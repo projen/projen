@@ -2335,9 +2335,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.352"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.352.tgz#be96bd7c2f4b980deebc9338a49a67430a33ed73"
-  integrity sha512-ikFUEyu5/q+wJpMOxWxTaEVk2M1qKqTGKKyfJmod1CPZxKfYnxVS41/GCBQg21ItBpZybyN8sNpRqCUGm+Zc4Q==
+  version "1.4.353"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.353.tgz#20e9cb4c83a08e35b3314d3fa8988764c105e6b7"
+  integrity sha512-IdJVpMHJoBT/nn0GQ02wPfbhogDVpd1ud95lP//FTf5l35wzxKJwibB4HBdY7Q+xKPA1nkZ0UDLOMyRj5U5IAQ==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -3499,7 +3499,7 @@ is-ci@^3.0.1:
   dependencies:
     ci-info "^3.2.0"
 
-is-core-module@^2.11.0, is-core-module@^2.5.0, is-core-module@^2.8.1, is-core-module@^2.9.0:
+is-core-module@^2.11.0, is-core-module@^2.5.0, is-core-module@^2.8.1:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.11.0.tgz#ad4cb3e3863e814523c96f3f58d26cc570ff0144"
   integrity sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==
@@ -4718,14 +4718,14 @@ minimatch@^5.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^7.4.2, minimatch@^7.4.3:
+minimatch@^7.4.2:
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-7.4.5.tgz#e721f2a6faba6846f3b891ccff9966dcf728813e"
   integrity sha512-OzOamaOmNBJZUv2qqY1OSWa+++4YPpOkLgkc0w30Oov5ufKlWWXnFUl0l4dgmSv5Shq/zRVkEOXAe2NaqO4l5Q==
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^8.0.2:
+minimatch@^8.0.2, minimatch@^8.0.3:
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-8.0.3.tgz#0415cb9bb0c1d8ac758c8a673eb1d288e13f5e75"
   integrity sha512-tEEvU9TkZgnFDCtpnrEYnPsjT7iUx42aXfs4bzmQ5sMA09/6hZY0jeZcGkXyDagiBOvkUjNo8Viom+Me6+2x7g==
@@ -4957,9 +4957,9 @@ npm-bundled@^3.0.0:
     npm-normalize-package-bin "^3.0.0"
 
 npm-check-updates@^16:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.10.2.tgz#b694fc35f8f5668070c4aa171269ccdfcf8f724b"
-  integrity sha512-njcps3jbtviL8Bqmv5vh2EeUY4z3dEORr7t0CIOR6+M05yhch5GzYT9MObQaA/pi0miDqukf2Y829c1SAc3n+w==
+  version "16.10.7"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.10.7.tgz#95c6fda0d5c8e5405bc26a29da748a185d6cbcfe"
+  integrity sha512-hVJCULf8AoVob9FDvoC7hrkQGuWhWctE9k3sNmR+M6hxZJnlb+03Ph4G1w/pHmI5BGHoo+ZPJtVEXkJsA+JwPQ==
   dependencies:
     chalk "^5.2.0"
     cli-table3 "^0.6.3"
@@ -4971,15 +4971,16 @@ npm-check-updates@^16:
     globby "^11.0.4"
     hosted-git-info "^5.1.0"
     ini "^4.0.0"
+    js-yaml "^4.1.0"
     json-parse-helpfulerror "^1.0.3"
     jsonlines "^0.1.1"
     lodash "^4.17.21"
-    minimatch "^7.4.3"
+    minimatch "^8.0.3"
     p-map "^4.0.0"
     pacote "15.1.1"
     parse-github-url "^1.0.2"
     progress "^2.0.3"
-    prompts-ncu "^2.5.1"
+    prompts-ncu "^3.0.0"
     rc-config-loader "^4.1.2"
     remote-git-tags "^3.0.0"
     rimraf "^4.4.1"
@@ -4990,7 +4991,6 @@ npm-check-updates@^16:
     strip-json-comments "^5.0.0"
     untildify "^4.0.0"
     update-notifier "^6.0.2"
-    yaml "^2.2.1"
 
 npm-install-checks@^6.0.0:
   version "6.1.0"
@@ -5429,10 +5429,10 @@ promise-retry@^2.0.1:
     err-code "^2.0.2"
     retry "^0.12.0"
 
-prompts-ncu@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/prompts-ncu/-/prompts-ncu-2.5.1.tgz#0a75702e0af1d1319261113aad9153fd7267122a"
-  integrity sha512-Hdd7GgV7b76Yh9FP9HL1D9xqtJCJdVPpiM2vDtuoc8W1KfweJe15gutFYmxkq83ViFaagFM8K0UcPCQ/tZq8bA==
+prompts-ncu@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/prompts-ncu/-/prompts-ncu-3.0.0.tgz#716feb4874fca3dbe00af0f3de17a15d43d2228d"
+  integrity sha512-qyz9UxZ5MlPKWVhWrCmSZ1ahm2GVYdjLb8og2sg0IPth1KRuhcggHGuijz0e41dkx35p1t1q3GRISGH7QGALFA==
   dependencies:
     kleur "^4.0.1"
     sisteransi "^1.0.5"
@@ -5694,11 +5694,11 @@ resolve.exports@^1.1.0:
   integrity sha512-/NtpHNDN7jWhAaQ9BvBUYZ6YTXsRBgfqWFWP7BZBaoMJO/I3G5OFzvTuWNlZC3aPjins1F+TNrLKsGbH4rfsRQ==
 
 resolve@^1.1.6, resolve@^1.10.0, resolve@^1.20.0, resolve@^1.22.0, resolve@^1.22.1:
-  version "1.22.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.1.tgz#27cb2ebb53f91abb49470a928bba7558066ac177"
-  integrity sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==
+  version "1.22.2"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.2.tgz#0ed0943d4e301867955766c9f3e1ae6d01c6845f"
+  integrity sha512-Sb+mjNHOULsBv818T40qSPeRiuWLyaGMa5ewydRLFimneixmVy2zdivRl+AF6jaYPC8ERxGDmFSiqui6SfPd+g==
   dependencies:
-    is-core-module "^2.9.0"
+    is-core-module "^2.11.0"
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
@@ -6474,9 +6474,9 @@ typescript@5.x, typescript@~5.0.3:
   integrity sha512-xv8mOEDnigb/tN9PSMTwSEqAnUvkoXMQlicOb0IUVDBSQCgBSaAAROUZYy2IcUy5qU6XajK5jjjO7TMWqBTKZA==
 
 typescript@next:
-  version "5.1.0-dev.20230404"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230404.tgz#8044739267d17e5d9d8963785b74b52005d5a448"
-  integrity sha512-jnBojDBCCoAxsmxh8bjH7FHFBsGVOFOcPwfGhZ9zPnh2/uORifLcsKRHD3DI2dM+6Y9wISlh+cb23R2BQR09xg==
+  version "5.1.0-dev.20230405"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230405.tgz#bcaff68c2e2ca446902a1206ae6f73561b432645"
+  integrity sha512-4unWRVmR6URHndao/lK2XCSabqveeczgOSGNNQbfZW7Hu4b+YND5DlpVQOL/Yaz9olB1FgeZidZwYnTQbOXc6w==
 
 typescript@~3.9.10:
   version "3.9.10"
@@ -6878,11 +6878,6 @@ yaml@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.0.0.tgz#cbc588ad58e0cd924cd3f5f2b1a9485103048e25"
   integrity sha512-JbfdlHKGP2Ik9IHylzWlGd4pPK++EU46/IxMykphS2ZKw7a7h+dHNmcXObLgpRDriBY+rpWslldikckX8oruWQ==
-
-yaml@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.2.1.tgz#3014bf0482dcd15147aa8e56109ce8632cd60ce4"
-  integrity sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==
 
 yargs-parser@20.x, yargs-parser@^20.2.2, yargs-parser@^20.2.3:
   version "20.2.9"
