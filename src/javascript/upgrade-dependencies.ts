@@ -351,11 +351,11 @@ export class UpgradeDependencies extends Component {
         patch: {
           jobId: upgrade.jobId,
           outputName: PATCH_CREATED_OUTPUT,
-          workflowName: workflow.name,
+          ref: upgrade.ref,
         },
+        workflowName: workflow.name,
         credentials,
         runsOn: this.options.workflowOptions?.runsOn,
-        ref: upgrade.ref,
         pullRequestTitle: `chore(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,

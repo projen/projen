@@ -1,6 +1,14 @@
-import { GitIdentity } from ".";
+import { GitIdentity, GithubCredentials } from ".";
+import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { JobStep } from "./workflows-model";
 
+function context(value: string) {
+  return `\${{ ${value} }}`;
+}
+
+const REPO = context("github.repository");
+const RUN_ID = context("github.run_id");
+const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const GIT_PATCH_FILE_DEFAULT = ".repo.patch";
 const RUNNER_TEMP = "${{ runner.temp }}";
 
@@ -104,6 +112,60 @@ export class WorkflowActions {
       },
     ];
   }
+
+  /**
+   * A step that creates a pull request based on the current repo state.
+   *
+   * @param options Options
+   * @returns Job steps
+   */
+  public static createPullRequest(
+    options: CreatePullRequestOptions
+  ): JobStep[] {
+    const workflowName = options.workflowName;
+    const branchName = options.branchName ?? `github-actions/${workflowName}`;
+    const stepId = options.stepId ?? "create-pr";
+    const stepName = options.stepName ?? "Create Pull Request";
+    const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    const committer = `${gitIdentity.name} <${gitIdentity.email}>`;
+    const pullRequestDescription = options.pullRequestDescription
+      .trimEnd()
+      .endsWith(".")
+      ? options.pullRequestDescription.trimEnd()
+      : `${options.pullRequestDescription.trimEnd()}.`;
+
+    const title = options.pullRequestTitle;
+    const description = [
+      `${pullRequestDescription} See details in [workflow run].`,
+      "",
+      `[Workflow Run]: ${RUN_URL}`,
+      "",
+      "------",
+      "",
+      `*Automatically created by projen via the "${workflowName}" workflow*`,
+    ].join("\n");
+
+    return [
+      {
+        name: stepName,
+        id: stepId,
+        uses: "peter-evans/create-pull-request@v4",
+        with: {
+          token: options.credentials?.tokenRef,
+          "commit-message": `${title}\n\n${description}`,
+          branch: branchName,
+          base: options.baseBranch,
+          title: title,
+          labels: options.labels?.join(",") || undefined,
+          assignees: options.assignees?.join(",") || undefined,
+          body: description,
+          author: committer,
+          committer: committer,
+          signoff: options.signoff ?? true,
+        },
+      },
+    ];
+  }
 }
 
 /**
@@ -176,4 +238,85 @@ export interface UploadGitPatchOptions {
    * @default - do not fail upon mutation
    */
   readonly mutationError?: string;
+}
+
+export interface CreatePullRequestOptions {
+  /**
+   * The step ID which produces the output which indicates if a patch was created.
+   * @default "create_pr"
+   */
+  readonly stepId?: string;
+
+  /**
+   * The name of the step displayed on GitHub.
+   * @default "Create Pull Request"
+   */
+  readonly stepName?: string;
+
+  /**
+   * The job credentials used to create the pull request.
+   *
+   * Provided credentials must have permissions to create a pull request on the repository.
+   */
+  readonly credentials?: GithubCredentials;
+
+  /**
+   * The name of the workflow that will create the PR
+   */
+  readonly workflowName: string;
+
+  /**
+   * The full title used to create the pull request.
+   *
+   * If PR titles are validated in this repo, the title should comply with the respective rules.
+   */
+  readonly pullRequestTitle: string;
+
+  /**
+   * Description added to the pull request.
+   *
+   * Providence information are automatically added.
+   */
+  readonly pullRequestDescription: string;
+
+  /**
+   * Sets the pull request base branch.
+   *
+   * @default - The branch checked out in the workflow.
+   */
+  readonly baseBranch?: string;
+
+  /**
+   * The pull request branch name.
+   *
+   * @default `github-actions/${options.workflowName}`
+   */
+  readonly branchName?: string;
+
+  /**
+   * The git identity used to create the commit.
+   * @default - the default github-actions user
+   */
+  readonly gitIdentity?: GitIdentity;
+
+  /**
+   * Add Signed-off-by line by the committer at the end of the commit log message.
+   *
+   * @default true
+   */
+  readonly signoff?: boolean;
+
+  /**
+   * Labels to apply on the PR.
+   *
+   * @default - no labels.
+   */
+  readonly labels?: string[];
+
+  /**
+   * Assignees to add on the PR.
+   *
+   * @default - no assignees
+   */
+  readonly assignees?: string[];
 }
