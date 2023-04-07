@@ -9233,7 +9233,7 @@ addTestCommand(...commands: string[]): void
 
 
 
-#### hasScript(name)🔹 <a id="projen-javascript-nodeproject-hasscript"></a>
+#### hasScript(name)⚠️ <a id="projen-javascript-nodeproject-hasscript"></a>
 
 Indicates if a script by the name name is defined.
 
