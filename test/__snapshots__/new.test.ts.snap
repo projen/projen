@@ -11,9 +11,9 @@ public class projenrc {
             .artifactId(\\"my-app\\")
             .groupId(\\"org.acme\\")
             .name(\\"my-project\\")
-            .version(\\"0.1.0\\")
             .projectType(ProjectType.LIB)
             .projenrcJava(true)
+            .version(\\"0.1.0\\")
             .build());
         project.synth();
     }
@@ -44,9 +44,9 @@ project = PythonProject(
     author_name=\\"My User Name\\",
     module_name=\\"my_project\\",
     name=\\"my-project\\",
-    version=\\"0.1.0\\",
     project_type=ProjectType.LIB,
     projenrc_python=True,
+    version=\\"0.1.0\\",
 )
 
 project.synth()"
@@ -361,6 +361,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: \\"my@user.email.com\\",
   cdkVersion: \\"2.1.0\\",
   defaultReleaseBranch: \\"main\\",
+  jsiiVersion: \\"~5.0.0\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
@@ -415,6 +416,7 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   authorAddress: \\"my@user.email.com\\",
   cdk8sVersion: \\"1.4.10\\",
   defaultReleaseBranch: \\"main\\",
+  jsiiVersion: \\"~5.0.0\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
@@ -435,6 +437,7 @@ const project = new cdktf.ConstructLibraryCdktf({
   authorAddress: \\"my@user.email.com\\",
   cdktfVersion: \\"^0.13.0\\",
   defaultReleaseBranch: \\"main\\",
+  jsiiVersion: \\"~5.0.0\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
@@ -473,6 +476,7 @@ const project = new cdk.JsiiProject({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
   defaultReleaseBranch: \\"main\\",
+  jsiiVersion: \\"~5.0.0\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 

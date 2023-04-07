@@ -117,6 +117,14 @@ describe("all default values in docstrings are renderable JS values", () => {
   });
 });
 
+test("@pjnew is parsed as initial value", () => {
+  const jsiiVersionOption = result
+    .find((p) => p.pjid === "jsii")
+    ?.options.find((o) => o.name === "jsiiVersion");
+
+  expect(jsiiVersionOption?.initialValue).toBe('"~5.0.0"');
+});
+
 test("all allowed default values can be discovered and rendered", () => {
   const defaultOptionsManifest = inventory.readManifest(
     path.join(__dirname, "inventory/renderable-defaults")

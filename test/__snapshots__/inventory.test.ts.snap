@@ -15,6 +15,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"my-app\\"",
         "jsonLike": true,
         "name": "artifactId",
         "parent": "PomOptions",
@@ -217,6 +218,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"2.1.0\\"",
         "jsonLike": true,
         "name": "cdkVersion",
         "parent": "AwsCdkDepsCommonOptions",
@@ -520,6 +522,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"org.acme\\"",
         "jsonLike": true,
         "name": "groupId",
         "parent": "PomOptions",
@@ -591,6 +594,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"org.acme.MyApp\\"",
         "jsonLike": true,
         "name": "mainClass",
         "parent": "AwsCdkJavaAppOptions",
@@ -645,6 +649,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -1060,6 +1065,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"0.1.0\\"",
         "jsonLike": true,
         "name": "version",
         "parent": "PomOptions",
@@ -1164,6 +1170,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorEmail",
         "parent": "PythonPackagingOptions",
@@ -1180,6 +1187,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "authorName",
         "parent": "PythonPackagingOptions",
@@ -1382,6 +1390,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"2.1.0\\"",
         "jsonLike": true,
         "name": "cdkVersion",
         "parent": "AwsCdkDepsCommonOptions",
@@ -1781,6 +1790,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$PYTHON_MODULE_NAME",
         "jsonLike": true,
         "name": "moduleName",
         "parent": "PythonProjectOptions",
@@ -1797,6 +1807,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -2388,6 +2399,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"0.1.0\\"",
         "jsonLike": true,
         "name": "version",
         "parent": "PythonPackagingOptions",
@@ -2938,6 +2950,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"2.1.0\\"",
         "jsonLike": true,
         "name": "cdkVersion",
         "parent": "AwsCdkDepsCommonOptions",
@@ -3131,6 +3144,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -3931,6 +3945,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -5369,6 +5384,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "author",
         "parent": "JsiiProjectOptions",
@@ -5385,6 +5401,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorAddress",
         "parent": "JsiiProjectOptions",
@@ -5798,6 +5815,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"2.1.0\\"",
         "jsonLike": true,
         "name": "cdkVersion",
         "parent": "AwsCdkDepsCommonOptions",
@@ -6020,6 +6038,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -6592,6 +6611,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"~5.0.0\\"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -6876,6 +6896,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -7946,6 +7967,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_REMOTE",
         "jsonLike": true,
         "name": "repositoryUrl",
         "parent": "JsiiProjectOptions",
@@ -8360,6 +8382,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorEmail",
         "parent": "PythonPackagingOptions",
@@ -8376,6 +8399,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "authorName",
         "parent": "PythonPackagingOptions",
@@ -8554,6 +8578,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"2.3.33\\"",
         "jsonLike": true,
         "name": "cdk8sVersion",
         "parent": "Cdk8sDepsCommonOptions",
@@ -8965,6 +8990,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$PYTHON_MODULE_NAME",
         "jsonLike": true,
         "name": "moduleName",
         "parent": "PythonProjectOptions",
@@ -8981,6 +9007,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -9536,6 +9563,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"0.1.0\\"",
         "jsonLike": true,
         "name": "version",
         "parent": "PythonPackagingOptions",
@@ -10018,6 +10046,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"2.3.33\\"",
         "jsonLike": true,
         "name": "cdk8sVersion",
         "parent": "Cdk8sDepsCommonOptions",
@@ -10206,6 +10235,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -10953,6 +10983,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -12328,6 +12359,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "author",
         "parent": "JsiiProjectOptions",
@@ -12344,6 +12376,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorAddress",
         "parent": "JsiiProjectOptions",
@@ -12677,6 +12710,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"1.4.10\\"",
         "jsonLike": true,
         "name": "cdk8sVersion",
         "parent": "ConstructLibraryCdk8sOptions",
@@ -12916,6 +12950,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -13471,6 +13506,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"~5.0.0\\"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -13702,6 +13738,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -14772,6 +14809,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_REMOTE",
         "jsonLike": true,
         "name": "repositoryUrl",
         "parent": "JsiiProjectOptions",
@@ -15203,6 +15241,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "author",
         "parent": "JsiiProjectOptions",
@@ -15219,6 +15258,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorAddress",
         "parent": "JsiiProjectOptions",
@@ -15535,6 +15575,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"^0.13.0\\"",
         "jsonLike": true,
         "name": "cdktfVersion",
         "parent": "ConstructLibraryCdktfOptions",
@@ -15740,6 +15781,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -16278,6 +16320,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"~5.0.0\\"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -16509,6 +16552,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -17579,6 +17623,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_REMOTE",
         "jsonLike": true,
         "name": "repositoryUrl",
         "parent": "JsiiProjectOptions",
@@ -17976,6 +18021,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"my-app\\"",
         "jsonLike": true,
         "name": "artifactId",
         "parent": "PomOptions",
@@ -18261,6 +18307,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"org.acme\\"",
         "jsonLike": true,
         "name": "groupId",
         "parent": "PomOptions",
@@ -18370,6 +18417,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -18766,6 +18814,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"0.1.0\\"",
         "jsonLike": true,
         "name": "version",
         "parent": "PomOptions",
@@ -18843,6 +18892,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "author",
         "parent": "JsiiProjectOptions",
@@ -18859,6 +18909,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorAddress",
         "parent": "JsiiProjectOptions",
@@ -19328,6 +19379,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -19866,6 +19918,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"~5.0.0\\"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -20097,6 +20150,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -21167,6 +21221,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_REMOTE",
         "jsonLike": true,
         "name": "repositoryUrl",
         "parent": "JsiiProjectOptions",
@@ -22017,6 +22072,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -22575,6 +22631,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -24262,6 +24319,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -24958,6 +25016,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -26752,6 +26811,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -27310,6 +27370,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -28565,6 +28626,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -28715,6 +28777,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_EMAIL",
         "jsonLike": true,
         "name": "authorEmail",
         "parent": "PythonPackagingOptions",
@@ -28731,6 +28794,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$GIT_USER_NAME",
         "jsonLike": true,
         "name": "authorName",
         "parent": "PythonPackagingOptions",
@@ -29112,6 +29176,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$PYTHON_MODULE_NAME",
         "jsonLike": true,
         "name": "moduleName",
         "parent": "PythonProjectOptions",
@@ -29128,6 +29193,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -29683,6 +29749,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"0.1.0\\"",
         "jsonLike": true,
         "name": "version",
         "parent": "PythonPackagingOptions",
@@ -30162,6 +30229,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -30720,6 +30788,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -32395,6 +32464,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -33091,6 +33161,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -34890,6 +34961,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -35586,6 +35658,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
@@ -37363,6 +37436,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "\\"main\\"",
         "jsonLike": true,
         "name": "defaultReleaseBranch",
         "parent": "NodeProjectOptions",
@@ -38059,6 +38133,7 @@ Array [
         "fullType": Object {
           "primitive": "string",
         },
+        "initialValue": "$BASEDIR",
         "jsonLike": true,
         "name": "name",
         "parent": "ProjectOptions",
