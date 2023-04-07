@@ -1,3 +1,4 @@
+import * as TOML from "@iarna/toml";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
@@ -91,7 +92,7 @@ export class Poetry
       // Python version must be defined for poetry projects. Default to ^3.7.
       dependencies.python = "^3.7";
     }
-    return dependencies;
+    return this.permitDependenciesWithMetadata(dependencies);
   }
 
   private synthDevDependencies() {
@@ -101,7 +102,30 @@ export class Poetry
         dependencies[pkg.name] = pkg.version;
       }
     }
-    return dependencies;
+    return this.permitDependenciesWithMetadata(dependencies);
+  }
+
+  /**
+   * Allow for poetry dependencies to specify metadata, eg `mypackage@{ version="1.2.3", extras = ["my-package-extra"] }`
+   * @param dependencies poetry dependencies object
+   * @private
+   */
+  private permitDependenciesWithMetadata(dependencies: { [key: string]: any }) {
+    const parseVersionMetadata = (version: any) => {
+      try {
+        // Try parsing the version as toml to permit metadata
+        return TOML.parse(`version = ${version}`).version;
+      } catch (e) {
+        // Invalid toml means it's not metadata, so should just be treated as the string
+        return version;
+      }
+    };
+    return Object.fromEntries(
+      Object.entries(dependencies).map(([key, value]) => [
+        key,
+        parseVersionMetadata(value),
+      ])
+    );
   }
 
   /**

@@ -146,6 +146,41 @@ test("poetry enabled with poetry-specific options", () => {
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
+test("poetry enabled with metadata in dependencies", () => {
+  const p = new TestPythonProject({
+    poetry: true,
+    homepage: "http://www.example.com",
+    description: "a short project description",
+    license: "Apache-2.0",
+    classifiers: ["Development Status :: 4 - Beta"],
+    deps: [
+      "regular-version-package@1.2.3",
+      'package1@{version = "^3.3.3", extras = ["mypackage-extra"]}',
+      'package2@{ path = "../mypackage/foo" }',
+    ],
+  });
+
+  const snapshot = synthSnapshot(p);
+  // Rendered as a "normal" version
+  expect(snapshot["pyproject.toml"]).toContain(
+    'regular-version-package = "1.2.3"'
+  );
+  // package1 metadata should be rendered as its own section, and contain the specified metadata
+  expect(snapshot["pyproject.toml"]).toContain(
+    "[tool.poetry.dependencies.package1]"
+  );
+  expect(snapshot["pyproject.toml"]).toContain('version = "^3.3.3"');
+  expect(snapshot["pyproject.toml"]).toContain(
+    'extras = [ "mypackage-extra" ]'
+  );
+  // Likewise package2 metadata should be rendered
+  expect(snapshot["pyproject.toml"]).toContain(
+    "[tool.poetry.dependencies.package2]"
+  );
+  expect(snapshot["pyproject.toml"]).toContain('path = "../mypackage/foo"');
+  expect(snapshot["pyproject.toml"]).toMatchSnapshot();
+});
+
 class TestPythonProject extends python.PythonProject {
   constructor(options: Partial<python.PythonProjectOptions> = {}) {
     super({
