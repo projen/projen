@@ -274,6 +274,7 @@ Name|Description
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.CheckoutWithPatchOptions](#projen-github-checkoutwithpatchoptions)|Options for `checkoutWithPatch`.
+[github.CreatePullRequestOptions](#projen-github-createpullrequestoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
@@ -7443,6 +7444,31 @@ static checkoutWithPatch(options?: CheckoutWithPatchOptions): Array<JobStep>
 __Returns__:
 * <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
 
+#### *static* createPullRequest(options)🔹 <a id="projen-github-workflowactions-createpullrequest"></a>
+
+A step that creates a pull request based on the current repo state.
+
+```ts
+static createPullRequest(options: CreatePullRequestOptions): Array<JobStep>
+```
+
+* **options** (<code>[github.CreatePullRequestOptions](#projen-github-createpullrequestoptions)</code>)  Options.
+  * **pullRequestDescription** (<code>string</code>)  Description added to the pull request. 
+  * **pullRequestTitle** (<code>string</code>)  The full title used to create the pull request. 
+  * **workflowName** (<code>string</code>)  The name of the workflow that will create the PR. 
+  * **assignees** (<code>Array<string></code>)  Assignees to add on the PR. __*Default*__: no assignees
+  * **baseBranch** (<code>string</code>)  Sets the pull request base branch. __*Default*__: The branch checked out in the workflow.
+  * **branchName** (<code>string</code>)  The pull request branch name. __*Default*__: `github-actions/${options.workflowName}`
+  * **credentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  The job credentials used to create the pull request. __*Optional*__
+  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity used to create the commit. __*Default*__: the default github-actions user
+  * **labels** (<code>Array<string></code>)  Labels to apply on the PR. __*Default*__: no labels.
+  * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
+  * **stepId** (<code>string</code>)  The step ID which produces the output which indicates if a patch was created. __*Default*__: "create_pr"
+  * **stepName** (<code>string</code>)  The name of the step displayed on GitHub. __*Default*__: "Create Pull Request"
+
+__Returns__:
+* <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
+
 #### *static* setupGitIdentity(id)🔹 <a id="projen-github-workflowactions-setupgitidentity"></a>
 
 Configures the git identity (user name and email).
@@ -7510,17 +7536,21 @@ static pullRequestFromPatch(options: PullRequestFromPatchOptions): Job
 ```
 
 * **options** (<code>[github.PullRequestFromPatchOptions](#projen-github-pullrequestfrompatchoptions)</code>)  *No description*
-  * **credentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  The job credentials used to create the pull request. 
-  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity used to create the commit. 
-  * **patch** (<code>[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)</code>)  Information about the patch that is used to create the pull request. 
   * **pullRequestDescription** (<code>string</code>)  Description added to the pull request. 
   * **pullRequestTitle** (<code>string</code>)  The full title used to create the pull request. 
+  * **workflowName** (<code>string</code>)  The name of the workflow that will create the PR. 
   * **assignees** (<code>Array<string></code>)  Assignees to add on the PR. __*Default*__: no assignees
-  * **jobName** (<code>string</code>)  The name of the job displayed on GitHub. __*Default*__: "Create Pull Request"
+  * **baseBranch** (<code>string</code>)  Sets the pull request base branch. __*Default*__: The branch checked out in the workflow.
+  * **branchName** (<code>string</code>)  The pull request branch name. __*Default*__: `github-actions/${options.workflowName}`
+  * **credentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  The job credentials used to create the pull request. __*Optional*__
+  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity used to create the commit. __*Default*__: the default github-actions user
   * **labels** (<code>Array<string></code>)  Labels to apply on the PR. __*Default*__: no labels.
-  * **ref** (<code>string</code>)  Branch or tag name. __*Default*__: the default branch is implicitly used
-  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
+  * **stepId** (<code>string</code>)  The step ID which produces the output which indicates if a patch was created. __*Default*__: "create_pr"
+  * **stepName** (<code>string</code>)  The name of the step displayed on GitHub. __*Default*__: "Create Pull Request"
+  * **patch** (<code>[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)</code>)  Information about the patch that is used to create the pull request. 
+  * **jobName** (<code>string</code>)  The name of the job displayed on GitHub. __*Default*__: "Create Pull Request"
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
 
 __Returns__:
 * <code>[github.workflows.Job](#projen-github-workflows-job)</code>
@@ -16168,6 +16198,30 @@ Name | Type | Description
 
 
 
+## struct CreatePullRequestOptions 🔹 <a id="projen-github-createpullrequestoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**pullRequestDescription**🔹 | <code>string</code> | Description added to the pull request.
+**pullRequestTitle**🔹 | <code>string</code> | The full title used to create the pull request.
+**workflowName**🔹 | <code>string</code> | The name of the workflow that will create the PR.
+**assignees**?🔹 | <code>Array<string></code> | Assignees to add on the PR.<br/>__*Default*__: no assignees
+**baseBranch**?🔹 | <code>string</code> | Sets the pull request base branch.<br/>__*Default*__: The branch checked out in the workflow.
+**branchName**?🔹 | <code>string</code> | The pull request branch name.<br/>__*Default*__: `github-actions/${options.workflowName}`
+**credentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | The job credentials used to create the pull request.<br/>__*Optional*__
+**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity used to create the commit.<br/>__*Default*__: the default github-actions user
+**labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
+**signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
+**stepId**?🔹 | <code>string</code> | The step ID which produces the output which indicates if a patch was created.<br/>__*Default*__: "create_pr"
+**stepName**?🔹 | <code>string</code> | The name of the step displayed on GitHub.<br/>__*Default*__: "Create Pull Request"
+
+
+
 ## struct DependabotIgnore 🔹 <a id="projen-github-dependabotignore"></a>
 
 
@@ -16430,17 +16484,21 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**credentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | The job credentials used to create the pull request.
-**gitIdentity**🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity used to create the commit.
 **patch**🔹 | <code>[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)</code> | Information about the patch that is used to create the pull request.
 **pullRequestDescription**🔹 | <code>string</code> | Description added to the pull request.
 **pullRequestTitle**🔹 | <code>string</code> | The full title used to create the pull request.
+**workflowName**🔹 | <code>string</code> | The name of the workflow that will create the PR.
 **assignees**?🔹 | <code>Array<string></code> | Assignees to add on the PR.<br/>__*Default*__: no assignees
+**baseBranch**?🔹 | <code>string</code> | Sets the pull request base branch.<br/>__*Default*__: The branch checked out in the workflow.
+**branchName**?🔹 | <code>string</code> | The pull request branch name.<br/>__*Default*__: `github-actions/${options.workflowName}`
+**credentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | The job credentials used to create the pull request.<br/>__*Optional*__
+**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity used to create the commit.<br/>__*Default*__: the default github-actions user
 **jobName**?🔹 | <code>string</code> | The name of the job displayed on GitHub.<br/>__*Default*__: "Create Pull Request"
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
-**ref**?🔹 | <code>string</code> | Branch or tag name.<br/>__*Default*__: the default branch is implicitly used
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
+**stepId**?🔹 | <code>string</code> | The step ID which produces the output which indicates if a patch was created.<br/>__*Default*__: "create_pr"
+**stepName**?🔹 | <code>string</code> | The name of the step displayed on GitHub.<br/>__*Default*__: "Create Pull Request"
 
 
 
@@ -16470,8 +16528,11 @@ Name | Type | Description
 -----|------|-------------
 **jobId**🔹 | <code>string</code> | The id of the job that created the patch file.
 **outputName**🔹 | <code>string</code> | The name of the output that indicates if a patch has been created.
-**workflowName**🔹 | <code>string</code> | The name of the workflow that will create the PR.
+**lfs**?🔹 | <code>boolean</code> | Whether LFS is enabled for the GitHub repository.<br/>__*Default*__: false
 **patchFile**?🔹 | <code>string</code> | The name of the artifact the patch is stored as.<br/>__*Default*__: ".repo.patch"
+**ref**?🔹 | <code>string</code> | Branch or tag name.<br/>__*Default*__: the default branch is implicitly used
+**repository**?🔹 | <code>string</code> | The repository (owner/repo) to use.<br/>__*Default*__: the default repository is implicitly used
+**token**?🔹 | <code>string</code> | A GitHub token to use when checking out the repository.<br/>__*Default*__: the default GITHUB_TOKEN is implicitly used
 
 
 
