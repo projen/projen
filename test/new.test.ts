@@ -209,7 +209,13 @@ test("options are not overwritten when creating from external project types", ()
 test("projen new --from will fail when a required option without a default is not provided", () => {
   withProjectDir((projectdir) => {
     try {
-      execProjenCLI(projectdir, ["new", "--from", "mrpj@0.0.1", "projen"]);
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "mrpj@0.0.1",
+        "projen",
+        "--no-synth",
+      ]);
     } catch (error: any) {
       expect(error.message).toMatch('Cannot create "mrpj.ProjenProject"');
       expect(error.message).toMatch("Missing required option:");
@@ -322,7 +328,7 @@ test("projenrc-json creates node-project", () => {
 
 test("projenrc-json creates java project", () => {
   withProjectDir((projectdir) => {
-    execProjenCLI(projectdir, ["new", "java", "--projenrc-json"]);
+    execProjenCLI(projectdir, ["new", "java", "--projenrc-json", "--no-synth"]);
 
     expect(directorySnapshot(projectdir)).toMatchSnapshot();
   });
@@ -428,7 +434,13 @@ test("projen new node --outdir path/to/mydir", () => {
     shell(`mkdir -p ${join("path", "to", "mydir")}`);
 
     // WHEN
-    execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
+    execProjenCLI(projectdir, [
+      "new",
+      "node",
+      "--outdir",
+      "path/to/mydir",
+      "--no-post",
+    ]);
 
     // THEN
     const targetDirSnapshot = directorySnapshot(
@@ -470,7 +482,8 @@ describe("initial values", () => {
       execProjenCLI(projectdir, [
         "new",
         "typescript",
-        "--projenrc-ts false",
+        "--projenrc-ts",
+        "false",
         "--no-post",
       ]);
       const actual = directorySnapshot(projectdir, {
