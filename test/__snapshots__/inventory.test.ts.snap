@@ -4473,6 +4473,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -7425,6 +7426,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -11513,6 +11515,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -14269,6 +14272,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -17084,6 +17088,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -20683,6 +20688,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -25551,6 +25557,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -33699,6 +33706,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -36197,6 +36205,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
@@ -38673,6 +38682,7 @@ Array [
         "fullType": Object {
           "primitive": "boolean",
         },
+        "initialValue": "true",
         "jsonLike": true,
         "name": "projenrcTs",
         "optional": true,
