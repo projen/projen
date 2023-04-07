@@ -135,6 +135,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * Use TypeScript for your projenrc file (`.projenrc.ts`).
    *
    * @default false
+   * @pjnew true
    */
   readonly projenrcTs?: boolean;
 
