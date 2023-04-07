@@ -491,6 +491,7 @@ export class NodePackage extends Component {
   public readonly file: JsonFile;
 
   private readonly scripts: Record<string, string> = {};
+  private readonly scriptsToBeRemoved = new Set<string>();
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
@@ -739,6 +740,8 @@ export class NodePackage extends Component {
    * @param name The name of the script.
    */
   public removeScript(name: string) {
+    // need to keep track in case there's a task of the same name
+    this.scriptsToBeRemoved.add(name);
     delete this.scripts[name];
   }
 
@@ -1452,6 +1455,9 @@ export class NodePackage extends Component {
       .sort((x, y) => x.name.localeCompare(y.name));
 
     for (const task of tasks) {
+      if (this.scriptsToBeRemoved.has(task.name)) {
+        continue;
+      }
       result[task.name] = this.npmScriptForTask(task);
     }
 
