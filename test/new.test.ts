@@ -464,6 +464,24 @@ test("can create external project in directory path containing a space", () => {
   );
 });
 
+describe("initial values", () => {
+  test("cli can override initial values", () => {
+    withProjectDir((projectdir) => {
+      execProjenCLI(projectdir, [
+        "new",
+        "typescript",
+        "--projenrc-ts false",
+        "--no-post",
+      ]);
+      const actual = directorySnapshot(projectdir, {
+        excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+      });
+      expect(actual[".projenrc.js"]).toBeDefined();
+      expect(actual[".projenrc.ts"]).not.toBeDefined();
+    });
+  });
+});
+
 describe("git", () => {
   test("--git (default) will initialize a git repo and create a commit", () => {
     withProjectDir((projectdir) => {
