@@ -122,6 +122,14 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
+  "typesVersions": {
+    "<=3.9": {
+      "lib/*": [
+        "lib/.types-compat/ts3.9/*",
+        "lib/.types-compat/ts3.9/*/index.d.ts"
+      ]
+    }
+  },
   "version": "0.0.0",
   "jest": {
     "maxWorkers": "50%",

@@ -8664,6 +8664,7 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | Allow project to take library dependencies.
 **entrypoint**🔹 | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`).
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | The package.json file.
 **installAndUpdateLockfileCommand**🔹 | <code>string</code> | Renders `yarn install` or `npm install` with lockfile update (not frozen).
 **installCiTask**🔹 | <code>[Task](#projen-task)</code> | The task for installing project dependencies (frozen).
 **installCommand**🔹 | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen).
@@ -8867,7 +8868,7 @@ preSynthesize(): void
 
 #### removeScript(name)🔹 <a id="projen-javascript-nodepackage-removescript"></a>
 
-Removes the npm script (always successful).
+Removes an npm script (always successful).
 
 ```ts
 removeScript(name: string): void
@@ -8894,7 +8895,7 @@ __Returns__:
 
 #### setScript(name, command)🔹 <a id="projen-javascript-nodepackage-setscript"></a>
 
-Override the contents of an npm package.json script.
+Add a npm package.json script.
 
 ```ts
 setScript(name: string, command: string): void
@@ -9233,7 +9234,7 @@ addTestCommand(...commands: string[]): void
 
 
 
-#### hasScript(name)🔹 <a id="projen-javascript-nodeproject-hasscript"></a>
+#### hasScript(name)⚠️ <a id="projen-javascript-nodeproject-hasscript"></a>
 
 Indicates if a script by the name name is defined.
 
@@ -13841,7 +13842,7 @@ Name | Type | Description
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -14227,7 +14228,7 @@ Name | Type | Description
 **requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -14876,7 +14877,7 @@ Name | Type | Description
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -15150,7 +15151,7 @@ Name | Type | Description
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -15491,7 +15492,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -15663,7 +15664,7 @@ Name | Type | Description
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -15860,7 +15861,7 @@ Name | Type | Description
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -17736,7 +17737,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 
 
@@ -17859,7 +17860,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
@@ -19195,7 +19196,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -19538,7 +19539,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -19684,7 +19685,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -19854,7 +19855,7 @@ Name | Type | Description
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `public/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Source directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -20029,7 +20030,7 @@ Name | Type | Description
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false

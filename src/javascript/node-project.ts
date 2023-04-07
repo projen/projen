@@ -792,6 +792,7 @@ export class NodeProject extends GitHubProject {
   /**
    * Indicates if a script by the name name is defined.
    * @param name The name of the script
+   * @deprecated Use `project.tasks.tryFind(name)`
    */
   public hasScript(name: string) {
     return this.package.hasScript(name);

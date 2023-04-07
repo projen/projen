@@ -4976,6 +4976,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -8036,6 +8037,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -11997,6 +11999,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -14880,6 +14883,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -17695,6 +17699,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -21294,6 +21299,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -23613,6 +23619,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -26034,6 +26041,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -28336,6 +28344,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -31793,6 +31802,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -34202,6 +34212,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -36678,6 +36689,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {
@@ -39154,6 +39166,7 @@ Array [
       },
       Object {
         "default": "{}",
+        "deprecated": true,
         "docs": "npm scripts to include.",
         "featured": false,
         "fullType": Object {

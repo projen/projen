@@ -6,12 +6,7 @@ import {
   readdirSync,
 } from "fs";
 import { join, resolve } from "path";
-import { parse as urlparse } from "url";
-import {
-  extractCodeArtifactDetails,
-  minVersion,
-  packageResolutionsFieldName,
-} from "./util";
+import { extractCodeArtifactDetails, minVersion } from "./util";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { Dependencies, DependencyType } from "../dependencies";
@@ -158,8 +153,10 @@ export interface NodePackageOptions {
   /**
    * npm scripts to include. If a script has the same name as a standard script,
    * the standard script will be overwritten.
+   * Also adds the script as a task.
    *
    * @default {}
+   * @deprecated use `project.addTask()` or `package.setScript()`
    */
   readonly scripts?: { [name: string]: string };
 
@@ -488,11 +485,18 @@ export class NodePackage extends Component {
    */
   public readonly installCiTask: Task;
 
+  /**
+   * The package.json file.
+   */
+  public readonly file: JsonFile;
+
+  private readonly scripts: Record<string, string> = {};
+  private readonly scriptsToBeRemoved = new Set<string>();
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
-  private readonly file: JsonFile;
+  private readonly packageResolutions = new Map<string, string>();
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -549,12 +553,14 @@ export class NodePackage extends Component {
       peerDependencies: {},
       dependencies: {},
       bundledDependencies: [],
+      ...this.renderPackageResolutions(),
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
+      typesVersions: prev?.typesVersions,
 
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
@@ -568,7 +574,8 @@ export class NodePackage extends Component {
           : undefined,
     };
 
-    // override any scripts from options (if specified)
+    // add tasks for scripts from options (if specified)
+    // @deprecated
     for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
       project.addTask(cmdname, { exec: shell });
     }
@@ -718,21 +725,24 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Override the contents of an npm package.json script.
+   * Add a npm package.json script.
    *
    * @param name The script name
    * @param command The command to execute
    */
   public setScript(name: string, command: string) {
-    this.file.addOverride(`scripts.${name}`, command);
+    this.scripts[name] = command;
   }
 
   /**
-   * Removes the npm script (always successful).
+   * Removes an npm script (always successful).
+   *
    * @param name The name of the script.
    */
   public removeScript(name: string) {
-    this.file.addDeletionOverride(`scripts.${name}`);
+    // need to keep track in case there's a task of the same name
+    this.scriptsToBeRemoved.add(name);
+    delete this.scripts[name];
   }
 
   /**
@@ -771,12 +781,10 @@ export class NodePackage extends Component {
    * `module@^7`.
    */
   public addPackageResolutions(...resolutions: string[]) {
-    const fieldName = packageResolutionsFieldName(this.packageManager);
-
     for (const resolution of resolutions) {
       this.project.deps.addDependency(resolution, DependencyType.OVERRIDE);
       const { name, version = "*" } = Dependencies.parseDependency(resolution);
-      this.file.addOverride(`${fieldName}.${name}`, version);
+      this.packageResolutions.set(name, version);
     }
   }
 
@@ -910,7 +918,7 @@ export class NodePackage extends Component {
       npmRegistryUrl = `https://${options.npmRegistry}`;
     }
 
-    const npmr = urlparse(npmRegistryUrl ?? DEFAULT_NPM_REGISTRY_URL);
+    const npmr = new URL(npmRegistryUrl ?? DEFAULT_NPM_REGISTRY_URL);
     if (!npmr || !npmr.hostname || !npmr.href) {
       throw new Error(
         `unable to determine npm registry host from url ${npmRegistryUrl}. Is this really a URL?`
@@ -1348,6 +1356,26 @@ export class NodePackage extends Component {
     return true;
   }
 
+  private renderPackageResolutions() {
+    const render = () => {
+      if (this.packageResolutions.size === 0) {
+        return undefined;
+      }
+      return Object.fromEntries(this.packageResolutions);
+    };
+
+    switch (this.packageManager) {
+      case NodePackageManager.NPM:
+        return { overrides: render };
+      case NodePackageManager.PNPM:
+        return { pnpm: { overrides: render } };
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN2:
+      default:
+        return { resolutions: render };
+    }
+  }
+
   private renderPublishConfig() {
     // omit values if they are the same as the npm defaults
     return resolveJson(
@@ -1427,10 +1455,16 @@ export class NodePackage extends Component {
       .sort((x, y) => x.name.localeCompare(y.name));
 
     for (const task of tasks) {
+      if (this.scriptsToBeRemoved.has(task.name)) {
+        continue;
+      }
       result[task.name] = this.npmScriptForTask(task);
     }
 
-    return result;
+    return {
+      ...result,
+      ...this.scripts,
+    };
   }
 
   private npmScriptForTask(task: Task) {
