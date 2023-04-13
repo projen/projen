@@ -61,6 +61,13 @@ export enum TypeScriptModuleResolution {
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
   NODE_NEXT = "nodenext",
+
+  /**
+   * Resolution strategy which attempts to mimic resolution patterns of modern bundlers; from TypeScript 5.0 onwards.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#moduleResolution
+   */
+  BUNDLER = "bundler",
 }
 
 /**
