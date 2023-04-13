@@ -1,3 +1,4 @@
+import * as path from "path";
 import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
@@ -8,6 +9,12 @@ export interface TypescriptConfigOptions {
    * @default "tsconfig.json"
    */
   readonly fileName?: string;
+
+  /**
+   * Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from.
+   */
+  readonly extends?: string | string[] | TypescriptConfig | TypescriptConfig[];
+
   /**
    * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
    *
@@ -504,6 +511,7 @@ export interface TypeScriptCompilerOptions {
 
 export class TypescriptConfig extends Component {
   public readonly compilerOptions: TypeScriptCompilerOptions;
+  public readonly extends: string[];
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
@@ -513,6 +521,7 @@ export class TypescriptConfig extends Component {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
 
+    this.extends = [];
     this.include = options.include ?? ["**/*.ts"];
     this.exclude = options.exclude ?? ["node_modules"];
     this.fileName = fileName;
@@ -522,6 +531,13 @@ export class TypescriptConfig extends Component {
     this.file = new JsonFile(project, fileName, {
       allowComments: true,
       obj: {
+        // use string value for singular extension for TS<5.0 support.
+        extends: () =>
+          this.extends.length === 1
+            ? this.extends[0]
+            : this.extends.length
+            ? this.extends
+            : undefined,
         compilerOptions: this.compilerOptions,
         include: () => this.include,
         exclude: () => this.exclude,
@@ -531,6 +547,24 @@ export class TypescriptConfig extends Component {
     if (project instanceof NodeProject) {
       project.npmignore?.exclude(`/${fileName}`);
     }
+
+    if (options.extends) {
+      const values = Array.isArray(options.extends)
+        ? options.extends
+        : [options.extends];
+      values.map((value) => this.addExtends(value));
+    }
+  }
+
+  public addExtends(value: string | TypescriptConfig) {
+    const pathValue =
+      typeof value === "string"
+        ? value
+        : path.relative(
+            path.dirname(this.file.absolutePath),
+            value.file.absolutePath
+          );
+    this.extends.push(pathValue);
   }
 
   public addInclude(pattern: string) {
