@@ -9569,6 +9569,7 @@ new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptio
 * **options** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  *No description*
   * **compilerOptions** (<code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code>)  Compiler options to use. 
   * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
+  * **extends** (<code>string &#124; Array<string> &#124; [javascript.TypescriptConfig](#projen-javascript-typescriptconfig) &#124; Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code>)  Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from. __*Optional*__
   * **fileName** (<code>string</code>)  *No description* __*Default*__: "tsconfig.json"
   * **include** (<code>Array<string></code>)  Specifies a list of glob patterns that match TypeScript files to be included in compilation. __*Default*__: all .ts files recursively
 
@@ -9581,6 +9582,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code> | <span></span>
 **exclude**🔹 | <code>Array<string></code> | <span></span>
+**extends**🔹 | <code>Array<string></code> | <span></span>
 **file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
@@ -9597,6 +9599,19 @@ addExclude(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addExtends(value)🔹 <a id="projen-javascript-typescriptconfig-addextends"></a>
+
+
+
+```ts
+addExtends(value: string &#124; TypescriptConfig): void
+```
+
+* **value** (<code>string &#124; [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code>)  *No description*
 
 
 
@@ -18042,10 +18057,13 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**allowArbitraryExtensions**?🔹 | <code>boolean</code> | Suppress arbitrary extension import errors with the assumption that a bundler will be handling it.<br/>__*Default*__: undefined
+**allowImportingTsExtensions**?🔹 | <code>boolean</code> | Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`). Requires `noEmit` or `emitDeclarationOnly`.<br/>__*Default*__: undefined
 **allowJs**?🔹 | <code>boolean</code> | Allow JavaScript files to be compiled.<br/>__*Default*__: false
 **allowSyntheticDefaultImports**?🔹 | <code>boolean</code> | Allow default imports from modules with no default export.<br/>__*Optional*__
 **alwaysStrict**?🔹 | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.<br/>__*Default*__: true
 **baseUrl**?🔹 | <code>string</code> | Lets you set a base directory to resolve non-absolute module names.<br/>__*Optional*__
+**customConditions**?🔹 | <code>Array<string></code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.<br/>__*Default*__: undefined
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
 **emitDeclarationOnly**?🔹 | <code>boolean</code> | Only emit .d.ts files; do not emit .js files.<br/>__*Default*__: false
@@ -18053,7 +18071,7 @@ Name | Type | Description
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
 **experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: true
 **forceConsistentCasingInFileNames**?🔹 | <code>boolean</code> | Disallow inconsistently-cased references to the same file.<br/>__*Default*__: false
-**importsNotUsedAsValues**?🔹 | <code>[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)</code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.<br/>__*Default*__: "remove"
+**importsNotUsedAsValues**?⚠️ | <code>[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)</code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.<br/>__*Default*__: "remove"
 **inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.<br/>__*Default*__: true
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
 **isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
@@ -18076,6 +18094,8 @@ Name | Type | Description
 **outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/>__*Optional*__
 **paths**?🔹 | <code>Map<string, Array<string>></code> | A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.<br/>__*Optional*__
 **resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.<br/>__*Default*__: true
+**resolvePackageJsonExports**?🔹 | <code>boolean</code> | Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`.<br/>__*Default*__: true
+**resolvePackageJsonImports**?🔹 | <code>boolean</code> | Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor.<br/>__*Default*__: undefined
 **rootDir**?🔹 | <code>string</code> | Specifies the root directory of input files.<br/>__*Optional*__
 **skipLibCheck**?🔹 | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts).<br/>__*Default*__: false
 **sourceMap**?🔹 | <code>boolean</code> | Enables the generation of sourcemap files.<br/>__*Default*__: undefined
@@ -18085,6 +18105,7 @@ Name | Type | Description
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
 **stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an @internal annotation in it’s JSDoc comment.<br/>__*Default*__: true
 **target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
+**verbatimModuleSyntax**?🔹 | <code>string</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
 
 
@@ -18099,6 +18120,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code> | Compiler options to use.
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
+**extends**?🔹 | <code>string &#124; Array<string> &#124; [javascript.TypescriptConfig](#projen-javascript-typescriptconfig) &#124; Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code> | Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from.<br/>__*Optional*__
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
 
@@ -20606,6 +20628,7 @@ Name | Description
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 **NODE16** 🔹|Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
 **NODE_NEXT** 🔹|Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
+**BUNDLER** 🔹|Resolution strategy which attempts to mimic resolution patterns of modern bundlers;
 
 
 ## enum UpdateSnapshot 🔹 <a id="projen-javascript-updatesnapshot"></a>
