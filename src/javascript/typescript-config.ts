@@ -136,6 +136,22 @@ export interface TypeScriptCompilerOptions {
   readonly allowJs?: boolean;
 
   /**
+   * Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`).
+   * Requires `noEmit` or `emitDeclarationOnly`.
+   *
+   * @default undefined
+   */
+  readonly allowImportingTsExtensions?: boolean;
+
+  /**
+   * Suppress arbitrary extension import errors with the assumption that a bundler will be handling it.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#allowArbitraryExtensions
+   * @default undefined
+   */
+  readonly allowArbitraryExtensions?: boolean;
+
+  /**
    * Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict”
    * for each source file.
    *
@@ -154,6 +170,14 @@ export interface TypeScriptCompilerOptions {
    *
    */
   readonly declaration?: boolean;
+
+  /**
+   * List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#customConditions
+   * @default undefined
+   */
+  readonly customConditions?: string[];
 
   /**
    * Emit __importStar and __importDefault helpers for runtime babel
@@ -190,8 +214,17 @@ export interface TypeScriptCompilerOptions {
   readonly forceConsistentCasingInFileNames?: boolean;
 
   /**
+   * Simplifies TypeScript's handling of import/export `type` modifiers.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
+   * @default undefined
+   */
+  readonly verbatimModuleSyntax?: string;
+
+  /**
    * This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
    *
+   * @deprecated For TypeScript 5.0+ use `verbatimModuleSyntax` instead.
    * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
    * @default "remove"
    */
@@ -413,6 +446,20 @@ export interface TypeScriptCompilerOptions {
    * @default true
    */
   readonly stripInternal?: boolean;
+
+  /**
+   * Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`.
+   *
+   * @default true
+   */
+  readonly resolvePackageJsonExports?: boolean;
+
+  /**
+   * Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor.
+   *
+   * @default undefined
+   */
+  readonly resolvePackageJsonImports?: boolean;
 
   /**
    * Modern browsers support all ES6 features, so ES6 is a good choice. You might choose to set
