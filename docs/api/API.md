@@ -9667,12 +9667,12 @@ static fromPaths(paths: Array<string>): TypescriptConfigExtends
 __Returns__:
 * <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>
 
-#### *static* fromTypeScriptConfigs(configs)🔹 <a id="projen-javascript-typescriptconfigextends-fromtypescriptconfigs"></a>
+#### *static* fromTypescriptConfigs(configs)🔹 <a id="projen-javascript-typescriptconfigextends-fromtypescriptconfigs"></a>
 
 Factory for creation from array of other `TypescriptConfig` instances.
 
 ```ts
-static fromTypeScriptConfigs(configs: Array<TypescriptConfig>): TypescriptConfigExtends
+static fromTypescriptConfigs(configs: Array<TypescriptConfig>): TypescriptConfigExtends
 ```
 
 * **configs** (<code>Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code>)  Base `TypescriptConfig` instances.

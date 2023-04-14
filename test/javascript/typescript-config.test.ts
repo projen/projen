@@ -53,7 +53,7 @@ describe("TypescriptConfig", () => {
       });
       const tsConfig = new TypescriptConfig(project, {
         fileName: "tsconfig.inherit.json",
-        extends: TypescriptConfigExtends.fromTypeScriptConfigs([baseConfig]),
+        extends: TypescriptConfigExtends.fromTypescriptConfigs([baseConfig]),
         compilerOptions: { allowJs: true },
       });
       project.synth();
@@ -88,7 +88,7 @@ describe("TypescriptConfig", () => {
       const commonBase = new TypescriptConfig(project, {
         fileName: "tsconfig.json",
         compilerOptions: { outDir: "testOurDir" },
-        extends: TypescriptConfigExtends.fromTypeScriptConfigs([buildBase]),
+        extends: TypescriptConfigExtends.fromTypescriptConfigs([buildBase]),
       });
 
       const bundlerConfig = new TypescriptConfig(project, {

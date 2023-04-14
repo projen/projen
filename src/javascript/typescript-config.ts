@@ -526,7 +526,7 @@ export class TypescriptConfigExtends {
    * Factory for creation from array of other `TypescriptConfig` instances.
    * @param configs Base `TypescriptConfig` instances.
    */
-  public static fromTypeScriptConfigs(configs: TypescriptConfig[]) {
+  public static fromTypescriptConfigs(configs: TypescriptConfig[]) {
     const paths = configs.map((config) => config.file.absolutePath);
     return TypescriptConfigExtends.fromPaths(paths);
   }
