@@ -11,7 +11,7 @@ export interface TypescriptConfigOptions {
   readonly fileName?: string;
 
   /**
-   * Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from.
+   * Base `tsconfig.json` configuration(s) to inherit from.
    */
   readonly extends?: TypescriptConfigExtends;
 
@@ -510,12 +510,13 @@ export interface TypeScriptCompilerOptions {
 }
 
 /**
- * Container for `TypescriptConfig` `.tsconfig.json` extensions.
+ * Container for `TypescriptConfig` `tsconfig.json` base configuration(s).
+ * Extending from more than one base config file requires TypeScript 5.0+.
  */
 export class TypescriptConfigExtends {
   /**
    * Factory for creation from array of file paths.
-   * @param paths Absolute or relative paths to base `.tsconfig.json` files.
+   * @param paths Absolute or relative paths to base `tsconfig.json` files.
    */
   public static fromPaths(paths: string[]) {
     return new TypescriptConfigExtends(paths);
@@ -583,7 +584,7 @@ export class TypescriptConfig extends Component {
   }
 
   /**
-   * Array of base `.tsconfig.json` paths.
+   * Array of base `tsconfig.json` paths.
    * Any absolute paths are resolved relative to this instance,
    * while any relative paths are used as is.
    */
