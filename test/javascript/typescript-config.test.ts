@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import {
   NodeProject,
   TypescriptConfig,
+  TypescriptConfigExtends,
   TypeScriptModuleResolution,
 } from "../../src/javascript";
 import { withProjectDir } from "../util";
@@ -52,7 +53,7 @@ describe("TypescriptConfig", () => {
       });
       const tsConfig = new TypescriptConfig(project, {
         fileName: "tsconfig.inherit.json",
-        extends: [baseConfig],
+        extends: TypescriptConfigExtends.fromTypeScriptConfigs([baseConfig]),
         compilerOptions: { allowJs: true },
       });
       project.synth();
@@ -91,9 +92,11 @@ describe("TypescriptConfig", () => {
       });
       const tsConfig = new TypescriptConfig(project, {
         fileName: "sub/tsconfig.inherit.json",
+        extends: TypescriptConfigExtends.fromPaths([
+          "../a/tsconfig.outdir.json",
+        ]),
         compilerOptions: { allowJs: true },
       });
-      tsConfig.addExtends("../a/tsconfig.outdir.json");
       tsConfig.addExtends(bundlerConfig);
       project.synth();
 
