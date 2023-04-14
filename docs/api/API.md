@@ -114,6 +114,7 @@ Name|Description
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [javascript.Transform](#projen-javascript-transform)|*No description*
 [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
+[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)|Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
 [javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
 [javascript.WatchPlugin](#projen-javascript-watchplugin)|*No description*
@@ -9569,7 +9570,7 @@ new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptio
 * **options** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  *No description*
   * **compilerOptions** (<code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code>)  Compiler options to use. 
   * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
-  * **extends** (<code>string &#124; Array<string> &#124; [javascript.TypescriptConfig](#projen-javascript-typescriptconfig) &#124; Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code>)  Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from. __*Optional*__
+  * **extends** (<code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>)  Base `tsconfig.json` configuration(s) to inherit from. __*Optional*__
   * **fileName** (<code>string</code>)  *No description* __*Default*__: "tsconfig.json"
   * **include** (<code>Array<string></code>)  Specifies a list of glob patterns that match TypeScript files to be included in compilation. __*Default*__: all .ts files recursively
 
@@ -9582,7 +9583,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code> | <span></span>
 **exclude**🔹 | <code>Array<string></code> | <span></span>
-**extends**🔹 | <code>Array<string></code> | <span></span>
+**extends**🔹 | <code>Array<string></code> | Array of base `tsconfig.json` paths. Any absolute paths are resolved relative to this instance, while any relative paths are used as is.
 **file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
@@ -9605,13 +9606,13 @@ addExclude(pattern: string): void
 
 #### addExtends(value)🔹 <a id="projen-javascript-typescriptconfig-addextends"></a>
 
-
+Extend from base `TypescriptConfig` instance.
 
 ```ts
-addExtends(value: string &#124; TypescriptConfig): void
+addExtends(value: TypescriptConfig): void
 ```
 
-* **value** (<code>string &#124; [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code>)  *No description*
+* **value** (<code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code>)  Base `TypescriptConfig` instance.
 
 
 
@@ -9628,6 +9629,56 @@ addInclude(pattern: string): void
 
 
 
+
+
+
+## class TypescriptConfigExtends 🔹 <a id="projen-javascript-typescriptconfigextends"></a>
+
+Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
+
+__Submodule__: javascript
+
+
+### Methods
+
+
+#### toJSON()🔹 <a id="projen-javascript-typescriptconfigextends-tojson"></a>
+
+
+
+```ts
+toJSON(): Array<string>
+```
+
+
+__Returns__:
+* <code>Array<string></code>
+
+#### *static* fromPaths(paths)🔹 <a id="projen-javascript-typescriptconfigextends-frompaths"></a>
+
+Factory for creation from array of file paths.
+
+```ts
+static fromPaths(paths: Array<string>): TypescriptConfigExtends
+```
+
+* **paths** (<code>Array<string></code>)  Absolute or relative paths to base `tsconfig.json` files.
+
+__Returns__:
+* <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>
+
+#### *static* fromTypeScriptConfigs(configs)🔹 <a id="projen-javascript-typescriptconfigextends-fromtypescriptconfigs"></a>
+
+Factory for creation from array of other `TypescriptConfig` instances.
+
+```ts
+static fromTypeScriptConfigs(configs: Array<TypescriptConfig>): TypescriptConfigExtends
+```
+
+* **configs** (<code>Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code>)  Base `TypescriptConfig` instances.
+
+__Returns__:
+* <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>
 
 
 
@@ -18120,7 +18171,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code> | Compiler options to use.
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
-**extends**?🔹 | <code>string &#124; Array<string> &#124; [javascript.TypescriptConfig](#projen-javascript-typescriptconfig) &#124; Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code> | Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from.<br/>__*Optional*__
+**extends**?🔹 | <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code> | Base `tsconfig.json` configuration(s) to inherit from.<br/>__*Optional*__
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
 
