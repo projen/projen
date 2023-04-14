@@ -226,7 +226,7 @@ export interface TypeScriptCompilerOptions {
    * @see https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
    * @default undefined
    */
-  readonly verbatimModuleSyntax?: string;
+  readonly verbatimModuleSyntax?: boolean;
 
   /**
    * This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
