@@ -13,7 +13,7 @@ export interface TypescriptConfigOptions {
   /**
    * Path or list of paths (TypeScript 5.0+) to base configuration(s) to inherit from.
    */
-  readonly extends?: string | string[] | TypescriptConfig | TypescriptConfig[];
+  readonly extends?: TypescriptConfigExtends;
 
   /**
    * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
@@ -509,9 +509,41 @@ export interface TypeScriptCompilerOptions {
   readonly paths?: { [key: string]: string[] };
 }
 
+/**
+ * Container for `TypescriptConfig` `.tsconfig.json` extensions.
+ */
+export class TypescriptConfigExtends {
+  /**
+   * Factory for creation from array of file paths.
+   * @param paths Absolute or relative paths to base `.tsconfig.json` files.
+   */
+  public static fromPaths(paths: string[]) {
+    return new TypescriptConfigExtends(paths);
+  }
+
+  /**
+   * Factory for creation from array of other `TypescriptConfig` instances.
+   * @param configs Base `TypescriptConfig` instances.
+   */
+  public static fromTypeScriptConfigs(configs: TypescriptConfig[]) {
+    const paths = configs.map((config) => config.file.absolutePath);
+    return TypescriptConfigExtends.fromPaths(paths);
+  }
+
+  private readonly bases: string[];
+
+  private constructor(bases: string[]) {
+    this.bases = bases;
+  }
+
+  public toJSON(): string[] {
+    return this.bases;
+  }
+}
+
 export class TypescriptConfig extends Component {
+  private _extends: TypescriptConfigExtends;
   public readonly compilerOptions: TypeScriptCompilerOptions;
-  public readonly extends: string[];
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
@@ -521,7 +553,7 @@ export class TypescriptConfig extends Component {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
 
-    this.extends = [];
+    this._extends = options.extends ?? TypescriptConfigExtends.fromPaths([]);
     this.include = options.include ?? ["**/*.ts"];
     this.exclude = options.exclude ?? ["node_modules"];
     this.fileName = fileName;
@@ -531,8 +563,9 @@ export class TypescriptConfig extends Component {
     this.file = new JsonFile(project, fileName, {
       allowComments: true,
       obj: {
-        // use string value for singular extension for TS<5.0 support.
         extends: () =>
+          // use string value for singular extension for TS<5.0 support;
+          // omit if no extensions.
           this.extends.length === 1
             ? this.extends[0]
             : this.extends.length
@@ -547,24 +580,32 @@ export class TypescriptConfig extends Component {
     if (project instanceof NodeProject) {
       project.npmignore?.exclude(`/${fileName}`);
     }
-
-    if (options.extends) {
-      const values = Array.isArray(options.extends)
-        ? options.extends
-        : [options.extends];
-      values.map((value) => this.addExtends(value));
-    }
   }
 
-  public addExtends(value: string | TypescriptConfig) {
-    const pathValue =
-      typeof value === "string"
-        ? value
-        : path.relative(
-            path.dirname(this.file.absolutePath),
-            value.file.absolutePath
-          );
-    this.extends.push(pathValue);
+  /**
+   * Array of base `.tsconfig.json` paths.
+   * Any absolute paths are resolved relative to this instance,
+   * while any relative paths are used as is.
+   */
+  public get extends(): string[] {
+    return this._extends
+      .toJSON()
+      .map((value) =>
+        path.isAbsolute(value)
+          ? path.relative(path.dirname(this.file.absolutePath), value)
+          : value
+      );
+  }
+
+  /**
+   * Extend from base `TypescriptConfig` instance.
+   * @param value Base `TypescriptConfig` instance.
+   */
+  public addExtends(value: TypescriptConfig) {
+    this._extends = TypescriptConfigExtends.fromPaths([
+      ...this._extends.toJSON(),
+      value.file.absolutePath,
+    ]);
   }
 
   public addInclude(pattern: string) {
