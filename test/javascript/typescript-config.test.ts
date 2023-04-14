@@ -80,35 +80,70 @@ describe("TypescriptConfig", () => {
         defaultReleaseBranch: "main",
         outdir,
       });
-      new TypescriptConfig(project, {
-        fileName: "a/tsconfig.outdir.json",
-        compilerOptions: { outDir: "testOurDir" },
+
+      const buildBase = new TypescriptConfig(project, {
+        fileName: "tsconfig.build.json",
+        compilerOptions: { outDir: "buildDir" },
       });
+      const commonBase = new TypescriptConfig(project, {
+        fileName: "tsconfig.json",
+        compilerOptions: { outDir: "testOurDir" },
+        extends: TypescriptConfigExtends.fromTypeScriptConfigs([buildBase]),
+      });
+
       const bundlerConfig = new TypescriptConfig(project, {
         fileName: "sub/b/d/c/tsconfig.bundler.json",
         compilerOptions: {
           moduleResolution: TypeScriptModuleResolution.BUNDLER,
         },
       });
+      const esmConfig = new TypescriptConfig(project, {
+        fileName: "other/bases/tsconfig.esm.json",
+        compilerOptions: {
+          module: "ESNext",
+          target: "ESNext",
+          lib: ["ESNext"],
+        },
+      });
+
       const tsConfig = new TypescriptConfig(project, {
-        fileName: "sub/tsconfig.inherit.json",
-        extends: TypescriptConfigExtends.fromPaths([
-          "../a/tsconfig.outdir.json",
-        ]),
+        fileName: "sub/tsconfig.json",
+        extends: TypescriptConfigExtends.fromPaths(["../tsconfig.json"]),
         compilerOptions: { allowJs: true },
       });
       tsConfig.addExtends(bundlerConfig);
+      tsConfig.addExtends(esmConfig);
+
       project.synth();
 
       const loadedConfig = ts.readConfigFile(
         tsConfig.file.absolutePath,
         ts.sys.readFile
       );
+      const buildConfig = ts.readConfigFile(
+        buildBase.file.absolutePath,
+        ts.sys.readFile
+      );
+      const baseConfig = ts.readConfigFile(
+        commonBase.file.absolutePath,
+        ts.sys.readFile
+      );
 
+      // expect no "extends" field by default.
+      expect(buildConfig.error).toBeUndefined();
+      expect(buildConfig.config).not.toHaveProperty("extends");
+      // expect string extends field when singular extension.
+      expect(baseConfig.error).toBeUndefined();
+      expect(baseConfig.config).toHaveProperty(
+        "extends",
+        "tsconfig.build.json"
+      );
+      // expect array extends field when multiple extensions.
       expect(loadedConfig.error).toBeUndefined();
       expect(loadedConfig.config).toHaveProperty("extends", [
-        "../a/tsconfig.outdir.json",
+        "../tsconfig.json",
         "b/d/c/tsconfig.bundler.json",
+        "../other/bases/tsconfig.esm.json",
       ]);
     });
   });
