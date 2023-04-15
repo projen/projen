@@ -63,7 +63,7 @@ const project = new cdk.JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "14.0.0", // Do not change this before a version has been EOL for a while
-  workflowNodeVersion: "16.13.0",
+  workflowNodeVersion: "16.14.0",
 
   codeCov: true,
   prettier: true,
