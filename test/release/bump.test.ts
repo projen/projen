@@ -251,6 +251,38 @@ test("minMajorVersion throws if set together with majorVersion", async () => {
   ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
 });
 
+test("first prerelease after promotion, with prerelease", async () => {
+  const result = await testBump({
+    options: {
+      prerelease: "beta",
+    },
+    commits: [
+      { message: "first version", tag: "v1.0.0" },
+      { message: "fix(test): testing", tag: "v1.0.1-beta.0" },
+      { message: "fix(test): testing2", tag: "v1.0.1-beta.1" },
+      { message: "fix(test): testing3", tag: "v1.0.1" },
+      { message: "fix(test): new fix" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.0.2-beta.0");
+});
+
+test("second prerelease after the first prerelease", async () => {
+  const result = await testBump({
+    options: {
+      prerelease: "beta",
+    },
+    commits: [
+      { message: "first version", tag: "v1.0.0" },
+      { message: "fix(test): testing", tag: "v1.0.1-beta.0" },
+      { message: "fix(test): new fix" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.0.1-beta.1");
+});
+
 //----------------------------------------------------------------------------------------------------------------------------------
 
 async function testBump(

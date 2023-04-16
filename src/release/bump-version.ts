@@ -1,6 +1,7 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
+import { compare } from "semver";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
@@ -296,7 +297,23 @@ function determineLatestTag(options: LatestTagOptions): {
     new RegExp(`-${prerelease}\.[0-9]+$`).test(x)
   );
   if (prerelease && prereleaseTags.length > 0) {
-    tags = prereleaseTags;
+    /**
+     * Cover the following case specifically
+     * 1 - v1.0.0
+     * 2 - v1.0.1-beta.0
+     * 3 - v1.0.1-beta.1
+     * 4 - v1.0.1
+     * 5 - now publish a new release on the prerelease branch
+     *    by setting the latestTag as v1.0.1 instead of v1.0.1-beta.1
+     */
+    const releaseTags = tags.filter((x) =>
+      new RegExp(`^v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
+    );
+    if (releaseTags && compare(releaseTags[0], prereleaseTags[0]) === 1) {
+      tags = releaseTags;
+    } else {
+      tags = prereleaseTags;
+    }
   }
 
   tags = tags.filter((x) => x);
