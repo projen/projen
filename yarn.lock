@@ -1669,9 +1669,9 @@ camelcase@^7.0.0:
   integrity sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==
 
 caniuse-lite@^1.0.30001449:
-  version "1.0.30001479"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001479.tgz#ef3d6f76011e44181af411fd4896123afbc14eda"
-  integrity sha512-6nuRFim5dx8Eu2tO+KJ9PiBdPHs7WB5Hdf+klDcyefyEuOAcfhihIv7pS+JFknJLUiNQbm1AJYKm0c9QOlQS/Q==
+  version "1.0.30001480"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001480.tgz#9bbd35ee44c2480a1e3a3b9f4496f5066817164a"
+  integrity sha512-q7cpoPPvZYgtyC4VaBSN0Bt+PJ4c4EYRf0DrduInOz2SkFpHD5p3LnvEpqBp7UnJn+8x1Ogl1s38saUxe+ihQQ==
 
 case@^1.6.3:
   version "1.6.3"
@@ -4158,9 +4158,9 @@ jsii@1.80.0:
     yargs "^16.2.0"
 
 jsii@5.x:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.0.5.tgz#f2d98cbf35847b0307c29a5bf53091da47fa8b25"
-  integrity sha512-HUdncR3PLywl/gV87rsRnMQYAYqLrRb6yigaOhgBWehZTIqVAxlJgd4K119BcfsJ9g4tYDipCs9Lofo36303ww==
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.0.6.tgz#e9f21eb067e9e1b922a7453ced8e61aedf94967a"
+  integrity sha512-sRcffOl2eCeLTvAu5MK9kmD2cU6nInFOqUaQazd7Prssvx7Qpxk+zXjUEilQktDL7akr+Ws6ea7WPGNjeYr+4A==
   dependencies:
     "@jsii/check-node" "1.80.0"
     "@jsii/spec" "^1.80.0"
@@ -6252,9 +6252,9 @@ typescript@5.x, typescript@~5.0.4:
   integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
 typescript@next:
-  version "5.1.0-dev.20230416"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230416.tgz#20d4b5021523e7d79fb00df4163399ea0ef778c2"
-  integrity sha512-LdNpnAyqzCIcx7R5/cZDGlsxGTL4j+omGMhMYVCVaroMOFZBnMtzUJSlMIO9yHBjN5ENSVJ2+Pq57GwmSPiZFA==
+  version "5.1.0-dev.20230417"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230417.tgz#3c6acdd4e49858bc10f7bdf535e768513ebc55e9"
+  integrity sha512-bEjKfPjxAgvrUViweybCkB++3y9qyF4hCBeXOf998QQDJpLAcaQWmub4IoPZ5yTvrkuGuNzFpy46tytA4p1fbA==
 
 typescript@~3.9.10:
   version "3.9.10"
