@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`JsiiProject with default settings synthesizes 1`] = `
-Object {
-  ".eslintrc.json": Object {
-    "env": Object {
+{
+  ".eslintrc.json": {
+    "env": {
       "jest": true,
       "node": true,
     },
-    "extends": Array [
+    "extends": [
       "plugin:import/typescript",
     ],
-    "ignorePatterns": Array [
+    "ignorePatterns": [
       "*.js",
       "*.d.ts",
       "node_modules/",
@@ -18,40 +18,40 @@ Object {
       "coverage",
       "!.projenrc.js",
     ],
-    "overrides": Array [
-      Object {
-        "files": Array [
+    "overrides": [
+      {
+        "files": [
           ".projenrc.js",
         ],
-        "rules": Object {
+        "rules": {
           "@typescript-eslint/no-require-imports": "off",
           "import/no-extraneous-dependencies": "off",
         },
       },
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
+    "parserOptions": {
       "ecmaVersion": 2018,
       "project": "./tsconfig.dev.json",
       "sourceType": "module",
     },
-    "plugins": Array [
+    "plugins": [
       "@typescript-eslint",
       "import",
     ],
     "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
+    "rules": {
+      "@typescript-eslint/indent": [
         "error",
         2,
       ],
-      "@typescript-eslint/member-delimiter-style": Array [
+      "@typescript-eslint/member-delimiter-style": [
         "error",
       ],
-      "@typescript-eslint/member-ordering": Array [
+      "@typescript-eslint/member-ordering": [
         "error",
-        Object {
-          "default": Array [
+        {
+          "default": [
             "public-static-field",
             "public-static-method",
             "protected-static-field",
@@ -64,56 +64,56 @@ Object {
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": Array [
+      "@typescript-eslint/no-floating-promises": [
         "error",
       ],
-      "@typescript-eslint/no-require-imports": Array [
+      "@typescript-eslint/no-require-imports": [
         "error",
       ],
-      "@typescript-eslint/no-shadow": Array [
+      "@typescript-eslint/no-shadow": [
         "error",
       ],
-      "@typescript-eslint/return-await": Array [
+      "@typescript-eslint/return-await": [
         "error",
       ],
-      "array-bracket-newline": Array [
+      "array-bracket-newline": [
         "error",
         "consistent",
       ],
-      "array-bracket-spacing": Array [
+      "array-bracket-spacing": [
         "error",
         "never",
       ],
-      "brace-style": Array [
+      "brace-style": [
         "error",
         "1tbs",
-        Object {
+        {
           "allowSingleLine": true,
         },
       ],
-      "comma-dangle": Array [
+      "comma-dangle": [
         "error",
         "always-multiline",
       ],
-      "comma-spacing": Array [
+      "comma-spacing": [
         "error",
-        Object {
+        {
           "after": true,
           "before": false,
         },
       ],
-      "curly": Array [
+      "curly": [
         "error",
         "multi-line",
         "consistent",
       ],
-      "dot-notation": Array [
+      "dot-notation": [
         "error",
       ],
-      "import/no-extraneous-dependencies": Array [
+      "import/no-extraneous-dependencies": [
         "error",
-        Object {
-          "devDependencies": Array [
+        {
+          "devDependencies": [
             "**/test/**",
             "**/build-tools/**",
           ],
@@ -121,34 +121,34 @@ Object {
           "peerDependencies": true,
         },
       ],
-      "import/no-unresolved": Array [
+      "import/no-unresolved": [
         "error",
       ],
-      "import/order": Array [
+      "import/order": [
         "warn",
-        Object {
-          "alphabetize": Object {
+        {
+          "alphabetize": {
             "caseInsensitive": true,
             "order": "asc",
           },
-          "groups": Array [
+          "groups": [
             "builtin",
             "external",
           ],
         },
       ],
-      "indent": Array [
+      "indent": [
         "off",
       ],
-      "key-spacing": Array [
+      "key-spacing": [
         "error",
       ],
-      "keyword-spacing": Array [
+      "keyword-spacing": [
         "error",
       ],
-      "max-len": Array [
+      "max-len": [
         "error",
-        Object {
+        {
           "code": 150,
           "ignoreComments": true,
           "ignoreRegExpLiterals": true,
@@ -157,83 +157,83 @@ Object {
           "ignoreUrls": true,
         },
       ],
-      "no-bitwise": Array [
+      "no-bitwise": [
         "error",
       ],
-      "no-duplicate-imports": Array [
+      "no-duplicate-imports": [
         "error",
       ],
-      "no-multi-spaces": Array [
+      "no-multi-spaces": [
         "error",
-        Object {
+        {
           "ignoreEOLComments": false,
         },
       ],
-      "no-multiple-empty-lines": Array [
+      "no-multiple-empty-lines": [
         "error",
       ],
-      "no-return-await": Array [
+      "no-return-await": [
         "off",
       ],
-      "no-shadow": Array [
+      "no-shadow": [
         "off",
       ],
-      "no-trailing-spaces": Array [
+      "no-trailing-spaces": [
         "error",
       ],
-      "object-curly-newline": Array [
+      "object-curly-newline": [
         "error",
-        Object {
+        {
           "consistent": true,
           "multiline": true,
         },
       ],
-      "object-curly-spacing": Array [
+      "object-curly-spacing": [
         "error",
         "always",
       ],
-      "object-property-newline": Array [
+      "object-property-newline": [
         "error",
-        Object {
+        {
           "allowAllPropertiesOnSameLine": true,
         },
       ],
-      "quote-props": Array [
+      "quote-props": [
         "error",
         "consistent-as-needed",
       ],
-      "quotes": Array [
+      "quotes": [
         "error",
         "single",
-        Object {
+        {
           "avoidEscape": true,
         },
       ],
-      "semi": Array [
+      "semi": [
         "error",
         "always",
       ],
-      "space-before-blocks": Array [
+      "space-before-blocks": [
         "error",
       ],
     },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [
           ".ts",
           ".tsx",
         ],
       },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
+      "import/resolver": {
+        "node": {},
+        "typescript": {
           "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
     },
   },
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 *.snap linguist-generated
 /.eslintrc.json linguist-generated
@@ -256,7 +256,7 @@ Object {
 /tsconfig.dev.json linguist-generated
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
-  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: build
 on:
@@ -270,7 +270,7 @@ jobs:
     outputs:
       self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -285,7 +285,7 @@ jobs:
         id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v3
@@ -295,7 +295,7 @@ jobs:
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
-          echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+          echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat .repo.patch
           exit 1
       - name: Backup artifact permissions
@@ -325,21 +325,21 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Push changes
         run: |2-
             git add .
-            git commit -s -m \\"chore: self mutation\\"
+            git commit -s -m "chore: self mutation"
             git push origin HEAD:\${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \\"! needs.build.outputs.self_mutation_happened\\"
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -361,7 +361,7 @@ jobs:
       - name: Collect js Artifact
         run: mv .repo/dist dist
 ",
-  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: pull-request-lint
 on:
@@ -390,7 +390,7 @@ jobs:
             chore
           requireScope: false
 ",
-  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: release
 on:
@@ -406,7 +406,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -414,15 +414,15 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote
-        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
+        run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -461,7 +461,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.ref }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -496,7 +496,7 @@ jobs:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm
 ",
-  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: upgrade-main
 on:
@@ -524,7 +524,7 @@ jobs:
         id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"patch_created=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v3
@@ -549,11 +549,11 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -568,9 +568,9 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           branch: github-actions/upgrade-main
-          title: \\"chore(deps): upgrade dependencies\\"
+          title: "chore(deps): upgrade dependencies"
           body: |-
             Upgrades project dependencies. See details in [workflow run].
 
@@ -578,12 +578,12 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
 ",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
@@ -636,13 +636,13 @@ junit.xml
 tsconfig.json
 !/API.md
 ",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 queue_rules:
   - name: default
     update_method: merge
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
@@ -658,12 +658,12 @@ pull_request_rules:
 
           {{ body }}
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
 ",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
 /test-reports/
 junit.xml
@@ -688,111 +688,111 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
+  ".projen/deps.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "dependencies": [
+      {
         "name": "@types/jest",
         "type": "build",
         "version": "^27",
       },
-      Object {
+      {
         "name": "@types/node",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "@typescript-eslint/parser",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-node",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-plugin-import",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint",
         "type": "build",
         "version": "^8",
       },
-      Object {
+      {
         "name": "jest-junit",
         "type": "build",
         "version": "^15",
       },
-      Object {
+      {
         "name": "jest",
         "type": "build",
         "version": "^27",
       },
-      Object {
+      {
         "name": "jsii-diff",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-docgen",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-pacmak",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii",
         "type": "build",
         "version": "1.x",
       },
-      Object {
+      {
         "name": "npm-check-updates",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "projen",
         "type": "build",
       },
-      Object {
+      {
         "name": "standard-version",
         "type": "build",
         "version": "^9",
       },
-      Object {
+      {
         "name": "ts-jest",
         "type": "build",
         "version": "^27",
       },
-      Object {
+      {
         "name": "typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/babel__traverse",
         "type": "override",
         "version": "7.18.2",
       },
-      Object {
+      {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
       },
     ],
   },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
+  ".projen/files.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "files": [
       ".eslintrc.json",
       ".gitattributes",
       ".github/pull_request_template.md",
@@ -809,40 +809,40 @@ tsconfig.tsbuildinfo
       "tsconfig.dev.json",
     ],
   },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/tasks.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "env": {
+      "PATH": "$(npx -c "node -e \\"console.log(process.env.PATH)\\"")",
     },
-    "tasks": Object {
-      "build": Object {
+    "tasks": {
+      "build": {
         "description": "Full release build",
         "name": "build",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
-          Object {
+          {
             "spawn": "pre-compile",
           },
-          Object {
+          {
             "spawn": "compile",
           },
-          Object {
+          {
             "spawn": "post-compile",
           },
-          Object {
+          {
             "spawn": "test",
           },
-          Object {
+          {
             "spawn": "package",
           },
         ],
       },
-      "bump": Object {
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
+      "bump": {
+        "condition": "! git log --oneline -1 | grep -q "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -850,214 +850,214 @@ tsconfig.tsbuildinfo
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/bump-version",
           },
         ],
       },
-      "clobber": Object {
+      "clobber": {
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
+        "env": {
           "BRANCH": "$(git branch --show-current)",
         },
         "name": "clobber",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
+            "name": "save current HEAD in "scratch" branch",
           },
-          Object {
+          {
             "exec": "git checkout $BRANCH",
           },
-          Object {
+          {
             "exec": "git fetch origin",
             "name": "fetch latest changes from origin",
           },
-          Object {
+          {
             "exec": "git reset --hard origin/$BRANCH",
             "name": "hard reset to origin commit",
           },
-          Object {
+          {
             "exec": "git clean -fdx",
             "name": "clean all untracked files",
           },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
+          {
+            "say": "ready to rock! (unpushed commits are under the "scratch" branch)",
           },
         ],
       },
-      "compat": Object {
+      "compat": {
         "description": "Perform API compatibility check against latest version",
         "name": "compat",
-        "steps": Array [
-          Object {
-            "exec": "jsii-diff npm:$(node -p \\"require('./package.json').name\\") -k --ignore-file .compatignore || (echo \\"
+        "steps": [
+          {
+            "exec": "jsii-diff npm:$(node -p "require('./package.json').name") -k --ignore-file .compatignore || (echo "
 UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.
-\\" && exit 1)",
+" && exit 1)",
           },
         ],
       },
-      "compile": Object {
+      "compile": {
         "description": "Only compile",
         "name": "compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
-      "default": Object {
+      "default": {
         "description": "Synthesize project files",
         "name": "default",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "node .projenrc.js",
           },
         ],
       },
-      "docgen": Object {
+      "docgen": {
         "description": "Generate API.md from .jsii manifest",
         "name": "docgen",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-docgen -o API.md",
           },
         ],
       },
-      "eject": Object {
+      "eject": {
         "description": "Remove projen from the project",
-        "env": Object {
+        "env": {
           "PROJEN_EJECTING": "true",
         },
         "name": "eject",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
         ],
       },
-      "eslint": Object {
+      "eslint": {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
-      "install": Object {
+      "install": {
         "description": "Install project dependencies and update lockfile (non-frozen)",
         "name": "install",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files",
           },
         ],
       },
-      "install:ci": Object {
+      "install:ci": {
         "description": "Install project dependencies using frozen lockfile",
         "name": "install:ci",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files --frozen-lockfile",
           },
         ],
       },
-      "package": Object {
+      "package": {
         "description": "Creates the distribution package",
         "name": "package",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
-      "package-all": Object {
+      "package-all": {
         "description": "Packages artifacts for all target languages",
         "name": "package-all",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "package:js",
           },
         ],
       },
-      "package:js": Object {
+      "package:js": {
         "description": "Create js language bindings",
         "name": "package:js",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
-      "post-compile": Object {
+      "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "docgen",
           },
         ],
       },
-      "post-upgrade": Object {
+      "post-upgrade": {
         "description": "Runs after upgrading dependencies",
         "name": "post-upgrade",
       },
-      "pre-compile": Object {
+      "pre-compile": {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "release": Object {
-        "description": "Prepare a release from \\"main\\" branch",
-        "env": Object {
+      "release": {
+        "description": "Prepare a release from "main" branch",
+        "env": {
           "RELEASE": "true",
         },
         "name": "release",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "rm -fr dist",
           },
-          Object {
+          {
             "spawn": "bump",
           },
-          Object {
+          {
             "spawn": "build",
           },
-          Object {
+          {
             "spawn": "unbump",
           },
-          Object {
+          {
             "exec": "git diff --ignore-space-at-eol --exit-code",
           },
         ],
       },
-      "test": Object {
+      "test": {
         "description": "Run tests",
         "name": "test",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --passWithNoTests --updateSnapshot",
             "receiveArgs": true,
           },
-          Object {
+          {
             "spawn": "eslint",
           },
         ],
       },
-      "test:watch": Object {
+      "test:watch": {
         "description": "Run jest in watch mode",
         "name": "test:watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --watch",
           },
         ],
       },
-      "unbump": Object {
+      "unbump": {
         "description": "Restores version to 0.0.0",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -1065,56 +1065,56 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/reset-version",
           },
         ],
       },
-      "upgrade": Object {
+      "upgrade": {
         "description": "upgrade dependencies",
-        "env": Object {
+        "env": {
           "CI": "0",
         },
         "name": "upgrade",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn upgrade npm-check-updates",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "yarn install --check-files",
           },
-          Object {
+          {
             "exec": "yarn upgrade",
           },
-          Object {
+          {
             "exec": "npx projen",
           },
-          Object {
+          {
             "spawn": "post-upgrade",
           },
         ],
       },
-      "watch": Object {
+      "watch": {
         "description": "Watch & compile in the background",
         "name": "watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
@@ -1130,38 +1130,38 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    1. Definitions.
 
-      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
 
-      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      "Licensor" shall mean the copyright owner or entity authorized by
       the copyright owner that is granting the License.
 
-      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      "Legal Entity" shall mean the union of the acting entity and all
       other entities that control, are controlled by, or are under common
       control with that entity. For the purposes of this definition,
-      \\"control\\" means (i) the power, direct or indirect, to cause the
+      "control" means (i) the power, direct or indirect, to cause the
       direction or management of such entity, whether by contract or
       otherwise, or (ii) ownership of fifty percent (50%) or more of the
       outstanding shares, or (iii) beneficial ownership of such entity.
 
-      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      "You" (or "Your") shall mean an individual or Legal Entity
       exercising permissions granted by this License.
 
-      \\"Source\\" form shall mean the preferred form for making modifications,
+      "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
       source, and configuration files.
 
-      \\"Object\\" form shall mean any form resulting from mechanical
+      "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
       and conversions to other media types.
 
-      \\"Work\\" shall mean the work of authorship, whether in Source or
+      "Work" shall mean the work of authorship, whether in Source or
       Object form, made available under the License, as indicated by a
       copyright notice that is included in or attached to the work
       (an example is provided in the Appendix below).
 
-      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      "Derivative Works" shall mean any work, whether in Source or Object
       form, that is based on (or derived from) the Work and for which the
       editorial revisions, annotations, elaborations, or other modifications
       represent, as a whole, an original work of authorship. For the purposes
@@ -1169,21 +1169,21 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       separable from, or merely link (or bind by name) to the interfaces of,
       the Work and Derivative Works thereof.
 
-      \\"Contribution\\" shall mean any work of authorship, including
+      "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
       to that Work or Derivative Works thereof, that is intentionally
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      the copyright owner. For the purposes of this definition, "submitted"
       means any form of electronic, verbal, or written communication sent
       to the Licensor or its representatives, including but not limited to
       communication on electronic mailing lists, source code control systems,
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+      designated in writing by the copyright owner as "Not a Contribution."
 
-      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
 
@@ -1227,7 +1227,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           excluding those notices that do not pertain to any part of
           the Derivative Works; and
 
-      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+      (d) If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained
           within such NOTICE file, excluding those notices that do not
@@ -1266,7 +1266,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    7. Disclaimer of Warranty. Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      Contributor provides its Contributions) on an "AS IS" BASIS,
       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
       implied, including, without limitation, any warranties or conditions
       of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
@@ -1302,37 +1302,37 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
    APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      boilerplate notice, with the fields enclosed by brackets "[]"
       replaced with your own identifying information. (Don't include
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same \\"printed page\\" as the copyright notice for easier
+      same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
 
-   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
+  "package.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "author": {
       "name": "Test",
       "organization": false,
       "url": "test@projen",
     },
-    "devDependencies": Object {
+    "devDependencies": {
       "@types/jest": "^27",
       "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
@@ -1353,50 +1353,50 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "ts-jest": "^27",
       "typescript": "*",
     },
-    "jest": Object {
+    "jest": {
       "clearMocks": true,
       "collectCoverage": true,
       "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
+      "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
-      "coverageReporters": Array [
+      "coverageReporters": [
         "json",
         "lcov",
         "clover",
         "cobertura",
         "text",
       ],
-      "globals": Object {
-        "ts-jest": Object {
+      "globals": {
+        "ts-jest": {
           "tsconfig": "tsconfig.dev.json",
         },
       },
       "preset": "ts-jest",
-      "reporters": Array [
+      "reporters": [
         "default",
-        Array [
+        [
           "jest-junit",
-          Object {
+          {
             "outputDirectory": "test-reports",
           },
         ],
       ],
-      "testMatch": Array [
+      "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
         "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
-      "testPathIgnorePatterns": Array [
+      "testPathIgnorePatterns": [
         "/node_modules/",
       ],
-      "watchPathIgnorePatterns": Array [
+      "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
     },
-    "jsii": Object {
+    "jsii": {
       "outdir": "dist",
-      "targets": Object {},
-      "tsc": Object {
+      "targets": {},
+      "tsc": {
         "outDir": "lib",
         "rootDir": "src",
       },
@@ -1404,15 +1404,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
-    "repository": Object {
+    "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
     },
-    "resolutions": Object {
+    "resolutions": {
       "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
     },
-    "scripts": Object {
+    "scripts": {
       "build": "npx projen build",
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
@@ -1450,15 +1450,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "compilerOptions": Object {
+  "tsconfig.dev.json": {
+    "compilerOptions": {
       "alwaysStrict": true,
       "declaration": true,
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "inlineSourceMap": true,
       "inlineSources": true,
-      "lib": Array [
+      "lib": [
         "es2019",
       ],
       "module": "CommonJS",
@@ -1476,10 +1476,10 @@ test('hello', () => {
       "stripInternal": true,
       "target": "ES2019",
     },
-    "exclude": Array [
+    "exclude": [
       "node_modules",
     ],
-    "include": Array [
+    "include": [
       ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",
@@ -1489,16 +1489,16 @@ test('hello', () => {
 `;
 
 exports[`JsiiProject with jsiiVersion: '*' synthesizes 1`] = `
-Object {
-  ".eslintrc.json": Object {
-    "env": Object {
+{
+  ".eslintrc.json": {
+    "env": {
       "jest": true,
       "node": true,
     },
-    "extends": Array [
+    "extends": [
       "plugin:import/typescript",
     ],
-    "ignorePatterns": Array [
+    "ignorePatterns": [
       "*.js",
       "*.d.ts",
       "node_modules/",
@@ -1506,40 +1506,40 @@ Object {
       "coverage",
       "!.projenrc.js",
     ],
-    "overrides": Array [
-      Object {
-        "files": Array [
+    "overrides": [
+      {
+        "files": [
           ".projenrc.js",
         ],
-        "rules": Object {
+        "rules": {
           "@typescript-eslint/no-require-imports": "off",
           "import/no-extraneous-dependencies": "off",
         },
       },
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
+    "parserOptions": {
       "ecmaVersion": 2018,
       "project": "./tsconfig.dev.json",
       "sourceType": "module",
     },
-    "plugins": Array [
+    "plugins": [
       "@typescript-eslint",
       "import",
     ],
     "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
+    "rules": {
+      "@typescript-eslint/indent": [
         "error",
         2,
       ],
-      "@typescript-eslint/member-delimiter-style": Array [
+      "@typescript-eslint/member-delimiter-style": [
         "error",
       ],
-      "@typescript-eslint/member-ordering": Array [
+      "@typescript-eslint/member-ordering": [
         "error",
-        Object {
-          "default": Array [
+        {
+          "default": [
             "public-static-field",
             "public-static-method",
             "protected-static-field",
@@ -1552,56 +1552,56 @@ Object {
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": Array [
+      "@typescript-eslint/no-floating-promises": [
         "error",
       ],
-      "@typescript-eslint/no-require-imports": Array [
+      "@typescript-eslint/no-require-imports": [
         "error",
       ],
-      "@typescript-eslint/no-shadow": Array [
+      "@typescript-eslint/no-shadow": [
         "error",
       ],
-      "@typescript-eslint/return-await": Array [
+      "@typescript-eslint/return-await": [
         "error",
       ],
-      "array-bracket-newline": Array [
+      "array-bracket-newline": [
         "error",
         "consistent",
       ],
-      "array-bracket-spacing": Array [
+      "array-bracket-spacing": [
         "error",
         "never",
       ],
-      "brace-style": Array [
+      "brace-style": [
         "error",
         "1tbs",
-        Object {
+        {
           "allowSingleLine": true,
         },
       ],
-      "comma-dangle": Array [
+      "comma-dangle": [
         "error",
         "always-multiline",
       ],
-      "comma-spacing": Array [
+      "comma-spacing": [
         "error",
-        Object {
+        {
           "after": true,
           "before": false,
         },
       ],
-      "curly": Array [
+      "curly": [
         "error",
         "multi-line",
         "consistent",
       ],
-      "dot-notation": Array [
+      "dot-notation": [
         "error",
       ],
-      "import/no-extraneous-dependencies": Array [
+      "import/no-extraneous-dependencies": [
         "error",
-        Object {
-          "devDependencies": Array [
+        {
+          "devDependencies": [
             "**/test/**",
             "**/build-tools/**",
           ],
@@ -1609,34 +1609,34 @@ Object {
           "peerDependencies": true,
         },
       ],
-      "import/no-unresolved": Array [
+      "import/no-unresolved": [
         "error",
       ],
-      "import/order": Array [
+      "import/order": [
         "warn",
-        Object {
-          "alphabetize": Object {
+        {
+          "alphabetize": {
             "caseInsensitive": true,
             "order": "asc",
           },
-          "groups": Array [
+          "groups": [
             "builtin",
             "external",
           ],
         },
       ],
-      "indent": Array [
+      "indent": [
         "off",
       ],
-      "key-spacing": Array [
+      "key-spacing": [
         "error",
       ],
-      "keyword-spacing": Array [
+      "keyword-spacing": [
         "error",
       ],
-      "max-len": Array [
+      "max-len": [
         "error",
-        Object {
+        {
           "code": 150,
           "ignoreComments": true,
           "ignoreRegExpLiterals": true,
@@ -1645,83 +1645,83 @@ Object {
           "ignoreUrls": true,
         },
       ],
-      "no-bitwise": Array [
+      "no-bitwise": [
         "error",
       ],
-      "no-duplicate-imports": Array [
+      "no-duplicate-imports": [
         "error",
       ],
-      "no-multi-spaces": Array [
+      "no-multi-spaces": [
         "error",
-        Object {
+        {
           "ignoreEOLComments": false,
         },
       ],
-      "no-multiple-empty-lines": Array [
+      "no-multiple-empty-lines": [
         "error",
       ],
-      "no-return-await": Array [
+      "no-return-await": [
         "off",
       ],
-      "no-shadow": Array [
+      "no-shadow": [
         "off",
       ],
-      "no-trailing-spaces": Array [
+      "no-trailing-spaces": [
         "error",
       ],
-      "object-curly-newline": Array [
+      "object-curly-newline": [
         "error",
-        Object {
+        {
           "consistent": true,
           "multiline": true,
         },
       ],
-      "object-curly-spacing": Array [
+      "object-curly-spacing": [
         "error",
         "always",
       ],
-      "object-property-newline": Array [
+      "object-property-newline": [
         "error",
-        Object {
+        {
           "allowAllPropertiesOnSameLine": true,
         },
       ],
-      "quote-props": Array [
+      "quote-props": [
         "error",
         "consistent-as-needed",
       ],
-      "quotes": Array [
+      "quotes": [
         "error",
         "single",
-        Object {
+        {
           "avoidEscape": true,
         },
       ],
-      "semi": Array [
+      "semi": [
         "error",
         "always",
       ],
-      "space-before-blocks": Array [
+      "space-before-blocks": [
         "error",
       ],
     },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [
           ".ts",
           ".tsx",
         ],
       },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
+      "import/resolver": {
+        "node": {},
+        "typescript": {
           "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
     },
   },
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 *.snap linguist-generated
 /.eslintrc.json linguist-generated
@@ -1744,7 +1744,7 @@ Object {
 /tsconfig.dev.json linguist-generated
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
-  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: build
 on:
@@ -1758,7 +1758,7 @@ jobs:
     outputs:
       self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1773,7 +1773,7 @@ jobs:
         id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v3
@@ -1783,7 +1783,7 @@ jobs:
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
-          echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+          echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat .repo.patch
           exit 1
       - name: Backup artifact permissions
@@ -1813,21 +1813,21 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Push changes
         run: |2-
             git add .
-            git commit -s -m \\"chore: self mutation\\"
+            git commit -s -m "chore: self mutation"
             git push origin HEAD:\${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \\"! needs.build.outputs.self_mutation_happened\\"
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -1849,7 +1849,7 @@ jobs:
       - name: Collect js Artifact
         run: mv .repo/dist dist
 ",
-  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: pull-request-lint
 on:
@@ -1878,7 +1878,7 @@ jobs:
             chore
           requireScope: false
 ",
-  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: release
 on:
@@ -1894,7 +1894,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1902,15 +1902,15 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote
-        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
+        run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1949,7 +1949,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.ref }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -1984,7 +1984,7 @@ jobs:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm
 ",
-  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: upgrade-main
 on:
@@ -2012,7 +2012,7 @@ jobs:
         id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"patch_created=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v3
@@ -2037,11 +2037,11 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -2056,9 +2056,9 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           branch: github-actions/upgrade-main
-          title: \\"chore(deps): upgrade dependencies\\"
+          title: "chore(deps): upgrade dependencies"
           body: |-
             Upgrades project dependencies. See details in [workflow run].
 
@@ -2066,12 +2066,12 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
 ",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
@@ -2124,13 +2124,13 @@ junit.xml
 tsconfig.json
 !/API.md
 ",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 queue_rules:
   - name: default
     update_method: merge
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
@@ -2146,12 +2146,12 @@ pull_request_rules:
 
           {{ body }}
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
 ",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
 /test-reports/
 junit.xml
@@ -2176,97 +2176,97 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
+  ".projen/deps.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "dependencies": [
+      {
         "name": "@types/jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/node",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "@typescript-eslint/parser",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-node",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-plugin-import",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint",
         "type": "build",
         "version": "^8",
       },
-      Object {
+      {
         "name": "jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "jest-junit",
         "type": "build",
         "version": "^15",
       },
-      Object {
+      {
         "name": "jsii",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-diff",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-docgen",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-pacmak",
         "type": "build",
       },
-      Object {
+      {
         "name": "npm-check-updates",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "projen",
         "type": "build",
       },
-      Object {
+      {
         "name": "standard-version",
         "type": "build",
         "version": "^9",
       },
-      Object {
+      {
         "name": "ts-jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "typescript",
         "type": "build",
       },
     ],
   },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
+  ".projen/files.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "files": [
       ".eslintrc.json",
       ".gitattributes",
       ".github/pull_request_template.md",
@@ -2283,40 +2283,40 @@ tsconfig.tsbuildinfo
       "tsconfig.dev.json",
     ],
   },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/tasks.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "env": {
+      "PATH": "$(npx -c "node -e \\"console.log(process.env.PATH)\\"")",
     },
-    "tasks": Object {
-      "build": Object {
+    "tasks": {
+      "build": {
         "description": "Full release build",
         "name": "build",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
-          Object {
+          {
             "spawn": "pre-compile",
           },
-          Object {
+          {
             "spawn": "compile",
           },
-          Object {
+          {
             "spawn": "post-compile",
           },
-          Object {
+          {
             "spawn": "test",
           },
-          Object {
+          {
             "spawn": "package",
           },
         ],
       },
-      "bump": Object {
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
+      "bump": {
+        "condition": "! git log --oneline -1 | grep -q "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -2324,214 +2324,214 @@ tsconfig.tsbuildinfo
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/bump-version",
           },
         ],
       },
-      "clobber": Object {
+      "clobber": {
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
+        "env": {
           "BRANCH": "$(git branch --show-current)",
         },
         "name": "clobber",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
+            "name": "save current HEAD in "scratch" branch",
           },
-          Object {
+          {
             "exec": "git checkout $BRANCH",
           },
-          Object {
+          {
             "exec": "git fetch origin",
             "name": "fetch latest changes from origin",
           },
-          Object {
+          {
             "exec": "git reset --hard origin/$BRANCH",
             "name": "hard reset to origin commit",
           },
-          Object {
+          {
             "exec": "git clean -fdx",
             "name": "clean all untracked files",
           },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
+          {
+            "say": "ready to rock! (unpushed commits are under the "scratch" branch)",
           },
         ],
       },
-      "compat": Object {
+      "compat": {
         "description": "Perform API compatibility check against latest version",
         "name": "compat",
-        "steps": Array [
-          Object {
-            "exec": "jsii-diff npm:$(node -p \\"require('./package.json').name\\") -k --ignore-file .compatignore || (echo \\"
+        "steps": [
+          {
+            "exec": "jsii-diff npm:$(node -p "require('./package.json').name") -k --ignore-file .compatignore || (echo "
 UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.
-\\" && exit 1)",
+" && exit 1)",
           },
         ],
       },
-      "compile": Object {
+      "compile": {
         "description": "Only compile",
         "name": "compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
-      "default": Object {
+      "default": {
         "description": "Synthesize project files",
         "name": "default",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "node .projenrc.js",
           },
         ],
       },
-      "docgen": Object {
+      "docgen": {
         "description": "Generate API.md from .jsii manifest",
         "name": "docgen",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-docgen -o API.md",
           },
         ],
       },
-      "eject": Object {
+      "eject": {
         "description": "Remove projen from the project",
-        "env": Object {
+        "env": {
           "PROJEN_EJECTING": "true",
         },
         "name": "eject",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
         ],
       },
-      "eslint": Object {
+      "eslint": {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
-      "install": Object {
+      "install": {
         "description": "Install project dependencies and update lockfile (non-frozen)",
         "name": "install",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files",
           },
         ],
       },
-      "install:ci": Object {
+      "install:ci": {
         "description": "Install project dependencies using frozen lockfile",
         "name": "install:ci",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files --frozen-lockfile",
           },
         ],
       },
-      "package": Object {
+      "package": {
         "description": "Creates the distribution package",
         "name": "package",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
-      "package-all": Object {
+      "package-all": {
         "description": "Packages artifacts for all target languages",
         "name": "package-all",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "package:js",
           },
         ],
       },
-      "package:js": Object {
+      "package:js": {
         "description": "Create js language bindings",
         "name": "package:js",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
-      "post-compile": Object {
+      "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "docgen",
           },
         ],
       },
-      "post-upgrade": Object {
+      "post-upgrade": {
         "description": "Runs after upgrading dependencies",
         "name": "post-upgrade",
       },
-      "pre-compile": Object {
+      "pre-compile": {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "release": Object {
-        "description": "Prepare a release from \\"main\\" branch",
-        "env": Object {
+      "release": {
+        "description": "Prepare a release from "main" branch",
+        "env": {
           "RELEASE": "true",
         },
         "name": "release",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "rm -fr dist",
           },
-          Object {
+          {
             "spawn": "bump",
           },
-          Object {
+          {
             "spawn": "build",
           },
-          Object {
+          {
             "spawn": "unbump",
           },
-          Object {
+          {
             "exec": "git diff --ignore-space-at-eol --exit-code",
           },
         ],
       },
-      "test": Object {
+      "test": {
         "description": "Run tests",
         "name": "test",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --passWithNoTests --updateSnapshot",
             "receiveArgs": true,
           },
-          Object {
+          {
             "spawn": "eslint",
           },
         ],
       },
-      "test:watch": Object {
+      "test:watch": {
         "description": "Run jest in watch mode",
         "name": "test:watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --watch",
           },
         ],
       },
-      "unbump": Object {
+      "unbump": {
         "description": "Restores version to 0.0.0",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -2539,56 +2539,56 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/reset-version",
           },
         ],
       },
-      "upgrade": Object {
+      "upgrade": {
         "description": "upgrade dependencies",
-        "env": Object {
+        "env": {
           "CI": "0",
         },
         "name": "upgrade",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn upgrade npm-check-updates",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "yarn install --check-files",
           },
-          Object {
+          {
             "exec": "yarn upgrade",
           },
-          Object {
+          {
             "exec": "npx projen",
           },
-          Object {
+          {
             "spawn": "post-upgrade",
           },
         ],
       },
-      "watch": Object {
+      "watch": {
         "description": "Watch & compile in the background",
         "name": "watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
@@ -2604,38 +2604,38 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    1. Definitions.
 
-      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
 
-      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      "Licensor" shall mean the copyright owner or entity authorized by
       the copyright owner that is granting the License.
 
-      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      "Legal Entity" shall mean the union of the acting entity and all
       other entities that control, are controlled by, or are under common
       control with that entity. For the purposes of this definition,
-      \\"control\\" means (i) the power, direct or indirect, to cause the
+      "control" means (i) the power, direct or indirect, to cause the
       direction or management of such entity, whether by contract or
       otherwise, or (ii) ownership of fifty percent (50%) or more of the
       outstanding shares, or (iii) beneficial ownership of such entity.
 
-      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      "You" (or "Your") shall mean an individual or Legal Entity
       exercising permissions granted by this License.
 
-      \\"Source\\" form shall mean the preferred form for making modifications,
+      "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
       source, and configuration files.
 
-      \\"Object\\" form shall mean any form resulting from mechanical
+      "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
       and conversions to other media types.
 
-      \\"Work\\" shall mean the work of authorship, whether in Source or
+      "Work" shall mean the work of authorship, whether in Source or
       Object form, made available under the License, as indicated by a
       copyright notice that is included in or attached to the work
       (an example is provided in the Appendix below).
 
-      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      "Derivative Works" shall mean any work, whether in Source or Object
       form, that is based on (or derived from) the Work and for which the
       editorial revisions, annotations, elaborations, or other modifications
       represent, as a whole, an original work of authorship. For the purposes
@@ -2643,21 +2643,21 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       separable from, or merely link (or bind by name) to the interfaces of,
       the Work and Derivative Works thereof.
 
-      \\"Contribution\\" shall mean any work of authorship, including
+      "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
       to that Work or Derivative Works thereof, that is intentionally
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      the copyright owner. For the purposes of this definition, "submitted"
       means any form of electronic, verbal, or written communication sent
       to the Licensor or its representatives, including but not limited to
       communication on electronic mailing lists, source code control systems,
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+      designated in writing by the copyright owner as "Not a Contribution."
 
-      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
 
@@ -2701,7 +2701,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           excluding those notices that do not pertain to any part of
           the Derivative Works; and
 
-      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+      (d) If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained
           within such NOTICE file, excluding those notices that do not
@@ -2740,7 +2740,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    7. Disclaimer of Warranty. Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      Contributor provides its Contributions) on an "AS IS" BASIS,
       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
       implied, including, without limitation, any warranties or conditions
       of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
@@ -2776,37 +2776,37 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
    APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      boilerplate notice, with the fields enclosed by brackets "[]"
       replaced with your own identifying information. (Don't include
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same \\"printed page\\" as the copyright notice for easier
+      same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
 
-   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
+  "package.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "author": {
       "name": "Test",
       "organization": false,
       "url": "test@projen",
     },
-    "devDependencies": Object {
+    "devDependencies": {
       "@types/jest": "*",
       "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
@@ -2827,50 +2827,50 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "ts-jest": "*",
       "typescript": "*",
     },
-    "jest": Object {
+    "jest": {
       "clearMocks": true,
       "collectCoverage": true,
       "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
+      "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
-      "coverageReporters": Array [
+      "coverageReporters": [
         "json",
         "lcov",
         "clover",
         "cobertura",
         "text",
       ],
-      "globals": Object {
-        "ts-jest": Object {
+      "globals": {
+        "ts-jest": {
           "tsconfig": "tsconfig.dev.json",
         },
       },
       "preset": "ts-jest",
-      "reporters": Array [
+      "reporters": [
         "default",
-        Array [
+        [
           "jest-junit",
-          Object {
+          {
             "outputDirectory": "test-reports",
           },
         ],
       ],
-      "testMatch": Array [
+      "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
         "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
-      "testPathIgnorePatterns": Array [
+      "testPathIgnorePatterns": [
         "/node_modules/",
       ],
-      "watchPathIgnorePatterns": Array [
+      "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
     },
-    "jsii": Object {
+    "jsii": {
       "outdir": "dist",
-      "targets": Object {},
-      "tsc": Object {
+      "targets": {},
+      "tsc": {
         "outDir": "lib",
         "rootDir": "src",
       },
@@ -2878,11 +2878,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
-    "repository": Object {
+    "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
     },
-    "scripts": Object {
+    "scripts": {
       "build": "npx projen build",
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
@@ -2920,15 +2920,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "compilerOptions": Object {
+  "tsconfig.dev.json": {
+    "compilerOptions": {
       "alwaysStrict": true,
       "declaration": true,
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "inlineSourceMap": true,
       "inlineSources": true,
-      "lib": Array [
+      "lib": [
         "es2019",
       ],
       "module": "CommonJS",
@@ -2946,10 +2946,10 @@ test('hello', () => {
       "stripInternal": true,
       "target": "ES2019",
     },
-    "exclude": Array [
+    "exclude": [
       "node_modules",
     ],
-    "include": Array [
+    "include": [
       ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",
@@ -2959,16 +2959,16 @@ test('hello', () => {
 `;
 
 exports[`JsiiProject with jsiiVersion: '^1.78.1' synthesizes 1`] = `
-Object {
-  ".eslintrc.json": Object {
-    "env": Object {
+{
+  ".eslintrc.json": {
+    "env": {
       "jest": true,
       "node": true,
     },
-    "extends": Array [
+    "extends": [
       "plugin:import/typescript",
     ],
-    "ignorePatterns": Array [
+    "ignorePatterns": [
       "*.js",
       "*.d.ts",
       "node_modules/",
@@ -2976,40 +2976,40 @@ Object {
       "coverage",
       "!.projenrc.js",
     ],
-    "overrides": Array [
-      Object {
-        "files": Array [
+    "overrides": [
+      {
+        "files": [
           ".projenrc.js",
         ],
-        "rules": Object {
+        "rules": {
           "@typescript-eslint/no-require-imports": "off",
           "import/no-extraneous-dependencies": "off",
         },
       },
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
+    "parserOptions": {
       "ecmaVersion": 2018,
       "project": "./tsconfig.dev.json",
       "sourceType": "module",
     },
-    "plugins": Array [
+    "plugins": [
       "@typescript-eslint",
       "import",
     ],
     "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
+    "rules": {
+      "@typescript-eslint/indent": [
         "error",
         2,
       ],
-      "@typescript-eslint/member-delimiter-style": Array [
+      "@typescript-eslint/member-delimiter-style": [
         "error",
       ],
-      "@typescript-eslint/member-ordering": Array [
+      "@typescript-eslint/member-ordering": [
         "error",
-        Object {
-          "default": Array [
+        {
+          "default": [
             "public-static-field",
             "public-static-method",
             "protected-static-field",
@@ -3022,56 +3022,56 @@ Object {
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": Array [
+      "@typescript-eslint/no-floating-promises": [
         "error",
       ],
-      "@typescript-eslint/no-require-imports": Array [
+      "@typescript-eslint/no-require-imports": [
         "error",
       ],
-      "@typescript-eslint/no-shadow": Array [
+      "@typescript-eslint/no-shadow": [
         "error",
       ],
-      "@typescript-eslint/return-await": Array [
+      "@typescript-eslint/return-await": [
         "error",
       ],
-      "array-bracket-newline": Array [
+      "array-bracket-newline": [
         "error",
         "consistent",
       ],
-      "array-bracket-spacing": Array [
+      "array-bracket-spacing": [
         "error",
         "never",
       ],
-      "brace-style": Array [
+      "brace-style": [
         "error",
         "1tbs",
-        Object {
+        {
           "allowSingleLine": true,
         },
       ],
-      "comma-dangle": Array [
+      "comma-dangle": [
         "error",
         "always-multiline",
       ],
-      "comma-spacing": Array [
+      "comma-spacing": [
         "error",
-        Object {
+        {
           "after": true,
           "before": false,
         },
       ],
-      "curly": Array [
+      "curly": [
         "error",
         "multi-line",
         "consistent",
       ],
-      "dot-notation": Array [
+      "dot-notation": [
         "error",
       ],
-      "import/no-extraneous-dependencies": Array [
+      "import/no-extraneous-dependencies": [
         "error",
-        Object {
-          "devDependencies": Array [
+        {
+          "devDependencies": [
             "**/test/**",
             "**/build-tools/**",
           ],
@@ -3079,34 +3079,34 @@ Object {
           "peerDependencies": true,
         },
       ],
-      "import/no-unresolved": Array [
+      "import/no-unresolved": [
         "error",
       ],
-      "import/order": Array [
+      "import/order": [
         "warn",
-        Object {
-          "alphabetize": Object {
+        {
+          "alphabetize": {
             "caseInsensitive": true,
             "order": "asc",
           },
-          "groups": Array [
+          "groups": [
             "builtin",
             "external",
           ],
         },
       ],
-      "indent": Array [
+      "indent": [
         "off",
       ],
-      "key-spacing": Array [
+      "key-spacing": [
         "error",
       ],
-      "keyword-spacing": Array [
+      "keyword-spacing": [
         "error",
       ],
-      "max-len": Array [
+      "max-len": [
         "error",
-        Object {
+        {
           "code": 150,
           "ignoreComments": true,
           "ignoreRegExpLiterals": true,
@@ -3115,83 +3115,83 @@ Object {
           "ignoreUrls": true,
         },
       ],
-      "no-bitwise": Array [
+      "no-bitwise": [
         "error",
       ],
-      "no-duplicate-imports": Array [
+      "no-duplicate-imports": [
         "error",
       ],
-      "no-multi-spaces": Array [
+      "no-multi-spaces": [
         "error",
-        Object {
+        {
           "ignoreEOLComments": false,
         },
       ],
-      "no-multiple-empty-lines": Array [
+      "no-multiple-empty-lines": [
         "error",
       ],
-      "no-return-await": Array [
+      "no-return-await": [
         "off",
       ],
-      "no-shadow": Array [
+      "no-shadow": [
         "off",
       ],
-      "no-trailing-spaces": Array [
+      "no-trailing-spaces": [
         "error",
       ],
-      "object-curly-newline": Array [
+      "object-curly-newline": [
         "error",
-        Object {
+        {
           "consistent": true,
           "multiline": true,
         },
       ],
-      "object-curly-spacing": Array [
+      "object-curly-spacing": [
         "error",
         "always",
       ],
-      "object-property-newline": Array [
+      "object-property-newline": [
         "error",
-        Object {
+        {
           "allowAllPropertiesOnSameLine": true,
         },
       ],
-      "quote-props": Array [
+      "quote-props": [
         "error",
         "consistent-as-needed",
       ],
-      "quotes": Array [
+      "quotes": [
         "error",
         "single",
-        Object {
+        {
           "avoidEscape": true,
         },
       ],
-      "semi": Array [
+      "semi": [
         "error",
         "always",
       ],
-      "space-before-blocks": Array [
+      "space-before-blocks": [
         "error",
       ],
     },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [
           ".ts",
           ".tsx",
         ],
       },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
+      "import/resolver": {
+        "node": {},
+        "typescript": {
           "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
     },
   },
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 *.snap linguist-generated
 /.eslintrc.json linguist-generated
@@ -3214,7 +3214,7 @@ Object {
 /tsconfig.dev.json linguist-generated
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
-  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: build
 on:
@@ -3228,7 +3228,7 @@ jobs:
     outputs:
       self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -3243,7 +3243,7 @@ jobs:
         id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v3
@@ -3253,7 +3253,7 @@ jobs:
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
-          echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+          echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat .repo.patch
           exit 1
       - name: Backup artifact permissions
@@ -3283,21 +3283,21 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Push changes
         run: |2-
             git add .
-            git commit -s -m \\"chore: self mutation\\"
+            git commit -s -m "chore: self mutation"
             git push origin HEAD:\${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \\"! needs.build.outputs.self_mutation_happened\\"
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -3319,7 +3319,7 @@ jobs:
       - name: Collect js Artifact
         run: mv .repo/dist dist
 ",
-  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: pull-request-lint
 on:
@@ -3348,7 +3348,7 @@ jobs:
             chore
           requireScope: false
 ",
-  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: release
 on:
@@ -3364,7 +3364,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -3372,15 +3372,15 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote
-        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
+        run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3419,7 +3419,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.ref }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -3454,7 +3454,7 @@ jobs:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm
 ",
-  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: upgrade-main
 on:
@@ -3482,7 +3482,7 @@ jobs:
         id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"patch_created=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v3
@@ -3507,11 +3507,11 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -3526,9 +3526,9 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           branch: github-actions/upgrade-main
-          title: \\"chore(deps): upgrade dependencies\\"
+          title: "chore(deps): upgrade dependencies"
           body: |-
             Upgrades project dependencies. See details in [workflow run].
 
@@ -3536,12 +3536,12 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
 ",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
@@ -3594,13 +3594,13 @@ junit.xml
 tsconfig.json
 !/API.md
 ",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 queue_rules:
   - name: default
     update_method: merge
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
@@ -3616,12 +3616,12 @@ pull_request_rules:
 
           {{ body }}
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
 ",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
 /test-reports/
 junit.xml
@@ -3646,111 +3646,111 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
+  ".projen/deps.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "dependencies": [
+      {
         "name": "@types/jest",
         "type": "build",
         "version": "^27",
       },
-      Object {
+      {
         "name": "@types/node",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "@typescript-eslint/parser",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-node",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-plugin-import",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint",
         "type": "build",
         "version": "^8",
       },
-      Object {
+      {
         "name": "jest-junit",
         "type": "build",
         "version": "^15",
       },
-      Object {
+      {
         "name": "jest",
         "type": "build",
         "version": "^27",
       },
-      Object {
+      {
         "name": "jsii-diff",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-docgen",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-pacmak",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii",
         "type": "build",
         "version": "^1.78.1",
       },
-      Object {
+      {
         "name": "npm-check-updates",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "projen",
         "type": "build",
       },
-      Object {
+      {
         "name": "standard-version",
         "type": "build",
         "version": "^9",
       },
-      Object {
+      {
         "name": "ts-jest",
         "type": "build",
         "version": "^27",
       },
-      Object {
+      {
         "name": "typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/babel__traverse",
         "type": "override",
         "version": "7.18.2",
       },
-      Object {
+      {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
       },
     ],
   },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
+  ".projen/files.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "files": [
       ".eslintrc.json",
       ".gitattributes",
       ".github/pull_request_template.md",
@@ -3767,40 +3767,40 @@ tsconfig.tsbuildinfo
       "tsconfig.dev.json",
     ],
   },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/tasks.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "env": {
+      "PATH": "$(npx -c "node -e \\"console.log(process.env.PATH)\\"")",
     },
-    "tasks": Object {
-      "build": Object {
+    "tasks": {
+      "build": {
         "description": "Full release build",
         "name": "build",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
-          Object {
+          {
             "spawn": "pre-compile",
           },
-          Object {
+          {
             "spawn": "compile",
           },
-          Object {
+          {
             "spawn": "post-compile",
           },
-          Object {
+          {
             "spawn": "test",
           },
-          Object {
+          {
             "spawn": "package",
           },
         ],
       },
-      "bump": Object {
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
+      "bump": {
+        "condition": "! git log --oneline -1 | grep -q "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -3808,214 +3808,214 @@ tsconfig.tsbuildinfo
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/bump-version",
           },
         ],
       },
-      "clobber": Object {
+      "clobber": {
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
+        "env": {
           "BRANCH": "$(git branch --show-current)",
         },
         "name": "clobber",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
+            "name": "save current HEAD in "scratch" branch",
           },
-          Object {
+          {
             "exec": "git checkout $BRANCH",
           },
-          Object {
+          {
             "exec": "git fetch origin",
             "name": "fetch latest changes from origin",
           },
-          Object {
+          {
             "exec": "git reset --hard origin/$BRANCH",
             "name": "hard reset to origin commit",
           },
-          Object {
+          {
             "exec": "git clean -fdx",
             "name": "clean all untracked files",
           },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
+          {
+            "say": "ready to rock! (unpushed commits are under the "scratch" branch)",
           },
         ],
       },
-      "compat": Object {
+      "compat": {
         "description": "Perform API compatibility check against latest version",
         "name": "compat",
-        "steps": Array [
-          Object {
-            "exec": "jsii-diff npm:$(node -p \\"require('./package.json').name\\") -k --ignore-file .compatignore || (echo \\"
+        "steps": [
+          {
+            "exec": "jsii-diff npm:$(node -p "require('./package.json').name") -k --ignore-file .compatignore || (echo "
 UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.
-\\" && exit 1)",
+" && exit 1)",
           },
         ],
       },
-      "compile": Object {
+      "compile": {
         "description": "Only compile",
         "name": "compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
-      "default": Object {
+      "default": {
         "description": "Synthesize project files",
         "name": "default",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "node .projenrc.js",
           },
         ],
       },
-      "docgen": Object {
+      "docgen": {
         "description": "Generate API.md from .jsii manifest",
         "name": "docgen",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-docgen -o API.md",
           },
         ],
       },
-      "eject": Object {
+      "eject": {
         "description": "Remove projen from the project",
-        "env": Object {
+        "env": {
           "PROJEN_EJECTING": "true",
         },
         "name": "eject",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
         ],
       },
-      "eslint": Object {
+      "eslint": {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
-      "install": Object {
+      "install": {
         "description": "Install project dependencies and update lockfile (non-frozen)",
         "name": "install",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files",
           },
         ],
       },
-      "install:ci": Object {
+      "install:ci": {
         "description": "Install project dependencies using frozen lockfile",
         "name": "install:ci",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files --frozen-lockfile",
           },
         ],
       },
-      "package": Object {
+      "package": {
         "description": "Creates the distribution package",
         "name": "package",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
-      "package-all": Object {
+      "package-all": {
         "description": "Packages artifacts for all target languages",
         "name": "package-all",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "package:js",
           },
         ],
       },
-      "package:js": Object {
+      "package:js": {
         "description": "Create js language bindings",
         "name": "package:js",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
-      "post-compile": Object {
+      "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "docgen",
           },
         ],
       },
-      "post-upgrade": Object {
+      "post-upgrade": {
         "description": "Runs after upgrading dependencies",
         "name": "post-upgrade",
       },
-      "pre-compile": Object {
+      "pre-compile": {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "release": Object {
-        "description": "Prepare a release from \\"main\\" branch",
-        "env": Object {
+      "release": {
+        "description": "Prepare a release from "main" branch",
+        "env": {
           "RELEASE": "true",
         },
         "name": "release",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "rm -fr dist",
           },
-          Object {
+          {
             "spawn": "bump",
           },
-          Object {
+          {
             "spawn": "build",
           },
-          Object {
+          {
             "spawn": "unbump",
           },
-          Object {
+          {
             "exec": "git diff --ignore-space-at-eol --exit-code",
           },
         ],
       },
-      "test": Object {
+      "test": {
         "description": "Run tests",
         "name": "test",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --passWithNoTests --updateSnapshot",
             "receiveArgs": true,
           },
-          Object {
+          {
             "spawn": "eslint",
           },
         ],
       },
-      "test:watch": Object {
+      "test:watch": {
         "description": "Run jest in watch mode",
         "name": "test:watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --watch",
           },
         ],
       },
-      "unbump": Object {
+      "unbump": {
         "description": "Restores version to 0.0.0",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -4023,56 +4023,56 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/reset-version",
           },
         ],
       },
-      "upgrade": Object {
+      "upgrade": {
         "description": "upgrade dependencies",
-        "env": Object {
+        "env": {
           "CI": "0",
         },
         "name": "upgrade",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn upgrade npm-check-updates",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "yarn install --check-files",
           },
-          Object {
+          {
             "exec": "yarn upgrade",
           },
-          Object {
+          {
             "exec": "npx projen",
           },
-          Object {
+          {
             "spawn": "post-upgrade",
           },
         ],
       },
-      "watch": Object {
+      "watch": {
         "description": "Watch & compile in the background",
         "name": "watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
@@ -4088,38 +4088,38 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    1. Definitions.
 
-      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
 
-      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      "Licensor" shall mean the copyright owner or entity authorized by
       the copyright owner that is granting the License.
 
-      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      "Legal Entity" shall mean the union of the acting entity and all
       other entities that control, are controlled by, or are under common
       control with that entity. For the purposes of this definition,
-      \\"control\\" means (i) the power, direct or indirect, to cause the
+      "control" means (i) the power, direct or indirect, to cause the
       direction or management of such entity, whether by contract or
       otherwise, or (ii) ownership of fifty percent (50%) or more of the
       outstanding shares, or (iii) beneficial ownership of such entity.
 
-      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      "You" (or "Your") shall mean an individual or Legal Entity
       exercising permissions granted by this License.
 
-      \\"Source\\" form shall mean the preferred form for making modifications,
+      "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
       source, and configuration files.
 
-      \\"Object\\" form shall mean any form resulting from mechanical
+      "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
       and conversions to other media types.
 
-      \\"Work\\" shall mean the work of authorship, whether in Source or
+      "Work" shall mean the work of authorship, whether in Source or
       Object form, made available under the License, as indicated by a
       copyright notice that is included in or attached to the work
       (an example is provided in the Appendix below).
 
-      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      "Derivative Works" shall mean any work, whether in Source or Object
       form, that is based on (or derived from) the Work and for which the
       editorial revisions, annotations, elaborations, or other modifications
       represent, as a whole, an original work of authorship. For the purposes
@@ -4127,21 +4127,21 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       separable from, or merely link (or bind by name) to the interfaces of,
       the Work and Derivative Works thereof.
 
-      \\"Contribution\\" shall mean any work of authorship, including
+      "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
       to that Work or Derivative Works thereof, that is intentionally
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      the copyright owner. For the purposes of this definition, "submitted"
       means any form of electronic, verbal, or written communication sent
       to the Licensor or its representatives, including but not limited to
       communication on electronic mailing lists, source code control systems,
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+      designated in writing by the copyright owner as "Not a Contribution."
 
-      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
 
@@ -4185,7 +4185,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           excluding those notices that do not pertain to any part of
           the Derivative Works; and
 
-      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+      (d) If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained
           within such NOTICE file, excluding those notices that do not
@@ -4224,7 +4224,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    7. Disclaimer of Warranty. Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      Contributor provides its Contributions) on an "AS IS" BASIS,
       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
       implied, including, without limitation, any warranties or conditions
       of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
@@ -4260,37 +4260,37 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
    APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      boilerplate notice, with the fields enclosed by brackets "[]"
       replaced with your own identifying information. (Don't include
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same \\"printed page\\" as the copyright notice for easier
+      same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
 
-   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
+  "package.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "author": {
       "name": "Test",
       "organization": false,
       "url": "test@projen",
     },
-    "devDependencies": Object {
+    "devDependencies": {
       "@types/jest": "^27",
       "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
@@ -4311,50 +4311,50 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "ts-jest": "^27",
       "typescript": "*",
     },
-    "jest": Object {
+    "jest": {
       "clearMocks": true,
       "collectCoverage": true,
       "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
+      "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
-      "coverageReporters": Array [
+      "coverageReporters": [
         "json",
         "lcov",
         "clover",
         "cobertura",
         "text",
       ],
-      "globals": Object {
-        "ts-jest": Object {
+      "globals": {
+        "ts-jest": {
           "tsconfig": "tsconfig.dev.json",
         },
       },
       "preset": "ts-jest",
-      "reporters": Array [
+      "reporters": [
         "default",
-        Array [
+        [
           "jest-junit",
-          Object {
+          {
             "outputDirectory": "test-reports",
           },
         ],
       ],
-      "testMatch": Array [
+      "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
         "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
-      "testPathIgnorePatterns": Array [
+      "testPathIgnorePatterns": [
         "/node_modules/",
       ],
-      "watchPathIgnorePatterns": Array [
+      "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
     },
-    "jsii": Object {
+    "jsii": {
       "outdir": "dist",
-      "targets": Object {},
-      "tsc": Object {
+      "targets": {},
+      "tsc": {
         "outDir": "lib",
         "rootDir": "src",
       },
@@ -4362,15 +4362,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
-    "repository": Object {
+    "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
     },
-    "resolutions": Object {
+    "resolutions": {
       "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
     },
-    "scripts": Object {
+    "scripts": {
       "build": "npx projen build",
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
@@ -4408,15 +4408,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "compilerOptions": Object {
+  "tsconfig.dev.json": {
+    "compilerOptions": {
       "alwaysStrict": true,
       "declaration": true,
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "inlineSourceMap": true,
       "inlineSources": true,
-      "lib": Array [
+      "lib": [
         "es2019",
       ],
       "module": "CommonJS",
@@ -4434,10 +4434,10 @@ test('hello', () => {
       "stripInternal": true,
       "target": "ES2019",
     },
-    "exclude": Array [
+    "exclude": [
       "node_modules",
     ],
-    "include": Array [
+    "include": [
       ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",
@@ -4447,16 +4447,16 @@ test('hello', () => {
 `;
 
 exports[`JsiiProject with jsiiVersion: '~5.0.0' synthesizes 1`] = `
-Object {
-  ".eslintrc.json": Object {
-    "env": Object {
+{
+  ".eslintrc.json": {
+    "env": {
       "jest": true,
       "node": true,
     },
-    "extends": Array [
+    "extends": [
       "plugin:import/typescript",
     ],
-    "ignorePatterns": Array [
+    "ignorePatterns": [
       "*.js",
       "*.d.ts",
       "node_modules/",
@@ -4464,40 +4464,40 @@ Object {
       "coverage",
       "!.projenrc.js",
     ],
-    "overrides": Array [
-      Object {
-        "files": Array [
+    "overrides": [
+      {
+        "files": [
           ".projenrc.js",
         ],
-        "rules": Object {
+        "rules": {
           "@typescript-eslint/no-require-imports": "off",
           "import/no-extraneous-dependencies": "off",
         },
       },
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
+    "parserOptions": {
       "ecmaVersion": 2018,
       "project": "./tsconfig.dev.json",
       "sourceType": "module",
     },
-    "plugins": Array [
+    "plugins": [
       "@typescript-eslint",
       "import",
     ],
     "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
+    "rules": {
+      "@typescript-eslint/indent": [
         "error",
         2,
       ],
-      "@typescript-eslint/member-delimiter-style": Array [
+      "@typescript-eslint/member-delimiter-style": [
         "error",
       ],
-      "@typescript-eslint/member-ordering": Array [
+      "@typescript-eslint/member-ordering": [
         "error",
-        Object {
-          "default": Array [
+        {
+          "default": [
             "public-static-field",
             "public-static-method",
             "protected-static-field",
@@ -4510,56 +4510,56 @@ Object {
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": Array [
+      "@typescript-eslint/no-floating-promises": [
         "error",
       ],
-      "@typescript-eslint/no-require-imports": Array [
+      "@typescript-eslint/no-require-imports": [
         "error",
       ],
-      "@typescript-eslint/no-shadow": Array [
+      "@typescript-eslint/no-shadow": [
         "error",
       ],
-      "@typescript-eslint/return-await": Array [
+      "@typescript-eslint/return-await": [
         "error",
       ],
-      "array-bracket-newline": Array [
+      "array-bracket-newline": [
         "error",
         "consistent",
       ],
-      "array-bracket-spacing": Array [
+      "array-bracket-spacing": [
         "error",
         "never",
       ],
-      "brace-style": Array [
+      "brace-style": [
         "error",
         "1tbs",
-        Object {
+        {
           "allowSingleLine": true,
         },
       ],
-      "comma-dangle": Array [
+      "comma-dangle": [
         "error",
         "always-multiline",
       ],
-      "comma-spacing": Array [
+      "comma-spacing": [
         "error",
-        Object {
+        {
           "after": true,
           "before": false,
         },
       ],
-      "curly": Array [
+      "curly": [
         "error",
         "multi-line",
         "consistent",
       ],
-      "dot-notation": Array [
+      "dot-notation": [
         "error",
       ],
-      "import/no-extraneous-dependencies": Array [
+      "import/no-extraneous-dependencies": [
         "error",
-        Object {
-          "devDependencies": Array [
+        {
+          "devDependencies": [
             "**/test/**",
             "**/build-tools/**",
           ],
@@ -4567,34 +4567,34 @@ Object {
           "peerDependencies": true,
         },
       ],
-      "import/no-unresolved": Array [
+      "import/no-unresolved": [
         "error",
       ],
-      "import/order": Array [
+      "import/order": [
         "warn",
-        Object {
-          "alphabetize": Object {
+        {
+          "alphabetize": {
             "caseInsensitive": true,
             "order": "asc",
           },
-          "groups": Array [
+          "groups": [
             "builtin",
             "external",
           ],
         },
       ],
-      "indent": Array [
+      "indent": [
         "off",
       ],
-      "key-spacing": Array [
+      "key-spacing": [
         "error",
       ],
-      "keyword-spacing": Array [
+      "keyword-spacing": [
         "error",
       ],
-      "max-len": Array [
+      "max-len": [
         "error",
-        Object {
+        {
           "code": 150,
           "ignoreComments": true,
           "ignoreRegExpLiterals": true,
@@ -4603,83 +4603,83 @@ Object {
           "ignoreUrls": true,
         },
       ],
-      "no-bitwise": Array [
+      "no-bitwise": [
         "error",
       ],
-      "no-duplicate-imports": Array [
+      "no-duplicate-imports": [
         "error",
       ],
-      "no-multi-spaces": Array [
+      "no-multi-spaces": [
         "error",
-        Object {
+        {
           "ignoreEOLComments": false,
         },
       ],
-      "no-multiple-empty-lines": Array [
+      "no-multiple-empty-lines": [
         "error",
       ],
-      "no-return-await": Array [
+      "no-return-await": [
         "off",
       ],
-      "no-shadow": Array [
+      "no-shadow": [
         "off",
       ],
-      "no-trailing-spaces": Array [
+      "no-trailing-spaces": [
         "error",
       ],
-      "object-curly-newline": Array [
+      "object-curly-newline": [
         "error",
-        Object {
+        {
           "consistent": true,
           "multiline": true,
         },
       ],
-      "object-curly-spacing": Array [
+      "object-curly-spacing": [
         "error",
         "always",
       ],
-      "object-property-newline": Array [
+      "object-property-newline": [
         "error",
-        Object {
+        {
           "allowAllPropertiesOnSameLine": true,
         },
       ],
-      "quote-props": Array [
+      "quote-props": [
         "error",
         "consistent-as-needed",
       ],
-      "quotes": Array [
+      "quotes": [
         "error",
         "single",
-        Object {
+        {
           "avoidEscape": true,
         },
       ],
-      "semi": Array [
+      "semi": [
         "error",
         "always",
       ],
-      "space-before-blocks": Array [
+      "space-before-blocks": [
         "error",
       ],
     },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [
           ".ts",
           ".tsx",
         ],
       },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
+      "import/resolver": {
+        "node": {},
+        "typescript": {
           "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
     },
   },
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 *.snap linguist-generated
 /.eslintrc.json linguist-generated
@@ -4702,7 +4702,7 @@ Object {
 /tsconfig.dev.json linguist-generated
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
-  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: build
 on:
@@ -4716,7 +4716,7 @@ jobs:
     outputs:
       self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4731,7 +4731,7 @@ jobs:
         id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v3
@@ -4741,7 +4741,7 @@ jobs:
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
-          echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+          echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat .repo.patch
           exit 1
       - name: Backup artifact permissions
@@ -4771,21 +4771,21 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Push changes
         run: |2-
             git add .
-            git commit -s -m \\"chore: self mutation\\"
+            git commit -s -m "chore: self mutation"
             git push origin HEAD:\${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \\"! needs.build.outputs.self_mutation_happened\\"
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -4807,7 +4807,7 @@ jobs:
       - name: Collect js Artifact
         run: mv .repo/dist dist
 ",
-  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: pull-request-lint
 on:
@@ -4836,7 +4836,7 @@ jobs:
             chore
           requireScope: false
 ",
-  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: release
 on:
@@ -4852,7 +4852,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4860,15 +4860,15 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote
-        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
+        run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4907,7 +4907,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.ref }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -4942,7 +4942,7 @@ jobs:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm
 ",
-  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: upgrade-main
 on:
@@ -4970,7 +4970,7 @@ jobs:
         id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"patch_created=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v3
@@ -4995,11 +4995,11 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -5014,9 +5014,9 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           branch: github-actions/upgrade-main
-          title: \\"chore(deps): upgrade dependencies\\"
+          title: "chore(deps): upgrade dependencies"
           body: |-
             Upgrades project dependencies. See details in [workflow run].
 
@@ -5024,12 +5024,12 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade-main\\" workflow*
+            *Automatically created by projen via the "upgrade-main" workflow*
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
 ",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
@@ -5082,13 +5082,13 @@ junit.xml
 tsconfig.json
 !/API.md
 ",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 queue_rules:
   - name: default
     update_method: merge
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
@@ -5104,12 +5104,12 @@ pull_request_rules:
 
           {{ body }}
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
       - status-success=package-js
 ",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
 /test-reports/
 junit.xml
@@ -5134,98 +5134,98 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
+  ".projen/deps.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "dependencies": [
+      {
         "name": "@types/jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/node",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "@typescript-eslint/parser",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-node",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-plugin-import",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint",
         "type": "build",
         "version": "^8",
       },
-      Object {
+      {
         "name": "jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "jest-junit",
         "type": "build",
         "version": "^15",
       },
-      Object {
+      {
         "name": "jsii-diff",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-docgen",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii-pacmak",
         "type": "build",
       },
-      Object {
+      {
         "name": "jsii",
         "type": "build",
         "version": "~5.0.0",
       },
-      Object {
+      {
         "name": "npm-check-updates",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "projen",
         "type": "build",
       },
-      Object {
+      {
         "name": "standard-version",
         "type": "build",
         "version": "^9",
       },
-      Object {
+      {
         "name": "ts-jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "typescript",
         "type": "build",
       },
     ],
   },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
+  ".projen/files.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "files": [
       ".eslintrc.json",
       ".gitattributes",
       ".github/pull_request_template.md",
@@ -5242,40 +5242,40 @@ tsconfig.tsbuildinfo
       "tsconfig.dev.json",
     ],
   },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/tasks.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "env": {
+      "PATH": "$(npx -c "node -e \\"console.log(process.env.PATH)\\"")",
     },
-    "tasks": Object {
-      "build": Object {
+    "tasks": {
+      "build": {
         "description": "Full release build",
         "name": "build",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
-          Object {
+          {
             "spawn": "pre-compile",
           },
-          Object {
+          {
             "spawn": "compile",
           },
-          Object {
+          {
             "spawn": "post-compile",
           },
-          Object {
+          {
             "spawn": "test",
           },
-          Object {
+          {
             "spawn": "package",
           },
         ],
       },
-      "bump": Object {
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
+      "bump": {
+        "condition": "! git log --oneline -1 | grep -q "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -5283,214 +5283,214 @@ tsconfig.tsbuildinfo
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/bump-version",
           },
         ],
       },
-      "clobber": Object {
+      "clobber": {
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
+        "env": {
           "BRANCH": "$(git branch --show-current)",
         },
         "name": "clobber",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
+            "name": "save current HEAD in "scratch" branch",
           },
-          Object {
+          {
             "exec": "git checkout $BRANCH",
           },
-          Object {
+          {
             "exec": "git fetch origin",
             "name": "fetch latest changes from origin",
           },
-          Object {
+          {
             "exec": "git reset --hard origin/$BRANCH",
             "name": "hard reset to origin commit",
           },
-          Object {
+          {
             "exec": "git clean -fdx",
             "name": "clean all untracked files",
           },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
+          {
+            "say": "ready to rock! (unpushed commits are under the "scratch" branch)",
           },
         ],
       },
-      "compat": Object {
+      "compat": {
         "description": "Perform API compatibility check against latest version",
         "name": "compat",
-        "steps": Array [
-          Object {
-            "exec": "jsii-diff npm:$(node -p \\"require('./package.json').name\\") -k --ignore-file .compatignore || (echo \\"
+        "steps": [
+          {
+            "exec": "jsii-diff npm:$(node -p "require('./package.json').name") -k --ignore-file .compatignore || (echo "
 UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.
-\\" && exit 1)",
+" && exit 1)",
           },
         ],
       },
-      "compile": Object {
+      "compile": {
         "description": "Only compile",
         "name": "compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
-      "default": Object {
+      "default": {
         "description": "Synthesize project files",
         "name": "default",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "node .projenrc.js",
           },
         ],
       },
-      "docgen": Object {
+      "docgen": {
         "description": "Generate API.md from .jsii manifest",
         "name": "docgen",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-docgen -o API.md",
           },
         ],
       },
-      "eject": Object {
+      "eject": {
         "description": "Remove projen from the project",
-        "env": Object {
+        "env": {
           "PROJEN_EJECTING": "true",
         },
         "name": "eject",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
         ],
       },
-      "eslint": Object {
+      "eslint": {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
-      "install": Object {
+      "install": {
         "description": "Install project dependencies and update lockfile (non-frozen)",
         "name": "install",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files",
           },
         ],
       },
-      "install:ci": Object {
+      "install:ci": {
         "description": "Install project dependencies using frozen lockfile",
         "name": "install:ci",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files --frozen-lockfile",
           },
         ],
       },
-      "package": Object {
+      "package": {
         "description": "Creates the distribution package",
         "name": "package",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
-      "package-all": Object {
+      "package-all": {
         "description": "Packages artifacts for all target languages",
         "name": "package-all",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "package:js",
           },
         ],
       },
-      "package:js": Object {
+      "package:js": {
         "description": "Create js language bindings",
         "name": "package:js",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
-      "post-compile": Object {
+      "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "docgen",
           },
         ],
       },
-      "post-upgrade": Object {
+      "post-upgrade": {
         "description": "Runs after upgrading dependencies",
         "name": "post-upgrade",
       },
-      "pre-compile": Object {
+      "pre-compile": {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "release": Object {
-        "description": "Prepare a release from \\"main\\" branch",
-        "env": Object {
+      "release": {
+        "description": "Prepare a release from "main" branch",
+        "env": {
           "RELEASE": "true",
         },
         "name": "release",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "rm -fr dist",
           },
-          Object {
+          {
             "spawn": "bump",
           },
-          Object {
+          {
             "spawn": "build",
           },
-          Object {
+          {
             "spawn": "unbump",
           },
-          Object {
+          {
             "exec": "git diff --ignore-space-at-eol --exit-code",
           },
         ],
       },
-      "test": Object {
+      "test": {
         "description": "Run tests",
         "name": "test",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --passWithNoTests --updateSnapshot",
             "receiveArgs": true,
           },
-          Object {
+          {
             "spawn": "eslint",
           },
         ],
       },
-      "test:watch": Object {
+      "test:watch": {
         "description": "Run jest in watch mode",
         "name": "test:watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jest --watch",
           },
         ],
       },
-      "unbump": Object {
+      "unbump": {
         "description": "Restores version to 0.0.0",
-        "env": Object {
+        "env": {
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
@@ -5498,56 +5498,56 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "builtin": "release/reset-version",
           },
         ],
       },
-      "upgrade": Object {
+      "upgrade": {
         "description": "upgrade dependencies",
-        "env": Object {
+        "env": {
           "CI": "0",
         },
         "name": "upgrade",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn upgrade npm-check-updates",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii'",
           },
-          Object {
+          {
             "exec": "yarn install --check-files",
           },
-          Object {
+          {
             "exec": "yarn upgrade",
           },
-          Object {
+          {
             "exec": "npx projen",
           },
-          Object {
+          {
             "spawn": "post-upgrade",
           },
         ],
       },
-      "watch": Object {
+      "watch": {
         "description": "Watch & compile in the background",
         "name": "watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
@@ -5563,38 +5563,38 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    1. Definitions.
 
-      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
 
-      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      "Licensor" shall mean the copyright owner or entity authorized by
       the copyright owner that is granting the License.
 
-      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      "Legal Entity" shall mean the union of the acting entity and all
       other entities that control, are controlled by, or are under common
       control with that entity. For the purposes of this definition,
-      \\"control\\" means (i) the power, direct or indirect, to cause the
+      "control" means (i) the power, direct or indirect, to cause the
       direction or management of such entity, whether by contract or
       otherwise, or (ii) ownership of fifty percent (50%) or more of the
       outstanding shares, or (iii) beneficial ownership of such entity.
 
-      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      "You" (or "Your") shall mean an individual or Legal Entity
       exercising permissions granted by this License.
 
-      \\"Source\\" form shall mean the preferred form for making modifications,
+      "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
       source, and configuration files.
 
-      \\"Object\\" form shall mean any form resulting from mechanical
+      "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
       and conversions to other media types.
 
-      \\"Work\\" shall mean the work of authorship, whether in Source or
+      "Work" shall mean the work of authorship, whether in Source or
       Object form, made available under the License, as indicated by a
       copyright notice that is included in or attached to the work
       (an example is provided in the Appendix below).
 
-      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      "Derivative Works" shall mean any work, whether in Source or Object
       form, that is based on (or derived from) the Work and for which the
       editorial revisions, annotations, elaborations, or other modifications
       represent, as a whole, an original work of authorship. For the purposes
@@ -5602,21 +5602,21 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       separable from, or merely link (or bind by name) to the interfaces of,
       the Work and Derivative Works thereof.
 
-      \\"Contribution\\" shall mean any work of authorship, including
+      "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
       to that Work or Derivative Works thereof, that is intentionally
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      the copyright owner. For the purposes of this definition, "submitted"
       means any form of electronic, verbal, or written communication sent
       to the Licensor or its representatives, including but not limited to
       communication on electronic mailing lists, source code control systems,
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+      designated in writing by the copyright owner as "Not a Contribution."
 
-      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
 
@@ -5660,7 +5660,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           excluding those notices that do not pertain to any part of
           the Derivative Works; and
 
-      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+      (d) If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained
           within such NOTICE file, excluding those notices that do not
@@ -5699,7 +5699,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 
    7. Disclaimer of Warranty. Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      Contributor provides its Contributions) on an "AS IS" BASIS,
       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
       implied, including, without limitation, any warranties or conditions
       of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
@@ -5735,37 +5735,37 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
    APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      boilerplate notice, with the fields enclosed by brackets "[]"
       replaced with your own identifying information. (Don't include
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same \\"printed page\\" as the copyright notice for easier
+      same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
 
-   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
+  "package.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "author": {
       "name": "Test",
       "organization": false,
       "url": "test@projen",
     },
-    "devDependencies": Object {
+    "devDependencies": {
       "@types/jest": "*",
       "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
@@ -5786,50 +5786,50 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "ts-jest": "*",
       "typescript": "*",
     },
-    "jest": Object {
+    "jest": {
       "clearMocks": true,
       "collectCoverage": true,
       "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
+      "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
-      "coverageReporters": Array [
+      "coverageReporters": [
         "json",
         "lcov",
         "clover",
         "cobertura",
         "text",
       ],
-      "globals": Object {
-        "ts-jest": Object {
+      "globals": {
+        "ts-jest": {
           "tsconfig": "tsconfig.dev.json",
         },
       },
       "preset": "ts-jest",
-      "reporters": Array [
+      "reporters": [
         "default",
-        Array [
+        [
           "jest-junit",
-          Object {
+          {
             "outputDirectory": "test-reports",
           },
         ],
       ],
-      "testMatch": Array [
+      "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
         "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
-      "testPathIgnorePatterns": Array [
+      "testPathIgnorePatterns": [
         "/node_modules/",
       ],
-      "watchPathIgnorePatterns": Array [
+      "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
     },
-    "jsii": Object {
+    "jsii": {
       "outdir": "dist",
-      "targets": Object {},
-      "tsc": Object {
+      "targets": {},
+      "tsc": {
         "outDir": "lib",
         "rootDir": "src",
       },
@@ -5837,11 +5837,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
-    "repository": Object {
+    "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
     },
-    "scripts": Object {
+    "scripts": {
       "build": "npx projen build",
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
@@ -5879,15 +5879,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "compilerOptions": Object {
+  "tsconfig.dev.json": {
+    "compilerOptions": {
       "alwaysStrict": true,
       "declaration": true,
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "inlineSourceMap": true,
       "inlineSources": true,
-      "lib": Array [
+      "lib": [
         "es2019",
       ],
       "module": "CommonJS",
@@ -5905,10 +5905,10 @@ test('hello', () => {
       "stripInternal": true,
       "target": "ES2019",
     },
-    "exclude": Array [
+    "exclude": [
       "node_modules",
     ],
-    "include": Array [
+    "include": [
       ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",

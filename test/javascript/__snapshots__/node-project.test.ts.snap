@@ -1,44 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`deps upgrade commit can be signed 1`] = `
-Object {
+{
   "if": "\${{ needs.upgrade.outputs.patch_created }}",
   "name": "Create Pull Request",
   "needs": "upgrade",
-  "permissions": Object {
+  "permissions": {
     "contents": "read",
   },
   "runs-on": "ubuntu-latest",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "name": "Checkout",
       "uses": "actions/checkout@v3",
-      "with": Object {
+      "with": {
         "ref": "main",
       },
     },
-    Object {
+    {
       "name": "Download patch",
       "uses": "actions/download-artifact@v3",
-      "with": Object {
+      "with": {
         "name": ".repo.patch",
         "path": "\${{ runner.temp }}",
       },
     },
-    Object {
+    {
       "name": "Apply patch",
-      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."",
     },
-    Object {
+    {
       "name": "Set git identity",
-      "run": "git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
+      "run": "git config user.name "github-actions"
+git config user.email "github-actions@github.com"",
     },
-    Object {
+    {
       "id": "create-pr",
       "name": "Create Pull Request",
       "uses": "peter-evans/create-pull-request@v4",
-      "with": Object {
+      "with": {
         "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
 
@@ -46,7 +46,7 @@ git config user.email \\"github-actions@github.com\\"",
 
 ------
 
-*Automatically created by projen via the \\"upgrade-main\\" workflow*",
+*Automatically created by projen via the "upgrade-main" workflow*",
         "branch": "github-actions/upgrade-main",
         "commit-message": "chore(deps): upgrade dependencies
 
@@ -56,7 +56,7 @@ Upgrades project dependencies. See details in [workflow run].
 
 ------
 
-*Automatically created by projen via the \\"upgrade-main\\" workflow*",
+*Automatically created by projen via the "upgrade-main" workflow*",
         "committer": "github-actions <github-actions@github.com>",
         "signoff": true,
         "title": "chore(deps): upgrade dependencies",
@@ -68,42 +68,42 @@ Upgrades project dependencies. See details in [workflow run].
 `;
 
 exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
-Array [
-  Object {
+[
+  {
     "name": "Checkout",
     "uses": "actions/checkout@v3",
-    "with": Object {
+    "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
     },
   },
-  Object {
+  {
     "name": "Install dependencies",
     "run": "yarn install --check-files --frozen-lockfile",
   },
-  Object {
+  {
     "name": "build",
     "run": "npx projen build",
   },
-  Object {
+  {
     "id": "self_mutation",
     "name": "Find mutations",
     "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
   },
-  Object {
+  {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v3",
-    "with": Object {
+    "with": {
       "name": ".repo.patch",
       "path": ".repo.patch",
     },
   },
-  Object {
+  {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
-    "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+    "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
 cat .repo.patch
 exit 1",
   },
@@ -111,75 +111,75 @@ exit 1",
 `;
 
 exports[`enabling renovatebot does not overturn mergify: false 1`] = `
-Object {
-  "extends": Array [
+{
+  "extends": [
     ":preserveSemverRanges",
     "config:base",
     "group:allNonMajor",
     "group:recommended",
     "group:monorepos",
   ],
-  "ignoreDeps": Array [
+  "ignoreDeps": [
     "jest-junit",
     "npm-check-updates",
     "standard-version",
     "projen",
   ],
-  "packageRules": Array [
-    Object {
+  "packageRules": [
+    {
       "groupName": "devDependencies (non-major)",
-      "matchDepTypes": Array [
+      "matchDepTypes": [
         "devDependencies",
       ],
-      "matchUpdateTypes": Array [
+      "matchUpdateTypes": [
         "patch",
         "minor",
       ],
     },
   ],
-  "schedule": Array [
+  "schedule": [
     "at any time",
   ],
 }
 `;
 
 exports[`mutableBuild will push changes to PR branches 1`] = `
-Array [
-  Object {
+[
+  {
     "name": "Checkout",
     "uses": "actions/checkout@v3",
-    "with": Object {
+    "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
     },
   },
-  Object {
+  {
     "name": "Install dependencies",
     "run": "yarn install --check-files",
   },
-  Object {
+  {
     "name": "build",
     "run": "npx projen build",
   },
-  Object {
+  {
     "id": "self_mutation",
     "name": "Find mutations",
     "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
   },
-  Object {
+  {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v3",
-    "with": Object {
+    "with": {
       "name": ".repo.patch",
       "path": ".repo.patch",
     },
   },
-  Object {
+  {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
-    "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+    "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
 cat .repo.patch
 exit 1",
   },
@@ -187,89 +187,89 @@ exit 1",
 `;
 
 exports[`mutableBuild will push changes to PR branches 2`] = `
-Array [
-  Object {
+[
+  {
     "name": "Checkout",
     "uses": "actions/checkout@v3",
-    "with": Object {
+    "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
       "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
     },
   },
-  Object {
+  {
     "name": "Download patch",
     "uses": "actions/download-artifact@v3",
-    "with": Object {
+    "with": {
       "name": ".repo.patch",
       "path": "\${{ runner.temp }}",
     },
   },
-  Object {
+  {
     "name": "Apply patch",
-    "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."",
   },
-  Object {
+  {
     "name": "Set git identity",
-    "run": "git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
+    "run": "git config user.name "github-actions"
+git config user.email "github-actions@github.com"",
   },
-  Object {
+  {
     "name": "Push changes",
     "run": "  git add .
-  git commit -s -m \\"chore: self mutation\\"
+  git commit -s -m "chore: self mutation"
   git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
   },
 ]
 `;
 
 exports[`node project can be ejected 1`] = `
-Object {
-  "devDependencies": Object {
+{
+  "devDependencies": {
     "jest": "*",
     "jest-junit": "^15",
     "npm-check-updates": "^16",
     "standard-version": "^9",
     "test": "*",
   },
-  "jest": Object {
+  "jest": {
     "clearMocks": true,
     "collectCoverage": true,
     "coverageDirectory": "coverage",
-    "coveragePathIgnorePatterns": Array [
+    "coveragePathIgnorePatterns": [
       "/node_modules/",
     ],
-    "coverageReporters": Array [
+    "coverageReporters": [
       "json",
       "lcov",
       "clover",
       "cobertura",
       "text",
     ],
-    "reporters": Array [
+    "reporters": [
       "default",
-      Array [
+      [
         "jest-junit",
-        Object {
+        {
           "outputDirectory": "test-reports",
         },
       ],
     ],
-    "testMatch": Array [
+    "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)",
       "**/?(*.)+(spec|test).[tj]s?(x)",
     ],
-    "testPathIgnorePatterns": Array [
+    "testPathIgnorePatterns": [
       "/node_modules/",
     ],
-    "watchPathIgnorePatterns": Array [
+    "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
   },
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "test-node-project",
-  "scripts": Object {
+  "scripts": {
     "build": "scripts/run-task build",
     "bump": "scripts/run-task bump",
     "clobber": "scripts/run-task clobber",
@@ -289,15 +289,15 @@ Object {
 `;
 
 exports[`renovatebot ignored dependency overrides 1`] = `
-Object {
-  "extends": Array [
+{
+  "extends": [
     ":preserveSemverRanges",
     "config:base",
     "group:allNonMajor",
     "group:recommended",
     "group:monorepos",
   ],
-  "ignoreDeps": Array [
+  "ignoreDeps": [
     "jest-junit",
     "npm-check-updates",
     "standard-version",
@@ -305,19 +305,19 @@ Object {
     "some-overriden-package",
     "projen",
   ],
-  "packageRules": Array [
-    Object {
+  "packageRules": [
+    {
       "groupName": "devDependencies (non-major)",
-      "matchDepTypes": Array [
+      "matchDepTypes": [
         "devDependencies",
       ],
-      "matchUpdateTypes": Array [
+      "matchUpdateTypes": [
         "patch",
         "minor",
       ],
     },
   ],
-  "schedule": Array [
+  "schedule": [
     "at any time",
   ],
 }

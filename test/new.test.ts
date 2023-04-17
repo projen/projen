@@ -414,12 +414,12 @@ test("python project can define an array option", () => {
       "from projen.python import PythonProject
 
       project = PythonProject(
-          author_email=\\"my@user.email.com\\",
-          author_name=\\"My User Name\\",
-          deps=[\\"python@^3.9\\"],
-          module_name=\\"my_project\\",
-          name=\\"my-project\\",
-          version=\\"0.1.0\\",
+          author_email="my@user.email.com",
+          author_name="My User Name",
+          deps=["python@^3.9"],
+          module_name="my_project",
+          name="my-project",
+          version="0.1.0",
       )
 
       project.synth()"

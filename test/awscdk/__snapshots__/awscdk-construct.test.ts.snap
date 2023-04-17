@@ -1,72 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`node version in workflow does setup a custom version 1`] = `
-Object {
-  "env": Object {
+{
+  "env": {
     "CI": "true",
   },
-  "outputs": Object {
+  "outputs": {
     "self_mutation_happened": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
   },
-  "permissions": Object {
+  "permissions": {
     "contents": "write",
   },
   "runs-on": "ubuntu-latest",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "name": "Checkout",
       "uses": "actions/checkout@v3",
-      "with": Object {
+      "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
       },
     },
-    Object {
+    {
       "name": "Setup Node.js",
       "uses": "actions/setup-node@v3",
-      "with": Object {
+      "with": {
         "node-version": "18.x",
       },
     },
-    Object {
+    {
       "name": "Install dependencies",
       "run": "yarn install --check-files",
     },
-    Object {
+    {
       "name": "build",
       "run": "npx projen build",
     },
-    Object {
+    {
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
     },
-    Object {
+    {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v3",
-      "with": Object {
+      "with": {
         "name": ".repo.patch",
         "path": ".repo.patch",
       },
     },
-    Object {
+    {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
-      "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+      "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
 cat .repo.patch
 exit 1",
     },
-    Object {
+    {
       "continue-on-error": true,
       "name": "Backup artifact permissions",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
-    Object {
+    {
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v3",
-      "with": Object {
+      "with": {
         "name": "build-artifact",
         "path": "dist",
       },
@@ -76,72 +76,72 @@ exit 1",
 `;
 
 exports[`node version in workflow does setup default version 1`] = `
-Object {
-  "env": Object {
+{
+  "env": {
     "CI": "true",
   },
-  "outputs": Object {
+  "outputs": {
     "self_mutation_happened": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
   },
-  "permissions": Object {
+  "permissions": {
     "contents": "write",
   },
   "runs-on": "ubuntu-latest",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "name": "Checkout",
       "uses": "actions/checkout@v3",
-      "with": Object {
+      "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
       },
     },
-    Object {
+    {
       "name": "Setup Node.js",
       "uses": "actions/setup-node@v3",
-      "with": Object {
+      "with": {
         "node-version": "16.x",
       },
     },
-    Object {
+    {
       "name": "Install dependencies",
       "run": "yarn install --check-files",
     },
-    Object {
+    {
       "name": "build",
       "run": "npx projen build",
     },
-    Object {
+    {
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
     },
-    Object {
+    {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v3",
-      "with": Object {
+      "with": {
         "name": ".repo.patch",
         "path": ".repo.patch",
       },
     },
-    Object {
+    {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
-      "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+      "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
 cat .repo.patch
 exit 1",
     },
-    Object {
+    {
       "continue-on-error": true,
       "name": "Backup artifact permissions",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
-    Object {
+    {
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v3",
-      "with": Object {
+      "with": {
         "name": "build-artifact",
         "path": "dist",
       },
@@ -151,72 +151,72 @@ exit 1",
 `;
 
 exports[`node version in workflow does use minNodeVersion 1`] = `
-Object {
-  "env": Object {
+{
+  "env": {
     "CI": "true",
   },
-  "outputs": Object {
+  "outputs": {
     "self_mutation_happened": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
   },
-  "permissions": Object {
+  "permissions": {
     "contents": "write",
   },
   "runs-on": "ubuntu-latest",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "name": "Checkout",
       "uses": "actions/checkout@v3",
-      "with": Object {
+      "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
       },
     },
-    Object {
+    {
       "name": "Setup Node.js",
       "uses": "actions/setup-node@v3",
-      "with": Object {
+      "with": {
         "node-version": "18.0.0",
       },
     },
-    Object {
+    {
       "name": "Install dependencies",
       "run": "yarn install --check-files",
     },
-    Object {
+    {
       "name": "build",
       "run": "npx projen build",
     },
-    Object {
+    {
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
     },
-    Object {
+    {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v3",
-      "with": Object {
+      "with": {
         "name": ".repo.patch",
         "path": ".repo.patch",
       },
     },
-    Object {
+    {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
-      "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+      "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
 cat .repo.patch
 exit 1",
     },
-    Object {
+    {
       "continue-on-error": true,
       "name": "Backup artifact permissions",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
-    Object {
+    {
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v3",
-      "with": Object {
+      "with": {
         "name": "build-artifact",
         "path": "dist",
       },

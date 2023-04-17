@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`IntegrationTest tasks 1`] = `
-Object {
+{
   "description": "assert the snapshot of integration test 'foo'",
   "name": "integ:foo:assert",
-  "steps": Array [
-    Object {
-      "exec": "[ -d \\"test/foo.integ.snapshot\\" ] || (echo \\"No snapshot available for integration test 'foo'. Run 'projen integ:foo:deploy' to capture.\\" && exit 1)",
+  "steps": [
+    {
+      "exec": "[ -d "test/foo.integ.snapshot" ] || (echo "No snapshot available for integration test 'foo'. Run 'projen integ:foo:deploy' to capture." && exit 1)",
     },
-    Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/.tmp/foo.integ/assert.cdk.out > /dev/null",
+    {
+      "exec": "cdk synth --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/.tmp/foo.integ/assert.cdk.out > /dev/null",
     },
-    Object {
+    {
       "exec": "diff -r -x asset.* -x cdk.out -x manifest.json -x tree.json test/foo.integ.snapshot/ test/.tmp/foo.integ/assert.cdk.out/",
     },
   ],
@@ -19,23 +19,23 @@ Object {
 `;
 
 exports[`IntegrationTest tasks 2`] = `
-Object {
+{
   "description": "deploy integration test 'foo' and capture snapshot",
   "name": "integ:foo:deploy",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "exec": "rm -fr test/.tmp/foo.integ/deploy.cdk.out",
     },
-    Object {
-      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+    {
+      "exec": "cdk deploy --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
     },
-    Object {
+    {
       "exec": "rm -fr test/foo.integ.snapshot",
     },
-    Object {
+    {
       "exec": "mv test/.tmp/foo.integ/deploy.cdk.out test/foo.integ.snapshot",
     },
-    Object {
+    {
       "spawn": "integ:foo:destroy",
     },
   ],
@@ -43,11 +43,11 @@ Object {
 `;
 
 exports[`IntegrationTest tasks 3`] = `
-Object {
+{
   "description": "destroy integration test 'foo'",
   "name": "integ:foo:destroy",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "exec": "cdk destroy --app test/foo.integ.snapshot '**' --no-version-reporting",
     },
   ],
@@ -55,38 +55,38 @@ Object {
 `;
 
 exports[`IntegrationTest tasks 4`] = `
-Object {
-  "description": "update snapshot for integration test \\"foo\\"",
+{
+  "description": "update snapshot for integration test "foo"",
   "name": "integ:foo:snapshot",
-  "steps": Array [
-    Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/foo.integ.snapshot > /dev/null",
+  "steps": [
+    {
+      "exec": "cdk synth --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/foo.integ.snapshot > /dev/null",
     },
   ],
 }
 `;
 
 exports[`IntegrationTest tasks 5`] = `
-Object {
+{
   "description": "watch integration test 'foo' (without updating snapshots)",
   "name": "integ:foo:watch",
-  "steps": Array [
-    Object {
-      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' -o test/.tmp/foo.integ/deploy.cdk.out",
+  "steps": [
+    {
+      "exec": "cdk watch --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' -o test/.tmp/foo.integ/deploy.cdk.out",
     },
   ],
 }
 `;
 
 exports[`IntegrationTest tasks 6`] = `
-Object {
+{
   "description": "update snapshot for all integration tests",
   "name": "integ:snapshot-all",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "spawn": "integ:foo:snapshot",
     },
-    Object {
+    {
       "spawn": "integ:bar:snapshot",
     },
   ],
@@ -94,23 +94,23 @@ Object {
 `;
 
 exports[`synthesizing an integration test containing a multi-stack stage 1`] = `
-Object {
+{
   "description": "deploy integration test 'my-stage' and capture snapshot",
   "name": "integ:my-stage:deploy",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "exec": "rm -fr test/.tmp/my-stage.integ/deploy.cdk.out",
     },
-    Object {
-      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' --require-approval=never -o test/.tmp/my-stage.integ/deploy.cdk.out",
+    {
+      "exec": "cdk deploy --app "ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' --require-approval=never -o test/.tmp/my-stage.integ/deploy.cdk.out",
     },
-    Object {
+    {
       "exec": "rm -fr test/my-stage.integ.snapshot",
     },
-    Object {
+    {
       "exec": "mv test/.tmp/my-stage.integ/deploy.cdk.out test/my-stage.integ.snapshot",
     },
-    Object {
+    {
       "spawn": "integ:my-stage:destroy",
     },
   ],
@@ -118,47 +118,47 @@ Object {
 `;
 
 exports[`synthesizing an integration test containing a multi-stack stage 2`] = `
-Object {
-  "description": "update snapshot for integration test \\"my-stage\\"",
+{
+  "description": "update snapshot for integration test "my-stage"",
   "name": "integ:my-stage:snapshot",
-  "steps": Array [
-    Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/my-stage.integ.snapshot > /dev/null",
+  "steps": [
+    {
+      "exec": "cdk synth --app "ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/my-stage.integ.snapshot > /dev/null",
     },
   ],
 }
 `;
 
 exports[`synthesizing an integration test containing a multi-stack stage 3`] = `
-Object {
+{
   "description": "watch integration test 'my-stage' (without updating snapshots)",
   "name": "integ:my-stage:watch",
-  "steps": Array [
-    Object {
-      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' -o test/.tmp/my-stage.integ/deploy.cdk.out",
+  "steps": [
+    {
+      "exec": "cdk watch --app "ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' -o test/.tmp/my-stage.integ/deploy.cdk.out",
     },
   ],
 }
 `;
 
 exports[`synthesizing cdk v2 integration tests 1`] = `
-Object {
+{
   "description": "deploy integration test 'foo' and capture snapshot",
   "name": "integ:foo:deploy",
-  "steps": Array [
-    Object {
+  "steps": [
+    {
       "exec": "rm -fr test/.tmp/foo.integ/deploy.cdk.out",
     },
-    Object {
-      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+    {
+      "exec": "cdk deploy --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
     },
-    Object {
+    {
       "exec": "rm -fr test/foo.integ.snapshot",
     },
-    Object {
+    {
       "exec": "mv test/.tmp/foo.integ/deploy.cdk.out test/foo.integ.snapshot",
     },
-    Object {
+    {
       "spawn": "integ:foo:destroy",
     },
   ],
@@ -166,24 +166,24 @@ Object {
 `;
 
 exports[`synthesizing cdk v2 integration tests 2`] = `
-Object {
-  "description": "update snapshot for integration test \\"foo\\"",
+{
+  "description": "update snapshot for integration test "foo"",
   "name": "integ:foo:snapshot",
-  "steps": Array [
-    Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/foo.integ.snapshot > /dev/null",
+  "steps": [
+    {
+      "exec": "cdk synth --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/foo.integ.snapshot > /dev/null",
     },
   ],
 }
 `;
 
 exports[`synthesizing cdk v2 integration tests 3`] = `
-Object {
+{
   "description": "watch integration test 'foo' (without updating snapshots)",
   "name": "integ:foo:watch",
-  "steps": Array [
-    Object {
-      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' -o test/.tmp/foo.integ/deploy.cdk.out",
+  "steps": [
+    {
+      "exec": "cdk watch --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' -o test/.tmp/foo.integ/deploy.cdk.out",
     },
   ],
 }
