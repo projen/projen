@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`defaults 1`] = `
-Object {
-  ".eslintrc.json": Object {
-    "env": Object {
+{
+  ".eslintrc.json": {
+    "env": {
       "jest": true,
       "node": true,
     },
-    "extends": Array [
+    "extends": [
       "plugin:import/typescript",
     ],
-    "ignorePatterns": Array [
+    "ignorePatterns": [
       "*.js",
       "*.d.ts",
       "node_modules/",
@@ -18,40 +18,40 @@ Object {
       "coverage",
       "!.projenrc.js",
     ],
-    "overrides": Array [
-      Object {
-        "files": Array [
+    "overrides": [
+      {
+        "files": [
           ".projenrc.js",
         ],
-        "rules": Object {
+        "rules": {
           "@typescript-eslint/no-require-imports": "off",
           "import/no-extraneous-dependencies": "off",
         },
       },
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
+    "parserOptions": {
       "ecmaVersion": 2018,
       "project": "./tsconfig.dev.json",
       "sourceType": "module",
     },
-    "plugins": Array [
+    "plugins": [
       "@typescript-eslint",
       "import",
     ],
     "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
+    "rules": {
+      "@typescript-eslint/indent": [
         "error",
         2,
       ],
-      "@typescript-eslint/member-delimiter-style": Array [
+      "@typescript-eslint/member-delimiter-style": [
         "error",
       ],
-      "@typescript-eslint/member-ordering": Array [
+      "@typescript-eslint/member-ordering": [
         "error",
-        Object {
-          "default": Array [
+        {
+          "default": [
             "public-static-field",
             "public-static-method",
             "protected-static-field",
@@ -64,56 +64,56 @@ Object {
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": Array [
+      "@typescript-eslint/no-floating-promises": [
         "error",
       ],
-      "@typescript-eslint/no-require-imports": Array [
+      "@typescript-eslint/no-require-imports": [
         "error",
       ],
-      "@typescript-eslint/no-shadow": Array [
+      "@typescript-eslint/no-shadow": [
         "error",
       ],
-      "@typescript-eslint/return-await": Array [
+      "@typescript-eslint/return-await": [
         "error",
       ],
-      "array-bracket-newline": Array [
+      "array-bracket-newline": [
         "error",
         "consistent",
       ],
-      "array-bracket-spacing": Array [
+      "array-bracket-spacing": [
         "error",
         "never",
       ],
-      "brace-style": Array [
+      "brace-style": [
         "error",
         "1tbs",
-        Object {
+        {
           "allowSingleLine": true,
         },
       ],
-      "comma-dangle": Array [
+      "comma-dangle": [
         "error",
         "always-multiline",
       ],
-      "comma-spacing": Array [
+      "comma-spacing": [
         "error",
-        Object {
+        {
           "after": true,
           "before": false,
         },
       ],
-      "curly": Array [
+      "curly": [
         "error",
         "multi-line",
         "consistent",
       ],
-      "dot-notation": Array [
+      "dot-notation": [
         "error",
       ],
-      "import/no-extraneous-dependencies": Array [
+      "import/no-extraneous-dependencies": [
         "error",
-        Object {
-          "devDependencies": Array [
+        {
+          "devDependencies": [
             "**/src/**/*.test.tsx",
             "**/src/setupTests.ts",
           ],
@@ -121,34 +121,34 @@ Object {
           "peerDependencies": true,
         },
       ],
-      "import/no-unresolved": Array [
+      "import/no-unresolved": [
         "error",
       ],
-      "import/order": Array [
+      "import/order": [
         "warn",
-        Object {
-          "alphabetize": Object {
+        {
+          "alphabetize": {
             "caseInsensitive": true,
             "order": "asc",
           },
-          "groups": Array [
+          "groups": [
             "builtin",
             "external",
           ],
         },
       ],
-      "indent": Array [
+      "indent": [
         "off",
       ],
-      "key-spacing": Array [
+      "key-spacing": [
         "error",
       ],
-      "keyword-spacing": Array [
+      "keyword-spacing": [
         "error",
       ],
-      "max-len": Array [
+      "max-len": [
         "error",
-        Object {
+        {
           "code": 150,
           "ignoreComments": true,
           "ignoreRegExpLiterals": true,
@@ -157,83 +157,83 @@ Object {
           "ignoreUrls": true,
         },
       ],
-      "no-bitwise": Array [
+      "no-bitwise": [
         "error",
       ],
-      "no-duplicate-imports": Array [
+      "no-duplicate-imports": [
         "error",
       ],
-      "no-multi-spaces": Array [
+      "no-multi-spaces": [
         "error",
-        Object {
+        {
           "ignoreEOLComments": false,
         },
       ],
-      "no-multiple-empty-lines": Array [
+      "no-multiple-empty-lines": [
         "error",
       ],
-      "no-return-await": Array [
+      "no-return-await": [
         "off",
       ],
-      "no-shadow": Array [
+      "no-shadow": [
         "off",
       ],
-      "no-trailing-spaces": Array [
+      "no-trailing-spaces": [
         "error",
       ],
-      "object-curly-newline": Array [
+      "object-curly-newline": [
         "error",
-        Object {
+        {
           "consistent": true,
           "multiline": true,
         },
       ],
-      "object-curly-spacing": Array [
+      "object-curly-spacing": [
         "error",
         "always",
       ],
-      "object-property-newline": Array [
+      "object-property-newline": [
         "error",
-        Object {
+        {
           "allowAllPropertiesOnSameLine": true,
         },
       ],
-      "quote-props": Array [
+      "quote-props": [
         "error",
         "consistent-as-needed",
       ],
-      "quotes": Array [
+      "quotes": [
         "error",
         "single",
-        Object {
+        {
           "avoidEscape": true,
         },
       ],
-      "semi": Array [
+      "semi": [
         "error",
         "always",
       ],
-      "space-before-blocks": Array [
+      "space-before-blocks": [
         "error",
       ],
     },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [
           ".ts",
           ".tsx",
         ],
       },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
+      "import/resolver": {
+        "node": {},
+        "typescript": {
           "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
     },
   },
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 /.eslintrc.json linguist-generated
 /.gitattributes linguist-generated
@@ -254,7 +254,7 @@ Object {
 /tsconfig.json linguist-generated
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
-  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: build
 on:
@@ -268,7 +268,7 @@ jobs:
     outputs:
       self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
-      CI: \\"true\\"
+      CI: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -283,7 +283,7 @@ jobs:
         id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v3
@@ -293,7 +293,7 @@ jobs:
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
-          echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+          echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat .repo.patch
           exit 1
   self-mutation:
@@ -315,18 +315,18 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Push changes
         run: |2-
             git add .
-            git commit -s -m \\"chore: self mutation\\"
+            git commit -s -m "chore: self mutation"
             git push origin HEAD:\${{ github.event.pull_request.head.ref }}
 ",
-  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: pull-request-lint
 on:
@@ -355,7 +355,7 @@ jobs:
             chore
           requireScope: false
 ",
-  ".github/workflows/upgrade.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".github/workflows/upgrade.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 name: upgrade
 on:
@@ -381,7 +381,7 @@ jobs:
         id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"patch_created=true\\" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v3
@@ -405,11 +405,11 @@ jobs:
           name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -424,9 +424,9 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade\\" workflow*
+            *Automatically created by projen via the "upgrade" workflow*
           branch: github-actions/upgrade
-          title: \\"chore(deps): upgrade dependencies\\"
+          title: "chore(deps): upgrade dependencies"
           body: |-
             Upgrades project dependencies. See details in [workflow run].
 
@@ -434,12 +434,12 @@ jobs:
 
             ------
 
-            *Automatically created by projen via the \\"upgrade\\" workflow*
+            *Automatically created by projen via the "upgrade" workflow*
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
 ",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
@@ -485,13 +485,13 @@ jspm_packages/
 !/.eslintrc.json
 /build/
 ",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
 queue_rules:
   - name: default
     update_method: merge
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
 pull_request_rules:
@@ -506,11 +506,11 @@ pull_request_rules:
 
           {{ body }}
     conditions:
-      - \\"#approved-reviews-by>=1\\"
+      - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
 ",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
 permissions-backup.acl
 /.mergify.yml
@@ -530,111 +530,111 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 /build/
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
+  ".projen/deps.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "dependencies": [
+      {
         "name": "@testing-library/jest-dom",
         "type": "build",
       },
-      Object {
+      {
         "name": "@testing-library/react",
         "type": "build",
       },
-      Object {
+      {
         "name": "@testing-library/user-event",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/jest",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/node",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "@types/react",
         "type": "build",
       },
-      Object {
+      {
         "name": "@types/react-dom",
         "type": "build",
       },
-      Object {
+      {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "@typescript-eslint/parser",
         "type": "build",
         "version": "^5",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-node",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-import-resolver-typescript",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint-plugin-import",
         "type": "build",
       },
-      Object {
+      {
         "name": "eslint",
         "type": "build",
         "version": "^8",
       },
-      Object {
+      {
         "name": "npm-check-updates",
         "type": "build",
         "version": "^16",
       },
-      Object {
+      {
         "name": "projen",
         "type": "build",
       },
-      Object {
+      {
         "name": "typescript",
         "type": "build",
         "version": "^4.0.3",
       },
-      Object {
+      {
         "name": "@types/express-serve-static-core",
         "type": "override",
         "version": "4.17.30",
       },
-      Object {
+      {
         "name": "@types/express",
         "type": "override",
         "version": "4.17.13",
       },
-      Object {
+      {
         "name": "react",
         "type": "runtime",
       },
-      Object {
+      {
         "name": "react-dom",
         "type": "runtime",
       },
-      Object {
+      {
         "name": "react-scripts",
         "type": "runtime",
         "version": "^5",
       },
-      Object {
+      {
         "name": "web-vitals",
         "type": "runtime",
       },
     ],
   },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
+  ".projen/files.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "files": [
       ".eslintrc.json",
       ".gitattributes",
       ".github/pull_request_template.md",
@@ -652,174 +652,174 @@ tsconfig.tsbuildinfo
       "tsconfig.json",
     ],
   },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/tasks.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "env": {
+      "PATH": "$(npx -c "node -e \\"console.log(process.env.PATH)\\"")",
     },
-    "tasks": Object {
-      "build": Object {
+    "tasks": {
+      "build": {
         "description": "Full release build",
         "name": "build",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
-          Object {
+          {
             "spawn": "pre-compile",
           },
-          Object {
+          {
             "spawn": "compile",
           },
-          Object {
+          {
             "spawn": "post-compile",
           },
-          Object {
+          {
             "spawn": "test",
           },
-          Object {
+          {
             "spawn": "package",
           },
         ],
       },
-      "compile": Object {
+      "compile": {
         "description": "Only compile",
         "name": "compile",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "react-scripts build",
           },
         ],
       },
-      "default": Object {
+      "default": {
         "description": "Synthesize project files",
         "name": "default",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "node .projenrc.js",
           },
         ],
       },
-      "dev": Object {
+      "dev": {
         "description": "Starts the react application",
         "name": "dev",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "react-scripts start",
           },
         ],
       },
-      "eject": Object {
+      "eject": {
         "description": "Remove projen from the project",
-        "env": Object {
+        "env": {
           "PROJEN_EJECTING": "true",
         },
         "name": "eject",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "default",
           },
         ],
       },
-      "eslint": Object {
+      "eslint": {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
-      "install": Object {
+      "install": {
         "description": "Install project dependencies and update lockfile (non-frozen)",
         "name": "install",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files",
           },
         ],
       },
-      "install:ci": Object {
+      "install:ci": {
         "description": "Install project dependencies using frozen lockfile",
         "name": "install:ci",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn install --check-files --frozen-lockfile",
           },
         ],
       },
-      "package": Object {
+      "package": {
         "description": "Creates the distribution package",
         "name": "package",
       },
-      "post-compile": Object {
+      "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
-      "post-upgrade": Object {
+      "post-upgrade": {
         "description": "Runs after upgrading dependencies",
         "name": "post-upgrade",
       },
-      "pre-compile": Object {
+      "pre-compile": {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "test": Object {
+      "test": {
         "description": "Run tests",
         "name": "test",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "spawn": "eslint",
           },
-          Object {
+          {
             "exec": "react-scripts test --watchAll=false",
           },
         ],
       },
-      "upgrade": Object {
+      "upgrade": {
         "description": "upgrade dependencies",
-        "env": Object {
+        "env": {
           "CI": "0",
         },
         "name": "upgrade",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "yarn upgrade npm-check-updates",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
-          Object {
+          {
             "exec": "yarn install --check-files",
           },
-          Object {
+          {
             "exec": "yarn upgrade",
           },
-          Object {
+          {
             "exec": "npx projen",
           },
-          Object {
+          {
             "spawn": "post-upgrade",
           },
         ],
       },
-      "watch": Object {
+      "watch": {
         "description": "Watch & compile in the background",
         "name": "watch",
-        "steps": Array [
-          Object {
+        "steps": [
+          {
             "exec": "tsc --build -w",
           },
         ],
@@ -835,38 +835,38 @@ tsconfig.tsbuildinfo
 
    1. Definitions.
 
-      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
 
-      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      "Licensor" shall mean the copyright owner or entity authorized by
       the copyright owner that is granting the License.
 
-      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      "Legal Entity" shall mean the union of the acting entity and all
       other entities that control, are controlled by, or are under common
       control with that entity. For the purposes of this definition,
-      \\"control\\" means (i) the power, direct or indirect, to cause the
+      "control" means (i) the power, direct or indirect, to cause the
       direction or management of such entity, whether by contract or
       otherwise, or (ii) ownership of fifty percent (50%) or more of the
       outstanding shares, or (iii) beneficial ownership of such entity.
 
-      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      "You" (or "Your") shall mean an individual or Legal Entity
       exercising permissions granted by this License.
 
-      \\"Source\\" form shall mean the preferred form for making modifications,
+      "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
       source, and configuration files.
 
-      \\"Object\\" form shall mean any form resulting from mechanical
+      "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
       and conversions to other media types.
 
-      \\"Work\\" shall mean the work of authorship, whether in Source or
+      "Work" shall mean the work of authorship, whether in Source or
       Object form, made available under the License, as indicated by a
       copyright notice that is included in or attached to the work
       (an example is provided in the Appendix below).
 
-      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      "Derivative Works" shall mean any work, whether in Source or Object
       form, that is based on (or derived from) the Work and for which the
       editorial revisions, annotations, elaborations, or other modifications
       represent, as a whole, an original work of authorship. For the purposes
@@ -874,21 +874,21 @@ tsconfig.tsbuildinfo
       separable from, or merely link (or bind by name) to the interfaces of,
       the Work and Derivative Works thereof.
 
-      \\"Contribution\\" shall mean any work of authorship, including
+      "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
       to that Work or Derivative Works thereof, that is intentionally
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      the copyright owner. For the purposes of this definition, "submitted"
       means any form of electronic, verbal, or written communication sent
       to the Licensor or its representatives, including but not limited to
       communication on electronic mailing lists, source code control systems,
       and issue tracking systems that are managed by, or on behalf of, the
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+      designated in writing by the copyright owner as "Not a Contribution."
 
-      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
 
@@ -932,7 +932,7 @@ tsconfig.tsbuildinfo
           excluding those notices that do not pertain to any part of
           the Derivative Works; and
 
-      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+      (d) If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained
           within such NOTICE file, excluding those notices that do not
@@ -971,7 +971,7 @@ tsconfig.tsbuildinfo
 
    7. Disclaimer of Warranty. Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      Contributor provides its Contributions) on an "AS IS" BASIS,
       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
       implied, including, without limitation, any warranties or conditions
       of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
@@ -1007,50 +1007,50 @@ tsconfig.tsbuildinfo
    APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      boilerplate notice, with the fields enclosed by brackets "[]"
       replaced with your own identifying information. (Don't include
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
       file or class name and description of purpose be included on the
-      same \\"printed page\\" as the copyright notice for easier
+      same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
    Copyright [yyyy] [name of copyright owner]
 
-   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "browserslist": Object {
-      "development": Array [
+  "package.json": {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
+    "browserslist": {
+      "development": [
         "last 1 chrome version",
         "last 1 firefox version",
         "last 1 safari version",
       ],
-      "production": Array [
+      "production": [
         ">0.2%",
         "not dead",
         "not op_mini all",
       ],
     },
-    "dependencies": Object {
+    "dependencies": {
       "react": "*",
       "react-dom": "*",
       "react-scripts": "^5",
       "web-vitals": "*",
     },
-    "devDependencies": Object {
+    "devDependencies": {
       "@testing-library/jest-dom": "*",
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
@@ -1068,19 +1068,19 @@ tsconfig.tsbuildinfo
       "projen": "*",
       "typescript": "^4.0.3",
     },
-    "eslintConfig": Object {
-      "extends": Array [
+    "eslintConfig": {
+      "extends": [
         "react-app",
         "react-app/jest",
       ],
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
-    "resolutions": Object {
+    "resolutions": {
       "@types/express": "4.17.13",
       "@types/express-serve-static-core": "4.17.30",
     },
-    "scripts": Object {
+    "scripts": {
       "build": "npx projen build",
       "compile": "npx projen compile",
       "default": "npx projen default",
@@ -1099,28 +1099,28 @@ tsconfig.tsbuildinfo
     "version": "0.0.0",
   },
   "public/index.html": "<!DOCTYPE html>
-<html lang=\\"en\\">
+<html lang="en">
   <head>
-    <meta charset=\\"utf-8\\" />
-    <link rel=\\"icon\\" href=\\"%PUBLIC_URL%/favicon.ico\\" />
-    <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
-    <meta name=\\"theme-color\\" content=\\"#000000\\" />
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
     <meta
-      name=\\"description\\"
-      content=\\"Web site created using create-react-app\\"
+      name="description"
+      content="Web site created using create-react-app"
     />
-    <link rel=\\"apple-touch-icon\\" href=\\"%PUBLIC_URL%/logo192.png\\" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel=\\"manifest\\" href=\\"%PUBLIC_URL%/manifest.json\\" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the \`public\` folder during the build.
       Only files inside the \`public\` folder can be referenced from the HTML.
 
-      Unlike \\"/favicon.ico\\" or \\"favicon.ico\\", \\"%PUBLIC_URL%/favicon.ico\\" will
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running \`npm run build\`.
     -->
@@ -1128,7 +1128,7 @@ tsconfig.tsbuildinfo
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id=\\"root\\"></div>
+    <div id="root"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -1142,21 +1142,21 @@ tsconfig.tsbuildinfo
   </body>
 </html>
 ",
-  "public/manifest.json": Object {
+  "public/manifest.json": {
     "background_color": "#ffffff",
     "display": "standalone",
-    "icons": Array [
-      Object {
+    "icons": [
+      {
         "sizes": "64x64 32x32 24x24 16x16",
         "src": "favicon.ico",
         "type": "image/x-icon",
       },
-      Object {
+      {
         "sizes": "192x192",
         "src": "logo192.png",
         "type": "image/png",
       },
-      Object {
+      {
         "sizes": "512x512",
         "src": "logo512.png",
         "type": "image/png",
@@ -1224,16 +1224,16 @@ import './App.css'
 
 function App() {
   return (
-   <div className=\\"App\\">
-      <header className=\\"App-header\\">
-        <img src={logo} className=\\"App-logo\\" alt=\\"logo\\" />
+   <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a className=\\"App-link\\"
-          href=\\"https://reactjs.org\\"
-          target=\\"_blank\\"
-          rel=\\"noopener noreferrer\\"
+        <a className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Learn React
         </a>
@@ -1276,15 +1276,15 @@ ReactDOM.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 ",
-  "src/logo.svg": "<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 841.9 595.3\\">
-    <g fill=\\"#61DAFB\\">
-        <path d=\\"M666.3 296.5c0-32.5-40.7-63.3-103.1-82.4 14.4-63.6 8-114.2-20.2-130.4-6.5-3.8-14.1-5.6-22.4-5.6v22.3c4.6 0 8.3.9 11.4 2.6 13.6 7.8 19.5 37.5 14.9 75.7-1.1 9.4-2.9 19.3-5.1 29.4-19.6-4.8-41-8.5-63.5-10.9-13.5-18.5-27.5-35.3-41.6-50 32.6-30.3 63.2-46.9 84-46.9V78c-27.5 0-63.5 19.6-99.9 53.6-36.4-33.8-72.4-53.2-99.9-53.2v22.3c20.7 0 51.4 16.5 84 46.6-14 14.7-28 31.4-41.3 49.9-22.6 2.4-44 6.1-63.6 11-2.3-10-4-19.7-5.2-29-4.7-38.2 1.1-67.9 14.6-75.8 3-1.8 6.9-2.6 11.5-2.6V78.5c-8.4 0-16 1.8-22.6 5.6-28.1 16.2-34.4 66.7-19.9 130.1-62.2 19.2-102.7 49.9-102.7 82.3 0 32.5 40.7 63.3 103.1 82.4-14.4 63.6-8 114.2 20.2 130.4 6.5 3.8 14.1 5.6 22.5 5.6 27.5 0 63.5-19.6 99.9-53.6 36.4 33.8 72.4 53.2 99.9 53.2 8.4 0 16-1.8 22.6-5.6 28.1-16.2 34.4-66.7 19.9-130.1 62-19.1 102.5-49.9 102.5-82.3zm-130.2-66.7c-3.7 12.9-8.3 26.2-13.5 39.5-4.1-8-8.4-16-13.1-24-4.6-8-9.5-15.8-14.4-23.4 14.2 2.1 27.9 4.7 41 7.9zm-45.8 106.5c-7.8 13.5-15.8 26.3-24.1 38.2-14.9 1.3-30 2-45.2 2-15.1 0-30.2-.7-45-1.9-8.3-11.9-16.4-24.6-24.2-38-7.6-13.1-14.5-26.4-20.8-39.8 6.2-13.4 13.2-26.8 20.7-39.9 7.8-13.5 15.8-26.3 24.1-38.2 14.9-1.3 30-2 45.2-2 15.1 0 30.2.7 45 1.9 8.3 11.9 16.4 24.6 24.2 38 7.6 13.1 14.5 26.4 20.8 39.8-6.3 13.4-13.2 26.8-20.7 39.9zm32.3-13c5.4 13.4 10 26.8 13.8 39.8-13.1 3.2-26.9 5.9-41.2 8 4.9-7.7 9.8-15.6 14.4-23.7 4.6-8 8.9-16.1 13-24.1zM421.2 430c-9.3-9.6-18.6-20.3-27.8-32 9 .4 18.2.7 27.5.7 9.4 0 18.7-.2 27.8-.7-9 11.7-18.3 22.4-27.5 32zm-74.4-58.9c-14.2-2.1-27.9-4.7-41-7.9 3.7-12.9 8.3-26.2 13.5-39.5 4.1 8 8.4 16 13.1 24 4.7 8 9.5 15.8 14.4 23.4zM420.7 163c9.3 9.6 18.6 20.3 27.8 32-9-.4-18.2-.7-27.5-.7-9.4 0-18.7.2-27.8.7 9-11.7 18.3-22.4 27.5-32zm-74 58.9c-4.9 7.7-9.8 15.6-14.4 23.7-4.6 8-8.9 16-13 24-5.4-13.4-10-26.8-13.8-39.8 13.1-3.1 26.9-5.8 41.2-7.9zm-90.5 125.2c-35.4-15.1-58.3-34.9-58.3-50.6 0-15.7 22.9-35.6 58.3-50.6 8.6-3.7 18-7 27.7-10.1 5.7 19.6 13.2 40 22.5 60.9-9.2 20.8-16.6 41.1-22.2 60.6-9.9-3.1-19.3-6.5-28-10.2zM310 490c-13.6-7.8-19.5-37.5-14.9-75.7 1.1-9.4 2.9-19.3 5.1-29.4 19.6 4.8 41 8.5 63.5 10.9 13.5 18.5 27.5 35.3 41.6 50-32.6 30.3-63.2 46.9-84 46.9-4.5-.1-8.3-1-11.3-2.7zm237.2-76.2c4.7 38.2-1.1 67.9-14.6 75.8-3 1.8-6.9 2.6-11.5 2.6-20.7 0-51.4-16.5-84-46.6 14-14.7 28-31.4 41.3-49.9 22.6-2.4 44-6.1 63.6-11 2.3 10.1 4.1 19.8 5.2 29.1zm38.5-66.7c-8.6 3.7-18 7-27.7 10.1-5.7-19.6-13.2-40-22.5-60.9 9.2-20.8 16.6-41.1 22.2-60.6 9.9 3.1 19.3 6.5 28.1 10.2 35.4 15.1 58.3 34.9 58.3 50.6-.1 15.7-23 35.6-58.4 50.6zM320.8 78.4z\\"/>
-        <circle cx=\\"420.9\\" cy=\\"296.5\\" r=\\"45.7\\"/>
-        <path d=\\"M520.5 78.1z\\"/>
+  "src/logo.svg": "<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.9 595.3">
+    <g fill="#61DAFB">
+        <path d="M666.3 296.5c0-32.5-40.7-63.3-103.1-82.4 14.4-63.6 8-114.2-20.2-130.4-6.5-3.8-14.1-5.6-22.4-5.6v22.3c4.6 0 8.3.9 11.4 2.6 13.6 7.8 19.5 37.5 14.9 75.7-1.1 9.4-2.9 19.3-5.1 29.4-19.6-4.8-41-8.5-63.5-10.9-13.5-18.5-27.5-35.3-41.6-50 32.6-30.3 63.2-46.9 84-46.9V78c-27.5 0-63.5 19.6-99.9 53.6-36.4-33.8-72.4-53.2-99.9-53.2v22.3c20.7 0 51.4 16.5 84 46.6-14 14.7-28 31.4-41.3 49.9-22.6 2.4-44 6.1-63.6 11-2.3-10-4-19.7-5.2-29-4.7-38.2 1.1-67.9 14.6-75.8 3-1.8 6.9-2.6 11.5-2.6V78.5c-8.4 0-16 1.8-22.6 5.6-28.1 16.2-34.4 66.7-19.9 130.1-62.2 19.2-102.7 49.9-102.7 82.3 0 32.5 40.7 63.3 103.1 82.4-14.4 63.6-8 114.2 20.2 130.4 6.5 3.8 14.1 5.6 22.5 5.6 27.5 0 63.5-19.6 99.9-53.6 36.4 33.8 72.4 53.2 99.9 53.2 8.4 0 16-1.8 22.6-5.6 28.1-16.2 34.4-66.7 19.9-130.1 62-19.1 102.5-49.9 102.5-82.3zm-130.2-66.7c-3.7 12.9-8.3 26.2-13.5 39.5-4.1-8-8.4-16-13.1-24-4.6-8-9.5-15.8-14.4-23.4 14.2 2.1 27.9 4.7 41 7.9zm-45.8 106.5c-7.8 13.5-15.8 26.3-24.1 38.2-14.9 1.3-30 2-45.2 2-15.1 0-30.2-.7-45-1.9-8.3-11.9-16.4-24.6-24.2-38-7.6-13.1-14.5-26.4-20.8-39.8 6.2-13.4 13.2-26.8 20.7-39.9 7.8-13.5 15.8-26.3 24.1-38.2 14.9-1.3 30-2 45.2-2 15.1 0 30.2.7 45 1.9 8.3 11.9 16.4 24.6 24.2 38 7.6 13.1 14.5 26.4 20.8 39.8-6.3 13.4-13.2 26.8-20.7 39.9zm32.3-13c5.4 13.4 10 26.8 13.8 39.8-13.1 3.2-26.9 5.9-41.2 8 4.9-7.7 9.8-15.6 14.4-23.7 4.6-8 8.9-16.1 13-24.1zM421.2 430c-9.3-9.6-18.6-20.3-27.8-32 9 .4 18.2.7 27.5.7 9.4 0 18.7-.2 27.8-.7-9 11.7-18.3 22.4-27.5 32zm-74.4-58.9c-14.2-2.1-27.9-4.7-41-7.9 3.7-12.9 8.3-26.2 13.5-39.5 4.1 8 8.4 16 13.1 24 4.7 8 9.5 15.8 14.4 23.4zM420.7 163c9.3 9.6 18.6 20.3 27.8 32-9-.4-18.2-.7-27.5-.7-9.4 0-18.7.2-27.8.7 9-11.7 18.3-22.4 27.5-32zm-74 58.9c-4.9 7.7-9.8 15.6-14.4 23.7-4.6 8-8.9 16-13 24-5.4-13.4-10-26.8-13.8-39.8 13.1-3.1 26.9-5.8 41.2-7.9zm-90.5 125.2c-35.4-15.1-58.3-34.9-58.3-50.6 0-15.7 22.9-35.6 58.3-50.6 8.6-3.7 18-7 27.7-10.1 5.7 19.6 13.2 40 22.5 60.9-9.2 20.8-16.6 41.1-22.2 60.6-9.9-3.1-19.3-6.5-28-10.2zM310 490c-13.6-7.8-19.5-37.5-14.9-75.7 1.1-9.4 2.9-19.3 5.1-29.4 19.6 4.8 41 8.5 63.5 10.9 13.5 18.5 27.5 35.3 41.6 50-32.6 30.3-63.2 46.9-84 46.9-4.5-.1-8.3-1-11.3-2.7zm237.2-76.2c4.7 38.2-1.1 67.9-14.6 75.8-3 1.8-6.9 2.6-11.5 2.6-20.7 0-51.4-16.5-84-46.6 14-14.7 28-31.4 41.3-49.9 22.6-2.4 44-6.1 63.6-11 2.3 10.1 4.1 19.8 5.2 29.1zm38.5-66.7c-8.6 3.7-18 7-27.7 10.1-5.7-19.6-13.2-40-22.5-60.9 9.2-20.8 16.6-41.1 22.2-60.6 9.9 3.1 19.3 6.5 28.1 10.2 35.4 15.1 58.3 34.9 58.3 50.6-.1 15.7-23 35.6-58.4 50.6zM320.8 78.4z"/>
+        <circle cx="420.9" cy="296.5" r="45.7"/>
+        <path d="M520.5 78.1z"/>
     </g>
 </svg>
 ",
-  "src/react-app-env.d.ts": "/// <reference types=\\"react-scripts\\" />",
+  "src/react-app-env.d.ts": "/// <reference types="react-scripts" />",
   "src/reportWebVitals.ts": "import { ReportHandler } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {
@@ -1309,8 +1309,8 @@ export default reportWebVitals;",
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 ",
-  "tsconfig.dev.json": Object {
-    "compilerOptions": Object {
+  "tsconfig.dev.json": {
+    "compilerOptions": {
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
       "alwaysStrict": true,
@@ -1322,7 +1322,7 @@ import '@testing-library/jest-dom';
       "inlineSources": true,
       "isolatedModules": true,
       "jsx": "react-jsx",
-      "lib": Array [
+      "lib": [
         "dom",
         "dom.iterable",
         "esnext",
@@ -1345,18 +1345,18 @@ import '@testing-library/jest-dom';
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": Array [
+    "exclude": [
       "node_modules",
     ],
-    "include": Array [
+    "include": [
       ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",
       "src",
     ],
   },
-  "tsconfig.json": Object {
-    "compilerOptions": Object {
+  "tsconfig.json": {
+    "compilerOptions": {
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
       "alwaysStrict": true,
@@ -1368,7 +1368,7 @@ import '@testing-library/jest-dom';
       "inlineSources": true,
       "isolatedModules": true,
       "jsx": "react-jsx",
-      "lib": Array [
+      "lib": [
         "dom",
         "dom.iterable",
         "esnext",
@@ -1393,8 +1393,8 @@ import '@testing-library/jest-dom';
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": Array [],
-    "include": Array [
+    "exclude": [],
+    "include": [
       "src/**/*.ts",
       "src",
     ],

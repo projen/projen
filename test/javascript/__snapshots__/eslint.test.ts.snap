@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`devdirs 1`] = `
-Object {
-  "env": Object {
+{
+  "env": {
     "jest": true,
     "node": true,
   },
-  "extends": Array [
+  "extends": [
     "plugin:import/typescript",
   ],
-  "ignorePatterns": Array [
+  "ignorePatterns": [
     "*.js",
     "*.d.ts",
     "node_modules/",
@@ -17,40 +17,40 @@ Object {
     "coverage",
     "!.projenrc.js",
   ],
-  "overrides": Array [
-    Object {
-      "files": Array [
+  "overrides": [
+    {
+      "files": [
         ".projenrc.js",
       ],
-      "rules": Object {
+      "rules": {
         "@typescript-eslint/no-require-imports": "off",
         "import/no-extraneous-dependencies": "off",
       },
     },
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": Object {
+  "parserOptions": {
     "ecmaVersion": 2018,
     "project": "./tsconfig.json",
     "sourceType": "module",
   },
-  "plugins": Array [
+  "plugins": [
     "@typescript-eslint",
     "import",
   ],
   "root": true,
-  "rules": Object {
-    "@typescript-eslint/indent": Array [
+  "rules": {
+    "@typescript-eslint/indent": [
       "error",
       2,
     ],
-    "@typescript-eslint/member-delimiter-style": Array [
+    "@typescript-eslint/member-delimiter-style": [
       "error",
     ],
-    "@typescript-eslint/member-ordering": Array [
+    "@typescript-eslint/member-ordering": [
       "error",
-      Object {
-        "default": Array [
+      {
+        "default": [
           "public-static-field",
           "public-static-method",
           "protected-static-field",
@@ -63,56 +63,56 @@ Object {
         ],
       },
     ],
-    "@typescript-eslint/no-floating-promises": Array [
+    "@typescript-eslint/no-floating-promises": [
       "error",
     ],
-    "@typescript-eslint/no-require-imports": Array [
+    "@typescript-eslint/no-require-imports": [
       "error",
     ],
-    "@typescript-eslint/no-shadow": Array [
+    "@typescript-eslint/no-shadow": [
       "error",
     ],
-    "@typescript-eslint/return-await": Array [
+    "@typescript-eslint/return-await": [
       "error",
     ],
-    "array-bracket-newline": Array [
+    "array-bracket-newline": [
       "error",
       "consistent",
     ],
-    "array-bracket-spacing": Array [
+    "array-bracket-spacing": [
       "error",
       "never",
     ],
-    "brace-style": Array [
+    "brace-style": [
       "error",
       "1tbs",
-      Object {
+      {
         "allowSingleLine": true,
       },
     ],
-    "comma-dangle": Array [
+    "comma-dangle": [
       "error",
       "always-multiline",
     ],
-    "comma-spacing": Array [
+    "comma-spacing": [
       "error",
-      Object {
+      {
         "after": true,
         "before": false,
       },
     ],
-    "curly": Array [
+    "curly": [
       "error",
       "multi-line",
       "consistent",
     ],
-    "dot-notation": Array [
+    "dot-notation": [
       "error",
     ],
-    "import/no-extraneous-dependencies": Array [
+    "import/no-extraneous-dependencies": [
       "error",
-      Object {
-        "devDependencies": Array [
+      {
+        "devDependencies": [
           "**/foo/**",
           "**/bar/**",
         ],
@@ -120,34 +120,34 @@ Object {
         "peerDependencies": true,
       },
     ],
-    "import/no-unresolved": Array [
+    "import/no-unresolved": [
       "error",
     ],
-    "import/order": Array [
+    "import/order": [
       "warn",
-      Object {
-        "alphabetize": Object {
+      {
+        "alphabetize": {
           "caseInsensitive": true,
           "order": "asc",
         },
-        "groups": Array [
+        "groups": [
           "builtin",
           "external",
         ],
       },
     ],
-    "indent": Array [
+    "indent": [
       "off",
     ],
-    "key-spacing": Array [
+    "key-spacing": [
       "error",
     ],
-    "keyword-spacing": Array [
+    "keyword-spacing": [
       "error",
     ],
-    "max-len": Array [
+    "max-len": [
       "error",
-      Object {
+      {
         "code": 150,
         "ignoreComments": true,
         "ignoreRegExpLiterals": true,
@@ -156,76 +156,76 @@ Object {
         "ignoreUrls": true,
       },
     ],
-    "no-bitwise": Array [
+    "no-bitwise": [
       "error",
     ],
-    "no-duplicate-imports": Array [
+    "no-duplicate-imports": [
       "error",
     ],
-    "no-multi-spaces": Array [
+    "no-multi-spaces": [
       "error",
-      Object {
+      {
         "ignoreEOLComments": false,
       },
     ],
-    "no-multiple-empty-lines": Array [
+    "no-multiple-empty-lines": [
       "error",
     ],
-    "no-return-await": Array [
+    "no-return-await": [
       "off",
     ],
-    "no-shadow": Array [
+    "no-shadow": [
       "off",
     ],
-    "no-trailing-spaces": Array [
+    "no-trailing-spaces": [
       "error",
     ],
-    "object-curly-newline": Array [
+    "object-curly-newline": [
       "error",
-      Object {
+      {
         "consistent": true,
         "multiline": true,
       },
     ],
-    "object-curly-spacing": Array [
+    "object-curly-spacing": [
       "error",
       "always",
     ],
-    "object-property-newline": Array [
+    "object-property-newline": [
       "error",
-      Object {
+      {
         "allowAllPropertiesOnSameLine": true,
       },
     ],
-    "quote-props": Array [
+    "quote-props": [
       "error",
       "consistent-as-needed",
     ],
-    "quotes": Array [
+    "quotes": [
       "error",
       "single",
-      Object {
+      {
         "avoidEscape": true,
       },
     ],
-    "semi": Array [
+    "semi": [
       "error",
       "always",
     ],
-    "space-before-blocks": Array [
+    "space-before-blocks": [
       "error",
     ],
   },
-  "settings": Object {
-    "import/parsers": Object {
-      "@typescript-eslint/parser": Array [
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
         ".ts",
         ".tsx",
       ],
     },
-    "import/resolver": Object {
-      "node": Object {},
-      "typescript": Object {
+    "import/resolver": {
+      "node": {},
+      "typescript": {
         "alwaysTryTypes": true,
         "project": "./tsconfig.json",
       },
@@ -235,17 +235,17 @@ Object {
 `;
 
 exports[`prettier snapshot 1`] = `
-Object {
-  "env": Object {
+{
+  "env": {
     "jest": true,
     "node": true,
   },
-  "extends": Array [
+  "extends": [
     "plugin:import/typescript",
     "prettier",
     "plugin:prettier/recommended",
   ],
-  "ignorePatterns": Array [
+  "ignorePatterns": [
     "*.js",
     "*.d.ts",
     "node_modules/",
@@ -253,34 +253,34 @@ Object {
     "coverage",
     "!.projenrc.js",
   ],
-  "overrides": Array [
-    Object {
-      "files": Array [
+  "overrides": [
+    {
+      "files": [
         ".projenrc.js",
       ],
-      "rules": Object {
+      "rules": {
         "@typescript-eslint/no-require-imports": "off",
         "import/no-extraneous-dependencies": "off",
       },
     },
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": Object {
+  "parserOptions": {
     "ecmaVersion": 2018,
     "project": "./tsconfig.json",
     "sourceType": "module",
   },
-  "plugins": Array [
+  "plugins": [
     "@typescript-eslint",
     "import",
     "prettier",
   ],
   "root": true,
-  "rules": Object {
-    "@typescript-eslint/member-ordering": Array [
+  "rules": {
+    "@typescript-eslint/member-ordering": [
       "error",
-      Object {
-        "default": Array [
+      {
+        "default": [
           "public-static-field",
           "public-static-method",
           "protected-static-field",
@@ -293,80 +293,80 @@ Object {
         ],
       },
     ],
-    "@typescript-eslint/no-floating-promises": Array [
+    "@typescript-eslint/no-floating-promises": [
       "error",
     ],
-    "@typescript-eslint/no-require-imports": Array [
+    "@typescript-eslint/no-require-imports": [
       "error",
     ],
-    "@typescript-eslint/no-shadow": Array [
+    "@typescript-eslint/no-shadow": [
       "error",
     ],
-    "@typescript-eslint/return-await": Array [
+    "@typescript-eslint/return-await": [
       "error",
     ],
-    "dot-notation": Array [
+    "dot-notation": [
       "error",
     ],
-    "import/no-extraneous-dependencies": Array [
+    "import/no-extraneous-dependencies": [
       "error",
-      Object {
-        "devDependencies": Array [],
+      {
+        "devDependencies": [],
         "optionalDependencies": false,
         "peerDependencies": true,
       },
     ],
-    "import/no-unresolved": Array [
+    "import/no-unresolved": [
       "error",
     ],
-    "import/order": Array [
+    "import/order": [
       "warn",
-      Object {
-        "alphabetize": Object {
+      {
+        "alphabetize": {
           "caseInsensitive": true,
           "order": "asc",
         },
-        "groups": Array [
+        "groups": [
           "builtin",
           "external",
         ],
       },
     ],
-    "key-spacing": Array [
+    "key-spacing": [
       "error",
     ],
-    "no-bitwise": Array [
+    "no-bitwise": [
       "error",
     ],
-    "no-duplicate-imports": Array [
+    "no-duplicate-imports": [
       "error",
     ],
-    "no-multiple-empty-lines": Array [
+    "no-multiple-empty-lines": [
       "error",
     ],
-    "no-return-await": Array [
+    "no-return-await": [
       "off",
     ],
-    "no-shadow": Array [
+    "no-shadow": [
       "off",
     ],
-    "no-trailing-spaces": Array [
+    "no-trailing-spaces": [
       "error",
     ],
-    "prettier/prettier": Array [
+    "prettier/prettier": [
       "error",
     ],
   },
-  "settings": Object {
-    "import/parsers": Object {
-      "@typescript-eslint/parser": Array [
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
         ".ts",
         ".tsx",
       ],
     },
-    "import/resolver": Object {
-      "node": Object {},
-      "typescript": Object {
+    "import/resolver": {
+      "node": {},
+      "typescript": {
         "alwaysTryTypes": true,
         "project": "./tsconfig.json",
       },

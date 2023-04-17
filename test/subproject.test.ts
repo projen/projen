@@ -137,7 +137,7 @@ test("subproject generated json files can be synthed", () => {
 
   const out = synthSnapshot(root);
   expect(out["sub-project/test.jsonc"]).toMatchInlineSnapshot(`
-    Object {
+    {
       "test": "data",
     }
   `);

@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`cleanup empty files 1`] = `
-Array [
+[
   "will-be-empty",
 ]
 `;
 
 exports[`cleanup falls back to greedy method 1`] = `
-Array [
+[
   ".gitattributes",
   ".github/workflows/pull-request-lint.yml",
   ".gitignore",
@@ -19,7 +19,7 @@ Array [
 `;
 
 exports[`cleanup only orphaned files 1`] = `
-Array [
+[
   ".gitattributes",
   ".github/workflows/pull-request-lint.yml",
   ".gitignore",
@@ -30,7 +30,7 @@ Array [
 `;
 
 exports[`cleanup uses cache file 1`] = `
-Array [
+[
   ".gitattributes",
   ".github/workflows/pull-request-lint.yml",
   ".gitignore",
