@@ -1,7 +1,7 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import { compare } from "semver";
+import { compare, prerelease as getPreRelease } from "semver";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
@@ -128,7 +128,15 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   let skipBump = false;
 
-  if (currentTags.includes(latestTag)) {
+  const latestTagPrerelease = getPreRelease(latestTag);
+  // returns true if the latest tag on this commit is on the same release branch
+  const latestTagSamePrerelease =
+    (prerelease &&
+      latestTagPrerelease &&
+      latestTagPrerelease[0] === prerelease) ||
+    (!prerelease && !latestTagPrerelease);
+
+  if (currentTags.includes(latestTag) && latestTagSamePrerelease) {
     logging.info("Skipping bump...");
     skipBump = true;
 
@@ -166,7 +174,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   exec(cmd.join(" "), { cwd });
 
   // add the tag back if it was previously removed
-  if (currentTags.includes(latestTag)) {
+  if (currentTags.includes(latestTag) && latestTagSamePrerelease) {
     exec(`git tag ${latestTag}`, { cwd });
   }
 
@@ -309,7 +317,11 @@ function determineLatestTag(options: LatestTagOptions): {
     const releaseTags = tags.filter((x) =>
       new RegExp(`^v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
     );
-    if (releaseTags && compare(releaseTags[0], prereleaseTags[0]) === 1) {
+    if (
+      releaseTags &&
+      releaseTags.length > 0 &&
+      compare(releaseTags[0], prereleaseTags[0]) === 1
+    ) {
       tags = releaseTags;
     } else {
       tags = prereleaseTags;
