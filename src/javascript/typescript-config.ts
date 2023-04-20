@@ -584,6 +584,32 @@ export class TypescriptConfig extends Component {
   }
 
   /**
+   * Resolve valid TypeScript extends paths relative to this config.
+   *
+   * @remarks
+   * This will only resolve the relative path from this config to another given
+   * an absolute path as input. Any non-absolute path or other string will be returned as is.
+   * This is to preserve manually specified relative paths as well as npm import paths.
+   *
+   * @param configPath Path to resolve against.
+   */
+  public resolveExtendsPath(configPath: string) {
+    // if not absolute assume user-defined path (or npm package).
+    if (!path.isAbsolute(configPath)) return configPath;
+    const relativeConfig = path.relative(
+      path.dirname(this.file.absolutePath),
+      configPath
+    );
+    // ensure immediate sibling files are prefixed with './'
+    // typescript figures this out, but some tools seemingly break without it (i.e, eslint).
+    const { dir, ...pathParts } = path.parse(relativeConfig);
+    const configDir = dir
+      ? path.format({ dir: dir.startsWith("..") ? "" : ".", base: dir })
+      : ".";
+    return path.format({ ...pathParts, dir: configDir });
+  }
+
+  /**
    * Array of base `tsconfig.json` paths.
    * Any absolute paths are resolved relative to this instance,
    * while any relative paths are used as is.
@@ -591,11 +617,7 @@ export class TypescriptConfig extends Component {
   public get extends(): string[] {
     return this._extends
       .toJSON()
-      .map((value) =>
-        path.isAbsolute(value)
-          ? path.relative(path.dirname(this.file.absolutePath), value)
-          : value
-      );
+      .map((value) => this.resolveExtendsPath(value));
   }
 
   /**
