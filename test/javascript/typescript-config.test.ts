@@ -68,8 +68,35 @@ describe("TypescriptConfig", () => {
       );
 
       expect(loadedConfig.error).toBeUndefined();
-      expect(loadedConfig.config).toHaveProperty("extends", "tsconfig.json");
+      expect(loadedConfig.config).toHaveProperty("extends", "./tsconfig.json");
       expect(loadedBase.config).not.toHaveProperty("extends");
+    });
+  });
+
+  test("TypeScript should allow parse package for extends.", () => {
+    withProjectDir((outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const baseConfig = new TypescriptConfig(project, {
+        compilerOptions: { outDir: "testOurDir" },
+        extends: TypescriptConfigExtends.fromPaths([
+          "@tsconfig/recommended/tsconfig.json",
+        ]),
+      });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        baseConfig.file.absolutePath,
+        ts.sys.readFile
+      );
+      expect(loadedConfig.error).toBeUndefined();
+      expect(loadedConfig.config).toHaveProperty(
+        "extends",
+        "@tsconfig/recommended/tsconfig.json"
+      );
     });
   });
 
@@ -136,13 +163,13 @@ describe("TypescriptConfig", () => {
       expect(baseConfig.error).toBeUndefined();
       expect(baseConfig.config).toHaveProperty(
         "extends",
-        "tsconfig.build.json"
+        "./tsconfig.build.json"
       );
       // expect array extends field when multiple extensions.
       expect(loadedConfig.error).toBeUndefined();
       expect(loadedConfig.config).toHaveProperty("extends", [
         "../tsconfig.json",
-        "b/d/c/tsconfig.bundler.json",
+        "./b/d/c/tsconfig.bundler.json",
         "../other/bases/tsconfig.esm.json",
       ]);
     });
