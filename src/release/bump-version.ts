@@ -1,7 +1,7 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import { compare, prerelease as getPreRelease } from "semver";
+import { compare, prerelease as getPrereleaseComponent } from "semver";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
@@ -128,15 +128,19 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   let skipBump = false;
 
-  const latestTagPrerelease = getPreRelease(latestTag);
-  // returns true if the latest tag on this commit is on the same release branch
-  const latestTagSamePrerelease =
-    (prerelease &&
-      latestTagPrerelease &&
-      latestTagPrerelease[0] === prerelease) ||
-    (!prerelease && !latestTagPrerelease);
+  // get the prerelease component(alpha, beta, pre) of the latestTag determined. Returns null if this is a regular release
+  const latestTagPrerelease = getPrereleaseComponent(latestTag);
 
-  if (currentTags.includes(latestTag) && latestTagSamePrerelease) {
+  const isLatestTagOnSameReleaseBranch =
+    (prerelease && // If we are bumping a prerelease now
+      latestTagPrerelease && // and the latest tag was also a prerelease
+      latestTagPrerelease[0] === prerelease) || // and the latest tag has the same prerelease component(alpha, beta, pre) as this prerelease
+    (!prerelease && !latestTagPrerelease); // If we are bumping a regular release( example: 1.0.5) now and also latest release was a regular release
+
+  /**
+   * Skip the bump only if the current commit is already tagged within the same branch
+   */
+  if (currentTags.includes(latestTag) && isLatestTagOnSameReleaseBranch) {
     logging.info("Skipping bump...");
     skipBump = true;
 
@@ -174,7 +178,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   exec(cmd.join(" "), { cwd });
 
   // add the tag back if it was previously removed
-  if (currentTags.includes(latestTag) && latestTagSamePrerelease) {
+  if (currentTags.includes(latestTag) && isLatestTagOnSameReleaseBranch) {
     exec(`git tag ${latestTag}`, { cwd });
   }
 
