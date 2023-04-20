@@ -520,6 +520,10 @@ export interface TypeScriptCompilerOptions {
 export class TypescriptConfigExtends {
   /**
    * Factory for creation from array of file paths.
+   *
+   * @remarks
+   * TypeScript 5.0+ is required to specify more than one value in `paths`.
+   *
    * @param paths Absolute or relative paths to base `tsconfig.json` files.
    */
   public static fromPaths(paths: string[]) {
@@ -528,6 +532,10 @@ export class TypescriptConfigExtends {
 
   /**
    * Factory for creation from array of other `TypescriptConfig` instances.
+   *
+   * @remarks
+   * TypeScript 5.0+ is required to specify more than on value in `configs`.
+   *
    * @param configs Base `TypescriptConfig` instances.
    */
   public static fromTypescriptConfigs(configs: TypescriptConfig[]) {
@@ -647,6 +655,10 @@ export class TypescriptConfig extends Component {
 
   /**
    * Extend from base `TypescriptConfig` instance.
+   *
+   * @remarks
+   * TypeScript 5.0+ is required to extend from more than one base `TypescriptConfig`.
+   *
    * @param value Base `TypescriptConfig` instance.
    */
   public addExtends(value: TypescriptConfig) {
