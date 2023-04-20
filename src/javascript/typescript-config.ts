@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as semver from "semver";
 import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
@@ -610,6 +611,27 @@ export class TypescriptConfig extends Component {
   }
 
   /**
+   * Validate usage of `extends` against current TypeScript version.
+   * @private
+   */
+  private validateExtends() {
+    // accept no extends or singular extends.
+    if (this.extends.length <= 1) return;
+    const ts = this.project.deps.tryGetDependency("typescript");
+    const tsVersion = semver.coerce(ts?.version, { loose: true });
+    // we assume latest by default, so return if not set (or not valid).
+    if (!ts || !tsVersion) return;
+    if (tsVersion.major < 5) {
+      this.project.logger.warn(
+        "TypeScript >= 5.0.0 is required to extends from more than one base config.",
+        `TypeScript Version: ${ts.version}`,
+        `File: ${this.file.absolutePath}`,
+        `Extends: ${this.extends}`
+      );
+    }
+  }
+
+  /**
    * Array of base `tsconfig.json` paths.
    * Any absolute paths are resolved relative to this instance,
    * while any relative paths are used as is.
@@ -637,5 +659,10 @@ export class TypescriptConfig extends Component {
 
   public addExclude(pattern: string) {
     this.exclude.push(pattern);
+  }
+
+  preSynthesize() {
+    super.preSynthesize();
+    this.validateExtends();
   }
 }
