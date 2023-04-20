@@ -174,4 +174,66 @@ describe("TypescriptConfig", () => {
       ]);
     });
   });
+
+  const extendsCase = (
+    tsVersion: string,
+    warns: { none: boolean; single: boolean; multi: boolean }
+  ) => {
+    return [
+      { tsVersion, extends: [], expectWarn: warns.none },
+      { tsVersion, extends: ["./tsconfig.esm.json"], expectWarn: warns.single },
+      {
+        tsVersion,
+        extends: ["./tsconfig.esm.json", "./other/tsconfig.json"],
+        expectWarn: warns.multi,
+      },
+    ];
+  };
+
+  test.each([
+    ...extendsCase("", { none: false, single: false, multi: false }),
+    ...extendsCase("typescript@*", {
+      none: false,
+      single: false,
+      multi: false,
+    }),
+    ...extendsCase("typescript@^4", {
+      none: false,
+      single: false,
+      multi: true,
+    }),
+    ...extendsCase("typescript@^5", {
+      none: false,
+      single: false,
+      multi: false,
+    }),
+  ])(
+    "Should warn when using extends with %p",
+    ({ tsVersion, extends: extendsPaths, expectWarn }) => {
+      withProjectDir((outdir) => {
+        const project = new NodeProject({
+          name: "project",
+          defaultReleaseBranch: "main",
+          outdir,
+          ...(tsVersion && { devDeps: [tsVersion] }),
+        });
+        const tsconfig = new TypescriptConfig(project, {
+          fileName: "tsconfig.json",
+          extends: TypescriptConfigExtends.fromPaths(extendsPaths),
+          compilerOptions: {},
+        });
+        const logSpy = jest.spyOn(project.logger, "warn");
+        project.synth();
+        const doExpect = expectWarn ? expect(logSpy) : expect(logSpy).not;
+        doExpect.toHaveBeenCalledWith(
+          "TypeScript >= 5.0.0 is required to extends from more than one base config.",
+          `TypeScript Version: ${
+            project.deps.tryGetDependency("typescript")?.version
+          }`,
+          `File: ${tsconfig.file.absolutePath}`,
+          `Extends: ${extendsPaths}`
+        );
+      });
+    }
+  );
 });
