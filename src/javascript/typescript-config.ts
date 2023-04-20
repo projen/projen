@@ -232,7 +232,10 @@ export interface TypeScriptCompilerOptions {
   /**
    * This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
    *
-   * @deprecated For TypeScript 5.0+ use `verbatimModuleSyntax` instead.
+   * @remarks
+   * For TypeScript 5.0+ use `verbatimModuleSyntax` instead.
+   * Posed for deprecation upon TypeScript 5.5.
+   *
    * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
    * @default "remove"
    */
