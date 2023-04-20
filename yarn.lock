@@ -1053,9 +1053,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "18.15.11"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.11.tgz#b3b790f09cb1696cffcec605de025b088fa4225f"
-  integrity sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==
+  version "18.15.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.12.tgz#833756634e78c829e1254db006468dadbb0c696b"
+  integrity sha512-Wha1UwsB3CYdqUm2PPzh/1gujGCNtWVUYF0mB00fJFoR4gTyWTDPjSm+zBF787Ahw8vSGgBja90MkgFwvB86Dg==
 
 "@types/node@^14":
   version "14.18.42"
@@ -2182,7 +2182,7 @@ defer-to-connect@^2.0.1:
   resolved "https://registry.yarnpkg.com/defer-to-connect/-/defer-to-connect-2.0.1.tgz#8016bdb4143e4632b77a3449c6236277de520587"
   integrity sha512-4tvttepXG1VaYGrRibk5EwJd1t4udunSOVMdLSAL6mId1ix438oPwPZMALY41FCijukO1L0twNcGsdzS7dHgDg==
 
-define-properties@^1.1.3, define-properties@^1.1.4:
+define-properties@^1.1.3, define-properties@^1.1.4, define-properties@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/define-properties/-/define-properties-1.2.0.tgz#52988570670c9eacedd8064f4a990f2405849bd5"
   integrity sha512-xvqAVKGfT1+UAvPwKTVw/njhdQ8ZhXK4lI0bCIuCMrp2up9nPnaDftrLtmpTazqd1o+UY4zgzU+avtMbDP+ldA==
@@ -2872,7 +2872,7 @@ function.prototype.name@^1.1.5:
     es-abstract "^1.19.0"
     functions-have-names "^1.2.2"
 
-functions-have-names@^1.2.2:
+functions-have-names@^1.2.2, functions-have-names@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
@@ -5451,13 +5451,13 @@ regenerator-runtime@^0.13.11:
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 regexp.prototype.flags@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.3.tgz#87cab30f80f66660181a3bb7bf5981a872b367ac"
-  integrity sha512-fjggEOO3slI6Wvgjwflkc4NFRCTZAu5CnNfBd5qOMYhWdn67nJBBu34/TkD++eeFmd8C9r9jfXJ27+nSiRkSUA==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.5.0.tgz#fe7ce25e7e4cca8db37b6634c8a2c7009199b9cb"
+  integrity sha512-0SutC3pNudRKgquxGoRGIz946MZVHqbNfPjBdxeOhBrdgDKlRoXmYLQN9xRbrR09ZXWeGAdPuif7egofn6v5LA==
   dependencies:
     call-bind "^1.0.2"
-    define-properties "^1.1.3"
-    functions-have-names "^1.2.2"
+    define-properties "^1.2.0"
+    functions-have-names "^1.2.3"
 
 registry-auth-token@^5.0.1:
   version "5.0.2"
@@ -6252,9 +6252,9 @@ typescript@5.x, typescript@~5.0.4:
   integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
 typescript@next:
-  version "5.1.0-dev.20230418"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230418.tgz#7ccb67d97c7de1391348ef576a42a69b48da8517"
-  integrity sha512-BfA/KV0xddF8ZCAQZxZ0FoS8p+nWKXVaa5fctXW6WNGfcYF04cXlLB6F6uf3uCVbd0iad4YdHchz3KR0722QLg==
+  version "5.1.0-dev.20230419"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230419.tgz#343118b96605711a9f94d9c43a3dec23bcdd6dbd"
+  integrity sha512-J8QfDyJDC/8fpA7fzlVBx4zSR+dGVd6afEpu6nEtplA98lcW3NHA7v9KcQ0AJ8SZGoCDLIl+8BVfiI/CkFS2fg==
 
 typescript@~3.9.10:
   version "3.9.10"
