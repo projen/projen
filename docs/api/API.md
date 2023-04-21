@@ -7997,6 +7997,14 @@ new java.MavenPackaging(project: Project, pom: Pom, options?: MavenPackagingOpti
 
 
 
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**distdir**🔹 | <code>string</code> | The directory containing the package output, relative to the project outdir.
+
+
 
 ## class MavenSample 🔹 <a id="projen-java-mavensample"></a>
 
