@@ -35,6 +35,11 @@ export interface MavenPackagingOptions {
  * Configures a maven project to produce a .jar archive with sources and javadocs.
  */
 export class MavenPackaging extends Component {
+  /**
+   * The directory containing the package output, relative to the project outdir
+   */
+  public readonly distdir: string;
+
   constructor(project: Project, pom: Pom, options: MavenPackagingOptions = {}) {
     super(project);
 
@@ -78,16 +83,16 @@ export class MavenPackaging extends Component {
       MAVEN_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
     };
 
-    const distdir = options.distdir ?? "dist/java";
+    this.distdir = options.distdir ?? "dist/java";
 
     for (const [k, v] of Object.entries(env)) {
       this.project.packageTask.env(k, v);
     }
-    this.project.packageTask.exec(`mkdir -p ${distdir}`);
+    this.project.packageTask.exec(`mkdir -p ${this.distdir}`);
     this.project.packageTask.exec(
-      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`
+      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${this.distdir}`
     );
 
-    project.gitignore.exclude(distdir);
+    project.gitignore.exclude(this.distdir);
   }
 }
