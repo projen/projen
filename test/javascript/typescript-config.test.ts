@@ -226,7 +226,7 @@ describe("TypescriptConfig", () => {
         project.synth();
         const doExpect = expectWarn ? expect(logSpy) : expect(logSpy).not;
         doExpect.toHaveBeenCalledWith(
-          "TypeScript >= 5.0.0 is required to extends from more than one base config.",
+          "TypeScript < 5.0.0 is can only extend from a single base config.",
           `TypeScript Version: ${
             project.deps.tryGetDependency("typescript")?.version
           }`,
