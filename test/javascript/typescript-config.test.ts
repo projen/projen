@@ -1,3 +1,4 @@
+import * as semver from "semver";
 import * as ts from "typescript";
 import {
   NodeProject,
@@ -5,6 +6,7 @@ import {
   TypescriptConfigExtends,
   TypeScriptModuleResolution,
 } from "../../src/javascript";
+import * as utils from "../../src/util";
 import { withProjectDir } from "../util";
 
 describe("TypescriptConfig", () => {
@@ -177,26 +179,77 @@ describe("TypescriptConfig", () => {
 
   const extendsCase = (
     tsVersion: string,
-    warns: { none: boolean; single: boolean; multi: boolean }
+    warns: { none: boolean; single: boolean; multi: boolean },
+    tscVersion?: string,
+    expectTscCalled?: boolean
   ) => {
     return [
-      { tsVersion, extends: [], expectWarn: warns.none },
-      { tsVersion, extends: ["./tsconfig.esm.json"], expectWarn: warns.single },
+      {
+        tsVersion,
+        extends: [],
+        tscVersion,
+        expectWarn: warns.none,
+        expectTscCalled: false,
+      },
+      {
+        tsVersion,
+        extends: ["./tsconfig.esm.json"],
+        tscVersion,
+        expectWarn: warns.single,
+        expectTscCalled: false,
+      },
       {
         tsVersion,
         extends: ["./tsconfig.esm.json", "./other/tsconfig.json"],
+        tscVersion,
         expectWarn: warns.multi,
+        expectTscCalled: Boolean(expectTscCalled),
       },
     ];
   };
 
   test.each([
-    ...extendsCase("", { none: false, single: false, multi: false }),
-    ...extendsCase("typescript@*", {
-      none: false,
-      single: false,
-      multi: false,
-    }),
+    // no dependency, no tsc
+    ...extendsCase(
+      "",
+      { none: false, single: false, multi: false },
+      undefined,
+      true
+    ),
+    // no dependency, tsc 4.5.0
+    ...extendsCase(
+      "",
+      { none: false, single: false, multi: true },
+      "Version 4.5.0",
+      true
+    ),
+    // no dependency, tsc 5.0.0
+    ...extendsCase(
+      "",
+      { none: false, single: false, multi: false },
+      "Version 5.0.0",
+      true
+    ),
+    ...extendsCase(
+      "typescript@*",
+      {
+        none: false,
+        single: false,
+        multi: true,
+      },
+      "Version 4.5.0",
+      true
+    ),
+    ...extendsCase(
+      "typescript@*",
+      {
+        none: false,
+        single: false,
+        multi: false,
+      },
+      "Version 5.0.0",
+      true
+    ),
     ...extendsCase("typescript@^4", {
       none: false,
       single: false,
@@ -209,7 +262,13 @@ describe("TypescriptConfig", () => {
     }),
   ])(
     "Should warn when using extends with %p",
-    ({ tsVersion, extends: extendsPaths, expectWarn }) => {
+    ({
+      tsVersion,
+      tscVersion,
+      extends: extendsPaths,
+      expectWarn,
+      expectTscCalled,
+    }) => {
       withProjectDir((outdir) => {
         const project = new NodeProject({
           name: "project",
@@ -223,16 +282,29 @@ describe("TypescriptConfig", () => {
           compilerOptions: {},
         });
         const logSpy = jest.spyOn(project.logger, "warn");
+        const execUndefinedSpy = jest.spyOn(utils, "execOrUndefined");
+        if (tscVersion) {
+          execUndefinedSpy.mockReturnValueOnce(tscVersion);
+        }
         project.synth();
         const doExpect = expectWarn ? expect(logSpy) : expect(logSpy).not;
+        const doExpectTsc = expectTscCalled
+          ? expect(execUndefinedSpy)
+          : expect(execUndefinedSpy).not;
+        const versFromDep = semver.coerce(
+          project.deps.tryGetDependency("typescript")?.version,
+          { loose: true }
+        );
+        const vers = expectTscCalled
+          ? tscVersion?.split?.(" ")?.[1]
+          : versFromDep;
         doExpect.toHaveBeenCalledWith(
-          "TypeScript < 5.0.0 is can only extend from a single base config.",
-          `TypeScript Version: ${
-            project.deps.tryGetDependency("typescript")?.version
-          }`,
+          "TypeScript < 5.0.0 can only extend from a single base config.",
+          `TypeScript Version: ${vers}`,
           `File: ${tsconfig.file.absolutePath}`,
           `Extends: ${extendsPaths}`
         );
+        doExpectTsc.toHaveBeenCalled();
       });
     }
   );
