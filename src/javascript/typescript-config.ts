@@ -634,7 +634,7 @@ export class TypescriptConfig extends Component {
     if (!ts || !tsVersion) return;
     if (tsVersion.major < 5) {
       this.project.logger.warn(
-        "TypeScript >= 5.0.0 is required to extends from more than one base config.",
+        "TypeScript < 5.0.0 is can only extend from a single base config.",
         `TypeScript Version: ${ts.version}`,
         `File: ${this.file.absolutePath}`,
         `Extends: ${this.extends}`
