@@ -1,9 +1,11 @@
 import * as path from "path";
 import * as semver from "semver";
 import { NodeProject } from ".";
+import { tryFindLocalBin } from "./util";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
+import { execOrUndefined } from "../util";
 
 export interface TypescriptConfigOptions {
   /**
@@ -622,20 +624,39 @@ export class TypescriptConfig extends Component {
   }
 
   /**
+   * Attempt to resolve project TypeScript version.
+   * @private
+   */
+  private resolveTypeScriptVersion() {
+    const ts = this.project.deps.tryGetDependency("typescript");
+    const tsVersion = semver.coerce(ts?.version, { loose: true });
+    // early exit if we found dependency.
+    if (tsVersion) return tsVersion;
+    // else, try looking for tsc executable.
+    const localTsc =
+      tryFindLocalBin("tsc", { cwd: this.project.outdir }) ?? "tsc";
+    const tscVersionStdout = execOrUndefined(localTsc, {
+      cwd: this.project.outdir,
+    });
+    if (!tscVersionStdout) return;
+    // tsc --version gives: "Version X.X.X"
+    const version = tscVersionStdout.match(/\d+(\.\d+)*/)?.[0];
+    return semver.coerce(version, { loose: true });
+  }
+
+  /**
    * Validate usage of `extends` against current TypeScript version.
    * @private
    */
   private validateExtends() {
     // accept no extends or singular extends.
     if (this.extends.length <= 1) return;
-    const ts = this.project.deps.tryGetDependency("typescript");
-    const tsVersion = semver.coerce(ts?.version, { loose: true });
-    // we assume latest by default, so return if not set (or not valid).
-    if (!ts || !tsVersion) return;
+    const tsVersion = this.resolveTypeScriptVersion();
+    if (!tsVersion) return;
     if (tsVersion.major < 5) {
       this.project.logger.warn(
         "TypeScript < 5.0.0 is can only extend from a single base config.",
-        `TypeScript Version: ${ts.version}`,
+        `TypeScript Version: ${tsVersion.format()}`,
         `File: ${this.file.absolutePath}`,
         `Extends: ${this.extends}`
       );
