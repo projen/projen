@@ -13,6 +13,7 @@
     ".gitpod.yml",
     ".markdownlint.json",
     ".mergify.yml",
+    ".npmrc",
     ".prettierignore",
     ".prettierrc.json",
     ".projen/deps.json",

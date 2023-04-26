@@ -6,11 +6,12 @@ import { GithubCredentials } from "../../src/github";
 import { secretToString } from "../../src/github/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
+  CodeArtifactAuthProvider,
+  NodePackage,
+  NodePackageManager,
   NodeProject,
   NodeProjectOptions,
-  NodePackage,
   NpmAccess,
-  CodeArtifactAuthProvider,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
@@ -1488,4 +1489,24 @@ describe("scoped private packages", () => {
       ],
     });
   });
+});
+
+test("sets resolution-mode to highest by default for pnpm", () => {
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const output = synthSnapshot(project);
+  expect(output[".npmrc"]).toContain("resolution-mode=highest");
+});
+
+test("can override resolution-mode to lowest for pnpm", () => {
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.PNPM,
+  });
+  project.npmrc.addConfig("resolution-mode", "lowest");
+
+  const output = synthSnapshot(project);
+  expect(output[".npmrc"]).toContain("resolution-mode=lowest");
+  expect(output[".npmrc"]).not.toContain("resolution-mode=highest");
 });

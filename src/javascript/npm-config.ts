@@ -14,6 +14,12 @@ export interface NpmConfigOptions {
    * @default - use npmjs default registry
    */
   readonly registry?: string;
+
+  /**
+   * Omits empty objects and arrays.
+   * @default false
+   */
+  readonly omitEmpty?: boolean;
 }
 
 /**
@@ -29,7 +35,10 @@ export class NpmConfig extends Component {
   constructor(project: NodeProject, options: NpmConfigOptions = {}) {
     super(project);
 
-    new IniFile(project, ".npmrc", { obj: this.config });
+    new IniFile(project, ".npmrc", {
+      obj: this.config,
+      omitEmpty: options.omitEmpty,
+    });
 
     if (options.registry) {
       this.addRegistry(options.registry);
