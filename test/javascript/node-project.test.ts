@@ -1508,4 +1508,5 @@ test("can override resolution-mode to lowest for pnpm", () => {
 
   const output = synthSnapshot(project);
   expect(output[".npmrc"]).toContain("resolution-mode=lowest");
+  expect(output[".npmrc"]).not.toContain("resolution-mode=highest");
 });
