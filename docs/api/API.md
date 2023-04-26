@@ -9069,6 +9069,7 @@ Name | Type | Description
 **bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
 **manifest**⚠️ | <code>any</code> | <span></span>
+**npmrc**🔹 | <code>[javascript.NpmConfig](#projen-javascript-npmconfig)</code> | The .npmrc file.
 **package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -9333,6 +9334,7 @@ new javascript.NpmConfig(project: NodeProject, options?: NpmConfigOptions)
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)</code>)  *No description*
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
   * **registry** (<code>string</code>)  URL of the registry mirror to use. __*Default*__: use npmjs default registry
 
 
@@ -17891,6 +17893,7 @@ Options to configure the local NPM config.
 
 Name | Type | Description 
 -----|------|-------------
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **registry**?🔹 | <code>string</code> | URL of the registry mirror to use.<br/>__*Default*__: use npmjs default registry
 
 

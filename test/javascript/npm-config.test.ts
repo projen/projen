@@ -66,5 +66,7 @@ class TestNodeProject extends NodeProject {
       defaultReleaseBranch: "master",
       ...options,
     });
+    // Remove default .npmrc
+    this.tryRemoveFile(".npmrc");
   }
 }
