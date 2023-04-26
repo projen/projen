@@ -1,3 +1,5 @@
+import { writeFileSync, mkdirSync } from "fs";
+import * as path from "path";
 import * as semver from "semver";
 import * as ts from "typescript";
 import {
@@ -6,7 +8,6 @@ import {
   TypescriptConfigExtends,
   TypeScriptModuleResolution,
 } from "../../src/javascript";
-import * as utils from "../../src/util";
 import { withProjectDir } from "../util";
 
 describe("TypescriptConfig", () => {
@@ -180,56 +181,37 @@ describe("TypescriptConfig", () => {
   const extendsCase = (
     tsVersion: string,
     warns: { none: boolean; single: boolean; multi: boolean },
-    tscVersion?: string,
-    expectTscCalled?: boolean
+    manifestVersion?: string
   ) => {
     return [
       {
         tsVersion,
         extends: [],
-        tscVersion,
+        manifestVersion,
         expectWarn: warns.none,
-        expectTscCalled: false,
       },
       {
         tsVersion,
         extends: ["./tsconfig.esm.json"],
-        tscVersion,
+        manifestVersion,
         expectWarn: warns.single,
-        expectTscCalled: false,
       },
       {
         tsVersion,
         extends: ["./tsconfig.esm.json", "./other/tsconfig.json"],
-        tscVersion,
+        manifestVersion,
         expectWarn: warns.multi,
-        expectTscCalled: Boolean(expectTscCalled),
       },
     ];
   };
 
   test.each([
     // no dependency, no tsc
-    ...extendsCase(
-      "",
-      { none: false, single: false, multi: false },
-      undefined,
-      true
-    ),
+    ...extendsCase("", { none: false, single: false, multi: false }, undefined),
     // no dependency, tsc 4.5.0
-    ...extendsCase(
-      "",
-      { none: false, single: false, multi: true },
-      "Version 4.5.0",
-      true
-    ),
+    ...extendsCase("", { none: false, single: false, multi: true }, "4.5.0"),
     // no dependency, tsc 5.0.0
-    ...extendsCase(
-      "",
-      { none: false, single: false, multi: false },
-      "Version 5.0.0",
-      true
-    ),
+    ...extendsCase("", { none: false, single: false, multi: false }, "5.0.0"),
     ...extendsCase(
       "typescript@*",
       {
@@ -237,8 +219,7 @@ describe("TypescriptConfig", () => {
         single: false,
         multi: true,
       },
-      "Version 4.5.0",
-      true
+      "4.5.0"
     ),
     ...extendsCase(
       "typescript@*",
@@ -247,8 +228,7 @@ describe("TypescriptConfig", () => {
         single: false,
         multi: false,
       },
-      "Version 5.0.0",
-      true
+      "5.0.0"
     ),
     ...extendsCase("typescript@^4", {
       none: false,
@@ -262,13 +242,7 @@ describe("TypescriptConfig", () => {
     }),
   ])(
     "Should warn when using extends with %p",
-    ({
-      tsVersion,
-      tscVersion,
-      extends: extendsPaths,
-      expectWarn,
-      expectTscCalled,
-    }) => {
+    ({ tsVersion, manifestVersion, extends: extendsPaths, expectWarn }) => {
       withProjectDir((outdir) => {
         const project = new NodeProject({
           name: "project",
@@ -282,29 +256,30 @@ describe("TypescriptConfig", () => {
           compilerOptions: {},
         });
         const logSpy = jest.spyOn(project.logger, "warn");
-        const execUndefinedSpy = jest.spyOn(utils, "execOrUndefined");
-        if (tscVersion) {
-          execUndefinedSpy.mockReturnValueOnce(tscVersion);
+        if (manifestVersion) {
+          const mockManifestPath = path.join(
+            outdir,
+            "node_modules/typescript/package.json"
+          );
+          mkdirSync(path.dirname(mockManifestPath), { recursive: true });
+          writeFileSync(
+            mockManifestPath,
+            JSON.stringify({ name: "typescript", version: manifestVersion })
+          );
         }
         project.synth();
         const doExpect = expectWarn ? expect(logSpy) : expect(logSpy).not;
-        const doExpectTsc = expectTscCalled
-          ? expect(execUndefinedSpy)
-          : expect(execUndefinedSpy).not;
         const versFromDep = semver.coerce(
           project.deps.tryGetDependency("typescript")?.version,
           { loose: true }
         );
-        const vers = expectTscCalled
-          ? tscVersion?.split?.(" ")?.[1]
-          : versFromDep;
+        const vers = manifestVersion ?? versFromDep;
         doExpect.toHaveBeenCalledWith(
           "TypeScript < 5.0.0 can only extend from a single base config.",
           `TypeScript Version: ${vers}`,
           `File: ${tsconfig.file.absolutePath}`,
           `Extends: ${extendsPaths}`
         );
-        doExpectTsc.toHaveBeenCalled();
       });
     }
   );
