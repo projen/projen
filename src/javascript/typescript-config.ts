@@ -1,11 +1,10 @@
+import { readFileSync } from "fs";
 import * as path from "path";
 import * as semver from "semver";
 import { NodeProject } from ".";
-import { tryFindLocalBin } from "./util";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
-import { execOrUndefined } from "../util";
 
 export interface TypescriptConfigOptions {
   /**
@@ -632,16 +631,16 @@ export class TypescriptConfig extends Component {
     const tsVersion = semver.coerce(ts?.version, { loose: true });
     // early exit if we found dependency.
     if (tsVersion) return tsVersion;
-    // else, try looking for tsc executable.
-    const localTsc =
-      tryFindLocalBin("tsc", { cwd: this.project.outdir }) ?? "tsc";
-    const tscVersionStdout = execOrUndefined(localTsc, {
-      cwd: this.project.outdir,
-    });
-    if (!tscVersionStdout) return;
-    // tsc --version gives: "Version X.X.X"
-    const version = tscVersionStdout.match(/\d+(\.\d+)*/)?.[0];
-    return semver.coerce(version, { loose: true });
+    try {
+      const tsManifest = require.resolve("typescript/package.json", {
+        paths: [this.project.outdir],
+      });
+      const manifest = JSON.parse(readFileSync(tsManifest).toString());
+      return semver.coerce(manifest.version, { loose: true });
+    } catch (e) {
+      // no typescript found anywhere in resolution path.
+      return undefined;
+    }
   }
 
   /**
