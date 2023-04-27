@@ -1,12 +1,17 @@
 import {
-  readFileSync,
   accessSync,
   constants,
   existsSync,
   readdirSync,
+  readFileSync,
 } from "fs";
 import { join, resolve } from "path";
-import { extractCodeArtifactDetails, minVersion } from "./util";
+import * as semver from "semver";
+import {
+  extractCodeArtifactDetails,
+  minVersion,
+  tryResolveDependencyVersion,
+} from "./util";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { Dependencies, DependencyType } from "../dependencies";
@@ -847,6 +852,28 @@ export class NodePackage extends Component {
     // return a lazy function so that dependencies include ones that were
     // added post project instantiation (i.e using project.addDeps)
     return lazy as unknown as string;
+  }
+
+  /**
+   * Attempt to resolve the currently installed version for a given dependency.
+   *
+   * @remarks
+   * This method will first look through the current project's dependencies.
+   * If found and semantically valid (not '*'), that will be used.
+   * Otherwise, it will fall back to locating a `package.json` manifest for the dependency
+   * through node's internal resolution reading the version from there.
+   *
+   * @param dependencyName Dependency to resolve for.
+   */
+  public tryResolveDependencyVersion(dependencyName: string) {
+    try {
+      const fromDeps = this.project.deps.tryGetDependency(dependencyName);
+      const version = semver.coerce(fromDeps?.version, { loose: true });
+      if (version) return version.format();
+    } catch (e) {}
+    return tryResolveDependencyVersion(dependencyName, {
+      paths: [this.project.outdir],
+    });
   }
 
   // ---------------------------------------------------------------------------------------
