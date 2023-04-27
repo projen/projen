@@ -8,6 +8,7 @@ import {
   Jest,
   NodeProject,
   NodeProjectOptions,
+  Transform,
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
@@ -21,6 +22,7 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge } from "../util";
+import tsJestPackageJson = require('ts-jest/package.json');
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -450,14 +452,22 @@ export class TypeScriptProject extends NodeProject {
     if (!jest.config.preset) {
       jest.config.preset = "ts-jest";
     }
-    jest.config.globals = deepMerge([
-      {
-        "ts-jest": {
-          tsconfig: this.tsconfigDev.fileName,
+    if (semver.gte(tsJestPackageJson.version, "29.0.0")) {
+      jest.config.transform = {
+        "^.+\\.(ts|tsx)$": new Transform("ts-jest", {
+          tsconfig: "tsconfig.dev.json",
+        }),
+      };
+    } else {
+      jest.config.globals = deepMerge([
+        {
+          "ts-jest": {
+            tsconfig: this.tsconfigDev.fileName,
+          },
         },
-      },
-      jest.config.globals,
-    ]);
+        jest.config.globals,
+      ]);
+    }
   }
 }
 

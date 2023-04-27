@@ -1,3 +1,5 @@
+import * as semver from "semver";
+import * as tsJestPackageJson from "ts-jest/package.json";
 import { TaskRuntime } from "../../src";
 import { PROJEN_RC } from "../../src/common";
 import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
@@ -266,11 +268,25 @@ describe("jestConfig", () => {
         },
       },
     });
+    const expectedTransformConfig = {
+      "^.+\\.(ts|tsx)$": [
+        "ts-jest",
+        {
+          tsconfig: "tsconfig.dev.json",
+        },
+      ],
+    };
     const snapshot = synthSnapshot(prj);
     const jest = snapshot["package.json"].jest;
+    if (semver.gte(tsJestPackageJson.version, "29.0.0")) {
+      expect(jest.transform).toEqual(expectedTransformConfig);
+    } else {
+      expect(jest.globals["ts-jest"].tsconfig).toStrictEqual(
+        "tsconfig.dev.json"
+      );
+      expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+    }
     expect(jest.preset).toStrictEqual("ts-jest");
-    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("tsconfig.dev.json");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
   });
 
   test("overrides default values", () => {
