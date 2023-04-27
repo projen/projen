@@ -869,7 +869,9 @@ export class NodePackage extends Component {
     try {
       const fromDeps = this.project.deps.tryGetDependency(dependencyName);
       const version = semver.coerce(fromDeps?.version, { loose: true });
-      if (version) return version.format();
+      if (version) {
+        return version.format();
+      }
     } catch {}
     return tryResolveDependencyVersion(dependencyName, {
       paths: [this.project.outdir],
