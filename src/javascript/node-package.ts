@@ -1303,7 +1303,7 @@ export class NodePackage extends Component {
         let desiredVersion = currentDefinition;
 
         if (currentDefinition === "*") {
-          const resolvedVersion = this.tryResolveDependencyVersion(name);
+          const resolvedVersion = tryResolveDependencyVersion(name);
           if (!resolvedVersion) {
             this.project.logger.warn(
               `unable to resolve version for ${name} from installed modules`
