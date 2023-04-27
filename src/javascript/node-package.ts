@@ -1301,20 +1301,14 @@ export class NodePackage extends Component {
         let desiredVersion = currentDefinition;
 
         if (currentDefinition === "*") {
-          try {
-            const modulePath = require.resolve(`${name}/package.json`, {
-              paths: [outdir],
-            });
-            const module = JSON.parse(readFileSync(modulePath, "utf-8"));
-            desiredVersion = `^${module.version}`;
-          } catch (e) {}
-
-          if (!desiredVersion) {
+          const resolvedVersion = this.tryResolveDependencyVersion(name);
+          if (!resolvedVersion) {
             this.project.logger.warn(
               `unable to resolve version for ${name} from installed modules`
             );
             continue;
           }
+          desiredVersion = `^${resolvedVersion}`;
         }
 
         if (currentDefinition !== desiredVersion) {
