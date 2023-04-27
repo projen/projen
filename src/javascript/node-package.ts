@@ -865,7 +865,9 @@ export class NodePackage extends Component {
    *
    * @param dependencyName Dependency to resolve for.
    */
-  public tryResolveDependencyVersion(dependencyName: string) {
+  public tryResolveDependencyVersion(
+    dependencyName: string
+  ): string | undefined {
     try {
       const fromDeps = this.project.deps.tryGetDependency(dependencyName);
       const version = semver.coerce(fromDeps?.version, { loose: true });
