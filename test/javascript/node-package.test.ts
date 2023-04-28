@@ -533,3 +533,23 @@ test("typesVersions is not managed by projen, but can be manipulated", () => {
     ">=4.0": { "*": ["ts4.0/*"] },
   });
 });
+
+test("tryResolveDependencyVersion", () => {
+  jest
+    .spyOn(TaskRuntime.prototype, "runTask")
+    .mockImplementation(function (this: TaskRuntime, command) {
+      expect(command).toMatch("install");
+      mockYarnInstall(this.workdir, { ms: "2.1.3" });
+    });
+  const outdir = mkdtemp();
+  const project = new TestProject({ outdir });
+
+  const pkg = new NodePackage(project);
+  pkg.addDeps("typescript@5.0.0", "ms@*");
+  project.synth();
+
+  expect(pkg.tryResolveDependencyVersion("typescript")).toEqual("5.0.0");
+  expect(project.deps.tryGetDependency("ms")?.version).toEqual("*");
+  expect(pkg.tryResolveDependencyVersion("ms")).toEqual("2.1.3");
+  expect(pkg.tryResolveDependencyVersion("foo")).toEqual(undefined);
+});

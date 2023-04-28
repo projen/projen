@@ -1,12 +1,17 @@
 import {
-  readFileSync,
   accessSync,
   constants,
   existsSync,
   readdirSync,
+  readFileSync,
 } from "fs";
 import { join, resolve } from "path";
-import { extractCodeArtifactDetails, minVersion } from "./util";
+import * as semver from "semver";
+import {
+  extractCodeArtifactDetails,
+  minVersion,
+  tryResolveDependencyVersion,
+} from "./util";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { Dependencies, DependencyType } from "../dependencies";
@@ -849,6 +854,32 @@ export class NodePackage extends Component {
     return lazy as unknown as string;
   }
 
+  /**
+   * Attempt to resolve the currently installed version for a given dependency.
+   *
+   * @remarks
+   * This method will first look through the current project's dependencies.
+   * If found and semantically valid (not '*'), that will be used.
+   * Otherwise, it will fall back to locating a `package.json` manifest for the dependency
+   * through node's internal resolution reading the version from there.
+   *
+   * @param dependencyName Dependency to resolve for.
+   */
+  public tryResolveDependencyVersion(
+    dependencyName: string
+  ): string | undefined {
+    try {
+      const fromDeps = this.project.deps.tryGetDependency(dependencyName);
+      const version = semver.coerce(fromDeps?.version, { loose: true });
+      if (version) {
+        return version.format();
+      }
+    } catch {}
+    return tryResolveDependencyVersion(dependencyName, {
+      paths: [this.project.outdir],
+    });
+  }
+
   // ---------------------------------------------------------------------------------------
 
   public preSynthesize() {
@@ -1274,20 +1305,18 @@ export class NodePackage extends Component {
         let desiredVersion = currentDefinition;
 
         if (currentDefinition === "*") {
-          try {
-            const modulePath = require.resolve(`${name}/package.json`, {
-              paths: [outdir],
-            });
-            const module = JSON.parse(readFileSync(modulePath, "utf-8"));
-            desiredVersion = `^${module.version}`;
-          } catch (e) {}
-
-          if (!desiredVersion) {
+          // we already know we don't have the version in project `deps`,
+          // so skip straight to checking manifest.
+          const resolvedVersion = tryResolveDependencyVersion(name, {
+            paths: [this.project.outdir],
+          });
+          if (!resolvedVersion) {
             this.project.logger.warn(
               `unable to resolve version for ${name} from installed modules`
             );
             continue;
           }
+          desiredVersion = `^${resolvedVersion}`;
         }
 
         if (currentDefinition !== desiredVersion) {

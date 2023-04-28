@@ -8915,6 +8915,19 @@ setScript(name: string, command: string): void
 
 
 
+#### tryResolveDependencyVersion(dependencyName)🔹 <a id="projen-javascript-nodepackage-tryresolvedependencyversion"></a>
+
+Attempt to resolve the currently installed version for a given dependency.
+
+```ts
+tryResolveDependencyVersion(dependencyName: string): string
+```
+
+* **dependencyName** (<code>string</code>)  Dependency to resolve for.
+
+__Returns__:
+* <code>string</code>
+
 
 
 ## class NodeProject 🔹 <a id="projen-javascript-nodeproject"></a>

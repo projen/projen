@@ -1,3 +1,4 @@
+import { readFileSync } from "fs";
 import { basename, dirname, extname, join, sep } from "path";
 import * as semver from "semver";
 
@@ -39,5 +40,30 @@ export function minVersion(version: string): string | undefined {
     return semver.minVersion(version)?.version;
   } else {
     return version;
+  }
+}
+
+/**
+ * Attempt to resolve the installed version of a given dependency.
+ * @param dependencyName Name of dependency.
+ * @param options Optional options passed through to `require.resolve`.
+ */
+export function tryResolveDependencyVersion(
+  dependencyName: string,
+  options?: { paths: string[] }
+): string | undefined {
+  const manifestId = `${dependencyName}/package.json`;
+  try {
+    const manifestPath = require.resolve(manifestId, options);
+    // cannot just `require('dependency/package.json')` here because
+    // `options.paths` may not overlap with this node proc's resolution paths.
+    const manifest = JSON.parse(
+      readFileSync(manifestPath, "utf-8").toString()
+    ) as {
+      version: string;
+    };
+    return manifest.version;
+  } catch (e) {
+    return undefined;
   }
 }
