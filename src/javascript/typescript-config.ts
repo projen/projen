@@ -576,14 +576,7 @@ export class TypescriptConfig extends Component {
     this.file = new JsonFile(project, fileName, {
       allowComments: true,
       obj: {
-        extends: () =>
-          // use string value for singular extension for TS<5.0 support;
-          // omit if no extensions.
-          this.extends.length === 1
-            ? this.extends[0]
-            : this.extends.length
-            ? this.extends
-            : undefined,
+        extends: () => this.renderExtends(),
         compilerOptions: this.compilerOptions,
         include: () => this.include,
         exclude: () => this.exclude,
@@ -593,6 +586,20 @@ export class TypescriptConfig extends Component {
     if (project instanceof NodeProject) {
       project.npmignore?.exclude(`/${fileName}`);
     }
+  }
+
+  /**
+   * Render appropriate value for `extends` field.
+   * @private
+   */
+  private renderExtends(): string | string[] | undefined {
+    if (this.extends.length <= 1) {
+      // render string value when only one extension (TS<5.0);
+      // omit if no extensions.
+      return this.extends[0];
+    }
+    // render many extensions as array (TS>=5.0)
+    return this.extends;
   }
 
   /**
