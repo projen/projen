@@ -1,3 +1,5 @@
+import * as path from "path";
+import * as semver from "semver";
 import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
@@ -8,6 +10,12 @@ export interface TypescriptConfigOptions {
    * @default "tsconfig.json"
    */
   readonly fileName?: string;
+
+  /**
+   * Base `tsconfig.json` configuration(s) to inherit from.
+   */
+  readonly extends?: TypescriptConfigExtends;
+
   /**
    * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
    *
@@ -61,6 +69,13 @@ export enum TypeScriptModuleResolution {
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
   NODE_NEXT = "nodenext",
+
+  /**
+   * Resolution strategy which attempts to mimic resolution patterns of modern bundlers; from TypeScript 5.0 onwards.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#moduleResolution
+   */
+  BUNDLER = "bundler",
 }
 
 /**
@@ -129,6 +144,22 @@ export interface TypeScriptCompilerOptions {
   readonly allowJs?: boolean;
 
   /**
+   * Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`).
+   * Requires `noEmit` or `emitDeclarationOnly`.
+   *
+   * @default undefined
+   */
+  readonly allowImportingTsExtensions?: boolean;
+
+  /**
+   * Suppress arbitrary extension import errors with the assumption that a bundler will be handling it.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#allowArbitraryExtensions
+   * @default undefined
+   */
+  readonly allowArbitraryExtensions?: boolean;
+
+  /**
    * Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict”
    * for each source file.
    *
@@ -147,6 +178,14 @@ export interface TypeScriptCompilerOptions {
    *
    */
   readonly declaration?: boolean;
+
+  /**
+   * List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#customConditions
+   * @default undefined
+   */
+  readonly customConditions?: string[];
 
   /**
    * Emit __importStar and __importDefault helpers for runtime babel
@@ -183,7 +222,19 @@ export interface TypeScriptCompilerOptions {
   readonly forceConsistentCasingInFileNames?: boolean;
 
   /**
+   * Simplifies TypeScript's handling of import/export `type` modifiers.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
+   * @default undefined
+   */
+  readonly verbatimModuleSyntax?: boolean;
+
+  /**
    * This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
+   *
+   * @remarks
+   * For TypeScript 5.0+ use `verbatimModuleSyntax` instead.
+   * Posed for deprecation upon TypeScript 5.5.
    *
    * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
    * @default "remove"
@@ -408,6 +459,20 @@ export interface TypeScriptCompilerOptions {
   readonly stripInternal?: boolean;
 
   /**
+   * Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`.
+   *
+   * @default true
+   */
+  readonly resolvePackageJsonExports?: boolean;
+
+  /**
+   * Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor.
+   *
+   * @default undefined
+   */
+  readonly resolvePackageJsonImports?: boolean;
+
+  /**
    * Modern browsers support all ES6 features, so ES6 is a good choice. You might choose to set
    * a lower target if your code is deployed to older environments, or a higher target if your
    * code is guaranteed to run in newer environments.
@@ -448,7 +513,49 @@ export interface TypeScriptCompilerOptions {
   readonly paths?: { [key: string]: string[] };
 }
 
+/**
+ * Container for `TypescriptConfig` `tsconfig.json` base configuration(s).
+ * Extending from more than one base config file requires TypeScript 5.0+.
+ */
+export class TypescriptConfigExtends {
+  /**
+   * Factory for creation from array of file paths.
+   *
+   * @remarks
+   * TypeScript 5.0+ is required to specify more than one value in `paths`.
+   *
+   * @param paths Absolute or relative paths to base `tsconfig.json` files.
+   */
+  public static fromPaths(paths: string[]) {
+    return new TypescriptConfigExtends(paths);
+  }
+
+  /**
+   * Factory for creation from array of other `TypescriptConfig` instances.
+   *
+   * @remarks
+   * TypeScript 5.0+ is required to specify more than on value in `configs`.
+   *
+   * @param configs Base `TypescriptConfig` instances.
+   */
+  public static fromTypescriptConfigs(configs: TypescriptConfig[]) {
+    const paths = configs.map((config) => config.file.absolutePath);
+    return TypescriptConfigExtends.fromPaths(paths);
+  }
+
+  private readonly bases: string[];
+
+  private constructor(bases: string[]) {
+    this.bases = bases;
+  }
+
+  public toJSON(): string[] {
+    return this.bases;
+  }
+}
+
 export class TypescriptConfig extends Component {
+  private _extends: TypescriptConfigExtends;
   public readonly compilerOptions: TypeScriptCompilerOptions;
   public readonly include: string[];
   public readonly exclude: string[];
@@ -459,6 +566,7 @@ export class TypescriptConfig extends Component {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
 
+    this._extends = options.extends ?? TypescriptConfigExtends.fromPaths([]);
     this.include = options.include ?? ["**/*.ts"];
     this.exclude = options.exclude ?? ["node_modules"];
     this.fileName = fileName;
@@ -468,6 +576,7 @@ export class TypescriptConfig extends Component {
     this.file = new JsonFile(project, fileName, {
       allowComments: true,
       obj: {
+        extends: () => this.renderExtends(),
         compilerOptions: this.compilerOptions,
         include: () => this.include,
         exclude: () => this.exclude,
@@ -479,11 +588,108 @@ export class TypescriptConfig extends Component {
     }
   }
 
+  /**
+   * Render appropriate value for `extends` field.
+   * @private
+   */
+  private renderExtends(): string | string[] | undefined {
+    if (this.extends.length <= 1) {
+      // render string value when only one extension (TS<5.0);
+      // omit if no extensions.
+      return this.extends[0];
+    }
+    // render many extensions as array (TS>=5.0)
+    return this.extends;
+  }
+
+  /**
+   * Resolve valid TypeScript extends paths relative to this config.
+   *
+   * @remarks
+   * This will only resolve the relative path from this config to another given
+   * an absolute path as input. Any non-absolute path or other string will be returned as is.
+   * This is to preserve manually specified relative paths as well as npm import paths.
+   *
+   * @param configPath Path to resolve against.
+   */
+  public resolveExtendsPath(configPath: string): string {
+    // if not absolute assume user-defined path (or npm package).
+    if (!path.isAbsolute(configPath)) return configPath;
+    const relativeConfig = path.relative(
+      path.dirname(this.file.absolutePath),
+      configPath
+    );
+    // ensure immediate sibling files are prefixed with './'
+    // typescript figures this out, but some tools seemingly break without it (i.e, eslint).
+    const { dir, ...pathParts } = path.parse(relativeConfig);
+    const configDir = dir
+      ? path.format({ dir: dir.startsWith("..") ? "" : ".", base: dir })
+      : ".";
+    return path.format({ ...pathParts, dir: configDir });
+  }
+
+  /**
+   * Validate usage of `extends` against current TypeScript version.
+   * @private
+   */
+  private validateExtends() {
+    const project = this.project;
+    const hasOneOrNoneExtends = this.extends.length <= 1;
+    const isNodeProject = project instanceof NodeProject;
+    if (hasOneOrNoneExtends || !isNodeProject) {
+      // always accept no extends or singular extends.
+      return;
+    }
+    const tsVersion = semver.coerce(
+      project.package.tryResolveDependencyVersion("typescript"),
+      { loose: true }
+    );
+    if (tsVersion && tsVersion.major < 5) {
+      this.project.logger.warn(
+        "TypeScript < 5.0.0 can only extend from a single base config.",
+        `TypeScript Version: ${tsVersion.format()}`,
+        `File: ${this.file.absolutePath}`,
+        `Extends: ${this.extends}`
+      );
+    }
+  }
+
+  /**
+   * Array of base `tsconfig.json` paths.
+   * Any absolute paths are resolved relative to this instance,
+   * while any relative paths are used as is.
+   */
+  public get extends(): string[] {
+    return this._extends
+      .toJSON()
+      .map((value) => this.resolveExtendsPath(value));
+  }
+
+  /**
+   * Extend from base `TypescriptConfig` instance.
+   *
+   * @remarks
+   * TypeScript 5.0+ is required to extend from more than one base `TypescriptConfig`.
+   *
+   * @param value Base `TypescriptConfig` instance.
+   */
+  public addExtends(value: TypescriptConfig) {
+    this._extends = TypescriptConfigExtends.fromPaths([
+      ...this._extends.toJSON(),
+      value.file.absolutePath,
+    ]);
+  }
+
   public addInclude(pattern: string) {
     this.include.push(pattern);
   }
 
   public addExclude(pattern: string) {
     this.exclude.push(pattern);
+  }
+
+  preSynthesize() {
+    super.preSynthesize();
+    this.validateExtends();
   }
 }
