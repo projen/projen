@@ -1,4 +1,3 @@
-import { readFileSync } from "fs";
 import * as path from "path";
 import * as semver from "semver";
 import { NodeProject } from ".";
@@ -606,7 +605,7 @@ export class TypescriptConfig extends Component {
    *
    * @param configPath Path to resolve against.
    */
-  public resolveExtendsPath(configPath: string) {
+  public resolveExtendsPath(configPath: string): string {
     // if not absolute assume user-defined path (or npm package).
     if (!path.isAbsolute(configPath)) return configPath;
     const relativeConfig = path.relative(
@@ -623,36 +622,22 @@ export class TypescriptConfig extends Component {
   }
 
   /**
-   * Attempt to resolve project TypeScript version.
-   * @private
-   */
-  private resolveTypeScriptVersion() {
-    const ts = this.project.deps.tryGetDependency("typescript");
-    const tsVersion = semver.coerce(ts?.version, { loose: true });
-    // early exit if we found dependency.
-    if (tsVersion) return tsVersion;
-    try {
-      const tsManifest = require.resolve("typescript/package.json", {
-        paths: [this.project.outdir],
-      });
-      const manifest = JSON.parse(readFileSync(tsManifest).toString());
-      return semver.coerce(manifest.version, { loose: true });
-    } catch (e) {
-      // no typescript found anywhere in resolution path.
-      return undefined;
-    }
-  }
-
-  /**
    * Validate usage of `extends` against current TypeScript version.
    * @private
    */
   private validateExtends() {
-    // accept no extends or singular extends.
-    if (this.extends.length <= 1) return;
-    const tsVersion = this.resolveTypeScriptVersion();
-    if (!tsVersion) return;
-    if (tsVersion.major < 5) {
+    const project = this.project;
+    const hasOneOrNoneExtends = this.extends.length <= 1;
+    const isNodeProject = project instanceof NodeProject;
+    if (hasOneOrNoneExtends || !isNodeProject) {
+      // always accept no extends or singular extends.
+      return;
+    }
+    const tsVersion = semver.coerce(
+      project.package.tryResolveDependencyVersion("typescript"),
+      { loose: true }
+    );
+    if (tsVersion && tsVersion.major < 5) {
       this.project.logger.warn(
         "TypeScript < 5.0.0 can only extend from a single base config.",
         `TypeScript Version: ${tsVersion.format()}`,
