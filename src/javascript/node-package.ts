@@ -1308,15 +1308,17 @@ export class NodePackage extends Component {
           // we already know we don't have the version in project `deps`,
           // so skip straight to checking manifest.
           const resolvedVersion = tryResolveDependencyVersion(name, {
-            paths: [this.project.outdir],
+            paths: [outdir],
           });
-          if (!resolvedVersion) {
+          if (resolvedVersion) {
+            desiredVersion = `^${resolvedVersion}`;
+          }
+          if (!desiredVersion) {
             this.project.logger.warn(
               `unable to resolve version for ${name} from installed modules`
             );
             continue;
           }
-          desiredVersion = `^${resolvedVersion}`;
         }
 
         if (currentDefinition !== desiredVersion) {

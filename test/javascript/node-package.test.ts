@@ -175,6 +175,39 @@ test('lockfile updated (install twice) after "*"s are resolved', () => {
   expect(taskMock).toBeCalledTimes(2);
 });
 
+test('can resolve "*"s in monorepor subprojects', () => {
+  const monorepoRoot = new Project({ name: "parent" });
+  const taskMock = jest
+    .spyOn(TaskRuntime.prototype, "runTask")
+    .mockImplementation(function (this: TaskRuntime, command) {
+      expect(command).toMatch("install");
+      // using the monorepoRoot outdir simulates yarn installing the packages at the root
+      // this happens when workspaces are used
+      mockYarnInstall(monorepoRoot.outdir, { ms: "2.1.3" });
+    });
+  // Add a root package.json and synth once for the mock to work
+  new NodePackage(monorepoRoot);
+  monorepoRoot.synth();
+  taskMock.mockReset();
+
+  // Setup a subproject
+  const subproject = new Project({
+    name: "subproject",
+    parent: monorepoRoot,
+    outdir: "packages/subproject",
+  });
+  const pkg = new NodePackage(subproject);
+  pkg.addDeps("ms");
+  subproject.synth();
+
+  // spy on the subproject logger, as the subproject is responsible for installing subproject deps
+  const logSpy = jest.spyOn(subproject.logger, "warn");
+  expect(taskMock).toBeCalledTimes(2);
+  expect(logSpy).not.toHaveBeenCalledWith(
+    expect.stringContaining("unable to resolve version for")
+  );
+});
+
 test("install only once if all versions are resolved", () => {
   const taskMock = jest
     .spyOn(TaskRuntime.prototype, "runTask")
