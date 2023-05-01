@@ -97,7 +97,11 @@ export function tryResolveManifestPathFromDefaultExport(
   if (!defaultExportPath) {
     return undefined;
   }
-  return findUp("package.json", defaultExportPath);
+  const moduleDir = findUp("package.json", defaultExportPath);
+  if (!moduleDir) {
+    return undefined;
+  }
+  return join(moduleDir, "package.json");
 }
 
 /**
