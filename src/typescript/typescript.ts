@@ -13,6 +13,7 @@ import {
   TypescriptConfig,
   TypescriptConfigOptions,
 } from "../javascript";
+import { tryResolveDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
 import { TextFile } from "../textfile";
@@ -22,7 +23,6 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge } from "../util";
-import tsJestPackageJson = require('ts-jest/package.json');
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -452,19 +452,29 @@ export class TypeScriptProject extends NodeProject {
     if (!jest.config.preset) {
       jest.config.preset = "ts-jest";
     }
-    if (semver.gte(tsJestPackageJson.version, "29.0.0")) {
-      jest.config.transform = {
-        "^.+\\.(ts|tsx)$": new Transform("ts-jest", {
-          tsconfig: "tsconfig.dev.json",
-        }),
-      };
-    } else {
+
+    const tsJestVersion = tryResolveDependencyVersion("ts-jest");
+
+    if (!tsJestVersion) {
+      throw new Error("ts-jest is not installed, please install it");
+    }
+
+    if (semver.lt(tsJestVersion, "29.0.0")) {
       jest.config.globals = deepMerge([
         {
           "ts-jest": {
             tsconfig: this.tsconfigDev.fileName,
           },
         },
+        jest.config.globals,
+      ]);
+    } else {
+      jest.config.globals = deepMerge([
+        (jest.config.transform = {
+          "^.+\\.(ts|tsx)$": new Transform("ts-jest", {
+            tsconfig: this.tsconfigDev.fileName,
+          }),
+        }),
         jest.config.globals,
       ]);
     }
