@@ -18,10 +18,12 @@ import { mkdtemp, synthSnapshot, TestProject } from "../util";
  * NOT A PERFECT MODEL OF YARN. JUST CLOSE ENOUGH.
  * @param outdir Test project's outdir, where package.json and node_modules live
  * @param latestPackages Package name and version to "install" for "*" deps
+ * @param manifests Optional record by package name of additional manifest fields to write to package.json.
  */
 function mockYarnInstall(
   outdir: string,
-  latestPackages: Record<string, string>
+  latestPackages: Record<string, string>,
+  manifests: Record<string, Record<string, any>> = {}
 ) {
   const pkgJson = JSON.parse(
     readFileSync(join(outdir, "package.json"), "utf-8")
@@ -94,6 +96,7 @@ function mockYarnInstall(
       JSON.stringify({
         name: `${dep}`,
         version: `${installVersion}`,
+        ...(manifests[dep] ?? {}),
       })
     );
     // Not accurate to yaml.lock v1 format, but close enough.
@@ -551,5 +554,44 @@ test("tryResolveDependencyVersion", () => {
   expect(pkg.tryResolveDependencyVersion("typescript")).toEqual("5.0.0");
   expect(project.deps.tryGetDependency("ms")?.version).toEqual("*");
   expect(pkg.tryResolveDependencyVersion("ms")).toEqual("2.1.3");
+  expect(pkg.tryResolveDependencyVersion("foo")).toEqual(undefined);
+});
+
+test("tryResolveDependencyVersion resolves with custom package exports.", () => {
+  jest
+    .spyOn(TaskRuntime.prototype, "runTask")
+    .mockImplementation(function (this: TaskRuntime, command) {
+      expect(command).toMatch("install");
+      mockYarnInstall(
+        this.workdir,
+        { rollup: "3.21.1" },
+        {
+          rollup: {
+            exports: {
+              ".": {
+                types: "./dist/rollup.d.ts",
+                require: "./dist/rollup.js",
+                import: "./dist/es/rollup.js",
+              },
+              "./loadConfigFile": {
+                types: "./dist/loadConfigFile.d.ts",
+                require: "./dist/loadConfigFile.js",
+                default: "./dist/loadConfigFile.js",
+              },
+              "./dist/*": "./dist/*",
+            },
+          },
+        }
+      );
+    });
+  const outdir = mkdtemp();
+  const project = new TestProject({ outdir });
+
+  const pkg = new NodePackage(project);
+  pkg.addDeps("typescript@5.0.0", "rollup@*");
+  project.synth();
+
+  expect(project.deps.tryGetDependency("rollup")?.version).toEqual("*");
+  expect(pkg.tryResolveDependencyVersion("rollup")).toEqual("3.2.1");
   expect(pkg.tryResolveDependencyVersion("foo")).toEqual(undefined);
 });
