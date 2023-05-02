@@ -342,10 +342,13 @@ export class BuildWorkflow extends Component {
         ...WorkflowActions.setupGitIdentity(this.gitIdentity),
         {
           name: "Push changes",
+          env: {
+            PULL_REQUEST_REF,
+          },
           run: [
-            "  git add .",
-            '  git commit -s -m "chore: self mutation"',
-            `  git push origin HEAD:${PULL_REQUEST_REF}`,
+            "git add .",
+            'git commit -s -m "chore: self mutation"',
+            `git push origin HEAD:$PULL_REQUEST_REF`,
           ].join("\n"),
         },
       ],
