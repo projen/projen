@@ -455,11 +455,7 @@ export class TypeScriptProject extends NodeProject {
 
     const tsJestVersion = tryResolveDependencyVersion("ts-jest");
 
-    if (!tsJestVersion) {
-      throw new Error("ts-jest is not installed, please install it");
-    }
-
-    if (semver.lt(tsJestVersion, "29.0.0")) {
+    if (tsJestVersion && semver.lt(tsJestVersion, "29.0.0")) {
       jest.config.globals = deepMerge([
         {
           "ts-jest": {
@@ -469,13 +465,14 @@ export class TypeScriptProject extends NodeProject {
         jest.config.globals,
       ]);
     } else {
-      jest.config.globals = deepMerge([
-        (jest.config.transform = {
+      // if tsJestVersion is >= 29 or undefined, we will default to using transforms
+      jest.config.transform = deepMerge([
+        {
           "^.+\\.(ts|tsx)$": new Transform("ts-jest", {
             tsconfig: this.tsconfigDev.fileName,
           }),
-        }),
-        jest.config.globals,
+        },
+        jest.config.transform,
       ]);
     }
   }
