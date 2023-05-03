@@ -1370,11 +1370,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "cobertura",
         "text",
       ],
-      "globals": {
-        "ts-jest": {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
       "preset": "ts-jest",
       "reporters": [
         "default",
@@ -1392,6 +1387,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "testPathIgnorePatterns": [
         "/node_modules/",
       ],
+      "transform": {
+        "^.+\\.(ts|tsx)$": [
+          "ts-jest",
+          {
+            "tsconfig": "tsconfig.dev.json",
+          },
+        ],
+      },
       "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
@@ -2847,11 +2850,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "cobertura",
         "text",
       ],
-      "globals": {
-        "ts-jest": {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
       "preset": "ts-jest",
       "reporters": [
         "default",
@@ -2869,6 +2867,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "testPathIgnorePatterns": [
         "/node_modules/",
       ],
+      "transform": {
+        "^.+\\.(ts|tsx)$": [
+          "ts-jest",
+          {
+            "tsconfig": "tsconfig.dev.json",
+          },
+        ],
+      },
       "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
@@ -4334,11 +4340,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "cobertura",
         "text",
       ],
-      "globals": {
-        "ts-jest": {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
       "preset": "ts-jest",
       "reporters": [
         "default",
@@ -4356,6 +4357,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "testPathIgnorePatterns": [
         "/node_modules/",
       ],
+      "transform": {
+        "^.+\\.(ts|tsx)$": [
+          "ts-jest",
+          {
+            "tsconfig": "tsconfig.dev.json",
+          },
+        ],
+      },
       "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
@@ -5812,11 +5821,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "cobertura",
         "text",
       ],
-      "globals": {
-        "ts-jest": {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
       "preset": "ts-jest",
       "reporters": [
         "default",
@@ -5834,6 +5838,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "testPathIgnorePatterns": [
         "/node_modules/",
       ],
+      "transform": {
+        "^.+\\.(ts|tsx)$": [
+          "ts-jest",
+          {
+            "tsconfig": "tsconfig.dev.json",
+          },
+        ],
+      },
       "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
