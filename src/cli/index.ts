@@ -52,7 +52,7 @@ async function main() {
     global: false,
   });
 
-  const args = ya.argv;
+  const args = await ya.argv;
 
   if (args.debug) {
     process.env.DEBUG = "true";
