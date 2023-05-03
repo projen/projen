@@ -8,7 +8,7 @@ import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
 import { exec, execCapture, getGitVersion, isTruthy } from "../../util";
 import { tryProcessMacro } from "../macros";
-import { installPackage, renderInstallCommand } from "../util";
+import { CliError, installPackage, renderInstallCommand } from "../util";
 
 class Command implements yargs.CommandModule {
   public readonly command = "new [PROJECT-TYPE-NAME] [OPTIONS]";
@@ -101,25 +101,41 @@ class Command implements yargs.CommandModule {
 }
 
 async function handler(args: any) {
-  // handle --from which means we want to first install a jsii module and then
-  // create a project defined within this module.
-  if (args.from) {
-    return initProjectFromModule(process.cwd(), args.from, args);
-  }
-
-  // project type is defined but was not matched by yargs, so print the list of supported types
-  if (args.projectTypeName) {
-    console.log(
-      `Invalid project type ${args.projectTypeName}. Supported types:`
-    );
-    for (const pjid of inventory.discover().map((x) => x.pjid)) {
-      console.log(`  ${pjid}`);
+  try {
+    // handle --from which means we want to first install a jsii module and then
+    // create a project defined within this module.
+    if (args.from) {
+      return await initProjectFromModule(process.cwd(), args.from, args);
     }
-    return;
-  }
 
-  // Handles the use case that nothing was specified since PROJECT-TYPE is now an optional positional parameter
-  yargs.showHelp();
+    // project type is defined but was not matched by yargs, so print the list of supported types
+    if (args.projectTypeName) {
+      const types = inventory.discover();
+      throw new CliError(
+        [
+          `Project type "${args.projectTypeName}" not found. Available types:\n`,
+          ...types.map((t) => `    ${t.pjid}`),
+          "",
+          `Please specify a project type.`,
+          `Example: npx projen new ${types[0].pjid}`,
+        ].join("\n")
+      );
+    }
+
+    // Handles the use case that nothing was specified since PROJECT-TYPE is now an optional positional parameter
+    yargs.showHelp();
+  } catch (error: unknown) {
+    if (error instanceof CliError) {
+      logging.error(error.message);
+      logging.empty();
+      process.exitCode = 1;
+      return;
+    }
+
+    // unknown error, likely a node runtime exception in project code
+    // rethrow so the full stack trace is displayed
+    throw error;
+  }
 }
 
 /**
@@ -288,8 +304,8 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     .filter((x) => x.moduleName === moduleName); // Only list project types from the requested 'from' module
 
   if (projects.length < 1) {
-    throw new Error(
-      `No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`
+    throw new CliError(
+      `No project types found after installing "${spec}". The module must export at least one class which extends "projen.Project".`
     );
   }
 
@@ -298,12 +314,14 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // if user did not specify a project type but the module has more than one, we need them to tell us which one...
   if (!requested && projects.length > 1) {
-    throw new Error(
-      `Multiple projects found after installing ${spec}: ${types.join(
-        ","
-      )}. Please specify a project name.\nExample: npx projen new --from ${spec} ${
-        types[0]
-      }`
+    throw new CliError(
+      [
+        `Multiple project types found after installing "${spec}":\n`,
+        ...types.map((t) => `    ${t}`),
+        "",
+        `Please specify a project type.`,
+        `Example: npx projen new --from ${spec} ${types[0]}`,
+      ].join("\n")
     );
   }
 
@@ -312,8 +330,14 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     ? projects[0]
     : projects.find((p) => p.pjid === requested);
   if (!type) {
-    throw new Error(
-      `Project type ${requested} not found. Found ${types.join(",")}`
+    throw new CliError(
+      [
+        `Project type "${requested}" not found in "${spec}". Found:\n`,
+        ...types.map((t) => `    ${t}`),
+        "",
+        `Please specify a valid project type.`,
+        `Example: npx projen new --from ${spec} ${types[0]}`,
+      ].join("\n")
     );
   }
 
@@ -349,14 +373,14 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // We are missing some required options
   if (missingOptions.length) {
-    logging.error(
-      `Cannot create "${type.fqn}". Missing required option${
-        missingOptions.length > 1 ? "s" : ""
-      }:\n`,
-      ...missingOptions.map((m) => `    ${m}\n`)
+    throw new CliError(
+      [
+        `Cannot create "${type.fqn}". Missing required option${
+          missingOptions.length > 1 ? "s" : ""
+        }:`,
+        ...missingOptions.map((m) => `    ${m}`),
+      ].join("\n")
     );
-    process.exitCode = 1;
-    return;
   }
 
   // include a dev dependency for the external module
