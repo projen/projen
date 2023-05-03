@@ -112,13 +112,11 @@ async function handler(args: any) {
     if (args.projectTypeName) {
       const types = inventory.discover();
       throw new CliError(
-        [
-          `Project type "${args.projectTypeName}" not found. Available types:\n`,
-          ...types.map((t) => `    ${t.pjid}`),
-          "",
-          `Please specify a project type.`,
-          `Example: npx projen new ${types[0].pjid}`,
-        ].join("\n")
+        `Project type "${args.projectTypeName}" not found. Available types:\n`,
+        ...types.map((t) => `    ${t.pjid}`),
+        "",
+        `Please specify a project type.`,
+        `Example: npx projen new ${types[0].pjid}`
       );
     }
 
@@ -315,13 +313,11 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   // if user did not specify a project type but the module has more than one, we need them to tell us which one...
   if (!requested && projects.length > 1) {
     throw new CliError(
-      [
-        `Multiple project types found after installing "${spec}":\n`,
-        ...types.map((t) => `    ${t}`),
-        "",
-        `Please specify a project type.`,
-        `Example: npx projen new --from ${spec} ${types[0]}`,
-      ].join("\n")
+      `Multiple project types found after installing "${spec}":\n`,
+      ...types.map((t) => `    ${t}`),
+      "",
+      `Please specify a project type.`,
+      `Example: npx projen new --from ${spec} ${types[0]}`
     );
   }
 
@@ -331,13 +327,11 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     : projects.find((p) => p.pjid === requested);
   if (!type) {
     throw new CliError(
-      [
-        `Project type "${requested}" not found in "${spec}". Found:\n`,
-        ...types.map((t) => `    ${t}`),
-        "",
-        `Please specify a valid project type.`,
-        `Example: npx projen new --from ${spec} ${types[0]}`,
-      ].join("\n")
+      `Project type "${requested}" not found in "${spec}". Found:\n`,
+      ...types.map((t) => `    ${t}`),
+      "",
+      `Please specify a valid project type.`,
+      `Example: npx projen new --from ${spec} ${types[0]}`
     );
   }
 
@@ -374,12 +368,10 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   // We are missing some required options
   if (missingOptions.length) {
     throw new CliError(
-      [
-        `Cannot create "${type.fqn}". Missing required option${
-          missingOptions.length > 1 ? "s" : ""
-        }:`,
-        ...missingOptions.map((m) => `    ${m}`),
-      ].join("\n")
+      `Cannot create "${type.fqn}". Missing required option${
+        missingOptions.length > 1 ? "s" : ""
+      }:`,
+      ...missingOptions.map((m) => `    ${m}`)
     );
   }
 
