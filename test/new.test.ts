@@ -180,7 +180,7 @@ test("projen new --from can use pjid that is similar to a built-in one", () => {
     } catch (error: any) {
       // expect an error since this project type doesn't exist in the package
       // however it is important that the project type is passed to the package
-      expect(error.message).toContain("Error: Project type jsi not found.");
+      expect(error.message).toContain('Project type "jsi" not found');
     }
   });
 });
@@ -266,6 +266,18 @@ test("projen new with unknown option works", () => {
     const projenrc = directorySnapshot(projectdir)[".projenrc.js"];
     expect(projenrc).toBeDefined();
     expect(projenrc).toMatchSnapshot();
+  });
+});
+
+test("projen new without any arguments displays full help", () => {
+  withProjectDir((projectdir) => {
+    try {
+      execProjenCLI(projectdir, ["new"]);
+    } catch (error: any) {
+      expect(error.message).toMatch("Creates a new projen project");
+      expect(error.message).toMatch("Commands:");
+      expect(error.message).toMatch("Multi-language jsii library project.");
+    }
   });
 });
 
