@@ -54,3 +54,10 @@ export function installPackage(baseDir: string, spec: string): string {
 export function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
 }
+
+export class CliError extends Error {
+  constructor(...lines: string[]) {
+    super(lines.join("\n"));
+    this.name = "CliError";
+  }
+}
