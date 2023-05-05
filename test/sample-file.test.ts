@@ -29,6 +29,18 @@ test("sample file from source", () => {
   );
 });
 
+test("sample empty directory", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new SampleDir(project, "foo", { files: {} });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot).toBeDefined();
+});
+
 test("sample directory from files", () => {
   // GIVEN
   const project = new TestProject();

@@ -148,6 +148,9 @@ export class SampleDir extends Component {
         dot: true,
       }); // returns relative file paths with POSIX separators
 
+      // creating the directory even though it's empty
+      fs.mkdirSync(fullOutdir, { recursive: true });
+
       for (const file of files) {
         const sourcePath = path.join(basedir, file);
         const targetPath = path.join(fullOutdir, file);
