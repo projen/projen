@@ -217,7 +217,7 @@ export class Project {
   public readonly commitGenerated: boolean;
 
   private readonly _components = new Array<Component>();
-  private readonly subprojects = new Array<Project>();
+  private readonly _subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
@@ -336,6 +336,13 @@ export class Project {
   }
 
   /**
+   * Returns all the subprojects within this project.
+   */
+  public get subprojects() {
+    return [...this._subprojects];
+  }
+
+  /**
    * All files in this project.
    */
   public get files(): FileBase[] {
@@ -404,7 +411,7 @@ export class Project {
       }
     }
 
-    for (const child of this.subprojects) {
+    for (const child of this._subprojects) {
       const file = child.tryFindFile(absolute);
       if (file) {
         return file;
@@ -475,7 +482,7 @@ export class Project {
       return this._components.splice(index, 1)[0] as FileBase;
     }
 
-    for (const child of this.subprojects) {
+    for (const child of this._subprojects) {
       const file = child.tryRemoveFile(absolute);
       if (file) {
         return file;
@@ -566,7 +573,7 @@ export class Project {
 
     // we exclude all subproject directories to ensure that when subproject.synth()
     // gets called below after cleanup(), subproject generated files are left intact
-    for (const subproject of this.subprojects) {
+    for (const subproject of this._subprojects) {
       this.addExcludeFromCleanup(subproject.outdir + "/**");
     }
 
@@ -577,7 +584,7 @@ export class Project {
       this.excludeFromCleanup
     );
 
-    for (const subproject of this.subprojects) {
+    for (const subproject of this._subprojects) {
       subproject.synth();
     }
 
@@ -653,7 +660,7 @@ export class Project {
     }
 
     // check that `outdir` is exclusive
-    for (const p of this.subprojects) {
+    for (const p of this._subprojects) {
       if (path.resolve(p.outdir) === path.resolve(subproject.outdir)) {
         throw new Error(
           `there is already a sub-project with "outdir": ${subproject.outdir}`
@@ -661,7 +668,7 @@ export class Project {
       }
     }
 
-    this.subprojects.push(subproject);
+    this._subprojects.push(subproject);
   }
 
   /**
