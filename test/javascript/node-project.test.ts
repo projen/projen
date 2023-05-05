@@ -1510,3 +1510,34 @@ test("can override resolution-mode to lowest for pnpm", () => {
   expect(output[".npmrc"]).toContain("resolution-mode=lowest");
   expect(output[".npmrc"]).not.toContain("resolution-mode=highest");
 });
+
+describe("package manager env", () => {
+  [
+    {
+      packageManager: NodePackageManager.NPM,
+      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+    {
+      packageManager: NodePackageManager.YARN,
+      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+    {
+      packageManager: NodePackageManager.YARN2,
+      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+    {
+      packageManager: NodePackageManager.PNPM,
+      cmd: '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+  ].forEach((testCase) => {
+    test(testCase.packageManager, () => {
+      // GIVEN / WHEN
+      const project = new TestNodeProject({
+        packageManager: testCase.packageManager,
+      });
+
+      // THEN
+      expect(project.tasks.env.PATH).toEqual(testCase.cmd);
+    });
+  });
+});
