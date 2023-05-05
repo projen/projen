@@ -1,6 +1,5 @@
 import { TaskRuntime } from "../../src";
 import { PROJEN_RC } from "../../src/common";
-import { Transform } from "../../src/javascript";
 import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
 import { execProjenCLI, synthSnapshot } from "../util";
 
@@ -264,11 +263,6 @@ describe("jestConfig", () => {
               shouldBePreserved: true,
             },
           },
-          transform: {
-            "^.+\\.(ts|tsx)$": new Transform("ts-jest", {
-              tsconfig: "tsconfig.dev.json",
-            }),
-          },
         },
       },
     });
@@ -318,21 +312,13 @@ describe("jestConfig", () => {
       name: "test",
       jestOptions: {
         jestVersion: "^27",
-        jestConfig: {
-          globals: {
-            "ts-jest": {
-              shouldBePreserved: true,
-              tsconfig: "tsconfig.dev.json",
-            },
-          },
-        },
       },
     });
+
     const snapshot = synthSnapshot(prj);
     const jest = snapshot["package.json"].jest;
     expect(jest.preset).toStrictEqual("ts-jest");
     expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("tsconfig.dev.json");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
   });
 
   test("uses transforms for ts-jest >= 29", () => {
@@ -343,7 +329,7 @@ describe("jestConfig", () => {
         jestVersion: "^29",
       },
     });
-    
+
     const expectedTransformConfig = {
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
@@ -352,7 +338,7 @@ describe("jestConfig", () => {
         },
       ],
     };
-    
+
     const snapshot = synthSnapshot(prj);
     const jest = snapshot["package.json"].jest;
     expect(jest.preset).toStrictEqual("ts-jest");

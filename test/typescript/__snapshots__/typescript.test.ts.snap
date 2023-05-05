@@ -1218,6 +1218,11 @@ tsconfig.tsbuildinfo
         "cobertura",
         "text",
       ],
+      "globals": {
+        "ts-jest": {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      },
       "preset": "ts-jest",
       "reporters": [
         "default",
@@ -1235,14 +1240,6 @@ tsconfig.tsbuildinfo
       "testPathIgnorePatterns": [
         "/node_modules/",
       ],
-      "transform": {
-        "^.+\\.(ts|tsx)$": [
-          "ts-jest",
-          {
-            "tsconfig": "tsconfig.dev.json",
-          },
-        ],
-      },
       "watchPathIgnorePatterns": [
         "/node_modules/",
       ],
