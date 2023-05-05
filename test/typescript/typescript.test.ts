@@ -335,7 +335,15 @@ describe("jestConfig", () => {
     expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
   });
 
-  test("uses default values and jestVersion >= 29", () => {
+  test("uses transforms for ts-jest >= 29", () => {
+    const prj = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+      jestOptions: {
+        jestVersion: "^29",
+      },
+    });
+    
     const expectedTransformConfig = {
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
@@ -344,30 +352,10 @@ describe("jestConfig", () => {
         },
       ],
     };
-
-    const prj = new TypeScriptProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      jestOptions: {
-        jestVersion: "^29",
-        jestConfig: {
-          globals: {
-            "ts-jest": {
-              shouldBePreserved: true,
-            },
-          },
-          transform: {
-            "^.+\\.(ts|tsx)$": new Transform("ts-jest", {
-              tsconfig: "tsconfig.dev.json",
-            }),
-          },
-        },
-      },
-    });
+    
     const snapshot = synthSnapshot(prj);
     const jest = snapshot["package.json"].jest;
     expect(jest.preset).toStrictEqual("ts-jest");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
     expect(jest.transform).toStrictEqual(expectedTransformConfig);
   });
 });
