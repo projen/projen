@@ -140,6 +140,9 @@ export class SampleDir extends Component {
       return;
     }
 
+    // previously creating the directory to allow empty dirs to be created
+    fs.mkdirSync(fullOutdir, { recursive: true });
+
     if (this.options.sourceDir) {
       const basedir = this.options.sourceDir;
       const files = glob.sync("**", {
@@ -147,9 +150,6 @@ export class SampleDir extends Component {
         nodir: true,
         dot: true,
       }); // returns relative file paths with POSIX separators
-
-      // creating the directory even though it's empty
-      fs.mkdirSync(fullOutdir, { recursive: true });
 
       for (const file of files) {
         const sourcePath = path.join(basedir, file);

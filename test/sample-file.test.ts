@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import * as path from "path";
 import { synthSnapshot } from "./util";
 import { Project, ProjectOptions } from "../src";
@@ -34,11 +35,16 @@ test("sample empty directory", () => {
   const project = new TestProject();
 
   // WHEN
-  new SampleDir(project, "foo", { files: {} });
+  new SampleDir(project, "foo", {
+    files: {},
+  });
+  const fooPath = path.join(project.outdir, "foo/");
 
   // THEN
-  const snapshot = synthSnapshot(project);
-  expect(snapshot).toBeDefined();
+  project.synth();
+  expect(fs.existsSync(fooPath)).toBeTruthy();
+  //removing the project directory
+  fs.rmSync(project.outdir, { force: true, recursive: true });
 });
 
 test("sample directory from files", () => {
