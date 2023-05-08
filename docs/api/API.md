@@ -2940,6 +2940,7 @@ exec(command: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -2970,6 +2971,7 @@ prepend(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -2988,6 +2990,7 @@ prependExec(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3006,6 +3009,7 @@ prependSay(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3024,6 +3028,7 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3042,6 +3047,7 @@ reset(command?: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3060,6 +3066,7 @@ say(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3078,6 +3085,7 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: {}
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -13631,6 +13639,7 @@ Name | Type | Description
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **builtin**?🔹 | <code>string</code> | The name of a built-in task to execute.<br/>__*Default*__: do not execute a builtin task
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
@@ -13650,6 +13659,7 @@ Name | Type | Description
 -----|------|-------------
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: {}
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 

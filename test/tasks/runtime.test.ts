@@ -84,7 +84,43 @@ describe("environment variables", () => {
     expect(executeTask(p, "test:env")).toEqual(["my_environment_var!"]);
   });
 
-  test("are resolved dynamically", () => {
+  test("can be set on individual steps", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const t = p.addTask("test:env:stepwise", {
+      env: { VALUE: "something" },
+      steps: [
+        { exec: "echo ${VALUE}", env: { VALUE: "foo" } },
+        { exec: "echo ${VALUE}", env: { VALUE: "bar" } },
+      ],
+    });
+    t.exec("echo ${VALUE}", { env: { VALUE: "baz" } });
+
+    // THEN
+    expect(executeTask(p, "test:env:stepwise")).toEqual(["foo", "bar", "baz"]);
+  });
+
+  test("are resolved dynamically (step vars)", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const t = p.addTask("test:env:stepwise", {
+      env: { VALUE: "something" },
+      steps: [
+        { exec: "echo ${VALUE}", env: { VALUE: "$(echo foo)" } },
+        { exec: "echo ${VALUE}", env: { VALUE: "$(echo bar)" } },
+      ],
+    });
+    t.exec("echo ${VALUE}", { env: { VALUE: "$(echo baz)" } });
+
+    // THEN
+    expect(executeTask(p, "test:env:stepwise")).toEqual(["foo", "bar", "baz"]);
+  });
+
+  test("are resolved dynamically (task vars)", () => {
     // GIVEN
     const p = new TestProject();
 
@@ -98,6 +134,40 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["dynamic_value!"]);
+  });
+
+  test("are resolved lazily (step vars)", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const t = p.addTask("test:env");
+    t.exec("echo testing >> test.txt");
+    // VALUE wouldn't return anything if evaluated up front
+    t.exec("echo ${VALUE}", { env: { VALUE: "$(cat test.txt)" } });
+
+    // THEN
+    expect(executeTask(p, "test:env")).toEqual(["testing"]);
+  });
+
+  test("numerics are converted properly (step vars)", () => {
+    // GIVEN
+    const warn = jest.spyOn(logging, "warn");
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env", {
+      steps: [
+        { exec: "echo ${VALUE}!", env: { VALUE: 1 as unknown as string } },
+      ],
+    });
+
+    // THEN
+    expect(executeTask(p, "test:env")).toEqual(["1!"]);
+    expect(warn).toBeCalledWith(
+      "Received non-string value for environment variable VALUE. Value will be stringified."
+    );
+    warn.mockRestore();
   });
 
   test("numerics are converted properly (task vars)", () => {

@@ -239,12 +239,28 @@ export class Task {
    * @internal
    */
   public _renderSpec(): TaskSpec {
+    // Fix task-level env vars
+    const steps = this.steps.map((s) => {
+      return s.env
+        ? {
+            ...s,
+            env: Object.keys(s.env).reduce(
+              (prev, curr) => ({
+                ...prev,
+                [curr]: this.getEnvString(curr, s.env![curr]),
+              }),
+              {}
+            ),
+          }
+        : s;
+    });
+
     return {
       name: this.name,
       description: this.description,
       env: this._env,
       requiredEnv: this.requiredEnv,
-      steps: this._steps,
+      steps: steps,
       condition: this.condition,
       cwd: this.cwd,
     };
@@ -256,16 +272,24 @@ export class Task {
     }
   }
 
+  /**
+   * Ensure that environment variables are persisted as strings
+   * to prevent type errors when parsing from tasks.json in future
+   */
+  private getEnvString(name: string, value: any) {
+    if (typeof value !== "string" && value !== undefined) {
+      warn(
+        `Received non-string value for environment variable ${name}. Value will be stringified.`
+      );
+      return String(value);
+    } else {
+      return value;
+    }
+  }
+
   private addEnv(env: { [name: string]: string }) {
     Object.entries(env).forEach(([name, value]) => {
-      if (typeof value !== "string" && value !== undefined) {
-        warn(
-          `Received non-string value for environment variable ${name}. Value will be stringified.`
-        );
-        this._env[name] = String(value);
-      } else {
-        this._env[name] = value;
-      }
+      this._env[name] = this.getEnvString(name, value);
     });
   }
 }
