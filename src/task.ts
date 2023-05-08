@@ -240,20 +240,22 @@ export class Task {
    */
   public _renderSpec(): TaskSpec {
     // Fix task-level env vars
-    const steps = this.steps.map((s) => {
-      return s.env
-        ? {
-            ...s,
-            env: Object.keys(s.env).reduce(
-              (prev, curr) => ({
-                ...prev,
-                [curr]: this.getEnvString(curr, s.env![curr]),
-              }),
-              {}
-            ),
-          }
-        : s;
-    });
+    const steps = Array.isArray(this._steps)
+      ? [...this._steps].map((s) => {
+          return s.env
+            ? {
+                ...s,
+                env: Object.keys(s.env).reduce(
+                  (prev, curr) => ({
+                    ...prev,
+                    [curr]: this.getEnvString(curr, s.env![curr]),
+                  }),
+                  {}
+                ),
+              }
+            : s;
+        })
+      : this._steps;
 
     return {
       name: this.name,
