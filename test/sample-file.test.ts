@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { synthSnapshot } from "./util";
+import { mkdtemp, synthSnapshot } from "./util";
 import { Project, ProjectOptions } from "../src";
 import { SampleDir, SampleFile } from "../src/sample-file";
 
@@ -32,7 +32,8 @@ test("sample file from source", () => {
 
 test("sample empty directory", () => {
   // GIVEN
-  const project = new TestProject();
+  const tempDir = mkdtemp(); // dir auto removed after test
+  const project = new TestProject({ outdir: tempDir });
 
   // WHEN
   new SampleDir(project, "foo", {
@@ -43,8 +44,6 @@ test("sample empty directory", () => {
   // THEN
   project.synth();
   expect(fs.existsSync(fooPath)).toBeTruthy();
-  //removing the project directory
-  fs.rmSync(project.outdir, { force: true, recursive: true });
 });
 
 test("sample directory from files", () => {
