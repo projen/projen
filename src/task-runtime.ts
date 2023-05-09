@@ -153,7 +153,7 @@ class RunTask {
 
       const execs = step.exec ? [step.exec] : [];
 
-      // Parse step-specific environmetn variables
+      // Parse step-specific environment variables
       const env = this.evalEnvironment(step.env ?? {});
 
       if (step.builtin) {

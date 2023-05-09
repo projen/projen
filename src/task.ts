@@ -64,9 +64,7 @@ export class Task {
     this.condition = props.condition;
     this.cwd = props.cwd;
     this._locked = false;
-    this._env = {};
-
-    this.addEnv(props.env ?? {});
+    this._env = props.env ?? {};
 
     this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
@@ -218,7 +216,7 @@ export class Task {
    */
   public env(name: string, value: string) {
     this.assertUnlocked();
-    this.addEnv({ [name]: value });
+    this._env[name] = value;
   }
 
   /**
@@ -239,7 +237,16 @@ export class Task {
    * @internal
    */
   public _renderSpec(): TaskSpec {
-    // Fix task-level env vars
+    // Ensure task-level env vars are strings
+    const env = Object.keys(this._env).reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: this.getEnvString(curr, this._env[curr]),
+      }),
+      {}
+    );
+
+    // Ensure step-level env vars are strings
     const steps = Array.isArray(this._steps)
       ? [...this._steps].map((s) => {
           return s.env
@@ -260,7 +267,7 @@ export class Task {
     return {
       name: this.name,
       description: this.description,
-      env: this._env,
+      env: env,
       requiredEnv: this.requiredEnv,
       steps: steps,
       condition: this.condition,
@@ -287,11 +294,5 @@ export class Task {
     } else {
       return value;
     }
-  }
-
-  private addEnv(env: { [name: string]: string }) {
-    Object.entries(env).forEach(([name, value]) => {
-      this._env[name] = this.getEnvString(name, value);
-    });
   }
 }

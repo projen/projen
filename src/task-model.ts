@@ -121,8 +121,11 @@ export interface TaskStepOptions {
 
   /**
    * Defines environment variables for the execution of this step (`exec` and `builtin` only).
-   * Values in this map will be evaluated in a shell, so you can do stuff like `$(echo "foo")`.
-   * @default {}
+   * Values in this map can be simple, literal values or shell expressions that will be evaluated at runtime e.g. `$(echo "foo")`.
+   *
+   * @example { "foo": "bar", "boo": "$(echo baz)" }
+   *
+   * @default - no environment variables defined in step
    */
   readonly env?: { [name: string]: string };
 }
