@@ -44,9 +44,15 @@ Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creato
 
 ## Getting Started
 
-_projen_ doesn't need to be installed. You will be using [npx](https://docs.npmjs.com/cli/v7/commands/npx) to run _projen_ which takes care of all required setup steps.
+_projen_ doesn't need to be installed. You will be using [npx](https://docs.npmjs.com/cli/v7/commands/npx) to run
+_projen_ which takes care of all required setup steps. _projen_ requires either `yarn` or `npm` to be installed.
+It uses `yarn` v1 by default, but can be changed with the `--package-manager` option. Available options:
+- `yarn` v1 (default if not provided)
+- `yarn2` version 2 and anything **greater than version 2**
+- `npm` any version, but it's recommended to use npm v8+ (node v16+).
 
-To create a new project, run the following command and follow the instructions:
+To create a new project, run the following command, which uses the default package manager, yarn v1, and follow
+the instructions:
 
 ```console
 $ mkdir my-project
