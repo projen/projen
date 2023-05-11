@@ -1,5 +1,6 @@
+import * as fs from "fs";
 import * as path from "path";
-import { synthSnapshot } from "./util";
+import { mkdtemp, synthSnapshot } from "./util";
 import { Project, ProjectOptions } from "../src";
 import { SampleDir, SampleFile } from "../src/sample-file";
 
@@ -27,6 +28,22 @@ test("sample file from source", () => {
   expect(synthSnapshot(project)["logo.svg"]).toMatch(
     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
   );
+});
+
+test("sample empty directory", () => {
+  // GIVEN
+  const tempDir = mkdtemp(); // dir auto removed after test
+  const project = new TestProject({ outdir: tempDir });
+
+  // WHEN
+  new SampleDir(project, "foo", {
+    files: {},
+  });
+  const fooPath = path.join(project.outdir, "foo/");
+
+  // THEN
+  project.synth();
+  expect(fs.existsSync(fooPath)).toBeTruthy();
 });
 
 test("sample directory from files", () => {

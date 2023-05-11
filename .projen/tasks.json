@@ -384,19 +384,19 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii,typescript,comment-json,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii,typescript,comment-json,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii,typescript,comment-json,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii,typescript,comment-json,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii,typescript,comment-json,markmac'"
         },
         {
           "exec": "yarn install --check-files"

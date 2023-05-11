@@ -114,6 +114,7 @@ Name|Description
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [javascript.Transform](#projen-javascript-transform)|*No description*
 [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
+[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)|Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
 [javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
 [javascript.WatchPlugin](#projen-javascript-watchplugin)|*No description*
@@ -2120,6 +2121,7 @@ Name | Type | Description
 **projectBuild**🔹 | <code>[ProjectBuild](#projen-projectbuild)</code> | Manages the build process of the project.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
+**subprojects**🔹 | <code>Array<[Project](#projen-project)></code> | Returns all the subprojects within this project.
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
@@ -8915,6 +8917,19 @@ setScript(name: string, command: string): void
 
 
 
+#### tryResolveDependencyVersion(dependencyName)🔹 <a id="projen-javascript-nodepackage-tryresolvedependencyversion"></a>
+
+Attempt to resolve the currently installed version for a given dependency.
+
+```ts
+tryResolveDependencyVersion(dependencyName: string): string
+```
+
+* **dependencyName** (<code>string</code>)  Dependency to resolve for.
+
+__Returns__:
+* <code>string</code>
+
 
 
 ## class NodeProject 🔹 <a id="projen-javascript-nodeproject"></a>
@@ -9069,6 +9084,7 @@ Name | Type | Description
 **bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
 **manifest**⚠️ | <code>any</code> | <span></span>
+**npmrc**🔹 | <code>[javascript.NpmConfig](#projen-javascript-npmconfig)</code> | The .npmrc file.
 **package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -9333,6 +9349,7 @@ new javascript.NpmConfig(project: NodeProject, options?: NpmConfigOptions)
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)</code>)  *No description*
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
   * **registry** (<code>string</code>)  URL of the registry mirror to use. __*Default*__: use npmjs default registry
 
 
@@ -9554,6 +9571,7 @@ new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptio
 * **options** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  *No description*
   * **compilerOptions** (<code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code>)  Compiler options to use. 
   * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
+  * **extends** (<code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>)  Base `tsconfig.json` configuration(s) to inherit from. __*Optional*__
   * **fileName** (<code>string</code>)  *No description* __*Default*__: "tsconfig.json"
   * **include** (<code>Array<string></code>)  Specifies a list of glob patterns that match TypeScript files to be included in compilation. __*Default*__: all .ts files recursively
 
@@ -9566,6 +9584,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code> | <span></span>
 **exclude**🔹 | <code>Array<string></code> | <span></span>
+**extends**🔹 | <code>Array<string></code> | Array of base `tsconfig.json` paths. Any absolute paths are resolved relative to this instance, while any relative paths are used as is.
 **file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
@@ -9586,6 +9605,19 @@ addExclude(pattern: string): void
 
 
 
+#### addExtends(value)🔹 <a id="projen-javascript-typescriptconfig-addextends"></a>
+
+Extend from base `TypescriptConfig` instance.
+
+```ts
+addExtends(value: TypescriptConfig): void
+```
+
+* **value** (<code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code>)  Base `TypescriptConfig` instance.
+
+
+
+
 #### addInclude(pattern)🔹 <a id="projen-javascript-typescriptconfig-addinclude"></a>
 
 
@@ -9598,6 +9630,81 @@ addInclude(pattern: string): void
 
 
 
+
+#### preSynthesize()🔹 <a id="projen-javascript-typescriptconfig-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
+
+#### resolveExtendsPath(configPath)🔹 <a id="projen-javascript-typescriptconfig-resolveextendspath"></a>
+
+Resolve valid TypeScript extends paths relative to this config.
+
+```ts
+resolveExtendsPath(configPath: string): string
+```
+
+* **configPath** (<code>string</code>)  Path to resolve against.
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class TypescriptConfigExtends 🔹 <a id="projen-javascript-typescriptconfigextends"></a>
+
+Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
+
+__Submodule__: javascript
+
+
+### Methods
+
+
+#### toJSON()🔹 <a id="projen-javascript-typescriptconfigextends-tojson"></a>
+
+
+
+```ts
+toJSON(): Array<string>
+```
+
+
+__Returns__:
+* <code>Array<string></code>
+
+#### *static* fromPaths(paths)🔹 <a id="projen-javascript-typescriptconfigextends-frompaths"></a>
+
+Factory for creation from array of file paths.
+
+```ts
+static fromPaths(paths: Array<string>): TypescriptConfigExtends
+```
+
+* **paths** (<code>Array<string></code>)  Absolute or relative paths to base `tsconfig.json` files.
+
+__Returns__:
+* <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>
+
+#### *static* fromTypescriptConfigs(configs)🔹 <a id="projen-javascript-typescriptconfigextends-fromtypescriptconfigs"></a>
+
+Factory for creation from array of other `TypescriptConfig` instances.
+
+```ts
+static fromTypescriptConfigs(configs: Array<TypescriptConfig>): TypescriptConfigExtends
+```
+
+* **configs** (<code>Array<[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)></code>)  Base `TypescriptConfig` instances.
+
+__Returns__:
+* <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code>
 
 
 
@@ -17891,6 +17998,7 @@ Options to configure the local NPM config.
 
 Name | Type | Description 
 -----|------|-------------
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **registry**?🔹 | <code>string</code> | URL of the registry mirror to use.<br/>__*Default*__: use npmjs default registry
 
 
@@ -18026,10 +18134,13 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**allowArbitraryExtensions**?🔹 | <code>boolean</code> | Suppress arbitrary extension import errors with the assumption that a bundler will be handling it.<br/>__*Default*__: undefined
+**allowImportingTsExtensions**?🔹 | <code>boolean</code> | Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`). Requires `noEmit` or `emitDeclarationOnly`.<br/>__*Default*__: undefined
 **allowJs**?🔹 | <code>boolean</code> | Allow JavaScript files to be compiled.<br/>__*Default*__: false
 **allowSyntheticDefaultImports**?🔹 | <code>boolean</code> | Allow default imports from modules with no default export.<br/>__*Optional*__
 **alwaysStrict**?🔹 | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.<br/>__*Default*__: true
 **baseUrl**?🔹 | <code>string</code> | Lets you set a base directory to resolve non-absolute module names.<br/>__*Optional*__
+**customConditions**?🔹 | <code>Array<string></code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.<br/>__*Default*__: undefined
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
 **emitDeclarationOnly**?🔹 | <code>boolean</code> | Only emit .d.ts files; do not emit .js files.<br/>__*Default*__: false
@@ -18060,6 +18171,8 @@ Name | Type | Description
 **outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/>__*Optional*__
 **paths**?🔹 | <code>Map<string, Array<string>></code> | A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.<br/>__*Optional*__
 **resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.<br/>__*Default*__: true
+**resolvePackageJsonExports**?🔹 | <code>boolean</code> | Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`.<br/>__*Default*__: true
+**resolvePackageJsonImports**?🔹 | <code>boolean</code> | Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor.<br/>__*Default*__: undefined
 **rootDir**?🔹 | <code>string</code> | Specifies the root directory of input files.<br/>__*Optional*__
 **skipLibCheck**?🔹 | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts).<br/>__*Default*__: false
 **sourceMap**?🔹 | <code>boolean</code> | Enables the generation of sourcemap files.<br/>__*Default*__: undefined
@@ -18069,6 +18182,7 @@ Name | Type | Description
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
 **stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an @internal annotation in it’s JSDoc comment.<br/>__*Default*__: true
 **target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
+**verbatimModuleSyntax**?🔹 | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
 
 
@@ -18083,6 +18197,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code> | Compiler options to use.
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
+**extends**?🔹 | <code>[javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)</code> | Base `tsconfig.json` configuration(s) to inherit from.<br/>__*Optional*__
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
 
@@ -20590,6 +20705,7 @@ Name | Description
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 **NODE16** 🔹|Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
 **NODE_NEXT** 🔹|Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
+**BUNDLER** 🔹|Resolution strategy which attempts to mimic resolution patterns of modern bundlers;
 
 
 ## enum UpdateSnapshot 🔹 <a id="projen-javascript-updatesnapshot"></a>

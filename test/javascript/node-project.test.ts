@@ -6,11 +6,12 @@ import { GithubCredentials } from "../../src/github";
 import { secretToString } from "../../src/github/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
+  CodeArtifactAuthProvider,
+  NodePackage,
+  NodePackageManager,
   NodeProject,
   NodeProjectOptions,
-  NodePackage,
   NpmAccess,
-  CodeArtifactAuthProvider,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
@@ -1486,6 +1487,57 @@ describe("scoped private packages", () => {
           exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text); npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
         },
       ],
+    });
+  });
+});
+
+test("sets resolution-mode to highest by default for pnpm", () => {
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const output = synthSnapshot(project);
+  expect(output[".npmrc"]).toContain("resolution-mode=highest");
+});
+
+test("can override resolution-mode to lowest for pnpm", () => {
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.PNPM,
+  });
+  project.npmrc.addConfig("resolution-mode", "lowest");
+
+  const output = synthSnapshot(project);
+  expect(output[".npmrc"]).toContain("resolution-mode=lowest");
+  expect(output[".npmrc"]).not.toContain("resolution-mode=highest");
+});
+
+describe("package manager env", () => {
+  [
+    {
+      packageManager: NodePackageManager.NPM,
+      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+    {
+      packageManager: NodePackageManager.YARN,
+      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+    {
+      packageManager: NodePackageManager.YARN2,
+      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+    {
+      packageManager: NodePackageManager.PNPM,
+      cmd: '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")',
+    },
+  ].forEach((testCase) => {
+    test(testCase.packageManager, () => {
+      // GIVEN / WHEN
+      const project = new TestNodeProject({
+        packageManager: testCase.packageManager,
+      });
+
+      // THEN
+      expect(project.tasks.env.PATH).toEqual(testCase.cmd);
     });
   });
 });

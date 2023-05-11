@@ -215,10 +215,13 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
 git config user.email "github-actions@github.com"",
   },
   {
+    "env": {
+      "PULL_REQUEST_REF": "\${{ github.event.pull_request.head.ref }}",
+    },
     "name": "Push changes",
-    "run": "  git add .
-  git commit -s -m "chore: self mutation"
-  git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
+    "run": "git add .
+git commit -s -m "chore: self mutation"
+git push origin HEAD:$PULL_REQUEST_REF",
   },
 ]
 `;

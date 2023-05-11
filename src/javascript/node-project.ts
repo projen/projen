@@ -28,6 +28,7 @@ import {
 } from "../github/workflows-model";
 import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
 import {
+  NpmConfig,
   Prettier,
   PrettierOptions,
   UpgradeDependencies,
@@ -35,13 +36,13 @@ import {
 } from "../javascript";
 import { License } from "../license";
 import {
+  CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
+  CodeArtifactAuthProvider,
   isAwsCodeArtifactRegistry,
+  NpmPublishOptions,
   Publisher,
   Release,
   ReleaseProjectOptions,
-  NpmPublishOptions,
-  CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
-  CodeArtifactAuthProvider,
 } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
@@ -338,6 +339,11 @@ export class NodeProject extends GitHubProject {
   public readonly npmignore?: IgnoreFile;
 
   /**
+   * The .npmrc file
+   */
+  public readonly npmrc: NpmConfig;
+
+  /**
    * @deprecated use `package.allowLibraryDependencies`
    */
   public get allowLibraryDependencies(): boolean {
@@ -463,14 +469,20 @@ export class NodeProject extends GitHubProject {
       }
     })();
 
+    const envCommand = (() => {
+      switch (this.packageManager) {
+        case NodePackageManager.PNPM:
+          return '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")';
+        default:
+          return '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")';
+      }
+    })();
+
     this.nodeVersion =
       options.workflowNodeVersion ?? this.package.minNodeVersion;
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.addEnvironment(
-      "PATH",
-      '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")'
-    );
+    this.tasks.addEnvironment("PATH", envCommand);
 
     this.addLicense(options);
 
@@ -731,6 +743,18 @@ export class NodeProject extends GitHubProject {
 
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
+    }
+
+    // Create the .npmrc file
+    this.npmrc = new NpmConfig(this, {
+      omitEmpty: true,
+    });
+
+    // For PNPM, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
+    // resolved to the lowest available version, which is unlikely to be expected behaviour for users. We set resolution
+    // mode to "highest" to match the behaviour of yarn and npm.
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      this.npmrc.addConfig("resolution-mode", "highest");
     }
   }
 

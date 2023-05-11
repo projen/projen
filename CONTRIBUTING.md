@@ -35,6 +35,8 @@ $ yarn # install dependencies
 $ yarn build # build projen
 ```
 
+Attention Windows users: It has been noted that there are compatibility issues between Git Bash and the Projen build script when running on Windows. Therefore, we recommend directly utilizing the WSL (Windows Subsystem Linux) terminal to build the Projen project.
+
 ## Code Organization
 
 Check out [this recording](https://www.youtube.com/watch?v=8dHwnuSND14) from a walkthrough of the projen codebase.
