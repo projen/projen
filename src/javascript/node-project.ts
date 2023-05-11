@@ -469,14 +469,20 @@ export class NodeProject extends GitHubProject {
       }
     })();
 
+    const envCommand = (() => {
+      switch (this.packageManager) {
+        case NodePackageManager.PNPM:
+          return '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")';
+        default:
+          return '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")';
+      }
+    })();
+
     this.nodeVersion =
       options.workflowNodeVersion ?? this.package.minNodeVersion;
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.addEnvironment(
-      "PATH",
-      '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")'
-    );
+    this.tasks.addEnvironment("PATH", envCommand);
 
     this.addLicense(options);
 

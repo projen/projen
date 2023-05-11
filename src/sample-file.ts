@@ -140,6 +140,9 @@ export class SampleDir extends Component {
       return;
     }
 
+    // previously creating the directory to allow empty dirs to be created
+    fs.mkdirSync(fullOutdir, { recursive: true });
+
     if (this.options.sourceDir) {
       const basedir = this.options.sourceDir;
       const files = glob.sync("**", {

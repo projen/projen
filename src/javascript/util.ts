@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { basename, dirname, extname, join, sep } from "path";
 import * as semver from "semver";
+import { findUp } from "../util";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
@@ -44,6 +45,66 @@ export function minVersion(version: string): string | undefined {
 }
 
 /**
+ * Attempt to resolve location of the given `moduleId`.
+ * @param moduleId Module ID to lookup.
+ * @param options Passed through to `require.resolve`.
+ */
+export function tryResolveModule(
+  moduleId: string,
+  options?: { paths: string[] }
+): string | undefined {
+  try {
+    return require.resolve(moduleId, options);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) path via `require.resolve` lookup.
+ *
+ * @remarks
+ * If the target package has `exports` that differ from the default
+ * (i.e, it defines the `exports` field in its manifest) and does not
+ * explicitly include an entry for `package.json`, this strategy will fail.
+ * See {@link tryResolveManifestPathFromDefaultExport} as an alternative.
+ *
+ * @param moduleId Module ID to lookup.
+ * @param options Passed through to `require.resolve`.
+ */
+export function tryResolveModuleManifestPath(
+  moduleId: string,
+  options?: { paths: string[] }
+): string | undefined {
+  // cannot just `require('dependency/package.json')` here because
+  // `options.paths` may not overlap with this node proc's resolution paths.
+  const manifestId = `${moduleId}/package.json`;
+  return tryResolveModule(manifestId, options);
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) path by looking for the nearest
+ * `package.json` file that is an ancestor to the module's default export location.
+ *
+ * @param moduleId Module ID to lookup.
+ * @param options Passed through to `require.resolve`.
+ */
+export function tryResolveManifestPathFromDefaultExport(
+  moduleId: string,
+  options?: { paths: string[] }
+): string | undefined {
+  const defaultExportPath = tryResolveModule(moduleId, options);
+  if (!defaultExportPath) {
+    return undefined;
+  }
+  const moduleDir = findUp("package.json", defaultExportPath);
+  if (!moduleDir) {
+    return undefined;
+  }
+  return join(moduleDir, "package.json");
+}
+
+/**
  * Attempt to resolve the installed version of a given dependency.
  * @param dependencyName Name of dependency.
  * @param options Optional options passed through to `require.resolve`.
@@ -52,18 +113,21 @@ export function tryResolveDependencyVersion(
   dependencyName: string,
   options?: { paths: string[] }
 ): string | undefined {
-  const manifestId = `${dependencyName}/package.json`;
+  const manifestPath =
+    tryResolveModuleManifestPath(dependencyName, options) ??
+    tryResolveManifestPathFromDefaultExport(dependencyName, options);
+  if (!manifestPath) {
+    return undefined;
+  }
   try {
-    const manifestPath = require.resolve(manifestId, options);
-    // cannot just `require('dependency/package.json')` here because
-    // `options.paths` may not overlap with this node proc's resolution paths.
     const manifest = JSON.parse(
       readFileSync(manifestPath, "utf-8").toString()
-    ) as {
-      version: string;
-    };
-    return manifest.version;
-  } catch (e) {
+    ) as { name?: string; version?: string };
+    if (manifest?.name !== dependencyName) {
+      return undefined;
+    }
+    return manifest?.version;
+  } catch {
     return undefined;
   }
 }

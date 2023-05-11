@@ -2121,6 +2121,7 @@ Name | Type | Description
 **projectBuild**🔹 | <code>[ProjectBuild](#projen-projectbuild)</code> | Manages the build process of the project.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
+**subprojects**🔹 | <code>Array<[Project](#projen-project)></code> | Returns all the subprojects within this project.
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
