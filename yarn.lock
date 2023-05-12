@@ -1078,9 +1078,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "20.1.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.1.2.tgz#8fd63447e3f99aba6c3168fd2ec4580d5b97886f"
-  integrity sha512-CTO/wa8x+rZU626cL2BlbCDzydgnFNgc19h4YvizpTO88MFQxab8wqisxaofQJ/9bLGugRdWIuX/TbIs6VVF6g==
+  version "20.1.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.1.3.tgz#bc8e7cd8065a5fc355a3a191a68db8019c58bc00"
+  integrity sha512-NP2yfZpgmf2eDRPmgGq+fjGjSwFgYbihA8/gK+ey23qT9RkxsgNTZvGOEpXgzIGqesTYkElELLgtKoMQTys5vA==
 
 "@types/node@^14":
   version "14.18.46"
@@ -2317,9 +2317,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.391"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.391.tgz#197994210792e29e39baf3ce807df42f66e9b5f8"
-  integrity sha512-GqydVV1+kUWY5qlEzaw34/hyWTApuQrHiGrcGA2Kk/56nEK44i+YUW45VH43JuZT0Oo7uY8aVtpPhBBZXEWtSA==
+  version "1.4.392"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.392.tgz#57ec91fa02393ab32e46df6925ef309642a44680"
+  integrity sha512-TXQOMW9tnhIms3jGy/lJctLjICOgyueZFJ1KUtm6DTQ+QpxX3p7ZBwB6syuZ9KBuT5S4XX7bgY1ECPgfxKUdOg==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5738,9 +5738,9 @@ signal-exit@^4.0.1:
   integrity sha512-MY2/qGx4enyjprQnFaZsHib3Yadh3IXyV2C321GY0pjGfVBu4un0uDJkwgdxqO+Rdx8JMT8IfJIRwbYVz3Ob3Q==
 
 sigstore@^1.0.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/sigstore/-/sigstore-1.4.0.tgz#2e3a28c08b1b8246744c27cfb179c525c3f164d8"
-  integrity sha512-N7TRpSbFjY/TrFDg6yGAQSYBrQ5s6qmPiq4pD6fkv1LoyfMsLG0NwZWG2s5q+uttLHgyVyTa0Rogx2P78rN8kQ==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/sigstore/-/sigstore-1.5.0.tgz#795e44b8e9ab0089daa90eff792a831ba87ffe9c"
+  integrity sha512-i3nhvdobiPj8XrXNIggjeur6+A5iAQ4f+r1bR5SGitFJBbthy/6c7Fz0h+kY70Wua1FSMdDr/UEhXSVRXNpynw==
   dependencies:
     "@sigstore/protobuf-specs" "^0.1.0"
     make-fetch-happen "^11.0.1"
@@ -6285,9 +6285,9 @@ typescript@5.x, typescript@~5.0.4:
   integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
 typescript@next:
-  version "5.1.0-dev.20230510"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230510.tgz#4b42ecd76c179dcf87785f8adf9a9737e53a38b9"
-  integrity sha512-jtCZp40/FBD7Tlj916Dv7bbr+NJK1ZYXoODwxKNBSuZTGeuijogC3k78zp84rij3uxY+F+HFl30cIpMm5i/iAQ==
+  version "5.1.0-dev.20230511"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230511.tgz#4da5fa260e2fdf6930f21d6191580443ff8e9691"
+  integrity sha512-T/GsNgbl4YWUZwSxCrj9uq2aIj7OC/5EyXqj4exIhRbwZEpjPIflv2TEqm6K5fFQhqKQpFATE8OBvY0Qzu8D1A==
 
 typescript@~3.9.10:
   version "3.9.10"
