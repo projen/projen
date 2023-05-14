@@ -38,12 +38,12 @@ export class Projenrc extends ProjenrcFile {
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
-    project.addDevDeps("ts-node");
+    project.addDevDeps("ts-node", "@swc/core");
 
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.
     project.defaultTask?.exec(
-      `ts-node --project ${project.tsconfigDev.fileName} ${this.filePath}`
+      `ts-node --swc --project ${project.tsconfigDev.fileName} ${this.filePath}`
     );
 
     this.generateProjenrc();
