@@ -3,6 +3,12 @@ import { basename, dirname, extname, join, sep, resolve } from "path";
 import * as semver from "semver";
 import { findUp } from "../util";
 
+interface PackageManifest {
+  name: string;
+  version: string;
+  [key: string]: any;
+}
+
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
   if (parts[0] === "src") {
@@ -147,6 +153,40 @@ export function tryResolveManifestPathFromSearch(
     // early return on first result.
     if (result) {
       return result;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) using multiple strategies.
+ * @param moduleId Module to resolve manifest path for.
+ * @param options Resolution options.
+ */
+export function tryResolveModuleManifest(
+  moduleId: string,
+  options?: { paths: string[] }
+): PackageManifest | undefined {
+  const strategies = [
+    tryResolveModuleManifestPath,
+    tryResolveManifestPathFromDefaultExport,
+    tryResolveManifestPathFromSearch,
+  ];
+  for (const strategy of strategies) {
+    const result = strategy(moduleId, options);
+    // early return on first result.
+    if (result) {
+      try {
+        const manifest = JSON.parse(
+          readFileSync(result, "utf8")
+        ) as PackageManifest;
+        // verify name matches target module.
+        if (manifest.name === moduleId) {
+          return manifest;
+        }
+      } catch {
+        // continue to next strategy.
+      }
     }
   }
   return undefined;
