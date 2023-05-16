@@ -3,10 +3,20 @@ import { basename, dirname, extname, join, sep, resolve } from "path";
 import * as semver from "semver";
 import { findUp } from "../util";
 
+/**
+ * Basic interface for `package.json`.
+ */
 interface PackageManifest {
-  name: string;
-  version: string;
   [key: string]: any;
+
+  /**
+   * Package name.
+   */
+  name: string;
+  /**
+   * Package version.
+   */
+  version: string;
 }
 
 export function renderBundleName(entrypoint: string) {
