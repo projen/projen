@@ -1,5 +1,5 @@
-import { readFileSync } from "fs";
-import { basename, dirname, extname, join, sep } from "path";
+import { existsSync, readFileSync } from "fs";
+import { basename, dirname, extname, join, sep, resolve } from "path";
 import * as semver from "semver";
 import { findUp } from "../util";
 
@@ -102,6 +102,54 @@ export function tryResolveManifestPathFromDefaultExport(
     return undefined;
   }
   return join(moduleDir, "package.json");
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) path by checking for its existence under `node_modules` relative to `basePath`.
+ *
+ * @remarks
+ * This strategy can be helpful in the scenario that a module defines
+ * custom exports without `package.json` and no default export (i.e, some type definition packages).
+ *
+ * @param moduleId Module ID to lookup.
+ * @param basePath Root path to search from.
+ */
+export function tryResolveManifestPathFromPath(
+  moduleId: string,
+  basePath: string
+) {
+  const base = basePath.includes("node_modules")
+    ? basePath
+    : join(basePath, "node_modules");
+  const filePath = resolve(base, ...moduleId.split("/"), "package.json");
+  if (existsSync(filePath)) {
+    return filePath;
+  }
+  return undefined;
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) path by searching for it in the optionally provided paths array
+ * as well as the current node processes' default resolution paths.
+ * @param moduleId Module ID to search for.
+ * @param options Search options.
+ */
+export function tryResolveManifestPathFromSearch(
+  moduleId: string,
+  options?: { paths: string[] }
+): string | undefined {
+  const searchPaths = [
+    ...(options?.paths ?? []),
+    ...(require.resolve.paths(moduleId) ?? []),
+  ];
+  for (const path of searchPaths) {
+    const result = tryResolveManifestPathFromPath(moduleId, path);
+    // early return on first result.
+    if (result) {
+      return result;
+    }
+  }
+  return undefined;
 }
 
 /**
