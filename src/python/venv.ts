@@ -17,10 +17,10 @@ export interface VenvOptions {
   readonly envdir?: string;
 
   /**
-   * Python executable to use. default python3 alternative:  python.
-   * @default  "python3"
+   * Path to the python executable to use.
+   * @default  "python"
    */
-  readonly pythonexec?: string;
+  readonly pythonExec?: string;
 }
 
 /**
@@ -31,13 +31,13 @@ export class Venv extends Component implements IPythonEnv {
    * Name of directory to store the environment in
    */
   private readonly envdir: string;
-  private readonly pythonexec: string;
+  private readonly pythonExec: string;
 
   constructor(project: Project, options: VenvOptions = {}) {
     super(project);
 
     this.envdir = options.envdir ?? ".env";
-    this.pythonexec = options.pythonexec ?? "python3";
+    this.pythonExec = options.pythonExec ?? "python";
 
     this.project.addGitIgnore(`/${this.envdir}`);
     this.project.tasks.addEnvironment(
@@ -57,7 +57,7 @@ export class Venv extends Component implements IPythonEnv {
     const absoluteEnvdir = path.join(this.project.outdir, this.envdir);
     if (!fs.existsSync(absoluteEnvdir)) {
       this.project.logger.info("Setting up a virtual environment...");
-      exec(`${this.pythonexec} -m venv ${this.envdir}`, {
+      exec(`${this.pythonExec} -m venv ${this.envdir}`, {
         cwd: this.project.outdir,
       });
       this.project.logger.info(
