@@ -201,21 +201,9 @@ export function tryResolveDependencyVersion(
   dependencyName: string,
   options?: { paths: string[] }
 ): string | undefined {
-  const manifestPath =
-    tryResolveModuleManifestPath(dependencyName, options) ??
-    tryResolveManifestPathFromDefaultExport(dependencyName, options);
-  if (!manifestPath) {
+  const manifest = tryResolveModuleManifest(dependencyName, options);
+  if (!manifest) {
     return undefined;
   }
-  try {
-    const manifest = JSON.parse(
-      readFileSync(manifestPath, "utf-8").toString()
-    ) as { name?: string; version?: string };
-    if (manifest?.name !== dependencyName) {
-      return undefined;
-    }
-    return manifest?.version;
-  } catch {
-    return undefined;
-  }
+  return manifest?.version;
 }
