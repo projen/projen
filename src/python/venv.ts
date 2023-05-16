@@ -31,6 +31,10 @@ export class Venv extends Component implements IPythonEnv {
    * Name of directory to store the environment in
    */
   private readonly envdir: string;
+
+  /**
+   * Path to the python executable to use.
+   */
   private readonly pythonExec: string;
 
   constructor(project: Project, options: VenvOptions = {}) {
