@@ -115,7 +115,7 @@ export interface PythonProjectOptions
 
   /**
    * Path to the python executable to use.
-   * @default  "python"
+   * @default "python"
    */
   readonly pythonExec?: string;
 
