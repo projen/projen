@@ -217,3 +217,34 @@ my_job:
 `
   );
 });
+
+test("test code coverage report", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      build: {
+        artifacts: {
+          reports: {
+            coverageReport: {
+              coverageFormat: "cobertura",
+              path: "coverage/cobertura-coverage.xml",
+            },
+          },
+        },
+      },
+    },
+  });
+  // THEN
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build.artifacts
+      .reports
+  ).toStrictEqual({
+    coverage_report: {
+      coverage_format: "cobertura",
+      path: "coverage/cobertura-coverage.xml",
+    },
+  });
+});

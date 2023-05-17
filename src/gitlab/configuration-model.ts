@@ -112,17 +112,30 @@ export interface Artifacts {
 }
 
 /**
+ * Code coverage report interface
+ * @link https://docs.gitlab.com/ee/ci/yaml/artifacts_reports.html#artifactsreportscoverage_report
+ */
+export interface CoverageReport {
+  readonly coverageFormat: string;
+  readonly path: string;
+}
+
+/**
  * Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, such as in
  * Merge Requests.
  * @see https://docs.gitlab.com/ee/ci/yaml/#artifactsreports
  */
 export interface Reports {
-  /** Path for file(s) that should be parsed as Cobertura XML coverage report*/
+  /** Path for file(s) that should be parsed as Cobertura XML coverage report
+   * @deprecated per {@link https://docs.gitlab.com/ee/update/deprecations.html#artifactsreportscobertura-keyword} use {@link coverageReport} instead
+   */
   readonly cobertura?: string[];
   /** Path to file or list of files with code quality report(s) (such as Code Climate).*/
   readonly codequality?: string[];
   /** Path to file or list of files with Container scanning vulnerabilities report(s).*/
   readonly containerScanning?: string[];
+  /** Code coverage report information */
+  readonly coverageReport?: CoverageReport;
   /** Path to file or list of files with DAST vulnerabilities report(s).*/
   readonly dast?: string[];
   /** Path to file or list of files with Dependency scanning vulnerabilities report(s).*/

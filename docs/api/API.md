@@ -304,6 +304,7 @@ Name|Description
 [gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
 [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)|Use this construct to generate a new key when one or two specific files change.
 [gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)|Options for `CiConfiguration`.
+[gitlab.CoverageReport](#projen-gitlab-coveragereport)|Code coverage report interface.
 [gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
 [gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
 [gitlab.Environment](#projen-gitlab-environment)|The environment that a job deploys to.
@@ -16868,6 +16869,20 @@ Name | Type | Description
 
 
 
+## struct CoverageReport 🔹 <a id="projen-gitlab-coveragereport"></a>
+
+
+Code coverage report interface.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**coverageFormat**🔹 | <code>string</code> | <span></span>
+**path**🔹 | <code>string</code> | <span></span>
+
+
+
 ## struct Default 🔹 <a id="projen-gitlab-default"></a>
 
 
@@ -17148,9 +17163,10 @@ Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, suc
 
 Name | Type | Description 
 -----|------|-------------
-**cobertura**?🔹 | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
+**cobertura**?⚠️ | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
 **codequality**?🔹 | <code>Array<string></code> | Path to file or list of files with code quality report(s) (such as Code Climate).<br/>__*Optional*__
 **containerScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Container scanning vulnerabilities report(s).<br/>__*Optional*__
+**coverageReport**?🔹 | <code>[gitlab.CoverageReport](#projen-gitlab-coveragereport)</code> | Code coverage report information.<br/>__*Optional*__
 **dast**?🔹 | <code>Array<string></code> | Path to file or list of files with DAST vulnerabilities report(s).<br/>__*Optional*__
 **dependencyScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Dependency scanning vulnerabilities report(s).<br/>__*Optional*__
 **dotenv**?🔹 | <code>Array<string></code> | Path to file or list of files containing runtime-created variables for this job.<br/>__*Optional*__
