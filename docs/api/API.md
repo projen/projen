@@ -4222,6 +4222,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -5858,6 +5859,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -10082,6 +10084,7 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 * **options** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.py"
   * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
 
 
 
@@ -10091,6 +10094,7 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **filePath**🔹 | <code>string</code> | The name of the projenrc file.
+**pythonExec**🔹 | <code>string</code> | Path to the python executable to use.
 
 
 
@@ -10223,6 +10227,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -10480,6 +10485,7 @@ new python.Venv(project: Project, options?: VenvOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
 
 
 ### Methods
@@ -14177,6 +14183,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -15450,6 +15457,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -18433,6 +18441,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.py"
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 
 
 
@@ -18541,6 +18550,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -18613,6 +18623,7 @@ Options for venv.
 Name | Type | Description 
 -----|------|-------------
 **envdir**?🔹 | <code>string</code> | Name of directory to store the environment in.<br/>__*Default*__: ".env"
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 
 
 
