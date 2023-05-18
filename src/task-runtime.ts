@@ -153,6 +153,9 @@ class RunTask {
 
       const execs = step.exec ? [step.exec] : [];
 
+      // Parse step-specific environment variables
+      const env = this.evalEnvironment(step.env ?? {});
+
       if (step.builtin) {
         execs.push(this.renderBuiltin(step.builtin));
       }
@@ -181,6 +184,7 @@ class RunTask {
           const result = this.shell({
             command,
             cwd,
+            extraEnv: env,
           });
           hasError = result.status !== 0;
         } catch (e) {
@@ -230,27 +234,9 @@ class RunTask {
   }
 
   /**
-   * Renders the runtime environment for a task. Namely, it supports this syntax
-   * `$(xx)` for allowing environment to be evaluated by executing a shell
-   * command and obtaining its result.
+   * Evaluates environment variables from shell commands (e.g. `$(xx)`)
    */
-  private resolveEnvironment(parents: string[]) {
-    let env = this.runtime.manifest.env ?? {};
-
-    // add env from all parent tasks one by one
-    for (const parent of parents) {
-      env = {
-        ...env,
-        ...(this.runtime.tryFindTask(parent)?.env ?? {}),
-      };
-    }
-
-    // apply the task's environment last
-    env = {
-      ...env,
-      ...(this.task.env ?? {}),
-    };
-
+  private evalEnvironment(env: { [name: string]: string }) {
     const output: { [name: string]: string | undefined } = {};
 
     for (const [key, value] of Object.entries(env ?? {})) {
@@ -270,8 +256,32 @@ class RunTask {
         output[key] = value;
       }
     }
-
     return output;
+  }
+
+  /**
+   * Renders the runtime environment for a task. Namely, it supports this syntax
+   * `$(xx)` for allowing environment to be evaluated by executing a shell
+   * command and obtaining its result.
+   */
+  private resolveEnvironment(parents: string[]) {
+    let env = this.runtime.manifest.env ?? {};
+
+    // add env from all parent tasks one by one
+    for (const parent of parents) {
+      env = {
+        ...env,
+        ...(this.runtime.tryFindTask(parent)?.env ?? {}),
+      };
+    }
+
+    // apply the task environment last
+    env = {
+      ...env,
+      ...(this.task.env ?? {}),
+    };
+
+    return this.evalEnvironment(env ?? {});
   }
 
   /**
@@ -326,6 +336,7 @@ class RunTask {
       env: {
         ...process.env,
         ...this.env,
+        ...options.extraEnv,
       },
       ...options.spawnOptions,
     });
@@ -360,4 +371,5 @@ interface ShellOptions {
   readonly spawnOptions?: SpawnOptions;
   /** @default false */
   readonly quiet?: boolean;
+  readonly extraEnv?: { [name: string]: string | undefined };
 }
