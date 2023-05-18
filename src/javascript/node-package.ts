@@ -501,7 +501,6 @@ export class NodePackage extends Component {
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
-  private readonly packageResolutions = new Map<string, string>();
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -787,11 +786,7 @@ export class NodePackage extends Component {
    */
   public addPackageResolutions(...resolutions: string[]) {
     for (const resolution of resolutions) {
-      const dependency = this.project.deps.addDependency(
-        resolution,
-        DependencyType.OVERRIDE
-      );
-      this.packageResolutions.set(dependency.name, dependency.version ?? "*");
+      this.project.deps.addDependency(resolution, DependencyType.OVERRIDE);
     }
   }
 
@@ -1389,29 +1384,16 @@ export class NodePackage extends Component {
 
   private renderPackageResolutions() {
     const render = () => {
-      const overridingDependencies = new Set(
-        this.project.deps.all
-          .filter((dep) => dep.type === DependencyType.OVERRIDE)
-          .map((dep) => dep.name)
+      const overridingDependencies = this.project.deps.all.filter(
+        (dep) => dep.type === DependencyType.OVERRIDE
       );
-      if (overridingDependencies.size === 0) {
+      if (!overridingDependencies.length) {
         return undefined;
       }
-      for (const resolution of this.packageResolutions.keys()) {
-        if (!overridingDependencies.has(resolution)) {
-          this.project.logger.debug(
-            `Removing resolution '${resolution}' as it missing from project override dependencies`
-          );
-          this.packageResolutions.delete(resolution);
-        }
-      }
-      for (const override of overridingDependencies) {
-        if (!this.packageResolutions.has(override))
-          this.project.logger.warn(
-            `Overriding dependency '${override}' lacks target. Make sure you adding overrides via addPackageResolutions method.`
-          );
-      }
-      return Object.fromEntries(this.packageResolutions);
+
+      return Object.fromEntries(
+        overridingDependencies.map(({ name, version = "*" }) => [name, version])
+      );
     };
 
     switch (this.packageManager) {

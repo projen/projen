@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
-import { Project, DependencyType, LogLevel } from "../../src";
+import { Project, DependencyType } from "../../src";
 import {
   NodePackage,
   NodePackageManager,
@@ -491,8 +491,7 @@ test("npm overrides", () => {
 });
 
 test("removed override dependency will not be rendered in overrides", () => {
-  const logSpy = jest.spyOn(console, "error").mockImplementation(() => {});
-  const project = new TestProject({ logging: { level: LogLevel.DEBUG } });
+  const project = new TestProject();
 
   const pkg = new NodePackage(project, {
     packageManager: NodePackageManager.NPM,
@@ -506,15 +505,7 @@ test("removed override dependency will not be rendered in overrides", () => {
   const pkgJson = snps["package.json"];
 
   expect(pkgJson).toHaveProperty("dependencies.some-dep", "1.0.0");
-  expect(pkgJson).toHaveProperty("overrides", {
-    "other-dep": "another-dep@1.2.3",
-  });
-  expect(logSpy).toHaveBeenCalledWith(
-    expect.stringContaining(
-      "Removing resolution 'some-dep' as it missing from project override dependencies"
-    )
-  );
-  logSpy.mockRestore();
+  expect(pkgJson).not.toHaveProperty("overrides.some-dep");
 });
 
 test("pnpm overrides", () => {
