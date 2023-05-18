@@ -14,7 +14,7 @@ import {
 } from "./util";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
-import { Dependencies, DependencyType } from "../dependencies";
+import { DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
@@ -783,13 +783,15 @@ export class NodePackage extends Component {
    *
    * @param resolutions Names resolutions to be added. Specify a version or
    * range with this syntax:
-   * `module@^7`.
+   * `module@^7`
    */
   public addPackageResolutions(...resolutions: string[]) {
     for (const resolution of resolutions) {
-      this.project.deps.addDependency(resolution, DependencyType.OVERRIDE);
-      const { name, version = "*" } = Dependencies.parseDependency(resolution);
-      this.packageResolutions.set(name, version);
+      const dependency = this.project.deps.addDependency(
+        resolution,
+        DependencyType.OVERRIDE
+      );
+      this.packageResolutions.set(dependency.name, dependency.version ?? "*");
     }
   }
 
@@ -1387,8 +1389,27 @@ export class NodePackage extends Component {
 
   private renderPackageResolutions() {
     const render = () => {
-      if (this.packageResolutions.size === 0) {
+      const overridingDependencies = new Set(
+        this.project.deps.all
+          .filter((dep) => dep.type === DependencyType.OVERRIDE)
+          .map((dep) => dep.name)
+      );
+      if (overridingDependencies.size === 0) {
         return undefined;
+      }
+      for (const resolution of this.packageResolutions.keys()) {
+        if (!overridingDependencies.has(resolution)) {
+          this.project.logger.debug(
+            `Removing resolution '${resolution}' as it missing from project override dependencies`
+          );
+          this.packageResolutions.delete(resolution);
+        }
+      }
+      for (const override of overridingDependencies) {
+        if (!this.packageResolutions.has(override))
+          this.project.logger.warn(
+            `Overriding dependency '${override}' lacks target. Make sure you adding overrides via addPackageResolutions method.`
+          );
       }
       return Object.fromEntries(this.packageResolutions);
     };
