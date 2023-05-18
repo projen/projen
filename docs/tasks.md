@@ -27,7 +27,7 @@ const projen = require('projen');
 
 const hello = project.addTask('hello', {
   description: 'say hello',
-  category: projen.tasks.TaskCategory.TEST,  
+  category: projen.tasks.TaskCategory.TEST,
   exec: 'echo hello, world!'
 });
 ```
@@ -101,22 +101,22 @@ world:
 
 ## Environment
 
-Environment variables can be defined at the project level (for all tasks) or the task level:
+Environment variables can be defined at the project level (for all tasks), the task level, or the task step level:
 
 ```ts
 project.tasks.addEnvironment('FOO', 'hello');
 
 const hello = project.addTask('hello');
-hello.env('BAR', 'world');
-hello.exec('echo $FOO, $BAR!');
+hello.env('BAR', 'beautiful');
+hello.exec('echo $FOO, $BAR $BAZ!', { env: { BAZ: 'world' } });
 ```
 
 Then:
 
 ```shell
 $ projen hello
-🤖 hello | echo $FOO, $BAR!
-hello, world!
+🤖 hello | echo $FOO, $BAR $BAZ!
+hello, beautiful world!
 ```
 
 You can also evaluate environment variable values from a shell command:
@@ -159,6 +159,36 @@ $ CI=1 projen hello
 🤖 hello | condition: [ -n "$CI" ]
 🤖 hello | echo running in a CI environment
 running in a CI environment
+```
+
+The `condition` option can also be specified on individual task steps, for more
+granular control over task execution behavior:
+
+```ts
+const hello = project.addTask('hello', {
+  steps: [
+    { exec: 'running in a CI environment', condition: '[ -n "$CI" ]' },
+    { exec: 'not running in a CI environment', condition: '[ ! -n "$CI" ]' }
+  ]
+});
+```
+
+Then:
+
+```shell
+$ projen hello
+🤖 hello | condition: [ -n "$CI" ]
+🤖 hello | condition exited with non-zero - skipping
+🤖 hello | condition: [ ! -n "$CI" ]
+🤖 hello | echo not running in a CI environment
+not running in a CI environment
+
+$ CI=1 projen hello
+🤖 hello | condition: [ -n "$CI" ]
+🤖 hello | echo running in a CI environment
+running in a CI environment
+🤖 hello | condition: [ ! -n "$CI" ]
+🤖 hello | condition exited with non-zero - skipping
 ```
 
 ## Tasks as npm scripts
