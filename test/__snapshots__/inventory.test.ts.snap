@@ -2175,6 +2175,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""python"",
+        "docs": "Path to the python executable to use.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonExec",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "pythonExec",
+        ],
+        "simpleType": "string",
+        "switch": "python-exec",
+      },
+      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -9377,6 +9394,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PytestOptions",
         "switch": "pytest-options",
+      },
+      {
+        "default": ""python"",
+        "docs": "Path to the python executable to use.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonExec",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "pythonExec",
+        ],
+        "simpleType": "string",
+        "switch": "python-exec",
       },
       {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
@@ -29575,6 +29609,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PytestOptions",
         "switch": "pytest-options",
+      },
+      {
+        "default": ""python"",
+        "docs": "Path to the python executable to use.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonExec",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "pythonExec",
+        ],
+        "simpleType": "string",
+        "switch": "python-exec",
       },
       {
         "default": "- { filename: 'README.md', contents: '# replace this' }",

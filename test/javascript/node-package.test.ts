@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
-import { join } from "path";
+import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType } from "../../src";
@@ -18,10 +18,15 @@ import { mkdtemp, synthSnapshot, TestProject } from "../util";
  * NOT A PERFECT MODEL OF YARN. JUST CLOSE ENOUGH.
  * @param outdir Test project's outdir, where package.json and node_modules live
  * @param latestPackages Package name and version to "install" for "*" deps
+ * @param hooks Optional record by package name of hooks to execute on mock "install". Should return manifest.
  */
 function mockYarnInstall(
   outdir: string,
-  latestPackages: Record<string, string>
+  latestPackages: Record<string, string>,
+  hooks?: Record<
+    string,
+    (manifest: Record<string, any>, manifestPath: string) => Record<string, any>
+  >
 ) {
   const pkgJson = JSON.parse(
     readFileSync(join(outdir, "package.json"), "utf-8")
@@ -89,12 +94,19 @@ function mockYarnInstall(
       throw new Error(`No version given satisfies all constraints on ${dep}`);
     }
     mkdirSync(join(outdir, `node_modules/${dep}`), { recursive: true });
+    const manifestHook = hooks?.[dep] ?? ((manifest) => manifest);
+    const manifestPath = join(outdir, `node_modules/${dep}/package.json`);
     writeFileSync(
-      join(outdir, `node_modules/${dep}/package.json`),
-      JSON.stringify({
-        name: `${dep}`,
-        version: `${installVersion}`,
-      })
+      manifestPath,
+      JSON.stringify(
+        manifestHook(
+          {
+            name: `${dep}`,
+            version: `${installVersion}`,
+          },
+          manifestPath
+        )
+      )
     );
     // Not accurate to yaml.lock v1 format, but close enough.
     yarnLock[
@@ -552,4 +564,77 @@ test("tryResolveDependencyVersion", () => {
   expect(project.deps.tryGetDependency("ms")?.version).toEqual("*");
   expect(pkg.tryResolveDependencyVersion("ms")).toEqual("2.1.3");
   expect(pkg.tryResolveDependencyVersion("foo")).toEqual(undefined);
+});
+
+test("tryResolveDependencyVersion resolves with custom package exports.", () => {
+  jest
+    .spyOn(TaskRuntime.prototype, "runTask")
+    .mockImplementation(function (this: TaskRuntime, command) {
+      expect(command).toMatch("install");
+      mockYarnInstall(
+        this.workdir,
+        { rollup: "3.21.1" },
+        {
+          rollup: (manifest, manifestPath) => {
+            // create default entrypoint so node is able to resolve it.
+            const entrypoint = join(dirname(manifestPath), "dist", "rollup.js");
+            mkdirSync(dirname(entrypoint), { recursive: true });
+            writeFileSync(entrypoint, "");
+            return {
+              ...manifest,
+              exports: {
+                ".": {
+                  require: "./dist/rollup.js",
+                },
+              },
+            };
+          },
+        }
+      );
+    });
+  const outdir = mkdtemp();
+  const project = new TestProject({ outdir });
+
+  const pkg = new NodePackage(project);
+  pkg.addDeps("rollup@*");
+  project.synth();
+
+  expect(project.deps.tryGetDependency("rollup")?.version).toEqual("*");
+  expect(pkg.tryResolveDependencyVersion("rollup")).toEqual("3.21.1");
+});
+
+test("tryResolveDependencyVersion resolves with no package.json or default export with default conditions.", () => {
+  jest
+    .spyOn(TaskRuntime.prototype, "runTask")
+    .mockImplementation(function (this: TaskRuntime, command) {
+      expect(command).toMatch("install");
+      mockYarnInstall(
+        this.workdir,
+        { "@types/js-yaml": "4.0.5" },
+        {
+          "@types/js-yaml": (manifest) => {
+            return {
+              ...manifest,
+              exports: {
+                ".": {
+                  types: {
+                    import: "./index.d.mts",
+                    default: "./index.d.ts",
+                  },
+                },
+              },
+            };
+          },
+        }
+      );
+    });
+  const outdir = mkdtemp();
+  const project = new TestProject({ outdir });
+
+  const pkg = new NodePackage(project);
+  pkg.addDeps("@types/js-yaml@*");
+  project.synth();
+
+  expect(project.deps.tryGetDependency("@types/js-yaml")?.version).toEqual("*");
+  expect(pkg.tryResolveDependencyVersion("@types/js-yaml")).toEqual("4.0.5");
 });
