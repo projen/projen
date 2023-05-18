@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
-import { Project, DependencyType } from "../../src";
+import { Project, DependencyType, LogLevel } from "../../src";
 import {
   NodePackage,
   NodePackageManager,
@@ -488,6 +488,33 @@ test("npm overrides", () => {
 
   expect(snps["package.json"].overrides).toBeDefined();
   expect(snps["package.json"]).toMatchSnapshot();
+});
+
+test("removed override dependency will not be rendered in overrides", () => {
+  const logSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+  const project = new TestProject({ logging: { level: LogLevel.DEBUG } });
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.NPM,
+  });
+
+  pkg.addDeps("some-dep@1.0.0");
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep@another-dep@1.2.3");
+  project.deps.removeDependency("some-dep", DependencyType.OVERRIDE);
+
+  const snps = synthSnapshot(project);
+  const pkgJson = snps["package.json"];
+
+  expect(pkgJson).toHaveProperty("dependencies.some-dep", "1.0.0");
+  expect(pkgJson).toHaveProperty("overrides", {
+    "other-dep": "another-dep@1.2.3",
+  });
+  expect(logSpy).toHaveBeenCalledWith(
+    expect.stringContaining(
+      "Removing resolution 'some-dep' as it missing from project override dependencies"
+    )
+  );
+  logSpy.mockRestore();
 });
 
 test("pnpm overrides", () => {
