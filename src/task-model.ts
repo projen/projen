@@ -118,6 +118,16 @@ export interface TaskStepOptions {
    * @default - no arguments are passed to the step
    */
   readonly args?: string[];
+
+  /**
+   * Defines environment variables for the execution of this step (`exec` and `builtin` only).
+   * Values in this map can be simple, literal values or shell expressions that will be evaluated at runtime e.g. `$(echo "foo")`.
+   *
+   * @example { "foo": "bar", "boo": "$(echo baz)" }
+   *
+   * @default - no environment variables defined in step
+   */
+  readonly env?: { [name: string]: string };
 }
 
 /**
