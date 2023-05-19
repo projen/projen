@@ -18,6 +18,13 @@ export interface ProjenrcOptions {
    * @default "projenrc"
    */
   readonly projenCodeDir?: string;
+
+  /**
+   * Whether to use `SWC` for ts-node.
+   *
+   * @default false
+   */
+  readonly swc?: boolean;
 }
 
 /**
@@ -27,6 +34,7 @@ export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
+  private readonly _swc: boolean;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
@@ -34,19 +42,31 @@ export class Projenrc extends ProjenrcFile {
 
     this.filePath = options.filename ?? ".projenrc.ts";
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
+    this._swc = options.swc ?? false;
+
+    this.addDefaultTask();
+
+    this.generateProjenrc();
+  }
+
+  private addDefaultTask() {
+    const deps = ["ts-node"];
+    if (this._swc) {
+      deps.push("@swc/core");
+    }
 
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
-    project.addDevDeps("ts-node", "@swc/core");
+    this._tsProject.addDevDeps(...deps);
+
+    const tsNode = this._swc ? "ts-node --swc" : "ts-node";
 
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.
-    project.defaultTask?.exec(
-      `ts-node --swc --project ${project.tsconfigDev.fileName} ${this.filePath}`
+    this._tsProject.defaultTask?.exec(
+      `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`
     );
-
-    this.generateProjenrc();
   }
 
   public preSynthesize(): void {
