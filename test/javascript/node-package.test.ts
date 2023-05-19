@@ -490,6 +490,24 @@ test("npm overrides", () => {
   expect(snps["package.json"]).toMatchSnapshot();
 });
 
+test("removed override dependency will not be rendered in overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.NPM,
+  });
+
+  pkg.addDeps("some-dep@1.0.0");
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep@another-dep@1.2.3");
+  project.deps.removeDependency("some-dep", DependencyType.OVERRIDE);
+
+  const snps = synthSnapshot(project);
+  const pkgJson = snps["package.json"];
+
+  expect(pkgJson).toHaveProperty("dependencies.some-dep", "1.0.0");
+  expect(pkgJson).not.toHaveProperty("overrides.some-dep");
+});
+
 test("pnpm overrides", () => {
   const project = new TestProject();
 
