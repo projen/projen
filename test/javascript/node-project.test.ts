@@ -980,6 +980,66 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
   });
 });
 
+describe("workflowPackageCache", () => {
+  const cache = (job: any) =>
+    job.steps.find((step: any) => step.name === "Setup Node.js")?.with?.cache;
+
+  test.each([
+    { name: "default to false", options: {}, expected: undefined },
+    {
+      name: "only nodeVersion to be disabled",
+      options: { workflowNodeVersion: "18" },
+      expected: undefined,
+    },
+    {
+      name: "npm to be enabled",
+      options: {
+        workflowPackageCache: true,
+        packageManager: NodePackageManager.NPM,
+      },
+      expected: "npm",
+    },
+    {
+      name: "yarn to be enabled",
+      options: {
+        workflowPackageCache: true,
+        packageManager: NodePackageManager.YARN,
+      },
+      expected: "yarn",
+    },
+    {
+      name: "yarn2 to be enabled",
+      options: {
+        workflowPackageCache: true,
+        packageManager: NodePackageManager.YARN2,
+      },
+      expected: "yarn",
+    },
+    {
+      name: "pnpm to be enabled",
+      options: {
+        workflowPackageCache: true,
+        packageManager: NodePackageManager.PNPM,
+      },
+      expected: "pnpm",
+    },
+  ])("$name", ({ options, expected }) => {
+    // WHEN
+    const project = new TestNodeProject(options);
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(cache(buildWorkflow.jobs.build)).toEqual(expected);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(cache(releaseWorkflow.jobs.release)).toEqual(expected);
+    const upgradeWorkflow = yaml.parse(
+      output[".github/workflows/upgrade-main.yml"]
+    );
+    expect(cache(upgradeWorkflow.jobs.upgrade)).toEqual(expected);
+  });
+});
+
 describe("workflowRunsOn", () => {
   test("default to ubuntu-latest", () => {
     // WHEN
