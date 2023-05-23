@@ -34,6 +34,17 @@ export interface TypescriptConfigOptions {
    * Compiler options to use.
    */
   readonly compilerOptions: TypeScriptCompilerOptions;
+
+  /**
+   * References to other Typescript modules in a multi-module project.
+   *
+   * If a project has any references, the `declaration` compiler option will be turned on and an
+   * error will be thrown if this option is disabled.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+   * @default - no references
+   */
+  readonly references?: TypescriptProjectReferences;
 }
 
 /**
@@ -554,6 +565,58 @@ export class TypescriptConfigExtends {
   }
 }
 
+/**
+ * Reference to another Typescript project.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+ */
+export interface TypescriptProjectReference {
+  /**
+   * Path to a directory containing a tsconfig.json file, or to the config file itself (which may have
+   * any name). Relative paths are resolved relative to the referencing Typescript config file.
+   */
+  path: string;
+
+  /**
+   * Whether a project's output is included above the current project.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/project-references.html#prepend-with-outfile
+   * @default false
+   */
+  prepend?: boolean;
+}
+
+/**
+ * References to another Typescript project.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+ */
+export class TypescriptProjectReferences {
+  /**
+   * Factory for creation from array of file paths. Paths may be relative or absolute. Absolute paths will be
+   * converted to relative ones when the tsconfig.json file is synthesized.
+   *
+   * @param paths Absolute or relative paths to base `tsconfig.json` files.
+   */
+  public static fromPaths(paths: string[]) {
+    throw new Error("Not implemented");
+  }
+
+  /**
+   * Factory for creation from array of other TypescriptConfig instances. This will automatically set the
+   * 'composite' compiler option on the referenced projects to true.
+   *
+   * @param paths Referenced `TypescriptConfig` instances.
+   */
+  public static fromTypescriptConfigs(configs: TypescriptConfig[]) {
+    throw new Error("Not implemented");
+  }
+
+  public toJSON(): TypescriptProjectReference[] {
+    throw new Error("Not implemented");
+  }
+}
+
 export class TypescriptConfig extends Component {
   private _extends: TypescriptConfigExtends;
   public readonly compilerOptions: TypeScriptCompilerOptions;
@@ -666,6 +729,15 @@ export class TypescriptConfig extends Component {
   }
 
   /**
+   * Array of refererenced tsconfig files.
+   * Any absolute paths are resolved relative to this instance,
+   * while any relative paths are used as is.
+   */
+  public get references(): TypescriptProjectReference[] {
+    throw new Error("not implemented");
+  }
+
+  /**
    * Extend from base `TypescriptConfig` instance.
    *
    * @remarks
@@ -686,6 +758,28 @@ export class TypescriptConfig extends Component {
 
   public addExclude(pattern: string) {
     this.exclude.push(pattern);
+  }
+
+  /**
+   * Add a project reference to the specified TypescriptConfig. This will automatically set the
+   * 'composite' compiler option on the referenced project`s to true.
+   *
+   * @param value Referenced `TypescriptConfig` instance.
+   * @param prepend Whether to prepend the reference to the list of references.
+   */
+  public addReference(reference: TypescriptConfig, prepend?: boolean) {
+    throw new Error("Not implemented");
+  }
+
+  /**
+   * Invoked when this config is used part of the TypescriptProjectReferences of another project. This
+   * is used to ensure that all referenced projects have the necessary compiler options. (Specifically, that
+   * the 'composite' option is set to true.)
+   *
+   * This is intended to be called during the preSynthesize step of the referencing project.
+   */
+  protected markAsReferenced() {
+    throw new Error("Not implemented");
   }
 
   preSynthesize() {
