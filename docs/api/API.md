@@ -10963,6 +10963,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
+  * **swc** (<code>boolean</code>)  Whether to use `SWC` for ts-node. __*Default*__: false
 
 
 
@@ -19060,6 +19061,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 **projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
+**swc**?🔹 | <code>boolean</code> | Whether to use `SWC` for ts-node.<br/>__*Default*__: false
 
 
 
