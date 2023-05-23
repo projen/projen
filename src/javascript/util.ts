@@ -1,7 +1,23 @@
-import { readFileSync } from "fs";
-import { basename, dirname, extname, join, sep } from "path";
+import { existsSync, readFileSync } from "fs";
+import { basename, dirname, extname, join, sep, resolve } from "path";
 import * as semver from "semver";
 import { findUp } from "../util";
+
+/**
+ * Basic interface for `package.json`.
+ */
+interface PackageManifest {
+  [key: string]: any;
+
+  /**
+   * Package name.
+   */
+  name: string;
+  /**
+   * Package version.
+   */
+  version: string;
+}
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
@@ -105,6 +121,88 @@ export function tryResolveManifestPathFromDefaultExport(
 }
 
 /**
+ * Attempt to resolve a module's manifest (package.json) path by checking for its existence under `node_modules` relative to `basePath`.
+ *
+ * @remarks
+ * This strategy can be helpful in the scenario that a module defines
+ * custom exports without `package.json` and no default export (i.e, some type definition packages).
+ *
+ * @param moduleId Module ID to lookup.
+ * @param basePath Root path to search from.
+ */
+export function tryResolveManifestPathFromPath(
+  moduleId: string,
+  basePath: string
+) {
+  const base = basePath.includes("node_modules")
+    ? basePath
+    : join(basePath, "node_modules");
+  const filePath = resolve(base, ...moduleId.split("/"), "package.json");
+  if (existsSync(filePath)) {
+    return filePath;
+  }
+  return undefined;
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) path by searching for it in the optionally provided paths array
+ * as well as the current node processes' default resolution paths.
+ * @param moduleId Module ID to search for.
+ * @param options Search options.
+ */
+export function tryResolveManifestPathFromSearch(
+  moduleId: string,
+  options?: { paths: string[] }
+): string | undefined {
+  const searchPaths = [
+    ...(options?.paths ?? []),
+    ...(require.resolve.paths(moduleId) ?? []),
+  ];
+  for (const path of searchPaths) {
+    const result = tryResolveManifestPathFromPath(moduleId, path);
+    // early return on first result.
+    if (result) {
+      return result;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Attempt to resolve a module's manifest (package.json) using multiple strategies.
+ * @param moduleId Module to resolve manifest path for.
+ * @param options Resolution options.
+ */
+export function tryResolveModuleManifest(
+  moduleId: string,
+  options?: { paths: string[] }
+): PackageManifest | undefined {
+  const strategies = [
+    tryResolveModuleManifestPath,
+    tryResolveManifestPathFromDefaultExport,
+    tryResolveManifestPathFromSearch,
+  ];
+  for (const strategy of strategies) {
+    const result = strategy(moduleId, options);
+    // early return on first result.
+    if (result) {
+      try {
+        const manifest = JSON.parse(
+          readFileSync(result, "utf8")
+        ) as PackageManifest;
+        // verify name matches target module.
+        if (manifest.name === moduleId) {
+          return manifest;
+        }
+      } catch {
+        // continue to next strategy.
+      }
+    }
+  }
+  return undefined;
+}
+
+/**
  * Attempt to resolve the installed version of a given dependency.
  * @param dependencyName Name of dependency.
  * @param options Optional options passed through to `require.resolve`.
@@ -113,21 +211,9 @@ export function tryResolveDependencyVersion(
   dependencyName: string,
   options?: { paths: string[] }
 ): string | undefined {
-  const manifestPath =
-    tryResolveModuleManifestPath(dependencyName, options) ??
-    tryResolveManifestPathFromDefaultExport(dependencyName, options);
-  if (!manifestPath) {
+  const manifest = tryResolveModuleManifest(dependencyName, options);
+  if (!manifest) {
     return undefined;
   }
-  try {
-    const manifest = JSON.parse(
-      readFileSync(manifestPath, "utf-8").toString()
-    ) as { name?: string; version?: string };
-    if (manifest?.name !== dependencyName) {
-      return undefined;
-    }
-    return manifest?.version;
-  } catch {
-    return undefined;
-  }
+  return manifest?.version;
 }

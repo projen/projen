@@ -304,6 +304,7 @@ Name|Description
 [gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
 [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)|Use this construct to generate a new key when one or two specific files change.
 [gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)|Options for `CiConfiguration`.
+[gitlab.CoverageReport](#projen-gitlab-coveragereport)|Code coverage report interface.
 [gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
 [gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
 [gitlab.Environment](#projen-gitlab-environment)|The environment that a job deploys to.
@@ -2940,6 +2941,7 @@ exec(command: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -2970,6 +2972,7 @@ prepend(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -2988,6 +2991,7 @@ prependExec(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3006,6 +3010,7 @@ prependSay(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3024,6 +3029,7 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3042,6 +3048,7 @@ reset(command?: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3060,6 +3067,7 @@ say(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3078,6 +3086,7 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -4222,6 +4231,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -5858,6 +5868,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -10082,6 +10093,7 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 * **options** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.py"
   * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
 
 
 
@@ -10091,6 +10103,7 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **filePath**🔹 | <code>string</code> | The name of the projenrc file.
+**pythonExec**🔹 | <code>string</code> | Path to the python executable to use.
 
 
 
@@ -10223,6 +10236,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -10480,6 +10494,7 @@ new python.Venv(project: Project, options?: VenvOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
 
 
 ### Methods
@@ -13632,6 +13647,7 @@ Name | Type | Description
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **builtin**?🔹 | <code>string</code> | The name of a built-in task to execute.<br/>__*Default*__: do not execute a builtin task
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: no environment variables defined in step
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
@@ -13651,6 +13667,7 @@ Name | Type | Description
 -----|------|-------------
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: no environment variables defined in step
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 
@@ -14178,6 +14195,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -15451,6 +15469,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -16861,6 +16880,20 @@ Name | Type | Description
 
 
 
+## struct CoverageReport 🔹 <a id="projen-gitlab-coveragereport"></a>
+
+
+Code coverage report interface.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**coverageFormat**🔹 | <code>string</code> | <span></span>
+**path**🔹 | <code>string</code> | <span></span>
+
+
+
 ## struct Default 🔹 <a id="projen-gitlab-default"></a>
 
 
@@ -17141,9 +17174,10 @@ Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, suc
 
 Name | Type | Description 
 -----|------|-------------
-**cobertura**?🔹 | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
+**cobertura**?⚠️ | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
 **codequality**?🔹 | <code>Array<string></code> | Path to file or list of files with code quality report(s) (such as Code Climate).<br/>__*Optional*__
 **containerScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Container scanning vulnerabilities report(s).<br/>__*Optional*__
+**coverageReport**?🔹 | <code>[gitlab.CoverageReport](#projen-gitlab-coveragereport)</code> | Code coverage report information.<br/>__*Optional*__
 **dast**?🔹 | <code>Array<string></code> | Path to file or list of files with DAST vulnerabilities report(s).<br/>__*Optional*__
 **dependencyScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Dependency scanning vulnerabilities report(s).<br/>__*Optional*__
 **dotenv**?🔹 | <code>Array<string></code> | Path to file or list of files containing runtime-created variables for this job.<br/>__*Optional*__
@@ -18434,6 +18468,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.py"
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 
 
 
@@ -18542,6 +18577,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -18614,6 +18650,7 @@ Options for venv.
 Name | Type | Description 
 -----|------|-------------
 **envdir**?🔹 | <code>string</code> | Name of directory to store the environment in.<br/>__*Default*__: ".env"
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 
 
 
