@@ -14,7 +14,7 @@ import {
 } from "./util";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
-import { Dependencies, DependencyType } from "../dependencies";
+import { DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
@@ -501,7 +501,6 @@ export class NodePackage extends Component {
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
-  private readonly packageResolutions = new Map<string, string>();
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -783,13 +782,11 @@ export class NodePackage extends Component {
    *
    * @param resolutions Names resolutions to be added. Specify a version or
    * range with this syntax:
-   * `module@^7`.
+   * `module@^7`
    */
   public addPackageResolutions(...resolutions: string[]) {
     for (const resolution of resolutions) {
       this.project.deps.addDependency(resolution, DependencyType.OVERRIDE);
-      const { name, version = "*" } = Dependencies.parseDependency(resolution);
-      this.packageResolutions.set(name, version);
     }
   }
 
@@ -1387,10 +1384,16 @@ export class NodePackage extends Component {
 
   private renderPackageResolutions() {
     const render = () => {
-      if (this.packageResolutions.size === 0) {
+      const overridingDependencies = this.project.deps.all.filter(
+        (dep) => dep.type === DependencyType.OVERRIDE
+      );
+      if (!overridingDependencies.length) {
         return undefined;
       }
-      return Object.fromEntries(this.packageResolutions);
+
+      return Object.fromEntries(
+        overridingDependencies.map(({ name, version = "*" }) => [name, version])
+      );
     };
 
     switch (this.packageManager) {
