@@ -45,12 +45,7 @@ export class Task {
    */
   public readonly name: string;
 
-  /**
-   * A command to execute which determines if the task should be skipped. If it
-   * returns a zero exit code, the task will not be executed.
-   */
-  public readonly condition?: string;
-
+  private readonly _conditions: string[];
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
@@ -61,7 +56,7 @@ export class Task {
   constructor(name: string, props: TaskOptions = {}) {
     this.name = name;
     this._description = props.description;
-    this.condition = props.condition;
+    this._conditions = props.condition ? [props.condition] : [];
     this.cwd = props.cwd;
     this._locked = false;
     this._env = props.env ?? {};
@@ -97,6 +92,28 @@ export class Task {
    */
   public set description(desc: string | undefined) {
     this._description = desc;
+  }
+
+  /**
+   * A command to execute which determines if the task should be skipped. If it
+   * returns a zero exit code, the task will not be executed.
+   */
+  public get condition(): string | undefined {
+    if (this._conditions?.length) {
+      return this._conditions.join(" && ");
+    }
+    return undefined;
+  }
+
+  /**
+   * Add a command to execute which determines if the task should be skipped.
+   *
+   * If a condition already exists, the new condition will be appended with ` && ` delimiter.
+   * @param condition The command to execute.
+   * @see {@link Task.condition}
+   */
+  public addCondition(...condition: string[]): void {
+    this._conditions.push(...condition);
   }
 
   /**

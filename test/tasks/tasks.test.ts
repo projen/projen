@@ -280,6 +280,48 @@ test('"condition" can be used to define a command that will determine if a task 
   });
 });
 
+test('"addCondition" can be added after task initialized', () => {
+  // GIVEN
+  const p = new TestProject();
+  const t = p.addTask("foo", {
+    condition: undefined,
+    exec: "foo bar",
+  });
+  t.addCondition("false");
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      foo: {
+        name: "foo",
+        condition: "false",
+        steps: [{ exec: "foo bar" }],
+      },
+    },
+  });
+});
+
+test('"addCondition" can append additional condition', () => {
+  // GIVEN
+  const p = new TestProject();
+  const t = p.addTask("foo", {
+    condition: "a",
+    exec: "foo bar",
+  });
+  t.addCondition("b");
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      foo: {
+        name: "foo",
+        condition: "a && b",
+        steps: [{ exec: "foo bar" }],
+      },
+    },
+  });
+});
+
 test('"builtin" can be used to execute builtin commands', () => {
   const p = new TestProject();
   const task = p.addTask("foo", {

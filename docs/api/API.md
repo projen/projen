@@ -2897,6 +2897,21 @@ Name | Type | Description
 ### Methods
 
 
+#### addCondition(...condition)🔹 <a id="projen-task-addcondition"></a>
+
+Add a command to execute which determines if the task should be skipped.
+
+If a condition already exists, the new condition will be appended with ` && ` delimiter.
+
+```ts
+addCondition(...condition: string[]): void
+```
+
+* **condition** (<code>string</code>)  The command to execute.
+
+
+
+
 #### builtin(name)🔹 <a id="projen-task-builtin"></a>
 
 Execute a builtin task.
