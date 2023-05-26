@@ -2955,6 +2955,7 @@ exec(command: string, options?: TaskStepOptions): void
 * **command** (<code>string</code>)  Shell command.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -2986,6 +2987,7 @@ prepend(shell: string, options?: TaskStepOptions): void
 * **shell** (<code>string</code>)  The command to add.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -3005,6 +3007,7 @@ prependExec(shell: string, options?: TaskStepOptions): void
 * **shell** (<code>string</code>)  The command to add.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -3024,6 +3027,7 @@ prependSay(message: string, options?: TaskStepOptions): void
 * **message** (<code>string</code>)  Your message.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -3043,6 +3047,7 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 * **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -3062,6 +3067,7 @@ reset(command?: string, options?: TaskStepOptions): void
 * **command** (<code>string</code>)  the first command to add to the task after it was cleared.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -3081,6 +3087,7 @@ say(message: string, options?: TaskStepOptions): void
 * **message** (<code>string</code>)  Your message.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -3100,6 +3107,7 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 * **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
@@ -10978,6 +10986,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
+  * **swc** (<code>boolean</code>)  Whether to use `SWC` for ts-node. __*Default*__: false
 
 
 
@@ -13660,6 +13669,7 @@ Name | Type | Description
 -----|------|-------------
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **builtin**?🔹 | <code>string</code> | The name of a built-in task to execute.<br/>__*Default*__: do not execute a builtin task
+**condition**?🔹 | <code>string</code> | A shell command which determines if the this step should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: no environment variables defined in step
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
@@ -13680,6 +13690,7 @@ Options for task steps.
 Name | Type | Description 
 -----|------|-------------
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
+**condition**?🔹 | <code>string</code> | A shell command which determines if the this step should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: no environment variables defined in step
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
@@ -19075,6 +19086,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 **projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
+**swc**?🔹 | <code>boolean</code> | Whether to use `SWC` for ts-node.<br/>__*Default*__: false
 
 
 

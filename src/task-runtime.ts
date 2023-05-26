@@ -7,7 +7,7 @@ import { format } from "util";
 import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
-import { TasksManifest, TaskSpec } from "./task-model";
+import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
@@ -134,6 +134,12 @@ class RunTask {
     }
 
     for (const step of task.steps) {
+      // evaluate step condition
+      if (!this.evalCondition(step)) {
+        this.log("condition exited with non-zero - skipping");
+        continue;
+      }
+
       const argsList: string[] = [
         ...(step.args || []),
         ...(step.receiveArgs ? args : []),
@@ -214,15 +220,15 @@ class RunTask {
    * evaluates to false (exits with non-zero), indicating that the task should
    * be skipped.
    */
-  private evalCondition(task: TaskSpec) {
+  private evalCondition(taskOrStep: TaskSpec | TaskStep) {
     // no condition, carry on
-    if (!task.condition) {
+    if (!taskOrStep.condition) {
       return true;
     }
 
-    this.log(gray(`${underline("condition")}: ${task.condition}`));
+    this.log(gray(`${underline("condition")}: ${taskOrStep.condition}`));
     const result = this.shell({
-      command: task.condition,
+      command: taskOrStep.condition,
       logprefix: "condition: ",
       quiet: true,
     });

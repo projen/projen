@@ -206,7 +206,7 @@ describe("environment variables", () => {
   });
 });
 
-describe("condition", () => {
+describe("task condition", () => {
   test("zero exit code means that steps should be executed", () => {
     // GIVEN
     const p = new TestProject();
@@ -241,6 +241,37 @@ describe("condition", () => {
 
     // THEN
     expect(executeTask(p, "foo")).toEqual(["failing_condition"]);
+  });
+});
+
+describe("step condition", () => {
+  test("zero exit code means that step should be executed", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const t = p.addTask("foo");
+
+    t.exec("echo step0");
+    t.exec("echo step1", { condition: "echo yes" });
+
+    // THEN
+    expect(executeTask(p, "foo")).toEqual(["step0", "yes", "step1"]);
+  });
+
+  test("non-zero exit code means step should not be executed", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const t = p.addTask("foo");
+
+    t.exec("echo step0");
+    t.exec("echo step1", { condition: "echo no && false" });
+    t.exec("echo step2");
+
+    // THEN
+    expect(executeTask(p, "foo")).toEqual(["step0", "no", "step2"]);
   });
 });
 

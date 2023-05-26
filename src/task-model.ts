@@ -83,6 +83,13 @@ export interface TaskStepOptions {
   readonly cwd?: string;
 
   /**
+   * A shell command which determines if the this step should be executed. If
+   * the program exits with a zero exit code, the step will be executed. A non-zero
+   * code means the step will be skipped (subsequent task steps will still be evaluated/executed).
+   */
+  readonly condition?: string;
+
+  /**
    * Should this step receive args passed to the task.
    *
    * If `true`, args are passed through at the end of the `exec` shell command.\
