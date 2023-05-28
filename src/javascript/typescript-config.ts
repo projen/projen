@@ -328,7 +328,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @default false
    */
-  readonly emitDeclarationOnly?: true;
+  readonly emitDeclarationOnly?: boolean;
 
   /**
    * Do not emit compiler output files like JavaScript source code, source-maps or
