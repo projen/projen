@@ -2912,6 +2912,18 @@ addCondition(...condition: string[]): void
 
 
 
+#### allEnvVars()🔹 <a id="projen-task-allenvvars"></a>
+
+Returns all environment variables in the task level.
+
+```ts
+allEnvVars(): Map<string, string>
+```
+
+
+__Returns__:
+* <code>Map<string, string></code>
+
 #### builtin(name)🔹 <a id="projen-task-builtin"></a>
 
 Execute a builtin task.
