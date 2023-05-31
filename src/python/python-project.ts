@@ -545,7 +545,6 @@ export class PythonProject extends GitHubProject {
   public addDevDependency(spec: string) {
     return this.depsManager.addDevDependency(spec);
   }
-  
 
   public postSynthesize() {
     super.postSynthesize();
