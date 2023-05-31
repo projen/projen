@@ -5331,6 +5331,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -8346,6 +8363,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",
@@ -12327,6 +12361,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -15211,6 +15262,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -18025,6 +18093,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",
@@ -21627,6 +21712,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -23873,6 +23975,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",
@@ -26386,6 +26505,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -28564,6 +28700,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",
@@ -32058,6 +32211,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -34557,6 +34727,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -37034,6 +37221,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -39509,6 +39713,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",

@@ -164,6 +164,13 @@ export interface NodeProjectOptions
   readonly workflowNodeVersion?: string;
 
   /**
+   * Enable Node.js package cache in GitHub workflows.
+   *
+   * @default false
+   */
+  readonly workflowPackageCache?: boolean;
+
+  /**
    * Use dependabot to handle dependency upgrades.
    * Cannot be used in conjunction with `depsUpgrade`.
    *
@@ -443,6 +450,7 @@ export class NodeProject extends GitHubProject {
 
   protected readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
+  protected readonly workflowPackageCache: boolean;
   public readonly prettier?: Prettier;
 
   constructor(options: NodeProjectOptions) {
@@ -452,6 +460,7 @@ export class NodeProject extends GitHubProject {
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    this.workflowPackageCache = options.workflowPackageCache ?? false;
     this.artifactsDirectory = options.artifactsDirectory ?? "dist";
     this.artifactsJavascriptDirectory = join(this.artifactsDirectory, "js");
 
@@ -954,19 +963,34 @@ export class NodeProject extends GitHubProject {
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
-    if (this.nodeVersion) {
-      install.push({
-        name: "Setup Node.js",
-        uses: "actions/setup-node@v3",
-        with: { "node-version": this.nodeVersion },
-      });
-    }
-
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
         uses: "pnpm/action-setup@v2.2.4",
         with: { version: this.package.pnpmVersion },
+      });
+    }
+
+    if (this.nodeVersion || this.workflowPackageCache) {
+      const cache =
+        this.package.packageManager === NodePackageManager.YARN
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.YARN2
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.PNPM
+          ? "pnpm"
+          : "npm";
+      install.push({
+        name: "Setup Node.js",
+        uses: "actions/setup-node@v3",
+        with: {
+          ...(this.nodeVersion && {
+            "node-version": this.nodeVersion,
+          }),
+          ...(this.workflowPackageCache && {
+            cache,
+          }),
+        },
       });
     }
 
