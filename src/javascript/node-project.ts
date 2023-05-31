@@ -963,6 +963,14 @@ export class NodeProject extends GitHubProject {
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      install.push({
+        name: "Setup pnpm",
+        uses: "pnpm/action-setup@v2.2.4",
+        with: { version: this.package.pnpmVersion },
+      });
+    }
+
     if (this.nodeVersion || this.workflowPackageCache) {
       const cache =
         this.package.packageManager === NodePackageManager.YARN
@@ -983,14 +991,6 @@ export class NodeProject extends GitHubProject {
             cache,
           }),
         },
-      });
-    }
-
-    if (this.package.packageManager === NodePackageManager.PNPM) {
-      install.push({
-        name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.4",
-        with: { version: this.package.pnpmVersion },
       });
     }
 
