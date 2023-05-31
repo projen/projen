@@ -51,7 +51,7 @@ To create a new project, run the following command and follow the instructions:
 ```console
 $ mkdir my-project
 $ cd my-project
-$ npx projen new PROJECT-TYPE
+$ npx projen new PROJECT-TYPEya
 🤖 Synthesizing project...
 ...
 ```
