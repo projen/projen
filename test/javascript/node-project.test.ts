@@ -1552,7 +1552,7 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: "aws codeartifact login --region my-region-1  --tool npm --repository MyRepository  --domain my-domain --domain-owner 123456789012; NaN; npm config always-auth=true",
+          exec: "aws codeartifact login --region my-region-1  --tool npm --repository MyRepository  --domain my-domain --domain-owner 123456789012;  npm config always-auth=true",
         },
       ],
     });
@@ -1589,10 +1589,10 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: "aws codeartifact login --region my-region-1  --tool npm --repository MyRepository  --domain my-domain --domain-owner 123456789012; NaN; npm config always-auth=true",
+          exec: "aws codeartifact login --region my-region-1  --tool npm --repository MyRepository  --domain my-domain --domain-owner 123456789012;npm config always-auth=true",
         },
         {
-          exec: "aws codeartifact login --region my-region-2  --tool npm --repository MyRepository2  --domain my-domain-2 --domain-owner 123456789013; NaN; npm config always-auth=true",
+          exec: "aws codeartifact login --region my-region-2  --tool npm --repository MyRepository2  --domain my-domain-2 --domain-owner 123456789013; npm config always-auth=true",
         },
       ],
     });
