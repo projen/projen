@@ -1074,13 +1074,13 @@ export class NodePackage extends Component {
       steps: [
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
-          const { registryUrl} = scopedPackagesOption;
+          const { registryUrl } = scopedPackagesOption;
           const { domain, region, accountId, repository } =
             extractCodeArtifactDetails(registryUrl);
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
             `aws codeartifact login --region ${region}  --tool npm --repository ${repository}  --domain ${domain} --domain-owner ${accountId}`,
-+                        `npm config set always-auth=true`,
+            +`npm config set always-auth=true`,
             `npm config always-auth=true`,
           ];
           return {

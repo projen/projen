@@ -772,6 +772,8 @@ jobs:
         with:
           role-to-assume: role-arn
           aws-region: us-west-2
+      - name: Configure AWS CodeArtifact
+        run: npx projen ca:login
       - name: Release
         env:
           NPM_DIST_TAG: latest

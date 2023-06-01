@@ -286,7 +286,7 @@ export class Publisher extends Component {
     const isAwsCodeArtifactWithOidc =
       isAwsCodeArtifact &&
       options.codeArtifactOptions?.authProvider ===
-      CodeArtifactAuthProvider.GITHUB_OIDC;
+        CodeArtifactAuthProvider.GITHUB_OIDC;
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     if (options.distTag) {
@@ -323,8 +323,8 @@ export class Publisher extends Component {
 
       prePublishSteps.push({
         name: "Configure AWS CodeArtifact",
-        run: "npx projen ca:login"
-      })
+        run: "npx projen ca:login",
+      });
     }
 
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
@@ -355,16 +355,16 @@ export class Publisher extends Component {
           AWS_ACCESS_KEY_ID:
             isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
               ? secret(
-                options.codeArtifactOptions?.accessKeyIdSecret ??
-                "AWS_ACCESS_KEY_ID"
-              )
+                  options.codeArtifactOptions?.accessKeyIdSecret ??
+                    "AWS_ACCESS_KEY_ID"
+                )
               : undefined,
           AWS_SECRET_ACCESS_KEY:
             isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
               ? secret(
-                options.codeArtifactOptions?.secretAccessKeySecret ??
-                "AWS_SECRET_ACCESS_KEY"
-              )
+                  options.codeArtifactOptions?.secretAccessKeySecret ??
+                    "AWS_SECRET_ACCESS_KEY"
+                )
               : undefined,
           AWS_ROLE_TO_ASSUME:
             isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
@@ -441,17 +441,17 @@ export class Publisher extends Component {
           MAVEN_GPG_PRIVATE_KEY: isGitHubPackages
             ? undefined
             : secret(
-              options.mavenGpgPrivateKeySecret ?? "MAVEN_GPG_PRIVATE_KEY"
-            ),
+                options.mavenGpgPrivateKeySecret ?? "MAVEN_GPG_PRIVATE_KEY"
+              ),
           MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages
             ? undefined
             : secret(
-              options.mavenGpgPrivateKeyPassphrase ??
-              "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
-            ),
+                options.mavenGpgPrivateKeyPassphrase ??
+                  "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
+              ),
           MAVEN_PASSWORD: secret(
             options.mavenPassword ??
-            (isGitHubPackages ? "GITHUB_TOKEN" : "MAVEN_PASSWORD")
+              (isGitHubPackages ? "GITHUB_TOKEN" : "MAVEN_PASSWORD")
           ),
           MAVEN_USERNAME: isGitHubActor
             ? "${{ github.actor }}"
@@ -459,8 +459,8 @@ export class Publisher extends Component {
           MAVEN_STAGING_PROFILE_ID: isGitHubPackages
             ? undefined
             : secret(
-              options.mavenStagingProfileId ?? "MAVEN_STAGING_PROFILE_ID"
-            ),
+                options.mavenStagingProfileId ?? "MAVEN_STAGING_PROFILE_ID"
+              ),
         },
         permissions: {
           contents: JobPermission.READ,
@@ -621,8 +621,8 @@ export class Publisher extends Component {
       const perms = opts.permissions ?? { contents: JobPermission.READ };
       const container = this.workflowContainerImage
         ? {
-          image: this.workflowContainerImage,
-        }
+            image: this.workflowContainerImage,
+          }
         : undefined;
 
       if (this.failureIssue) {
@@ -783,7 +783,7 @@ export interface CommonPublishOptions {
 /**
  * @deprecated Use `NpmPublishOptions` instead.
  */
-export interface JsiiReleaseNpm extends NpmPublishOptions { }
+export interface JsiiReleaseNpm extends NpmPublishOptions {}
 
 /**
  * Options for npm release
@@ -899,7 +899,7 @@ export interface CodeArtifactOptions {
 /**
  * @deprecated Use `PyPiPublishOptions` instead.
  */
-export interface JsiiReleasePyPi extends PyPiPublishOptions { }
+export interface JsiiReleasePyPi extends PyPiPublishOptions {}
 
 /**
  * Options for PyPI release
@@ -928,7 +928,7 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
 /**
  * @deprecated Use `NugetPublishOptions` instead.
  */
-export interface JsiiReleaseNuget extends NugetPublishOptions { }
+export interface JsiiReleaseNuget extends NugetPublishOptions {}
 
 /**
  * Options for NuGet releases
@@ -950,7 +950,7 @@ export interface NugetPublishOptions extends CommonPublishOptions {
 /**
  * @deprecated Use `MavenPublishOptions` instead.
  */
-export interface JsiiReleaseMaven extends MavenPublishOptions { }
+export interface JsiiReleaseMaven extends MavenPublishOptions {}
 
 /**
  * Options for Maven releases
@@ -1037,7 +1037,7 @@ export interface MavenPublishOptions extends CommonPublishOptions {
 /**
  * @deprecated Use `GoPublishOptions` instead.
  */
-export interface JsiiReleaseGo extends GoPublishOptions { }
+export interface JsiiReleaseGo extends GoPublishOptions {}
 
 /**
  * Options for Go releases.
@@ -1141,7 +1141,7 @@ export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
  */
 export interface GitHubReleasesPublishOptions
   extends VersionArtifactOptions,
-  CommonPublishOptions { }
+    CommonPublishOptions {}
 
 /**
  * Publishing options for Git releases

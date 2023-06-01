@@ -1552,7 +1552,7 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+          exec: "aws codeartifact login --region my-region-1  --tool npm --repository MyRepository  --domain my-domain --domain-owner 123456789012; NaN; npm config always-auth=true",
         },
       ],
     });
@@ -1589,10 +1589,10 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+          exec: "aws codeartifact login --region my-region-1  --tool npm --repository MyRepository  --domain my-domain --domain-owner 123456789012; NaN; npm config always-auth=true",
         },
         {
-          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text); npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
+          exec: "aws codeartifact login --region my-region-2  --tool npm --repository MyRepository2  --domain my-domain-2 --domain-owner 123456789013; NaN; npm config always-auth=true",
         },
       ],
     });
