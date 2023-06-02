@@ -112,14 +112,6 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create js artifact
-        run: cd .repo && npx projen package:js
-      - name: Collect js Artifact
-        run: mv .repo/dist dist
       - name: Release
         env:
           NPM_DIST_TAG: latest
@@ -163,14 +155,6 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create java artifact
-        run: cd .repo && npx projen package:java
-      - name: Collect java Artifact
-        run: mv .repo/dist dist
       - name: Release
         env:
           MAVEN_ENDPOINT: https://s01.oss.sonatype.org
@@ -216,14 +200,6 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create python artifact
-        run: cd .repo && npx projen package:python
-      - name: Collect python Artifact
-        run: mv .repo/dist dist
       - name: Release
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
@@ -265,14 +241,6 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create go artifact
-        run: cd .repo && npx projen package:go
-      - name: Collect go Artifact
-        run: mv .repo/dist dist
       - name: Release
         env:
           GIT_USER_NAME: github-actions

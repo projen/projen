@@ -1079,7 +1079,7 @@ export class NodePackage extends Component {
             extractCodeArtifactDetails(registryUrl);
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
-            `aws codeartifact login --region ${region}  --tool npm --repository ${repository}  --domain ${domain} --domain-owner ${accountId}` ,
+            `aws codeartifact login --region ${region}  --tool npm --repository ${repository}  --domain ${domain} --domain-owner ${accountId}`,
             `npm config always-auth=true`,
           ];
           return {

@@ -477,24 +477,30 @@ export class JsiiProject extends TypeScriptProject {
       });
     }
 
-    prePublishSteps.push(
-      {
-        name: "Prepare Repository",
-        run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
-      },
-      {
-        name: "Install Dependencies",
-        run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
-      },
-      {
-        name: `Create ${target} artifact`,
-        run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
-      },
-      {
-        name: `Collect ${target} Artifact`,
-        run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
-      }
-    );
+    if (this.package.codeArtifactOptions) {
+      prePublishSteps.push();
+
+      prePublishSteps.push(
+        {
+          name: "Prepare Repository",
+          run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
+        },
+
+        {
+          name: "Install Dependencies",
+          run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
+        },
+        {
+          name: `Create ${target} artifact`,
+          run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
+        },
+        {
+          name: `Collect ${target} Artifact`,
+          run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
+        }
+      );
+    }
+
     return {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps,

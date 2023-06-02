@@ -875,7 +875,7 @@ export class NodeProject extends GitHubProject {
    * @param codeArtifactOptions Details of logging in to AWS
    * @returns array of job steps required for each private scoped packages
    */
-  private getScopedPackageSteps(
+  public getScopedPackageSteps(
     codeArtifactOptions: CodeArtifactOptions | undefined
   ): JobStep[] {
     const parsedCodeArtifactOptions = {

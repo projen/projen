@@ -9302,6 +9302,23 @@ addTestCommand(...commands: string[]): void
 
 
 
+#### getScopedPackageSteps(codeArtifactOptions?)🔹 <a id="projen-javascript-nodeproject-getscopedpackagesteps"></a>
+
+Get steps for scoped package access.
+
+```ts
+getScopedPackageSteps(codeArtifactOptions?: CodeArtifactOptions): Array<JobStep>
+```
+
+* **codeArtifactOptions** (<code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code>)  Details of logging in to AWS.
+  * **accessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+  * **authProvider** (<code>[javascript.CodeArtifactAuthProvider](#projen-javascript-codeartifactauthprovider)</code>)  Provider to use for authorizing requests to AWS CodeArtifact. __*Default*__: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+  * **roleToAssume** (<code>string</code>)  ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL). __*Default*__: undefined
+  * **secretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+
+__Returns__:
+* <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
+
 #### hasScript(name)⚠️ <a id="projen-javascript-nodeproject-hasscript"></a>
 
 Indicates if a script by the name name is defined.
