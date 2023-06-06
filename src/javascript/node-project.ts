@@ -481,9 +481,9 @@ export class NodeProject extends GitHubProject {
     const envCommand = (() => {
       switch (this.packageManager) {
         case NodePackageManager.PNPM:
-          return '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")';
+          return '$(pnpm -c exec "node --print process.env.PATH")';
         default:
-          return '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")';
+          return '$(npx -c "node --print process.env.PATH")';
       }
     })();
 

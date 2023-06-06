@@ -1623,19 +1623,19 @@ describe("package manager env", () => {
   [
     {
       packageManager: NodePackageManager.NPM,
-      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.YARN,
-      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.YARN2,
-      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.PNPM,
-      cmd: '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(pnpm -c exec "node --print process.env.PATH")',
     },
   ].forEach((testCase) => {
     test(testCase.packageManager, () => {
