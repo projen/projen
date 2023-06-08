@@ -1,4 +1,4 @@
-const { cdk, JsonFile, TextFile } = require("./lib");
+const { cdk, javascript, JsonFile, TextFile } = require("./lib");
 const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
@@ -58,6 +58,12 @@ const project = new cdk.JsiiProject({
   depsUpgradeOptions: {
     // markmac depends on projen, we are excluding it here to avoid a circular update loop
     exclude: ["markmac"],
+    workflowOptions: {
+      // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
+      schedule: javascript.UpgradeDependenciesSchedule.expressions([
+        "0 12 * * *",
+      ]),
+    },
   },
 
   projenDevDependency: false, // because I am projen
