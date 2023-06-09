@@ -55,7 +55,7 @@ junit.xml
 !/.eslintrc.json
 .jsii
 tsconfig.json
-!/docs/api/API.md
+!/docs/docs/api/API.md
 !/projen.bash
 !templates/**
 /.idea

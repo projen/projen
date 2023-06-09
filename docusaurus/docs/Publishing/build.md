@@ -1,7 +1,7 @@
 # Build
 
 Projen defines a standard way for building software through a fixed set of
-*build phases*. This is implemented via a set of [tasks](./tasks.md) defined in
+*build phases*. This is implemented via a set of [tasks](../Basics/tasks.md) defined in
 the `Project` base class.
 
 The `build` task spawns a set of sub-tasks which represent the various build phases:
