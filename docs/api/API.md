@@ -5082,6 +5082,7 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
   * **env** (<code>Map<string, string></code>)  Build environment variables. __*Default*__: {}
   * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  Git identity to use for the workflow. __*Default*__: default identity
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
+  * **name** (<code>string</code>)  Name of the buildfile (e.g. "build" becomes "build.yml"). __*Default*__: "build"
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. __*Default*__: `{ contents: JobPermission.WRITE }`
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
@@ -14874,6 +14875,7 @@ Name | Type | Description
 **env**?🔹 | <code>Map<string, string></code> | Build environment variables.<br/>__*Default*__: {}
 **gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | Git identity to use for the workflow.<br/>__*Default*__: default identity
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
+**name**?🔹 | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml").<br/>__*Default*__: "build"
 **permissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.<br/>__*Default*__: `{ contents: JobPermission.WRITE }`
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
