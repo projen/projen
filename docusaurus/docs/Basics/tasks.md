@@ -8,8 +8,8 @@ The following example defines a task named "hello" which executes the shell
 command `echo hello, world!`:
 
 ```js
-const hello = project.addTask('hello');
-hello.exec('echo hello, world!');
+const hello = project.addTask("hello");
+hello.exec("echo hello, world!");
 ```
 
 Run `pj` and the task will be available in the CLI:
@@ -23,12 +23,12 @@ hello, world!
 You can also define some metadata and the first exec step declaratively:
 
 ```js
-const projen = require('projen');
+const projen = require("projen");
 
-const hello = project.addTask('hello', {
-  description: 'say hello',
+const hello = project.addTask("hello", {
+  description: "say hello",
   category: projen.tasks.TaskCategory.TEST,
-  exec: 'echo hello, world!'
+  exec: "echo hello, world!",
 });
 ```
 
@@ -37,10 +37,10 @@ const hello = project.addTask('hello', {
 Tasks can include any number of _steps_:
 
 ```ts
-hello.exec('echo step number 2');
+hello.exec("echo step number 2");
 
 // a name can be added to a step if desired
-hello.exec('echo foo bar', { name: 'print the text "foo bar"' });
+hello.exec("echo foo bar", { name: 'print the text "foo bar"' });
 ```
 
 The `--inspect` option can be used to display the contents of a task:
@@ -58,9 +58,9 @@ executed.
 You can also add steps to the beginning of a task:
 
 ```ts
-const hello = project.addTask('hello');
-hello.exec('echo hello');
-hello.prepend('echo world');
+const hello = project.addTask("hello");
+hello.exec("echo hello");
+hello.prepend("echo world");
 ```
 
 Then:
@@ -76,11 +76,11 @@ hello
 Tasks can also spawn sub-tasks as a step:
 
 ```ts
-const world = project.addTask('world');
-world.exec('echo world!');
+const world = project.addTask("world");
+world.exec("echo world!");
 
-const hello = project.addTask('hello');
-hello.exec('echo hello');
+const hello = project.addTask("hello");
+hello.exec("echo hello");
 hello.spawn(world);
 ```
 
@@ -104,11 +104,11 @@ world:
 Environment variables can be defined at the project level (for all tasks), the task level, or the task step level:
 
 ```ts
-project.tasks.addEnvironment('FOO', 'hello');
+project.tasks.addEnvironment("FOO", "hello");
 
-const hello = project.addTask('hello');
-hello.env('BAR', 'beautiful');
-hello.exec('echo $FOO, $BAR $BAZ!', { env: { BAZ: 'world' } });
+const hello = project.addTask("hello");
+hello.env("BAR", "beautiful");
+hello.exec("echo $FOO, $BAR $BAZ!", { env: { BAZ: "world" } });
 ```
 
 Then:
@@ -122,9 +122,9 @@ hello, beautiful world!
 You can also evaluate environment variable values from a shell command:
 
 ```ts
-const hello = project.addTask('hello');
-hello.env('TIME', '$(date)');
-hello.exec('echo current time is $TIME');
+const hello = project.addTask("hello");
+hello.env("TIME", "$(date)");
+hello.exec("echo current time is $TIME");
 ```
 
 Then:
@@ -142,9 +142,9 @@ executed. If the command exits successfully (with a zero exit code), steps will
 be executed. Otherwise, the task will be skipped (successfully).
 
 ```ts
-const hello = project.addTask('hello', {
+const hello = project.addTask("hello", {
   condition: '[ -n "$CI" ]', // only execute if the CI environment variable is defined
-  exec: 'echo running in a CI environment'
+  exec: "echo running in a CI environment",
 });
 ```
 
@@ -165,11 +165,11 @@ The `condition` option can also be specified on individual task steps, for more
 granular control over task execution behavior:
 
 ```ts
-const hello = project.addTask('hello', {
+const hello = project.addTask("hello", {
   steps: [
-    { exec: 'running in a CI environment', condition: '[ -n "$CI" ]' },
-    { exec: 'not running in a CI environment', condition: '[ ! -n "$CI" ]' }
-  ]
+    { exec: "running in a CI environment", condition: '[ -n "$CI" ]' },
+    { exec: "not running in a CI environment", condition: '[ ! -n "$CI" ]' },
+  ],
 });
 ```
 
@@ -209,3 +209,32 @@ projen CLI will be invoked and the task will be executed.
 
 You can see a list of all steps in a task from the command line by passing
 the `--inspect` flag, e.g. `yarn compile --inspect`.
+
+## Overriding Tasks
+
+The Project-defined tasks can be overridden by the user using the `reset()` method. For example, the user may prefer
+running tests on a Python project using `nose2` instead of `pytest`, and the current `PythonProject`
+implementation uses `pytest` by default. The user can override the `test` task to use `nose2` instead:
+
+```ts
+const testTask = project.tasks.tryFind("test");
+if (testTask) {
+  testTask.reset("nose2 tests/");
+}
+```
+
+If you're using `.projenrc.py`, the example would look like this:
+
+```python
+test_task = project.tasks.try_find("test")
+if test_task:
+    test_task.reset("nose2 tests/", receive_args=True)  # Passes through any arguments passed to the task
+```
+
+## Extending Tasks
+
+Similar to overriding tasks, you can extend tasks by adding additional steps to the end of the task:
+
+```ts
+project.tasks.tryFind("build")?.exec("echo Build completed successfully.");
+```
