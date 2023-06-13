@@ -43,6 +43,7 @@ export interface SmithyMavenConfig {
 
 /**
  * Options for `SmithyBuild`
+ * @see https://smithy.io/2.0/guides/building-models/build-config.html
  */
 export interface SmithyBuildOptions extends SmithyCommon {
   /**
@@ -75,10 +76,16 @@ export interface SmithyBuildOptions extends SmithyCommon {
    * @default - no maven configuration set in the smithy-build.json file
    */
   readonly maven?: SmithyMavenConfig;
+  /**
+   * Relative paths to model source files or directories
+   * @default - refer to https://smithy.io/2.0/guides/building-models/gradle-plugin.html?highlight=source#smithy-model-sources
+   */
+  readonly sources?: string[];
 }
 
 /**
  * Smithy build configuration options
+ * @see https://smithy.io/2.0/guides/building-models/build-config.html
  */
 export class SmithyBuild extends Component {
   /**
@@ -125,6 +132,10 @@ export class SmithyBuild extends Component {
    * https://github.com/awslabs/smithy-vscode/blob/main/README.md#authoring-a-model
    */
   private _maven?: SmithyMavenConfig;
+  /**
+   * List of model source files/directories
+   */
+  private _sources?: string[];
 
   private readonly manifest: any;
 
@@ -138,6 +149,7 @@ export class SmithyBuild extends Component {
     this._plugins = options.plugins;
     this.ignoreMissingPlugins = options.ignoreMissingPlugins;
     this._maven = options.maven;
+    this._sources = options.sources;
 
     this.manifest = {
       version: this.version,
@@ -147,6 +159,7 @@ export class SmithyBuild extends Component {
       plugins: () => this._plugins,
       ignoreMissingPlugins: this.ignoreMissingPlugins,
       maven: () => this._maven,
+      sources: () => this._sources,
     };
 
     new JsonFile(this.project, "smithy-build.json", {
@@ -222,5 +235,14 @@ export class SmithyBuild extends Component {
       dependencies: this._maven?.dependencies ?? [],
       repositories: [...(this._maven?.repositories ?? []), ...repositories],
     };
+  }
+
+  /**
+   * Add relative paths to model source files or directories
+   */
+  public addSources(...sources: string[]) {
+    this._sources
+      ? this._sources.push(...sources)
+      : (this._sources = [...sources]);
   }
 }
