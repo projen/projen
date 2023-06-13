@@ -128,19 +128,13 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   let skipBump = false;
 
-  // get the prerelease component(alpha, beta, pre) of the latestTag determined. Returns null if this is a regular release
-  const latestTagPrerelease = getPrereleaseComponent(latestTag);
-
-  const isLatestTagOnSameReleaseBranch =
-    (prerelease && // If we are bumping a prerelease now
-      latestTagPrerelease && // and the latest tag was also a prerelease
-      latestTagPrerelease[0] === prerelease) || // and the latest tag has the same prerelease component(alpha, beta, pre) as this prerelease
-    (!prerelease && !latestTagPrerelease); // If we are bumping a regular release( example: 1.0.5) now and also latest release was a regular release
-
   /**
    * Skip the bump only if the current commit is already tagged within the same branch
    */
-  if (currentTags.includes(latestTag) && isLatestTagOnSameReleaseBranch) {
+  if (
+    currentTags.includes(latestTag) &&
+    isLatestTagOnSameReleaseBranch(latestTag, options.prerelease)
+  ) {
     logging.info("Skipping bump...");
     skipBump = true;
 
@@ -178,7 +172,10 @@ export async function bump(cwd: string, options: BumpOptions) {
   exec(cmd.join(" "), { cwd });
 
   // add the tag back if it was previously removed
-  if (currentTags.includes(latestTag) && isLatestTagOnSameReleaseBranch) {
+  if (
+    currentTags.includes(latestTag) &&
+    isLatestTagOnSameReleaseBranch(latestTag, options.prerelease)
+  ) {
     exec(`git tag ${latestTag}`, { cwd });
   }
 
@@ -358,4 +355,25 @@ function determineLatestTag(options: LatestTagOptions): {
   }
 
   return { latestVersion, latestTag, isFirstRelease };
+}
+
+/**
+ *
+ * @param latestTag on the repository
+ * @param prerelease component of the current release such as alpha, beta, etc...
+ * @returns if the latest commit on this repository has the same prerelease component with the current release( both alpha, both beta) or if both are regular releases.
+ */
+function isLatestTagOnSameReleaseBranch(
+  latestTag: string,
+  prerelease?: string
+) {
+  // get the prerelease component(alpha, beta, pre) of the latestTag determined. Returns null if this is a regular release
+  const latestTagPrerelease = getPrereleaseComponent(latestTag);
+
+  return (
+    (prerelease && // If we are bumping a prerelease now
+      latestTagPrerelease && // and the latest tag was also a prerelease
+      latestTagPrerelease[0] === prerelease) || // and the latest tag has the same prerelease component(alpha, beta, pre) as this prerelease
+    (!prerelease && !latestTagPrerelease)
+  ); // If we are bumping a regular release( example: 1.0.5) now and also latest release was a regular release
 }
