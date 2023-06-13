@@ -303,6 +303,7 @@ test("same commit prerelease on regular branch", async () => {
   const result = await testBump({
     options: {
       majorVersion: 1,
+      releaseSameCommitOnDifferentBranch: true,
     },
     commits: [
       { message: "first version", tag: "v1.0.0" },
@@ -319,6 +320,7 @@ test("same commit different prereleases", async () => {
     options: {
       prerelease: "pre",
       majorVersion: 1,
+      releaseSameCommitOnDifferentBranch: true,
     },
     commits: [
       { message: "first version", tag: "v1.0.0" },

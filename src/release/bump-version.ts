@@ -23,6 +23,15 @@ export interface BumpOptions {
   readonly prerelease?: string;
 
   /**
+   * For cases where the merge strategy is fast-forward without "squash commits", same commit might need to be
+   * released with different prerelese components like alpha, beta during the lifecycle. Setting this variable will
+   * allow releasing the same commit on multiple branches.
+   *
+   * @default false
+   */
+  readonly releaseSameCommitOnDifferentBranch?: boolean;
+
+  /**
    * Defines the major version line. This is used to select the latest version
    * and also enforce that new major versions are not released accidentally.
    *
@@ -133,7 +142,11 @@ export async function bump(cwd: string, options: BumpOptions) {
    */
   if (
     currentTags.includes(latestTag) &&
-    isLatestTagOnSameReleaseBranch(latestTag, options.prerelease)
+    !allowReleaseSameCommit(
+      latestTag,
+      options.prerelease,
+      options.releaseSameCommitOnDifferentBranch
+    )
   ) {
     logging.info("Skipping bump...");
     skipBump = true;
@@ -174,7 +187,11 @@ export async function bump(cwd: string, options: BumpOptions) {
   // add the tag back if it was previously removed
   if (
     currentTags.includes(latestTag) &&
-    isLatestTagOnSameReleaseBranch(latestTag, options.prerelease)
+    !allowReleaseSameCommit(
+      latestTag,
+      options.prerelease,
+      options.releaseSameCommitOnDifferentBranch
+    )
   ) {
     exec(`git tag ${latestTag}`, { cwd });
   }
@@ -358,22 +375,38 @@ function determineLatestTag(options: LatestTagOptions): {
 }
 
 /**
+ * Determines if release is allowed to be performed even if the previous release has the same commit. This should be allowed only
+ *
+ * 1. If it is specifically requested by the project through the options, by default it is false
+ * 2. Based on the version
+ *  2.1 If this is a regular release, the previous release on the same commit should not be a regular release as well
+ *  2.2 If this is a prerelease, prerelease component ( alpha, beta, etc... ) of this prerelse should be different from the previous release
+ *
+ * This does not allow to release the same version multiple times with the same components. For example, you cannot perform multiple releases with on the same commit.
+ *
+ * But based on the configuration, it can allow the same commit to be released as v1.0.0-alpha.0 => v1.0.0-beta.0 ==> v1.0.0
  *
  * @param latestTag on the repository
  * @param prerelease component of the current release such as alpha, beta, etc...
  * @returns if the latest commit on this repository has the same prerelease component with the current release( both alpha, both beta) or if both are regular releases.
  */
-function isLatestTagOnSameReleaseBranch(
+function allowReleaseSameCommit(
   latestTag: string,
-  prerelease?: string
+  prerelease?: string,
+  releaseSameCommitOnDifferentBranch?: boolean
 ) {
   // get the prerelease component(alpha, beta, pre) of the latestTag determined. Returns null if this is a regular release
   const latestTagPrerelease = getPrereleaseComponent(latestTag);
 
   return (
-    (prerelease && // If we are bumping a prerelease now
-      latestTagPrerelease && // and the latest tag was also a prerelease
-      latestTagPrerelease[0] === prerelease) || // and the latest tag has the same prerelease component(alpha, beta, pre) as this prerelease
-    (!prerelease && !latestTagPrerelease)
-  ); // If we are bumping a regular release( example: 1.0.5) now and also latest release was a regular release
+    releaseSameCommitOnDifferentBranch && // if global configuration allows releasing same commit on different branches
+    !(
+      (
+        prerelease && // If we are bumping a prerelease now
+        latestTagPrerelease && // and the latest tag was also a prerelease
+        latestTagPrerelease[0] === prerelease
+      ) // and the latest tag has the same prerelease component(alpha, beta, pre) as this prerelease
+    ) &&
+    !(!prerelease && !latestTagPrerelease) // If we are bumping a regular release( example: 1.0.5) now and also latest release was a regular release
+  );
 }
