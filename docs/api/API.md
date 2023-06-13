@@ -304,6 +304,7 @@ Name|Description
 [gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
 [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)|Use this construct to generate a new key when one or two specific files change.
 [gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)|Options for `CiConfiguration`.
+[gitlab.CoverageReport](#projen-gitlab-coveragereport)|Code coverage report interface.
 [gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
 [gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
 [gitlab.Environment](#projen-gitlab-environment)|The environment that a job deploys to.
@@ -2896,6 +2897,21 @@ Name | Type | Description
 ### Methods
 
 
+#### addCondition(...condition)🔹 <a id="projen-task-addcondition"></a>
+
+Add a command to execute which determines if the task should be skipped.
+
+If a condition already exists, the new condition will be appended with ` && ` delimiter.
+
+```ts
+addCondition(...condition: string[]): void
+```
+
+* **condition** (<code>string</code>)  The command to execute.
+
+
+
+
 #### builtin(name)🔹 <a id="projen-task-builtin"></a>
 
 Execute a builtin task.
@@ -2939,7 +2955,9 @@ exec(command: string, options?: TaskStepOptions): void
 * **command** (<code>string</code>)  Shell command.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -2969,7 +2987,9 @@ prepend(shell: string, options?: TaskStepOptions): void
 * **shell** (<code>string</code>)  The command to add.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -2987,7 +3007,9 @@ prependExec(shell: string, options?: TaskStepOptions): void
 * **shell** (<code>string</code>)  The command to add.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3005,7 +3027,9 @@ prependSay(message: string, options?: TaskStepOptions): void
 * **message** (<code>string</code>)  Your message.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3023,7 +3047,9 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 * **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3041,7 +3067,9 @@ reset(command?: string, options?: TaskStepOptions): void
 * **command** (<code>string</code>)  the first command to add to the task after it was cleared.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3059,7 +3087,9 @@ say(message: string, options?: TaskStepOptions): void
 * **message** (<code>string</code>)  Your message.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3077,7 +3107,9 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 * **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
+  * **condition** (<code>string</code>)  A shell command which determines if the this step should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this step (`exec` and `builtin` only). __*Default*__: no environment variables defined in step
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
@@ -3671,7 +3703,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -3701,6 +3733,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -4222,6 +4255,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -4368,7 +4402,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -4398,6 +4432,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -4682,7 +4717,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -4712,6 +4747,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -5313,7 +5349,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -5343,6 +5379,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -5576,7 +5613,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -5606,6 +5643,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -5858,6 +5896,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -5996,7 +6035,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -6026,6 +6065,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -6182,7 +6222,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -6212,6 +6252,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -6428,7 +6469,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -6458,6 +6499,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -9040,7 +9082,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -9070,6 +9112,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
 
 
 
@@ -9089,6 +9132,7 @@ Name | Type | Description
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
 **workflowBootstrapSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
+**workflowPackageCache**🔹 | <code>boolean</code> | <span></span>
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Component that sets up mergify for merging approved pull requests.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
@@ -10082,6 +10126,7 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 * **options** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.py"
   * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
 
 
 
@@ -10091,6 +10136,7 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **filePath**🔹 | <code>string</code> | The name of the projenrc file.
+**pythonExec**🔹 | <code>string</code> | Path to the python executable to use.
 
 
 
@@ -10223,6 +10269,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true, unless poetry is true, then false
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true, unless poetry is true, then false
@@ -10480,6 +10527,7 @@ new python.Venv(project: Project, options?: VenvOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
+  * **pythonExec** (<code>string</code>)  Path to the python executable to use. __*Default*__: "python"
 
 
 ### Methods
@@ -10948,6 +10996,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
+  * **swc** (<code>boolean</code>)  Whether to use `SWC` for ts-node. __*Default*__: false
 
 
 
@@ -11138,7 +11187,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -11168,6 +11217,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -11297,7 +11347,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -11327,6 +11377,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -11456,7 +11507,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -11486,6 +11537,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -11992,7 +12044,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -12022,6 +12074,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
 
@@ -12148,7 +12201,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -12178,6 +12231,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -12377,7 +12431,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -12407,6 +12461,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **rewire** (<code>Map<string, any></code>)  Rewire webpack configuration. __*Default*__: No rewired config.
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `public/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Source directory. __*Default*__: "src"
@@ -12575,7 +12630,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -12605,6 +12660,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **workflowPackageCache** (<code>boolean</code>)  Enable Node.js package cache in GitHub workflows. __*Default*__: false
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **disableTsconfigDev** (<code>boolean</code>)  Do not generate a `tsconfig.dev.json` file. __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
@@ -13630,7 +13686,9 @@ Name | Type | Description
 -----|------|-------------
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **builtin**?🔹 | <code>string</code> | The name of a built-in task to execute.<br/>__*Default*__: do not execute a builtin task
+**condition**?🔹 | <code>string</code> | A shell command which determines if the this step should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: no environment variables defined in step
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
@@ -13649,7 +13707,9 @@ Options for task steps.
 Name | Type | Description 
 -----|------|-------------
 **args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
+**condition**?🔹 | <code>string</code> | A shell command which determines if the this step should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this step (`exec` and `builtin` only).<br/>__*Default*__: no environment variables defined in step
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 
@@ -13840,7 +13900,7 @@ Name | Type | Description
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -13973,6 +14033,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -14177,6 +14238,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -14236,7 +14298,7 @@ Name | Type | Description
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
@@ -14361,6 +14423,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -14446,7 +14509,7 @@ Name | Type | Description
 **cdkVersionPinning**?⚠️ | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?⚠️ | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -14579,6 +14642,7 @@ Name | Type | Description
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -14842,7 +14906,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **announce**?🔹 | <code>boolean</code> | Should we announce new versions?<br/>__*Default*__: true
-**twitter**?🔹 | <code>string</code> | Twitter account to @mention in announcement tweet.<br/>__*Optional*__
+**twitter**?🔹 | <code>string</code> | Twitter account to.<br/>__*Optional*__
 
 
 
@@ -14881,7 +14945,7 @@ Name | Type | Description
 **catalog**?🔹 | <code>[cdk.Catalog](#projen-cdk-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -15008,6 +15072,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -15155,7 +15220,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -15282,6 +15347,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -15450,6 +15516,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -15504,7 +15571,7 @@ Name | Type | Description
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
@@ -15623,6 +15690,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -15665,7 +15733,7 @@ Name | Type | Description
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -15795,6 +15863,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -15864,7 +15933,7 @@ Name | Type | Description
 **catalog**?🔹 | <code>[cdk.Catalog](#projen-cdk-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -15992,6 +16061,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -16860,6 +16930,20 @@ Name | Type | Description
 
 
 
+## struct CoverageReport 🔹 <a id="projen-gitlab-coveragereport"></a>
+
+
+Code coverage report interface.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**coverageFormat**🔹 | <code>string</code> | <span></span>
+**path**🔹 | <code>string</code> | <span></span>
+
+
+
 ## struct Default 🔹 <a id="projen-gitlab-default"></a>
 
 
@@ -17140,9 +17224,10 @@ Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, suc
 
 Name | Type | Description 
 -----|------|-------------
-**cobertura**?🔹 | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
+**cobertura**?⚠️ | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
 **codequality**?🔹 | <code>Array<string></code> | Path to file or list of files with code quality report(s) (such as Code Climate).<br/>__*Optional*__
 **containerScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Container scanning vulnerabilities report(s).<br/>__*Optional*__
+**coverageReport**?🔹 | <code>[gitlab.CoverageReport](#projen-gitlab-coveragereport)</code> | Code coverage report information.<br/>__*Optional*__
 **dast**?🔹 | <code>Array<string></code> | Path to file or list of files with DAST vulnerabilities report(s).<br/>__*Optional*__
 **dependencyScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Dependency scanning vulnerabilities report(s).<br/>__*Optional*__
 **dotenv**?🔹 | <code>Array<string></code> | Path to file or list of files containing runtime-created variables for this job.<br/>__*Optional*__
@@ -17193,7 +17278,7 @@ Name | Type | Description
 
 Used to specify an additional Docker image to run scripts in.
 
-The service image is linked to the image specified in the @Default image keyword.
+The service image is linked to the image specified in the
 
 
 
@@ -17740,7 +17825,7 @@ Name | Type | Description
 **globalTeardown**?🔹 | <code>string</code> | This option allows the use of a custom global teardown module which exports an async function that is triggered once after all test suites.<br/>__*Default*__: undefined
 **globals**?🔹 | <code>any</code> | A set of global variables that need to be available in all test environments.<br/>__*Default*__: {}
 **haste**?🔹 | <code>[javascript.HasteConfig](#projen-javascript-hasteconfig)</code> | This will be used to configure the behavior of jest-haste-map, Jest's internal file crawler/cache system.<br/>__*Default*__: {}
-**injectGlobals**?🔹 | <code>boolean</code> | Insert Jest's globals (expect, test, describe, beforeEach etc.) into the global environment. If you set this to false, you should import from @jest/globals.<br/>__*Default*__: true
+**injectGlobals**?🔹 | <code>boolean</code> | Insert Jest's globals (expect, test, describe, beforeEach etc.) into the global environment. If you set this to false, you should import from.<br/>__*Default*__: true
 **maxConcurrency**?🔹 | <code>number</code> | A number limiting the number of tests that are allowed to run at the same time when using test.concurrent. Any test above this limit will be queued and executed once a slot is released.<br/>__*Default*__: 5
 **maxWorkers**?🔹 | <code>string &#124; number</code> | Specifies the maximum number of workers the worker-pool will spawn for running tests.<br/>__*Default*__: the number of the cores available on your machine minus one for the main thread
 **moduleDirectories**?🔹 | <code>Array<string></code> | An array of directory names to be searched recursively up from the requiring module's location.<br/>__*Default*__: ["node_modules"]
@@ -17888,7 +17973,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -17985,6 +18070,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -18065,7 +18151,7 @@ Name | Type | Description
 **endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Default*__: EndOfLine.LF
 **filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Default*__: none
 **htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Default*__: HTMLWhitespaceSensitivity.CSS
-**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Default*__: false
+**insertPragma**?🔹 | <code>boolean</code> | Insert.<br/>__*Default*__: false
 **jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Default*__: false
 **parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Default*__: Prettier automatically infers the parser from the input file path, so you shouldn’t have to change this setting.
 **pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Default*__: []
@@ -18151,7 +18237,7 @@ Name | Type | Description
 **importsNotUsedAsValues**?🔹 | <code>[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)</code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.<br/>__*Default*__: "remove"
 **inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.<br/>__*Default*__: true
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
-**isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
+**isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or.<br/>__*Default*__: false
 **jsx**?🔹 | <code>[javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc.<br/>__*Default*__: undefined
 **jsxImportSource**?🔹 | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.<br/>__*Default*__: undefined
 **lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: [ "es2018" ]
@@ -18180,7 +18266,7 @@ Name | Type | Description
 **strict**?🔹 | <code>boolean</code> | The strict flag enables a wide range of type checking behavior that results in stronger guarantees of program correctness.<br/>__*Default*__: true
 **strictNullChecks**?🔹 | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language.<br/>__*Default*__: true
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
-**stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an @internal annotation in it’s JSDoc comment.<br/>__*Default*__: true
+**stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.<br/>__*Default*__: true
 **target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
 **verbatimModuleSyntax**?🔹 | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
@@ -18433,6 +18519,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.py"
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 
 
 
@@ -18541,6 +18628,7 @@ Name | Type | Description
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
 **renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
@@ -18613,6 +18701,7 @@ Options for venv.
 Name | Type | Description 
 -----|------|-------------
 **envdir**?🔹 | <code>string</code> | Name of directory to store the environment in.<br/>__*Default*__: ".env"
+**pythonExec**?🔹 | <code>string</code> | Path to the python executable to use.<br/>__*Default*__: "python"
 
 
 
@@ -19023,6 +19112,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 **projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
+**swc**?🔹 | <code>boolean</code> | Whether to use `SWC` for ts-node.<br/>__*Default*__: false
 
 
 
@@ -19072,7 +19162,7 @@ Name | Type | Description
 **bundlerOptions**?⚠️ | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?⚠️ | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -19186,6 +19276,7 @@ Name | Type | Description
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -19221,7 +19312,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -19335,6 +19426,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -19574,7 +19666,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -19674,6 +19766,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -19710,7 +19803,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -19825,6 +19918,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -19889,7 +19983,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -19989,6 +20083,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -20054,7 +20149,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -20169,6 +20264,7 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 

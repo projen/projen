@@ -2175,6 +2175,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""python"",
+        "docs": "Path to the python executable to use.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonExec",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "pythonExec",
+        ],
+        "simpleType": "string",
+        "switch": "python-exec",
+      },
+      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -3014,7 +3031,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -5314,6 +5331,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -5881,7 +5915,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -8331,6 +8365,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -9379,6 +9430,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""python"",
+        "docs": "Path to the python executable to use.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonExec",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "pythonExec",
+        ],
+        "simpleType": "string",
+        "switch": "python-exec",
+      },
+      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -10115,7 +10183,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -12293,6 +12361,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -12781,7 +12866,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -15177,6 +15262,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -15631,7 +15733,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17993,6 +18095,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -19248,7 +19367,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -21593,6 +21712,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -21994,7 +22130,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -23841,6 +23977,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -24242,7 +24395,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -26352,6 +26505,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -26736,7 +26906,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -28532,6 +28702,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -29577,6 +29764,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""python"",
+        "docs": "Path to the python executable to use.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonExec",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "pythonExec",
+        ],
+        "simpleType": "string",
+        "switch": "python-exec",
+      },
+      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -30155,7 +30359,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -32007,6 +32211,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -32391,7 +32612,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -34506,6 +34727,23 @@ exports[`inventory 1`] = `
         "switch": "workflow-node-version",
       },
       {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
+      },
+      {
         "default": "["ubuntu-latest"]",
         "docs": "Github Runner selection labels.",
         "featured": false,
@@ -34890,7 +35128,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36981,6 +37219,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",
@@ -37367,7 +37622,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39458,6 +39713,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      {
+        "default": "false",
+        "docs": "Enable Node.js package cache in GitHub workflows.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowPackageCache",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPackageCache",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-package-cache",
       },
       {
         "default": "["ubuntu-latest"]",

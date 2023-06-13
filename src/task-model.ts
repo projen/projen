@@ -83,6 +83,13 @@ export interface TaskStepOptions {
   readonly cwd?: string;
 
   /**
+   * A shell command which determines if the this step should be executed. If
+   * the program exits with a zero exit code, the step will be executed. A non-zero
+   * code means the step will be skipped (subsequent task steps will still be evaluated/executed).
+   */
+  readonly condition?: string;
+
+  /**
    * Should this step receive args passed to the task.
    *
    * If `true`, args are passed through at the end of the `exec` shell command.\
@@ -118,6 +125,16 @@ export interface TaskStepOptions {
    * @default - no arguments are passed to the step
    */
   readonly args?: string[];
+
+  /**
+   * Defines environment variables for the execution of this step (`exec` and `builtin` only).
+   * Values in this map can be simple, literal values or shell expressions that will be evaluated at runtime e.g. `$(echo "foo")`.
+   *
+   * @example { "foo": "bar", "boo": "$(echo baz)" }
+   *
+   * @default - no environment variables defined in step
+   */
+  readonly env?: { [name: string]: string };
 }
 
 /**

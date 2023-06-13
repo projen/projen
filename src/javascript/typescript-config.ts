@@ -328,7 +328,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @default false
    */
-  readonly emitDeclarationOnly?: true;
+  readonly emitDeclarationOnly?: boolean;
 
   /**
    * Do not emit compiler output files like JavaScript source code, source-maps or
@@ -452,7 +452,7 @@ export interface TypeScriptCompilerOptions {
   readonly strictPropertyInitialization?: boolean;
 
   /**
-   * Do not emit declarations for code that has an @internal annotation in it’s JSDoc comment.
+   * Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.
    *
    * @default true
    */

@@ -7,7 +7,7 @@ import { format } from "util";
 import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
-import { TasksManifest, TaskSpec } from "./task-model";
+import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
@@ -134,6 +134,12 @@ class RunTask {
     }
 
     for (const step of task.steps) {
+      // evaluate step condition
+      if (!this.evalCondition(step)) {
+        this.log("condition exited with non-zero - skipping");
+        continue;
+      }
+
       const argsList: string[] = [
         ...(step.args || []),
         ...(step.receiveArgs ? args : []),
@@ -152,6 +158,9 @@ class RunTask {
       }
 
       const execs = step.exec ? [step.exec] : [];
+
+      // Parse step-specific environment variables
+      const env = this.evalEnvironment(step.env ?? {});
 
       if (step.builtin) {
         execs.push(this.renderBuiltin(step.builtin));
@@ -181,6 +190,7 @@ class RunTask {
           const result = this.shell({
             command,
             cwd,
+            extraEnv: env,
           });
           hasError = result.status !== 0;
         } catch (e) {
@@ -210,15 +220,15 @@ class RunTask {
    * evaluates to false (exits with non-zero), indicating that the task should
    * be skipped.
    */
-  private evalCondition(task: TaskSpec) {
+  private evalCondition(taskOrStep: TaskSpec | TaskStep) {
     // no condition, carry on
-    if (!task.condition) {
+    if (!taskOrStep.condition) {
       return true;
     }
 
-    this.log(gray(`${underline("condition")}: ${task.condition}`));
+    this.log(gray(`${underline("condition")}: ${taskOrStep.condition}`));
     const result = this.shell({
-      command: task.condition,
+      command: taskOrStep.condition,
       logprefix: "condition: ",
       quiet: true,
     });
@@ -230,27 +240,9 @@ class RunTask {
   }
 
   /**
-   * Renders the runtime environment for a task. Namely, it supports this syntax
-   * `$(xx)` for allowing environment to be evaluated by executing a shell
-   * command and obtaining its result.
+   * Evaluates environment variables from shell commands (e.g. `$(xx)`)
    */
-  private resolveEnvironment(parents: string[]) {
-    let env = this.runtime.manifest.env ?? {};
-
-    // add env from all parent tasks one by one
-    for (const parent of parents) {
-      env = {
-        ...env,
-        ...(this.runtime.tryFindTask(parent)?.env ?? {}),
-      };
-    }
-
-    // apply the task's environment last
-    env = {
-      ...env,
-      ...(this.task.env ?? {}),
-    };
-
+  private evalEnvironment(env: { [name: string]: string }) {
     const output: { [name: string]: string | undefined } = {};
 
     for (const [key, value] of Object.entries(env ?? {})) {
@@ -270,8 +262,32 @@ class RunTask {
         output[key] = value;
       }
     }
-
     return output;
+  }
+
+  /**
+   * Renders the runtime environment for a task. Namely, it supports this syntax
+   * `$(xx)` for allowing environment to be evaluated by executing a shell
+   * command and obtaining its result.
+   */
+  private resolveEnvironment(parents: string[]) {
+    let env = this.runtime.manifest.env ?? {};
+
+    // add env from all parent tasks one by one
+    for (const parent of parents) {
+      env = {
+        ...env,
+        ...(this.runtime.tryFindTask(parent)?.env ?? {}),
+      };
+    }
+
+    // apply the task environment last
+    env = {
+      ...env,
+      ...(this.task.env ?? {}),
+    };
+
+    return this.evalEnvironment(env ?? {});
   }
 
   /**
@@ -326,6 +342,7 @@ class RunTask {
       env: {
         ...process.env,
         ...this.env,
+        ...options.extraEnv,
       },
       ...options.spawnOptions,
     });
@@ -360,4 +377,5 @@ interface ShellOptions {
   readonly spawnOptions?: SpawnOptions;
   /** @default false */
   readonly quiet?: boolean;
+  readonly extraEnv?: { [name: string]: string | undefined };
 }

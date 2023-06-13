@@ -114,6 +114,12 @@ export interface PythonProjectOptions
   // -- optional components --
 
   /**
+   * Path to the python executable to use.
+   * @default "python"
+   */
+  readonly pythonExec?: string;
+
+  /**
    * Include pytest tests.
    * @default true
    * @featured
@@ -258,7 +264,10 @@ export class PythonProject extends GitHubProject {
     if (!this.parent) {
       // default to projenrc.py if no other projenrc type was elected
       if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
-        new ProjenrcPython(this, options.projenrcPythonOptions);
+        new ProjenrcPython(this, {
+          pythonExec: options.pythonExec,
+          ...options.projenrcPythonOptions,
+        });
       }
 
       if (options.projenrcJs ?? false) {
@@ -271,7 +280,10 @@ export class PythonProject extends GitHubProject {
     }
 
     if (venv) {
-      this.envManager = new Venv(this, options.venvOptions);
+      this.envManager = new Venv(this, {
+        pythonExec: options.pythonExec,
+        ...options.venvOptions,
+      });
     }
 
     if (pip) {

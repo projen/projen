@@ -22,6 +22,12 @@ export interface ProjenrcOptions {
    * @default - current version
    */
   readonly projenVersion?: string;
+
+  /**
+   * Path to the python executable to use.
+   * @default "python"
+   */
+  readonly pythonExec?: string;
 }
 
 /**
@@ -36,19 +42,24 @@ export class Projenrc extends ProjenrcFile {
    */
   public readonly filePath: string;
 
+  /**
+   * Path to the python executable to use.
+   */
+  public readonly pythonExec: string;
+
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;
     this.filePath = options.filename ?? ".projenrc.py";
-
+    this.pythonExec = options.pythonExec ?? "python";
     project.deps.addDependency(
       `projen@${projenVersion}`,
       DependencyType.DEVENV
     );
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask?.exec("python .projenrc.py");
+    project.defaultTask?.exec(`${this.pythonExec} .projenrc.py`);
 
     // if this is a new project, generate a skeleton for projenrc.py
     this.generateProjenrc();

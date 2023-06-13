@@ -102,7 +102,7 @@ export interface NodeProjectOptions
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
    * Uses codecov/codecov-action@v3
-   * A secret is required for private repos. Configured with @codeCovTokenSecret
+   * A secret is required for private repos. Configured with `@codeCovTokenSecret`
    * @default false
    */
   readonly codeCov?: boolean;
@@ -162,6 +162,13 @@ export interface NodeProjectOptions
    * @default - same as `minNodeVersion`
    */
   readonly workflowNodeVersion?: string;
+
+  /**
+   * Enable Node.js package cache in GitHub workflows.
+   *
+   * @default false
+   */
+  readonly workflowPackageCache?: boolean;
 
   /**
    * Use dependabot to handle dependency upgrades.
@@ -443,6 +450,7 @@ export class NodeProject extends GitHubProject {
 
   protected readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
+  protected readonly workflowPackageCache: boolean;
   public readonly prettier?: Prettier;
 
   constructor(options: NodeProjectOptions) {
@@ -452,6 +460,7 @@ export class NodeProject extends GitHubProject {
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    this.workflowPackageCache = options.workflowPackageCache ?? false;
     this.artifactsDirectory = options.artifactsDirectory ?? "dist";
     this.artifactsJavascriptDirectory = join(this.artifactsDirectory, "js");
 
@@ -472,9 +481,9 @@ export class NodeProject extends GitHubProject {
     const envCommand = (() => {
       switch (this.packageManager) {
         case NodePackageManager.PNPM:
-          return '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")';
+          return '$(pnpm -c exec "node --print process.env.PATH")';
         default:
-          return '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")';
+          return '$(npx -c "node --print process.env.PATH")';
       }
     })();
 
@@ -954,19 +963,34 @@ export class NodeProject extends GitHubProject {
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
-    if (this.nodeVersion) {
-      install.push({
-        name: "Setup Node.js",
-        uses: "actions/setup-node@v3",
-        with: { "node-version": this.nodeVersion },
-      });
-    }
-
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
         uses: "pnpm/action-setup@v2.2.4",
         with: { version: this.package.pnpmVersion },
+      });
+    }
+
+    if (this.nodeVersion || this.workflowPackageCache) {
+      const cache =
+        this.package.packageManager === NodePackageManager.YARN
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.YARN2
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.PNPM
+          ? "pnpm"
+          : "npm";
+      install.push({
+        name: "Setup Node.js",
+        uses: "actions/setup-node@v3",
+        with: {
+          ...(this.nodeVersion && {
+            "node-version": this.nodeVersion,
+          }),
+          ...(this.workflowPackageCache && {
+            cache,
+          }),
+        },
       });
     }
 

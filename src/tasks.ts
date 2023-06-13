@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { Component } from "./component";
 import { JsonFile } from "./json";
+import { warn } from "./logging";
 import { Project } from "./project";
 import { Task, TaskOptions } from "./task";
 import { TasksManifest, TaskSpec } from "./task-model";
@@ -27,7 +28,7 @@ export class Tasks extends Component {
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,
-        env: (() => this._env) as any,
+        env: (() => this.renderEnv()) as any,
       } as TasksManifest,
     });
   }
@@ -88,14 +89,7 @@ export class Tasks extends Component {
    * @param value Value
    */
   public addEnvironment(name: string, value: string) {
-    if (typeof value !== "string" && value !== undefined) {
-      this.project.logger.warn(
-        `Received non-string value for environment variable ${name}. Value will be stringified.`
-      );
-      this._env[name] = String(value);
-    } else {
-      this._env[name] = value;
-    }
+    this._env[name] = value;
   }
 
   /**
@@ -141,5 +135,30 @@ export class Tasks extends Component {
     }
 
     return tasks;
+  }
+
+  private renderEnv() {
+    return Object.keys(this._env).reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: this.getEnvString(curr, this._env[curr]),
+      }),
+      {}
+    );
+  }
+
+  /**
+   * Ensure that environment variables are persisted as strings
+   * to prevent type errors when parsing from tasks.json in future
+   */
+  private getEnvString(name: string, value: any) {
+    if (typeof value !== "string" && value !== undefined) {
+      warn(
+        `Received non-string value for environment variable ${name}. Value will be stringified.`
+      );
+      return String(value);
+    } else {
+      return value;
+    }
   }
 }

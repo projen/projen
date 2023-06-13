@@ -490,6 +490,24 @@ test("npm overrides", () => {
   expect(snps["package.json"]).toMatchSnapshot();
 });
 
+test("removed override dependency will not be rendered in overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.NPM,
+  });
+
+  pkg.addDeps("some-dep@1.0.0");
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep@another-dep@1.2.3");
+  project.deps.removeDependency("some-dep", DependencyType.OVERRIDE);
+
+  const snps = synthSnapshot(project);
+  const pkgJson = snps["package.json"];
+
+  expect(pkgJson).toHaveProperty("dependencies.some-dep", "1.0.0");
+  expect(pkgJson).not.toHaveProperty("overrides.some-dep");
+});
+
 test("pnpm overrides", () => {
   const project = new TestProject();
 
@@ -601,4 +619,40 @@ test("tryResolveDependencyVersion resolves with custom package exports.", () => 
 
   expect(project.deps.tryGetDependency("rollup")?.version).toEqual("*");
   expect(pkg.tryResolveDependencyVersion("rollup")).toEqual("3.21.1");
+});
+
+test("tryResolveDependencyVersion resolves with no package.json or default export with default conditions.", () => {
+  jest
+    .spyOn(TaskRuntime.prototype, "runTask")
+    .mockImplementation(function (this: TaskRuntime, command) {
+      expect(command).toMatch("install");
+      mockYarnInstall(
+        this.workdir,
+        { "@types/js-yaml": "4.0.5" },
+        {
+          "@types/js-yaml": (manifest) => {
+            return {
+              ...manifest,
+              exports: {
+                ".": {
+                  types: {
+                    import: "./index.d.mts",
+                    default: "./index.d.ts",
+                  },
+                },
+              },
+            };
+          },
+        }
+      );
+    });
+  const outdir = mkdtemp();
+  const project = new TestProject({ outdir });
+
+  const pkg = new NodePackage(project);
+  pkg.addDeps("@types/js-yaml@*");
+  project.synth();
+
+  expect(project.deps.tryGetDependency("@types/js-yaml")?.version).toEqual("*");
+  expect(pkg.tryResolveDependencyVersion("@types/js-yaml")).toEqual("4.0.5");
 });
