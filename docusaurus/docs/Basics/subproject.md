@@ -1,3 +1,8 @@
+---
+sidebar_position: 3
+---
+
+
 # Subprojects
 
 * Pass a project to the `parent` prop

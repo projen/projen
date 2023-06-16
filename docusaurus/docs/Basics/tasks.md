@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Tasks
 
 Tasks are a project-level feature to define a project command system backed by

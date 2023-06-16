@@ -1,3 +1,8 @@
+---
+sidebar_position: 6
+---
+
+
 # Ejecting
 
 To stop from using projen to manage your project configuration,

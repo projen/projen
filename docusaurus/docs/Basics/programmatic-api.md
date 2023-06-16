@@ -1,3 +1,8 @@
+---
+sidebar_position: 4
+---
+
+
 # Programmatic API
 
 Projen exposes a programmatic API that allows you to create new projects through

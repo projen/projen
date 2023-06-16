@@ -39,16 +39,5 @@ $ npx projen new PROJECT-TYPE
 
 ### Project types
 
-Your main entry into projen is through project types.
+Projen ships with a number of different [project types](docs/category/project-types) and you can build your own. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam eu.

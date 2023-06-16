@@ -1,3 +1,8 @@
+---
+sidebar_position: 1
+---
+
+
 # Dependencies
 
 Dependencies are an intrinsic part of every software project.

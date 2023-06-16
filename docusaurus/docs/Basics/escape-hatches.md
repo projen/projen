@@ -1,3 +1,8 @@
+---
+sidebar_position: 5
+---
+
+
 # Escape hatches
 
 It's possible projen doesn't have the right high-level or low-level APIs that

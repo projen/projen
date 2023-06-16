@@ -1,0 +1,12 @@
+{
+  "position": 1,
+  "label": "CDK Project Types",
+  "collapsible": true,
+  "collapsed": true,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "CDK Project Types"
+  }
+}
+

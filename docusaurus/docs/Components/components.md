@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Components
 
 Components are building blocks that can be composed together into projects. They
