@@ -110,15 +110,18 @@ export async function bump(cwd: string, options: BumpOptions) {
     prefix,
   });
 
-  const content = await tryReadVersionFile(versionFile);
+  const { contents, newline } = await tryReadVersionFile(versionFile);
 
   // update version
-  content.version = latestVersion;
+  contents.version = latestVersion;
 
   logging.info(
     `Update ${versionFile} to latest resolved version: ${latestVersion}`
   );
-  await fs.writeFile(versionFile, JSON.stringify(content, undefined, 2));
+  await fs.writeFile(
+    versionFile,
+    JSON.stringify(contents, undefined, 2) + (newline ? "\n" : "")
+  );
 
   // check if the latest commit already has a version tag
   const currentTags = execCapture("git tag --points-at HEAD", { cwd })
@@ -192,12 +195,20 @@ export async function bump(cwd: string, options: BumpOptions) {
   await fs.writeFile(releaseTagFile, newTag);
 }
 
-async function tryReadVersionFile(versionFile: string) {
+async function tryReadVersionFile(
+  versionFile: string
+): Promise<{ contents: any; version?: string; newline: boolean }> {
   if (!existsSync(versionFile)) {
-    return {};
+    return { contents: {}, newline: true };
   }
+  const raw = await fs.readFile(versionFile, "utf-8");
+  const contents = JSON.parse(raw);
 
-  return JSON.parse(await fs.readFile(versionFile, "utf-8"));
+  return {
+    contents,
+    version: contents.version,
+    newline: raw.endsWith("\n"),
+  };
 }
 
 interface LatestTagOptions {
