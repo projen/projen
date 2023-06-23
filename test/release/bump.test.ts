@@ -1,9 +1,11 @@
 import { execSync } from "child_process";
-import { promises as fs, mkdtempSync } from "fs";
+import { promises as fs, mkdtempSync, readFileSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import * as logging from "../../src/logging";
 import { bump, BumpOptions } from "../../src/release/bump-version";
+import { TypeScriptProject } from "../../src/typescript";
+import { execProjenCLI, withProjectDir } from "../util";
 
 logging.disable();
 jest.setTimeout(1000 * 60 * 5); // 5min
@@ -284,6 +286,41 @@ test("second prerelease after the first prerelease", async () => {
 });
 
 //----------------------------------------------------------------------------------------------------------------------------------
+describe("newline at the end of version file", () => {
+  test("created version file ends with a newline", async () => {
+    const result = await testBump();
+
+    const file = await fs.readFile(
+      join(result.workdir, "version.json"),
+      "utf-8"
+    );
+    expect(file.endsWith("\n")).toBe(true);
+  });
+
+  test("existing version file keeps newline at the end", async () => {
+    withProjectDir((projectdir) => {
+      const project = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        outdir: projectdir,
+        release: true,
+      });
+      project.synth();
+
+      // Commit files so the bump will work
+      execSync("git add .", { cwd: projectdir });
+      execSync('git commit -m"chore: init"', { cwd: projectdir });
+
+      // Bump the version
+      execProjenCLI(projectdir, ["bump"]);
+
+      const file = readFileSync(join(projectdir, "package.json"), "utf-8");
+      expect(file.endsWith("\n")).toBe(true);
+    });
+  });
+});
+
+//----------------------------------------------------------------------------------------------------------------------------------
 
 async function testBump(
   opts: {
@@ -337,5 +374,6 @@ async function testBump(
     changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
     bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),
     tag: await fs.readFile(join(workdir, "releasetag.txt"), "utf8"),
+    workdir,
   };
 }
