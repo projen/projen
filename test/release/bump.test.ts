@@ -1,7 +1,8 @@
 import { execSync } from "child_process";
 import { promises as fs, mkdtempSync, readFileSync } from "fs";
 import { tmpdir } from "os";
-import { join } from "path";
+import { dirname, join } from "path";
+import { ReleasableCommits } from "../../src";
 import * as logging from "../../src/logging";
 import { bump, BumpOptions } from "../../src/release/bump-version";
 import { TypeScriptProject } from "../../src/typescript";
@@ -253,6 +254,19 @@ test("minMajorVersion throws if set together with majorVersion", async () => {
   ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
 });
 
+test("second prerelease, no other releases", async () => {
+  const result = await testBump({
+    options: {
+      prerelease: "beta",
+    },
+    commits: [
+      { message: "fix(test): testing", tag: "v1.0.0-beta.0" },
+      { message: "fix(test): new fix" },
+    ],
+  });
+  expect(result.version).toStrictEqual("1.0.0-beta.1");
+});
+
 test("first prerelease after promotion, with prerelease", async () => {
   const result = await testBump({
     options: {
@@ -283,6 +297,88 @@ test("second prerelease after the first prerelease", async () => {
   });
 
   expect(result.version).toEqual("1.0.1-beta.1");
+});
+
+//----------------------------------------------------------------------------------------------------------------------------------
+
+describe("Releasable Commits Configurations", () => {
+  test("first release with no config is not skipped", async () => {
+    const result = await testBump({
+      commits: [{ message: "feat: first feature" }],
+    });
+    expect(result.version).toEqual("0.0.0");
+  });
+
+  test("first release with config is not skipped", async () => {
+    const result = await testBump({
+      commits: [{ message: "chore: would be ignored, but is first release" }],
+      options: {
+        releasableCommits: ReleasableCommits.featuresAndFixes().cmd,
+      },
+    });
+    expect(result.version).toEqual("0.0.0");
+  });
+
+  test("will bump if at least one type matches", async () => {
+    const result = await testBump({
+      options: {
+        releasableCommits: ReleasableCommits.ofType(["fix"]).cmd,
+      },
+      commits: [
+        { message: "first version", tag: "v1.1.0" },
+        { message: "second version", tag: "v1.2.0" },
+        { message: "docs: update Readme" },
+        { message: "fix: no more bugs" },
+      ],
+    });
+    expect(result.version).toEqual("1.2.1");
+  });
+
+  test("will bump if type with scope matches", async () => {
+    const result = await testBump({
+      options: {
+        releasableCommits: ReleasableCommits.ofType(["fix"]).cmd,
+      },
+      commits: [
+        { message: "first version", tag: "v1.1.0" },
+        { message: "second version", tag: "v1.2.0" },
+        { message: "docs: update Readme" },
+        { message: "fix(package): no more bugs" },
+      ],
+    });
+    expect(result.version).toEqual("1.2.1");
+  });
+
+  test("will not bump if no change in a relevant path", async () => {
+    const result = await testBump({
+      projectDir: "subproject",
+      options: {
+        releasableCommits: ReleasableCommits.featuresAndFixes(true).cmd,
+      },
+      commits: [
+        { message: "first version", tag: "v1.1.0" },
+        { message: "second version", tag: "v1.2.0" },
+        { message: "feat: unrelated", path: "unrelated/dummy.txt" },
+      ],
+    });
+    expect(result.version).toEqual("1.2.0");
+  });
+
+  test("will bump if change was made to a relevant path", async () => {
+    const result = await testBump({
+      projectDir: "subproject",
+      options: {
+        releasableCommits: ReleasableCommits.featuresAndFixes(true).cmd,
+      },
+      commits: [
+        { message: "first version", tag: "v1.1.0" },
+        { message: "second version", tag: "v1.2.0" },
+        { message: "feat: unrelated", path: "unrelated/dummy.txt" },
+        { message: "feat: relevant", path: "subproject/dummy.txt" },
+      ],
+    });
+    expect(result.version).toEqual("1.3.0");
+  });
 });
 
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -325,7 +421,8 @@ describe("newline at the end of version file", () => {
 async function testBump(
   opts: {
     options?: Partial<BumpOptions>;
-    commits?: { message: string; tag?: string }[];
+    commits?: { message: string; tag?: string; path?: string }[];
+    projectDir?: string;
   } = {}
 ) {
   const workdir = mkdtempSync(join(tmpdir(), "bump-test-"));
@@ -344,8 +441,10 @@ async function testBump(
   git("config commit.gpgsign false");
   git("config tag.gpgsign false");
 
-  const commit = async (message: string) => {
-    await fs.writeFile(join(workdir, "dummy.txt"), message);
+  const commit = async (message: string, path: string = "dummy.txt") => {
+    const filePath = join(workdir, path);
+    await fs.mkdir(dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, message);
     git("add .");
     git(`commit -m "${message}"`);
   };
@@ -353,13 +452,14 @@ async function testBump(
   await commit("initial commit");
 
   for (const c of opts.commits ?? []) {
-    await commit(c.message);
+    await commit(c.message, c.path);
     if (c.tag) {
       git(`tag ${c.tag}`);
     }
   }
 
-  await bump(workdir, {
+  const projectDir = opts.projectDir ? join(workdir, opts.projectDir) : workdir;
+  await bump(projectDir, {
     changelog: "changelog.md",
     versionFile: "version.json",
     bumpFile: "bump.txt",
@@ -369,11 +469,12 @@ async function testBump(
 
   return {
     version: JSON.parse(
-      await fs.readFile(join(workdir, "version.json"), "utf-8")
+      await fs.readFile(join(projectDir, "version.json"), "utf-8")
     ).version,
-    changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
-    bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),
-    tag: await fs.readFile(join(workdir, "releasetag.txt"), "utf8"),
+    changelog: await fs.readFile(join(projectDir, "changelog.md"), "utf8"),
+    bumpfile: await fs.readFile(join(projectDir, "bump.txt"), "utf8"),
+    tag: await fs.readFile(join(projectDir, "releasetag.txt"), "utf8"),
     workdir,
+    projectDir,
   };
 }
