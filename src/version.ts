@@ -134,16 +134,12 @@ export class ReleasableCommits {
    *
    * This will only not release if the most recent commit is tagged with the latest matching tag.
    *
-   * @param limitToProjectPath Only consider commits relevant to the path of the (sub-)project
+   * @param path Consider only commits that are enough to explain how the files that match the specified paths came to be.
+   * This path is relative to the current working dir of the `bump` task, i.e. to only consider commits of a subproject use `"."`.
    */
-  static everyCommit(limitToProjectPath: boolean = false) {
+  static everyCommit(path?: string) {
     const cmd = `git log --oneline $LATEST_TAG..HEAD`;
-
-    if (limitToProjectPath) {
-      return new ReleasableCommits(`${cmd} -- .`);
-    }
-
-    return new ReleasableCommits(cmd);
+    return new ReleasableCommits(withPath(cmd, path));
   }
 
   /**
@@ -153,19 +149,16 @@ export class ReleasableCommits {
    * Commits are required to follow the conventional commit spec and will be ignored otherwise.
    *
    * @param types List of conventional commit types that should be released
-   * @param limitToProjectPath Only consider commits relevant to the path of the (sub-)project
+   * @param path Consider only commits that are enough to explain how the files that match the specified paths came to be.
+   * This path is relative to the current working dir of the `bump` task, i.e. to only consider commits of a subproject use `"."`.
    */
-  static ofType(types: string[], limitToProjectPath: boolean = false) {
+  static ofType(types: string[], path?: string) {
+    const allowedTypes = types.join("|");
+
     // @see: https://github.com/conventional-commits/parser/blob/eeefb961ebf5b9dfea0fea8b06f8ad34a1e439b9/lib/parser.js
-    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(${types.join(
-      "|"
-    )}){1}(\\([^()\\r\\n]+\\))?(!)?:[^\\S\\r\\n]+.+'`;
+    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(${allowedTypes}){1}(\\([^()\\r\\n]+\\))?(!)?:[^\\S\\r\\n]+.+'`;
 
-    if (limitToProjectPath) {
-      return new ReleasableCommits(`${cmd} -- .`);
-    }
-
-    return new ReleasableCommits(cmd);
+    return new ReleasableCommits(withPath(cmd, path));
   }
 
   /**
@@ -173,10 +166,11 @@ export class ReleasableCommits {
    *
    * Shorthand for `ReleasableCommits.onlyOfType(['feat', 'fix'])`.
    *
-   * @param limitToProjectPath Only consider commits relevant to the path of the (sub-)project
+   * @param path Consider only commits that are enough to explain how the files that match the specified paths came to be.
+   * This path is relative to the current working dir of the `bump` task, i.e. to only consider commits of a subproject use `"."`.
    */
-  static featuresAndFixes(limitToProjectPath: boolean = false) {
-    return ReleasableCommits.ofType(["feat", "fix"], limitToProjectPath);
+  static featuresAndFixes(path?: string) {
+    return ReleasableCommits.ofType(["feat", "fix"], path);
   }
 
   /**
@@ -193,4 +187,15 @@ export class ReleasableCommits {
   }
 
   private constructor(public cmd: string) {}
+}
+
+/**
+ * Append a path argument to a git command if one is provided
+ */
+function withPath(cmd: string, path?: string): string {
+  if (path !== undefined) {
+    return `${cmd} -- ${path}`;
+  }
+
+  return cmd;
 }

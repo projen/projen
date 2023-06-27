@@ -351,9 +351,8 @@ describe("Releasable Commits Configurations", () => {
 
   test("will not bump if no change in a relevant path", async () => {
     const result = await testBump({
-      projectDir: "subproject",
       options: {
-        releasableCommits: ReleasableCommits.featuresAndFixes(true).cmd,
+        releasableCommits: ReleasableCommits.featuresAndFixes("subproject").cmd,
       },
       commits: [
         { message: "first version", tag: "v1.1.0" },
@@ -366,9 +365,8 @@ describe("Releasable Commits Configurations", () => {
 
   test("will bump if change was made to a relevant path", async () => {
     const result = await testBump({
-      projectDir: "subproject",
       options: {
-        releasableCommits: ReleasableCommits.featuresAndFixes(true).cmd,
+        releasableCommits: ReleasableCommits.featuresAndFixes("subproject").cmd,
       },
       commits: [
         { message: "first version", tag: "v1.1.0" },
@@ -422,7 +420,6 @@ async function testBump(
   opts: {
     options?: Partial<BumpOptions>;
     commits?: { message: string; tag?: string; path?: string }[];
-    projectDir?: string;
   } = {}
 ) {
   const workdir = mkdtempSync(join(tmpdir(), "bump-test-"));
@@ -458,8 +455,7 @@ async function testBump(
     }
   }
 
-  const projectDir = opts.projectDir ? join(workdir, opts.projectDir) : workdir;
-  await bump(projectDir, {
+  await bump(workdir, {
     changelog: "changelog.md",
     versionFile: "version.json",
     bumpFile: "bump.txt",
@@ -469,12 +465,11 @@ async function testBump(
 
   return {
     version: JSON.parse(
-      await fs.readFile(join(projectDir, "version.json"), "utf-8")
+      await fs.readFile(join(workdir, "version.json"), "utf-8")
     ).version,
-    changelog: await fs.readFile(join(projectDir, "changelog.md"), "utf8"),
-    bumpfile: await fs.readFile(join(projectDir, "bump.txt"), "utf8"),
-    tag: await fs.readFile(join(projectDir, "releasetag.txt"), "utf8"),
+    changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
+    bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),
+    tag: await fs.readFile(join(workdir, "releasetag.txt"), "utf8"),
     workdir,
-    projectDir,
   };
 }
