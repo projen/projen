@@ -2556,17 +2556,17 @@ Name | Type | Description
 ### Methods
 
 
-#### *static* everyCommit(limitToProjectPath?)🔹 <a id="projen-releasablecommits-everycommit"></a>
+#### *static* everyCommit(path?)🔹 <a id="projen-releasablecommits-everycommit"></a>
 
 Release every commit.
 
 This will only not release if the most recent commit is tagged with the latest matching tag.
 
 ```ts
-static everyCommit(limitToProjectPath?: boolean): ReleasableCommits
+static everyCommit(path?: string): ReleasableCommits
 ```
 
-* **limitToProjectPath** (<code>boolean</code>)  Only consider commits relevant to the path of the (sub-)project.
+* **path** (<code>string</code>)  Consider only commits that are enough to explain how the files that match the specified paths came to be.
 
 __Returns__:
 * <code>[ReleasableCommits](#projen-releasablecommits)</code>
@@ -2588,22 +2588,22 @@ static exec(cmd: string): ReleasableCommits
 __Returns__:
 * <code>[ReleasableCommits](#projen-releasablecommits)</code>
 
-#### *static* featuresAndFixes(limitToProjectPath?)🔹 <a id="projen-releasablecommits-featuresandfixes"></a>
+#### *static* featuresAndFixes(path?)🔹 <a id="projen-releasablecommits-featuresandfixes"></a>
 
 Release only features and fixes.
 
 Shorthand for `ReleasableCommits.onlyOfType(['feat', 'fix'])`.
 
 ```ts
-static featuresAndFixes(limitToProjectPath?: boolean): ReleasableCommits
+static featuresAndFixes(path?: string): ReleasableCommits
 ```
 
-* **limitToProjectPath** (<code>boolean</code>)  Only consider commits relevant to the path of the (sub-)project.
+* **path** (<code>string</code>)  Consider only commits that are enough to explain how the files that match the specified paths came to be.
 
 __Returns__:
 * <code>[ReleasableCommits](#projen-releasablecommits)</code>
 
-#### *static* ofType(types, limitToProjectPath?)🔹 <a id="projen-releasablecommits-oftype"></a>
+#### *static* ofType(types, path?)🔹 <a id="projen-releasablecommits-oftype"></a>
 
 Limit commits by their conventional commit type.
 
@@ -2611,11 +2611,11 @@ This will only release commit that match one of the provided types.
 Commits are required to follow the conventional commit spec and will be ignored otherwise.
 
 ```ts
-static ofType(types: Array<string>, limitToProjectPath?: boolean): ReleasableCommits
+static ofType(types: Array<string>, path?: string): ReleasableCommits
 ```
 
 * **types** (<code>Array<string></code>)  List of conventional commit types that should be released.
-* **limitToProjectPath** (<code>boolean</code>)  Only consider commits relevant to the path of the (sub-)project.
+* **path** (<code>string</code>)  Consider only commits that are enough to explain how the files that match the specified paths came to be.
 
 __Returns__:
 * <code>[ReleasableCommits](#projen-releasablecommits)</code>
