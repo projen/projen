@@ -2608,7 +2608,7 @@ __Returns__:
 Limit commits by their conventional commit type.
 
 This will only release commit that match one of the provided types.
-All commits are required to match conventional commit spec and will be ignored otherwise.
+Commits are required to follow the conventional commit spec and will be ignored otherwise.
 
 ```ts
 static ofType(types: Array<string>, limitToProjectPath?: boolean): ReleasableCommits
