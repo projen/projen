@@ -980,6 +980,54 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
   });
 });
 
+describe("Setup pnpm", () => {
+  const setupPnpmIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Setup pnpm");
+  const setupNodeIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Setup Node.js");
+
+  test("Setup pnpm should not run without pnpm option", () => {
+    // WHEN
+    const options = {};
+    const project = new TestNodeProject(options);
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(setupPnpmIndex(buildWorkflow.jobs.build)).toEqual(-1);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(setupPnpmIndex(releaseWorkflow.jobs.release)).toEqual(-1);
+    const upgradeWorkflow = yaml.parse(
+      output[".github/workflows/upgrade-main.yml"]
+    );
+    expect(setupPnpmIndex(upgradeWorkflow.jobs.upgrade)).toEqual(-1);
+  });
+
+  test("Setup pnpm should run before Setup Node.js", () => {
+    // WHEN
+    const options = {
+      workflowPackageCache: true,
+      packageManager: NodePackageManager.PNPM,
+    };
+    const project = new TestNodeProject(options);
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildJob = yaml.parse(output[".github/workflows/build.yml"]).jobs
+      .build;
+    expect(setupPnpmIndex(buildJob)).toBeGreaterThanOrEqual(0);
+    expect(setupPnpmIndex(buildJob)).toBeLessThan(setupNodeIndex(buildJob));
+    const releaseJob = yaml.parse(output[".github/workflows/release.yml"]).jobs
+      .release;
+    expect(setupPnpmIndex(releaseJob)).toBeGreaterThanOrEqual(0);
+    expect(setupPnpmIndex(releaseJob)).toBeLessThan(setupNodeIndex(releaseJob));
+    const upgradeJob = yaml.parse(output[".github/workflows/upgrade-main.yml"])
+      .jobs.upgrade;
+    expect(setupPnpmIndex(upgradeJob)).toBeGreaterThanOrEqual(0);
+    expect(setupPnpmIndex(upgradeJob)).toBeLessThan(setupNodeIndex(upgradeJob));
+  });
+});
+
 describe("workflowPackageCache", () => {
   const cache = (job: any) =>
     job.steps.find((step: any) => step.name === "Setup Node.js")?.with?.cache;
@@ -1575,19 +1623,19 @@ describe("package manager env", () => {
   [
     {
       packageManager: NodePackageManager.NPM,
-      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.YARN,
-      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.YARN2,
-      cmd: '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.PNPM,
-      cmd: '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")',
+      cmd: '$(pnpm -c exec "node --print process.env.PATH")',
     },
   ].forEach((testCase) => {
     test(testCase.packageManager, () => {

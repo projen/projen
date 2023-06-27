@@ -192,7 +192,7 @@ export class TypeScriptProject extends NodeProject {
         ...options.jestOptions,
         jestConfig: {
           ...options.jestOptions?.jestConfig,
-          testMatch: [],
+          testMatch: options.jestOptions?.jestConfig?.testMatch ?? [],
         },
       },
     });

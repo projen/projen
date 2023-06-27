@@ -41,6 +41,13 @@ export interface BuildWorkflowOptions {
   readonly artifactsDirectory: string;
 
   /**
+   * Name of the buildfile (e.g. "build" becomes "build.yml").
+   *
+   * @default "build"
+   */
+  readonly name?: string;
+
+  /**
    * The container image to use for builds.
    * @default - the default workflow container
    */
@@ -113,6 +120,7 @@ export class BuildWorkflow extends Component {
   private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
+  private readonly name: string;
   private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
@@ -133,9 +141,10 @@ export class BuildWorkflow extends Component {
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
     this.artifactsDirectory = options.artifactsDirectory;
+    this.name = options.name ?? "build";
     const mutableBuilds = options.mutableBuild ?? true;
 
-    this.workflow = new GithubWorkflow(github, "build");
+    this.workflow = new GithubWorkflow(github, this.name);
     this.workflow.on(
       options.workflowTriggers ?? {
         pullRequest: {},

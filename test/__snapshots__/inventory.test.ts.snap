@@ -3031,7 +3031,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -4647,6 +4647,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -5915,7 +5934,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -7709,6 +7728,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -10183,7 +10221,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -11740,6 +11778,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -12866,7 +12923,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -14608,6 +14665,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -15733,7 +15809,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17439,6 +17515,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -19367,7 +19462,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -21058,6 +21153,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -22130,7 +22244,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -23428,6 +23542,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -24395,7 +24528,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -25867,6 +26000,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -26906,7 +27058,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -28202,6 +28354,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -30359,7 +30530,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -31657,6 +31828,25 @@ exports[`inventory 1`] = `
         "switch": "readme",
       },
       {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
+      },
+      {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
         "featured": false,
@@ -32612,7 +32802,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -34082,6 +34272,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -35128,7 +35337,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36598,6 +36807,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -37622,7 +37850,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39092,6 +39320,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",

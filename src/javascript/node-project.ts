@@ -102,7 +102,7 @@ export interface NodeProjectOptions
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
    * Uses codecov/codecov-action@v3
-   * A secret is required for private repos. Configured with @codeCovTokenSecret
+   * A secret is required for private repos. Configured with `@codeCovTokenSecret`
    * @default false
    */
   readonly codeCov?: boolean;
@@ -481,9 +481,9 @@ export class NodeProject extends GitHubProject {
     const envCommand = (() => {
       switch (this.packageManager) {
         case NodePackageManager.PNPM:
-          return '$(pnpm -c exec "node -e \\"console.log(process.env.PATH)\\"")';
+          return '$(pnpm -c exec "node --print process.env.PATH")';
         default:
-          return '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")';
+          return '$(npx -c "node --print process.env.PATH")';
       }
     })();
 
@@ -963,6 +963,14 @@ export class NodeProject extends GitHubProject {
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      install.push({
+        name: "Setup pnpm",
+        uses: "pnpm/action-setup@v2.2.4",
+        with: { version: this.package.pnpmVersion },
+      });
+    }
+
     if (this.nodeVersion || this.workflowPackageCache) {
       const cache =
         this.package.packageManager === NodePackageManager.YARN
@@ -983,14 +991,6 @@ export class NodeProject extends GitHubProject {
             cache,
           }),
         },
-      });
-    }
-
-    if (this.package.packageManager === NodePackageManager.PNPM) {
-      install.push({
-        name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.4",
-        with: { version: this.package.pnpmVersion },
       });
     }
 

@@ -14,7 +14,7 @@ import {
   JobStep,
 } from "../github/workflows-model";
 import { Task } from "../task";
-import { Version } from "../version";
+import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
@@ -196,6 +196,14 @@ export interface ReleaseProjectOptions {
    * @default false
    */
   readonly publishDryRun?: boolean;
+
+  /**
+   * Find commits that should be considered releasable
+   * Used to decide if a release is required.
+   *
+   * @default ReleasableCommits.everyCommit()
+   */
+  readonly releasableCommits?: ReleasableCommits;
 }
 
 /**
@@ -350,6 +358,7 @@ export class Release extends Component {
       artifactsDirectory: this.artifactsDirectory,
       versionrcOptions: options.versionrcOptions,
       tagPrefix: options.releaseTagPrefix,
+      releasableCommits: options.releasableCommits,
     });
 
     this.publisher = new Publisher(project, {
@@ -644,8 +653,9 @@ export class Release extends Component {
         },
         permissions: this.workflowPermissions,
         checkoutWith: {
-          // we must use 'fetch-depth=0' in order to fetch all tags
-          // otherwise tags are not checked out
+          // fetch-depth= indicates all history for all branches and tags
+          // we must use this in order to fetch all tags
+          // and to inspect the history to decide if we should release
           "fetch-depth": 0,
         },
         preBuildSteps,

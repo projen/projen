@@ -90,18 +90,18 @@ As this is a [jsii project](./jsii.md), it will cross-compile to other languages
 any number of jsii target languages.
 
 ```typescript
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Acme.HelloNamespace',
     packageId: 'Acme.HelloPackage'
   },
-  java: {
+  publishToMaven: {
     javaPackage: 'com.acme.hello',
     mavenArtifactId: 'hello-jsii',
     mavenGroupId: 'com.acme.hello'
     serverId: 'github',
     repositoryUrl: 'https://maven.pkg.github.com/example/hello-jsii',
   },
-  python: {
+  publishToPypi: {
     distName: 'acme.hello-jsii',
     module: 'acme.hello_jsii'
   },

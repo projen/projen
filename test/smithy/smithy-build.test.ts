@@ -33,6 +33,19 @@ test("can add imports", () => {
   expect(snps["smithy-build.json"].imports).toContain("foo.json");
 });
 
+test("can add sources", () => {
+  // GIVEN
+  const project = new TestProject();
+  const smithyBuild = new SmithyBuild(project, {});
+
+  // WHEN
+  smithyBuild.addSources("my-model-dir");
+  const snps = synthSnapshot(project);
+
+  // THEN
+  expect(snps["smithy-build.json"].sources).toContain("my-model-dir");
+});
+
 test("can add plugins", () => {
   // GIVEN
   const project = new TestProject();
