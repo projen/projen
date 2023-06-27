@@ -5314,6 +5314,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -5368,6 +5383,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "awscdk-app-ts",
@@ -8348,6 +8378,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -8402,6 +8447,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "awscdk-construct",
@@ -12344,6 +12404,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -12398,6 +12473,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "cdk8s-app-ts",
@@ -15245,6 +15335,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -15299,6 +15404,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "cdk8s-construct",
@@ -18078,6 +18198,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -18132,6 +18267,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "cdktf-construct",
@@ -21695,6 +21845,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -21749,6 +21914,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "jsii",
@@ -23960,6 +24140,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -24014,6 +24209,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "nextjs",
@@ -26488,6 +26698,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -26542,6 +26767,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "nextjs-ts",
@@ -28685,6 +28925,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -28739,6 +28994,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "node",
@@ -32194,6 +32464,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -32248,6 +32533,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "react",
@@ -34710,6 +35010,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -34764,6 +35079,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "react-ts",
@@ -37204,6 +37534,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -37258,6 +37603,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "typescript",
@@ -39698,6 +40058,21 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowMacOS",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowMacOS",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-mac-o-s",
+      },
+      {
         "default": "- same as \`minNodeVersion\`",
         "docs": "The node version to use in GitHub workflows.",
         "featured": false,
@@ -39752,6 +40127,21 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "workflowWindows",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowWindows",
+        ],
+        "simpleType": "boolean",
+        "switch": "workflow-windows",
       },
     ],
     "pjid": "typescript-app",

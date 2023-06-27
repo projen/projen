@@ -122,6 +122,9 @@ const project = new cdk.JsiiProject({
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
   docgenFilePath: "docs/api/API.md",
+
+  workflowWindows: true,
+  workflowMacOS: true,
 });
 
 // this script is what we use as the projen command in this project

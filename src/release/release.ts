@@ -180,6 +180,10 @@ export interface ReleaseProjectOptions {
    */
   readonly workflowRunsOn?: string[];
 
+  readonly workflowMacOS?: boolean;
+
+  readonly workflowWindows?: boolean;
+
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
    *

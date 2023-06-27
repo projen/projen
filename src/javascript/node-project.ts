@@ -572,6 +572,8 @@ export class NodeProject extends GitHubProject {
         }),
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
+        windows: options.workflowWindows,
+        macos: options.workflowMacOS,
         workflowTriggers: options.buildWorkflowTriggers,
         permissions: workflowPermissions,
       });

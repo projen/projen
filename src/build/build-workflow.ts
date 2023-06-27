@@ -91,6 +91,10 @@ export interface BuildWorkflowOptions {
    */
   readonly runsOn?: string[];
 
+  readonly macos?: boolean;
+
+  readonly windows?: boolean;
+
   /**
    * Build workflow triggers
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
@@ -156,17 +160,27 @@ export class BuildWorkflow extends Component {
 
   private addBuildJob(options: BuildWorkflowOptions) {
     const oses = ["windows-latest", "macos-latest", "ubuntu-latest"];
+    const runners = [...this.defaultRunners];
+    if (options.macos) {
+      runners.push("macos-latest");
+    }
+    if (options.windows) {
+      runners.push("windows-latest");
+    }
     this.workflow.addJob(BUILD_JOBID, {
-      // runsOn: options.runsOn ?? this.defaultRunners,
-      runsOn: ["${{ matrix.os }}"],
-      strategy: {
-        failFast: false,
-        matrix: {
-          domain: {
-            os: oses,
-          },
-        },
-      },
+      runsOn:
+        runners.length > 1 ? ["${{ matrix.os }}"] : options.runsOn ?? runners,
+      strategy:
+        runners.length > 1
+          ? {
+              failFast: false,
+              matrix: {
+                domain: {
+                  os: oses,
+                },
+              },
+            }
+          : undefined,
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
