@@ -123,6 +123,7 @@
   "version": "0.0.0",
   "jest": {
     "maxWorkers": "50%",
+    "verbose": true,
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.ts?(x)",
       "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)"
