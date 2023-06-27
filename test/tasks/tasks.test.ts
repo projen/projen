@@ -236,6 +236,28 @@ test("env() can be used to add environment variables", () => {
   });
 });
 
+test(".envVars returns all environment variables in the task level", () => {
+  // GIVEN
+  const p = new TestProject();
+  const t = p.addTask("my-task", {
+    env: {
+      INITIAL: "123",
+      ENV: "456",
+    },
+  });
+
+  // WHEN
+  t.env("FOO", "BAR");
+  t.env("HELLO", "world");
+
+  expect(t.envVars).toStrictEqual({
+    INITIAL: "123",
+    ENV: "456",
+    FOO: "BAR",
+    HELLO: "world",
+  });
+});
+
 test(".steps can be used to list all steps in the current task", () => {
   // GIVEN
   const p = new TestProject();

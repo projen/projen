@@ -2972,6 +2972,7 @@ new Task(name: string, props?: TaskOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**envVars**🔹 | <code>Map<string, string></code> | Returns all environment variables in the task level.
 **name**🔹 | <code>string</code> | Task name.
 **steps**🔹 | <code>Array<[TaskStep](#projen-taskstep)></code> | Returns an immutable copy of all the step specifications of the task.
 **condition**?🔹 | <code>string</code> | A command to execute which determines if the task should be skipped.<br/>__*Optional*__
