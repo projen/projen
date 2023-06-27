@@ -12,6 +12,6 @@ if (!fs.existsSync(path.join(__dirname, 'lib', 'cli', 'index.js'))) {
     stdio: ['inherit', 'inherit', 'inherit']
   })
 }
-child.execSync(`${path.join(__dirname, 'bin', 'projen')} ${process.argv.slice(2).join(' ')}`, {
+child.execSync(`node ${path.join(__dirname, 'bin', 'projen')} ${process.argv.slice(2).join(' ')}`, {
   stdio: ['inherit', 'inherit', 'inherit']
 })
