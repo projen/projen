@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
-        run: /bin/bash ./projen.bash release
+        run: node ./projen.bootstrap.js release
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:

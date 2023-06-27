@@ -4,4 +4,4 @@ tasks:
   - name: Setup
     command: npx projen build
     init: yarn install
-    prebuild: bash ./projen.bash
+    prebuild: node ./projen.bootstrap.js

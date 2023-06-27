@@ -22,7 +22,7 @@ dist
 tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
-/projen.bash
+/projen.bootstrap.js
 /.markdownlint.json
 /.devcontainer.json
 /.all-contributorsrc

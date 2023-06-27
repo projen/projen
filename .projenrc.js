@@ -77,7 +77,7 @@ const project = new cdk.JsiiProject({
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: "/bin/bash ./projen.bash",
+  projenCommand: "node ./projen.bootstrap.js",
 
   // cli tests need projen to be compiled
   compileBeforeTest: true,
@@ -127,21 +127,7 @@ const project = new cdk.JsiiProject({
   workflowMacOS: true,
 });
 
-// this script is what we use as the projen command in this project
-// it will compile the project if needed and then run the cli.
-new TextFile(project, "projen.bash", {
-  lines: [
-    "#!/bin/bash",
-    `# ${PROJEN_MARKER}`,
-    "set -euo pipefail",
-    "if [ ! -f lib/cli/index.js ]; then",
-    '  echo "bootstrapping..."',
-    "  npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
-    "fi",
-    "exec bin/projen $@",
-  ],
-});
-project.npmignore.exclude("/projen.bash");
+project.npmignore.exclude("/projen.bootstrap.js");
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
@@ -188,7 +174,7 @@ project.github.mergify.addRule({
 project.gitpod.addCustomTask({
   name: "Setup",
   init: "yarn install",
-  prebuild: "bash ./projen.bash",
+  prebuild: "node ./projen.bootstrap.js",
   command: "npx projen build",
 });
 
