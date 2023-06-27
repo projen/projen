@@ -29,6 +29,14 @@ export interface VersionOptions {
    * The tag prefix corresponding to this version.
    */
   readonly tagPrefix?: string;
+
+  /**
+   * Find commits that should be considered releasable
+   * Used to decide if a release is required.
+   *
+   * @default ReleasableCommits.everyCommit()
+   */
+  readonly releasableCommits?: ReleasableCommits;
 }
 
 export class Version extends Component {
@@ -80,7 +88,7 @@ export class Version extends Component {
       this.releaseTagFileName
     );
 
-    const env = {
+    const env: Record<string, string> = {
       OUTFILE: versionInputFile,
       CHANGELOG: changelogFile,
       BUMPFILE: bumpFile,
@@ -89,6 +97,10 @@ export class Version extends Component {
       // doesn't work if custom configuration is long
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
     };
+
+    if (options.releasableCommits) {
+      env.RELEASABLE_COMMITS = options.releasableCommits.cmd;
+    }
 
     this.bumpTask = project.addTask("bump", {
       description:
@@ -111,4 +123,74 @@ export class Version extends Component {
     project.addPackageIgnore(`/${changelogFile}`);
     project.addPackageIgnore(`/${bumpFile}`);
   }
+}
+
+/**
+ * Find commits that should be considered releasable to decide if a release is required.
+ */
+export class ReleasableCommits {
+  /**
+   * Release every commit
+   *
+   * This will only not release if the most recent commit is tagged with the latest matching tag.
+   *
+   * @param limitToProjectPath Only consider commits relevant to the path of the (sub-)project
+   */
+  static everyCommit(limitToProjectPath: boolean = false) {
+    const cmd = `git log --oneline $LATEST_TAG..HEAD`;
+
+    if (limitToProjectPath) {
+      return new ReleasableCommits(`${cmd} -- .`);
+    }
+
+    return new ReleasableCommits(cmd);
+  }
+
+  /**
+   * Limit commits by their conventional commit type
+   *
+   * This will only release commit that match one of the provided types.
+   * Commits are required to follow the conventional commit spec and will be ignored otherwise.
+   *
+   * @param types List of conventional commit types that should be released
+   * @param limitToProjectPath Only consider commits relevant to the path of the (sub-)project
+   */
+  static ofType(types: string[], limitToProjectPath: boolean = false) {
+    // @see: https://github.com/conventional-commits/parser/blob/eeefb961ebf5b9dfea0fea8b06f8ad34a1e439b9/lib/parser.js
+    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(${types.join(
+      "|"
+    )}){1}(\\([^()\\r\\n]+\\))?(!)?:[^\\S\\r\\n]+.+'`;
+
+    if (limitToProjectPath) {
+      return new ReleasableCommits(`${cmd} -- .`);
+    }
+
+    return new ReleasableCommits(cmd);
+  }
+
+  /**
+   * Release only features and fixes
+   *
+   * Shorthand for `ReleasableCommits.onlyOfType(['feat', 'fix'])`.
+   *
+   * @param limitToProjectPath Only consider commits relevant to the path of the (sub-)project
+   */
+  static featuresAndFixes(limitToProjectPath: boolean = false) {
+    return ReleasableCommits.ofType(["feat", "fix"], limitToProjectPath);
+  }
+
+  /**
+   * Use an arbitrary shell command to find releasable commits since the latest tag.
+   *
+   * A new release will be initiated, if the number of returned commits is greater than zero.
+   * Must return a newline separate list of commits that should considered releasable.
+   * `$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.*
+   *
+   * @example "git log --oneline $LATEST_TAG..HEAD -- ."
+   */
+  static exec(cmd: string) {
+    return new ReleasableCommits(cmd);
+  }
+
+  private constructor(public cmd: string) {}
 }

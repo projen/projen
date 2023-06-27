@@ -28,6 +28,7 @@ const bumpFile = process.env.BUMPFILE;
 const releaseTagFile = process.env.RELEASETAG;
 const prefix = process.env.RELEASE_TAG_PREFIX;
 const versionrcOptions = process.env.VERSIONRCOPTIONS;
+const releasableCommits = process.env.RELEASABLE_COMMITS;
 
 if (!versionFile) {
   throw new Error("OUTFILE is required");
@@ -68,6 +69,7 @@ const opts: BumpOptions = {
   tagPrefix: prefix,
   // doesn't work with long customization
   versionrcOptions: JSON.parse(versionrcOptions ?? "{}"),
+  releasableCommits,
 };
 logging.debug(opts);
 

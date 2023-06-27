@@ -3,7 +3,8 @@ import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
 import { compare } from "semver";
 import * as logging from "../logging";
-import { exec, execCapture } from "../util";
+import { exec, execCapture, execOrUndefined } from "../util";
+import { ReleasableCommits } from "../version";
 
 export interface BumpOptions {
   /**
@@ -69,10 +70,21 @@ export interface BumpOptions {
   readonly tagPrefix?: string;
 
   /**
-   * Conguration values that would append to versionrc file or overwrite values
+   * Configuration values that would append to versionrc file or overwrite values
    * coming to that from default one.
    */
   readonly versionrcOptions?: Config;
+
+  /**
+   * A shell command to list all release commits since the latest tag.
+   *
+   * A new release will be initiated, if the number of returned commits is greater than zero.
+   *
+   * `$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.
+   *
+   * @default "git log --oneline $LATEST_TAG..HEAD"
+   */
+  readonly releasableCommits?: string;
 }
 
 /**
@@ -123,21 +135,31 @@ export async function bump(cwd: string, options: BumpOptions) {
     JSON.stringify(contents, undefined, 2) + (newline ? "\n" : "")
   );
 
-  // check if the latest commit already has a version tag
-  const currentTags = execCapture("git tag --points-at HEAD", { cwd })
-    .toString("utf8")
-    .split("\n");
-  logging.info(`Tags listed on current commit: ${currentTags}`);
-
+  // check for commits since the last release tag
   let skipBump = false;
 
-  if (currentTags.includes(latestTag)) {
-    logging.info("Skipping bump...");
-    skipBump = true;
+  // First Release is never skipping bump
+  if (!isFirstRelease) {
+    const findCommits = (
+      options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
+    ).replace("$LATEST_TAG", latestTag);
+    const commitsSinceLastTag = execOrUndefined(findCommits, { cwd })?.split(
+      "\n"
+    );
+    const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;
+    logging.info(
+      `Number of commits since ${latestTag}: ${numCommitsSinceLastTag}`
+    );
 
-    // delete the existing tag (locally)
-    // if we don't do this, standard-version generates an empty changelog
-    exec(`git tag --delete ${latestTag}`, { cwd });
+    // Nothing to release right now
+    if (numCommitsSinceLastTag === 0) {
+      logging.info("Skipping bump...");
+      skipBump = true;
+
+      // delete the existing tag (locally)
+      // if we don't do this, standard-version generates an empty changelog
+      exec(`git tag --delete ${latestTag}`, { cwd });
+    }
   }
 
   // create a standard-version configuration file
@@ -169,7 +191,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   exec(cmd.join(" "), { cwd });
 
   // add the tag back if it was previously removed
-  if (currentTags.includes(latestTag)) {
+  if (skipBump) {
     exec(`git tag ${latestTag}`, { cwd });
   }
 
@@ -320,7 +342,10 @@ function determineLatestTag(options: LatestTagOptions): {
     const releaseTags = tags.filter((x) =>
       new RegExp(`^v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
     );
-    if (releaseTags && compare(releaseTags[0], prereleaseTags[0]) === 1) {
+    if (
+      releaseTags.length > 0 &&
+      compare(releaseTags[0], prereleaseTags[0]) === 1
+    ) {
       tags = releaseTags;
     } else {
       tags = prereleaseTags;
@@ -349,7 +374,7 @@ function determineLatestTag(options: LatestTagOptions): {
 
   // remove "v" prefix (if exists)
   if (latestVersion.startsWith("v")) {
-    latestVersion = latestVersion.substr(1);
+    latestVersion = latestVersion.substring(1);
   }
 
   return { latestVersion, latestTag, isFirstRelease };
