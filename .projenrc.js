@@ -99,7 +99,6 @@ const project = new cdk.JsiiProject({
       // starved of CPU time and sometimes hang or timeout. This should
       // help mitigate that.
       maxWorkers: "50%",
-      verbose: true,
     },
   },
 
@@ -127,6 +126,11 @@ const project = new cdk.JsiiProject({
   workflowWindows: true,
   workflowMacOS: true,
 });
+
+project.jest.config.haste = {
+  ...(project.jest.config.haste ?? {}),
+  forceNodeFilesystemAPI: true,
+};
 
 project.npmignore.exclude("/projen.bootstrap.js");
 
