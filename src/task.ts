@@ -239,7 +239,7 @@ export class Task {
   /**
    * Returns all environment variables in the task level
    */
-  public allEnvVars(): Readonly<{ [name: string]: string }> {
+  public get envVars(): Readonly<{ [name: string]: string }> {
     return this._env;
   }
   /**

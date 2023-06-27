@@ -236,7 +236,7 @@ test("env() can be used to add environment variables", () => {
   });
 });
 
-test("getAllEnv() returns all environment variables in the task level", () => {
+test(".envVars returns all environment variables in the task level", () => {
   // GIVEN
   const p = new TestProject();
   const t = p.addTask("my-task", {
@@ -250,7 +250,7 @@ test("getAllEnv() returns all environment variables in the task level", () => {
   t.env("FOO", "BAR");
   t.env("HELLO", "world");
 
-  expect(t.allEnvVars()).toStrictEqual({
+  expect(t.envVars).toStrictEqual({
     INITIAL: "123",
     ENV: "456",
     FOO: "BAR",
