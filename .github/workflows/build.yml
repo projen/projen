@@ -6,7 +6,7 @@ on:
   workflow_dispatch: {}
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: write
     outputs:
@@ -56,6 +56,13 @@ jobs:
         with:
           name: build-artifact
           path: dist
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
   self-mutation:
     needs: build
     runs-on: ubuntu-latest

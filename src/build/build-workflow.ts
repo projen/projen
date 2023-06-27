@@ -155,8 +155,18 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
+    const oses = ["windows-latest", "macos-latest", "ubuntu-latest"];
     this.workflow.addJob(BUILD_JOBID, {
-      runsOn: options.runsOn ?? this.defaultRunners,
+      // runsOn: options.runsOn ?? this.defaultRunners,
+      runsOn: ["${{ matrix.os }}"],
+      strategy: {
+        failFast: false,
+        matrix: {
+          domain: {
+            os: oses,
+          },
+        },
+      },
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
