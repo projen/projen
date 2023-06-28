@@ -349,7 +349,7 @@ describe("Releasable Commits Configurations", () => {
     expect(result.version).toEqual("1.2.1");
   });
 
-  test("regressions bump if regex should accept all characters", async () => {
+  test("regression: bump regex should accept all characters", async () => {
     const result = await testBump({
       options: {
         releasableCommits: ReleasableCommits.featuresAndFixes().cmd,
