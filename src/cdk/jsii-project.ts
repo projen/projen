@@ -253,22 +253,14 @@ export class JsiiProject extends TypeScriptProject {
       description: "Packages artifacts for all target languages",
     });
 
-    // in jsii we consider the entire repo (post build) as the build artifact
-    // which is then used to create the language bindings in separate jobs.
-    const prepareRepoForCI = [
-      `rsync -a . .repo --exclude .git --exclude node_modules`,
-      `rm -rf ${this.artifactsDirectory}`,
-      `mv .repo ${this.artifactsDirectory}`,
-    ].join(" && ");
-
-    // when running inside CI we just prepare the repo for packaging, which
-    // takes place in separate tasks.
-    // outside of CI (i.e locally) we simply package all targets.
-    this.packageTask.reset(
-      `if [ ! -z \${CI} ]; then ${prepareRepoForCI}; else ${this.runTaskCommand(
-        this.packageAllTask
-      )}; fi`
-    );
+    this.packageTask.reset();
+    this.packageTask.builtin("cdk/jsii-project.package", {
+      env: {
+        ARTIFACTS_DIRECTORY: this.artifactsDirectory,
+        PACKAGE_ALL_TASK_NAME: this.packageAllTask.name,
+      },
+      requiredEnv: ["ARTIFACTS_DIRECTORY", "PACKAGE_ALL_TASK_NAME"],
+    });
 
     const targets: Record<string, any> = {};
 

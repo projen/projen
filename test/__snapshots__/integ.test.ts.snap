@@ -1022,7 +1022,15 @@ tsconfig.tsbuildinfo
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi"
+          "builtin": "cdk/jsii-project.package",
+          "env": {
+            "ARTIFACTS_DIRECTORY": "dist",
+            "PACKAGE_ALL_TASK_NAME": "package-all"
+          },
+          "requiredEnv": [
+            "ARTIFACTS_DIRECTORY",
+            "PACKAGE_ALL_TASK_NAME"
+          ]
         }
       ]
     },
@@ -2122,7 +2130,15 @@ tsconfig.tsbuildinfo
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi"
+          "builtin": "cdk/jsii-project.package",
+          "env": {
+            "ARTIFACTS_DIRECTORY": "dist",
+            "PACKAGE_ALL_TASK_NAME": "package-all"
+          },
+          "requiredEnv": [
+            "ARTIFACTS_DIRECTORY",
+            "PACKAGE_ALL_TASK_NAME"
+          ]
         }
       ]
     },

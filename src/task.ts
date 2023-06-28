@@ -153,9 +153,9 @@ export class Task {
    * @param name The name of the builtin task to execute (e.g.
    * `release/resolve-version`).
    */
-  public builtin(name: string) {
+  public builtin(name: string, options: TaskCommonOptions = {}) {
     this.assertUnlocked();
-    this._steps.push({ builtin: name });
+    this._steps.push({ builtin: name, ...options });
   }
 
   /**

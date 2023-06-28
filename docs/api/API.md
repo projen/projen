@@ -2912,7 +2912,7 @@ addCondition(...condition: string[]): void
 
 
 
-#### builtin(name)🔹 <a id="projen-task-builtin"></a>
+#### builtin(name, options?)🔹 <a id="projen-task-builtin"></a>
 
 Execute a builtin task.
 
@@ -2922,10 +2922,16 @@ helpers for various components.
 In the future we should support built-in tasks from external modules.
 
 ```ts
-builtin(name: string): void
+builtin(name: string, options?: TaskCommonOptions): void
 ```
 
 * **name** (<code>string</code>)  The name of the builtin task to execute (e.g. `release/resolve-version`).
+* **options** (<code>[TaskCommonOptions](#projen-taskcommonoptions)</code>)  *No description*
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
 
 
 
