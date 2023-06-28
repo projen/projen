@@ -349,6 +349,24 @@ describe("Releasable Commits Configurations", () => {
     expect(result.version).toEqual("1.2.1");
   });
 
+  test("regression: bump regex should accept all characters", async () => {
+    const result = await testBump({
+      options: {
+        releasableCommits: ReleasableCommits.featuresAndFixes().cmd,
+      },
+      commits: [
+        { message: "first version", tag: "v1.1.0" },
+        { message: "second version", tag: "v1.2.0" },
+        { message: "docs: update Readme" },
+        {
+          message:
+            "feat(abcdefghijklmnopqrstuvwxyz): abcdefghijklmnopqrstuvwxyz",
+        },
+      ],
+    });
+    expect(result.version).toEqual("1.3.0");
+  });
+
   test("will not bump if no change in a relevant path", async () => {
     const result = await testBump({
       options: {
