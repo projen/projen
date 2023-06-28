@@ -17,14 +17,19 @@ if (process.env.CI) {
   if (fs.existsSync(artifactsDirectory)) {
     fs.rmdirSync(artifactsDirectory, { recursive: true });
   }
-  fs.renameSync(repoTempDir, artifactsDirectory);
+  fs.mkdirSync(artifactsDirectory);
+  copyFiles(repoTempDir, artifactsDirectory);
 } else {
   child.execSync(`npx projen ${PACKAGE_ALL_TASK_NAME}`, {
     stdio: ["inherit", "inherit", "inherit"],
   });
 }
 
-function copyFiles(source: string, destination: string, exclude: string[]) {
+function copyFiles(
+  source: string,
+  destination: string,
+  exclude: string[] = []
+) {
   const files = fs.readdirSync(source);
 
   for (const file of files) {
