@@ -70,6 +70,7 @@
     "jsii-diff": "^1.84.0",
     "jsii-docgen": "^1.8.110",
     "jsii-pacmak": "^1.84.0",
+    "jsii-rosetta": "5.x",
     "markmac": "^0.1.146",
     "npm-check-updates": "^16",
     "prettier": "^2.8.8",

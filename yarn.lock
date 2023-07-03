@@ -2669,7 +2669,7 @@ fast-diff@^1.1.2:
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.3.0.tgz#ece407fa550a64d638536cd727e129c61616e0f0"
   integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
-fast-glob@^3.2.12, fast-glob@^3.2.9:
+fast-glob@^3.2.12, fast-glob@^3.2.9, fast-glob@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.0.tgz#7c40cb491e1e2ed5664749e87bfb516dbe8727c0"
   integrity sha512-ChDuvbOypPuNjO8yIDf36x7BlZX1smcUMTTcyoIjycexOxd6DFsKsg21qVBzEmr3G7fUKIRy2/psii+CIUt7FA==
@@ -4116,6 +4116,25 @@ jsii-reflect@^1.30.0, jsii-reflect@^1.84.0:
     oo-ascii-tree "^1.84.0"
     yargs "^16.2.0"
 
+jsii-rosetta@5.x:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.1.4.tgz#42f6d7c9feff5f70024e070a90dfe5bbe05f4be9"
+  integrity sha512-BZkoRsKgPJtBBvQ2FFh+AJxOhQ41enwPUvqlrbAYofsqPzljWM6O2WyYNziXhAG6cIPrIqoQzxzSAQ9VnIXv5A==
+  dependencies:
+    "@jsii/check-node" "1.84.0"
+    "@jsii/spec" "^1.84.0"
+    "@xmldom/xmldom" "^0.8.8"
+    chalk "^4"
+    commonmark "^0.30.0"
+    fast-glob "^3.3.0"
+    jsii "5.1.x"
+    semver "^7.5.3"
+    semver-intersect "^1.4.0"
+    stream-json "^1.8.0"
+    typescript "~5.1.6"
+    workerpool "^6.4.0"
+    yargs "^17.7.2"
+
 jsii-rosetta@^1.84.0:
   version "1.84.0"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.84.0.tgz#1dca8518f4ae6780beb8d73b54b013a3a1420b8e"
@@ -4152,6 +4171,25 @@ jsii@1.84.0:
     spdx-license-list "^6.6.0"
     typescript "~3.9.10"
     yargs "^16.2.0"
+
+jsii@5.1.x:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.1.4.tgz#cc6bcbed91a337fd61d82f665a2cf4a3e1184da0"
+  integrity sha512-c5AU0Af/uNtY3exSpR1qnhRG6c9YZWgjkhQcVGyz58lcd9L245DIk0gQ13QAaBpVyFm5VYQrhPCm4k8QZSvsug==
+  dependencies:
+    "@jsii/check-node" "1.84.0"
+    "@jsii/spec" "^1.84.0"
+    case "^1.6.3"
+    chalk "^4"
+    downlevel-dts "^0.11.0"
+    fast-deep-equal "^3.1.3"
+    log4js "^6.9.1"
+    semver "^7.5.3"
+    semver-intersect "^1.4.0"
+    sort-json "^2.0.1"
+    spdx-license-list "^6.6.0"
+    typescript "~5.1.6"
+    yargs "^17.7.2"
 
 jsii@5.x:
   version "5.1.4"
