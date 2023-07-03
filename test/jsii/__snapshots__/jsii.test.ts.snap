@@ -755,6 +755,11 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       {
+        "name": "jsii-rosetta",
+        "type": "build",
+        "version": "1.x",
+      },
+      {
         "name": "jsii",
         "type": "build",
         "version": "1.x",
@@ -1087,19 +1092,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
             "exec": "yarn install --check-files",
@@ -1352,6 +1357,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
+      "jsii-rosetta": "1.x",
       "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
@@ -2250,6 +2256,10 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       {
+        "name": "jsii-rosetta",
+        "type": "build",
+      },
+      {
         "name": "npm-check-updates",
         "type": "build",
         "version": "^16",
@@ -2831,6 +2841,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
+      "jsii-rosetta": "*",
       "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
@@ -3723,6 +3734,11 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       {
+        "name": "jsii-rosetta",
+        "type": "build",
+        "version": "^1.78.1",
+      },
+      {
         "name": "jsii",
         "type": "build",
         "version": "^1.78.1",
@@ -4320,6 +4336,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
+      "jsii-rosetta": "^1.78.1",
       "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
@@ -5214,6 +5231,11 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       {
+        "name": "jsii-rosetta",
+        "type": "build",
+        "version": "~5.0.0",
+      },
+      {
         "name": "jsii",
         "type": "build",
         "version": "~5.0.0",
@@ -5535,19 +5557,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
             "exec": "yarn install --check-files",
@@ -5800,6 +5822,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
+      "jsii-rosetta": "~5.0.0",
       "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",

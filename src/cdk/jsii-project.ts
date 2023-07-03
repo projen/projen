@@ -397,7 +397,12 @@ export class JsiiProject extends TypeScriptProject {
           ""
         : // Otherwise, use `jsiiVersion` or fall back to `1.x`.
           `@${options.jsiiVersion ?? "1.x"}`;
-    this.addDevDeps(`jsii${jsiiSuffix}`, "jsii-diff", "jsii-pacmak");
+    this.addDevDeps(
+      `jsii${jsiiSuffix}`,
+      `jsii-rosetta${jsiiSuffix}`,
+      "jsii-diff",
+      "jsii-pacmak"
+    );
 
     this.gitignore.exclude(".jsii", "tsconfig.json");
     this.npmignore?.include(".jsii");
