@@ -49,6 +49,22 @@ export interface DependabotOptions {
    * @default - use public registries
    */
   readonly registries?: { [name: string]: DependabotRegistry };
+
+  /**
+   * Sets the maximum of pull requests Dependabot opens for version updates.
+   * Dependabot will not open any new requests until some of those open requests
+   * are merged or closed.
+   *
+   * @default 5
+   */
+  readonly openPullRequestsLimit?: number;
+
+  /**
+   * Specify individual reviewers or teams of reviewers for all pull requests raised
+   * for a package manager.
+   * @default []
+   */
+  readonly reviewers?: string[];
 }
 
 /**
@@ -298,6 +314,14 @@ export class Dependabot extends Component {
           ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
           labels: options.labels ? options.labels : undefined,
           registries: registries ? Object.keys(registries) : undefined,
+          reviewers:
+            options.reviewers && options.reviewers.length > 0
+              ? options.reviewers
+              : undefined,
+          "open-pull-requests-limit":
+            options.openPullRequestsLimit !== undefined
+              ? options.openPullRequestsLimit
+              : undefined,
         },
       ],
     };

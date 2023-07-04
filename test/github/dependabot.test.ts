@@ -106,6 +106,85 @@ describe("dependabot", () => {
       expect(dependabot).toContain("20.x");
     });
   });
+
+  describe("open-pull-requests-limit", () => {
+    test("open pull requests limit set to positive integer", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { openPullRequestsLimit: 5 });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("open-pull-requests-limit: 5");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("open pull requests limit set to 0", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { openPullRequestsLimit: 0 });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("open-pull-requests-limit: 0");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("open pull requests limit not set", () => {
+      const project = createProject();
+      new Dependabot(project.github!);
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("open-pull-requests-limit:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+  });
+
+  describe("reviewers", () => {
+    test("one reviewer", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { reviewers: ["testUserOne"] });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("reviewers:");
+      expect(dependabot).toContain("testUserOne");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("multiple reviewers", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        reviewers: ["testUserOne", "testUserTwo"],
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("reviewers:");
+      expect(dependabot).toContain("testUserOne");
+      expect(dependabot).toContain("testUserTwo");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("empty reviewers", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { reviewers: [] });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("reviewers:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("no reviewers", () => {
+      const project = createProject();
+      new Dependabot(project.github!);
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("reviewers:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+  });
 });
 
 type ProjectOptions = Omit<
