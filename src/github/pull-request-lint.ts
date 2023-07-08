@@ -25,6 +25,12 @@ export interface PullRequestLintOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   *  GitHub Base URL for GitHub Enterprise
+   *  @see https://github.com/amannn/action-semantic-pull-request
+   */
+  readonly githubBaseUrl?: string;
 }
 
 /**
@@ -74,6 +80,7 @@ export class PullRequestLint extends Component {
             with: {
               types: types.join("\n"),
               requireScope: opts.requireScope ?? false,
+              githubBaseUrl: options.githubBaseUrl ?? undefined,
             },
           },
         ],

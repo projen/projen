@@ -71,6 +71,22 @@ test("with custom runner", () => {
   );
 });
 
+test("with github base url", () => {
+  // GIVEN
+  const project = createProject();
+
+  // WHEN
+  new PullRequestLint(project.github!, {
+    githubBaseUrl: "https://github.myorg.com/api/v3",
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
+    "githubBaseUrl: https://github.myorg.com/api/v3"
+  );
+});
+
 type ProjectOptions = Omit<
   NodeProjectOptions,
   "outdir" | "defaultReleaseBranch" | "name"
