@@ -70,6 +70,13 @@ export interface DependabotOptions {
   readonly openPullRequestsLimit?: number;
 
   /**
+   * Specify individual assignees or teams of assignees for all pull requests raised
+   * for a package manager.
+   * @default []
+   */
+  readonly assignees?: string[];
+
+  /**
    * Specify individual reviewers or teams of reviewers for all pull requests raised
    * for a package manager.
    * @default []
@@ -342,6 +349,10 @@ export class Dependabot extends Component {
           ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
           labels: options.labels ? options.labels : undefined,
           registries: registries ? Object.keys(registries) : undefined,
+          assignees:
+            options.assignees && options.assignees.length > 0
+              ? options.assignees
+              : undefined,
           reviewers:
             options.reviewers && options.reviewers.length > 0
               ? options.reviewers

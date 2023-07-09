@@ -153,6 +153,53 @@ describe("dependabot", () => {
     });
   });
 
+  describe("assignees", () => {
+    test("one assignee", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { assignees: ["testUserOne"] });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("assignees:");
+      expect(dependabot).toContain("testUserOne");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("multiple assignees", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        assignees: ["testUserOne", "testUserTwo"],
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("assignees:");
+      expect(dependabot).toContain("testUserOne");
+      expect(dependabot).toContain("testUserTwo");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("empty assignees", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { assignees: [] });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("assignees:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("no assignees", () => {
+      const project = createProject();
+      new Dependabot(project.github!);
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("assignees:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+  });
+
   describe("reviewers", () => {
     test("one reviewer", () => {
       const project = createProject();
