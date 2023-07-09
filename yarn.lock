@@ -1660,9 +1660,9 @@ camelcase@^7.0.1:
   integrity sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==
 
 caniuse-lite@^1.0.30001503:
-  version "1.0.30001513"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001513.tgz#382fe5fbfb0f7abbaf8c55ca3ac71a0307a752e9"
-  integrity sha512-pnjGJo7SOOjAGytZZ203Em95MRM8Cr6jhCXNF/FAXTpCTRTECnqQWLpiTRqrFtdYcth8hf4WECUpkezuYsMVww==
+  version "1.0.30001514"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001514.tgz#e2a7e184a23affc9367b7c8d734e7ec4628c1309"
+  integrity sha512-ENcIpYBmwAAOm/V2cXgM7rZUrKKaqisZl4ZAI520FIkqGXUxJjmaIssbRW5HVVR5tyV6ygTLIm15aU8LUmQSaQ==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2997,9 +2997,9 @@ glob-parent@^6.0.2:
     is-glob "^4.0.3"
 
 glob@^10.2.2, glob@^10.2.5:
-  version "10.3.2"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-10.3.2.tgz#04fe71118ec6d2f4cb761849acbacec14b06cb1e"
-  integrity sha512-vsuLzB3c/uyDLLEdBZtT8vGnN0z57rwOxHV2oYZib/7HWmBspUaja/McYIobBjC4qaUTuNpUyFO2IdqM4DZIJA==
+  version "10.3.3"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-10.3.3.tgz#8360a4ffdd6ed90df84aa8d52f21f452e86a123b"
+  integrity sha512-92vPiMb/iqpmEgsOoIDvTjc50wf9CCCvMzsi6W0JLPeUKE8TWP1a73PgqSrqy7iAZxaSD1YdzU7QZR5LF51MJw==
   dependencies:
     foreground-child "^3.1.0"
     jackspeak "^2.0.3"
@@ -6226,9 +6226,9 @@ typescript@5.1.x, typescript@~5.1.6:
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@next:
-  version "5.2.0-dev.20230708"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230708.tgz#cb4c117a2a91094460579e3f0c0fab4d6296b2b8"
-  integrity sha512-2qQLKn6o4SCe1BuM4TAYVogdK+od0G2rjw61On6LE0am9aFuPxtGJg2SwVlJxDwVE7p7JdCFquhVTU+enDVRtw==
+  version "5.2.0-dev.20230709"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230709.tgz#59ab4b5c4768d16a45d81b367337b156a991e103"
+  integrity sha512-5t8YdsfgmOchjqTAAKmSWAwHwUURpdquE+HzENLRZXpwBHklFoipu/KoC6W7TiVz2/8FcjjFjq8ABDGttwAQ1w==
 
 typescript@~3.9.10:
   version "3.9.10"
