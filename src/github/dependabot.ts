@@ -82,6 +82,15 @@ export interface DependabotOptions {
    * @default []
    */
   readonly reviewers?: string[];
+
+  /**
+   * https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups
+   *
+   * You can create groups to package dependency updates together into a single PR.
+   *
+   * @default []
+   */
+  readonly groups?: { [name: string]: DependabotGroup };
 }
 
 /**
@@ -245,6 +254,23 @@ export interface DependabotIgnore {
 }
 
 /**
+ * Defines a single group for dependency updates
+ */
+export interface DependabotGroup {
+  /**
+   * Define a list of strings (with or without wildcards) that will match
+   * package names to form this dependency group.
+   */
+  readonly patterns: string[];
+
+  /**
+   * Optionally you can use this to exclude certain dependencies from the
+   * group.
+   */
+  readonly excludePatterns?: string[];
+}
+
+/**
  * How often to check for new versions and raise pull requests for version
  * updates.
  */
@@ -333,6 +359,8 @@ export class Dependabot extends Component {
       ? kebabCaseKeys(options.registries)
       : undefined;
 
+    const groups = options.groups ? kebabCaseKeys(options.groups) : undefined;
+
     this.config = {
       version: 2,
       registries,
@@ -349,6 +377,7 @@ export class Dependabot extends Component {
           ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
           labels: options.labels ? options.labels : undefined,
           registries: registries ? Object.keys(registries) : undefined,
+          groups: groups ? groups : undefined,
           assignees:
             options.assignees && options.assignees.length > 0
               ? options.assignees

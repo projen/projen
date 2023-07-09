@@ -40,6 +40,40 @@ describe("dependabot", () => {
     expect(dependabot).toContain(registryName);
   });
 
+  describe("groups", () => {
+    test("no groups", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {});
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("groups:");
+      expect(dependabot).not.toContain("patterns:");
+      expect(dependabot).not.toContain("exclude-patterns:");
+    });
+
+    test("two groups", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        groups: {
+          groupOne: {
+            patterns: ["testlib-*"],
+          },
+          groupTwo: {
+            patterns: ["*"],
+            excludePatterns: ["otherlib-*"],
+          },
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("groups:");
+      expect(dependabot).toContain("patterns:");
+      expect(dependabot).toContain("exclude-patterns:");
+    });
+  });
+
   describe("allowing", () => {
     test("allows testlib only", () => {
       const project = createProject();
