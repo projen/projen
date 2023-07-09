@@ -40,6 +40,20 @@ describe("dependabot", () => {
     expect(dependabot).toContain(registryName);
   });
 
+  describe("allowing", () => {
+    test("allows testlib only", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        allow: [{ dependencyName: "testlib" }],
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("allow:");
+      expect(dependabot).toContain("dependency-name: testlib");
+    });
+  });
+
   describe("ignoring", () => {
     test("ignores projen by default", () => {
       const project = createProject();
