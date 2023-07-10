@@ -21,6 +21,16 @@ export interface DependabotOptions {
   readonly versioningStrategy?: VersioningStrategy;
 
   /**
+   * https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#allow
+   *
+   * Use the allow option to customize which dependencies are updated. This
+   * applies to both version and security updates.
+   *
+   * @default []
+   */
+  readonly allow?: DependabotAllow[];
+
+  /**
    * You can use the `ignore` option to customize which dependencies are updated.
    * The ignore option supports the following options.
    * @default []
@@ -60,11 +70,27 @@ export interface DependabotOptions {
   readonly openPullRequestsLimit?: number;
 
   /**
+   * Specify individual assignees or teams of assignees for all pull requests raised
+   * for a package manager.
+   * @default []
+   */
+  readonly assignees?: string[];
+
+  /**
    * Specify individual reviewers or teams of reviewers for all pull requests raised
    * for a package manager.
    * @default []
    */
   readonly reviewers?: string[];
+
+  /**
+   * https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups
+   *
+   * You can create groups to package dependency updates together into a single PR.
+   *
+   * @default []
+   */
+  readonly groups?: { [name: string]: DependabotGroup };
 }
 
 /**
@@ -191,6 +217,21 @@ export enum DependabotRegistryType {
 }
 
 /**
+ * You can use the `allow` option to customize which dependencies are updated.
+ * The allow option supports the following options.
+ */
+export interface DependabotAllow {
+  /**
+   * Use to allow updates for dependencies with matching names, optionally
+   * using `*` to match zero or more characters.
+   *
+   * For Java dependencies, the format of the dependency-name attribute is:
+   * `groupId:artifactId`, for example: `org.kohsuke:github-api`.
+   */
+  readonly dependencyName: string;
+}
+
+/**
  * You can use the `ignore` option to customize which dependencies are updated.
  * The ignore option supports the following options.
  */
@@ -210,6 +251,23 @@ export interface DependabotIgnore {
    * example: `^1.0.0` for npm, or `~> 2.0` for Bundler).
    */
   readonly versions?: string[];
+}
+
+/**
+ * Defines a single group for dependency updates
+ */
+export interface DependabotGroup {
+  /**
+   * Define a list of strings (with or without wildcards) that will match
+   * package names to form this dependency group.
+   */
+  readonly patterns: string[];
+
+  /**
+   * Optionally you can use this to exclude certain dependencies from the
+   * group.
+   */
+  readonly excludePatterns?: string[];
 }
 
 /**
@@ -285,6 +343,7 @@ export class Dependabot extends Component {
    */
   public readonly ignoresProjen: boolean;
 
+  private readonly allow: any[];
   private readonly ignore: any[];
 
   constructor(github: GitHub, options: DependabotOptions = {}) {
@@ -292,12 +351,15 @@ export class Dependabot extends Component {
 
     const project = github.project;
 
+    this.allow = [];
     this.ignore = [];
     this.ignoresProjen = options.ignoreProjen ?? true;
 
     const registries = options.registries
       ? kebabCaseKeys(options.registries)
       : undefined;
+
+    const groups = options.groups ? kebabCaseKeys(options.groups) : undefined;
 
     this.config = {
       version: 2,
@@ -311,9 +373,15 @@ export class Dependabot extends Component {
             interval:
               options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
+          allow: () => (this.allow.length > 0 ? this.allow : undefined),
           ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
           labels: options.labels ? options.labels : undefined,
           registries: registries ? Object.keys(registries) : undefined,
+          groups: groups ? groups : undefined,
+          assignees:
+            options.assignees && options.assignees.length > 0
+              ? options.assignees
+              : undefined,
           reviewers:
             options.reviewers && options.reviewers.length > 0
               ? options.reviewers
@@ -331,6 +399,10 @@ export class Dependabot extends Component {
       committed: true,
     });
 
+    for (const i of options.allow ?? []) {
+      this.addAllow(i.dependencyName);
+    }
+
     for (const i of options.ignore ?? []) {
       this.addIgnore(i.dependencyName, ...(i.versions ?? []));
     }
@@ -338,6 +410,18 @@ export class Dependabot extends Component {
     if (this.ignoresProjen) {
       this.addIgnore("projen");
     }
+  }
+
+  /**
+   * Allows a dependency from automatic updates.
+   *
+   * @param dependencyName Use to allow updates for dependencies with matching
+   * names, optionally using `*` to match zero or more characters.
+   */
+  public addAllow(dependencyName: string) {
+    this.allow.push({
+      "dependency-name": dependencyName,
+    });
   }
 
   /**

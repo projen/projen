@@ -277,6 +277,8 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.CheckoutWithPatchOptions](#projen-github-checkoutwithpatchoptions)|Options for `checkoutWithPatch`.
 [github.CreatePullRequestOptions](#projen-github-createpullrequestoptions)|*No description*
+[github.DependabotAllow](#projen-github-dependabotallow)|You can use the `allow` option to customize which dependencies are updated.
+[github.DependabotGroup](#projen-github-dependabotgroup)|Defines a single group for dependency updates.
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
@@ -6824,6 +6826,9 @@ new github.Dependabot(github: GitHub, options?: DependabotOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **allow** (<code>Array<[github.DependabotAllow](#projen-github-dependabotallow)></code>)  https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#allow. __*Default*__: []
+  * **assignees** (<code>Array<string></code>)  Specify individual assignees or teams of assignees for all pull requests raised for a package manager. __*Default*__: []
+  * **groups** (<code>Map<string, [github.DependabotGroup](#projen-github-dependabotgroup)></code>)  https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups. __*Default*__: []
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
@@ -6844,6 +6849,19 @@ Name | Type | Description
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this config,.
 
 ### Methods
+
+
+#### addAllow(dependencyName)🔹 <a id="projen-github-dependabot-addallow"></a>
+
+Allows a dependency from automatic updates.
+
+```ts
+addAllow(dependencyName: string): void
+```
+
+* **dependencyName** (<code>string</code>)  Use to allow updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+
+
 
 
 #### addIgnore(dependencyName, ...versions)🔹 <a id="projen-github-dependabot-addignore"></a>
@@ -6916,6 +6934,9 @@ addDependabot(options?: DependabotOptions): Dependabot
 ```
 
 * **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **allow** (<code>Array<[github.DependabotAllow](#projen-github-dependabotallow)></code>)  https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#allow. __*Default*__: []
+  * **assignees** (<code>Array<string></code>)  Specify individual assignees or teams of assignees for all pull requests raised for a package manager. __*Default*__: []
+  * **groups** (<code>Map<string, [github.DependabotGroup](#projen-github-dependabotgroup)></code>)  https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups. __*Default*__: []
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
@@ -16525,6 +16546,35 @@ Name | Type | Description
 
 
 
+## struct DependabotAllow 🔹 <a id="projen-github-dependabotallow"></a>
+
+
+You can use the `allow` option to customize which dependencies are updated.
+
+The allow option supports the following options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependencyName**🔹 | <code>string</code> | Use to allow updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+
+
+
+## struct DependabotGroup 🔹 <a id="projen-github-dependabotgroup"></a>
+
+
+Defines a single group for dependency updates.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**patterns**🔹 | <code>Array<string></code> | Define a list of strings (with or without wildcards) that will match package names to form this dependency group.
+**excludePatterns**?🔹 | <code>Array<string></code> | Optionally you can use this to exclude certain dependencies from the group.<br/>__*Optional*__
+
+
+
 ## struct DependabotIgnore 🔹 <a id="projen-github-dependabotignore"></a>
 
 
@@ -16550,6 +16600,9 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**allow**?🔹 | <code>Array<[github.DependabotAllow](#projen-github-dependabotallow)></code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#allow.<br/>__*Default*__: []
+**assignees**?🔹 | <code>Array<string></code> | Specify individual assignees or teams of assignees for all pull requests raised for a package manager.<br/>__*Default*__: []
+**groups**?🔹 | <code>Map<string, [github.DependabotGroup](#projen-github-dependabotgroup)></code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups.<br/>__*Default*__: []
 **ignore**?🔹 | <code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__

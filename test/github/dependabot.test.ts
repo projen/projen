@@ -40,6 +40,54 @@ describe("dependabot", () => {
     expect(dependabot).toContain(registryName);
   });
 
+  describe("groups", () => {
+    test("no groups", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {});
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("groups:");
+      expect(dependabot).not.toContain("patterns:");
+      expect(dependabot).not.toContain("exclude-patterns:");
+    });
+
+    test("two groups", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        groups: {
+          groupOne: {
+            patterns: ["testlib-*"],
+          },
+          groupTwo: {
+            patterns: ["*"],
+            excludePatterns: ["otherlib-*"],
+          },
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("groups:");
+      expect(dependabot).toContain("patterns:");
+      expect(dependabot).toContain("exclude-patterns:");
+    });
+  });
+
+  describe("allowing", () => {
+    test("allows testlib only", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        allow: [{ dependencyName: "testlib" }],
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("allow:");
+      expect(dependabot).toContain("dependency-name: testlib");
+    });
+  });
+
   describe("ignoring", () => {
     test("ignores projen by default", () => {
       const project = createProject();
@@ -135,6 +183,53 @@ describe("dependabot", () => {
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).not.toContain("open-pull-requests-limit:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+  });
+
+  describe("assignees", () => {
+    test("one assignee", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { assignees: ["testUserOne"] });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("assignees:");
+      expect(dependabot).toContain("testUserOne");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("multiple assignees", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        assignees: ["testUserOne", "testUserTwo"],
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("assignees:");
+      expect(dependabot).toContain("testUserOne");
+      expect(dependabot).toContain("testUserTwo");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("empty assignees", () => {
+      const project = createProject();
+      new Dependabot(project.github!, { assignees: [] });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("assignees:");
+      expect(dependabot).toContain("dependency-name: projen");
+    });
+
+    test("no assignees", () => {
+      const project = createProject();
+      new Dependabot(project.github!);
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("assignees:");
       expect(dependabot).toContain("dependency-name: projen");
     });
   });
