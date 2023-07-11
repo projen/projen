@@ -82,6 +82,25 @@ changelogs.
 releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
 ```
 
+## Selective Releases
+
+It is possible to only bump the version on a subset of commits.
+For example you could only release a new version for every feature and fix that was added to the repo.
+
+```js
+releasableCommits: ReleasableCommits.featuresAndFixes(),
+```
+
+This check only runs according to the release trigger, but serves as an additional check to not create unnecessary releases.
+
+A custom check can be implemented `ReleasableCommits.exec()`.
+This command should return a list of commit hashes that are considered releasable.
+I.e. to not not bump the version, the command must print nothing and exit successfully.
+
+```js
+releasableCommits: ReleasableCommits.exec("./custom-script.sh"),
+```
+
 ## Manual Releases
 
 If you don't want projen to automatically release your project, you can configure a manual release trigger:
