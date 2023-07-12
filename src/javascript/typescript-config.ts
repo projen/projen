@@ -125,7 +125,7 @@ export class TypeScriptModule {
    */
   public static readonly NODENEXT = "nodenext";
 
-  private constructor() { }
+  private constructor() {}
 }
 
 /**

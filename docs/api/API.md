@@ -114,7 +114,7 @@ Name|Description
 [javascript.Prettier](#projen-javascript-prettier)|Represents prettier configuration.
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [javascript.Transform](#projen-javascript-transform)|*No description*
-[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)|Sets the module system for the program.
+[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)|*No description*
 [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
 [javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)|Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
@@ -9717,7 +9717,7 @@ new javascript.Transform(name: string, options?: any)
 
 ## class TypeScriptModule 🔹 <a id="projen-javascript-typescriptmodule"></a>
 
-Sets the module system for the program.
+
 
 __Submodule__: javascript
 
