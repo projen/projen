@@ -16,7 +16,7 @@ const compilerOptionDefaults = {
   target: "ES2019",
   lib: ["es2019"],
   module: "commonjs",
-  moduleResolution: "nNode",
+  moduleResolution: "node",
   noEmitOnError: false,
   noFallthroughCasesInSwitch: true,
   noImplicitAny: true,
