@@ -1491,10 +1491,12 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "target": "ES2021",
     "lib": [
-      "es2019"
+      "es2021"
     ],
-    "module": "CommonJS",
     "noEmitOnError": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -1503,11 +1505,11 @@ test('hello', () => {
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "stripInternal": true,
-    "target": "ES2019"
+    "stripInternal": true
   },
   "include": [
     ".projenrc.js",
@@ -2702,10 +2704,12 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2019",
     "lib": [
       "es2019"
     ],
-    "module": "CommonJS",
     "noEmitOnError": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -2714,11 +2718,11 @@ test('hello', () => {
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "stripInternal": true,
-    "target": "ES2019"
+    "stripInternal": true
   },
   "include": [
     ".projenrc.js",
@@ -3817,10 +3821,12 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2019",
     "lib": [
       "es2019"
     ],
-    "module": "CommonJS",
     "noEmitOnError": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -3829,11 +3835,11 @@ test('hello', () => {
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "stripInternal": true,
-    "target": "ES2019"
+    "stripInternal": true
   },
   "include": [
     ".projenrc.js",
@@ -3856,10 +3862,12 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2019",
     "lib": [
       "es2019"
     ],
-    "module": "CommonJS",
     "noEmitOnError": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -3868,11 +3876,11 @@ test('hello', () => {
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "stripInternal": true,
-    "target": "ES2019"
+    "stripInternal": true
   },
   "include": [
     "src/**/*.ts"

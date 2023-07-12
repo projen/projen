@@ -47,28 +47,28 @@ export enum TypeScriptModuleResolution {
    *
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic
    */
-  CLASSIC = "classic",
+  CLASSIC = "Classic",
 
   /**
    * Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
    *
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#node
    */
-  NODE = "node",
+  NODE = "Node",
 
   /**
    * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
    *
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
-  NODE16 = "node16",
+  NODE16 = "Node16",
 
   /**
    * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
    *
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
-  NODE_NEXT = "nodenext",
+  NODE_NEXT = "NodeNext",
 
   /**
    * Resolution strategy which attempts to mimic resolution patterns of modern bundlers; from TypeScript 5.0 onwards.
@@ -76,6 +76,59 @@ export enum TypeScriptModuleResolution {
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
   BUNDLER = "bundler",
+}
+
+/**
+ * Sets the module system for the program.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/modules.html
+ */
+export enum TypeScriptModule {
+  NONE = "none",
+
+  COMMONJS = "CommonJS",
+
+  AMD = "AMD",
+
+  UMD = "UMD",
+
+  SYSTEM = "System",
+
+  /** Also known as ES2015 */
+  ES6 = "ES6",
+
+  /** Also known as ES6 */
+  ES2015 = "ES2015",
+
+  /**
+   * In addition to the base functionality of ES2015/ES6, ES2020 adds support
+   * for dynamic imports and import.meta.
+   */
+  ES2020 = "ES2020",
+
+  /**
+   * In addition to the functionality of ES2020, ES2022 adds support for top
+   * level await.
+   */
+  ES2022 = "ES2022",
+
+  ESNEXT = "ESNext",
+
+  /**
+   * Available from TypeScript 4.7+. Integrates with Node's native ECMAScript
+   * Module support. The emitted JavaScript uses either CommonJS or ES2020
+   * output depending on the file extension and the value of the type setting
+   * in the nearest package.json. Module resolution also works differently.
+   */
+  NODE16 = "Node16",
+
+  /**
+   * Available from TypeScript 4.7+. Integrates with Node's native ECMAScript
+   * Module support. The emitted JavaScript uses either CommonJS or ES2020
+   * output depending on the file extension and the value of the type setting
+   * in the nearest package.json. Module resolution also works differently.
+   */
+  NODENEXT = "NodeNext",
 }
 
 /**
@@ -297,7 +350,8 @@ export interface TypeScriptCompilerOptions {
   /**
    * Reference for type definitions / libraries to use (eg. ES2016, ES5, ES2018).
    *
-   * @default [ "es2018" ]
+   * @default ["es2023"] if the project's `minNodeVersion` is >= 18, ["es2021"] if the project's `minNodeVersion` is >= 16,
+   *          otherwise ["es2019"].
    */
   readonly lib?: string[];
 
@@ -305,14 +359,14 @@ export interface TypeScriptCompilerOptions {
    * Sets the module system for the program.
    * See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
    *
-   * @default "CommonJS"
+   * @default TypeScriptModule.COMMONJS if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModule.NODE16.
    */
-  readonly module?: string;
+  readonly module?: TypeScriptModule;
 
   /**
    * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
    *
-   * @default "node"
+   * @default TypeScriptModuleResolution.NODE if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModuleResolution.NODE16.
    */
   readonly moduleResolution?: TypeScriptModuleResolution;
 
@@ -477,7 +531,8 @@ export interface TypeScriptCompilerOptions {
    * a lower target if your code is deployed to older environments, or a higher target if your
    * code is guaranteed to run in newer environments.
    *
-   * @default "ES2018"
+   * @default "ES2022" if the project's `minNodeVersion` is >= 18, "ES201" if the project's `minNodeVersion` is >= 16,
+   *          otherwise "ES2019".
    */
   readonly target?: string;
 

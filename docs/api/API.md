@@ -488,6 +488,7 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)|This flag controls how `import` works, there are 3 different options.
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
+[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)|Sets the module system for the program.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
 [release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
@@ -18413,9 +18414,9 @@ Name | Type | Description
 **isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or.<br/>__*Default*__: false
 **jsx**?🔹 | <code>[javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc.<br/>__*Default*__: undefined
 **jsxImportSource**?🔹 | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.<br/>__*Default*__: undefined
-**lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: [ "es2018" ]
-**module**?🔹 | <code>string</code> | Sets the module system for the program.<br/>__*Default*__: "CommonJS"
-**moduleResolution**?🔹 | <code>[javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: "node"
+**lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: ["es2023"] if the project's `minNodeVersion` is >= 18, ["es2021"] if the project's `minNodeVersion` is >= 16, otherwise ["es2019"].
+**module**?🔹 | <code>[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)</code> | Sets the module system for the program.<br/>__*Default*__: TypeScriptModule.COMMONJS if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModule.NODE16.
+**moduleResolution**?🔹 | <code>[javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: TypeScriptModuleResolution.NODE if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModuleResolution.NODE16.
 **noEmit**?🔹 | <code>boolean</code> | Do not emit outputs.<br/>__*Default*__: false
 **noEmitOnError**?🔹 | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.<br/>__*Default*__: true
 **noFallthroughCasesInSwitch**?🔹 | <code>boolean</code> | Report errors for fallthrough cases in switch statements.<br/>__*Default*__: true
@@ -18440,7 +18441,7 @@ Name | Type | Description
 **strictNullChecks**?🔹 | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language.<br/>__*Default*__: true
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
 **stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.<br/>__*Default*__: true
-**target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
+**target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2022" if the project's `minNodeVersion` is >= 18, "ES201" if the project's `minNodeVersion` is >= 16, otherwise "ES2019".
 **verbatimModuleSyntax**?🔹 | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
 
@@ -20970,6 +20971,26 @@ Name | Description
 **REACT_NATIVE** 🔹|Keeps all JSX like 'preserve' mode, but output will have a .js extension.
 **REACT_JSX** 🔹|Passes `key` separately from props and always passes `children` as props (since React 17).
 **REACT_JSXDEV** 🔹|Same as `REACT_JSX` with additional debug data.
+
+
+## enum TypeScriptModule 🔹 <a id="projen-javascript-typescriptmodule"></a>
+
+Sets the module system for the program.
+
+Name | Description
+-----|-----
+**NONE** 🔹|
+**COMMONJS** 🔹|
+**AMD** 🔹|
+**UMD** 🔹|
+**SYSTEM** 🔹|
+**ES6** 🔹|Also known as ES2015.
+**ES2015** 🔹|Also known as ES6.
+**ES2020** 🔹|In addition to the base functionality of ES2015/ES6, ES2020 adds support for dynamic imports and import.meta.
+**ES2022** 🔹|In addition to the functionality of ES2020, ES2022 adds support for top level await.
+**ESNEXT** 🔹|
+**NODE16** 🔹|Available from TypeScript 4.7+. Integrates with Node's native ECMAScript Module support. The emitted JavaScript uses either CommonJS or ES2020 output depending on the file extension and the value of the type setting in the nearest package.json. Module resolution also works differently.
+**NODENEXT** 🔹|Available from TypeScript 4.7+. Integrates with Node's native ECMAScript Module support. The emitted JavaScript uses either CommonJS or ES2020 output depending on the file extension and the value of the type setting in the nearest package.json. Module resolution also works differently.
 
 
 ## enum TypeScriptModuleResolution 🔹 <a id="projen-javascript-typescriptmoduleresolution"></a>
