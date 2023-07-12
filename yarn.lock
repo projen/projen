@@ -2284,9 +2284,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.455"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.455.tgz#81fe4353ac970eb971c07088c8da8b7f6280ddc9"
-  integrity sha512-8tgdX0Odl24LtmLwxotpJCVjIndN559AvaOtd67u+2mo+IDsgsTF580NB+uuDCqsHw8yFg53l5+imFV9Fw3cbA==
+  version "1.4.457"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.457.tgz#3fdc7b4f97d628ac6b51e8b4b385befb362fe343"
+  integrity sha512-/g3UyNDmDd6ebeWapmAoiyy+Sy2HyJ+/X8KyvNeHfKRFfHaA2W8oF5fxD5F3tjBDcjpwo0iek6YNgxNXDBoEtA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -6226,9 +6226,9 @@ typescript@5.1.x, typescript@~5.1.6:
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@next:
-  version "5.2.0-dev.20230711"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230711.tgz#6fbedbdd04ffb4eb6e1fe7ac70485a525d5413c7"
-  integrity sha512-Pu1roPsNZOmZvIeoPHiwFqO31X+LQYLXjQgADk/wXu4qZ0/ovCuMVA3+3CYnrvsBecjLU9UN0pC4JFUyvfN6lA==
+  version "5.2.0-dev.20230712"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230712.tgz#6da271394793fd1c1cba26800f43bb8c25825a87"
+  integrity sha512-F/VND6YrBGr8RvnmpFpTDC5sT0Hh5cuXFWurGEhSBjwXodW+POmfGU0uLn+s/Rl0+Yvffpd2WRrpYC7bSDQS/Q==
 
 typescript@~3.9.10:
   version "3.9.10"
