@@ -1491,8 +1491,8 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "node16",
+    "moduleResolution": "node16",
     "target": "ES2021",
     "lib": [
       "es2021"
@@ -2704,8 +2704,8 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "target": "ES2019",
     "lib": [
       "es2019"
@@ -3821,8 +3821,8 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "target": "ES2019",
     "lib": [
       "es2019"
@@ -3862,8 +3862,8 @@ test('hello', () => {
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "target": "ES2019",
     "lib": [
       "es2019"

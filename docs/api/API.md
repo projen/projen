@@ -114,6 +114,7 @@ Name|Description
 [javascript.Prettier](#projen-javascript-prettier)|Represents prettier configuration.
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [javascript.Transform](#projen-javascript-transform)|*No description*
+[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)|Sets the module system for the program.
 [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
 [javascript.TypescriptConfigExtends](#projen-javascript-typescriptconfigextends)|Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
@@ -488,7 +489,6 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)|This flag controls how `import` works, there are 3 different options.
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
-[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)|Sets the module system for the program.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
 [release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
@@ -9715,6 +9715,34 @@ new javascript.Transform(name: string, options?: any)
 
 
 
+## class TypeScriptModule 🔹 <a id="projen-javascript-typescriptmodule"></a>
+
+Sets the module system for the program.
+
+__Submodule__: javascript
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+*static* **AMD**🔹 | <code>string</code> | <span></span>
+*static* **COMMONJS**🔹 | <code>string</code> | <span></span>
+*static* **ES2015**🔹 | <code>string</code> | Also known as ES6.
+*static* **ES2020**🔹 | <code>string</code> | In addition to the base functionality of ES2015/ES6, ES2020 adds support for dynamic imports and import.meta.
+*static* **ES2022**🔹 | <code>string</code> | In addition to the functionality of ES2020, ES2022 adds support for top level await.
+*static* **ES6**🔹 | <code>string</code> | Also known as ES2015.
+*static* **ESNEXT**🔹 | <code>string</code> | <span></span>
+*static* **NODE16**🔹 | <code>string</code> | Available from TypeScript 4.7+. Integrates with Node's native ECMAScript Module support. The emitted JavaScript uses either CommonJS or ES2020 output depending on the file extension and the value of the type setting in the nearest package.json. Module resolution also works differently.
+*static* **NODENEXT**🔹 | <code>string</code> | Available from TypeScript 4.7+. Integrates with Node's native ECMAScript Module support. The emitted JavaScript uses either CommonJS or ES2020 output depending on the file extension and the value of the type setting in the nearest package.json. Module resolution also works differently.
+*static* **NONE**🔹 | <code>string</code> | <span></span>
+*static* **SYSTEM**🔹 | <code>string</code> | <span></span>
+*static* **UMD**🔹 | <code>string</code> | <span></span>
+
+
+
 ## class TypescriptConfig 🔹 <a id="projen-javascript-typescriptconfig"></a>
 
 
@@ -18415,7 +18443,7 @@ Name | Type | Description
 **jsx**?🔹 | <code>[javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc.<br/>__*Default*__: undefined
 **jsxImportSource**?🔹 | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.<br/>__*Default*__: undefined
 **lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: ["es2023"] if the project's `minNodeVersion` is >= 18, ["es2021"] if the project's `minNodeVersion` is >= 16, otherwise ["es2019"].
-**module**?🔹 | <code>[javascript.TypeScriptModule](#projen-javascript-typescriptmodule)</code> | Sets the module system for the program.<br/>__*Default*__: TypeScriptModule.COMMONJS if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModule.NODE16.
+**module**?🔹 | <code>string</code> | Sets the module system for the program.<br/>__*Default*__: TypeScriptModule.COMMONJS if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModule.NODE16.
 **moduleResolution**?🔹 | <code>[javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: TypeScriptModuleResolution.NODE if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModuleResolution.NODE16.
 **noEmit**?🔹 | <code>boolean</code> | Do not emit outputs.<br/>__*Default*__: false
 **noEmitOnError**?🔹 | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.<br/>__*Default*__: true
@@ -20971,26 +20999,6 @@ Name | Description
 **REACT_NATIVE** 🔹|Keeps all JSX like 'preserve' mode, but output will have a .js extension.
 **REACT_JSX** 🔹|Passes `key` separately from props and always passes `children` as props (since React 17).
 **REACT_JSXDEV** 🔹|Same as `REACT_JSX` with additional debug data.
-
-
-## enum TypeScriptModule 🔹 <a id="projen-javascript-typescriptmodule"></a>
-
-Sets the module system for the program.
-
-Name | Description
------|-----
-**NONE** 🔹|
-**COMMONJS** 🔹|
-**AMD** 🔹|
-**UMD** 🔹|
-**SYSTEM** 🔹|
-**ES6** 🔹|Also known as ES2015.
-**ES2015** 🔹|Also known as ES6.
-**ES2020** 🔹|In addition to the base functionality of ES2015/ES6, ES2020 adds support for dynamic imports and import.meta.
-**ES2022** 🔹|In addition to the functionality of ES2020, ES2022 adds support for top level await.
-**ESNEXT** 🔹|
-**NODE16** 🔹|Available from TypeScript 4.7+. Integrates with Node's native ECMAScript Module support. The emitted JavaScript uses either CommonJS or ES2020 output depending on the file extension and the value of the type setting in the nearest package.json. Module resolution also works differently.
-**NODENEXT** 🔹|Available from TypeScript 4.7+. Integrates with Node's native ECMAScript Module support. The emitted JavaScript uses either CommonJS or ES2020 output depending on the file extension and the value of the type setting in the nearest package.json. Module resolution also works differently.
 
 
 ## enum TypeScriptModuleResolution 🔹 <a id="projen-javascript-typescriptmoduleresolution"></a>

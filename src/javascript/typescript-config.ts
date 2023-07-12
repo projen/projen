@@ -47,28 +47,28 @@ export enum TypeScriptModuleResolution {
    *
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic
    */
-  CLASSIC = "Classic",
+  CLASSIC = "classic",
 
   /**
    * Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
    *
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#node
    */
-  NODE = "Node",
+  NODE = "node",
 
   /**
    * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
    *
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
-  NODE16 = "Node16",
+  NODE16 = "node16",
 
   /**
    * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
    *
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
-  NODE_NEXT = "NodeNext",
+  NODE_NEXT = "nodenext",
 
   /**
    * Resolution strategy which attempts to mimic resolution patterns of modern bundlers; from TypeScript 5.0 onwards.
@@ -78,49 +78,36 @@ export enum TypeScriptModuleResolution {
   BUNDLER = "bundler",
 }
 
-/**
- * Sets the module system for the program.
- *
- * @see https://www.typescriptlang.org/docs/handbook/modules.html
- */
-export enum TypeScriptModule {
-  NONE = "none",
+export class TypeScriptModule {
+  public static readonly NONE = "none";
 
-  COMMONJS = "CommonJS",
+  public static readonly COMMONJS = "commonjs";
 
-  AMD = "AMD",
+  public static readonly AMD = "amd";
 
-  UMD = "UMD",
+  public static readonly UMD = "umd";
 
-  SYSTEM = "System",
+  public static readonly SYSTEM = "system";
 
   /** Also known as ES2015 */
-  ES6 = "ES6",
+  public static readonly ES6 = "es6";
 
   /** Also known as ES6 */
-  ES2015 = "ES2015",
+  public static readonly ES2015 = "es2015";
 
   /**
    * In addition to the base functionality of ES2015/ES6, ES2020 adds support
    * for dynamic imports and import.meta.
    */
-  ES2020 = "ES2020",
+  public static readonly ES2020 = "es2020";
 
   /**
    * In addition to the functionality of ES2020, ES2022 adds support for top
    * level await.
    */
-  ES2022 = "ES2022",
+  public static readonly ES2022 = "es2022";
 
-  ESNEXT = "ESNext",
-
-  /**
-   * Available from TypeScript 4.7+. Integrates with Node's native ECMAScript
-   * Module support. The emitted JavaScript uses either CommonJS or ES2020
-   * output depending on the file extension and the value of the type setting
-   * in the nearest package.json. Module resolution also works differently.
-   */
-  NODE16 = "Node16",
+  public static readonly ESNEXT = "esnext";
 
   /**
    * Available from TypeScript 4.7+. Integrates with Node's native ECMAScript
@@ -128,7 +115,17 @@ export enum TypeScriptModule {
    * output depending on the file extension and the value of the type setting
    * in the nearest package.json. Module resolution also works differently.
    */
-  NODENEXT = "NodeNext",
+  public static readonly NODE16 = "node16";
+
+  /**
+   * Available from TypeScript 4.7+. Integrates with Node's native ECMAScript
+   * Module support. The emitted JavaScript uses either CommonJS or ES2020
+   * output depending on the file extension and the value of the type setting
+   * in the nearest package.json. Module resolution also works differently.
+   */
+  public static readonly NODENEXT = "nodenext";
+
+  private constructor() { }
 }
 
 /**
@@ -356,12 +353,12 @@ export interface TypeScriptCompilerOptions {
   readonly lib?: string[];
 
   /**
-   * Sets the module system for the program.
+   * Sets the module system for the program. The `TypeScriptModule` class exposes constants for typical values.
    * See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
    *
    * @default TypeScriptModule.COMMONJS if the project's `minNodeVersion` is less than 16, otherwise TypeScriptModule.NODE16.
    */
-  readonly module?: TypeScriptModule;
+  readonly module?: string;
 
   /**
    * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".

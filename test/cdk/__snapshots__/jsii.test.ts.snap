@@ -1472,8 +1472,8 @@ test('hello', () => {
       "lib": [
         "es2019",
       ],
-      "module": "CommonJS",
-      "moduleResolution": "Node",
+      "module": "commonjs",
+      "moduleResolution": "node",
       "noEmitOnError": false,
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
