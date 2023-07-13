@@ -64,6 +64,7 @@ export class PullRequestLint extends Component {
     if (options.semanticTitle ?? true) {
       const opts = options.semanticTitleOptions ?? {};
       const types = opts.types ?? ["feat", "fix", "chore"];
+      const githubBaseUrl = options.githubBaseUrl ?? "${{ github.action_url }}";
 
       const validateJob: Job = {
         name: "Validate PR title",
@@ -80,7 +81,7 @@ export class PullRequestLint extends Component {
             with: {
               types: types.join("\n"),
               requireScope: opts.requireScope ?? false,
-              githubBaseUrl: options.githubBaseUrl ?? undefined,
+              githubBaseUrl: githubBaseUrl,
             },
           },
         ],
