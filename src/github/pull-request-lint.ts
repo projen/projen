@@ -74,7 +74,7 @@ export class PullRequestLint extends Component {
             with: {
               types: types.join("\n"),
               requireScope: opts.requireScope ?? false,
-              githubBaseUrl: "${{ github.action_url }}"
+              githubBaseUrl: "${{ github.action_url }}",
             },
           },
         ],
