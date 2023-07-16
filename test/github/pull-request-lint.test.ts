@@ -76,14 +76,12 @@ test("with github base url", () => {
   const project = createProject();
 
   // WHEN
-  new PullRequestLint(project.github!, {
-    githubBaseUrl: "https://github.myorg.com/api/v3",
-  });
+  new PullRequestLint(project.github!, {});
 
   // THEN
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-    "githubBaseUrl: https://github.myorg.com/api/v3"
+    "githubBaseUrl: ${{ github.action_url }}"
   );
 });
 
