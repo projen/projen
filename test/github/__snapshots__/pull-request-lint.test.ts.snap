@@ -29,7 +29,7 @@ jobs:
             fix
             chore
           requireScope: false
-          githubBaseUrl: \${{ github.action_url }}
+          githubBaseUrl: \${{ github.api_url }}
 "
 `;
 
@@ -61,7 +61,7 @@ jobs:
             feat
             fix
           requireScope: false
-          githubBaseUrl: \${{ github.action_url }}
+          githubBaseUrl: \${{ github.api_url }}
 "
 `;
 
@@ -94,6 +94,6 @@ jobs:
             fix
             chore
           requireScope: true
-          githubBaseUrl: \${{ github.action_url }}
+          githubBaseUrl: \${{ github.api_url }}
 "
 `;

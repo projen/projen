@@ -81,7 +81,7 @@ test("with github base url", () => {
   // THEN
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-    "githubBaseUrl: ${{ github.action_url }}"
+    "githubBaseUrl: ${{ github.api_url }}"
   );
 });
 
