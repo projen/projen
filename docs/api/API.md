@@ -9894,8 +9894,10 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
   * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
   * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
+  * **semanticCommit** (<code>string</code>)  The semantic commit type. __*Default*__: 'chore'
   * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
+  * **types** (<code>Array<[DependencyType](#projen-dependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
 
@@ -18474,8 +18476,10 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
 **include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
 **pullRequestTitle**?🔹 | <code>string</code> | Title of the pull request to use (should be all lower-case).<br/>__*Default*__: "upgrade dependencies"
+**semanticCommit**?🔹 | <code>string</code> | The semantic commit type.<br/>__*Default*__: 'chore'
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
+**types**?🔹 | <code>Array<[DependencyType](#projen-dependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
 **workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
 **workflowOptions**?🔹 | <code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
 
@@ -20476,6 +20480,7 @@ Name | Description
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
 **OVERRIDE** 🔹|Transient dependency that needs to be overwritten.
+**OPTIONAL** 🔹|An optional dependency that may be used at runtime if available, but is not required.
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>

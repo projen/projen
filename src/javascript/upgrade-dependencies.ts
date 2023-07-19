@@ -76,11 +76,25 @@ export interface UpgradeDependenciesOptions {
   readonly pullRequestTitle?: string;
 
   /**
+   * The semantic commit type.
+   *
+   * @default 'chore'
+   */
+  readonly semanticCommit?: string;
+
+  /**
    * Add Signed-off-by line by the committer at the end of the commit log message.
    *
    * @default true
    */
   readonly signoff?: boolean;
+
+  /**
+   * Specify which dependency types the upgrade should operate on.
+   *
+   * @default - All dependency types.
+   */
+  readonly types?: DependencyType[];
 }
 
 /**
@@ -223,7 +237,45 @@ export class UpgradeDependencies extends Component {
       ),
     });
 
-    for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
+    const depTypes = this.options.types ?? [
+      DependencyType.BUILD,
+      DependencyType.BUNDLED,
+      DependencyType.DEVENV,
+      DependencyType.PEER,
+      DependencyType.RUNTIME,
+      DependencyType.TEST,
+      DependencyType.OPTIONAL,
+    ];
+
+    const npmDeps = new Set();
+
+    for (const dep of depTypes) {
+      switch (dep) {
+        case DependencyType.BUILD:
+        case DependencyType.TEST:
+        case DependencyType.DEVENV:
+          npmDeps.add("dev");
+          break;
+        case DependencyType.PEER:
+          npmDeps.add("peer");
+          break;
+        case DependencyType.BUNDLED:
+          npmDeps.add("bundle");
+          break;
+        case DependencyType.RUNTIME:
+          npmDeps.add("prod");
+          break;
+        case DependencyType.OPTIONAL:
+          npmDeps.add("optional");
+          break;
+        default:
+          throw new Error(
+            `Unsupported dependency type '${dep.valueOf()}' for upgrade dependencies task`
+          );
+      }
+    }
+
+    for (const dep of npmDeps) {
       const ncuCommand = [
         "npm-check-updates",
         "--dep",
@@ -346,6 +398,8 @@ export class UpgradeDependencies extends Component {
       this.options.workflowOptions?.projenCredentials ??
       workflow.projenCredentials;
 
+    const semanticCommit = this.options.semanticCommit ?? "chore";
+
     return {
       job: WorkflowJobs.pullRequestFromPatch({
         patch: {
@@ -356,7 +410,7 @@ export class UpgradeDependencies extends Component {
         workflowName: workflow.name,
         credentials,
         runsOn: this.options.workflowOptions?.runsOn,
-        pullRequestTitle: `chore(deps): ${this.pullRequestTitle}`,
+        pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,
         assignees: this.options.workflowOptions?.assignees,

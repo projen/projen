@@ -1162,7 +1162,7 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
           "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'"
@@ -1171,7 +1171,7 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
           "exec": "yarn install --check-files"
@@ -2238,7 +2238,7 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
           "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'"
@@ -2247,7 +2247,7 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
           "exec": "yarn install --check-files"
@@ -3372,7 +3372,7 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep dev --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
         },
         {
           "exec": "npm-check-updates --dep peer --upgrade --target=minor"
@@ -3381,7 +3381,7 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep prod --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
         },
         {
           "exec": "yarn install --check-files"
@@ -4502,7 +4502,7 @@ resolution-mode=highest
           "exec": "npm-check-updates --dep dev --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
         },
         {
           "exec": "npm-check-updates --dep peer --upgrade --target=minor"
@@ -4511,7 +4511,7 @@ resolution-mode=highest
           "exec": "npm-check-updates --dep prod --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
