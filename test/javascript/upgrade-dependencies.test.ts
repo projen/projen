@@ -9,6 +9,18 @@ import {
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot } from "../util";
 
+test("allows configuring semantic commit type", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      semanticCommit: "feat",
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
 test("allows configuring specific dependency types", () => {
   const project = createProject({
     deps: ["some-dep"],

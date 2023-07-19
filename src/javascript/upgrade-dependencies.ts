@@ -106,6 +106,13 @@ export interface UpgradeDependenciesOptions {
   readonly pullRequestTitle?: string;
 
   /**
+   * The semantic commit type.
+   *
+   * @default 'chore'
+   */
+  readonly semanticCommit?: string;
+
+  /**
    * Add Signed-off-by line by the committer at the end of the commit log message.
    *
    * @default true
@@ -391,6 +398,8 @@ export class UpgradeDependencies extends Component {
       this.options.workflowOptions?.projenCredentials ??
       workflow.projenCredentials;
 
+    const semanticCommit = this.options.semanticCommit ?? "chore";
+
     return {
       job: WorkflowJobs.pullRequestFromPatch({
         patch: {
@@ -401,7 +410,7 @@ export class UpgradeDependencies extends Component {
         workflowName: workflow.name,
         credentials,
         runsOn: this.options.workflowOptions?.runsOn,
-        pullRequestTitle: `chore(deps): ${this.pullRequestTitle}`,
+        pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,
         assignees: this.options.workflowOptions?.assignees,
