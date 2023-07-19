@@ -9895,6 +9895,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
   * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
   * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
+  * **semanticCommit** (<code>string</code>)  The semantic commit type. __*Default*__: 'chore'
   * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
   * **types** (<code>Array<[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
@@ -18476,6 +18477,7 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
 **include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
 **pullRequestTitle**?🔹 | <code>string</code> | Title of the pull request to use (should be all lower-case).<br/>__*Default*__: "upgrade dependencies"
+**semanticCommit**?🔹 | <code>string</code> | The semantic commit type.<br/>__*Default*__: 'chore'
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
 **types**?🔹 | <code>Array<[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
