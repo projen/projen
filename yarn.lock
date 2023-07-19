@@ -1672,9 +1672,9 @@ camelcase@^7.0.1:
   integrity sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==
 
 caniuse-lite@^1.0.30001503:
-  version "1.0.30001516"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001516.tgz#621b1be7d85a8843ee7d210fd9d87b52e3daab3a"
-  integrity sha512-Wmec9pCBY8CWbmI4HsjBeQLqDTqV91nFVR83DnZpYyRnPI1wePDsTg0bGLPC5VU/3OIZV1fmxEea1b+tFKe86g==
+  version "1.0.30001517"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001517.tgz#90fabae294215c3495807eb24fc809e11dc2f0a8"
+  integrity sha512-Vdhm5S11DaFVLlyiKu4hiUTkpZu+y1KA/rZZqVQfOD5YdDT/eQKlkt7NaE0WGOFgX32diqt9MiP9CAiFeRklaA==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2296,9 +2296,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.463"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.463.tgz#8eb04355f24fef5c8097661d14e143f6d8554055"
-  integrity sha512-fT3hvdUWLjDbaTGzyOjng/CQhQJSQP8ThO3XZAoaxHvHo2kUXiRQVMj9M235l8uDFiNPsPa6KHT1p3RaR6ugRw==
+  version "1.4.464"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.464.tgz#2f94bad78dff34e527aacbfc5d0b1a33cf046507"
+  integrity sha512-guZ84yoou4+ILNdj0XEbmGs6DEWj6zpVOWYpY09GU66yEb0DSYvP/biBPzHn0GuW/3RC/pnaYNUWlQE1fJYtgA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -6282,9 +6282,9 @@ typescript@5.1.x, typescript@~5.1.6:
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@next:
-  version "5.2.0-dev.20230718"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230718.tgz#8c60b2f6807b3f8b2db47980ee6c73dea1f45e42"
-  integrity sha512-ED1Vm+2UzdbtKui+0lVswEuAX94fQXeoghXyy/+aTNers8X/WB81r5sFg6nA4e43nVQ2MP/Qsa7/XJRFuHR+Cg==
+  version "5.2.0-dev.20230719"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230719.tgz#5755b1f2bcb8b3c0b64d5ec56a6d2f346bacce9c"
+  integrity sha512-GOt7vOkrLjQ7hGNUO+9VyV4nf7/gQz3NM37f6r8RVeXY1Wu+McCi7IO94ZuQWYUYrO+h/WjoTSk8HjhEVhEESQ==
 
 typescript@~3.9.10:
   version "3.9.10"
