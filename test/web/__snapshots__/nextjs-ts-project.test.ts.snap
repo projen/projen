@@ -542,7 +542,7 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor",
@@ -551,7 +551,7 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           {
             "exec": "yarn install --check-files",

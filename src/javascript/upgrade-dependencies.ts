@@ -25,36 +25,6 @@ const CREATE_PATCH_STEP_ID = "create_patch";
 const PATCH_CREATED_OUTPUT = "patch_created";
 
 /**
- * Dependency Types.
- */
-export enum NodeDependencyType {
-  /**
-   * `devDependencies`
-   */
-  DEV = "dev",
-
-  /**
-   * `optionalDependencies`
-   */
-  OPTIONAL = "optional",
-
-  /**
-   * `peerDependencies`
-   */
-  PEER = "peer",
-
-  /**
-   * `dependencies`
-   */
-  PROD = "prod",
-
-  /**
-   * `bundledDependencies`
-   */
-  BUNDLE = "bundle",
-}
-
-/**
  * Options for `UpgradeDependencies`.
  */
 export interface UpgradeDependenciesOptions {
@@ -124,7 +94,7 @@ export interface UpgradeDependenciesOptions {
    *
    * @default - All dependency types.
    */
-  readonly types?: NodeDependencyType[];
+  readonly types?: DependencyType[];
 }
 
 /**
@@ -268,18 +238,48 @@ export class UpgradeDependencies extends Component {
     });
 
     const depTypes = this.options.types ?? [
-      NodeDependencyType.DEV,
-      NodeDependencyType.OPTIONAL,
-      NodeDependencyType.PEER,
-      NodeDependencyType.PROD,
-      NodeDependencyType.BUNDLE,
+      DependencyType.BUILD,
+      DependencyType.BUNDLED,
+      DependencyType.DEVENV,
+      DependencyType.PEER,
+      DependencyType.RUNTIME,
+      DependencyType.TEST,
+      DependencyType.OPTIONAL,
     ];
 
+    const npmDeps = new Set();
+
     for (const dep of depTypes) {
+      switch (dep) {
+        case DependencyType.BUILD:
+        case DependencyType.TEST:
+        case DependencyType.DEVENV:
+          npmDeps.add("dev");
+          break;
+        case DependencyType.PEER:
+          npmDeps.add("peer");
+          break;
+        case DependencyType.BUNDLED:
+          npmDeps.add("bundle");
+          break;
+        case DependencyType.RUNTIME:
+          npmDeps.add("prod");
+          break;
+        case DependencyType.OPTIONAL:
+          npmDeps.add("optional");
+          break;
+        default:
+          throw new Error(
+            `Unsupported dependency type '${dep.valueOf()}' for upgrade dependencies task`
+          );
+      }
+    }
+
+    for (const dep of npmDeps) {
       const ncuCommand = [
         "npm-check-updates",
         "--dep",
-        dep.valueOf(),
+        dep,
         "--upgrade",
         "--target=minor",
       ];

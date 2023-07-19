@@ -481,7 +481,6 @@ Name|Description
 [javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
 [javascript.EndOfLine](#projen-javascript-endofline)|*No description*
 [javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|*No description*
-[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)|Dependency Types.
 [javascript.NodePackageManager](#projen-javascript-nodepackagemanager)|The node package manager to use.
 [javascript.NpmAccess](#projen-javascript-npmaccess)|Npm package access level.
 [javascript.ProseWrap](#projen-javascript-prosewrap)|*No description*
@@ -9898,7 +9897,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
   * **semanticCommit** (<code>string</code>)  The semantic commit type. __*Default*__: 'chore'
   * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
-  * **types** (<code>Array<[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
+  * **types** (<code>Array<[DependencyType](#projen-dependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
 
@@ -18480,7 +18479,7 @@ Name | Type | Description
 **semanticCommit**?🔹 | <code>string</code> | The semantic commit type.<br/>__*Default*__: 'chore'
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
-**types**?🔹 | <code>Array<[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
+**types**?🔹 | <code>Array<[DependencyType](#projen-dependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
 **workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
 **workflowOptions**?🔹 | <code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
 
@@ -20481,6 +20480,7 @@ Name | Description
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
 **OVERRIDE** 🔹|Transient dependency that needs to be overwritten.
+**OPTIONAL** 🔹|An optional dependency that may or may not be installed by the package manager.
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
@@ -20896,19 +20896,6 @@ Name | Description
 **CSS** 🔹|Respect the default value of CSS display property.
 **IGNORE** 🔹|Whitespaces are considered insignificant.
 **STRICT** 🔹|Whitespaces are considered significant.
-
-
-## enum NodeDependencyType 🔹 <a id="projen-javascript-nodedependencytype"></a>
-
-Dependency Types.
-
-Name | Description
------|-----
-**DEV** 🔹|`devDependencies`.
-**OPTIONAL** 🔹|`optionalDependencies`.
-**PEER** 🔹|`peerDependencies`.
-**PROD** 🔹|`dependencies`.
-**BUNDLE** 🔹|`bundledDependencies`.
 
 
 ## enum NodePackageManager 🔹 <a id="projen-javascript-nodepackagemanager"></a>

@@ -1096,7 +1096,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
             "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'",
@@ -1105,7 +1105,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'",
           },
           {
             "exec": "yarn install --check-files",

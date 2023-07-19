@@ -1,9 +1,9 @@
 import * as yaml from "yaml";
+import { DependencyType } from "../../src";
 import { GithubCredentials, workflows } from "../../src/github";
 import {
   NodeProject,
   NodeProjectOptions,
-  NodeDependencyType,
   UpgradeDependenciesSchedule,
 } from "../../src/javascript";
 import { TaskRuntime } from "../../src/task-runtime";
@@ -17,6 +17,8 @@ test("allows configuring semantic commit type", () => {
     },
   });
 
+  project.deps.addDependency("x", DependencyType.DEVENV);
+
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
@@ -25,7 +27,7 @@ test("allows configuring specific dependency types", () => {
   const project = createProject({
     deps: ["some-dep"],
     depsUpgradeOptions: {
-      types: [NodeDependencyType.PROD, NodeDependencyType.DEV],
+      types: [DependencyType.RUNTIME, DependencyType.DEVENV],
     },
   });
 
