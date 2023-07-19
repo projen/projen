@@ -481,9 +481,9 @@ Name|Description
 [javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
 [javascript.EndOfLine](#projen-javascript-endofline)|*No description*
 [javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|*No description*
+[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)|Dependency Types.
 [javascript.NodePackageManager](#projen-javascript-nodepackagemanager)|The node package manager to use.
 [javascript.NpmAccess](#projen-javascript-npmaccess)|Npm package access level.
-[javascript.NpmDependencyType](#projen-javascript-npmdependencytype)|Dependency Types.
 [javascript.ProseWrap](#projen-javascript-prosewrap)|*No description*
 [javascript.QuoteProps](#projen-javascript-quoteprops)|*No description*
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
@@ -9892,12 +9892,12 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  *No description*
-  * **depTypes** (<code>Array<[javascript.NpmDependencyType](#projen-javascript-npmdependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
   * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
   * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
   * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
+  * **types** (<code>Array<[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
 
@@ -18473,12 +18473,12 @@ Options for `UpgradeDependencies`.
 
 Name | Type | Description 
 -----|------|-------------
-**depTypes**?🔹 | <code>Array<[javascript.NpmDependencyType](#projen-javascript-npmdependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
 **exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
 **include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
 **pullRequestTitle**?🔹 | <code>string</code> | Title of the pull request to use (should be all lower-case).<br/>__*Default*__: "upgrade dependencies"
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
+**types**?🔹 | <code>Array<[javascript.NodeDependencyType](#projen-javascript-nodedependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
 **workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
 **workflowOptions**?🔹 | <code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
 
@@ -20896,6 +20896,19 @@ Name | Description
 **STRICT** 🔹|Whitespaces are considered significant.
 
 
+## enum NodeDependencyType 🔹 <a id="projen-javascript-nodedependencytype"></a>
+
+Dependency Types.
+
+Name | Description
+-----|-----
+**DEV** 🔹|`devDependencies`.
+**OPTIONAL** 🔹|`optionalDependencies`.
+**PEER** 🔹|`peerDependencies`.
+**PROD** 🔹|`dependencies`.
+**BUNDLE** 🔹|`bundledDependencies`.
+
+
 ## enum NodePackageManager 🔹 <a id="projen-javascript-nodepackagemanager"></a>
 
 The node package manager to use.
@@ -20916,19 +20929,6 @@ Name | Description
 -----|-----
 **PUBLIC** 🔹|Package is public.
 **RESTRICTED** 🔹|Package can only be accessed with credentials.
-
-
-## enum NpmDependencyType 🔹 <a id="projen-javascript-npmdependencytype"></a>
-
-Dependency Types.
-
-Name | Description
------|-----
-**DEV** 🔹|`devDependencies`.
-**OPTIONAL** 🔹|`optionalDependencies`.
-**PEER** 🔹|`peerDependencies`.
-**PROD** 🔹|`dependencies`.
-**BUNDLE** 🔹|`bundledDependencies`.
 
 
 ## enum ProseWrap 🔹 <a id="projen-javascript-prosewrap"></a>
