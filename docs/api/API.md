@@ -20480,7 +20480,7 @@ Name | Description
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
 **OVERRIDE** 🔹|Transient dependency that needs to be overwritten.
-**OPTIONAL** 🔹|An optional dependency that may or may not be installed by the package manager.
+**OPTIONAL** 🔹|An optional dependency that may be used at runtime if available, but is not required.
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
