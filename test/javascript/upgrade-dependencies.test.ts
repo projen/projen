@@ -3,10 +3,28 @@ import { GithubCredentials, workflows } from "../../src/github";
 import {
   NodeProject,
   NodeProjectOptions,
+  NodeDependencyType,
   UpgradeDependenciesSchedule,
 } from "../../src/javascript";
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot } from "../util";
+
+test("allows configuring specific dependency types", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      types: [NodeDependencyType.PROD, NodeDependencyType.DEV],
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
+    "npm-check-updates --dep prod --upgrade --target=minor"
+  );
+  expect(tasks.upgrade.steps[2].exec).toStrictEqual(
+    "npm-check-updates --dep dev --upgrade --target=minor"
+  );
+});
 
 test("upgrades command includes all dependencies", () => {
   const project = createProject({

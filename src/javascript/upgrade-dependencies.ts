@@ -25,6 +25,36 @@ const CREATE_PATCH_STEP_ID = "create_patch";
 const PATCH_CREATED_OUTPUT = "patch_created";
 
 /**
+ * Dependency Types.
+ */
+export enum NodeDependencyType {
+  /**
+   * `devDependencies`
+   */
+  DEV = "dev",
+
+  /**
+   * `optionalDependencies`
+   */
+  OPTIONAL = "optional",
+
+  /**
+   * `peerDependencies`
+   */
+  PEER = "peer",
+
+  /**
+   * `dependencies`
+   */
+  PROD = "prod",
+
+  /**
+   * `bundledDependencies`
+   */
+  BUNDLE = "bundle",
+}
+
+/**
  * Options for `UpgradeDependencies`.
  */
 export interface UpgradeDependenciesOptions {
@@ -81,6 +111,13 @@ export interface UpgradeDependenciesOptions {
    * @default true
    */
   readonly signoff?: boolean;
+
+  /**
+   * Specify which dependency types the upgrade should operate on.
+   *
+   * @default - All dependency types.
+   */
+  readonly types?: NodeDependencyType[];
 }
 
 /**
@@ -223,11 +260,19 @@ export class UpgradeDependencies extends Component {
       ),
     });
 
-    for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
+    const depTypes = this.options.types ?? [
+      NodeDependencyType.DEV,
+      NodeDependencyType.OPTIONAL,
+      NodeDependencyType.PEER,
+      NodeDependencyType.PROD,
+      NodeDependencyType.BUNDLE,
+    ];
+
+    for (const dep of depTypes) {
       const ncuCommand = [
         "npm-check-updates",
         "--dep",
-        dep,
+        dep.valueOf(),
         "--upgrade",
         "--target=minor",
       ];
