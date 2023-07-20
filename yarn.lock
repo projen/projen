@@ -892,17 +892,24 @@
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
 
-"@sigstore/protobuf-specs@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@sigstore/protobuf-specs/-/protobuf-specs-0.1.0.tgz#957cb64ea2f5ce527cc9cf02a096baeb0d2b99b4"
-  integrity sha512-a31EnjuIDSX8IXBUib3cYLDRlPMU36AWX4xS8ysLaNu4ZzUesDiPt83pgrW2X1YLMe5L2HbDyaKK5BrL4cNKaQ==
-
-"@sigstore/tuf@^1.0.1":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@sigstore/tuf/-/tuf-1.0.2.tgz#acbb2c8399fb03aca0c90fa1dc1934bda4160623"
-  integrity sha512-vjwcYePJzM01Ha6oWWZ9gNcdIgnzyFxfqfWzph483DPJTH8Tb7f7bQRRll3CYVkyH56j0AgcPAcl6Vg95DPF+Q==
+"@sigstore/bundle@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@sigstore/bundle/-/bundle-1.0.0.tgz#2f2f4867f434760f4bc6f4b4bbccbaecd4143bc3"
+  integrity sha512-yLvrWDOh6uMOUlFCTJIZEnwOT9Xte7NPXUqVexEKGSF5XtBAuSg5du0kn3dRR0p47a4ah10Y0mNt8+uyeQXrBQ==
   dependencies:
-    "@sigstore/protobuf-specs" "^0.1.0"
+    "@sigstore/protobuf-specs" "^0.2.0"
+
+"@sigstore/protobuf-specs@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@sigstore/protobuf-specs/-/protobuf-specs-0.2.0.tgz#5801b2a4d10afe1577be6133be6b132b5677c18c"
+  integrity sha512-8ZhZKAVfXjIspDWwm3D3Kvj0ddbJ0HqDZ/pOs5cx88HpT8mVsotFrg7H1UMnXOuDHz6Zykwxn4mxG3QLuN+RUg==
+
+"@sigstore/tuf@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@sigstore/tuf/-/tuf-1.0.3.tgz#2a65986772ede996485728f027b0514c0b70b160"
+  integrity sha512-2bRovzs0nJZFlCN3rXirE4gwxCn97JNjMmwpecqlbgV9WcxX7WRuIrgzx/X7Ib7MYRbyUTpBYE0s2x6AmZXnlg==
+  dependencies:
+    "@sigstore/protobuf-specs" "^0.2.0"
     tuf-js "^1.1.7"
 
 "@sinclair/typebox@^0.27.8":
@@ -1200,9 +1207,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@xmldom/xmldom@^0.8.8", "@xmldom/xmldom@^0.8.9":
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.9.tgz#b6ef7457e826be8049667ae673eda7876eb049be"
-  integrity sha512-4VSbbcMoxc4KLjb1gs96SRmi7w4h1SF+fCoiK0XaQX62buCc1G5d0DC5bJ9xJBNPDSVCmIrcl8BiYxzjrqaaJA==
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.10.tgz#a1337ca426aa61cef9fe15b5b28e340a72f6fa99"
+  integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
 
 JSONStream@^1.0.4:
   version "1.3.5"
@@ -2296,9 +2303,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.464"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.464.tgz#2f94bad78dff34e527aacbfc5d0b1a33cf046507"
-  integrity sha512-guZ84yoou4+ILNdj0XEbmGs6DEWj6zpVOWYpY09GU66yEb0DSYvP/biBPzHn0GuW/3RC/pnaYNUWlQE1fJYtgA==
+  version "1.4.466"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.466.tgz#17193d70f203da3d52a89c653b8d89f47a51d79d"
+  integrity sha512-TSkRvbXRXD8BwhcGlZXDsbI2lRoP8dvqR7LQnqQNk9KxXBc4tG8O+rTuXgTyIpEdiqSGKEBSqrxdqEntnjNncA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5712,12 +5719,13 @@ signal-exit@^4.0.1:
   integrity sha512-MY2/qGx4enyjprQnFaZsHib3Yadh3IXyV2C321GY0pjGfVBu4un0uDJkwgdxqO+Rdx8JMT8IfJIRwbYVz3Ob3Q==
 
 sigstore@^1.3.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/sigstore/-/sigstore-1.7.0.tgz#9186e6c8ce1ab0cba5d97b414212d40f0a01564e"
-  integrity sha512-KP7QULhWdlu3hlp+jw2EvgWKlOGOY9McLj/jrchLjHNlNPK0KWIwF919cbmOp6QiKXLmPijR2qH/5KYWlbtG9Q==
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/sigstore/-/sigstore-1.8.0.tgz#f790120697fa7c89f4418598ce59e638ff680aa5"
+  integrity sha512-ogU8qtQ3VFBawRJ8wjsBEX/vIFeHuGs1fm4jZtjWQwjo8pfAt7T/rh+udlAN4+QUe0IzA8qRSc/YZ7dHP6kh+w==
   dependencies:
-    "@sigstore/protobuf-specs" "^0.1.0"
-    "@sigstore/tuf" "^1.0.1"
+    "@sigstore/bundle" "^1.0.0"
+    "@sigstore/protobuf-specs" "^0.2.0"
+    "@sigstore/tuf" "^1.0.3"
     make-fetch-happen "^11.0.1"
 
 sisteransi@^1.0.5:
@@ -6282,9 +6290,9 @@ typescript@5.1.x, typescript@~5.1.6:
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@next:
-  version "5.2.0-dev.20230719"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230719.tgz#5755b1f2bcb8b3c0b64d5ec56a6d2f346bacce9c"
-  integrity sha512-GOt7vOkrLjQ7hGNUO+9VyV4nf7/gQz3NM37f6r8RVeXY1Wu+McCi7IO94ZuQWYUYrO+h/WjoTSk8HjhEVhEESQ==
+  version "5.2.0-dev.20230720"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.0-dev.20230720.tgz#9eb5d0d5a9b935d8d6b496701cfff09d1e6f1bde"
+  integrity sha512-uZPSzgA2ZfMYqCafPbJ67YLwiVXeo93rT2iackGNerTEFs7wRBr2ENVRBIP33g5xCV0fFqN+e0l4oLvQjCZUKw==
 
 typescript@~3.9.10:
   version "3.9.10"
