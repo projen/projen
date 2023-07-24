@@ -1,4 +1,4 @@
-import * as yaml from "yaml";
+import * as YAML from "yaml";
 import { DependencyType } from "../../src";
 import { GithubCredentials, workflows } from "../../src/github";
 import {
@@ -111,7 +111,7 @@ test("upgrade workflow can be overwritten", () => {
     ?.addOverride("hello", "world");
 
   const snapshot = synthSnapshot(project);
-  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  const upgrade = YAML.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.hello).toStrictEqual("world");
 });
 
@@ -256,7 +256,7 @@ test("git identity can be customized", () => {
   });
 
   const snapshot = synthSnapshot(project);
-  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  const upgrade = YAML.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.jobs.pr.steps[3]).toEqual({
     name: "Set git identity",
     run: [
@@ -276,7 +276,7 @@ test("github runner can be customized", () => {
   });
 
   const snapshot = synthSnapshot(project);
-  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  const upgrade = YAML.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.jobs.upgrade["runs-on"]).toEqual("self-hosted");
   expect(upgrade.jobs.pr["runs-on"]).toEqual("self-hosted");
 });
@@ -292,7 +292,7 @@ test("labels and assignees can be customized", () => {
   });
 
   const snapshot = synthSnapshot(project);
-  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  const upgrade = YAML.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.jobs.pr.steps[4].with.labels).toEqual("deps-upgrade-label");
   expect(upgrade.jobs.pr.steps[4].with.assignees).toEqual("repo-maintainer");
 });

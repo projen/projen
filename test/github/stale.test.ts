@@ -51,6 +51,24 @@ test("with custom runner", () => {
   );
 });
 
+test("with custom runner group", () => {
+  const project = new TestProject({
+    stale: true,
+    staleOptions: {
+      runsOn: {
+        group: "Default",
+        labels: ["self-hosted", "x86", "linux"],
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+
+  expect(
+    JSON.stringify(YAML.parse(snapshot[".github/workflows/stale.yml"]))
+  ).toContain('{"group":"Default","labels":["self-hosted","x86","linux"]}');
+});
+
 describe("renderBehavior()", () => {
   test("defaults", () => {
     expect(

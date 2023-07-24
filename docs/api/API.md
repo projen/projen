@@ -7251,11 +7251,11 @@ Name | Type | Description
 Adds a single job to the workflow.
 
 ```ts
-addJob(id: string, job: Job &#124; JobCallingReusableWorkflow): void
+addJob(id: string, job: JobCallingReusableWorkflow &#124; Job): void
 ```
 
 * **id** (<code>string</code>)  The job name (unique within the workflow).
-* **job** (<code>[github.workflows.Job](#projen-github-workflows-job) &#124; [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow)</code>)  The job specification.
+* **job** (<code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
 
 
 
@@ -7265,10 +7265,10 @@ addJob(id: string, job: Job &#124; JobCallingReusableWorkflow): void
 Add jobs to the workflow.
 
 ```ts
-addJobs(jobs: Map<string, Job &#124; JobCallingReusableWorkflow>): void
+addJobs(jobs: Map<string, JobCallingReusableWorkflow &#124; Job>): void
 ```
 
-* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job) &#124; [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow)></code>)  Jobs to add.
+* **jobs** (<code>Map<string, [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to add.
 
 
 
@@ -7278,13 +7278,13 @@ addJobs(jobs: Map<string, Job &#124; JobCallingReusableWorkflow>): void
 Get a single job from the workflow.
 
 ```ts
-getJob(id: string): Job &#124; JobCallingReusableWorkflow
+getJob(id: string): JobCallingReusableWorkflow &#124; Job
 ```
 
 * **id** (<code>string</code>)  The job name (unique within the workflow).
 
 __Returns__:
-* <code>[github.workflows.Job](#projen-github-workflows-job) &#124; [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow)</code>
+* <code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>
 
 #### on(events)🔹 <a id="projen-github-githubworkflow-on"></a>
 
@@ -7352,11 +7352,11 @@ removeJob(id: string): void
 Updates a single job to the workflow.
 
 ```ts
-updateJob(id: string, job: Job &#124; JobCallingReusableWorkflow): void
+updateJob(id: string, job: JobCallingReusableWorkflow &#124; Job): void
 ```
 
 * **id** (<code>string</code>)  The job name (unique within the workflow).
-* **job** (<code>[github.workflows.Job](#projen-github-workflows-job) &#124; [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow)</code>)  *No description*
+* **job** (<code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>)  *No description*
 
 
 
@@ -7366,10 +7366,10 @@ updateJob(id: string, job: Job &#124; JobCallingReusableWorkflow): void
 Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
 
 ```ts
-updateJobs(jobs: Map<string, Job &#124; JobCallingReusableWorkflow>): void
+updateJobs(jobs: Map<string, JobCallingReusableWorkflow &#124; Job>): void
 ```
 
-* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job) &#124; [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow)></code>)  Jobs to update.
+* **jobs** (<code>Map<string, [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to update.
 
 
 

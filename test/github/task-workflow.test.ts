@@ -1,3 +1,4 @@
+import * as yaml from "yaml";
 import { TaskWorkflow } from "../../src/github/task-workflow";
 import { Task } from "../../src/task";
 import { synthSnapshot, TestProject } from "../util";
@@ -66,6 +67,28 @@ describe("task-workflow", () => {
     expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
       "runs-on: self-hosted"
     );
+  });
+
+  test("with custom runner group", () => {
+    const project = new TestProject();
+
+    new TaskWorkflow(project.github!, {
+      name: "task-workflow",
+      task,
+      permissions: {},
+      runsOn: {
+        group: "Default",
+        labels: ["self-hosted", "x86", "linux"],
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(
+      JSON.stringify(
+        yaml.parse(snapshot[".github/workflows/task-workflow.yml"])
+      )
+    ).toContain('{"group":"Default","labels":["self-hosted","x86","linux"]}');
   });
 
   test("enabling LFS on a GitHub repo adds the lfs property to workflows", () => {

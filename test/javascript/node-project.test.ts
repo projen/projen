@@ -1118,17 +1118,49 @@ describe("workflowRunsOn", () => {
     // THEN
     const output = synthSnapshot(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-    const runsOn = buildWorkflow.jobs.build["runs-on"];
-
-    if (typeof runsOn === "string") {
-      expect(runsOn).toEqual("self-hosted");
-    } else {
-      expect(runsOn).toMatchObject({ group: "Default" });
-    }
-
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
       "self-hosted"
     );
+  });
+
+  test("use github runner group specified in workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: {
+        group: "Default",
+        labels: ["self-hosted", "x86", "linux"],
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(JSON.stringify(buildWorkflow.jobs.build["runs-on"])).toContain(
+      "group"
+    );
+    expect(JSON.stringify(buildWorkflow.jobs.build["runs-on"])).toContain(
+      "labels"
+    );
+    expect(JSON.stringify(buildWorkflow.jobs.build["runs-on"].group)).toContain(
+      "Default"
+    );
+    expect(
+      JSON.stringify(buildWorkflow.jobs.build["runs-on"].labels)
+    ).toContain("self-hosted");
+
+    expect(
+      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"])
+    ).toContain("group");
+    expect(
+      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"])
+    ).toContain("labels");
+    expect(
+      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"].group)
+    ).toContain("Default");
+    expect(
+      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"].labels)
+    ).toContain("self-hosted");
   });
 });
 

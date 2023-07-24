@@ -1,3 +1,4 @@
+import * as yaml from "yaml";
 import { PullRequestLint } from "../../src/github/pull-request-lint";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
@@ -71,7 +72,7 @@ test("with custom runner", () => {
   );
 });
 
-test("with runner group", () => {
+test("with custom runner group", () => {
   // GIVEN
   const project = createProject();
 
@@ -85,25 +86,12 @@ test("with runner group", () => {
 
   // THEN
   const snapshot = synthSnapshot(project);
-  expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-    "group: Default"
-  );
-});
 
-test("with runner group and labels", () => {
-  // GIVEN
-  const project = createProject();
-
-  // WHEN
-  new PullRequestLint(project.github!, {
-    runsOn: { group: "Default", labels: ["x86", "linux"] },
-  });
-
-  // THEN
-  const snapshot = synthSnapshot(project);
-  expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-    "group: Default"
-  );
+  expect(
+    JSON.stringify(
+      yaml.parse(snapshot[".github/workflows/pull-request-lint.yml"])
+    )
+  ).toContain('{"group":"Default","labels":["self-hosted","x86","linux"]}');
 });
 
 test("with github base url", () => {
