@@ -1,4 +1,5 @@
 import { BranchOptions } from "./release";
+import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
@@ -103,7 +104,7 @@ export interface PublisherOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly workflowRunsOn?: string[];
+  readonly workflowRunsOn?: string[] | GroupRunnerOptions;
 
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
@@ -141,7 +142,7 @@ export class Publisher extends Component {
 
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
-  private readonly runsOn: string[];
+  private readonly runsOn: string[] | GroupRunnerOptions;
   private readonly publishTasks: boolean;
 
   // functions that create jobs associated with a specific branch

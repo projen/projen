@@ -1,3 +1,4 @@
+import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import {
@@ -495,7 +496,7 @@ export interface UpgradeDependenciesWorkflowOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 
   /**
    * Permissions granted to the upgrade job

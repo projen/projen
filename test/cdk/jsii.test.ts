@@ -598,6 +598,110 @@ describe("workflows use global workflowRunsOn option", () => {
   );
 });
 
+describe("workflows use global workflowRunsOn option - runner group extended", () => {
+  const project = new JsiiProject({
+    author: "My name",
+    name: "testproject",
+    authorAddress: "https://foo.bar",
+    defaultReleaseBranch: "main",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    publishToGo: { moduleName: "github.com/foo/bar" },
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.watchful",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "cdk-watchful",
+    },
+    publishToNuget: {
+      dotNetNamespace: "DotNet.Namespace",
+      packageId: "PackageId",
+    },
+    publishToPypi: { distName: "dist-name", module: "module-name" },
+    workflowRunsOn: {
+      group: "Default",
+      labels: ["self-hosted", "linux", "x64"],
+    },
+    depsUpgradeOptions: {
+      workflowOptions: {
+        runsOn: {
+          group: "Default",
+          labels: ["self-hosted", "linux", "x64"],
+        },
+      },
+    },
+    githubOptions: {
+      pullRequestLintOptions: {
+        runsOn: {
+          group: "Default",
+          labels: ["self-hosted", "linux", "x64"],
+        },
+      },
+    },
+  });
+
+  const output = synthSnapshot(project);
+  const build = yaml.parse(output[".github/workflows/build.yml"]);
+  const release = yaml.parse(output[".github/workflows/release.yml"]);
+  const upgrade = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+  const prLint = yaml.parse(output[".github/workflows/pull-request-lint.yml"]);
+
+  const EXPECTED_RUNS_ON = JSON.parse(
+    '{"group":"Default","labels":["self-hosted", "linux", "x64"]}'
+  );
+
+  expect(build).toHaveProperty("jobs.build.runs-on.group", "Default");
+  expect(build).toHaveProperty("jobs.build.runs-on.labels", [
+    "self-hosted",
+    "linux",
+    "x64",
+  ]);
+  expect(build).toHaveProperty("jobs.self-mutation.runs-on.group", "Default");
+  expect(build).toHaveProperty("jobs.self-mutation.runs-on.labels", [
+    "self-hosted",
+    "linux",
+    "x64",
+  ]);
+
+  expect(upgrade).toHaveProperty("jobs.upgrade.runs-on.group", "Default");
+  expect(upgrade).toHaveProperty("jobs.upgrade.runs-on.labels", [
+    "self-hosted",
+    "linux",
+    "x64",
+  ]);
+  expect(upgrade).toHaveProperty("jobs.pr.runs-on.group", "Default");
+  expect(upgrade).toHaveProperty("jobs.pr.runs-on.labels", [
+    "self-hosted",
+    "linux",
+    "x64",
+  ]);
+
+  expect(prLint).toHaveProperty("jobs.validate.runs-on.group", "Default");
+  expect(prLint).toHaveProperty("jobs.validate.runs-on.labels", [
+    "self-hosted",
+    "linux",
+    "x64",
+  ]);
+
+  test.each(["js", "java", "python", "dotnet", "go"])(
+    "snapshot %s",
+    (language) => {
+      expect(build).toHaveProperty(
+        `jobs.package-${language}.runs-on`,
+        EXPECTED_RUNS_ON
+      );
+    }
+  );
+
+  test.each(["pypi", "nuget", "npm", "maven", "golang"])(
+    "release workflow includes release_%s job",
+    (language) => {
+      expect(release).toHaveProperty(
+        `jobs.release_${language}.runs-on`,
+        EXPECTED_RUNS_ON
+      );
+    }
+  );
+});
+
 describe("workflows use global workflowContainerImage option", () => {
   const project = new JsiiProject({
     author: "My name",

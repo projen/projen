@@ -10,6 +10,7 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
+import { GroupRunnerOptions } from "../build/build-workflow";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
@@ -112,7 +113,7 @@ export interface TaskWorkflowOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 
   /**
    * Whether to download files from Git LFS for this workflow
