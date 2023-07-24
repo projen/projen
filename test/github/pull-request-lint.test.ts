@@ -86,12 +86,14 @@ test("with custom runner group", () => {
 
   // THEN
   const snapshot = synthSnapshot(project);
+  const build = yaml.parse(snapshot[".github/workflows/pull-request-lint.yml"]);
 
-  expect(
-    JSON.stringify(
-      yaml.parse(snapshot[".github/workflows/pull-request-lint.yml"])
-    )
-  ).toContain('{"group":"Default","labels":["self-hosted","x64","linux"]}');
+  expect(build).toHaveProperty("jobs.validate.runs-on.group", "Default");
+  expect(build).toHaveProperty("jobs.validate.runs-on.labels", [
+    "self-hosted",
+    "x64",
+    "linux",
+  ]);
 });
 
 test("with github base url", () => {

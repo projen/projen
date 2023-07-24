@@ -69,10 +69,14 @@ describe("auto-approve", () => {
     });
 
     const snapshot = synthSnapshot(project);
+    const build = YAML.parse(snapshot[".github/workflows/auto-approve.yml"]);
 
-    expect(
-      JSON.stringify(YAML.parse(snapshot[".github/workflows/auto-approve.yml"]))
-    ).toContain('{"group":"Default","labels":["self-hosted","x64","linux"]}');
+    expect(build).toHaveProperty("jobs.approve.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.approve.runs-on.labels", [
+      "self-hosted",
+      "x64",
+      "linux",
+    ]);
   });
 });
 
