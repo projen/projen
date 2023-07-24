@@ -348,13 +348,30 @@ function renderJobs(
   }
 }
 
-function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
-  if (arr == null || arr.length === 0) {
+export interface GroupRunnerOptions {
+  readonly group: string;
+  readonly labels: string[];
+}
+
+function arrayOrScalar<T>(
+  arr: T[] | T | GroupRunnerOptions | GroupRunnerOptions[] | undefined
+): T | T[] | GroupRunnerOptions | GroupRunnerOptions[] | undefined {
+  if (arr == null) {
     return arr;
   }
+
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+
+  if (arr.length === 0) {
+    return arr;
+  }
+
   if (arr.length === 1) {
     return arr[0];
   }
+
   return arr;
 }
 
@@ -412,13 +429,32 @@ function verifyJobConstraints(
     }
   }
 
+  // TODO Rami-Husein
+  // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
+  // for (const [id, job] of Object.entries(jobs)) {
+  //   if (!("uses" in job)) {
+  //     if ("runsOn" in job && job.runsOn.length === 0) {
+  //       throw new Error(
+  //         `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+  //       );
+  //     }
+  //   }
+  // }
   // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
   for (const [id, job] of Object.entries(jobs)) {
     if (!("uses" in job)) {
-      if ("runsOn" in job && job.runsOn.length === 0) {
-        throw new Error(
-          `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-        );
+      if ("runsOn" in job) {
+        if (Array.isArray(job.runsOn) && job.runsOn.length === 0) {
+          throw new Error(
+            `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+          );
+        } else if ("group" in job.runsOn && "labels" in job.runsOn) {
+          if (!job.runsOn.group || job.runsOn.labels.length === 0) {
+            throw new Error(
+              `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+            );
+          }
+        }
       }
     }
   }

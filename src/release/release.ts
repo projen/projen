@@ -1,6 +1,7 @@
 import * as path from "path";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
+import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
 import {
@@ -178,7 +179,7 @@ export interface ReleaseProjectOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly workflowRunsOn?: string[];
+  readonly workflowRunsOn?: string[] | GroupRunnerOptions;
 
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
@@ -297,7 +298,7 @@ export class Release extends Component {
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
-  private readonly workflowRunsOn?: string[];
+  private readonly workflowRunsOn?: string[] | GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
 
   private readonly _branchHooks: BranchHook[];

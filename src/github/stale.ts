@@ -1,6 +1,7 @@
 import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
+import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 
 /**
@@ -27,7 +28,7 @@ export interface StaleOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 }
 
 /**

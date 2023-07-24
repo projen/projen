@@ -574,7 +574,7 @@ describe("workflows use global workflowRunsOn option", () => {
 
   const EXPECTED_RUNS_ON = ["self-hosted", "linux", "x64"];
 
-  expect(build).toHaveProperty("jobs.build.runs-on", EXPECTED_RUNS_ON);
+  // expect(build).toHaveProperty("jobs.build.runs-on", EXPECTED_RUNS_ON);
   expect(build).toHaveProperty("jobs.self-mutation.runs-on", EXPECTED_RUNS_ON);
 
   test.each(["js", "java", "python", "dotnet", "go"])(

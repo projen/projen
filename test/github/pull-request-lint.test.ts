@@ -71,6 +71,41 @@ test("with custom runner", () => {
   );
 });
 
+test("with runner group", () => {
+  // GIVEN
+  const project = createProject();
+
+  // WHEN
+  new PullRequestLint(project.github!, {
+    runsOn: {
+      group: "Default",
+      labels: ["self-hosted", "x86", "linux"],
+    },
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
+    "group: Default"
+  );
+});
+
+test("with runner group and labels", () => {
+  // GIVEN
+  const project = createProject();
+
+  // WHEN
+  new PullRequestLint(project.github!, {
+    runsOn: { group: "Default", labels: ["x86", "linux"] },
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
+    "group: Default"
+  );
+});
+
 test("with github base url", () => {
   // GIVEN
   const project = createProject();
