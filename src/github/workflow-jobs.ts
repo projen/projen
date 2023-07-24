@@ -6,6 +6,7 @@ import {
 } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { Job, JobStep } from "./workflows-model";
+import { GroupRunnerOptions } from "../build/build-workflow";
 
 /**
  * A set of utility functions for creating jobs in GitHub Workflows.
@@ -74,5 +75,5 @@ export interface PullRequestFromPatchOptions extends CreatePullRequestOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 }

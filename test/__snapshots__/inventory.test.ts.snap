@@ -5371,14 +5371,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -8424,14 +8433,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -12439,14 +12457,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -15359,14 +15386,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -18211,14 +18247,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -21847,14 +21892,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -24131,14 +24185,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -26678,14 +26741,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -28894,14 +28966,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -32422,14 +32503,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -34957,14 +35047,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -37470,14 +37569,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -39983,14 +40091,23 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
+          "union": {
+            "types": [
+              {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+              {
+                "fqn": "projen.build.GroupRunnerOptions",
+              },
+            ],
           },
         },
-        "jsonLike": true,
+        "jsonLike": false,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",

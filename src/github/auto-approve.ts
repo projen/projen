@@ -1,5 +1,6 @@
 import { GitHub } from "./github";
 import { Job, JobPermission } from "./workflows-model";
+import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 
 /**
@@ -38,7 +39,7 @@ export interface AutoApproveOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 }
 
 /**

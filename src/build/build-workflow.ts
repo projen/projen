@@ -96,7 +96,7 @@ export interface BuildWorkflowOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 
   /**
    * Build workflow triggers
@@ -110,6 +110,14 @@ export interface BuildWorkflowOptions {
    * @default `{ contents: JobPermission.WRITE }`
    */
   readonly permissions?: JobPermissions;
+}
+
+/**
+ * Options for WorkflowOptions.runsOn
+ */
+export interface GroupRunnerOptions {
+  readonly group: string;
+  readonly labels: string[];
 }
 
 export class BuildWorkflow extends Component {
@@ -431,7 +439,7 @@ export interface AddPostBuildJobTaskOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 }
 
 /**
@@ -465,5 +473,5 @@ export interface AddPostBuildJobCommandsOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | GroupRunnerOptions;
 }
