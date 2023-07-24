@@ -64,7 +64,7 @@ describe("auto-approve", () => {
       secret: "MY_SECRET",
       runsOn: {
         group: "Default",
-        labels: ["self-hosted", "x86", "linux"],
+        labels: ["self-hosted", "x64", "linux"],
       },
     });
 
@@ -72,7 +72,7 @@ describe("auto-approve", () => {
 
     expect(
       JSON.stringify(YAML.parse(snapshot[".github/workflows/auto-approve.yml"]))
-    ).toContain('{"group":"Default","labels":["self-hosted","x86","linux"]}');
+    ).toContain('{"group":"Default","labels":["self-hosted","x64","linux"]}');
   });
 });
 

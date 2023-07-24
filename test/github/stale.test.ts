@@ -57,7 +57,7 @@ test("with custom runner group", () => {
     staleOptions: {
       runsOn: {
         group: "Default",
-        labels: ["self-hosted", "x86", "linux"],
+        labels: ["self-hosted", "x64", "linux"],
       },
     },
   });
@@ -66,7 +66,7 @@ test("with custom runner group", () => {
 
   expect(
     JSON.stringify(YAML.parse(snapshot[".github/workflows/stale.yml"]))
-  ).toContain('{"group":"Default","labels":["self-hosted","x86","linux"]}');
+  ).toContain('{"group":"Default","labels":["self-hosted","x64","linux"]}');
 });
 
 describe("renderBehavior()", () => {

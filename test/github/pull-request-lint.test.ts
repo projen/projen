@@ -80,7 +80,7 @@ test("with custom runner group", () => {
   new PullRequestLint(project.github!, {
     runsOn: {
       group: "Default",
-      labels: ["self-hosted", "x86", "linux"],
+      labels: ["self-hosted", "x64", "linux"],
     },
   });
 
@@ -91,7 +91,7 @@ test("with custom runner group", () => {
     JSON.stringify(
       yaml.parse(snapshot[".github/workflows/pull-request-lint.yml"])
     )
-  ).toContain('{"group":"Default","labels":["self-hosted","x86","linux"]}');
+  ).toContain('{"group":"Default","labels":["self-hosted","x64","linux"]}');
 });
 
 test("with github base url", () => {

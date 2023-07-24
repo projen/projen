@@ -237,7 +237,7 @@ Name|Description
 [build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
 [build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildJobTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
-[build.GroupRunnerOptions](#projen-build-grouprunneroptions)|Options for BuildWorkflowOptions.runsOn.
+[build.GroupRunnerOptions](#projen-build-grouprunneroptions)|Options for WorkflowOptions.runsOn.
 [cdk.AutoDiscoverBaseOptions](#projen-cdk-autodiscoverbaseoptions)|Options for `AutoDiscoverBase`.
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -15022,7 +15022,7 @@ Name | Type | Description
 ## struct GroupRunnerOptions 🔹 <a id="projen-build-grouprunneroptions"></a>
 
 
-Options for BuildWorkflowOptions.runsOn.
+Options for WorkflowOptions.runsOn.
 
 
 

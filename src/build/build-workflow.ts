@@ -113,7 +113,7 @@ export interface BuildWorkflowOptions {
 }
 
 /**
- * Options for BuildWorkflowOptions.runsOn
+ * Options for WorkflowOptions.runsOn
  */
 export interface GroupRunnerOptions {
   readonly group: string;

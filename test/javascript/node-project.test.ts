@@ -1129,38 +1129,26 @@ describe("workflowRunsOn", () => {
     const project = new TestNodeProject({
       workflowRunsOn: {
         group: "Default",
-        labels: ["self-hosted", "x86", "linux"],
+        labels: ["self-hosted", "linux", "x64"],
       },
     });
 
     // THEN
     const output = synthSnapshot(project);
-    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-    expect(JSON.stringify(buildWorkflow.jobs.build["runs-on"])).toContain(
-      "group"
-    );
-    expect(JSON.stringify(buildWorkflow.jobs.build["runs-on"])).toContain(
-      "labels"
-    );
-    expect(JSON.stringify(buildWorkflow.jobs.build["runs-on"].group)).toContain(
-      "Default"
-    );
-    expect(
-      JSON.stringify(buildWorkflow.jobs.build["runs-on"].labels)
-    ).toContain("self-hosted");
+    const build = yaml.parse(output[".github/workflows/build.yml"]);
 
-    expect(
-      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"])
-    ).toContain("group");
-    expect(
-      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"])
-    ).toContain("labels");
-    expect(
-      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"].group)
-    ).toContain("Default");
-    expect(
-      JSON.stringify(buildWorkflow.jobs["self-mutation"]["runs-on"].labels)
-    ).toContain("self-hosted");
+    expect(build).toHaveProperty("jobs.build.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.build.runs-on.labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
+    expect(build).toHaveProperty("jobs.self-mutation.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.self-mutation.runs-on.labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
   });
 });
 
