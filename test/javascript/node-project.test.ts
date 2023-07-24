@@ -1096,14 +1096,7 @@ describe("workflowRunsOn", () => {
     // THEN
     const output = synthSnapshot(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-    const runsOn = buildWorkflow.jobs.build["runs-on"];
-
-    if (typeof runsOn === "string") {
-      expect(runsOn).toEqual("ubuntu-latest");
-    } else {
-      expect(runsOn).toMatchObject({ group: "Default" });
-    }
-
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("ubuntu-latest");
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
       "ubuntu-latest"
     );
