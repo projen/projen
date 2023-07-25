@@ -518,6 +518,72 @@ describe("git", () => {
       ).toBeTruthy();
     });
   });
+  test("--git (default) will use main when no init.defaultBranch is set", () => {
+    withProjectDir(
+      (projectdir) => {
+        let globalBranch;
+        try {
+          globalBranch = execCapture("git config --global init.defaultBranch", {
+            cwd: projectdir,
+          }).toString("utf8");
+          execCapture("git config --global --unset-all init.defaultBranch", {
+            cwd: projectdir,
+          }).toString("utf8");
+        } catch (error) {}
+        execProjenCLI(projectdir, ["new", "project"]);
+        expect(
+          execCapture("git branch --show-current", { cwd: projectdir })
+            .toString("utf8")
+            .includes("main")
+        ).toBeTruthy();
+        if (globalBranch ?? false)
+          execCapture(
+            `git config --global --replace-all init.defaultBranch ${globalBranch}`,
+            {
+              cwd: projectdir,
+            }
+          );
+      },
+      { git: false }
+    );
+  });
+  test("--git (default) will utilize the global local value set in gitconfig at init.defaultBranch", () => {
+    withProjectDir(
+      (projectdir) => {
+        let globalBranch;
+        try {
+          globalBranch = execCapture("git config --global init.defaultBranch", {
+            cwd: projectdir,
+          }).toString("utf8");
+          execCapture("git config --global --unset-all init.defaultBranch", {
+            cwd: projectdir,
+          }).toString("utf8");
+        } catch (error) {}
+        execCapture("git config --global init.defaultBranch trunk", {
+          cwd: projectdir,
+        });
+        execProjenCLI(projectdir, ["new", "project", "--debug"]);
+        expect(
+          execCapture("git branch --show-current", { cwd: projectdir })
+            .toString("utf8")
+            .includes("trunk")
+        ).toBeTruthy();
+        if (globalBranch ?? false) {
+          execCapture(
+            `git config --global --replace-all init.defaultBranch ${globalBranch}`,
+            {
+              cwd: projectdir,
+            }
+          );
+        } else {
+          execCapture("git config --global --unset init.defaultBranch trunk", {
+            cwd: projectdir,
+          });
+        }
+      },
+      { git: false }
+    );
+  });
 
   test("--no-git will not create a git repo", () => {
     withProjectDir(

@@ -320,21 +320,6 @@ export function formatAsPythonModule(name: string) {
   return name.replace(/-/g, "_").replace(/\./g, "_");
 }
 
-/**
- * Extract git version number from command line
- *
- * @param gitVersionOutput the output from `git version` CLI
- * @returns the version of git
- */
-export function getGitVersion(gitVersionOutput: string) {
-  const match = gitVersionOutput.match(/\d+.\d+.\d+/);
-  if (!match) {
-    throw new Error("Unable to retrieve git version");
-  }
-
-  return match[0];
-}
-
 export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
   if (typeof obj !== "object" || obj == null) {
     return obj;
