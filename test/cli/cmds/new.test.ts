@@ -3,6 +3,8 @@
 import { execSync } from "child_process";
 import { mkdirSync, existsSync } from "fs";
 import { join } from "path";
+import * as inventory from "../../../src/inventory";
+import { execCapture } from "../../../src/util";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -12,9 +14,7 @@ import {
   synthSnapshotWithPost,
   TestProject,
   withProjectDir,
-} from "./util";
-import * as inventory from "../src/inventory";
-import { execCapture } from "../src/util";
+} from "../../util";
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
