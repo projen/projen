@@ -547,7 +547,7 @@ describe("git", () => {
       { git: false }
     );
   });
-  test("--git (default) will utilize the global local value set in gitconfig at init.defaultBranch", () => {
+  test("--git (default) will utilize the global value set in gitconfig at init.defaultBranch", () => {
     withProjectDir(
       (projectdir) => {
         let globalBranch;

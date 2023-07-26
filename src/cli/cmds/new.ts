@@ -446,16 +446,13 @@ async function initProject(
 
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    let defaultBranch = "main";
+    let defaultBranch;
     try {
-      let current = execCapture(
-        "git config --global --get init.defaultBranch",
-        {
-          cwd: baseDir,
-        }
-      ).toString("utf8");
-      defaultBranch = current == "" ? defaultBranch : current;
+      defaultBranch = execCapture("git config --global init.defaultBranch", {
+        cwd: baseDir,
+      }).toString("utf8");
     } catch (e) {}
+    defaultBranch = defaultBranch ?? "main";
     git(`init -b ${defaultBranch}`);
     git("add .");
     git('commit --allow-empty -m "chore: project created with projen"');
