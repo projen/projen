@@ -8,7 +8,6 @@ import {
   isTruthy,
   getFilePermissions,
   formatAsPythonModule,
-  getGitVersion,
   isRoot,
 } from "../src/util";
 
@@ -247,11 +246,6 @@ test("getFilePermissions", () => {
   );
   expect(getFilePermissions({ readonly: false })).toEqual("644");
   expect(getFilePermissions({ executable: true })).toEqual("755");
-});
-
-test("getGitVersion", () => {
-  expect(getGitVersion("git version 2.24.3 ")).toEqual("2.24.3");
-  expect(getGitVersion("git version 2.30.1 (Apple Git-128)")).toEqual("2.30.1");
 });
 
 test("formatAsPythonModule", () => {
