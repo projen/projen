@@ -351,6 +351,15 @@ test("minMajorVersion throws if set together with majorVersion", async () => {
   ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
 });
 
+test("minorVersion throws if used without majorVersion", async () => {
+  await expect(
+    testBump({
+      options: { minorVersion: 1 },
+      commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
+    })
+  ).rejects.toThrow(/minorVersion and majorVersion must be used together/);
+});
+
 test("second prerelease, no other releases", async () => {
   const result = await testBump({
     options: {
