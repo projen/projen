@@ -29,6 +29,16 @@ test("first release, with major", async () => {
   expect(result.tag).toStrictEqual("v2.0.0");
 });
 
+test("first release, with minor", async () => {
+  const result = await testBump({
+    options: { majorVersion: 2, minorVersion: 1 },
+  });
+  expect(result.version).toStrictEqual("2.1.0");
+  expect(result.changelog).toMatch(/.*## 2\.1\.0 \(\d{4}-\d{2}-\d{2}\).*/); // ## 2.0.0 (2021-01-01)
+  expect(result.bumpfile).toStrictEqual("2.1.0");
+  expect(result.tag).toStrictEqual("v2.1.0");
+});
+
 test("first release, with new major", async () => {
   const result = await testBump({
     options: { majorVersion: 4 },
@@ -38,6 +48,17 @@ test("first release, with new major", async () => {
   expect(result.changelog.includes("## [4.0.0]")).toBeTruthy();
   expect(result.bumpfile).toStrictEqual("4.0.0");
   expect(result.tag).toStrictEqual("v4.0.0");
+});
+
+test("first release, with new minor", async () => {
+  const result = await testBump({
+    options: { majorVersion: 4, minorVersion: 3 },
+    commits: [{ message: "v1", tag: "v1.2.3" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("4.3.0");
+  expect(result.changelog.includes("## [4.3.0]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("4.3.0");
+  expect(result.tag).toStrictEqual("v4.3.0");
 });
 
 test("first release, with prerelease", async () => {
@@ -126,6 +147,43 @@ test("select latest with major", async () => {
   expect(result10.tag).toStrictEqual("v10.21.1");
 });
 
+test("select latest with minor", async () => {
+  const commits = [
+    { message: "first version", tag: "v1.1.0" },
+    { message: "boom", tag: "v10.21.0" },
+    { message: "second version", tag: "v1.2.0" },
+    { message: "fix: bug" },
+    { message: "fix: another bug" },
+  ];
+
+  const result11 = await testBump({
+    options: { majorVersion: 1, minorVersion: 1 },
+    commits: commits,
+  });
+
+  expect(result11.version).toEqual("1.1.1");
+  expect(result11.bumpfile).toEqual("1.1.1");
+  expect(result11.tag).toStrictEqual("v1.1.1");
+
+  const result1 = await testBump({
+    options: { majorVersion: 1 },
+    commits: commits,
+  });
+
+  expect(result1.version).toEqual("1.2.1");
+  expect(result1.bumpfile).toEqual("1.2.1");
+  expect(result1.tag).toStrictEqual("v1.2.1");
+
+  const result10 = await testBump({
+    options: { majorVersion: 10 },
+    commits: commits,
+  });
+
+  expect(result10.version).toEqual("10.21.1");
+  expect(result10.bumpfile).toStrictEqual("10.21.1");
+  expect(result10.tag).toStrictEqual("v10.21.1");
+});
+
 test("select latest, with prerelease", async () => {
   const result = await testBump({
     options: {
@@ -162,6 +220,24 @@ test("bump with major equal to 0", async () => {
   expect(result1.tag).toStrictEqual("v0.1.2");
 });
 
+test("bump with major and minior equal to 0", async () => {
+  const commits = [
+    { message: "first version", tag: "v0.0.1" },
+    { message: "second version", tag: "v0.1.1" },
+    { message: "stable branch", tag: "v1.0.0" },
+    { message: "fix: bug" },
+  ];
+
+  const result1 = await testBump({
+    options: { majorVersion: 0, minorVersion: 0 },
+    commits: commits,
+  });
+
+  expect(result1.version).toEqual("0.0.2");
+  expect(result1.bumpfile).toEqual("0.0.2");
+  expect(result1.tag).toStrictEqual("v0.0.2");
+});
+
 test("already tagged version is not bumped again", async () => {
   const result = await testBump({
     commits: [
@@ -196,6 +272,27 @@ test("bump fails due to crossing major version", async () => {
 
   await expect(promise).rejects.toThrow(
     /bump failed: this branch is configured to only publish v1 releases - bump resulted in 2.0.0/
+  );
+});
+
+test("bump fails due to crossing minor version", async () => {
+  const commits = [
+    { message: "first version", tag: "v1.1.0" },
+    { message: "boom", tag: "v10.21.0" },
+    { message: "second version", tag: "v1.2.0" },
+    {
+      message: "feat: new feature",
+    },
+    { message: "fix: bug" },
+  ];
+
+  const promise = testBump({
+    options: { majorVersion: 1, minorVersion: 1 },
+    commits: commits,
+  });
+
+  await expect(promise).rejects.toThrow(
+    /bump failed: this branch is configured to only publish v1.1 releases - bump resulted in 1.2/
   );
 });
 

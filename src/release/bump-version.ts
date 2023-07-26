@@ -46,6 +46,14 @@ export interface BumpOptions {
   readonly minMajorVersion?: number;
 
   /**
+   * Defines the minor version line. This is used to select the latest version
+   * and also enforce that new minor versions are not released accidentally.
+   *
+   * @default - any version is supported
+   */
+  readonly minorVersion?: number;
+
+  /**
    * The name of a file which will include the output version number (a text file).
    *
    * Relative to cwd.
@@ -100,6 +108,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   const versionFile = join(cwd, options.versionFile);
   const prerelease = options.prerelease;
   const major = options.majorVersion;
+  const minor = options.minorVersion;
   const minMajorVersion = options.minMajorVersion;
   const prefix = options.tagPrefix ?? "";
   const bumpFile = join(cwd, options.bumpFile);
@@ -110,6 +119,9 @@ export async function bump(cwd: string, options: BumpOptions) {
       `minMajorVersion and majorVersion cannot be used together.`
     );
   }
+  if (minor && !major) {
+    throw new Error(`minorVersion and majorVersion must be used together.`);
+  }
 
   await fs.mkdir(dirname(bumpFile), { recursive: true });
   await fs.mkdir(dirname(changelogFile), { recursive: true });
@@ -118,6 +130,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   const { latestVersion, latestTag, isFirstRelease } = determineLatestTag({
     cwd,
     major,
+    minor,
     prerelease,
     prefix,
   });
@@ -210,6 +223,13 @@ export async function bump(cwd: string, options: BumpOptions) {
       );
     }
   }
+  if (minor) {
+    if (!newVersion.startsWith(`${major}.${minor}`)) {
+      throw new Error(
+        `bump failed: this branch is configured to only publish v${major}.${minor} releases - bump resulted in ${newVersion}`
+      );
+    }
+  }
 
   await fs.writeFile(bumpFile, newVersion);
 
@@ -242,6 +262,10 @@ interface LatestTagOptions {
    * Major version to select from.
    */
   readonly major?: number;
+  /**
+   * Minor version to select from.
+   */
+  readonly minor?: number;
   /**
    * A pre-release suffix.
    */
@@ -306,11 +330,17 @@ function determineLatestTag(options: LatestTagOptions): {
   latestTag: string;
   isFirstRelease: boolean;
 } {
-  const { cwd, major, prerelease, prefix } = options;
+  const { cwd, major, minor, prerelease, prefix } = options;
 
   // filter only tags for this prefix and major version if specified (start with "vNN.").
-  const prefixFilter =
-    major !== undefined ? `${prefix}v${major}.*` : `${prefix}v*`;
+  let prefixFilter: string;
+  if (major !== undefined && minor !== undefined) {
+    prefixFilter = `${prefix}v${major}.${minor}.*`;
+  } else if (major !== undefined) {
+    prefixFilter = `${prefix}v${major}.*`;
+  } else {
+    prefixFilter = `${prefix}v*`;
+  }
 
   const listGitTags = [
     "git",
@@ -361,7 +391,7 @@ function determineLatestTag(options: LatestTagOptions): {
   if (tags.length > 0) {
     latestTag = tags[0];
   } else {
-    const initial = `${prefix}v${major ?? 0}.0.0`;
+    const initial = `${prefix}v${major ?? 0}.${minor ?? 0}.0`;
     latestTag = prerelease ? `${initial}-${prerelease}.0` : initial;
     isFirstRelease = true;
   }

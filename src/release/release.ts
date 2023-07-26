@@ -690,6 +690,11 @@ export interface BranchOptions {
   readonly minMajorVersion?: number;
 
   /**
+   * The minor versions released from this branch.
+   */
+  readonly minorVersion?: number;
+
+  /**
    * Bump the version as a pre-release tag.
    *
    * @default - normal releases
