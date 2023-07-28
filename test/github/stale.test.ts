@@ -55,7 +55,7 @@ test("with custom runner group", () => {
   const project = new TestProject({
     stale: true,
     staleOptions: {
-      runsOn: {
+      runsOnGroup: {
         group: "Default",
         labels: ["self-hosted", "x64", "linux"],
       },

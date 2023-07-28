@@ -15,6 +15,7 @@ import {
   Tools,
   Triggers,
 } from "../github/workflows-model";
+import { GroupRunnerOptions } from "../group-runner-options";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 
@@ -96,7 +97,12 @@ export interface BuildWorkflowOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Build workflow triggers
@@ -110,14 +116,6 @@ export interface BuildWorkflowOptions {
    * @default `{ contents: JobPermission.WRITE }`
    */
   readonly permissions?: JobPermissions;
-}
-
-/**
- * Options for WorkflowOptions.runsOn
- */
-export interface GroupRunnerOptions {
-  readonly group: string;
-  readonly labels: string[];
 }
 
 export class BuildWorkflow extends Component {
@@ -172,8 +170,8 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
-    this.workflow.addJob(BUILD_JOBID, {
-      runsOn: options.runsOn ?? this.defaultRunners,
+    let testing = {
+      ...this.getRunsOnConfig(options),
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
@@ -192,7 +190,9 @@ export class BuildWorkflow extends Component {
           outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         },
       },
-    });
+    };
+
+    this.workflow.addJob(BUILD_JOBID, testing);
   }
 
   /**
@@ -275,6 +275,10 @@ export class BuildWorkflow extends Component {
     task: Task,
     options: AddPostBuildJobTaskOptions = {}
   ) {
+    const runsOnValue = options.runsOnGroup
+      ? { runsOnGroup: options.runsOnGroup }
+      : { runsOn: options.runsOn ?? this.defaultRunners };
+
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
       [`${this.project.projenCommand} ${task.name}`],
@@ -282,7 +286,7 @@ export class BuildWorkflow extends Component {
         checkoutRepo: true,
         installDeps: true,
         tools: options.tools,
-        runsOn: options.runsOn,
+        ...runsOnValue,
       }
     );
   }
@@ -329,19 +333,31 @@ export class BuildWorkflow extends Component {
 
     steps.push({ run: commands.join("\n") });
 
+    const runsOnValue = options?.runsOnGroup
+      ? { runsOnGroup: options?.runsOnGroup }
+      : { runsOn: options?.runsOn ?? this.defaultRunners };
+
     this.addPostBuildJob(id, {
       permissions: {
         contents: JobPermission.READ,
       },
       tools: options?.tools,
-      runsOn: options?.runsOn ?? this.defaultRunners,
+      ...runsOnValue,
       steps,
     });
   }
 
   private addSelfMutationJob(options: BuildWorkflowOptions) {
+    let runsOnValue;
+    if (options.runsOnGroup) {
+      runsOnValue = { runsOnGroup: options.runsOnGroup };
+    } else {
+      runsOnValue = { runsOn: options.runsOn ?? this.defaultRunners };
+    }
+
     this.workflow.addJob("self-mutation", {
-      runsOn: options.runsOn ?? this.defaultRunners,
+      ...runsOnValue,
+      // runsOn: options.runsOn ?? this.defaultRunners,
       permissions: {
         contents: JobPermission.WRITE,
       },
@@ -424,6 +440,24 @@ export class BuildWorkflow extends Component {
           ]),
     ];
   }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getRunsOnConfig(options: BuildWorkflowOptions) {
+    if (options.runsOnGroup && options.runsOn) {
+      throw new Error(
+        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
+      );
+    }
+
+    return options.runsOnGroup
+      ? { runsOnGroup: options.runsOnGroup }
+      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
+  }
 }
 
 /**
@@ -439,7 +473,12 @@ export interface AddPostBuildJobTaskOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -473,5 +512,10 @@ export interface AddPostBuildJobCommandsOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 }

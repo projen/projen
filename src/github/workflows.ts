@@ -5,6 +5,7 @@ import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
+import { GroupRunnerOptions } from "../group-runner-options";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 
@@ -273,7 +274,7 @@ function renderJobs(
     return {
       name: job.name,
       needs: arrayOrScalar(job.needs),
-      "runs-on": arrayOrScalar(job.runsOn),
+      "runs-on": arrayOrScalar(job.runsOnGroup ?? job.runsOn),
       permissions: kebabCaseKeys(job.permissions),
       environment: job.environment,
       concurrency: job.concurrency,
@@ -346,11 +347,6 @@ function renderJobs(
       "working-directory": step.workingDirectory,
     };
   }
-}
-
-export interface GroupRunnerOptions {
-  readonly group: string;
-  readonly labels: string[];
 }
 
 function arrayOrScalar<T>(
@@ -432,18 +428,27 @@ function verifyJobConstraints(
   // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
   for (const [id, job] of Object.entries(jobs)) {
     if (!("uses" in job)) {
+      if ("runsOn" in job && "runsOnGroup" in job) {
+        throw new Error(
+          `${id}: both 'runsOn' and 'runsOnGroup' cannot be set at the same time.`
+        );
+      }
+
       if ("runsOn" in job) {
-        if (Array.isArray(job.runsOn) && job.runsOn.length === 0) {
+        if (job.runsOn?.length === 0) {
           throw new Error(
             `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
           );
-        } else if ("group" in job.runsOn && "labels" in job.runsOn) {
-          if (!job.runsOn.group || job.runsOn.labels.length === 0) {
-            throw new Error(
-              `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-            );
-          }
         }
+      } else if ("runsOnGroup" in job) {
+        if (job.runsOnGroup?.group.length === 0) {
+          throw new Error(
+            `${id}: runner group name must be specified in runsOnGroup`
+          );
+        }
+        // You may add checks for 'runsOnGroup' here if needed
+      } else {
+        throw new Error(`${id}: Either 'runsOn' or 'runsOnGroup' must be set.`);
       }
     }
   }

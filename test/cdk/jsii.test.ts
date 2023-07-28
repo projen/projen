@@ -616,13 +616,13 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
       packageId: "PackageId",
     },
     publishToPypi: { distName: "dist-name", module: "module-name" },
-    workflowRunsOn: {
+    workflowRunsOnGroup: {
       group: "Default",
       labels: ["self-hosted", "linux", "x64"],
     },
     depsUpgradeOptions: {
       workflowOptions: {
-        runsOn: {
+        runsOnGroup: {
           group: "Default",
           labels: ["self-hosted", "linux", "x64"],
         },
@@ -630,7 +630,7 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
     },
     githubOptions: {
       pullRequestLintOptions: {
-        runsOn: {
+        runsOnGroup: {
           group: "Default",
           labels: ["self-hosted", "linux", "x64"],
         },

@@ -62,7 +62,7 @@ describe("auto-approve", () => {
 
     new AutoApprove(project.github!, {
       secret: "MY_SECRET",
-      runsOn: {
+      runsOnGroup: {
         group: "Default",
         labels: ["self-hosted", "x64", "linux"],
       },

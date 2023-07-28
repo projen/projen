@@ -62,7 +62,7 @@ Name|Description
 [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover)|Creates Lambda Extensions from entrypoints discovered in the project's source tree.
 [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
-[build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
+[build.BuildWorkflow](#projen-build-buildworkflow)|Options for WorkflowOptions.runsOnGroup.
 [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)|Base class for auto-discovering and creating project subcomponents.
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
 [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)|Base class for locating integration tests in the project's test tree.
@@ -181,6 +181,7 @@ Name|Description
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+[GroupRunnerOptions](#projen-grouprunneroptions)|*No description*
 [IgnoreFileOptions](#projen-ignorefileoptions)|*No description*
 [IniFileOptions](#projen-inifileoptions)|Options for `IniFile`.
 [InitProject](#projen-initproject)|Information passed from `projen new` to the project object when the project is first created.
@@ -237,7 +238,6 @@ Name|Description
 [build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
 [build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildJobTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
-[build.GroupRunnerOptions](#projen-build-grouprunneroptions)|Options for WorkflowOptions.runsOn.
 [cdk.AutoDiscoverBaseOptions](#projen-cdk-autodiscoverbaseoptions)|Options for `AutoDiscoverBase`.
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -289,7 +289,6 @@ Name|Description
 [github.GithubCredentialsAppOptions](#projen-github-githubcredentialsappoptions)|Options for `GithubCredentials.fromApp`.
 [github.GithubCredentialsPersonalAccessTokenOptions](#projen-github-githubcredentialspersonalaccesstokenoptions)|Options for `GithubCredentials.fromPersonalAccessToken`.
 [github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|Options for `GithubWorkflow`.
-[github.GroupRunnerOptions](#projen-github-grouprunneroptions)|*No description*
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyQueue](#projen-github-mergifyqueue)|*No description*
@@ -3786,7 +3785,8 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -4486,7 +4486,8 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -4802,7 +4803,8 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -5151,7 +5153,7 @@ Name | Type | Description
 
 ## class BuildWorkflow 🔹 <a id="projen-build-buildworkflow"></a>
 
-
+Options for WorkflowOptions.runsOnGroup.
 
 __Submodule__: build
 
@@ -5178,7 +5180,8 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. __*Default*__: `{ contents: JobPermission.WRITE }`
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **workflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
 
@@ -5213,7 +5216,6 @@ addPostBuildJob(id: string, job: Job): void
   * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
   * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  The type of machine to run the job on. 
   * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
@@ -5221,6 +5223,8 @@ addPostBuildJob(id: string, job: Job): void
   * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
   * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
+  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. __*Optional*__
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
@@ -5245,7 +5249,8 @@ addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBu
 * **options** (<code>[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)</code>)  Specify tools and other options.
   * **checkoutRepo** (<code>boolean</code>)  Check out the repository at the pull request branch before commands are run. __*Default*__: false
   * **installDeps** (<code>boolean</code>)  Install project dependencies before running commands. `checkoutRepo` must also be set to true. __*Default*__: false
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the commands are run. __*Optional*__
 
 
@@ -5268,7 +5273,8 @@ addPostBuildJobTask(task: Task, options?: AddPostBuildJobTaskOptions): void
 
 * **task** (<code>[Task](#projen-task)</code>)  *No description*
 * **options** (<code>[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)</code>)  Specify tools and other options.
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the task is run. __*Optional*__
 
 
@@ -5436,7 +5442,8 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -5701,7 +5708,8 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6124,7 +6132,8 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6312,7 +6321,8 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6560,7 +6570,8 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6731,7 +6742,8 @@ new github.AutoApprove(github: GitHub, options?: AutoApproveOptions)
 * **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
   * **allowedUsernames** (<code>Array<string></code>)  Only pull requests authored by these Github usernames will be auto-approved. __*Default*__: ['github-bot']
   * **label** (<code>string</code>)  Only pull requests with this label will be auto-approved. __*Default*__: 'auto-approve'
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **secret** (<code>string</code>)  A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. __*Default*__: "GITHUB_TOKEN"
 
 
@@ -7458,7 +7470,8 @@ new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  *No description*
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **semanticTitle** (<code>boolean</code>)  Validate that pull request titles follow Conventional Commits. __*Default*__: true
   * **semanticTitleOptions** (<code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code>)  Options for validating the conventional commit title linter. __*Default*__: title must start with "feat", "fix", or "chore"
 
@@ -7516,7 +7529,8 @@ new github.Stale(github: GitHub, options?: StaleOptions)
 * **options** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  *No description*
   * **issues** (<code>[github.StaleBehavior](#projen-github-stalebehavior)</code>)  How to handle stale issues. __*Default*__: By default, stale issues with no activity will be marked as stale after 60 days and closed within 7 days.
   * **pullRequest** (<code>[github.StaleBehavior](#projen-github-stalebehavior)</code>)  How to handle stale pull requests. __*Default*__: By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
 
 
 
@@ -7555,7 +7569,8 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Actions to run after the main build step. __*Default*__: not set
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Default*__: not set
   * **preCheckoutSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Default*__: not set
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **triggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
 
 
@@ -7715,7 +7730,8 @@ static pullRequestFromPatch(options: PullRequestFromPatchOptions): Job
   * **stepName** (<code>string</code>)  The name of the step displayed on GitHub. __*Default*__: "Create Pull Request"
   * **patch** (<code>[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)</code>)  Information about the patch that is used to create the pull request. 
   * **jobName** (<code>string</code>)  The name of the job displayed on GitHub. __*Default*__: "Create Pull Request"
-  * **runsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **runsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
 
 __Returns__:
 * <code>[github.workflows.Job](#projen-github-workflows-job)</code>
@@ -9197,7 +9213,8 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -10703,7 +10720,8 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 16.x
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
 
 
 
@@ -10927,7 +10945,8 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. 
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
@@ -11306,7 +11325,8 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -11467,7 +11487,8 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -11628,7 +11649,8 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12166,7 +12188,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12324,7 +12347,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12555,7 +12579,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12755,7 +12780,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -13207,6 +13233,20 @@ Name | Type | Description
 **openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
 **openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
 **prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
+
+
+
+## struct GroupRunnerOptions 🔹 <a id="projen-grouprunneroptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**group**🔹 | <code>string</code> | <span></span>
+**labels**?🔹 | <code>Array<string></code> | __*Optional*__
 
 
 
@@ -14168,7 +14208,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -14559,7 +14600,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -14779,7 +14821,8 @@ Name | Type | Description
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?⚠️ | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?⚠️ | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -14976,7 +15019,8 @@ Name | Type | Description
 -----|------|-------------
 **checkoutRepo**?🔹 | <code>boolean</code> | Check out the repository at the pull request branch before commands are run.<br/>__*Default*__: false
 **installDeps**?🔹 | <code>boolean</code> | Install project dependencies before running commands. `checkoutRepo` must also be set to true.<br/>__*Default*__: false
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the commands are run.<br/>__*Optional*__
 
 
@@ -14990,7 +15034,8 @@ Options for `BuildWorkflow.addPostBuildJobTask`.
 
 Name | Type | Description 
 -----|------|-------------
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the task is run.<br/>__*Optional*__
 
 
@@ -15014,22 +15059,9 @@ Name | Type | Description
 **permissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.<br/>__*Default*__: `{ contents: JobPermission.WRITE }`
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **workflowTriggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | Build workflow triggers.<br/>__*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
-
-
-
-## struct GroupRunnerOptions 🔹 <a id="projen-build-grouprunneroptions"></a>
-
-
-Options for WorkflowOptions.runsOn.
-
-
-
-Name | Type | Description 
------|------|-------------
-**group**🔹 | <code>string</code> | <span></span>
-**labels**🔹 | <code>Array<string></code> | <span></span>
 
 
 
@@ -15225,7 +15257,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -15501,7 +15534,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -15845,7 +15879,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -16019,7 +16054,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -16218,7 +16254,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -16504,7 +16541,8 @@ Name | Type | Description
 -----|------|-------------
 **allowedUsernames**?🔹 | <code>Array<string></code> | Only pull requests authored by these Github usernames will be auto-approved.<br/>__*Default*__: ['github-bot']
 **label**?🔹 | <code>string</code> | Only pull requests with this label will be auto-approved.<br/>__*Default*__: 'auto-approve'
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **secret**?🔹 | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.<br/>__*Default*__: "GITHUB_TOKEN"
 
 
@@ -16769,20 +16807,6 @@ Name | Type | Description
 
 
 
-## struct GroupRunnerOptions 🔹 <a id="projen-github-grouprunneroptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**group**🔹 | <code>string</code> | <span></span>
-**labels**🔹 | <code>Array<string></code> | <span></span>
-
-
-
 ## interface IAddConditionsLater 🔹 <a id="projen-github-iaddconditionslater"></a>
 
 
@@ -16885,7 +16909,8 @@ Name | Type | Description
 **gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity used to create the commit.<br/>__*Default*__: the default github-actions user
 **jobName**?🔹 | <code>string</code> | The name of the job displayed on GitHub.<br/>__*Default*__: "Create Pull Request"
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
 **stepId**?🔹 | <code>string</code> | The step ID which produces the output which indicates if a patch was created.<br/>__*Default*__: "create_pr"
 **stepName**?🔹 | <code>string</code> | The name of the step displayed on GitHub.<br/>__*Default*__: "Create Pull Request"
@@ -16901,7 +16926,8 @@ Options for PullRequestLint.
 
 Name | Type | Description 
 -----|------|-------------
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **semanticTitle**?🔹 | <code>boolean</code> | Validate that pull request titles follow Conventional Commits.<br/>__*Default*__: true
 **semanticTitleOptions**?🔹 | <code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code> | Options for validating the conventional commit title linter.<br/>__*Default*__: title must start with "feat", "fix", or "chore"
 
@@ -16983,7 +17009,8 @@ Name | Type | Description
 -----|------|-------------
 **issues**?🔹 | <code>[github.StaleBehavior](#projen-github-stalebehavior)</code> | How to handle stale issues.<br/>__*Default*__: By default, stale issues with no activity will be marked as stale after 60 days and closed within 7 days.
 **pullRequest**?🔹 | <code>[github.StaleBehavior](#projen-github-stalebehavior)</code> | How to handle stale pull requests.<br/>__*Default*__: By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -17011,7 +17038,8 @@ Name | Type | Description
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Actions to run after the main build step.<br/>__*Default*__: not set
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Default*__: not set
 **preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **triggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
 
 
@@ -18276,7 +18304,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -18531,7 +18560,8 @@ Name | Type | Description
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
 **permissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the upgrade job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.<br/>__*Default*__: `{ contents: JobPermission.READ }`
 **projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method for authenticating with GitHub for creating the PR.<br/>__*Default*__: personal access token named PROJEN_GITHUB_TOKEN
-**runsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **schedule**?🔹 | <code>[javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
 
 
@@ -19203,7 +19233,8 @@ Name | Type | Description
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 16.x
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -19260,7 +19291,8 @@ Name | Type | Description
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 16.x
 **workflowPermissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the release workflow job.<br/>__*Default*__: `{ contents: JobPermission.WRITE }`
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -19293,7 +19325,8 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -19487,7 +19520,8 @@ Name | Type | Description
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?⚠️ | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?⚠️ | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -19638,7 +19672,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -19979,7 +20014,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -20132,7 +20168,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -20298,7 +20335,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 
@@ -20480,7 +20518,8 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
-**workflowRunsOn**?🔹 | <code>Array<string> &#124; [build.GroupRunnerOptions](#projen-build-grouprunneroptions)</code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
 
 

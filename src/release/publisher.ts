@@ -1,5 +1,4 @@
 import { BranchOptions } from "./release";
-import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
@@ -13,6 +12,7 @@ import {
   JobStep,
   Tools,
 } from "../github/workflows-model";
+import { GroupRunnerOptions } from "../group-runner-options";
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
 
@@ -104,7 +104,12 @@ export interface PublisherOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly workflowRunsOn?: string[] | GroupRunnerOptions;
+  readonly workflowRunsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly workflowRunsOnGroup?: GroupRunnerOptions;
 
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
@@ -142,7 +147,8 @@ export class Publisher extends Component {
 
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
-  private readonly runsOn: string[] | GroupRunnerOptions;
+  private readonly runsOn?: string[];
+  private readonly runsOnGroup?: GroupRunnerOptions;
   private readonly publishTasks: boolean;
 
   // functions that create jobs associated with a specific branch
@@ -170,8 +176,18 @@ export class Publisher extends Component {
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
-    this.runsOn = options.workflowRunsOn ?? ["ubuntu-latest"];
     this.publishTasks = options.publishTasks ?? false;
+
+    if (options.workflowRunsOnGroup && options.workflowRunsOn) {
+      throw new Error(
+        "Both 'workflowRunsOn' and 'workflowRunsOnGroup' cannot be set at the same time"
+      );
+    }
+    if (options.workflowRunsOnGroup) {
+      this.runsOnGroup = options.workflowRunsOnGroup;
+    } else {
+      this.runsOn = options.workflowRunsOn ?? ["ubuntu-latest"];
+    }
   }
 
   /**
@@ -647,7 +663,10 @@ export class Publisher extends Component {
         );
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
-
+      const runsOnValue = this.runsOnGroup 
+      ? { runsOnGroup: this.runsOnGroup } 
+      : { runsOn: this.runsOn };
+ 
       return {
         [jobname]: {
           tools: {
@@ -658,7 +677,7 @@ export class Publisher extends Component {
           permissions: perms,
           if: this.condition,
           needs: [this.buildJobId],
-          runsOn: this.runsOn,
+          ...runsOnValue,
           container,
           steps,
         },

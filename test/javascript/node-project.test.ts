@@ -1120,7 +1120,7 @@ describe("workflowRunsOn", () => {
   test("use github runner group specified in workflowRunsOn", () => {
     // WHEN
     const project = new TestNodeProject({
-      workflowRunsOn: {
+      workflowRunsOnGroup: {
         group: "Default",
         labels: ["self-hosted", "linux", "x64"],
       },

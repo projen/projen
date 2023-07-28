@@ -1,4 +1,3 @@
-import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import {
@@ -17,6 +16,7 @@ import {
   JobPermission,
   JobPermissions,
 } from "../github/workflows-model";
+import { GroupRunnerOptions } from "../group-runner-options";
 import { NodeProject } from "../javascript";
 import { Release } from "../release";
 import { Task } from "../task";
@@ -347,7 +347,7 @@ export class UpgradeDependencies extends Component {
   }
 
   private createUpgrade(task: Task, github: GitHub, branch?: string): Upgrade {
-    const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
+    // const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
 
     const with_ = {
       ...(branch ? { ref: branch } : {}),
@@ -380,7 +380,7 @@ export class UpgradeDependencies extends Component {
         name: "Upgrade",
         container: this.containerOptions,
         permissions: this.permissions,
-        runsOn: runsOn ?? ["ubuntu-latest"],
+        ...this.getRunsOnConfig(this.options.workflowOptions),
         steps: steps,
         outputs: {
           [PATCH_CREATED_OUTPUT]: {
@@ -394,12 +394,40 @@ export class UpgradeDependencies extends Component {
     };
   }
 
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getRunsOnConfig(options?: UpgradeDependenciesWorkflowOptions) {
+    if (!options) {
+      return;
+    }
+    if (options?.runsOnGroup && options?.runsOn) {
+      throw new Error(
+        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
+      );
+    }
+
+    return options?.runsOnGroup
+      ? { runsOnGroup: options?.runsOnGroup }
+      : { runsOn: options?.runsOn ?? ["ubuntu-latest"] };
+  }
+
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
     const credentials =
       this.options.workflowOptions?.projenCredentials ??
       workflow.projenCredentials;
 
     const semanticCommit = this.options.semanticCommit ?? "chore";
+
+    let runsOnValue;
+    if (this.options.workflowOptions?.runsOnGroup) {
+      runsOnValue = { runsOnGroup: this.options.workflowOptions?.runsOnGroup };
+    } else {
+      runsOnValue = { runsOn: this.options.workflowOptions?.runsOn };
+    }
 
     return {
       job: WorkflowJobs.pullRequestFromPatch({
@@ -410,7 +438,8 @@ export class UpgradeDependencies extends Component {
         },
         workflowName: workflow.name,
         credentials,
-        runsOn: this.options.workflowOptions?.runsOn,
+        ...runsOnValue,
+        // runsOn: this.options.workflowOptions?.runsOn,
         pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,
@@ -496,7 +525,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Permissions granted to the upgrade job

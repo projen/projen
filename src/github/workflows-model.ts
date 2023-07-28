@@ -1,6 +1,6 @@
 // @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
-import { GroupRunnerOptions } from "../build";
+import { GroupRunnerOptions } from "../group-runner-options";
 
 export interface CommonJobDefinition {
   /**
@@ -92,7 +92,12 @@ export interface Job extends CommonJobDefinition {
    *
    * @example ["ubuntu-latest"]
    */
-  readonly runsOn: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * A job contains a sequence of tasks called steps. Steps can run commands,

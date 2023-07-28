@@ -1,7 +1,6 @@
 import * as path from "path";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
-import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
 import {
@@ -14,6 +13,7 @@ import {
   JobPermissions,
   JobStep,
 } from "../github/workflows-model";
+import { GroupRunnerOptions } from "../group-runner-options";
 import { Task } from "../task";
 import { ReleasableCommits, Version } from "../version";
 
@@ -179,7 +179,12 @@ export interface ReleaseProjectOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly workflowRunsOn?: string[] | GroupRunnerOptions;
+  readonly workflowRunsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly workflowRunsOnGroup?: GroupRunnerOptions;
 
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
@@ -298,7 +303,8 @@ export class Release extends Component {
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
-  private readonly workflowRunsOn?: string[] | GroupRunnerOptions;
+  private readonly workflowRunsOn?: string[];
+  private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
 
   private readonly _branchHooks: BranchHook[];
@@ -326,6 +332,7 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
+    this.workflowRunsOnGroup = options.workflowRunsOnGroup;
     this.workflowPermissions = {
       contents: JobPermission.WRITE,
       ...options.workflowPermissions,
@@ -369,7 +376,7 @@ export class Release extends Component {
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
-      workflowRunsOn: options.workflowRunsOn,
+      ...this.getRunsOnConfig(options),
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
       workflowNodeVersion: options.workflowNodeVersion,
@@ -629,6 +636,13 @@ export class Release extends Component {
     );
 
     if (this.github && !this.releaseTrigger.isManual) {
+      let runsOnValue;
+      if (this.workflowRunsOnGroup) {
+        runsOnValue = { runsOnGroup: this.workflowRunsOnGroup };
+      } else {
+        runsOnValue = { runsOn: this.workflowRunsOn };
+      }
+
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
@@ -662,11 +676,29 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
-        runsOn: this.workflowRunsOn,
+        ...runsOnValue,
       });
     } else {
       return undefined;
     }
+  }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getRunsOnConfig(options: ReleaseOptions) {
+    if (options.workflowRunsOnGroup && options.workflowRunsOn) {
+      throw new Error(
+        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
+      );
+    }
+    
+    return options.workflowRunsOnGroup
+      ? { workflowRunsOnGroup: options.workflowRunsOnGroup }
+      : { workflowRunsOn: options.workflowRunsOn ?? ["ubuntu-latest"] };
   }
 }
 
