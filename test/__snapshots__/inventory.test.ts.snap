@@ -5371,23 +5371,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -5396,6 +5387,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "awscdk-app-ts",
@@ -8433,23 +8442,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -8458,6 +8458,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "awscdk-construct",
@@ -12457,23 +12475,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -12482,6 +12491,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "cdk8s-app-ts",
@@ -15386,23 +15413,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -15411,6 +15429,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "cdk8s-construct",
@@ -18247,23 +18283,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -18272,6 +18299,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "cdktf-construct",
@@ -21892,23 +21937,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -21917,6 +21953,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "jsii",
@@ -24185,23 +24239,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -24210,6 +24255,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "nextjs",
@@ -26741,23 +26804,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -26766,6 +26820,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "nextjs-ts",
@@ -28966,23 +29038,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -28991,6 +29054,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "node",
@@ -32503,23 +32584,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -32528,6 +32600,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "react",
@@ -35047,23 +35137,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -35072,6 +35153,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "react-ts",
@@ -37569,23 +37668,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -37594,6 +37684,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "typescript",
@@ -40091,23 +40199,14 @@ exports[`inventory 1`] = `
         "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": {
-          "union": {
-            "types": [
-              {
-                "collection": {
-                  "elementtype": {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-              {
-                "fqn": "projen.build.GroupRunnerOptions",
-              },
-            ],
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -40116,6 +40215,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
       },
     ],
     "pjid": "typescript-app",

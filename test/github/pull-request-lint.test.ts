@@ -78,7 +78,7 @@ test("with custom runner group", () => {
 
   // WHEN
   new PullRequestLint(project.github!, {
-    runsOn: {
+    runsOnGroup: {
       group: "Default",
       labels: ["self-hosted", "x64", "linux"],
     },

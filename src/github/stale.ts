@@ -1,8 +1,8 @@
 import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
-import { GroupRunnerOptions } from "../build/build-workflow";
 import { Component } from "../component";
+import { GroupRunnerOptions } from "../group-runner-options";
 
 /**
  * Options for `Stale`.
@@ -28,7 +28,12 @@ export interface StaleOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -124,7 +129,7 @@ export class Stale extends Component {
 
     stale.addJobs({
       stale: {
-        runsOn: options.runsOn ?? ["ubuntu-latest"],
+        ...this.getRunsOnConfig(options),
         permissions: {
           issues: JobPermission.WRITE,
           pullRequests: JobPermission.WRITE,
@@ -157,5 +162,23 @@ export class Stale extends Component {
         ],
       },
     });
+  }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getRunsOnConfig(options: StaleOptions) {
+    if (options.runsOnGroup && options.runsOn) {
+      throw new Error(
+        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
+      );
+    }
+
+    return options.runsOnGroup
+      ? { runsOnGroup: options.runsOnGroup }
+      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }

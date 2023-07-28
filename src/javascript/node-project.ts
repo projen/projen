@@ -571,7 +571,7 @@ export class NodeProject extends GitHubProject {
           mutable: options.mutableBuild ?? true,
         }),
         postBuildSteps: options.postBuildSteps,
-        runsOn: options.workflowRunsOn,
+        ...this.getRunsOnConfig(options),
         workflowTriggers: options.buildWorkflowTriggers,
         permissions: workflowPermissions,
       });
@@ -765,6 +765,24 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       this.npmrc.addConfig("resolution-mode", "highest");
     }
+  }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getRunsOnConfig(options: NodeProjectOptions) {
+    if (options.workflowRunsOnGroup && options.workflowRunsOn) {
+      throw new Error(
+        "Both 'workflowRunsOn' and 'workflowRunsOnGroup' cannot be set at the same time"
+      );
+    }
+
+    return options.workflowRunsOnGroup
+      ? { runsOnGroup: options.workflowRunsOnGroup }
+      : { runsOn: options.workflowRunsOn ?? ["ubuntu-latest"] };
   }
 
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {

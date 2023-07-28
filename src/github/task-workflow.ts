@@ -10,7 +10,7 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
-import { GroupRunnerOptions } from "../build/build-workflow";
+import { GroupRunnerOptions } from "../group-runner-options";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
@@ -113,7 +113,12 @@ export interface TaskWorkflowOptions {
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string[] | GroupRunnerOptions;
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Whether to download files from Git LFS for this workflow
@@ -180,7 +185,7 @@ export class TaskWorkflow extends GithubWorkflow {
     }
 
     const job: Job = {
-      runsOn: options.runsOn ?? ["ubuntu-latest"],
+      ...this.getRunsOnConfig(options),
       container: options.container,
       env: options.env,
       permissions: options.permissions,
@@ -214,6 +219,24 @@ export class TaskWorkflow extends GithubWorkflow {
     };
 
     this.addJobs({ [this.jobId]: job });
+  }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getRunsOnConfig(options: TaskWorkflowOptions) {
+    if (options.runsOnGroup && options.runsOn) {
+      throw new Error(
+        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
+      );
+    }
+
+    return options.runsOnGroup
+      ? { runsOnGroup: options.runsOnGroup }
+      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }
 

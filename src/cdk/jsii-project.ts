@@ -299,7 +299,7 @@ export class JsiiProject extends TypeScriptProject {
     );
 
     const extraJobOptions: Partial<Job> = {
-      ...(options.workflowRunsOn ? { runsOn: options.workflowRunsOn } : {}),
+      ...this.getJobRunsOnConfig(options),
       ...(options.workflowContainerImage
         ? { container: { image: options.workflowContainerImage } }
         : {}),
@@ -442,8 +442,15 @@ export class JsiiProject extends TypeScriptProject {
     }
     const pacmak = this.pacmakForLanguage(language, packTask);
 
+    let runsOnValue;
+    if (extraJobOptions.runsOnGroup) {
+      runsOnValue = { runsOnGroup: extraJobOptions.runsOnGroup };
+    } else {
+      runsOnValue = { runsOn: extraJobOptions.runsOn ?? ["ubuntu-latest"] };
+    }
+
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
-      runsOn: ["ubuntu-latest"],
+      ...runsOnValue,
       permissions: {},
       tools: {
         node: { version: this.nodeVersion ?? "16.x" },
@@ -504,6 +511,20 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps,
     };
+  }
+  
+  /**
+   * Generates the runs-on config for Jobs. 
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getJobRunsOnConfig(options: JsiiProjectOptions) {
+    return options.workflowRunsOnGroup
+      ? { runsOnGroup: options.workflowRunsOnGroup }
+      : options.workflowRunsOn
+      ? { runsOn: options.workflowRunsOn }
+      : {};
   }
 }
 

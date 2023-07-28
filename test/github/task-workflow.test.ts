@@ -76,7 +76,7 @@ describe("task-workflow", () => {
       name: "task-workflow",
       task,
       permissions: {},
-      runsOn: {
+      runsOnGroup: {
         group: "Default",
         labels: ["self-hosted", "x64", "linux"],
       },
