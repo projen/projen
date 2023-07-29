@@ -241,11 +241,14 @@ export class UpgradeDependencies extends Component {
     // update npm-check-updates before everything else, in case there is a bug
     // in it or one of its dependencies. This will make upgrade workflows
     // slightly more stable and resilient to upstream changes.
+    const ncuDep = this.project.deps.all.find(
+      (d) => d.name === "npm-check-updates"
+    )!;
     steps.push({
       exec: this._project.package.renderUpgradePackagesCommand(
-        [DependencyType.BUILD],
+        [ncuDep.type],
         [],
-        ["npm-check-updates"]
+        [ncuDep.name]
       ),
     });
 
