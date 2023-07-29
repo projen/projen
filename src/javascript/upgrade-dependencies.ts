@@ -128,12 +128,22 @@ export class UpgradeDependencies extends Component {
   private readonly gitIdentity: GitIdentity;
   private readonly postBuildSteps: JobStep[];
   private readonly permissions: JobPermissions;
+  private readonly depTypes: DependencyType[];
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
     this._project = project;
     this.options = options;
+    this.depTypes = this.options.types ?? [
+      DependencyType.BUILD,
+      DependencyType.BUNDLED,
+      DependencyType.DEVENV,
+      DependencyType.PEER,
+      DependencyType.RUNTIME,
+      DependencyType.TEST,
+      DependencyType.OPTIONAL,
+    ];
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -201,6 +211,7 @@ export class UpgradeDependencies extends Component {
     const ncuExcludes = [
       ...new Set(
         this.project.deps.all
+          .filter((d) => this.depTypes.includes(d.type))
           .filter(
             (dep) =>
               dep.version &&
@@ -232,24 +243,15 @@ export class UpgradeDependencies extends Component {
     // slightly more stable and resilient to upstream changes.
     steps.push({
       exec: this._project.package.renderUpgradePackagesCommand(
+        [DependencyType.BUILD],
         [],
         ["npm-check-updates"]
       ),
     });
 
-    const depTypes = this.options.types ?? [
-      DependencyType.BUILD,
-      DependencyType.BUNDLED,
-      DependencyType.DEVENV,
-      DependencyType.PEER,
-      DependencyType.RUNTIME,
-      DependencyType.TEST,
-      DependencyType.OPTIONAL,
-    ];
-
     const npmDeps = new Set();
 
-    for (const dep of depTypes) {
+    for (const dep of this.depTypes) {
       switch (dep) {
         case DependencyType.BUILD:
         case DependencyType.TEST:
@@ -293,12 +295,34 @@ export class UpgradeDependencies extends Component {
       steps.push({ exec: ncuCommand.join(" ") });
     }
 
+    // peerDependencies are actually installed via devDependencies
+    const devDependenciesToUpgrade = !this.depTypes.includes(
+      DependencyType.PEER
+    )
+      ? []
+      : this.project.deps.all
+          .filter((d) => d.type === DependencyType.PEER)
+          .map((d) => d.name);
+    if (devDependenciesToUpgrade.length > 0) {
+      const ncuCommand = [
+        "npm-check-updates",
+        "--dep",
+        "dev",
+        "--upgrade",
+        "--target=minor",
+        "--filter",
+        devDependenciesToUpgrade.join(","),
+      ];
+      steps.push({ exec: ncuCommand.join(" ") });
+    }
+
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
     steps.push({
       exec: this._project.package.renderUpgradePackagesCommand(
+        this.depTypes,
         exclude,
         this.options.include
       ),

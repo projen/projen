@@ -811,7 +811,7 @@ tsconfig.tsbuildinfo
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint npm-check-updates projen typescript react react-dom react-scripts web-vitals",
           },
           {
             "exec": "npx projen",

@@ -40,13 +40,30 @@ test("allows configuring specific dependency types", () => {
   );
 });
 
+test("upgrade command includes only dependencies of configured types", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    devDeps: ["some-dev-dep"],
+    depsUpgradeOptions: {
+      // 'devDeps' are added as BUILD
+      types: [DependencyType.BUILD],
+    },
+  });
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[3].exec).toStrictEqual(
+    `yarn upgrade jest jest-junit npm-check-updates projen some-dev-dep standard-version`
+  );
+});
+
 test("upgrades command includes all dependencies", () => {
   const project = createProject({
     deps: ["some-dep"],
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(
+    `yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep`
+  );
 });
 
 test("upgrades command includes dependencies added post instantiation", () => {
@@ -55,7 +72,9 @@ test("upgrades command includes dependencies added post instantiation", () => {
   project.addDeps("some-dep");
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(
+    `yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep`
+  );
 });
 
 test("upgrades command doesn't include ignored packages", () => {
