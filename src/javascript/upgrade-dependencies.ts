@@ -298,14 +298,22 @@ export class UpgradeDependencies extends Component {
       steps.push({ exec: ncuCommand.join(" ") });
     }
 
+    const devDepsTypes = [
+      DependencyType.BUILD,
+      DependencyType.DEVENV,
+      DependencyType.TEST,
+    ];
+
     // peerDependencies are actually installed via devDependencies
-    const devDependenciesToUpgrade = !this.depTypes.includes(
-      DependencyType.PEER
-    )
-      ? []
-      : this.project.deps.all
-          .filter((d) => d.type === DependencyType.PEER)
-          .map((d) => d.name);
+    // so if we weren't requested to upgrade dev dependencies, we need to do it
+    // anyway for peers.
+    const devDependenciesToUpgrade =
+      this.depTypes.includes(DependencyType.PEER) &&
+      !this.depTypes.some((d) => devDepsTypes.includes(d))
+        ? this.project.deps.all
+            .filter((d) => d.type === DependencyType.PEER)
+            .map((d) => d.name)
+        : [];
     if (devDependenciesToUpgrade.length > 0) {
       const ncuCommand = [
         "npm-check-updates",

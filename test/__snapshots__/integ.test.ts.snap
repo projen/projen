@@ -1174,9 +1174,6 @@ tsconfig.tsbuildinfo
           "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter @aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs"
-        },
-        {
           "exec": "yarn install --check-files"
         },
         {
@@ -2251,9 +2248,6 @@ tsconfig.tsbuildinfo
         },
         {
           "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter constructs"
         },
         {
           "exec": "yarn install --check-files"
