@@ -816,9 +816,8 @@ export class NodePackage extends Component {
     function upgradePackages(command: string) {
       return () => {
         return `${command} ${project.deps.all
-          .filter(
-            (d) => d.type !== DependencyType.OVERRIDE && types.includes(d.type)
-          )
+          .filter((d) => d.type !== DependencyType.OVERRIDE)
+          .filter((d) => types.includes(d.type))
           .map((d) => d.name)
           .filter((d) => (include ? include.includes(d) : true))
           .filter((d) => !exclude.includes(d))
