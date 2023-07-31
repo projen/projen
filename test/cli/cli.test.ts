@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { Project } from "../../src/project";
 import { directorySnapshot, execProjenCLI, mkdtemp } from "../util";
+import { Project } from "../../src/project";
 
 const MOCK_PROJENRC =
   "new (require('projen').Project)({ name: 'foo' }).synth()";
@@ -87,17 +87,6 @@ test('running "projen" with task in subdirectory of a subproject will execute ta
   );
 });
 
-test('running "projen" with task if there is no tasks.json', () => {
-  const dir = mkdtemp();
-
-  const projen = join(dir, ".projen");
-  mkdirSync(projen);
-
-  const t = () => {
-    execProjenCLI(dir, ["build"]);
-  };
-  expect(t).toThrowError("Unknown command: build");
-});
 test('running "projen" with task if there is no tasks.json', () => {
   const dir = mkdtemp();
 
