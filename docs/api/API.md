@@ -9050,14 +9050,15 @@ removeScript(name: string): void
 
 
 
-#### renderUpgradePackagesCommand(exclude, include?)🔹 <a id="projen-javascript-nodepackage-renderupgradepackagescommand"></a>
+#### renderUpgradePackagesCommand(types, exclude, include?)🔹 <a id="projen-javascript-nodepackage-renderupgradepackagescommand"></a>
 
 Render a package manager specific command to upgrade all requested dependencies.
 
 ```ts
-renderUpgradePackagesCommand(exclude: Array<string>, include?: Array<string>): string
+renderUpgradePackagesCommand(types: Array<DependencyType>, exclude: Array<string>, include?: Array<string>): string
 ```
 
+* **types** (<code>Array<[DependencyType](#projen-dependencytype)></code>)  *No description*
 * **exclude** (<code>Array<string></code>)  *No description*
 * **include** (<code>Array<string></code>)  *No description*
 
