@@ -669,7 +669,7 @@ permissions-backup.acl
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade npm-check-updates projen standard-version autoprefixer next postcss react react-dom tailwindcss",
           },
           {
             "exec": "npx projen",
