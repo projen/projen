@@ -132,7 +132,7 @@ export interface NodeProjectOptions
   /**
    * The name of the main release branch.
    *
-   * @default "main"
+   * @default $GIT_DEFAULT_BRANCH
    */
   readonly defaultReleaseBranch: string;
 

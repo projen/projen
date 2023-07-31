@@ -19,7 +19,8 @@ export function tryProcessMacro(cwd: string, macro: string) {
       const slug =
         getFromGitConfig(cwd, "github.user") ?? resolveEmail(cwd).split("@")[0];
       return `https://github.com/${slug}/${basedir}.git`;
-
+    case "$GIT_DEFAULT_BRANCH":
+      return getFromGitConfig(cwd, "init.defaultBranch") ?? "main";
     case "$GIT_USER_NAME":
       return getFromGitConfig(cwd, "user.name") ?? "user";
     case "$GIT_USER_EMAIL":

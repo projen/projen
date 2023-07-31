@@ -530,7 +530,7 @@ describe("git", () => {
             cwd: projectdir,
           }).toString("utf8");
         } catch (error) {}
-        execProjenCLI(projectdir, ["new", "project"]);
+        execProjenCLI(projectdir, ["new", "node"]);
         expect(
           execCapture("git branch --show-current", { cwd: projectdir })
             .toString("utf8")
@@ -562,7 +562,7 @@ describe("git", () => {
         execCapture("git config --global init.defaultBranch trunk", {
           cwd: projectdir,
         });
-        execProjenCLI(projectdir, ["new", "project", "--debug"]);
+        execProjenCLI(projectdir, ["new", "node"]);
         expect(
           execCapture("git branch --show-current", { cwd: projectdir })
             .toString("utf8")

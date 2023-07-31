@@ -5,7 +5,7 @@ import * as inventory from "../../inventory";
 import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
-import { exec, execCapture, isTruthy } from "../../util";
+import { exec, isTruthy } from "../../util";
 import { tryProcessMacro } from "../macros";
 import { CliError, installPackage, renderInstallCommand } from "../util";
 
@@ -90,7 +90,6 @@ class Command implements yargs.CommandModule {
         // manually set the matched command as the project type
         argv.projectTypeName = argv._[1];
       }, true);
-
     return args;
   }
 
@@ -259,7 +258,6 @@ function commandLineToProps(
       }
     }
   }
-
   return props;
 }
 
@@ -428,7 +426,6 @@ async function initProject(
 ) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(baseDir, type, args);
-
   Projects.createProject({
     dir: props.outdir ?? baseDir,
     projectFqn: type.fqn,
@@ -439,24 +436,17 @@ async function initProject(
     synth: args.synth,
     post: args.post,
   });
-
   if (fs.existsSync(path.join(baseDir, "package.json")) && args.post) {
     exec("npm run eslint --if-present", { cwd: baseDir });
   }
-
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    let defaultBranch;
-    try {
-      defaultBranch = execCapture("git config --global init.defaultBranch", {
-        cwd: baseDir,
-      }).toString("utf8");
-    } catch (e) {}
-    defaultBranch = defaultBranch ?? "main";
-    git(`init -b ${defaultBranch}`);
+    git(`init -b ${props.defaultReleaseBranch ?? "main"}`);
     git("add .");
     git('commit --allow-empty -m "chore: project created with projen"');
-    logging.debug(`default branch name set to ${defaultBranch}`);
+    logging.debug(
+      `default branch name set to ${props.defaultReleaseBranch ?? "main"}`
+    );
   }
 }
 
