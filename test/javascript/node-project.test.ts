@@ -1556,6 +1556,7 @@ describe("scoped private packages", () => {
         },
       ],
     });
+  });
 
   test("adds ca:login script without always-auth when min node version is greater than 16", () => {
     const project = new TestNodeProject({
@@ -1565,7 +1566,7 @@ describe("scoped private packages", () => {
           scope,
         },
       ],
-      minNodeVersion: '18.11.0'
+      minNodeVersion: "18.11.0",
     });
     const output = synthSnapshot(project);
 
