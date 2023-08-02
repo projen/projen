@@ -2651,6 +2651,14 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
   * **scheduleInterval** (<code>Array<string></code>)  How often to check for new versions and raise pull requests. __*Default*__: ["at any time"]
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | The file holding the renovatebot configuration.
+
 ### Methods
 
 
