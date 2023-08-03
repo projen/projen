@@ -651,19 +651,13 @@ permissions-backup.acl
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --upgrade --target=minor --filter=npm-check-updates,projen,standard-version",
-          },
-          {
-            "exec": "npm-check-updates --upgrade --target=minor --filter=autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=npm-check-updates,projen,standard-version,autoprefixer,next,postcss,react,react-dom,tailwindcss",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade npm-check-updates projen standard-version",
-          },
-          {
-            "exec": "yarn upgrade autoprefixer next postcss react react-dom tailwindcss",
+            "exec": "yarn upgrade npm-check-updates projen standard-version autoprefixer next postcss react react-dom tailwindcss",
           },
           {
             "exec": "npx projen",

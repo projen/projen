@@ -539,19 +539,13 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/node,@types/react,@types/react-dom,npm-check-updates,projen,typescript",
-          },
-          {
-            "exec": "npm-check-updates --upgrade --target=minor --filter=autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/node,@types/react,@types/react-dom,npm-check-updates,projen,typescript,autoprefixer,next,postcss,react,react-dom,tailwindcss",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @types/node @types/react @types/react-dom npm-check-updates projen typescript",
-          },
-          {
-            "exec": "yarn upgrade autoprefixer next postcss react react-dom tailwindcss",
+            "exec": "yarn upgrade @types/node @types/react @types/react-dom npm-check-updates projen typescript autoprefixer next postcss react react-dom tailwindcss",
           },
           {
             "exec": "npx projen",

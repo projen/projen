@@ -805,37 +805,6 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Render a package manager specific command to upgrade all requested dependencies.
-   */
-  public renderUpgradePackagesCommand(include?: string[]): string {
-    function upgradePackages(command: string) {
-      return () => {
-        return include ? `${command} ${include.join(" ")}` : command;
-      };
-    }
-
-    let lazy = undefined;
-    switch (this.packageManager) {
-      case NodePackageManager.YARN:
-      case NodePackageManager.YARN2:
-        lazy = upgradePackages("yarn upgrade");
-        break;
-      case NodePackageManager.NPM:
-        lazy = upgradePackages("npm update");
-        break;
-      case NodePackageManager.PNPM:
-        lazy = upgradePackages("pnpm update");
-        break;
-      default:
-        throw new Error(`unexpected package manager ${this.packageManager}`);
-    }
-
-    // return a lazy function so that dependencies include ones that were
-    // added post project instantiation (i.e using project.addDeps)
-    return lazy as unknown as string;
-  }
-
-  /**
    * Attempt to resolve the currently installed version for a given dependency.
    *
    * @remarks

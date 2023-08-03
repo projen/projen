@@ -16,7 +16,7 @@ import {
   JobPermission,
   JobPermissions,
 } from "../github/workflows-model";
-import { NodeProject } from "../javascript";
+import { NodePackageManager, NodeProject } from "../javascript";
 import { Release } from "../release";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
@@ -206,11 +206,9 @@ export class UpgradeDependencies extends Component {
   private renderTaskSteps(): TaskStep[] {
     const steps = new Array<TaskStep>();
 
-    const pkg = this._project.package;
-
-    const include = this.options.include
-      ? [this.options.include]
-      : this.filterDependencies();
+    const include = Array.from(
+      new Set(this.options.include ?? this.filterDependencies())
+    );
 
     if (include.length === 0) {
       return [{ exec: "echo No dependencies to upgrade." }];
@@ -222,26 +220,24 @@ export class UpgradeDependencies extends Component {
     const ncuDep = this.project.deps.all.find(
       (d) => d.name === "npm-check-updates"
     )!;
-    steps.push({ exec: pkg.renderUpgradePackagesCommand([ncuDep.name]) });
+    steps.push({ exec: this.renderUpgradePackagesCommand([ncuDep.name]) });
 
-    for (const c of include) {
-      const ncuCommand = [
-        "npm-check-updates",
-        "--upgrade",
-        "--target=minor",
-        `--filter=${c.join(",")}`,
-      ];
-      // bump versions in package.json
-      steps.push({ exec: ncuCommand.join(" ") });
-    }
+    const ncuCommand = [
+      "npm-check-updates",
+      "--upgrade",
+      "--target=minor",
+      `--filter=${include.join(",")}`,
+    ];
+    // bump versions in package.json
+    steps.push({ exec: ncuCommand.join(" ") });
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
-    for (const c of include) {
-      // run upgrade command to upgrade transitive deps as well
-      steps.push({ exec: pkg.renderUpgradePackagesCommand(c) });
-    }
+    // run upgrade command to upgrade transitive deps as well
+    steps.push({
+      exec: this.renderUpgradePackagesCommand(include),
+    });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     steps.push({ exec: this._project.projenCommand });
@@ -250,7 +246,40 @@ export class UpgradeDependencies extends Component {
     return steps;
   }
 
-  private filterDependencies(): string[][] {
+  /**
+   * Render a package manager specific command to upgrade all requested dependencies.
+   */
+  private renderUpgradePackagesCommand(include: string[]): string {
+    function upgradePackages(command: string) {
+      return () => {
+        return `${command} ${include.join(" ")}`;
+      };
+    }
+
+    const packageManager = this._project.package.packageManager;
+
+    let lazy = undefined;
+    switch (packageManager) {
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN2:
+        lazy = upgradePackages("yarn upgrade");
+        break;
+      case NodePackageManager.NPM:
+        lazy = upgradePackages("npm update");
+        break;
+      case NodePackageManager.PNPM:
+        lazy = upgradePackages("pnpm update");
+        break;
+      default:
+        throw new Error(`unexpected package manager ${packageManager}`);
+    }
+
+    // return a lazy function so that dependencies include ones that were
+    // added post project instantiation (i.e using project.addDeps)
+    return lazy as unknown as string;
+  }
+
+  private filterDependencies(): string[] {
     const depedencies = [];
 
     const deps = this.project.deps.all
@@ -260,18 +289,14 @@ export class UpgradeDependencies extends Component {
       .filter((d) => d.type !== DependencyType.OVERRIDE);
 
     for (const type of this.depTypes) {
-      // if an explicit 'include' was requested, use that.
-      // otherwise, filter out the relevant dependencies
-      const filtered = deps
-        .filter((d) => d.type === type)
-        .filter((d) => !(this.options.exclude ?? []).includes(d.name))
-        .map((d) => d.name);
-      if (filtered.length > 0) {
-        depedencies.push(filtered);
-      }
+      depedencies.push(
+        ...deps
+          .filter((d) => d.type === type)
+          .filter((d) => !(this.options.exclude ?? []).includes(d.name))
+      );
     }
 
-    return depedencies;
+    return depedencies.map((d) => d.name);
   }
 
   private createWorkflow(
