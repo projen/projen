@@ -1,7 +1,7 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
 import { execSync } from "child_process";
-import { mkdirSync, existsSync } from "fs";
+import { mkdirSync, existsSync, writeFileSync, readFileSync } from "fs";
 import { join } from "path";
 import {
   directorySnapshot,
@@ -221,6 +221,33 @@ test("projen new --from will fail when a required option without a default is no
       expect(error.message).toMatch("Missing required option:");
       expect(error.message).toMatch("--repo [string]");
     }
+  });
+});
+
+test("projen new --from does not fail when save=false in npm config", () => {
+  withProjectDir((projectdir) => {
+    // Tells Node to not save packages on install. However we must save the external package to determine its name.
+    writeFileSync(join(projectdir, ".npmrc"), "save=false\n");
+
+    // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@0.0.333",
+      "--no-post",
+      "--no-synth",
+      "--no-git",
+    ]);
+
+    // Load the package.json
+    const packageJson = JSON.parse(
+      readFileSync(join(projectdir, "package.json"), "utf-8")
+    );
+    const packageName = Object.keys(packageJson.devDependencies).find(
+      (name) => name !== "projen"
+    );
+
+    expect(packageName).toBe("@pepperize/projen-awscdk-app-ts");
   });
 });
 
