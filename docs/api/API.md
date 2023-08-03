@@ -2659,21 +2659,6 @@ Name | Type | Description
 -----|------|-------------
 **file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | The file holding the renovatebot configuration.
 
-### Methods
-
-
-#### preSynthesize()🔹 <a id="projen-renovatebot-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
-
 
 
 ## class SampleDir 🔹 <a id="projen-sampledir"></a>
