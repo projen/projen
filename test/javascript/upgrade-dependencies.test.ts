@@ -27,17 +27,33 @@ test("allows configuring specific dependency types", () => {
   const project = createProject({
     deps: ["some-dep"],
     depsUpgradeOptions: {
-      types: [DependencyType.RUNTIME, DependencyType.DEVENV],
+      types: [DependencyType.RUNTIME, DependencyType.BUILD],
     },
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep prod --upgrade --target=minor"
-  );
-  expect(tasks.upgrade.steps[2].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor"
-  );
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --filter=some-dep,jest,jest-junit,npm-check-updates,projen,standard-version",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade some-dep jest jest-junit npm-check-updates projen standard-version",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrade command includes only dependencies of configured types", () => {
@@ -61,9 +77,28 @@ test("upgrades command includes all dependencies", () => {
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(
-    `yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep`
-  );
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --filter=jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrades command includes dependencies added post instantiation", () => {
@@ -72,9 +107,28 @@ test("upgrades command includes dependencies added post instantiation", () => {
   project.addDeps("some-dep");
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(
-    `yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep`
-  );
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --filter=jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrades command doesn't include ignored packages", () => {
@@ -85,10 +139,29 @@ test("upgrades command doesn't include ignored packages", () => {
     },
   });
 
-  const deps = "jest jest-junit npm-check-updates projen standard-version dep1";
-
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --filter=jest,jest-junit,npm-check-updates,projen,standard-version,dep1",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version dep1",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrades command includes only included packages", () => {
@@ -99,10 +172,11 @@ test("upgrades command includes only included packages", () => {
     },
   });
 
-  const deps = "dep1";
-
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`); // implicitly all dependencies
+  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
+    `npm-check-updates --upgrade --target=minor --filter=dep1`
+  );
+  expect(tasks.upgrade.steps[3].exec).toStrictEqual(`yarn upgrade dep1`);
 });
 
 test("upgrade task can be overwritten", () => {
@@ -323,8 +397,45 @@ test("upgrade task created without projen defined versions at NodeProject", () =
     deps: ["npm@^8", "axios@~0.20.0", "markdownlint@0.24.0"],
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint'"
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --filter=jest,jest-junit,npm-check-updates,projen,standard-version,npm",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version npm",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
+});
+
+test("empty upgrade list", () => {
+  const project = createProject({
+    depsUpgradeOptions: {
+      exclude: [
+        "jest",
+        "jest-junit",
+        "npm-check-updates",
+        "projen",
+        "standard-version",
+      ],
+    },
+  });
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+    "echo No dependencies to upgrade."
   );
 });
 

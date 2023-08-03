@@ -539,19 +539,7 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/node,@types/react,@types/react-dom,npm-check-updates,projen,typescript,autoprefixer,next,postcss,react,react-dom,tailwindcss",
           },
           {
             "exec": "yarn install --check-files",
