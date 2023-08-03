@@ -204,39 +204,9 @@ export class UpgradeDependencies extends Component {
   }
 
   private renderTaskSteps(): TaskStep[] {
-    const exclude = this.options.exclude ?? [];
-
-    // exclude depedencies that has already version pinned (fully or with patch version) by Projen with ncu (but not package manager upgrade)
-    // Getting only unique values through set
-    const ncuExcludes = [
-      ...new Set(
-        this.project.deps.all
-          .filter((d) => this.depTypes.includes(d.type))
-          .filter(
-            (dep) =>
-              dep.version &&
-              dep.version[0] !== "^" &&
-              dep.type !== DependencyType.OVERRIDE
-          )
-          .map((dep) => dep.name)
-          .concat(exclude)
-      ),
-    ];
-
-    const ncuIncludes = this.options.include?.filter(
-      (item) => !ncuExcludes.includes(item)
-    );
-
-    const includeLength = this.options.include?.length ?? 0;
-    const ncuIncludesLength = ncuIncludes?.length ?? 0;
-
-    // If all explicit includes already have version pinned, don't add task.
-    // Note that without explicit includes task gets added
-    if (includeLength > 0 && ncuIncludesLength === 0) {
-      return [{ exec: "echo No dependencies to upgrade." }];
-    }
-
     const steps = new Array<TaskStep>();
+
+    const pkg = this._project.package;
 
     // update npm-check-updates before everything else, in case there is a bug
     // in it or one of its dependencies. This will make upgrade workflows
@@ -244,107 +214,53 @@ export class UpgradeDependencies extends Component {
     const ncuDep = this.project.deps.all.find(
       (d) => d.name === "npm-check-updates"
     )!;
-    steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
-        [ncuDep.type],
-        [],
-        [ncuDep.name]
-      ),
-    });
+    steps.push({ exec: pkg.renderUpgradePackagesCommand([ncuDep.name]) });
 
-    const npmDeps = new Set();
+    const include = this.options.include ?? this.filterDependencies();
 
-    for (const dep of this.depTypes) {
-      switch (dep) {
-        case DependencyType.BUILD:
-        case DependencyType.TEST:
-        case DependencyType.DEVENV:
-          npmDeps.add("dev");
-          break;
-        case DependencyType.PEER:
-          npmDeps.add("peer");
-          break;
-        case DependencyType.BUNDLED:
-          npmDeps.add("bundle");
-          break;
-        case DependencyType.RUNTIME:
-          npmDeps.add("prod");
-          break;
-        case DependencyType.OPTIONAL:
-          npmDeps.add("optional");
-          break;
-        default:
-          throw new Error(
-            `Unsupported dependency type '${dep.valueOf()}' for upgrade dependencies task`
-          );
-      }
-    }
-
-    for (const dep of npmDeps) {
-      const ncuCommand = [
-        "npm-check-updates",
-        "--dep",
-        dep,
-        "--upgrade",
-        "--target=minor",
-      ];
-      // Don't add includes and excludes same time
-      if (ncuIncludes) {
-        ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
-      } else if (ncuExcludes.length > 0) {
-        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
-      }
-
-      steps.push({ exec: ncuCommand.join(" ") });
-    }
-
-    const devDepsTypes = [
-      DependencyType.BUILD,
-      DependencyType.DEVENV,
-      DependencyType.TEST,
+    const ncuCommand = [
+      "npm-check-updates",
+      "--upgrade",
+      "--target=minor",
+      `--filter=${include.join(",")}`,
     ];
 
-    // peerDependencies are actually installed via devDependencies
-    // so if we weren't requested to upgrade dev dependencies, we need to do it
-    // anyway for peers.
-    const devDependenciesToUpgrade =
-      this.depTypes.includes(DependencyType.PEER) &&
-      !this.depTypes.some((d) => devDepsTypes.includes(d))
-        ? this.project.deps.all
-            .filter((d) => d.type === DependencyType.PEER)
-            .map((d) => d.name)
-        : [];
-    if (devDependenciesToUpgrade.length > 0) {
-      const ncuCommand = [
-        "npm-check-updates",
-        "--dep",
-        "dev",
-        "--upgrade",
-        "--target=minor",
-        "--filter",
-        devDependenciesToUpgrade.join(","),
-      ];
-      steps.push({ exec: ncuCommand.join(" ") });
-    }
+    // bump versions in package.json
+    steps.push({ exec: ncuCommand.join(" ") });
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
-    steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
-        this.depTypes,
-        exclude,
-        this.options.include
-      ),
-    });
+    steps.push({ exec: pkg.renderUpgradePackagesCommand(include) });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     steps.push({ exec: this._project.projenCommand });
-
     steps.push({ spawn: this.postUpgradeTask.name });
 
     return steps;
+  }
+
+  private filterDependencies(): string[] {
+    const depedencies = [];
+
+    const deps = this.project.deps.all
+      // remove those that have a pinned version
+      .filter((d) => !d.version || d.version[0] === "^")
+      // remove overriden dependencies
+      .filter((d) => d.type !== DependencyType.OVERRIDE);
+
+    for (const type of this.depTypes) {
+      // if an explicit 'include' was requested, use that.
+      // otherwise, filter out the relevant dependencies
+      depedencies.push(
+        ...deps
+          .filter((d) => d.type === type)
+          .filter((d) => !(this.options.exclude ?? []).includes(d.name))
+      );
+    }
+
+    return depedencies.map((d) => d.name);
   }
 
   private createWorkflow(

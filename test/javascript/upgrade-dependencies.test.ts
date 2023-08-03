@@ -40,6 +40,34 @@ test("allows configuring specific dependency types", () => {
   );
 });
 
+test("upgrade dev ignores peers", () => {
+  const project = createProject({
+    devDeps: ["some-dev-dep"],
+    peerDeps: ["some-peer-dep"],
+    depsUpgradeOptions: {
+      // 'devDeps' are added as BUILD
+      types: [DependencyType.BUILD],
+    },
+  });
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[3].exec).toStrictEqual(
+    `yarn upgrade jest jest-junit npm-check-updates projen some-dev-dep standard-version`
+  );
+});
+
+test("upgrade prod includes bundled", () => {
+  const project = createProject({
+    bundledDeps: ["some-bundled-dep"],
+    depsUpgradeOptions: {
+      types: [DependencyType.RUNTIME],
+    },
+  });
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[3].exec).toStrictEqual(
+    `yarn upgrade some-bundled-dep`
+  );
+});
+
 test("upgrade command includes only dependencies of configured types", () => {
   const project = createProject({
     deps: ["some-dep"],

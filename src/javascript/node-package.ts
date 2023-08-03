@@ -807,21 +807,10 @@ export class NodePackage extends Component {
   /**
    * Render a package manager specific command to upgrade all requested dependencies.
    */
-  public renderUpgradePackagesCommand(
-    types: DependencyType[],
-    exclude: string[],
-    include?: string[]
-  ): string {
-    const project = this.project;
+  public renderUpgradePackagesCommand(include?: string[]): string {
     function upgradePackages(command: string) {
       return () => {
-        return `${command} ${project.deps.all
-          .filter((d) => d.type !== DependencyType.OVERRIDE)
-          .filter((d) => types.includes(d.type))
-          .map((d) => d.name)
-          .filter((d) => (include ? include.includes(d) : true))
-          .filter((d) => !exclude.includes(d))
-          .join(" ")}`;
+        return include ? `${command} ${include.join(" ")}` : command;
       };
     }
 
