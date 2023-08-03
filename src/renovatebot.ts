@@ -141,11 +141,6 @@ export class Renovatebot extends Component {
     });
   }
 
-  // create actual file only here, so we know that all dependencies are added to the project
-  public preSynthesize() {
-    this.createRenovateConfiguration();
-  }
-
   private createRenovateConfiguration() {
     const renovateIgnore = [
       ...new Set(
