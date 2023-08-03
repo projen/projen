@@ -208,6 +208,14 @@ export class UpgradeDependencies extends Component {
 
     const pkg = this._project.package;
 
+    const include = this.options.include
+      ? [this.options.include]
+      : this.filterDependencies();
+
+    if (include.length === 0) {
+      return [{ exec: "echo No dependencies to upgrade." }];
+    }
+
     // update npm-check-updates before everything else, in case there is a bug
     // in it or one of its dependencies. This will make upgrade workflows
     // slightly more stable and resilient to upstream changes.
@@ -216,23 +224,24 @@ export class UpgradeDependencies extends Component {
     )!;
     steps.push({ exec: pkg.renderUpgradePackagesCommand([ncuDep.name]) });
 
-    const include = this.options.include ?? this.filterDependencies();
-
-    const ncuCommand = [
-      "npm-check-updates",
-      "--upgrade",
-      "--target=minor",
-      `--filter=${include.join(",")}`,
-    ];
-
-    // bump versions in package.json
-    steps.push({ exec: ncuCommand.join(" ") });
+    for (const c of include) {
+      const ncuCommand = [
+        "npm-check-updates",
+        "--upgrade",
+        "--target=minor",
+        `--filter=${c.join(",")}`,
+      ];
+      // bump versions in package.json
+      steps.push({ exec: ncuCommand.join(" ") });
+    }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
-    // run upgrade command to upgrade transitive deps as well
-    steps.push({ exec: pkg.renderUpgradePackagesCommand(include) });
+    for (const c of include) {
+      // run upgrade command to upgrade transitive deps as well
+      steps.push({ exec: pkg.renderUpgradePackagesCommand(c) });
+    }
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     steps.push({ exec: this._project.projenCommand });
@@ -241,7 +250,7 @@ export class UpgradeDependencies extends Component {
     return steps;
   }
 
-  private filterDependencies(): string[] {
+  private filterDependencies(): string[][] {
     const depedencies = [];
 
     const deps = this.project.deps.all
@@ -253,14 +262,16 @@ export class UpgradeDependencies extends Component {
     for (const type of this.depTypes) {
       // if an explicit 'include' was requested, use that.
       // otherwise, filter out the relevant dependencies
-      depedencies.push(
-        ...deps
-          .filter((d) => d.type === type)
-          .filter((d) => !(this.options.exclude ?? []).includes(d.name))
-      );
+      const filtered = deps
+        .filter((d) => d.type === type)
+        .filter((d) => !(this.options.exclude ?? []).includes(d.name))
+        .map((d) => d.name);
+      if (filtered.length > 0) {
+        depedencies.push(filtered);
+      }
     }
 
-    return depedencies.map((d) => d.name);
+    return depedencies;
   }
 
   private createWorkflow(
