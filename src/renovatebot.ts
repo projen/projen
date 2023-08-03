@@ -104,6 +104,11 @@ export enum RenovatebotScheduleInterval {
  * Ignores the versions controlled by Projen.
  */
 export class Renovatebot extends Component {
+  /**
+   * The file holding the renovatebot configuration
+   */
+  public readonly file: JsonFile;
+
   private readonly _project: Project;
 
   private readonly explicitIgnores: string[];
@@ -128,11 +133,12 @@ export class Renovatebot extends Component {
     (options.ignoreProjen ?? true) && this.explicitIgnores.push("projen");
     this.overrideConfig = options.overrideConfig ?? {};
     this.marker = options.marker ?? true;
-  }
 
-  // create actual file only here, so we know that all dependencies are added to the project
-  public preSynthesize() {
-    this.createRenovateConfiguration();
+    this.file = new JsonFile(this._project, "renovate.json5", {
+      obj: () => this.createRenovateConfiguration(),
+      committed: true,
+      marker: this.marker,
+    });
   }
 
   private createRenovateConfiguration() {
@@ -145,7 +151,7 @@ export class Renovatebot extends Component {
       ),
     ];
 
-    const config = {
+    return {
       labels: this.labels,
       schedule: this.scheduleInterval,
       extends: [
@@ -165,11 +171,5 @@ export class Renovatebot extends Component {
       ignoreDeps: renovateIgnore,
       ...this.overrideConfig,
     };
-
-    new JsonFile(this._project, "renovate.json5", {
-      obj: config,
-      committed: true,
-      marker: this.marker,
-    });
   }
 }
