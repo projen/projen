@@ -1159,25 +1159,13 @@ tsconfig.tsbuildinfo
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --upgrade --target=minor --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,aws-sdk,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,npm-check-updates,projen,standard-version,ts-jest,typescript,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-sdk eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii npm-check-updates projen standard-version ts-jest typescript @aws-cdk/aws-apigateway @aws-cdk/aws-cloudwatch-actions @aws-cdk/aws-cloudwatch @aws-cdk/aws-dynamodb @aws-cdk/aws-ecs-patterns @aws-cdk/aws-ecs @aws-cdk/aws-elasticloadbalancingv2 @aws-cdk/aws-events-targets @aws-cdk/aws-events @aws-cdk/aws-lambda @aws-cdk/aws-rds @aws-cdk/aws-sns-subscriptions @aws-cdk/aws-sns @aws-cdk/aws-sqs @aws-cdk/core constructs @aws-cdk/aws-apigateway @aws-cdk/aws-cloudwatch-actions @aws-cdk/aws-cloudwatch @aws-cdk/aws-dynamodb @aws-cdk/aws-ecs-patterns @aws-cdk/aws-ecs @aws-cdk/aws-elasticloadbalancingv2 @aws-cdk/aws-events-targets @aws-cdk/aws-events @aws-cdk/aws-lambda @aws-cdk/aws-rds @aws-cdk/aws-sns-subscriptions @aws-cdk/aws-sns @aws-cdk/aws-sqs @aws-cdk/core @aws-cdk/assert"
+          "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-sdk eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak npm-check-updates projen standard-version ts-jest typescript @aws-cdk/aws-apigateway @aws-cdk/aws-cloudwatch-actions @aws-cdk/aws-cloudwatch @aws-cdk/aws-dynamodb @aws-cdk/aws-ecs-patterns @aws-cdk/aws-ecs @aws-cdk/aws-elasticloadbalancingv2 @aws-cdk/aws-events-targets @aws-cdk/aws-events @aws-cdk/aws-lambda @aws-cdk/aws-rds @aws-cdk/aws-sns-subscriptions @aws-cdk/aws-sns @aws-cdk/aws-sqs @aws-cdk/core constructs @aws-cdk/assert"
         },
         {
           "exec": "npx projen"
@@ -2235,25 +2223,13 @@ tsconfig.tsbuildinfo
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'"
-        },
-        {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'"
+          "exec": "npm-check-updates --upgrade --target=minor --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/node,@types/yaml,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,json-schema-to-typescript,npm-check-updates,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json-schema-to-typescript npm-check-updates projen ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs"
+          "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak json-schema-to-typescript npm-check-updates projen ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml"
         },
         {
           "exec": "npx projen"
@@ -3369,25 +3345,13 @@ tsconfig.tsbuildinfo
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
+          "exec": "npm-check-updates --upgrade --target=minor --filter=@types/fs-extra,@types/jest,@types/json-schema,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-junit,npm-check-updates,projen,ts-jest,typescript,cdk8s,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit npm-check-updates projen ts-jest typescript @types/node cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs"
+          "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit npm-check-updates projen ts-jest typescript cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs"
         },
         {
           "exec": "npx projen"
@@ -4499,19 +4463,7 @@ resolution-mode=highest
           "exec": "pnpm update npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor"
-        },
-        {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
+          "exec": "npm-check-updates --upgrade --target=minor --filter=aws-sdk,jest,jest-junit,npm-check-updates,projen,standard-version,esbuild"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"

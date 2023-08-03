@@ -9043,21 +9043,6 @@ removeScript(name: string): void
 
 
 
-#### renderUpgradePackagesCommand(types, exclude, include?)🔹 <a id="projen-javascript-nodepackage-renderupgradepackagescommand"></a>
-
-Render a package manager specific command to upgrade all requested dependencies.
-
-```ts
-renderUpgradePackagesCommand(types: Array<DependencyType>, exclude: Array<string>, include?: Array<string>): string
-```
-
-* **types** (<code>Array<[DependencyType](#projen-dependencytype)></code>)  *No description*
-* **exclude** (<code>Array<string></code>)  *No description*
-* **include** (<code>Array<string></code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
 #### setScript(name, command)🔹 <a id="projen-javascript-nodepackage-setscript"></a>
 
 Add a npm package.json script.
