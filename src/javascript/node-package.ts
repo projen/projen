@@ -535,8 +535,6 @@ export class NodePackage extends Component {
 
     this.processDeps(options);
 
-    this.addCodeArtifactLoginScript();
-
     const prev = this.readPackageJson() ?? {};
 
     // empty objects are here to preserve order for backwards compatibility
@@ -604,6 +602,8 @@ export class NodePackage extends Component {
     this.maxNodeVersion = options.maxNodeVersion;
     this.pnpmVersion = options.pnpmVersion ?? "7";
     this.addNodeEngine();
+
+    this.addCodeArtifactLoginScript();
 
     // license
     if (options.licensed ?? true) {
@@ -802,53 +802,6 @@ export class NodePackage extends Component {
    */
   public get installAndUpdateLockfileCommand() {
     return this.renderInstallCommand(false);
-  }
-
-  /**
-   * Render a package manager specific command to upgrade all requested dependencies.
-   */
-  public renderUpgradePackagesCommand(
-    exclude: string[],
-    include?: string[]
-  ): string {
-    const project = this.project;
-    function upgradePackages(command: string) {
-      return () => {
-        if (exclude.length === 0 && !include) {
-          // request to upgrade all packages
-          // separated for asthetic reasons.
-          return command;
-        }
-
-        // filter by exclude and include.
-        return `${command} ${project.deps.all
-          .filter((d) => d.type !== DependencyType.OVERRIDE)
-          .map((d) => d.name)
-          .filter((d) => (include ? include.includes(d) : true))
-          .filter((d) => !exclude.includes(d))
-          .join(" ")}`;
-      };
-    }
-
-    let lazy = undefined;
-    switch (this.packageManager) {
-      case NodePackageManager.YARN:
-      case NodePackageManager.YARN2:
-        lazy = upgradePackages("yarn upgrade");
-        break;
-      case NodePackageManager.NPM:
-        lazy = upgradePackages("npm update");
-        break;
-      case NodePackageManager.PNPM:
-        lazy = upgradePackages("pnpm update");
-        break;
-      default:
-        throw new Error(`unexpected package manager ${this.packageManager}`);
-    }
-
-    // return a lazy function so that dependencies include ones that were
-    // added post project instantiation (i.e using project.addDeps)
-    return lazy as unknown as string;
   }
 
   /**
@@ -1082,8 +1035,9 @@ export class NodePackage extends Component {
             `npm config set ${scope}:registry ${registryUrl}`,
             `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
             `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
-            `npm config set //${registry}:always-auth=true`,
           ];
+          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16)
+            commands.push(`npm config set //${registry}:always-auth=true`);
           return {
             exec: commands.join("; "),
           };

@@ -1093,25 +1093,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,npm-check-updates,projen,standard-version,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak npm-check-updates projen standard-version ts-jest typescript",
           },
           {
             "exec": "npx projen",
@@ -2578,25 +2566,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-junit,jsii,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,npm-check-updates,projen,standard-version,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak jsii-rosetta npm-check-updates projen standard-version ts-jest typescript",
           },
           {
             "exec": "npx projen",
@@ -4074,25 +4050,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,npm-check-updates,projen,standard-version,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii npm-check-updates projen standard-version ts-jest typescript",
           },
           {
             "exec": "npx projen",
@@ -5561,25 +5525,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii-rosetta,jsii'",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii-rosetta,jsii'",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-junit,jsii-diff,jsii-docgen,jsii-pacmak,npm-check-updates,projen,standard-version,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak npm-check-updates projen standard-version ts-jest typescript",
           },
           {
             "exec": "npx projen",

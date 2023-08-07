@@ -793,25 +793,13 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --upgrade --target=minor --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/node,@types/react,@types/react-dom,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,npm-check-updates,projen,typescript,react,react-dom,react-scripts,web-vitals",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint npm-check-updates projen typescript react react-dom react-scripts web-vitals",
           },
           {
             "exec": "npx projen",

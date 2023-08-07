@@ -2652,20 +2652,13 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
   * **scheduleInterval** (<code>Array<string></code>)  How often to check for new versions and raise pull requests. __*Default*__: ["at any time"]
 
 
-### Methods
+
+### Properties
 
 
-#### preSynthesize()🔹 <a id="projen-renovatebot-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | The file holding the renovatebot configuration.
 
 
 
@@ -9067,20 +9060,6 @@ removeScript(name: string): void
 
 
 
-
-#### renderUpgradePackagesCommand(exclude, include?)🔹 <a id="projen-javascript-nodepackage-renderupgradepackagescommand"></a>
-
-Render a package manager specific command to upgrade all requested dependencies.
-
-```ts
-renderUpgradePackagesCommand(exclude: Array<string>, include?: Array<string>): string
-```
-
-* **exclude** (<code>Array<string></code>)  *No description*
-* **include** (<code>Array<string></code>)  *No description*
-
-__Returns__:
-* <code>string</code>
 
 #### setScript(name, command)🔹 <a id="projen-javascript-nodepackage-setscript"></a>
 
