@@ -57,7 +57,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "all-contributors-cli": "^6.26.1",
-    "esbuild": "^0.18.18",
+    "esbuild": "^0.18.19",
     "eslint": "^8",
     "eslint-config-prettier": "^8.10.0",
     "eslint-import-resolver-node": "^0.3.8",
