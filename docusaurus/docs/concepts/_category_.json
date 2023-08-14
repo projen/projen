@@ -1,0 +1,12 @@
+{
+  "position": 3,
+  "label": "Concepts",
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Concepts"
+  }
+}
+

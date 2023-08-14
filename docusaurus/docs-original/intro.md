@@ -39,5 +39,5 @@ $ npx projen new PROJECT-TYPE
 
 ### Project types
 
-Projen ships with a number of different [project types](docs/category/project-types) and you can build your own. 
+Projen ships with a number of different project types, and you can build your own. 
 
