@@ -2,11 +2,6 @@
   "position": 1,
   "label": "Introduction",
   "collapsible": true,
-  "collapsed": false,
-  "className": "red",
-  "link": {
-    "type": "generated-index",
-    "title": "Basics overview"
-  }
+  "collapsed": true
 }
 
