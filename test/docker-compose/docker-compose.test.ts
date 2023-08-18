@@ -912,6 +912,32 @@ describe("docker-compose", () => {
       assertDockerComposeFileValidates(project.outdir);
     });
   });
+  describe("can add a platform", () => {
+    test("declaratively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project, {
+        services: {
+          myservice: {
+            image: "nginx",
+            platform: "linux/amd64",
+          },
+        },
+      });
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            platform: "linux/amd64",
+          },
+        },
+      });
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+  });
 });
 
 const hasDockerCompose =
