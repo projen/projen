@@ -149,6 +149,11 @@ export class DockerCompose extends Component {
     };
   }
 
+  /**
+   * The Docker Compose file
+   */
+  public readonly file: YamlFile;
+
   private readonly services: Record<string, DockerComposeService>;
   private readonly version: string;
 
@@ -156,7 +161,7 @@ export class DockerCompose extends Component {
     super(project);
 
     const nameSuffix = props?.nameSuffix ? `${props!.nameSuffix}.yml` : "yml";
-    new YamlFile(project, `docker-compose.${nameSuffix}`, {
+    this.file = new YamlFile(project, `docker-compose.${nameSuffix}`, {
       committed: true,
       readonly: true,
       obj: () => this._synthesizeDockerCompose(),
