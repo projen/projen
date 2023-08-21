@@ -74,6 +74,9 @@ export class DockerComposeService implements IDockerComposeServiceName {
    * Attached labels.
    */
   public readonly labels: Record<string, string>;
+  /**
+   * Target platform
+   */
   public readonly platform?: string;
 
   constructor(
@@ -166,7 +169,6 @@ export class DockerComposeService implements IDockerComposeServiceName {
  * Description of a docker-compose.yml service.
  */
 export interface DockerComposeServiceDescription {
-  readonly platform?: string;
   /**
    * Use a docker image.
    * Note: You must specify either `build` or `image` key.
@@ -229,4 +231,10 @@ export interface DockerComposeServiceDescription {
    * @default - no labels are provided
    */
   readonly labels?: Record<string, string>;
+  /**
+   * Add platform
+   * @default - no platform is provided
+   */
+  readonly platform?: string;
+
 }
