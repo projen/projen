@@ -236,5 +236,4 @@ export interface DockerComposeServiceDescription {
    * @default - no platform is provided
    */
   readonly platform?: string;
-
 }
