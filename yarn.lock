@@ -1086,14 +1086,14 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "20.5.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.2.tgz#02850ed821c8113fd6ed9ae5c744b7f7cd6d6f51"
-  integrity sha512-5j/lXt7unfPOUlrKC34HIaedONleyLtwkKggiD/0uuMfT8gg2EOpg0dz4lCD15Ga7muC+1WzJZAjIB9simWd6Q==
+  version "20.5.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.3.tgz#fa52c147f405d56b2f1dd8780d840aa87ddff629"
+  integrity sha512-ITI7rbWczR8a/S6qjAW7DMqxqFMjjTo61qZVWJ1ubPvbIQsL5D/TvwjYEalM8Kthpe3hTzOGrF2TGbAu2uyqeA==
 
 "@types/node@^14":
-  version "14.18.54"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.54.tgz#fc304bd66419030141fa997dc5a9e0e374029ae8"
-  integrity sha512-uq7O52wvo2Lggsx1x21tKZgqkJpvwCseBBPtX/nKQfpVlEsLOb11zZ1CRsWUKvJF0+lzuA9jwvA7Pr2Wt7i3xw==
+  version "14.18.55"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.55.tgz#c60ad83c7d87c2d933cc4c1cb7d54d98ae50e460"
+  integrity sha512-PiNZnJDie6lgSWfjWYcQ8KWrEHp0bGv1WgnQAUuaao/HpUBKNX+HXubScoMRdLXBuovbte0djGtsxiWScvlQUQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -2314,9 +2314,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.477:
-  version "1.4.498"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.498.tgz#cef35341123f62a35ba7084e439c911d25e0d81b"
-  integrity sha512-4LODxAzKGVy7CJyhhN5mebwe7U2L29P+0G+HUriHnabm0d7LSff8Yn7t+Wq+2/9ze2Fu1dhX7mww090xfv7qXQ==
+  version "1.4.499"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.499.tgz#dc36b67f4c8e273524e8d2080c5203a6a76987b6"
+  integrity sha512-0NmjlYBLKVHva4GABWAaHuPJolnDuL0AhV3h1hES6rcLCWEIbRL6/8TghfsVwkx6TEroQVdliX7+aLysUpKvjw==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -4833,9 +4833,9 @@ npm-bundled@^3.0.0:
     npm-normalize-package-bin "^3.0.0"
 
 npm-check-updates@^16:
-  version "16.12.3"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.12.3.tgz#14d8ba9c7ee6995f7ea33f65a26ae928464c2294"
-  integrity sha512-oF6kwb5d0HzMpDA5Xt8Ah8LyEkYPI40tBwv1hPs43BMGHqh2Abah+KBp1RJLnIsb8Hjy0DY4yzQrm/qLjL2UCA==
+  version "16.13.0"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.13.0.tgz#92df9da56cc69657705c8abec46934cc99ac79f2"
+  integrity sha512-zTJCqov2+KpCLM7lOOxXLFiqKg8RLt10dempIbE9EfKCzoN1yqSrDcBCpU6uOmlSRy3IIGm1rK+piCrn+uulJw==
   dependencies:
     chalk "^5.3.0"
     cli-table3 "^0.6.3"
