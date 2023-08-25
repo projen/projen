@@ -226,6 +226,7 @@ export class UpgradeDependencies extends Component {
       "npm-check-updates",
       "--upgrade",
       "--target=minor",
+      `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
       `--filter=${include.join(",")}`,
     ];
     // bump versions in package.json
@@ -244,6 +245,37 @@ export class UpgradeDependencies extends Component {
     steps.push({ spawn: this.postUpgradeTask.name });
 
     return steps;
+  }
+
+  /**
+   * Render projen dependencies types to a list of ncu compatible types
+   */
+  private renderNcuDependencyTypes(types: DependencyType[]) {
+    return Array.from(
+      new Set(
+        types
+          .map((type) => {
+            switch (type) {
+              case DependencyType.PEER:
+                return "peer";
+              case DependencyType.RUNTIME:
+                return "prod";
+              case DependencyType.OPTIONAL:
+                return "optional";
+
+              case DependencyType.TEST:
+              case DependencyType.DEVENV:
+              case DependencyType.BUILD:
+                return "dev";
+
+              case DependencyType.BUNDLED:
+              default:
+                return false;
+            }
+          })
+          .filter((type) => Boolean(type))
+      )
+    ).join(",");
   }
 
   /**
