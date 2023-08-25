@@ -486,11 +486,15 @@ export interface UpgradeDependenciesWorkflowOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
 
   /**
    * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOnGroup?: GroupRunnerOptions;
 
