@@ -74,6 +74,10 @@ export class DockerComposeService implements IDockerComposeServiceName {
    * Attached labels.
    */
   public readonly labels: Record<string, string>;
+  /**
+   * Target platform
+   */
+  public readonly platform?: string;
 
   constructor(
     serviceName: string,
@@ -99,6 +103,7 @@ export class DockerComposeService implements IDockerComposeServiceName {
     this.environment = serviceDescription.environment ?? {};
     this.labels = serviceDescription.labels ?? {};
     this.entrypoint = serviceDescription.entrypoint;
+    this.platform = serviceDescription.platform;
   }
 
   /**
@@ -226,4 +231,9 @@ export interface DockerComposeServiceDescription {
    * @default - no labels are provided
    */
   readonly labels?: Record<string, string>;
+  /**
+   * Add platform
+   * @default - no platform is provided
+   */
+  readonly platform?: string;
 }

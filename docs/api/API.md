@@ -768,6 +768,7 @@ addService(serviceName: string, description: DockerComposeServiceDescription): D
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
   * **labels** (<code>Map<string, string></code>)  Add labels. __*Default*__: no labels are provided
   * **networks** (<code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code>)  Add some networks to the service. __*Optional*__
+  * **platform** (<code>string</code>)  Add platform. __*Default*__: no platform is provided
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
 
@@ -895,6 +896,7 @@ new DockerComposeService(serviceName: string, serviceDescription: DockerComposeS
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
   * **labels** (<code>Map<string, string></code>)  Add labels. __*Default*__: no labels are provided
   * **networks** (<code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code>)  Add some networks to the service. __*Optional*__
+  * **platform** (<code>string</code>)  Add platform. __*Default*__: no platform is provided
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
 
@@ -916,6 +918,7 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>Array<string></code> | Entrypoint to run in the container.<br/>__*Optional*__
 **image**?🔹 | <code>string</code> | Docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Docker image build instructions.<br/>__*Optional*__
+**platform**?🔹 | <code>string</code> | Target platform.<br/>__*Optional*__
 
 ### Methods
 
@@ -13051,6 +13054,7 @@ Name | Type | Description
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__
 **labels**?🔹 | <code>Map<string, string></code> | Add labels.<br/>__*Default*__: no labels are provided
 **networks**?🔹 | <code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code> | Add some networks to the service.<br/>__*Optional*__
+**platform**?🔹 | <code>string</code> | Add platform.<br/>__*Default*__: no platform is provided
 **ports**?🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Map some ports.<br/>__*Default*__: no ports are mapped
 **volumes**?🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Mount some volumes into the service.<br/>__*Optional*__
 
