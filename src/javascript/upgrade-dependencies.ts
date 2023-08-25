@@ -43,6 +43,27 @@ export interface UpgradeDependenciesOptions {
   readonly include?: string[];
 
   /**
+   * Determines the target version to upgrade dependencies to.
+   *
+   * @see https://github.com/raineorshine/npm-check-updates#target
+   *
+   * @default "minor"
+   */
+  readonly target?: string;
+
+  /**
+   * Check peer dependencies of installed packages and filter updates to compatible versions.
+   *
+   * By default, the upgrade workflow will adhere to version constraints from peer dependencies.
+   * Sometimes this is not desirable and can be disabled.
+   *
+   * @see https://github.com/raineorshine/npm-check-updates#peer
+   *
+   * @default true
+   */
+  readonly satisfyPeerDependencies?: boolean;
+
+  /**
    * Include a github workflow for creating PR's that upgrades the
    * required dependencies, either by manual dispatch, or by a schedule.
    *
@@ -129,6 +150,8 @@ export class UpgradeDependencies extends Component {
   private readonly postBuildSteps: JobStep[];
   private readonly permissions: JobPermissions;
   private readonly depTypes: DependencyType[];
+  private readonly upgradeTarget: string;
+  private readonly satisfyPeerDependencies: boolean;
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
@@ -144,6 +167,8 @@ export class UpgradeDependencies extends Component {
       DependencyType.TEST,
       DependencyType.OPTIONAL,
     ];
+    this.upgradeTarget = this.options.target ?? "minor";
+    this.satisfyPeerDependencies = this.options.satisfyPeerDependencies ?? true;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -225,7 +250,8 @@ export class UpgradeDependencies extends Component {
     const ncuCommand = [
       "npm-check-updates",
       "--upgrade",
-      "--target=minor",
+      `--target=${this.upgradeTarget}`,
+      `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
       `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
       `--filter=${include.join(",")}`,
     ];
