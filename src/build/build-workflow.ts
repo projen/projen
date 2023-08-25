@@ -15,9 +15,9 @@ import {
   Tools,
   Triggers,
 } from "../github/workflows-model";
-import { GroupRunnerOptions } from "../group-runner-options";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
 const PULL_REQUEST_REPOSITORY =
@@ -127,7 +127,6 @@ export class BuildWorkflow extends Component {
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
   private readonly name: string;
-  private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -170,8 +169,8 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
-    let testing = {
-      ...this.getRunsOnConfig(options),
+    const jobConfig = {
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
@@ -192,7 +191,7 @@ export class BuildWorkflow extends Component {
       },
     };
 
-    this.workflow.addJob(BUILD_JOBID, testing);
+    this.workflow.addJob(BUILD_JOBID, jobConfig);
   }
 
   /**
@@ -275,10 +274,6 @@ export class BuildWorkflow extends Component {
     task: Task,
     options: AddPostBuildJobTaskOptions = {}
   ) {
-    const runsOnValue = options.runsOnGroup
-      ? { runsOnGroup: options.runsOnGroup }
-      : { runsOn: options.runsOn ?? this.defaultRunners };
-
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
       [`${this.project.projenCommand} ${task.name}`],
@@ -286,7 +281,7 @@ export class BuildWorkflow extends Component {
         checkoutRepo: true,
         installDeps: true,
         tools: options.tools,
-        ...runsOnValue,
+        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       }
     );
   }
@@ -333,31 +328,19 @@ export class BuildWorkflow extends Component {
 
     steps.push({ run: commands.join("\n") });
 
-    const runsOnValue = options?.runsOnGroup
-      ? { runsOnGroup: options?.runsOnGroup }
-      : { runsOn: options?.runsOn ?? this.defaultRunners };
-
     this.addPostBuildJob(id, {
       permissions: {
         contents: JobPermission.READ,
       },
       tools: options?.tools,
-      ...runsOnValue,
+      ...filteredRunsOnOptions(options?.runsOn, options?.runsOnGroup),
       steps,
     });
   }
 
   private addSelfMutationJob(options: BuildWorkflowOptions) {
-    let runsOnValue;
-    if (options.runsOnGroup) {
-      runsOnValue = { runsOnGroup: options.runsOnGroup };
-    } else {
-      runsOnValue = { runsOn: options.runsOn ?? this.defaultRunners };
-    }
-
     this.workflow.addJob("self-mutation", {
-      ...runsOnValue,
-      // runsOn: options.runsOn ?? this.defaultRunners,
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
         contents: JobPermission.WRITE,
       },
@@ -439,24 +422,6 @@ export class BuildWorkflow extends Component {
             },
           ]),
     ];
-  }
-
-  /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
-   */
-  private getRunsOnConfig(options: BuildWorkflowOptions) {
-    if (options.runsOnGroup && options.runsOn) {
-      throw new Error(
-        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-      );
-    }
-
-    return options.runsOnGroup
-      ? { runsOnGroup: options.runsOnGroup }
-      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }
 

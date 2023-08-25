@@ -1,6 +1,6 @@
 // @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions } from "../runner-options";
 
 export interface CommonJobDefinition {
   /**

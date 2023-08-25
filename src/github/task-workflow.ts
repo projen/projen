@@ -10,7 +10,7 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
@@ -185,7 +185,7 @@ export class TaskWorkflow extends GithubWorkflow {
     }
 
     const job: Job = {
-      ...this.getRunsOnConfig(options),
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.container,
       env: options.env,
       permissions: options.permissions,
@@ -219,24 +219,6 @@ export class TaskWorkflow extends GithubWorkflow {
     };
 
     this.addJobs({ [this.jobId]: job });
-  }
-
-  /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
-   */
-  private getRunsOnConfig(options: TaskWorkflowOptions) {
-    if (options.runsOnGroup && options.runsOn) {
-      throw new Error(
-        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-      );
-    }
-
-    return options.runsOnGroup
-      ? { runsOnGroup: options.runsOnGroup }
-      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }
 

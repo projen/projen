@@ -62,7 +62,7 @@ Name|Description
 [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover)|Creates Lambda Extensions from entrypoints discovered in the project's source tree.
 [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
-[build.BuildWorkflow](#projen-build-buildworkflow)|Options for WorkflowOptions.runsOnGroup.
+[build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
 [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)|Base class for auto-discovering and creating project subcomponents.
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
 [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)|Base class for locating integration tests in the project's test tree.
@@ -5146,7 +5146,7 @@ Name | Type | Description
 
 ## class BuildWorkflow 🔹 <a id="projen-build-buildworkflow"></a>
 
-Options for WorkflowOptions.runsOnGroup.
+
 
 __Submodule__: build
 

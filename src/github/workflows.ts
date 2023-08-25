@@ -5,7 +5,7 @@ import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions } from "../runner-options";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 
@@ -422,34 +422,6 @@ function verifyJobConstraints(
       throw new Error(
         `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
       );
-    }
-  }
-
-  // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
-  for (const [id, job] of Object.entries(jobs)) {
-    if (!("uses" in job)) {
-      if ("runsOn" in job && "runsOnGroup" in job) {
-        throw new Error(
-          `${id}: both 'runsOn' and 'runsOnGroup' cannot be set at the same time.`
-        );
-      }
-
-      if ("runsOn" in job) {
-        if (job.runsOn?.length === 0) {
-          throw new Error(
-            `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-          );
-        }
-      } else if ("runsOnGroup" in job) {
-        if (job.runsOnGroup?.group.length === 0) {
-          throw new Error(
-            `${id}: runner group name must be specified in runsOnGroup`
-          );
-        }
-        // You may add checks for 'runsOnGroup' here if needed
-      } else {
-        throw new Error(`${id}: Either 'runsOn' or 'runsOnGroup' must be set.`);
-      }
     }
   }
 }

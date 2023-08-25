@@ -1,7 +1,7 @@
 import { GitHub } from ".";
 import { Job, JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for PullRequestLint
@@ -67,7 +67,7 @@ export class PullRequestLint extends Component {
 
       const validateJob: Job = {
         name: "Validate PR title",
-        ...this.getRunsOnConfig(options),
+        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
         permissions: {
           pullRequests: JobPermission.WRITE,
         },
@@ -101,23 +101,5 @@ export class PullRequestLint extends Component {
       });
       workflow.addJobs({ validate: validateJob });
     }
-  }
-
-  /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
-   */
-  private getRunsOnConfig(options: PullRequestLintOptions) {
-    if (options.runsOnGroup && options.runsOn) {
-      throw new Error(
-        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-      );
-    }
-
-    return options.runsOnGroup
-      ? { runsOnGroup: options.runsOnGroup }
-      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }

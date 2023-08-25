@@ -2,7 +2,7 @@ import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for `Stale`.
@@ -129,7 +129,7 @@ export class Stale extends Component {
 
     stale.addJobs({
       stale: {
-        ...this.getRunsOnConfig(options),
+        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
         permissions: {
           issues: JobPermission.WRITE,
           pullRequests: JobPermission.WRITE,
@@ -162,23 +162,5 @@ export class Stale extends Component {
         ],
       },
     });
-  }
-
-  /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
-   */
-  private getRunsOnConfig(options: StaleOptions) {
-    if (options.runsOnGroup && options.runsOn) {
-      throw new Error(
-        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-      );
-    }
-
-    return options.runsOnGroup
-      ? { runsOnGroup: options.runsOnGroup }
-      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }

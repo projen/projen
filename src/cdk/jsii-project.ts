@@ -11,6 +11,7 @@ import {
   NugetPublishOptions,
   PyPiPublishOptions,
 } from "../release";
+import { filteredRunsOnOptions } from "../runner-options";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { deepMerge } from "../util";
 
@@ -442,15 +443,11 @@ export class JsiiProject extends TypeScriptProject {
     }
     const pacmak = this.pacmakForLanguage(language, packTask);
 
-    let runsOnValue;
-    if (extraJobOptions.runsOnGroup) {
-      runsOnValue = { runsOnGroup: extraJobOptions.runsOnGroup };
-    } else {
-      runsOnValue = { runsOn: extraJobOptions.runsOn ?? ["ubuntu-latest"] };
-    }
-
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
-      ...runsOnValue,
+      ...filteredRunsOnOptions(
+        extraJobOptions.runsOn,
+        extraJobOptions.runsOnGroup
+      ),
       permissions: {},
       tools: {
         node: { version: this.nodeVersion ?? "16.x" },
@@ -512,9 +509,9 @@ export class JsiiProject extends TypeScriptProject {
       prePublishSteps,
     };
   }
-  
+
   /**
-   * Generates the runs-on config for Jobs. 
+   * Generates the runs-on config for Jobs.
    * Throws error if 'runsOn' and 'runsOnGroup' are both set.
    *
    * @param options - 'runsOn' or 'runsOnGroup'.

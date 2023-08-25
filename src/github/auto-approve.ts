@@ -1,7 +1,7 @@
 import { GitHub } from "./github";
 import { Job, JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for 'AutoApprove'
@@ -71,7 +71,7 @@ export class AutoApprove extends Component {
     const secret = options.secret ?? "GITHUB_TOKEN";
 
     const approveJob: Job = {
-      ...this.getRunsOnConfig(options),
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
         pullRequests: JobPermission.WRITE,
       },
@@ -109,23 +109,5 @@ export class AutoApprove extends Component {
       },
     });
     workflow.addJobs({ approve: approveJob });
-  }
-
-  /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
-   */
-  private getRunsOnConfig(options: AutoApproveOptions) {
-    if (options.runsOnGroup && options.runsOn) {
-      throw new Error(
-        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-      );
-    }
-
-    return options.runsOnGroup
-      ? { runsOnGroup: options.runsOnGroup }
-      : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
   }
 }

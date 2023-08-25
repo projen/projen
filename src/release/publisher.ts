@@ -12,9 +12,9 @@ import {
   JobStep,
   Tools,
 } from "../github/workflows-model";
-import { GroupRunnerOptions } from "../group-runner-options";
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
@@ -177,17 +177,8 @@ export class Publisher extends Component {
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
     this.publishTasks = options.publishTasks ?? false;
-
-    if (options.workflowRunsOnGroup && options.workflowRunsOn) {
-      throw new Error(
-        "Both 'workflowRunsOn' and 'workflowRunsOnGroup' cannot be set at the same time"
-      );
-    }
-    if (options.workflowRunsOnGroup) {
-      this.runsOnGroup = options.workflowRunsOnGroup;
-    } else {
-      this.runsOn = options.workflowRunsOn ?? ["ubuntu-latest"];
-    }
+    this.runsOn = options.workflowRunsOn;
+    this.runsOnGroup = options.workflowRunsOnGroup;
   }
 
   /**
@@ -663,10 +654,7 @@ export class Publisher extends Component {
         );
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
-      const runsOnValue = this.runsOnGroup 
-      ? { runsOnGroup: this.runsOnGroup } 
-      : { runsOn: this.runsOn };
- 
+
       return {
         [jobname]: {
           tools: {
@@ -677,7 +665,7 @@ export class Publisher extends Component {
           permissions: perms,
           if: this.condition,
           needs: [this.buildJobId],
-          ...runsOnValue,
+          ...filteredRunsOnOptions(this.runsOn, this.runsOnGroup),
           container,
           steps,
         },

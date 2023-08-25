@@ -6,7 +6,7 @@ import {
 } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { Job, JobStep } from "./workflows-model";
-import { GroupRunnerOptions } from "../group-runner-options";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
  * A set of utility functions for creating jobs in GitHub Workflows.
@@ -40,7 +40,7 @@ export class WorkflowJobs {
       permissions: {
         contents: workflows.JobPermission.READ,
       },
-      ...getRunsOnConfig(options),
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       steps,
     };
   }
@@ -80,22 +80,4 @@ export interface PullRequestFromPatchOptions extends CreatePullRequestOptions {
    * Github Runner Group selection options
    */
   readonly runsOnGroup?: GroupRunnerOptions;
-}
-
-/**
- * Generates the runs-on config for Jobs.
- * Throws error if 'runsOn' and 'runsOnGroup' are both set.
- *
- * @param options - 'runsOn' or 'runsOnGroup'.
- */
-function getRunsOnConfig(options: PullRequestFromPatchOptions) {
-  if (options.runsOnGroup && options.runsOn) {
-    throw new Error(
-      "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-    );
-  }
-
-  return options.runsOnGroup
-    ? { runsOnGroup: options.runsOnGroup }
-    : { runsOn: options.runsOn ?? ["ubuntu-latest"] };
 }

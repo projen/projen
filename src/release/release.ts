@@ -13,7 +13,11 @@ import {
   JobPermissions,
   JobStep,
 } from "../github/workflows-model";
-import { GroupRunnerOptions } from "../group-runner-options";
+import {
+  GroupRunnerOptions,
+  filteredRunsOnOptions,
+  filteredWorkflowRunsOnOptions,
+} from "../runner-options";
 import { Task } from "../task";
 import { ReleasableCommits, Version } from "../version";
 
@@ -376,7 +380,10 @@ export class Release extends Component {
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
-      ...this.getRunsOnConfig(options),
+      ...filteredWorkflowRunsOnOptions(
+        options.workflowRunsOn,
+        options.workflowRunsOnGroup
+      ),
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
       workflowNodeVersion: options.workflowNodeVersion,
@@ -636,13 +643,6 @@ export class Release extends Component {
     );
 
     if (this.github && !this.releaseTrigger.isManual) {
-      let runsOnValue;
-      if (this.workflowRunsOnGroup) {
-        runsOnValue = { runsOnGroup: this.workflowRunsOnGroup };
-      } else {
-        runsOnValue = { runsOn: this.workflowRunsOn };
-      }
-
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
@@ -676,29 +676,11 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
-        ...runsOnValue,
+        ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
     } else {
       return undefined;
     }
-  }
-
-  /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
-   */
-  private getRunsOnConfig(options: ReleaseOptions) {
-    if (options.workflowRunsOnGroup && options.workflowRunsOn) {
-      throw new Error(
-        "Both 'runsOn' and 'runsOnGroup' cannot be set at the same time"
-      );
-    }
-    
-    return options.workflowRunsOnGroup
-      ? { workflowRunsOnGroup: options.workflowRunsOnGroup }
-      : { workflowRunsOn: options.workflowRunsOn ?? ["ubuntu-latest"] };
   }
 }
 
