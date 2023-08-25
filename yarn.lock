@@ -4162,12 +4162,12 @@ jsii-reflect@^1.30.0, jsii-reflect@^1.87.0:
     yargs "^16.2.0"
 
 jsii-rosetta@5.1.x:
-  version "5.1.9"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.1.9.tgz#7307a562f0b51aa6922b137bb51ab9e6da172bbd"
-  integrity sha512-GgSLaxn9N0xnYBXkK8DIXrp1CWNSz2f7Q04kQW4n2htsLd3diPI3HNbbmJL5V+wwUIZhOpBe++5r1a7T7vFlqg==
+  version "5.1.10"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.1.10.tgz#90ff2d1f5909a60c3312310ca1ce10ca9e777b76"
+  integrity sha512-8j4+IdVBgc4OB9UVjs7Mb6htq4/mYa4N0TyciE/GPas3T+PVXjtPaLzoW8m1WX4Oku/rUNnVMDLZ7TV8YH4PSQ==
   dependencies:
-    "@jsii/check-node" "1.85.0"
-    "@jsii/spec" "^1.85.0"
+    "@jsii/check-node" "1.87.0"
+    "@jsii/spec" "^1.87.0"
     "@xmldom/xmldom" "^0.8.10"
     chalk "^4"
     commonmark "^0.30.0"
@@ -4177,7 +4177,7 @@ jsii-rosetta@5.1.x:
     semver-intersect "^1.4.0"
     stream-json "^1.8.0"
     typescript "~5.1.6"
-    workerpool "^6.4.0"
+    workerpool "^6.4.1"
     yargs "^17.7.2"
 
 jsii-rosetta@^1.87.0:
@@ -4217,13 +4217,32 @@ jsii@1.87.0:
     typescript "~3.9.10"
     yargs "^16.2.0"
 
-jsii@5.1.x, jsii@~5.1.5:
+jsii@5.1.x:
   version "5.1.10"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.1.10.tgz#e9973ea816362cb0791775a6ef1f43ebc5ed5702"
   integrity sha512-OvFBUj0V7H+ex7yGyg8bJwghiHnE/T8DmQBxJxUG6qApwKP9lJE+jSz0ONKuqdaxTK1RaLbZhatLkCRrkQrbJQ==
   dependencies:
     "@jsii/check-node" "1.85.0"
     "@jsii/spec" "^1.85.0"
+    case "^1.6.3"
+    chalk "^4"
+    downlevel-dts "^0.11.0"
+    fast-deep-equal "^3.1.3"
+    log4js "^6.9.1"
+    semver "^7.5.4"
+    semver-intersect "^1.4.0"
+    sort-json "^2.0.1"
+    spdx-license-list "^6.6.0"
+    typescript "~5.1.6"
+    yargs "^17.7.2"
+
+jsii@~5.1.5:
+  version "5.1.11"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.1.11.tgz#6c3faea5d9c2c9a85b06a5b65828e749fd6e437f"
+  integrity sha512-fM7RBmF6DcwVkfRhKZNK5NfPpTWCIoO6zkyPwZL8U8dO7SM1vP2xyUwG9upIHG17fv2BYYqg3wGlTwUE9aYL8w==
+  dependencies:
+    "@jsii/check-node" "1.87.0"
+    "@jsii/spec" "^1.87.0"
     case "^1.6.3"
     chalk "^4"
     downlevel-dts "^0.11.0"
@@ -6543,7 +6562,7 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
-workerpool@^6.4.0:
+workerpool@^6.4.0, workerpool@^6.4.1:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.4.2.tgz#5d086f6fef89adbc4300ca24fcafb7082330e960"
   integrity sha512-MrDWwemtC4xNV22kbbZDQQQmxNX+yLm790sgYl2wVD3CWnK7LJY1youI/11wHorAjHjK+GEjUxUh74XoPU71uQ==
