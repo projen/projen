@@ -157,7 +157,7 @@ export class PullRequestLint extends Component {
         if (!actual.includes(expected)) {
           console.log("%j", actual);
           console.log("%j", expected);
-          core.setFailed(`${process.env.HELP}: ${process.env.expected}`);
+          core.setFailed(`${process.env.HELP}: ${expected}`);
         }
       };
 

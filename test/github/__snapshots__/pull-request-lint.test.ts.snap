@@ -57,7 +57,7 @@ jobs:
             if (!actual.includes(expected)) {
                 console.log("%j", actual);
                 console.log("%j", expected);
-                core.setFailed(\`\${process.env.HELP}: \${process.env.expected}\`);
+                core.setFailed(\`\${process.env.HELP}: \${expected}\`);
             }
 "
 `;
@@ -118,7 +118,7 @@ jobs:
             if (!actual.includes(expected)) {
                 console.log("%j", actual);
                 console.log("%j", expected);
-                core.setFailed(\`\${process.env.HELP}: \${process.env.expected}\`);
+                core.setFailed(\`\${process.env.HELP}: \${expected}\`);
             }
 "
 `;
