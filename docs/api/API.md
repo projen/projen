@@ -746,6 +746,14 @@ new DockerCompose(project: Project, props?: DockerComposeProps)
   * **services** (<code>Map<string, [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)></code>)  Service descriptions. __*Optional*__
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The Docker Compose file.
+
 ### Methods
 
 
