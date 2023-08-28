@@ -793,7 +793,7 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --upgrade --target=minor --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/node,@types/react,@types/react-dom,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,npm-check-updates,projen,typescript,react,react-dom,react-scripts,web-vitals",
+            "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/node,@types/react,@types/react-dom,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,npm-check-updates,projen,typescript,react,react-dom,react-scripts,web-vitals",
           },
           {
             "exec": "yarn install --check-files",
