@@ -276,6 +276,7 @@ Name|Description
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.CheckoutWithPatchOptions](#projen-github-checkoutwithpatchoptions)|Options for `checkoutWithPatch`.
+[github.ContributorStatementOptions](#projen-github-contributorstatementoptions)|Options for requiring a contributor statement on Pull Requests.
 [github.CreatePullRequestOptions](#projen-github-createpullrequestoptions)|*No description*
 [github.DependabotAllow](#projen-github-dependabotallow)|You can use the `allow` option to customize which dependencies are updated.
 [github.DependabotGroup](#projen-github-dependabotgroup)|Defines a single group for dependency updates.
@@ -7452,9 +7453,26 @@ new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  *No description*
+  * **contributorStatement** (<code>string</code>)  Require a contributor statement to be included in the PR description. __*Default*__: no contributor statement is required
+  * **contributorStatementOptions** (<code>[github.ContributorStatementOptions](#projen-github-contributorstatementoptions)</code>)  Options for requiring a contributor statement on Pull Requests. __*Default*__: none
   * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **semanticTitle** (<code>boolean</code>)  Validate that pull request titles follow Conventional Commits. __*Default*__: true
   * **semanticTitleOptions** (<code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code>)  Options for validating the conventional commit title linter. __*Default*__: title must start with "feat", "fix", or "chore"
+
+
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-github-pullrequestlint-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
 
 
 
@@ -7480,6 +7498,22 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 * **options** (<code>[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)</code>)  *No description*
   * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
 
+
+### Methods
+
+
+#### *static* of(project)🔹 <a id="projen-github-pullrequesttemplate-of"></a>
+
+Returns the `PullRequestTemplate` instance associated with a project or `undefined` if there is no PullRequestTemplate.
+
+```ts
+static of(project: Project): PullRequestTemplate
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  The project.
+
+__Returns__:
+* <code>[github.PullRequestTemplate](#projen-github-pullrequesttemplate)</code>
 
 
 
@@ -16507,6 +16541,20 @@ Name | Type | Description
 
 
 
+## struct ContributorStatementOptions 🔹 <a id="projen-github-contributorstatementoptions"></a>
+
+
+Options for requiring a contributor statement on Pull Requests.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**exemptLabels**?🔹 | <code>Array<string></code> | Pull requests with one of these labels are exempted from a contributor statement.<br/>__*Default*__: no labels are excluded
+**exemptUsers**?🔹 | <code>Array<string></code> | Pull requests from these GitHub users are exempted from a contributor statement.<br/>__*Default*__: no users are exempted
+
+
+
 ## struct CreatePullRequestOptions 🔹 <a id="projen-github-createpullrequestoptions"></a>
 
 
@@ -16854,6 +16902,8 @@ Options for PullRequestLint.
 
 Name | Type | Description 
 -----|------|-------------
+**contributorStatement**?🔹 | <code>string</code> | Require a contributor statement to be included in the PR description.<br/>__*Default*__: no contributor statement is required
+**contributorStatementOptions**?🔹 | <code>[github.ContributorStatementOptions](#projen-github-contributorstatementoptions)</code> | Options for requiring a contributor statement on Pull Requests.<br/>__*Default*__: none
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **semanticTitle**?🔹 | <code>boolean</code> | Validate that pull request titles follow Conventional Commits.<br/>__*Default*__: true
 **semanticTitleOptions**?🔹 | <code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code> | Options for validating the conventional commit title linter.<br/>__*Default*__: title must start with "feat", "fix", or "chore"
