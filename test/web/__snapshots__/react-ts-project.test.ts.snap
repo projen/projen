@@ -570,12 +570,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^5",
+        "version": "^6",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^5",
+        "version": "^6",
       },
       {
         "name": "eslint-import-resolver-node",
@@ -1052,8 +1052,8 @@ tsconfig.tsbuildinfo
       "@types/node": "^16",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "@typescript-eslint/eslint-plugin": "^5",
-      "@typescript-eslint/parser": "^5",
+      "@typescript-eslint/eslint-plugin": "^6",
+      "@typescript-eslint/parser": "^6",
       "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",

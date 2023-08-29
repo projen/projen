@@ -709,12 +709,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^5",
+        "version": "^6",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^5",
+        "version": "^6",
       },
       {
         "name": "eslint-import-resolver-node",
@@ -1334,8 +1334,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "devDependencies": {
       "@types/jest": "^27",
       "@types/node": "^16",
-      "@typescript-eslint/eslint-plugin": "^5",
-      "@typescript-eslint/parser": "^5",
+      "@typescript-eslint/eslint-plugin": "^6",
+      "@typescript-eslint/parser": "^6",
       "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
