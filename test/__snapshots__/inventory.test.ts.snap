@@ -3231,7 +3231,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6163,7 +6163,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -10415,7 +10415,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -13168,7 +13168,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -16037,7 +16037,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -19673,7 +19673,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -22404,7 +22404,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -24688,7 +24688,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -27218,7 +27218,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -30690,7 +30690,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -32962,7 +32962,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -35497,7 +35497,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -38010,7 +38010,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
