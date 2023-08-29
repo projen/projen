@@ -12,7 +12,11 @@ test("default", () => {
   // THEN
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toBeDefined();
-  expect(snapshot[".github/workflows/pull-request-lint.yml"]).toMatchSnapshot();
+
+  const workflow = snapshot[".github/workflows/pull-request-lint.yml"];
+  expect(workflow).toMatchSnapshot();
+  expect(workflow).toContain("Validate PR title");
+  expect(workflow).not.toContain("Require Contributor Statement");
 });
 
 describe("semantic titles", () => {
@@ -52,6 +56,93 @@ describe("semantic titles", () => {
     expect(
       snapshot[".github/workflows/pull-request-lint.yml"]
     ).toMatchSnapshot();
+  });
+});
+
+describe("contributor statement", () => {
+  test("validates pull requests", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      contributorStatement: "Lorem ipsum dolor sit amet",
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(
+      snapshot[".github/workflows/pull-request-lint.yml"]
+    ).toMatchSnapshot();
+  });
+
+  test("creates pull request template", () => {
+    // GIVEN
+    const project = createProject({
+      pullRequestTemplate: false,
+    });
+    const contributorStatement = "Lorem ipsum dolor sit amet";
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      contributorStatement,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".github/pull_request_template.md"]).toMatchSnapshot();
+    expect(snapshot[".github/pull_request_template.md"]).toContain(
+      contributorStatement
+    );
+  });
+
+  test("appends to an existing request template", () => {
+    // GIVEN
+    const project = createProject({
+      pullRequestTemplate: true,
+      pullRequestTemplateContents: ["Foobar #"],
+    });
+    const contributorStatement = "Lorem ipsum dolor sit amet";
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      contributorStatement,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".github/pull_request_template.md"]).toMatchSnapshot();
+    expect(snapshot[".github/pull_request_template.md"]).toContain("Foobar #");
+    expect(snapshot[".github/pull_request_template.md"]).toContain(
+      contributorStatement
+    );
+  });
+
+  test("can exempt users and labels", () => {
+    // GIVEN
+    const project = createProject();
+    const contributorStatement = "Lorem ipsum dolor sit amet";
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      contributorStatement,
+      contributorStatementOptions: {
+        exemptLabels: ["automation"],
+        exemptUsers: ["github-bot[bot]"],
+      },
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(
+      snapshot[".github/workflows/pull-request-lint.yml"]
+    ).toMatchSnapshot();
+    expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
+      "github.event.pull_request.user.login == 'github-bot[bot]'"
+    );
+    expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
+      "contains(github.event.pull_request.labels.*.name, 'automation')"
+    );
   });
 });
 
