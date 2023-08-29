@@ -10736,6 +10736,29 @@ Name | Type | Description
 ### Methods
 
 
+#### addGitHubPostPublishingSteps(...steps)🔹 <a id="projen-release-publisher-addgithubpostpublishingsteps"></a>
+
+Adds post publishing steps for the GitHub release job.
+
+```ts
+addGitHubPostPublishingSteps(...steps: JobStep[]): void
+```
+
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  The steps.
+  * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
+  * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
+  * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
+  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
+  * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
+
+
+
+
 #### addGitHubPrePublishingSteps(...steps)🔹 <a id="projen-release-publisher-addgithubprepublishingsteps"></a>
 
 Adds pre publishing steps for the GitHub release job.
@@ -10789,6 +10812,7 @@ publishToGitHubReleases(options: GitHubReleasesPublishOptions): void
 ```
 
 * **options** (<code>[release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)</code>)  Options.
+  * **postPublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after executing the publishing command. __*Optional*__
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **changelogFile** (<code>string</code>)  The location of an .md file (relative to `dist/`) that includes the changelog for the release. 
@@ -10807,6 +10831,7 @@ publishToGo(options?: GoPublishOptions): void
 ```
 
 * **options** (<code>[release.GoPublishOptions](#projen-release-gopublishoptions)</code>)  Options.
+  * **postPublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after executing the publishing command. __*Optional*__
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
@@ -10830,6 +10855,7 @@ publishToMaven(options?: MavenPublishOptions): void
 ```
 
 * **options** (<code>[release.MavenPublishOptions](#projen-release-mavenpublishoptions)</code>)  Options.
+  * **postPublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after executing the publishing command. __*Optional*__
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **mavenEndpoint** (<code>string</code>)  URL of Nexus repository. __*Default*__: "https://oss.sonatype.org"
@@ -10853,6 +10879,7 @@ publishToNpm(options?: NpmPublishOptions): void
 ```
 
 * **options** (<code>[release.NpmPublishOptions](#projen-release-npmpublishoptions)</code>)  Options.
+  * **postPublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after executing the publishing command. __*Optional*__
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **codeArtifactOptions** (<code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
@@ -10872,6 +10899,7 @@ publishToNuget(options?: NugetPublishOptions): void
 ```
 
 * **options** (<code>[release.NugetPublishOptions](#projen-release-nugetpublishoptions)</code>)  Options.
+  * **postPublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after executing the publishing command. __*Optional*__
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **nugetApiKeySecret** (<code>string</code>)  GitHub secret which contains the API key for NuGet. __*Default*__: "NUGET_API_KEY"
@@ -10889,6 +10917,7 @@ publishToPyPi(options?: PyPiPublishOptions): void
 ```
 
 * **options** (<code>[release.PyPiPublishOptions](#projen-release-pypipublishoptions)</code>)  Options.
+  * **postPublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after executing the publishing command. __*Optional*__
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **twinePasswordSecret** (<code>string</code>)  The GitHub secret which contains PyPI password. __*Default*__: "TWINE_PASSWORD"
@@ -15285,6 +15314,7 @@ Name | Type | Description
 **iconUrl**?🔹 | <code>string</code> | __*Optional*__
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
 **nugetServer**?🔹 | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -15309,6 +15339,7 @@ Name | Type | Description
 **githubTokenSecret**?🔹 | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
 **githubUseSsh**?🔹 | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token.<br/>__*Default*__: false
 **packageName**?🔹 | <code>string</code> | The name of the go package.<br/>__*Default*__: derived from the module name
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -15334,6 +15365,7 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?🔹 | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?🔹 | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -15517,6 +15549,7 @@ Name | Type | Description
 -----|------|-------------
 **distName**🔹 | <code>string</code> | <span></span>
 **module**🔹 | <code>string</code> | <span></span>
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
@@ -18958,6 +18991,7 @@ Common publishing options.
 
 Name | Type | Description 
 -----|------|-------------
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -18975,6 +19009,7 @@ Name | Type | Description
 **changelogFile**🔹 | <code>string</code> | The location of an .md file (relative to `dist/`) that includes the changelog for the release.
 **releaseTagFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag.
 **versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19015,6 +19050,7 @@ Name | Type | Description
 **githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?🔹 | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
 **githubUseSsh**?🔹 | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token.<br/>__*Default*__: false
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19037,6 +19073,7 @@ Name | Type | Description
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
 **githubUseSsh**?⚠️ | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token.<br/>__*Default*__: false
+**postPublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19059,6 +19096,7 @@ Name | Type | Description
 **mavenServerId**?⚠️ | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?⚠️ | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?⚠️ | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**postPublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19076,6 +19114,7 @@ Name | Type | Description
 **codeArtifactOptions**?⚠️ | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**postPublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **registry**?⚠️ | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
@@ -19093,6 +19132,7 @@ Name | Type | Description
 -----|------|-------------
 **nugetApiKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
 **nugetServer**?⚠️ | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
+**postPublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19107,6 +19147,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**postPublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **twinePasswordSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
@@ -19147,6 +19188,7 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?🔹 | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?🔹 | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19164,6 +19206,7 @@ Name | Type | Description
 **codeArtifactOptions**?🔹 | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **registry**?🔹 | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
@@ -19181,6 +19224,7 @@ Name | Type | Description
 -----|------|-------------
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
 **nugetServer**?🔹 | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -19219,6 +19263,7 @@ Options for PyPI release.
 
 Name | Type | Description 
 -----|------|-------------
+**postPublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after executing the publishing command.<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
