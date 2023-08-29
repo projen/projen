@@ -148,6 +148,7 @@ export class Publisher extends Component {
   private readonly _jobFactories: PublishJobFactory[] = [];
 
   private readonly _gitHubPrePublishing: JobStep[] = [];
+  private readonly _gitHubPostPublishing: JobStep[] = [];
 
   private readonly dryRun: boolean;
 
@@ -207,6 +208,15 @@ export class Publisher extends Component {
   }
 
   /**
+   * Adds post publishing steps for the GitHub release job.
+   *
+   * @param steps The steps.
+   */
+  public addGitHubPostPublishingSteps(...steps: JobStep[]) {
+    this._gitHubPostPublishing.push(...steps);
+  }
+
+  /**
    * Publish to git.
    *
    * This includes generating a project-level changelog and release tags.
@@ -260,6 +270,8 @@ export class Publisher extends Component {
         name: "github",
         registryName: "GitHub Releases",
         prePublishSteps: options.prePublishSteps ?? this._gitHubPrePublishing,
+        postPublishSteps:
+          options.postPublishSteps ?? this._gitHubPostPublishing,
         publishTools: options.publishTools,
         permissions: {
           contents: JobPermission.WRITE,
@@ -333,6 +345,7 @@ export class Publisher extends Component {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
+        postPublishSteps: options.postPublishSteps ?? [],
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
@@ -383,6 +396,7 @@ export class Publisher extends Component {
         name: "nuget",
         publishTools: PUBLIB_TOOLCHAIN.dotnet,
         prePublishSteps: options.prePublishSteps ?? [],
+        postPublishSteps: options.postPublishSteps ?? [],
         run: this.publibCommand("publib-nuget"),
         registryName: "NuGet Gallery",
         permissions: {
@@ -426,6 +440,7 @@ export class Publisher extends Component {
         registryName: "Maven Central",
         publishTools: PUBLIB_TOOLCHAIN.java,
         prePublishSteps: options.prePublishSteps ?? [],
+        postPublishSteps: options.postPublishSteps ?? [],
         run: this.publibCommand("publib-maven"),
         env: {
           MAVEN_ENDPOINT: options.mavenEndpoint,
@@ -476,6 +491,7 @@ export class Publisher extends Component {
         registryName: "PyPI",
         publishTools: PUBLIB_TOOLCHAIN.python,
         prePublishSteps: options.prePublishSteps ?? [],
+        postPublishSteps: options.postPublishSteps ?? [],
         run: this.publibCommand("publib-pypi"),
         env: {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
@@ -523,6 +539,7 @@ export class Publisher extends Component {
         name: "golang",
         publishTools: PUBLIB_TOOLCHAIN.go,
         prePublishSteps: prePublishSteps,
+        postPublishSteps: options.postPublishSteps ?? [],
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
@@ -611,6 +628,7 @@ export class Publisher extends Component {
           run: commandToRun,
           env: jobEnv,
         },
+        ...opts.postPublishSteps,
       ];
 
       const perms = opts.permissions ?? { contents: JobPermission.READ };
@@ -747,6 +765,11 @@ interface PublishJobOptions {
   readonly prePublishSteps: JobStep[];
 
   /**
+   * Steps to execute before the release command for preparing the dist/ output.
+   */
+  readonly postPublishSteps: JobStep[];
+
+  /**
    * Tools setup for the workflow.
    * @default - no tools are installed
    */
@@ -767,6 +790,15 @@ export interface CommonPublishOptions {
    * Note that when using this in `publishToGitHubReleases` this will override steps added via `addGitHubPrePublishingSteps`.
    */
   readonly prePublishSteps?: JobStep[];
+
+  /**
+   * Steps to execute after executing the publishing command. These can be used
+   * to add/update the release artifacts ot any other tasks needed.
+   *
+   *
+   * Note that when using this in `publishToGitHubReleases` this will override steps added via `addGitHubPostPublishingSteps`.
+   */
+  readonly postPublishSteps?: JobStep[];
 
   /**
    * Additional tools to install in the publishing job.
