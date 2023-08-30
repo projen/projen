@@ -570,12 +570,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^5",
+        "version": "^6",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^5",
+        "version": "^6",
       },
       {
         "name": "eslint-import-resolver-node",
@@ -793,25 +793,13 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/node,@types/react,@types/react-dom,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,npm-check-updates,projen,typescript,react,react-dom,react-scripts,web-vitals",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint npm-check-updates projen typescript react react-dom react-scripts web-vitals",
           },
           {
             "exec": "npx projen",
@@ -1064,8 +1052,8 @@ tsconfig.tsbuildinfo
       "@types/node": "^16",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "@typescript-eslint/eslint-plugin": "^5",
-      "@typescript-eslint/parser": "^5",
+      "@typescript-eslint/eslint-plugin": "^6",
+      "@typescript-eslint/parser": "^6",
       "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",

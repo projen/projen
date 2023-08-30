@@ -246,9 +246,28 @@ test("upgrade task ignores pinned versions", () => {
     typescriptVersion: "4.4.4",
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
-  );
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-junit,npm-check-updates,projen,standard-version,ts-jest,npm",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit npm-check-updates projen standard-version ts-jest npm",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 describe("jestConfig", () => {

@@ -614,25 +614,13 @@ permissions-backup.acl
             "exec": "yarn upgrade npm-check-updates",
           },
           {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,npm-check-updates,projen,standard-version,react,react-dom,react-scripts,web-vitals",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event npm-check-updates projen standard-version react react-dom react-scripts web-vitals",
           },
           {
             "exec": "npx projen",

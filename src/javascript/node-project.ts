@@ -186,7 +186,7 @@ export interface NodeProjectOptions
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * Use github workflows to handle dependency upgrades.
+   * Use tasks and github workflows to handle dependency upgrades.
    * Cannot be used in conjunction with `dependabot`.
    *
    * @default true

@@ -182,7 +182,27 @@ test("upgrade task ignores pinned versions", () => {
     constructsVersion: "3.3.75",
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk8s-cli,cdk8s-plus-22,cdk8s,constructs'"
-  );
+  // notice cdk8s and constructs isn't here
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-junit,npm-check-updates,projen,standard-version,ts-jest,typescript",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit npm-check-updates projen standard-version ts-jest typescript",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });

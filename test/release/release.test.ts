@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { JobPermission } from "../../src/github/workflows-model";
+import { JobPermission, JobStep } from "../../src/github/workflows-model";
 import {
   Publisher,
   Release,
@@ -643,6 +643,69 @@ test("publisher can use custom github runner", () => {
   for (let job of Object.keys(workflow.jobs)) {
     expect(workflow.jobs[job]["runs-on"]).toEqual("self-hosted");
   }
+});
+
+test("ability to add post release steps in release workflow with publishToGitHubReleases", () => {
+  // GIVEN
+  const project = new TestProject({});
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    artifactsDirectory: "dist",
+  });
+
+  release.publisher.publishToGitHubReleases({
+    postPublishSteps: [
+      {
+        name: "Add additional content",
+        run: `gh release upload $(cat dist/releasetag.txt) 'dist/js/example-*.tgz'`,
+      },
+    ],
+    changelogFile: "changelog.md",
+    releaseTagFile: "releasetag.txt",
+    versionFile: "version.txt",
+  });
+
+  const outdir = synthSnapshot(project);
+  const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+
+  // Expect the last element to be the post step added
+  const githubReleaseJobSteps = workflow.jobs.release_github
+    .steps as Array<JobStep>;
+  expect(githubReleaseJobSteps[githubReleaseJobSteps.length - 1]).toEqual({
+    name: "Add additional content",
+    run: `gh release upload $(cat dist/releasetag.txt) 'dist/js/example-*.tgz'`,
+  });
+});
+
+test("ability to add post release steps in release workflow with addGitHubPostPublishingSteps", () => {
+  // GIVEN
+  const project = new TestProject({});
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    artifactsDirectory: "dist",
+  });
+
+  release.publisher.addGitHubPostPublishingSteps({
+    name: "Add additional content",
+    run: `gh release upload $(cat dist/releasetag.txt) 'dist/js/example-*.tgz'`,
+  });
+
+  const outdir = synthSnapshot(project);
+  const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+
+  // Expect the last element to be the post step added
+  const githubReleaseJobSteps = workflow.jobs.release_github
+    .steps as Array<JobStep>;
+  expect(githubReleaseJobSteps[githubReleaseJobSteps.length - 1]).toEqual({
+    name: "Add additional content",
+    run: `gh release upload $(cat dist/releasetag.txt) 'dist/js/example-*.tgz'`,
+  });
 });
 
 describe("npmDistTag", () => {
