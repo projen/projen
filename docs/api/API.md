@@ -11020,6 +11020,7 @@ addBranch(branch: string, options: BranchOptions): void
 * **options** (<code>[release.BranchOptions](#projen-release-branchoptions)</code>)  Branch definition.
   * **majorVersion** (<code>number</code>)  The major versions released from this branch. 
   * **minMajorVersion** (<code>number</code>)  The minimum major version to release. __*Optional*__
+  * **minorVersion** (<code>number</code>)  The minor versions released from this branch. __*Optional*__
   * **npmDistTag** (<code>string</code>)  The npm distribution tag to use for this branch. __*Default*__: "latest"
   * **prerelease** (<code>string</code>)  Bump the version as a pre-release tag. __*Default*__: normal releases
   * **tagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
@@ -18971,6 +18972,7 @@ Name | Type | Description
 -----|------|-------------
 **majorVersion**🔹 | <code>number</code> | The major versions released from this branch.
 **minMajorVersion**?🔹 | <code>number</code> | The minimum major version to release.<br/>__*Optional*__
+**minorVersion**?🔹 | <code>number</code> | The minor versions released from this branch.<br/>__*Optional*__
 **npmDistTag**?🔹 | <code>string</code> | The npm distribution tag to use for this branch.<br/>__*Default*__: "latest"
 **prerelease**?🔹 | <code>string</code> | Bump the version as a pre-release tag.<br/>__*Default*__: normal releases
 **tagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
