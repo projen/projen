@@ -436,6 +436,7 @@ Name|Description
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 [github.IAddConditionsLater](#projen-github-iaddconditionslater)|*No description*
+[gitlab.IDToken](#projen-gitlab-idtoken)|id_tokens Definition.
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
@@ -17268,6 +17269,20 @@ Name | Type | Description
 
 
 
+## interface IDToken 🔹 <a id="projen-gitlab-idtoken"></a>
+
+
+id_tokens Definition.
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**aud**🔹 | <code>string &#124; Array<string></code> | The required aud sub-keyword is used to configure the aud claim for the JWT.
+
+
+
 ## struct Image 🔹 <a id="projen-gitlab-image"></a>
 
 
@@ -17361,6 +17376,7 @@ Name | Type | Description
 **environment**?🔹 | <code>string &#124; [gitlab.Environment](#projen-gitlab-environment)</code> | Used to associate environment metadata with a deploy.<br/>__*Optional*__
 **except**?🔹 | <code>Array<string> &#124; [gitlab.Filter](#projen-gitlab-filter)</code> | Job will run *except* for when these filtering options match.<br/>__*Optional*__
 **extends**?🔹 | <code>Array<string></code> | The name of one or more jobs to inherit configuration from.<br/>__*Optional*__
+**idTokens**?🔹 | <code>Map<string, [gitlab.IDToken](#projen-gitlab-idtoken)></code> | Configurable ID tokens (JSON Web Tokens) that are used for CI/CD authentication.<br/>__*Optional*__
 **image**?🔹 | <code>[gitlab.Image](#projen-gitlab-image)</code> | __*Optional*__
 **inherit**?🔹 | <code>[gitlab.Inherit](#projen-gitlab-inherit)</code> | Controls inheritance of globally-defined defaults and variables.<br/>__*Optional*__
 **interruptible**?🔹 | <code>boolean</code> | __*Optional*__
