@@ -3704,7 +3704,7 @@ __Extends__: [cdk.ConstructLibrary](#projen-cdk-constructlibrary)
 new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 ```
 
-* **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
+* **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -4404,7 +4404,7 @@ __Extends__: [typescript.TypeScriptAppProject](#projen-typescript-typescriptappp
 new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 ```
 
-* **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  *No description*
+* **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -4720,7 +4720,7 @@ __Extends__: [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibra
 new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 ```
 
-* **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
+* **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -5354,7 +5354,7 @@ __Implemented by__: [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstru
 new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
-* **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
+* **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -5619,7 +5619,7 @@ __Extends__: [typescript.TypeScriptProject](#projen-typescript-typescriptproject
 new cdk.JsiiProject(options: JsiiProjectOptions)
 ```
 
-* **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
+* **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -6042,7 +6042,7 @@ __Extends__: [typescript.TypeScriptAppProject](#projen-typescript-typescriptappp
 new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 ```
 
-* **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  *No description*
+* **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -6230,7 +6230,7 @@ __Extends__: [cdk.ConstructLibrary](#projen-cdk-constructlibrary)
 new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 ```
 
-* **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  *No description*
+* **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -6478,7 +6478,7 @@ __Extends__: [cdk.ConstructLibrary](#projen-cdk-constructlibrary)
 new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 ```
 
-* **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
+* **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -11275,7 +11275,7 @@ __Extends__: [typescript.TypeScriptProject](#projen-typescript-typescriptproject
 new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
-* **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
+* **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
@@ -11747,6 +11747,7 @@ Name | Type | Description
 -----|------|-------------
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
+**options**🔹 | <code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code> | Reference to passed in options.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **tsconfigDev**🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | A typescript configuration file which covers all files (sources, tests, projen).
@@ -12291,7 +12292,7 @@ __Extends__: [typescript.TypeScriptAppProject](#projen-typescript-typescriptappp
 new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 ```
 
-* **options** (<code>[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)</code>)  *No description*
+* **options** (<code>[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)</code>)  Reference to passed in options.
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
@@ -12724,7 +12725,7 @@ __Extends__: [typescript.TypeScriptAppProject](#projen-typescript-typescriptappp
 new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 ```
 
-* **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
+* **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  Reference to passed in options.
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__

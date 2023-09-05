@@ -177,6 +177,11 @@ export class TypeScriptProject extends NodeProject {
   public readonly testdir: string;
 
   /**
+   * Reference to passed in options.
+   */
+  public readonly options: TypeScriptProjectOptions;
+
+  /**
    * The "watch" task.
    */
   public readonly watchTask: Task;
@@ -197,6 +202,7 @@ export class TypeScriptProject extends NodeProject {
       },
     });
 
+    this.options = options;
     this.srcdir = options.srcdir ?? "src";
     this.libdir = options.libdir ?? "lib";
 
