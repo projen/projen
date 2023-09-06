@@ -37,12 +37,6 @@ function verifyJobConstraints(
   runsOnGroup?: GroupRunnerOptions
 ): void {
   if (runsOn && runsOnGroup) {
-    throw new Error(
-      `Cannot specify both '${runsOn}' and '${JSON.stringify(
-        runsOnGroup,
-        undefined,
-        2
-      )}'`
-    );
+    throw new Error("Cannot specify both `workflowRunsOn` and `runsOn`");
   }
 }

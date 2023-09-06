@@ -5,7 +5,6 @@ import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
-import { GroupRunnerOptions } from "../runner-options";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 
@@ -274,7 +273,7 @@ function renderJobs(
     return {
       name: job.name,
       needs: arrayOrScalar(job.needs),
-      "runs-on": arrayOrScalar(job.runsOnGroup ?? job.runsOn),
+      "runs-on": arrayOrScalar(job.runsOnGroup) ?? arrayOrScalar(job.runsOn),
       permissions: kebabCaseKeys(job.permissions),
       environment: job.environment,
       concurrency: job.concurrency,
@@ -349,25 +348,16 @@ function renderJobs(
   }
 }
 
-function arrayOrScalar<T>(
-  arr: T[] | T | GroupRunnerOptions | GroupRunnerOptions[] | undefined
-): T | T[] | GroupRunnerOptions | GroupRunnerOptions[] | undefined {
-  if (arr == null) {
-    return arr;
-  }
-
+function arrayOrScalar<T>(arr: T | T[] | undefined): T | T[] | undefined {
   if (!Array.isArray(arr)) {
     return arr;
   }
-
-  if (arr.length === 0) {
+  if (arr == null || arr.length === 0) {
     return arr;
   }
-
   if (arr.length === 1) {
     return arr[0];
   }
-
   return arr;
 }
 
