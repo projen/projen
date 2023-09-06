@@ -3003,7 +3003,7 @@ addCondition(...condition: string[]): void
 
 
 
-#### builtin(name)🔹 <a id="projen-task-builtin"></a>
+#### builtin(name, options?)🔹 <a id="projen-task-builtin"></a>
 
 Execute a builtin task.
 
@@ -3013,10 +3013,16 @@ helpers for various components.
 In the future we should support built-in tasks from external modules.
 
 ```ts
-builtin(name: string): void
+builtin(name: string, options?: TaskCommonOptions): void
 ```
 
 * **name** (<code>string</code>)  The name of the builtin task to execute (e.g. `release/resolve-version`).
+* **options** (<code>[TaskCommonOptions](#projen-taskcommonoptions)</code>)  *No description*
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
 
 
 
@@ -3789,7 +3795,9 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -4489,7 +4497,9 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -4805,7 +4815,9 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -5176,12 +5188,14 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
   * **containerImage** (<code>string</code>)  The container image to use for builds. __*Default*__: the default workflow container
   * **env** (<code>Map<string, string></code>)  Build environment variables. __*Default*__: {}
   * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  Git identity to use for the workflow. __*Default*__: default identity
+  * **macos** (<code>boolean</code>)  *No description* __*Optional*__
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **name** (<code>string</code>)  Name of the buildfile (e.g. "build" becomes "build.yml"). __*Default*__: "build"
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. __*Default*__: `{ contents: JobPermission.WRITE }`
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
   * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **windows** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
 
@@ -5439,7 +5453,9 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -5704,7 +5720,9 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6127,7 +6145,9 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6315,7 +6335,9 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -6563,7 +6585,9 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -9219,7 +9243,9 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -10980,7 +11006,9 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. 
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
@@ -11360,7 +11388,9 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -11521,7 +11551,9 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -11682,7 +11714,9 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12220,7 +12254,9 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12378,7 +12414,9 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12609,7 +12647,9 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -12809,7 +12849,9 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowMacOS** (<code>boolean</code>)  *No description* __*Optional*__
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowWindows** (<code>boolean</code>)  *No description* __*Optional*__
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
@@ -14221,9 +14263,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -14612,9 +14656,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -14832,9 +14878,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?⚠️ | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?⚠️ | <code>boolean</code> | __*Optional*__
 
 
 
@@ -15064,12 +15112,14 @@ Name | Type | Description
 **containerImage**?🔹 | <code>string</code> | The container image to use for builds.<br/>__*Default*__: the default workflow container
 **env**?🔹 | <code>Map<string, string></code> | Build environment variables.<br/>__*Default*__: {}
 **gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | Git identity to use for the workflow.<br/>__*Default*__: default identity
+**macos**?🔹 | <code>boolean</code> | __*Optional*__
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **name**?🔹 | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml").<br/>__*Default*__: "build"
 **permissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.<br/>__*Default*__: `{ contents: JobPermission.WRITE }`
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**windows**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowTriggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | Build workflow triggers.<br/>__*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
 
@@ -15264,9 +15314,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -15543,9 +15595,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -15888,9 +15942,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -16062,9 +16118,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -16261,9 +16319,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -18321,9 +18381,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -19320,9 +19382,11 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 16.x
 **workflowPermissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the release workflow job.<br/>__*Default*__: `{ contents: JobPermission.WRITE }`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -19355,7 +19419,9 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -19547,9 +19613,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?⚠️ | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?⚠️ | <code>boolean</code> | __*Optional*__
 
 
 
@@ -19698,9 +19766,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -20039,9 +20109,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -20192,9 +20264,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -20358,9 +20432,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 
@@ -20540,9 +20616,11 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
+**workflowMacOS**?🔹 | <code>boolean</code> | __*Optional*__
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**workflowWindows**?🔹 | <code>boolean</code> | __*Optional*__
 
 
 

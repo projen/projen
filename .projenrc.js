@@ -82,7 +82,7 @@ const project = new cdk.JsiiProject({
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: "/bin/bash ./projen.bash",
+  projenCommand: "node ./projen.bootstrap.js",
 
   // cli tests need projen to be compiled
   compileBeforeTest: true,
@@ -127,23 +127,17 @@ const project = new cdk.JsiiProject({
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
   docgenFilePath: "docs/api/API.md",
+
+  workflowWindows: true,
+  workflowMacOS: true,
 });
 
-// this script is what we use as the projen command in this project
-// it will compile the project if needed and then run the cli.
-new TextFile(project, "projen.bash", {
-  lines: [
-    "#!/bin/bash",
-    `# ${PROJEN_MARKER}`,
-    "set -euo pipefail",
-    "if [ ! -f lib/cli/index.js ]; then",
-    '  echo "bootstrapping..."',
-    "  npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
-    "fi",
-    "exec bin/projen $@",
-  ],
-});
-project.npmignore.exclude("/projen.bash");
+project.jest.config.haste = {
+  ...(project.jest.config.haste ?? {}),
+  forceNodeFilesystemAPI: true,
+};
+
+project.npmignore.exclude("/projen.bootstrap.js");
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
@@ -190,7 +184,7 @@ project.github.mergify.addRule({
 project.gitpod.addCustomTask({
   name: "Setup",
   init: "yarn install",
-  prebuild: "bash ./projen.bash",
+  prebuild: "node ./projen.bootstrap.js",
   command: "npx projen build",
 });
 
@@ -239,18 +233,7 @@ function setupBundleTaskRunner() {
     description: 'Bundle the run-task script needed for "projen eject"',
     exec: `esbuild src/task-runtime.ts --outfile=${taskRunnerPath} --bundle --platform=node --external:"*/package.json"`,
   });
-  task.exec(
-    `echo "#!/usr/bin/env node" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null`,
-    {
-      name: "Insert Node shebang to beginning of the file",
-    }
-  );
-  task.exec(
-    `echo "const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);" >> ${taskRunnerPath}`,
-    {
-      name: "Add driver code to end of the file",
-    }
-  );
+  task.exec("node bundle.task-runner.js");
   project.postCompileTask.spawn(task);
 }
 

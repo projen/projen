@@ -56,7 +56,6 @@ junit.xml
 .jsii
 tsconfig.json
 !/docs/api/API.md
-!/projen.bash
 !templates/**
 /.idea
 !test/inventory/**

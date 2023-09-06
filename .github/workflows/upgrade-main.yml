@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
-        run: /bin/bash ./projen.bash upgrade
+        run: node ./projen.bootstrap.js upgrade
       - name: Find mutations
         id: create_patch
         run: |-

@@ -49,12 +49,7 @@
           "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\""
         },
         {
-          "exec": "echo \"#!/usr/bin/env node\" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null",
-          "name": "Insert Node shebang to beginning of the file"
-        },
-        {
-          "exec": "echo \"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\" >> lib/run-task.js",
-          "name": "Add driver code to end of the file"
+          "exec": "node bundle.task-runner.js"
         }
       ]
     },
@@ -213,7 +208,15 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "if [ ! -z ${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else /bin/bash ./projen.bash package-all; fi"
+          "builtin": "cdk/jsii-project.package",
+          "env": {
+            "ARTIFACTS_DIRECTORY": "dist",
+            "PACKAGE_ALL_TASK_NAME": "package-all"
+          },
+          "requiredEnv": [
+            "ARTIFACTS_DIRECTORY",
+            "PACKAGE_ALL_TASK_NAME"
+          ]
         }
       ]
     },
@@ -393,7 +396,7 @@
           "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak npm-check-updates prettier standard-version ts-jest @iarna/toml case chalk conventional-changelog-config-spec fast-json-patch glob ini semver shx xmlbuilder2 yaml yargs"
         },
         {
-          "exec": "/bin/bash ./projen.bash"
+          "exec": "node ./projen.bootstrap.js"
         },
         {
           "spawn": "post-upgrade"
