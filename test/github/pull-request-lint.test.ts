@@ -1,3 +1,4 @@
+import * as yaml from "yaml";
 import { PullRequestLint } from "../../src/github/pull-request-lint";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
@@ -160,6 +161,30 @@ test("with custom runner", () => {
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
     "runs-on: self-hosted"
   );
+});
+
+test("with custom runner group", () => {
+  // GIVEN
+  const project = createProject();
+
+  // WHEN
+  new PullRequestLint(project.github!, {
+    runsOnGroup: {
+      group: "Default",
+      labels: ["self-hosted", "x64", "linux"],
+    },
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  const build = yaml.parse(snapshot[".github/workflows/pull-request-lint.yml"]);
+
+  expect(build).toHaveProperty("jobs.validate.runs-on.group", "Default");
+  expect(build).toHaveProperty("jobs.validate.runs-on.labels", [
+    "self-hosted",
+    "x64",
+    "linux",
+  ]);
 });
 
 test("with github base url", () => {

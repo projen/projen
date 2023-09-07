@@ -1,6 +1,7 @@
 import { GitHub, PullRequestTemplate } from ".";
 import { Job, JobPermission } from "./workflows-model";
 import { Component } from "../component";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for PullRequestLint
@@ -23,8 +24,17 @@ export interface PullRequestLintOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Require a contributor statement to be included in the PR description.
@@ -117,7 +127,7 @@ export class PullRequestLint extends Component {
 
       const validateJob: Job = {
         name: "Validate PR title",
-        runsOn: options.runsOn ?? ["ubuntu-latest"],
+        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
         permissions: {
           pullRequests: JobPermission.WRITE,
         },

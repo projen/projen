@@ -13,6 +13,11 @@ import {
   JobPermissions,
   JobStep,
 } from "../github/workflows-model";
+import {
+  GroupRunnerOptions,
+  filteredRunsOnOptions,
+  filteredWorkflowRunsOnOptions,
+} from "../runner-options";
 import { Task } from "../task";
 import { ReleasableCommits, Version } from "../version";
 
@@ -177,8 +182,17 @@ export interface ReleaseProjectOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly workflowRunsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly workflowRunsOnGroup?: GroupRunnerOptions;
 
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
@@ -298,6 +312,7 @@ export class Release extends Component {
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
+  private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
 
   private readonly _branchHooks: BranchHook[];
@@ -325,6 +340,7 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
+    this.workflowRunsOnGroup = options.workflowRunsOnGroup;
     this.workflowPermissions = {
       contents: JobPermission.WRITE,
       ...options.workflowPermissions,
@@ -368,7 +384,10 @@ export class Release extends Component {
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
-      workflowRunsOn: options.workflowRunsOn,
+      ...filteredWorkflowRunsOnOptions(
+        options.workflowRunsOn,
+        options.workflowRunsOnGroup
+      ),
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
       workflowNodeVersion: options.workflowNodeVersion,
@@ -661,7 +680,7 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
-        runsOn: this.workflowRunsOn,
+        ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
     } else {
       return undefined;

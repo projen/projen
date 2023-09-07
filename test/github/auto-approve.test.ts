@@ -1,3 +1,4 @@
+import * as YAML from "yaml";
 import { AutoApprove } from "../../src/github/auto-approve";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
@@ -54,6 +55,28 @@ describe("auto-approve", () => {
     expect(snapshot[".github/workflows/auto-approve.yml"]).toContain(
       "runs-on: self-hosted"
     );
+  });
+
+  test("with custom runner group", () => {
+    const project = createProject();
+
+    new AutoApprove(project.github!, {
+      secret: "MY_SECRET",
+      runsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "x64", "linux"],
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    const build = YAML.parse(snapshot[".github/workflows/auto-approve.yml"]);
+
+    expect(build).toHaveProperty("jobs.approve.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.approve.runs-on.labels", [
+      "self-hosted",
+      "x64",
+      "linux",
+    ]);
   });
 });
 

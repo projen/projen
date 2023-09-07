@@ -273,7 +273,7 @@ function renderJobs(
     return {
       name: job.name,
       needs: arrayOrScalar(job.needs),
-      "runs-on": arrayOrScalar(job.runsOn),
+      "runs-on": arrayOrScalar(job.runsOnGroup) ?? arrayOrScalar(job.runsOn),
       permissions: kebabCaseKeys(job.permissions),
       environment: job.environment,
       concurrency: job.concurrency,
@@ -348,7 +348,10 @@ function renderJobs(
   }
 }
 
-function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
+function arrayOrScalar<T>(arr: T | T[] | undefined): T | T[] | undefined {
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
   if (arr == null || arr.length === 0) {
     return arr;
   }
@@ -409,17 +412,6 @@ function verifyJobConstraints(
       throw new Error(
         `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
       );
-    }
-  }
-
-  // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
-  for (const [id, job] of Object.entries(jobs)) {
-    if (!("uses" in job)) {
-      if ("runsOn" in job && job.runsOn.length === 0) {
-        throw new Error(
-          `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-        );
-      }
     }
   }
 }

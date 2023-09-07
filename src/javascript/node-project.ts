@@ -44,6 +44,7 @@ import {
   Release,
   ReleaseProjectOptions,
 } from "../release";
+import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
@@ -571,7 +572,10 @@ export class NodeProject extends GitHubProject {
           mutable: options.mutableBuild ?? true,
         }),
         postBuildSteps: options.postBuildSteps,
-        runsOn: options.workflowRunsOn,
+        ...filteredRunsOnOptions(
+          options.workflowRunsOn,
+          options.workflowRunsOnGroup
+        ),
         workflowTriggers: options.buildWorkflowTriggers,
         permissions: workflowPermissions,
       });

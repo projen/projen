@@ -17,6 +17,7 @@ import {
 } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
 const PULL_REQUEST_REPOSITORY =
@@ -95,8 +96,17 @@ export interface BuildWorkflowOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Build workflow triggers
@@ -121,7 +131,6 @@ export class BuildWorkflow extends Component {
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
   private readonly name: string;
-  private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -164,8 +173,8 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
-    this.workflow.addJob(BUILD_JOBID, {
-      runsOn: options.runsOn ?? this.defaultRunners,
+    const jobConfig = {
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
@@ -184,7 +193,9 @@ export class BuildWorkflow extends Component {
           outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         },
       },
-    });
+    };
+
+    this.workflow.addJob(BUILD_JOBID, jobConfig);
   }
 
   /**
@@ -274,7 +285,7 @@ export class BuildWorkflow extends Component {
         checkoutRepo: true,
         installDeps: true,
         tools: options.tools,
-        runsOn: options.runsOn,
+        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       }
     );
   }
@@ -326,14 +337,14 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.READ,
       },
       tools: options?.tools,
-      runsOn: options?.runsOn ?? this.defaultRunners,
+      ...filteredRunsOnOptions(options?.runsOn, options?.runsOnGroup),
       steps,
     });
   }
 
   private addSelfMutationJob(options: BuildWorkflowOptions) {
     this.workflow.addJob("self-mutation", {
-      runsOn: options.runsOn ?? this.defaultRunners,
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
         contents: JobPermission.WRITE,
       },
@@ -430,8 +441,17 @@ export interface AddPostBuildJobTaskOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -464,6 +484,15 @@ export interface AddPostBuildJobCommandsOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 }

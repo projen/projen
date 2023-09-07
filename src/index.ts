@@ -5,6 +5,7 @@ export * from "./docker-compose";
 export * from "./file";
 export * from "./gitattributes";
 export * from "./gitpod";
+export * from "./runner-options";
 export * from "./ignore-file";
 export * from "./ini";
 export * from "./json";
