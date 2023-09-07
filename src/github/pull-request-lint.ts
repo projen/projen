@@ -34,7 +34,7 @@ export interface PullRequestLintOptions {
    * @description Defines a target Runner Group by name and/or labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
-    readonly runsOnGroup?: GroupRunnerOptions;
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Require a contributor statement to be included in the PR description.
