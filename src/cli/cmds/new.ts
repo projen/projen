@@ -457,6 +457,7 @@ async function initProject(
       execCapture("git --version", { cwd: baseDir }).toString()
     );
     logging.debug("system using git version ", gitversion);
+    // `git config init.defaultBranch` and `git init -b` are only available since git 2.28.0
     if (gitversion && semver.gte(gitversion, "2.28.0")) {
       const defaultGitInitBranch =
         execOrUndefined("git config init.defaultBranch", {
