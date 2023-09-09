@@ -6,7 +6,13 @@ import * as inventory from "../../inventory";
 import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
-import { exec, execCapture, getGitVersion, isTruthy } from "../../util";
+import {
+  exec,
+  execCapture,
+  execOrUndefined,
+  getGitVersion,
+  isTruthy,
+} from "../../util";
 import { tryProcessMacro } from "../macros";
 import { CliError, installPackage, renderInstallCommand } from "../util";
 
@@ -452,10 +458,16 @@ async function initProject(
     );
     logging.debug("system using git version ", gitversion);
     if (gitversion && semver.gte(gitversion, "2.28.0")) {
-      git("init -b main");
+      const defaultGitInitBranch =
+        execOrUndefined("git config init.defaultBranch", {
+          cwd: baseDir,
+        })?.trim() ||
+        args.defaultReleaseBranch ||
+        "main";
+      git(`init -b ${defaultGitInitBranch}`);
       git("add .");
       git('commit --allow-empty -m "chore: project created with projen"');
-      logging.debug("default branch name set to main");
+      logging.debug(`default branch name set to ${defaultGitInitBranch}`);
     } else {
       git("init");
       git("add .");

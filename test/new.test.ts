@@ -536,14 +536,40 @@ describe("initial values", () => {
 
 describe("git", () => {
   test("--git (default) will initialize a git repo and create a commit", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, ["new", "project"]);
-      expect(
-        execCapture("git log", { cwd: projectdir })
-          .toString("utf8")
-          .includes("chore: project created with projen")
-      ).toBeTruthy();
-    });
+    withProjectDir(
+      (projectdir) => {
+        execProjenCLI(projectdir, ["new", "project"]);
+        expect(
+          execCapture("git log", { cwd: projectdir })
+            .toString("utf8")
+            .includes("chore: project created with projen")
+        ).toBeTruthy();
+      },
+      { git: false }
+    );
+  });
+
+  test("--git (default) respects init.defaultBranch setting", () => {
+    withProjectDir(
+      (projectdir) => {
+        const defaultBranch = "test-default-branch";
+
+        process.env.XDG_CONFIG_HOME = projectdir;
+        mkdirSync(join(projectdir, "git"));
+        writeFileSync(join(projectdir, "git", "config"), "");
+        execCapture(`git config --global init.defaultBranch ${defaultBranch}`, {
+          cwd: projectdir,
+        });
+
+        execProjenCLI(projectdir, ["new", "project"]);
+        expect(
+          execCapture("git rev-parse --abbrev-ref HEAD", {
+            cwd: projectdir,
+          }).toString()
+        ).toContain(defaultBranch);
+      },
+      { git: false }
+    );
   });
 
   test("--no-git will not create a git repo", () => {
