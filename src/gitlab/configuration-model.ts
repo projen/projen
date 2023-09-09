@@ -165,6 +165,15 @@ export interface Reports {
 }
 
 /**
+ * id_tokens Definition.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#id_tokens
+ */
+export interface IDToken {
+  /** The required aud sub-keyword is used to configure the aud claim for the JWT. */
+  aud: string[] | string;
+}
+
+/**
  * Specifies the docker image to use for the job or globally for all jobs. Job configuration
  * takes precedence over global setting. Requires a certain kind of Gitlab runner executor.
  * @see https://docs.gitlab.com/ee/ci/yaml/#image
@@ -293,6 +302,8 @@ export interface Job {
   readonly except?: string[] | Filter;
   /** The name of one or more jobs to inherit configuration from.*/
   readonly extends?: string[];
+  /** Configurable ID tokens (JSON Web Tokens) that are used for CI/CD authentication */
+  readonly idTokens?: Record<string, IDToken>;
   /* Specifies the default docker image to used for the job. */
   readonly image?: Image;
   /** Controls inheritance of globally-defined defaults and variables. Boolean values control inheritance of all default: or variables: keywords. To inherit only a subset of default: or variables: keywords, specify what you wish to inherit. Anything not listed is not inherited.*/
