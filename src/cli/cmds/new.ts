@@ -461,9 +461,7 @@ async function initProject(
       const defaultGitInitBranch =
         execOrUndefined("git config init.defaultBranch", {
           cwd: baseDir,
-        })?.trim() ||
-        args.defaultReleaseBranch ||
-        "main";
+        })?.trim() || "main";
       git(`init -b ${defaultGitInitBranch}`);
       git("add .");
       git('commit --allow-empty -m "chore: project created with projen"');
