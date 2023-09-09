@@ -1116,6 +1116,33 @@ describe("workflowRunsOn", () => {
       "self-hosted"
     );
   });
+
+  test("use github runner group specified in workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux", "x64"],
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const build = yaml.parse(output[".github/workflows/build.yml"]);
+
+    expect(build).toHaveProperty("jobs.build.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.build.runs-on.labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
+    expect(build).toHaveProperty("jobs.self-mutation.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.self-mutation.runs-on.labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
+  });
 });
 
 describe("buildWorkflowTriggers", () => {

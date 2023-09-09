@@ -14,6 +14,7 @@ import {
 } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
@@ -102,8 +103,17 @@ export interface PublisherOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly workflowRunsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly workflowRunsOnGroup?: GroupRunnerOptions;
 
   /**
    * Define publishing tasks that can be executed manually as well as workflows.
@@ -141,7 +151,8 @@ export class Publisher extends Component {
 
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
-  private readonly runsOn: string[];
+  private readonly runsOn?: string[];
+  private readonly runsOnGroup?: GroupRunnerOptions;
   private readonly publishTasks: boolean;
 
   // functions that create jobs associated with a specific branch
@@ -170,8 +181,9 @@ export class Publisher extends Component {
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
-    this.runsOn = options.workflowRunsOn ?? ["ubuntu-latest"];
     this.publishTasks = options.publishTasks ?? false;
+    this.runsOn = options.workflowRunsOn;
+    this.runsOnGroup = options.workflowRunsOnGroup;
   }
 
   /**
@@ -675,7 +687,7 @@ export class Publisher extends Component {
           permissions: perms,
           if: this.condition,
           needs: [this.buildJobId],
-          runsOn: this.runsOn,
+          ...filteredRunsOnOptions(this.runsOn, this.runsOnGroup),
           container,
           steps,
         },

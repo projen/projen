@@ -11,6 +11,7 @@ import {
   NugetPublishOptions,
   PyPiPublishOptions,
 } from "../release";
+import { filteredRunsOnOptions } from "../runner-options";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { deepMerge } from "../util";
 
@@ -299,7 +300,7 @@ export class JsiiProject extends TypeScriptProject {
     );
 
     const extraJobOptions: Partial<Job> = {
-      ...(options.workflowRunsOn ? { runsOn: options.workflowRunsOn } : {}),
+      ...this.getJobRunsOnConfig(options),
       ...(options.workflowContainerImage
         ? { container: { image: options.workflowContainerImage } }
         : {}),
@@ -443,7 +444,10 @@ export class JsiiProject extends TypeScriptProject {
     const pacmak = this.pacmakForLanguage(language, packTask);
 
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
-      runsOn: ["ubuntu-latest"],
+      ...filteredRunsOnOptions(
+        extraJobOptions.runsOn,
+        extraJobOptions.runsOnGroup
+      ),
       permissions: {},
       tools: {
         node: { version: this.nodeVersion ?? "16.x" },
@@ -504,6 +508,20 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps,
     };
+  }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getJobRunsOnConfig(options: JsiiProjectOptions) {
+    return options.workflowRunsOnGroup
+      ? { runsOnGroup: options.workflowRunsOnGroup }
+      : options.workflowRunsOn
+      ? { runsOn: options.workflowRunsOn }
+      : {};
   }
 }
 

@@ -18,6 +18,7 @@ import {
 } from "../github/workflows-model";
 import { NodePackageManager, NodeProject } from "../javascript";
 import { Release } from "../release";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
 
@@ -391,8 +392,6 @@ export class UpgradeDependencies extends Component {
   }
 
   private createUpgrade(task: Task, github: GitHub, branch?: string): Upgrade {
-    const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
-
     const with_ = {
       ...(branch ? { ref: branch } : {}),
       ...(github.downloadLfs ? { lfs: true } : {}),
@@ -424,7 +423,10 @@ export class UpgradeDependencies extends Component {
         name: "Upgrade",
         container: this.containerOptions,
         permissions: this.permissions,
-        runsOn: runsOn ?? ["ubuntu-latest"],
+        ...filteredRunsOnOptions(
+          this.options.workflowOptions?.runsOn,
+          this.options.workflowOptions?.runsOnGroup
+        ),
         steps: steps,
         outputs: {
           [PATCH_CREATED_OUTPUT]: {
@@ -454,7 +456,10 @@ export class UpgradeDependencies extends Component {
         },
         workflowName: workflow.name,
         credentials,
-        runsOn: this.options.workflowOptions?.runsOn,
+        ...filteredRunsOnOptions(
+          this.options.workflowOptions?.runsOn,
+          this.options.workflowOptions?.runsOnGroup
+        ),
         pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,
@@ -539,8 +544,17 @@ export interface UpgradeDependenciesWorkflowOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Permissions granted to the upgrade job

@@ -10,6 +10,7 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
@@ -111,8 +112,17 @@ export interface TaskWorkflowOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Whether to download files from Git LFS for this workflow
@@ -179,7 +189,7 @@ export class TaskWorkflow extends GithubWorkflow {
     }
 
     const job: Job = {
-      runsOn: options.runsOn ?? ["ubuntu-latest"],
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.container,
       env: options.env,
       permissions: options.permissions,
