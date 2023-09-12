@@ -18559,6 +18559,7 @@ Name | Type | Description
 **emitDeclarationOnly**?🔹 | <code>boolean</code> | Only emit .d.ts files; do not emit .js files.<br/>__*Default*__: false
 **emitDecoratorMetadata**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: undefined
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
+**exactOptionalPropertyTypes**?🔹 | <code>boolean</code> | Specifies that optional property types should be interpreted exactly as written, meaning that `| undefined` is not added to the type Available with TypeScript 4.4 and newer.<br/>__*Default*__: false
 **experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: true
 **forceConsistentCasingInFileNames**?🔹 | <code>boolean</code> | Disallow inconsistently-cased references to the same file.<br/>__*Default*__: false
 **importsNotUsedAsValues**?🔹 | <code>[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)</code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.<br/>__*Default*__: "remove"
@@ -18595,6 +18596,7 @@ Name | Type | Description
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
 **stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.<br/>__*Default*__: true
 **target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
+**useUnknownInCatchVariables**?🔹 | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer.<br/>__*Default*__: true
 **verbatimModuleSyntax**?🔹 | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
 
