@@ -132,6 +132,24 @@ test("respect the original format when adding global variables", () => {
   });
 });
 
+test("respect the original format when variables are added to jobs", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      build: {
+        idTokens: { TEST_ID_TOKEN: { aud: "https://test.service.com" } },
+      },
+    },
+  });
+  // THEN
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build.id_tokens
+  ).toStrictEqual({ TEST_ID_TOKEN: { aud: "https://test.service.com" } });
+});
+
 test("adds correct entries for path-based caching", () => {
   // GIVEN
   const p = new TestProject({
