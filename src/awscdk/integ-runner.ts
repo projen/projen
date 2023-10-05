@@ -22,16 +22,12 @@ export class IntegRunner extends Component {
     const integSnapshotTask = project.addTask("integ", {
       description: "Run integration snapshot tests",
       receiveArgs: true,
-      // Note: We're using -- to stop parsing of options because integ-runner
-      // interprets subsequent arguments as additional languages instead of
-      // test names. Unfortunately, this results in a warning from yarn, but
-      // it does not affect the execution of the command.
-      exec: "yarn integ-runner --language typescript --",
+      exec: "integ-runner $@ --language typescript",
     });
 
     project.addTask("integ:update", {
       description: "Run and update integration snapshot tests",
-      exec: "yarn integ-runner --language typescript --update-on-failed",
+      exec: "integ-runner $@ --language typescript --update-on-failed",
       receiveArgs: true,
     });
 

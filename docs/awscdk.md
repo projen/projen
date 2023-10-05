@@ -311,7 +311,7 @@ for integration testing. To enable this feature, you specify
 
 
 ```typescript
-const { awscdk } = require('projen');
+import { awscdk } from 'projen';
 
 new awscdk.AwsCdkConstructLibrary({
   // ...
@@ -326,18 +326,18 @@ committed snapshots at build-time, or whenever the test task is run.
 
 Projen also provides two new commands:
 
-`yarn integ [...test names]` - Verifies integration test snapshots. If test
+`projen integ [...test names]` - Verifies integration test snapshots. If test
 names are provided, only the provided integration tests will be checked.
 Otherwise, all integration tests will be checked.
 
-`yarn integ:update [...test names]` - Verifies integration test snapshots or
+`projen integ:update [...test names]` - Verifies integration test snapshots or
 updates the integration test snapshot by re-running the integration test on
-failure. Like `yarn integ`, you may specify zero or more test names.
+failure. Like `projen integ`, you may specify zero or more test names.
 
 > Tests are named based on their file path. For instance, with an integration
 > test contained in `test/r53writer/integ.ddbStreamHandler.ts`, the test name
 > is `r53writer/integ.ddbStreamHandler`, and you could update the test's
-> snapshot by running `yarn integ:update r53writer/integ.ddbStreamHandler`.
+> snapshot by running `projen integ:update r53writer/integ.ddbStreamHandler`.
 
 ## Watch
 
