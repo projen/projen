@@ -8,14 +8,14 @@ import { Project } from "../project";
  */
 export interface Cdk8sDepsCommonOptions {
   /**
-   * Minumum version of the cdk8s to depend on.
+   * Minimum version of the cdk8s to depend on.
    *
    * @default "2.3.33"
    */
   readonly cdk8sVersion: string;
 
   /**
-   * Minumum version of the cdk8s-cli to depend on.
+   * Minimum version of the cdk8s-cli to depend on.
    *
    * @default "2.0.28"
    */
@@ -75,7 +75,7 @@ export interface Cdk8sDepsCommonOptions {
   readonly k8sMinorVersion?: number;
 
   /**
-   * Minumum version of the cdk8s-plus-XX to depend on.
+   * Minimum version of the cdk8s-plus-XX to depend on.
    *
    * @default "2.0.0-rc.26"
    */

@@ -8629,7 +8629,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.28"",
-        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "docs": "Minimum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8702,7 +8702,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.0-rc.26"",
-        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "docs": "Minimum version of the cdk8s-plus-XX to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8736,7 +8736,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.3.33"",
-        "docs": "Minumum version of the cdk8s to depend on.",
+        "docs": "Minimum version of the cdk8s to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10114,7 +10114,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.28"",
-        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "docs": "Minimum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10187,7 +10187,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.0-rc.26"",
-        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "docs": "Minimum version of the cdk8s-plus-XX to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10221,7 +10221,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.3.33"",
-        "docs": "Minumum version of the cdk8s to depend on.",
+        "docs": "Minimum version of the cdk8s to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
