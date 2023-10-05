@@ -163,6 +163,38 @@ describe("watch", () => {
   });
 });
 
+describe("integ-runner", () => {
+  test('adds "integ-runner" to devDependencies', () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      cdkVersion: "2.12.0",
+      defaultReleaseBranch: "main",
+      experimentalIntegRunner: true,
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-runner"]
+    ).toStrictEqual("latest");
+    expect(
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"]
+    ).toStrictEqual("latest");
+    expect(project.tasks.tryFind("integ")?.steps).toEqual([
+      { exec: "integ-runner $@ --language typescript", receiveArgs: true },
+    ]);
+    expect(project.tasks.tryFind("integ:update")?.steps).toEqual([
+      {
+        exec: "integ-runner $@ --language typescript --update-on-failed",
+        receiveArgs: true,
+      },
+    ]);
+    expect(project.testTask.steps).toEqual(
+      expect.arrayContaining([{ spawn: "integ" }])
+    );
+  });
+});
+
 test("CDK v1 usage", () => {
   const project = new AwsCdkTypeScriptApp({
     cdkVersion: "1.126.0",
