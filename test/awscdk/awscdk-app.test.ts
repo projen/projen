@@ -181,11 +181,11 @@ describe("integ-runner", () => {
       snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"]
     ).toStrictEqual("latest");
     expect(project.tasks.tryFind("integ")?.steps).toEqual([
-      { exec: "yarn integ-runner --language typescript --", receiveArgs: true },
+      { exec: "integ-runner $@ --language typescript", receiveArgs: true },
     ]);
     expect(project.tasks.tryFind("integ:update")?.steps).toEqual([
       {
-        exec: "yarn integ-runner --language typescript --update-on-failed",
+        exec: "integ-runner $@ --language typescript --update-on-failed",
         receiveArgs: true,
       },
     ]);
