@@ -1712,9 +1712,9 @@ camelcase@^7.0.1:
   integrity sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==
 
 caniuse-lite@^1.0.30001541:
-  version "1.0.30001543"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001543.tgz#478a3e9dddbb353c5ab214b0ecb0dbed529ed1d8"
-  integrity sha512-qxdO8KPWPQ+Zk6bvNpPeQIOH47qZSYdFZd6dXQzb2KzhnSXju4Kd7H1PkSJx6NICSMgo/IhRZRhhfPTHYpJUCA==
+  version "1.0.30001546"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001546.tgz#10fdad03436cfe3cc632d3af7a99a0fb497407f0"
+  integrity sha512-zvtSJwuQFpewSyRrI3AsftF6rM0X80mZkChIt1spBGEvRglCrjTniXvinc8JKRoqTwXAgvqTImaN9igfSMtUBw==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2349,9 +2349,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.535:
-  version "1.4.540"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.540.tgz#c685f2f035e93eb21dd6a9cfe2c735bad8f77401"
-  integrity sha512-aoCqgU6r9+o9/S7wkcSbmPRFi7OWZWiXS9rtjEd+Ouyu/Xyw5RSq2XN8s5Qp8IaFOLiRrhQCphCIjAxgG3eCAg==
+  version "1.4.542"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.542.tgz#9bfe19d8ddafc2591e4a17d04e60a5f5acc54965"
+  integrity sha512-6+cpa00G09N3sfh2joln4VUXHquWrOFx3FLZqiVQvl45+zS9DskDBTPvob+BhvFRmTBkyDSk0vvLMMRo/qc6mQ==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -4867,9 +4867,9 @@ npm-bundled@^3.0.0:
     npm-normalize-package-bin "^3.0.0"
 
 npm-check-updates@^16:
-  version "16.14.4"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.14.4.tgz#561e97e92079ae4dbab9d9cbeb424d292ca01bae"
-  integrity sha512-PKg1wv3vno75/9qgRLqV2huBO7eukOlW+PmIGl7LPXjElfYTUTWUtaMOdOckImaSj4Uqe46W/zMbMFZQp5dHRQ==
+  version "16.14.5"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.14.5.tgz#caf7c7d346e21e8a6c9ebf466e4b8f77a0e6ac6a"
+  integrity sha512-f7v3YzPUgadtkB2LAVhiWMjrSejJ0N8OM9JjjVfxBz2neHqmPSWQUAUA+U/p3xeXHl9bghRD6knRqBhm9dkRGg==
   dependencies:
     chalk "^5.3.0"
     cli-table3 "^0.6.3"
