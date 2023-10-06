@@ -12088,31 +12088,33 @@ new vscode.VsCodeSettings(vscode: VsCode)
 ### Methods
 
 
-#### addSetting(setting, value, language?)🔹 <a id="projen-vscode-vscodesettings-addsetting"></a>
+#### addSetting(setting, value, language?, extend?)🔹 <a id="projen-vscode-vscodesettings-addsetting"></a>
 
 Adds a workspace setting.
 
 ```ts
-addSetting(setting: string, value: any, language?: string): void
+addSetting(setting: string, value: any, language?: string, extend?: boolean): void
 ```
 
 * **setting** (<code>string</code>)  The setting ID.
 * **value** (<code>any</code>)  The value of the setting.
 * **language** (<code>string</code>)  Scope the setting to a specific language.
+* **extend** (<code>boolean</code>)  Extend an existing setting if exists, override completely if false (default: false).
 
 
 
 
-#### addSettings(settings, languages?)🔹 <a id="projen-vscode-vscodesettings-addsettings"></a>
+#### addSettings(settings, languages?, extend?)🔹 <a id="projen-vscode-vscodesettings-addsettings"></a>
 
 Adds a workspace setting.
 
 ```ts
-addSettings(settings: Map<string, any>, languages?: string &#124; Array<string>): void
+addSettings(settings: Map<string, any>, languages?: string &#124; Array<string>, extend?: boolean): void
 ```
 
 * **settings** (<code>Map<string, any></code>)  Array structure: [setting: string, value: any, languages?: string[]].
 * **languages** (<code>string &#124; Array<string></code>)  *No description*
+* **extend** (<code>boolean</code>)  *No description*
 
 
 

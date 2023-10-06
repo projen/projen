@@ -105,3 +105,55 @@ test("batch add settings", () => {
     },
   });
 });
+
+test('add array setting with "extend" option', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  project.vscode?.settings.addSetting("editor.rulers", [80], undefined, true);
+  project.vscode?.settings.addSetting("editor.rulers", [120], undefined, true);
+  project.vscode?.settings.addSetting("editor.rulers", [80], undefined, true); // duplicate
+
+  // THEN
+  const settings = synthSnapshot(project)[VSCODE_SETTINGS_FILE];
+
+  expect(settings).toStrictEqual({
+    "//": expect.anything(),
+    "editor.rulers": [80, 120],
+  });
+});
+
+test('add object setting with "extend" option', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  project.vscode?.settings.addSetting(
+    "search.exclude",
+    {
+      "**/node_modules": true,
+    },
+    undefined,
+    true
+  );
+  project.vscode?.settings.addSetting(
+    "search.exclude",
+    {
+      "**/bower_components": true,
+    },
+    undefined,
+    true
+  );
+
+  // THEN
+  const settings = synthSnapshot(project)[VSCODE_SETTINGS_FILE];
+
+  expect(settings).toStrictEqual({
+    "//": expect.anything(),
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+    },
+  });
+});
