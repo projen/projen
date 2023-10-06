@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
-import { Project, DependencyType } from "../../src";
+import { Project, DependencyType, Component } from "../../src";
 import {
   NodePackage,
   NodePackageManager,
@@ -286,12 +286,6 @@ test("manually set devDependencies are not changed when a peerDependency is adde
     });
 
   const project = new Project({ name: "test" });
-  const pkg = new NodePackage(project, {
-    peerDependencyOptions: {
-      pinnedDevDependency: true,
-    },
-  });
-
   const orig = {
     name: "test",
     devDependencies: {
@@ -307,6 +301,12 @@ test("manually set devDependencies are not changed when a peerDependency is adde
     join(project.outdir, "package.json"),
     JSON.stringify(orig, undefined, 2)
   );
+
+  const pkg = new NodePackage(project, {
+    peerDependencyOptions: {
+      pinnedDevDependency: true,
+    },
+  });
 
   pkg.addPeerDeps("ms");
 
@@ -655,4 +655,28 @@ test("tryResolveDependencyVersion resolves with no package.json or default expor
 
   expect(project.deps.tryGetDependency("@types/js-yaml")?.version).toEqual("*");
   expect(pkg.tryResolveDependencyVersion("@types/js-yaml")).toEqual("4.0.5");
+});
+
+test("project components should be able to change dependencies during preSynthesize", () => {
+  const project = new TestProject();
+  const pkg = new NodePackage(project);
+  pkg.addDevDeps("test-dev-dep-1@1.0.0");
+
+  new (class extends Component {
+    public preSynthesize(): void {
+      project.deps.removeDependency("test-dev-dep-1", DependencyType.BUILD);
+      project.deps.addDependency(
+        "test-dev-dep-2@2.0.0",
+        DependencyType.RUNTIME
+      );
+    }
+  })(project);
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].devDependencies).toBeUndefined();
+  expect(snps["package.json"].dependencies).toHaveProperty(
+    "test-dev-dep-2",
+    "2.0.0"
+  );
 });

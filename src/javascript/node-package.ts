@@ -501,6 +501,7 @@ export class NodePackage extends Component {
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
+  private readonly _prev?: Record<string, any>;
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -535,7 +536,7 @@ export class NodePackage extends Component {
 
     this.processDeps(options);
 
-    const prev = this.readPackageJson() ?? {};
+    this._prev = this.readPackageJson();
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
@@ -562,11 +563,11 @@ export class NodePackage extends Component {
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
-      typesVersions: prev?.typesVersions,
+      typesVersions: this._prev?.typesVersions,
 
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
-      version: this.determineVersion(prev?.version),
+      version: this.determineVersion(this._prev?.version),
       bugs:
         options.bugsEmail || options.bugsUrl
           ? {
@@ -831,10 +832,9 @@ export class NodePackage extends Component {
   }
 
   // ---------------------------------------------------------------------------------------
-
-  public preSynthesize() {
-    super.preSynthesize();
+  public synthesize() {
     this._renderedDeps = this.renderDependencies();
+    super.synthesize();
   }
 
   public postSynthesize() {
@@ -1194,8 +1194,7 @@ export class NodePackage extends Component {
     this.manifest.bundledDependencies = sorted(bundledDependencies);
 
     // nothing further to do if package.json file does not exist
-    const pkg = this.readPackageJson();
-    if (!pkg) {
+    if (!this._prev) {
       return { devDependencies, peerDependencies, dependencies };
     }
 
@@ -1223,9 +1222,9 @@ export class NodePackage extends Component {
       }
     };
 
-    readDeps(devDependencies, pkg.devDependencies);
-    readDeps(dependencies, pkg.dependencies);
-    readDeps(peerDependencies, pkg.peerDependencies);
+    readDeps(devDependencies, this._prev.devDependencies);
+    readDeps(dependencies, this._prev.dependencies);
+    readDeps(peerDependencies, this._prev.peerDependencies);
 
     return { devDependencies, dependencies, peerDependencies };
   }
