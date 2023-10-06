@@ -180,6 +180,10 @@ cython_debug/
         "version": "0.0.2",
       },
       {
+        "name": "package3",
+        "type": "runtime",
+      },
+      {
         "name": "pytest",
         "type": "test",
         "version": "6.2.1",
@@ -361,6 +365,7 @@ exclude = [ "my_package/excluded.py" ]
   [tool.poetry.dependencies]
   package1 = "0.0.1"
   package2 = "0.0.2"
+  package3 = "*"
   python = "^3.7"
 
   [tool.poetry.dev-dependencies]
