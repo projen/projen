@@ -106,7 +106,7 @@ test("poetry enabled with poetry-specific options", () => {
     description: "a short project description",
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
-    deps: ["package1@0.0.1", "package2@0.0.2"],
+    deps: ["package1@0.0.1", "package2@0.0.2", "package3"],
     poetryOptions: {
       maintainers: ["First-2 Last-2"],
       repository: "https://github.com/test-python-project",
