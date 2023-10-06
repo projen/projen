@@ -30,6 +30,7 @@ readme = "README.md"
 
   [tool.poetry.dev-dependencies]
   projen = "99.99.99"
+  pytest = "6.2.1"
 "
 `;
 
@@ -364,6 +365,7 @@ exclude = [ "my_package/excluded.py" ]
 
   [tool.poetry.dev-dependencies]
   projen = "99.99.99"
+  pytest = "6.2.1"
 ",
   "test_python_project/__init__.py": "__version__ = "0.1.0"
 ",
