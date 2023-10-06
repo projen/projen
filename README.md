@@ -122,12 +122,12 @@ Once your project is created, you can configure your project by editing
 > to ensure that files are not updated during build).
 
 For example, to setup PyPI publishing in `jsii` projects, you can use
-[`python option`](https://github.com/eladb/projen/blob/master/API.md#projen-jsiipythontarget):
+[`publishToPypi option`](https://projen.io/publisher.html):
 
 ```js
 const project = new JsiiProject({
   // ...
-  python: {
+  publishToPypi: {
     distName: "mydist",
     module: "my_module",
   }
@@ -270,10 +270,10 @@ See [Vision](./VISION.md).
 ### Do I have to write my configuration in JavaScript?
 
 Not at all! JavaScript is the default, but it's also possible to write it in
-Java, TypeScript, or even JSON. Python support is also planned. This is made
+Java, Python, TypeScript, or even JSON. This is made
 possible by the [jsii](https://github.com/aws/jsii) library which allows us
 to write APIs once and generate libraries in several languages. You can choose
-a different language by passing the `--projenrc-ts`, `--projenrc-java`, or
+a different language by passing the `--projenrc-ts`, `--projenrc-py`, `--projenrc-java`, or
 `--projenrc-json` flags when running `projen new`.
 
 Note: using a `.projenrc.json` file to specify configuration only allows
