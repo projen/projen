@@ -9085,18 +9085,6 @@ postSynthesize(): void
 
 
 
-#### preSynthesize()🔹 <a id="projen-javascript-nodepackage-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
-
 #### removeScript(name)🔹 <a id="projen-javascript-nodepackage-removescript"></a>
 
 Removes an npm script (always successful).
@@ -9120,6 +9108,18 @@ setScript(name: string, command: string): void
 
 * **name** (<code>string</code>)  The script name.
 * **command** (<code>string</code>)  The command to execute.
+
+
+
+
+#### synthesize()🔹 <a id="projen-javascript-nodepackage-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(): void
+```
+
 
 
 
