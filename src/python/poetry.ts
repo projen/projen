@@ -85,7 +85,7 @@ export class Poetry
         pythonDefined = true;
       }
       if (pkg.type === DependencyType.RUNTIME) {
-        dependencies[pkg.name] = pkg.version;
+        dependencies[pkg.name] = pkg.version ?? "*";
       }
     }
     if (!pythonDefined) {
@@ -99,7 +99,7 @@ export class Poetry
     const dependencies: { [key: string]: any } = {};
     for (const pkg of this.project.deps.all) {
       if ([DependencyType.DEVENV, DependencyType.TEST].includes(pkg.type)) {
-        dependencies[pkg.name] = pkg.version;
+        dependencies[pkg.name] = pkg.version ?? "*";
       }
     }
     return this.permitDependenciesWithMetadata(dependencies);
