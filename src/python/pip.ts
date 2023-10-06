@@ -76,8 +76,8 @@ class RuntimeDependencyProvider implements IPackageProvider {
 class DevDependencyProvider implements IPackageProvider {
   constructor(private readonly project: Project) {}
   public get packages(): Dependency[] {
-    return this.project.deps.all.filter(
-      (dep) => dep.type === DependencyType.DEVENV
+    return this.project.deps.all.filter((dep) =>
+      [DependencyType.TEST, DependencyType.DEVENV].includes(dep.type)
     );
   }
 }

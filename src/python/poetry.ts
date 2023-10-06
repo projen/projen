@@ -98,7 +98,7 @@ export class Poetry
   private synthDevDependencies() {
     const dependencies: { [key: string]: any } = {};
     for (const pkg of this.project.deps.all) {
-      if ([DependencyType.DEVENV].includes(pkg.type)) {
+      if ([DependencyType.DEVENV, DependencyType.TEST].includes(pkg.type)) {
         dependencies[pkg.name] = pkg.version;
       }
     }
