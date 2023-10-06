@@ -81,7 +81,7 @@ export abstract class FileBase extends Component {
 
     // `marker` is empty if project is being ejected or if explicitly disabled
     const projenrc = ProjenrcFile.of(this.project)?.filePath ?? PROJEN_RC;
-    return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "npx projen".`;
+    return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "${this.project.projenCommand}".`;
   }
 
   constructor(
