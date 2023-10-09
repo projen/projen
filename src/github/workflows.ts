@@ -83,7 +83,7 @@ export class GithubWorkflow extends Component {
     name: string,
     options: GithubWorkflowOptions = {}
   ) {
-    super(github.project);
+    super(github.project, `${new.target.name}#${name}`);
 
     this.name = name;
     this.concurrency = options.concurrency;

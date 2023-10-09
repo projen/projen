@@ -57,6 +57,7 @@
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "all-contributors-cli": "^6.26.1",
+    "constructs": "10.0.0",
     "esbuild": "^0.19.5",
     "eslint": "^8",
     "eslint-config-prettier": "^8.10.0",
@@ -77,6 +78,9 @@
     "standard-version": "^9",
     "ts-jest": "^29",
     "typescript": "5.1.x"
+  },
+  "peerDependencies": {
+    "constructs": "^10.0.0"
   },
   "dependencies": {
     "@iarna/toml": "^2.2.5",

@@ -1,4 +1,4 @@
-const { cdk, javascript, JsonFile, TextFile } = require("./lib");
+const { cdk, javascript, JsonFile, ProjectTree, TextFile } = require("./lib");
 const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
@@ -59,6 +59,8 @@ const project = new cdk.JsiiProject({
     "esbuild",
     "all-contributors-cli",
   ],
+
+  peerDeps: ["constructs@^10.0.0"],
 
   depsUpgradeOptions: {
     // markmac depends on projen, we are excluding it here to avoid a circular update loop
@@ -267,5 +269,7 @@ setupBundleTaskRunner();
 // fixes feedback loop where projen contibutors run "build"
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
+
+new ProjectTree(project);
 
 project.synth();

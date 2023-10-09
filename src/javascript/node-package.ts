@@ -584,7 +584,7 @@ export class NodePackage extends Component {
       project.addTask(cmdname, { exec: shell });
     }
 
-    this.file = new JsonFile(this.project, "package.json", {
+    this.file = new JsonFile(this, "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
       newline: true, // all package managers prefer a newline, see https://github.com/projen/projen/issues/2076

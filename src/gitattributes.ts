@@ -1,5 +1,5 @@
+import { IConstruct } from "constructs";
 import { IResolver, FileBase } from "./file";
-import { Project } from "./project";
 
 /**
  * Assign attributes to file names in a git repository.
@@ -9,8 +9,8 @@ import { Project } from "./project";
 export class GitAttributesFile extends FileBase {
   private readonly attributes = new Map<string, Set<string>>();
 
-  public constructor(project: Project) {
-    super(project, ".gitattributes", {
+  public constructor(scope: IConstruct) {
+    super(scope, ".gitattributes", {
       editGitignore: false,
     });
   }

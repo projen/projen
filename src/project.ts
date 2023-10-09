@@ -1,6 +1,7 @@
 import { mkdtempSync, realpathSync, renameSync } from "fs";
 import { tmpdir } from "os";
 import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import * as glob from "glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
 import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
@@ -21,6 +22,11 @@ import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy } from "./util";
+import {
+  PROJECT_SYMBOL,
+  isProject,
+  findClosestProject,
+} from "./util/constructs";
 
 /**
  * Options for `Project`.
@@ -128,12 +134,29 @@ export interface GitOptions {
 /**
  * Base project
  */
-export class Project {
+export class Project extends Construct {
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
    */
   public static readonly DEFAULT_TASK = "default";
+
+  /**
+   * Test whether the given construct is a project.
+   */
+  public static isProject(x: any): x is Project {
+    return isProject(x);
+  }
+
+  /**
+   * Find the closest ancestor project for given construct.
+   * When given a project, this it the project itself.
+   *
+   * @throws when no project is found in the path to the root
+   */
+  public static of(construct: IConstruct): Project {
+    return findClosestProject(construct);
+  }
 
   /**
    * Project name.
@@ -223,6 +246,20 @@ export class Project {
   private readonly _ejected: boolean;
 
   constructor(options: ProjectOptions) {
+    const outdir = determineOutdir(options.parent, options.outdir);
+    const autoId = `${new.target.name}#${options.name}@${path.normalize(
+      options.outdir ?? "<root>"
+    )}`;
+
+    if (options.parent?.subprojects.find((p) => p.outdir === outdir)) {
+      throw new Error(`There is already a subproject with "outdir": ${outdir}`);
+    }
+
+    super(options.parent as any, autoId);
+    Object.defineProperty(this, PROJECT_SYMBOL, { value: true });
+    this.node.addMetadata("type", "project");
+    this.node.addMetadata("construct", new.target.name);
+
     this.initProject = resolveInitProject(options);
 
     this.name = options.name;
@@ -237,7 +274,7 @@ export class Project {
       this.projenCommand = options.projenCommand ?? "npx projen";
     }
 
-    this.outdir = this.determineOutdir(options.outdir);
+    this.outdir = outdir;
     this.root = this.parent ? this.parent.root : this;
 
     // must happen after this.outdir, this.parent and this.root are initialized
@@ -479,7 +516,9 @@ export class Project {
     );
 
     if (index !== -1) {
-      return this._components.splice(index, 1)[0] as FileBase;
+      const file = this._components.splice(index, 1)[0] as FileBase;
+      this.node.tryRemoveChild(file.node.id);
+      return file;
     }
 
     for (const child of this._subprojects) {
@@ -670,39 +709,6 @@ export class Project {
 
     this._subprojects.push(subproject);
   }
-
-  /**
-   * Resolves the project's output directory.
-   */
-  private determineOutdir(outdirOption?: string) {
-    if (this.parent && outdirOption && path.isAbsolute(outdirOption)) {
-      throw new Error('"outdir" must be a relative path');
-    }
-
-    // if this is a subproject, it is relative to the parent
-    if (this.parent) {
-      if (!outdirOption) {
-        throw new Error('"outdir" must be specified for subprojects');
-      }
-
-      return path.resolve(this.parent.outdir, outdirOption);
-    }
-
-    // if this is running inside a test and outdir is not explicitly set
-    // use a temp directory (unless cwd is aleady under tmp)
-    if (IS_TEST_RUN && !outdirOption) {
-      const realCwd = realpathSync(process.cwd());
-      const realTmp = realpathSync(tmpdir());
-
-      if (realCwd.startsWith(realTmp)) {
-        return path.resolve(realCwd, outdirOption ?? ".");
-      }
-
-      return mkdtempSync(path.join(tmpdir(), "projen."));
-    }
-
-    return path.resolve(outdirOption ?? ".");
-  }
 }
 
 /**
@@ -754,4 +760,37 @@ export interface InitProject {
    * @default InitProjectOptionHints.FEATURED
    */
   readonly comments: InitProjectOptionHints;
+}
+
+/**
+ * Resolves the project's output directory.
+ */
+function determineOutdir(parent?: Project, outdirOption?: string) {
+  if (parent && outdirOption && path.isAbsolute(outdirOption)) {
+    throw new Error('"outdir" must be a relative path');
+  }
+
+  // if this is a subproject, it is relative to the parent
+  if (parent) {
+    if (!outdirOption) {
+      throw new Error('"outdir" must be specified for subprojects');
+    }
+
+    return path.resolve(parent.outdir, outdirOption);
+  }
+
+  // if this is running inside a test and outdir is not explicitly set
+  // use a temp directory (unless cwd is already under tmp)
+  if (IS_TEST_RUN && !outdirOption) {
+    const realCwd = realpathSync(process.cwd());
+    const realTmp = realpathSync(tmpdir());
+
+    if (realCwd.startsWith(realTmp)) {
+      return path.resolve(realCwd, outdirOption ?? ".");
+    }
+
+    return mkdtempSync(path.join(tmpdir(), "projen."));
+  }
+
+  return path.resolve(outdirOption ?? ".");
 }

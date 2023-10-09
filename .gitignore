@@ -61,3 +61,4 @@ tsconfig.json
 !test/inventory/**
 !/.markdownlint.json
 !/.vscode/launch.json
+!/.projen/tree.json

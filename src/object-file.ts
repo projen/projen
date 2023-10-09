@@ -1,6 +1,6 @@
+import { IConstruct } from "constructs";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
 import { JsonPatch } from "./json-patch";
-import { Project } from "./project";
 import { deepMerge } from "./util";
 
 /**
@@ -47,8 +47,8 @@ export abstract class ObjectFile extends FileBase {
    */
   private readonly patchOperations: Array<JsonPatch[]>;
 
-  constructor(project: Project, filePath: string, options: ObjectFileOptions) {
-    super(project, filePath, options);
+  constructor(scope: IConstruct, filePath: string, options: ObjectFileOptions) {
+    super(scope, filePath, options);
 
     this.obj = options.obj ?? {};
     this.omitEmpty = options.omitEmpty ?? false;
