@@ -4,6 +4,7 @@ import { GithubCredentials } from "./github-credentials";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
+import { Settings, SettingsOptions } from "./settings";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
 import { Project } from "../project";
@@ -22,6 +23,22 @@ export interface GitHubOptions {
    * @default - default options
    */
   readonly mergifyOptions?: MergifyOptions;
+
+  /**
+   * Whether settings should be enabled on this repository or not.
+   * NOTE: you must still enable the GitHub Settings Application for the account.
+   * See https://github.com/apps/settings
+   * 
+   * @default - false
+   */
+  readonly settings?: boolean;
+
+  /**
+   * Options for Settings.
+   *
+   * @default - default options
+   */
+  readonly settingsOptions?: SettingsOptions;
 
   /**
    * Enables GitHub workflows. If this is set to `false`, workflows will not be created.
@@ -87,6 +104,12 @@ export class GitHub extends Component {
   public readonly mergify?: Mergify;
 
   /**
+   * The `Settings` configured on this repository.
+   * This is `undefined` if Settings was not enabled when creating the repository.
+   */
+  public readonly settings?: Settings;
+
+  /**
    * Are workflows enabled?
    */
   public readonly workflowsEnabled: boolean;
@@ -132,6 +155,10 @@ export class GitHub extends Component {
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
+    }
+
+    if (options.settings) {
+      this.settings = new Settings(this, options.settingsOptions);
     }
 
     if (options.pullRequestLint ?? true) {
