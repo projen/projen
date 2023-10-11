@@ -301,7 +301,7 @@ export interface LambdaRuntimeOptions {
 export class LambdaRuntime {
   /**
    * Node.js 10.x
-   * @deprecated NodeJS10 has been deprecated
+   * @deprecated NodeJS10 has been deprecated February 14, 2022
    */
   public static readonly NODEJS_10_X = new LambdaRuntime(
     "nodejs10.x",
@@ -311,7 +311,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 12.x
-   * @deprecated NodeJS12 has been deprecated
+   * @deprecated NodeJS12 has been deprecated April 30, 2023
    */
   public static readonly NODEJS_12_X = new LambdaRuntime(
     "nodejs12.x",
@@ -321,7 +321,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 14.x
-   * @deprecated NodeJS14 has been deprecated
+   * @deprecated NodeJS14 has been deprecation November 27, 2023
    */
   public static readonly NODEJS_14_X = new LambdaRuntime(
     "nodejs14.x",
@@ -331,7 +331,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 16.x
-   * @deprecated NodeJS16 has been deprecated
+   * @deprecated NodeJS16 has been deprecated March 11, 2024
    */
   public static readonly NODEJS_16_X = new LambdaRuntime(
     "nodejs16.x",
@@ -344,8 +344,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_18_X = new LambdaRuntime(
     "nodejs18.x",
-    "node18",
-    { defaultExternals: ["@aws-sdk/*"] }
+    "node18"
   );
 
   public readonly esbuildPlatform = "node";
