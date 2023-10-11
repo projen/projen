@@ -5111,7 +5111,7 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
   * **awsSdkConnectionReuse** (<code>boolean</code>)  Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript. __*Default*__: true
   * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
   * **edgeLambda** (<code>boolean</code>)  Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`. __*Default*__: false
-  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_16_X
+  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_18_X
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
   * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
@@ -15035,7 +15035,7 @@ Name | Type | Description
 **awsSdkConnectionReuse**?🔹 | <code>boolean</code> | Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript.<br/>__*Default*__: true
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
-**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_16_X
+**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_18_X
 
 
 
@@ -15055,7 +15055,7 @@ Name | Type | Description
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
-**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_16_X
+**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_18_X
 
 
 

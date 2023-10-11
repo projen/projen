@@ -20,7 +20,7 @@ export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
-   * @default Runtime.NODEJS_16_X
+   * @default Runtime.NODEJS_18_X
    */
   readonly runtime?: LambdaRuntime;
 
@@ -134,7 +134,7 @@ export class LambdaFunction extends Component {
       );
     }
 
-    const runtime = options.runtime ?? LambdaRuntime.NODEJS_16_X;
+    const runtime = options.runtime ?? LambdaRuntime.NODEJS_18_X;
 
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
@@ -345,7 +345,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_18_X = new LambdaRuntime(
     "nodejs18.x",
     "node18",
-    { defaultExternals: ["@aws-sdk/*"]}
+    { defaultExternals: ["@aws-sdk/*"] }
   );
 
   public readonly esbuildPlatform = "node";
