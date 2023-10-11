@@ -345,7 +345,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_18_X = new LambdaRuntime(
     "nodejs18.x",
     "node18",
-    { defaultExternals: []}
+    { defaultExternals: ["@aws-sdk/*"]}
   );
 
   public readonly esbuildPlatform = "node";
