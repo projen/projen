@@ -227,7 +227,7 @@ describe("node version in workflow", () => {
         expect.objectContaining({
           uses: "actions/setup-node@v3",
           with: {
-            "node-version": "16.x",
+            "node-version": "18.x",
           },
         }),
       ])

@@ -21,7 +21,7 @@ export class HelloFunction extends cloudfront.experimental.EdgeFunction {
     super(scope, id, {
       description: 'src/hello.edge-lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.edge-lambda')),
     });
@@ -226,7 +226,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../my-assets/hello.lambda')),
     });
@@ -257,7 +257,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
@@ -286,7 +286,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
@@ -315,7 +315,7 @@ export class WorldFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/world.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/world.lambda')),
     });

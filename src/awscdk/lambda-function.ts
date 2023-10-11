@@ -331,6 +331,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 16.x
+   * @deprecated NodeJS16 has been deprecated
    */
   public static readonly NODEJS_16_X = new LambdaRuntime(
     "nodejs16.x",
@@ -343,7 +344,8 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_18_X = new LambdaRuntime(
     "nodejs18.x",
-    "node18"
+    "node18",
+    { defaultExternals: []}
   );
 
   public readonly esbuildPlatform = "node";
