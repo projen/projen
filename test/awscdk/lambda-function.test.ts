@@ -52,7 +52,7 @@ describe("bundled function", () => {
       name: "bundle:hello.lambda",
       steps: [
         {
-          exec: 'esbuild --bundle src/hello.lambda.ts --target="node16" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
+          exec: 'esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
         },
       ],
     });
@@ -102,7 +102,7 @@ test("constructFile and constructName can be used to customize the generated con
   expect(generatedSource).toMatchSnapshot();
 });
 
-test("runtime can be used to customize the lambda runtime and esbuild target", () => {
+test("runtime can be used to customize the lambda runtime Node 14.x and esbuild target", () => {
   const project = new TypeScriptProject({
     name: "hello",
     defaultReleaseBranch: "main",
@@ -131,7 +131,7 @@ test("runtime can be used to customize the lambda runtime and esbuild target", (
   });
 });
 
-test("runtime can be used to customize the lambda runtime and esbuild target", () => {
+test("runtime can be used to customize the lambda runtime Node 16.x and esbuild target", () => {
   const project = new TypeScriptProject({
     name: "hello",
     defaultReleaseBranch: "main",
@@ -155,6 +155,35 @@ test("runtime can be used to customize the lambda runtime and esbuild target", (
     steps: [
       {
         exec: 'esbuild --bundle src/hello.lambda.ts --target="node16" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:aws-sdk',
+      },
+    ],
+  });
+});
+
+test("runtime can be used to customize the lambda runtime Node 18.x and esbuild target", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    runtime: awscdk.LambdaRuntime.NODEJS_18_X,
+    cdkDeps: cdkDepsForProject(project),
+  });
+
+  const snapshot = Testing.synth(project);
+  const generatedSource = snapshot["src/hello-function.ts"];
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+  expect(generatedSource).toContain(
+    "runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),"
+  );
+  expect(tasks["bundle:hello.lambda"]).toEqual({
+    description: "Create a JavaScript bundle from src/hello.lambda.ts",
+    name: "bundle:hello.lambda",
+    steps: [
+      {
+        exec: 'esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
       },
     ],
   });
