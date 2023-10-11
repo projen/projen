@@ -1506,6 +1506,11 @@ export enum NodePackageManager {
    * Use `pnpm` as the package manager.
    */
   PNPM = "pnpm",
+
+  /**
+   * Use `bun` as the package manager
+   */
+  BUN = "bun",
 }
 
 /**
