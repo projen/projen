@@ -135,7 +135,7 @@ app.listen(port, () => {
 We can start the app now using node:
 
 ```shell
-$ npx node src/index.js
+$ node src/index.js
 ```
 
 However, this isn't very convenient and doesn't align with standard practices in Node.js. 
