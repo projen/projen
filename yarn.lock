@@ -24,24 +24,24 @@
     chalk "^2.4.2"
 
 "@babel/compat-data@^7.22.9":
-  version "7.22.20"
-  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.22.20.tgz#8df6e96661209623f1975d66c35ffca66f3306d0"
-  integrity sha512-BQYjKbpXjoXwFW5jGqiizJQQT/aC7pFm9Ok1OWssonuguICi264lbgMzRp2ZMmRSlfkX6DsWDDcsrctK8Rwfiw==
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.23.2.tgz#6a12ced93455827037bfb5ed8492820d60fc32cc"
+  integrity sha512-0S9TQMmDHlqAZ2ITT95irXKfxN9bncq8ZCoJhun3nHL/lLUxd2NKBJYoNGWH7S0hz6fRQwWlAWn/ILM0C70KZQ==
 
 "@babel/core@^7.11.6", "@babel/core@^7.12.3":
-  version "7.23.0"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.23.0.tgz#f8259ae0e52a123eb40f552551e647b506a94d83"
-  integrity sha512-97z/ju/Jy1rZmDxybphrBuI+jtJjFVoz7Mr9yUQVVVi+DNZE333uFQeMOqcCIy1x3WYBIbWftUSLmbNXNT7qFQ==
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.23.2.tgz#ed10df0d580fff67c5f3ee70fd22e2e4c90a9f94"
+  integrity sha512-n7s51eWdaWZ3vGT2tD4T7J6eJs3QoBXydv7vkUM06Bf1cbVD2Kc2UrkzhiQwobfV7NwOnQXYL7UBJ5VPU+RGoQ==
   dependencies:
     "@ampproject/remapping" "^2.2.0"
     "@babel/code-frame" "^7.22.13"
     "@babel/generator" "^7.23.0"
     "@babel/helper-compilation-targets" "^7.22.15"
     "@babel/helper-module-transforms" "^7.23.0"
-    "@babel/helpers" "^7.23.0"
+    "@babel/helpers" "^7.23.2"
     "@babel/parser" "^7.23.0"
     "@babel/template" "^7.22.15"
-    "@babel/traverse" "^7.23.0"
+    "@babel/traverse" "^7.23.2"
     "@babel/types" "^7.23.0"
     convert-source-map "^2.0.0"
     debug "^4.1.0"
@@ -142,13 +142,13 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.22.15.tgz#694c30dfa1d09a6534cdfcafbe56789d36aba040"
   integrity sha512-bMn7RmyFjY/mdECUbgn9eoSY4vqvacUnS9i9vGAGttgFWesO6B4CYWA7XlpbWgBt71iv/hfbPlynohStqnu5hA==
 
-"@babel/helpers@^7.23.0":
-  version "7.23.1"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.23.1.tgz#44e981e8ce2b9e99f8f0b703f3326a4636c16d15"
-  integrity sha512-chNpneuK18yW5Oxsr+t553UZzzAs3aZnFm4bxhebsNTeshrC95yA7l5yl7GBAG+JG1rF0F7zzD2EixK9mWSDoA==
+"@babel/helpers@^7.23.2":
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.23.2.tgz#2832549a6e37d484286e15ba36a5330483cac767"
+  integrity sha512-lzchcp8SjTSVe/fPmLwtWVBFC7+Tbn8LGHDVfDp9JGxpAY5opSaEFgt8UQvrnECWOTdji2mOWMz1rOhkHscmGQ==
   dependencies:
     "@babel/template" "^7.22.15"
-    "@babel/traverse" "^7.23.0"
+    "@babel/traverse" "^7.23.2"
     "@babel/types" "^7.23.0"
 
 "@babel/highlight@^7.22.13":
@@ -264,9 +264,9 @@
     "@babel/helper-plugin-utils" "^7.22.5"
 
 "@babel/runtime@^7.18.9", "@babel/runtime@^7.7.6":
-  version "7.23.1"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
-  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.2.tgz#062b0ac103261d68a966c4c7baf2ae3e62ec3885"
+  integrity sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -279,10 +279,10 @@
     "@babel/parser" "^7.22.15"
     "@babel/types" "^7.22.15"
 
-"@babel/traverse@^7.23.0":
-  version "7.23.0"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.23.0.tgz#18196ddfbcf4ccea324b7f6d3ada00d8c5a99c53"
-  integrity sha512-t/QaEvyIoIkwzpiZ7aoSKK8kObQYeF7T2v+dazAYCb8SXtp58zEVkWW7zAnju8FNKNdr4ScAOEDmMItbyOmEYw==
+"@babel/traverse@^7.23.2":
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.23.2.tgz#329c7a06735e144a506bdb2cad0268b7f46f4ad8"
+  integrity sha512-azpe59SQ48qG6nu2CzcMLbxUudtN+dOM9kDbUqGq3HXUJRlo7i8fvPoxQUzYgLZ4cMVmuZgm8vvBpNeRhd6XSw==
   dependencies:
     "@babel/code-frame" "^7.22.13"
     "@babel/generator" "^7.23.0"
@@ -2351,9 +2351,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.535:
-  version "1.4.549"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.549.tgz#ab223f5d85c55a9def358db163bc8cacba72df69"
-  integrity sha512-gpXfJslSi4hYDkA0mTLEpYKRv9siAgSUgZ+UWyk+J5Cttpd1ThCVwdclzIwQSclz3hYn049+M2fgrP1WpvF8xg==
+  version "1.4.551"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.551.tgz#14db6660a88f66ce095ea2657abe5653bc7f42ed"
+  integrity sha512-/Ng/W/kFv7wdEHYzxdK7Cv0BHEGSkSB3M0Ssl8Ndr1eMiYeas/+Mv4cNaDqamqWx6nd2uQZfPz6g25z25M/sdw==
 
 emittery@^0.13.1:
   version "0.13.1"
