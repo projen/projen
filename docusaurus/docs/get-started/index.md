@@ -27,7 +27,7 @@ $ npx projen new PROJECT-TYPE
 ...
 ```
 
-## Modifying projen configuration
+## Modifying projen
 
 From here on out, all the changes to files managed by projen will be done in the projen RC file. 
 Depending on the project type you chose, the filename will be a little different, but will always start with 
@@ -36,8 +36,9 @@ Depending on the project type you chose, the filename will be a little different
 For example, if you chose the `node` project type, the file will be `.projenrc.js`. 
 If you chose the `typescript` project type, the file will be `.projenrc.ts`.
 If you chose the `python` project type, the file will be `.projenrc.py`.
+Typically, the projen RC file will be in the same language as the project.
 
-Editing configuration will be done by editing this RC file. For example, if you needed to add the 'uuid' dependency
+Editing configuration means modifying the contents of RC file. For example, if you needed to add the 'express' dependency
 to your typescript app:
 
 ```typescript
@@ -47,7 +48,7 @@ const project = new typescript.TypeScriptAppProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
   projenrcTs: true,
-  deps: ['uuid'],
+  deps: ['express'], // added 'express' to the deps array
 });
 project.synth();
 ```
@@ -56,7 +57,7 @@ After edits are made, re-run `npx projen` to apply the changes.
 projen will then re-read the RC file and modify any of the files under its control to match the new configuration. 
 Files not created by projen will remain untouched. 
 
-In the example above, it will add `uuid` to the package.json file,
+In the example above, it will add `express` to the package.json file,
 and then re-run the package manager to install it.
 
 :::tip
@@ -67,6 +68,29 @@ re-run whenever the file changes:
 $ npx projen --watch
 ```
 :::
+
+Modifying projen configuration is usually a matter of editing the properties that are passed to the project type's 
+constructor, but sometimes you'll also make changes after the project type has been constructed. 
+For instance, if you want to add a new task to your project, you call the `addTask` method:
+
+```typescript
+import { typescript } from 'projen';
+const project = new typescript.TypeScriptAppProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+  projenrcTs: true,
+  deps: ['express'], // added 'express' to the deps array
+});
+
+// adding a simple 'hello world' echo task.
+project.addTask('hello', {
+  exec: 'echo "hello world"',
+});
+
+project.synth();
+```
+
+Continue to the [next section](./build-a-simple-nodejs-api.md) to see a more detailed example of building a Node.js API.
 
 
 
