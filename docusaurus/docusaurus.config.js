@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Projen',
+  title: 'projen',
   tagline: 'Define and maintain complex project configuration through code.',
   favicon: 'img/favicon.ico',
 
@@ -42,7 +42,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/projen/proken/tree/main/docs/',
+            'https://github.com/projen/projen/tree/main/docusaurus/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
