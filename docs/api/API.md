@@ -17206,6 +17206,7 @@ Cache Definition.
 
 Name | Type | Description 
 -----|------|-------------
+**fallbackKeys**?🔹 | <code>Array<string></code> | Use cache:fallback_keys to specify a list of keys to try to restore cache from if there is no cache found for the cache:key.<br/>__*Optional*__
 **key**?🔹 | <code>string &#124; [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)</code> | Used the to give each cache a unique identifying key.<br/>__*Optional*__
 **paths**?🔹 | <code>Array<string></code> | Defines which files or directories to cache.<br/>__*Optional*__
 **policy**?🔹 | <code>[gitlab.CachePolicy](#projen-gitlab-cachepolicy)</code> | Defines the upload and download behaviour of the cache.<br/>__*Optional*__
