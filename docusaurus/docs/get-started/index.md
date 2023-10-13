@@ -36,6 +36,7 @@ Depending on the project type you chose, the filename will be a little different
 For example, if you chose the `node` project type, the file will be `.projenrc.js`. 
 If you chose the `typescript` project type, the file will be `.projenrc.ts`.
 If you chose the `python` project type, the file will be `.projenrc.py`.
+You can even choose to use JSON as the format for your projen RC file, in which case the file will be `.projenrc.json`.
 Typically, the projen RC file will be in the same language as the project.
 
 Editing configuration means modifying the contents of RC file. For example, if you needed to add the 'express' dependency

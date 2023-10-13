@@ -161,6 +161,10 @@ project.addTask('start', {
 project.synth();
 ```
 
+The `exec` field just defines the shell command to run. The `receiveArgs` field tells projen to pass any arguments through
+to the command. This is useful if you want to pass additional arguments to the node command, like `--inspect` for example.
+
+
 :::info
 From here on out, we're going to assume that you know that you need to re-run projen after making changes to the .projenrc.js file, and we're not going to explicitly call it out anymore.
 :::
