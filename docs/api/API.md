@@ -476,6 +476,7 @@ Name|Description
 [gitlab.JobWhen](#projen-gitlab-jobwhen)|Describes the conditions for when to run the job.
 [gitlab.KubernetesEnum](#projen-gitlab-kubernetesenum)|Filter job based on if Kubernetes integration is active.
 [gitlab.LinkType](#projen-gitlab-linktype)|The content kind of what users can download via url.
+[gitlab.PullPolicy](#projen-gitlab-pullpolicy)|Describes the conditions for when to pull an image.
 [gitlab.Strategy](#projen-gitlab-strategy)|You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend.
 [gitlab.WorkflowWhen](#projen-gitlab-workflowwhen)|Describes the conditions for when to run the job.
 [javascript.ArrowParens](#projen-javascript-arrowparens)|*No description*
@@ -7897,6 +7898,8 @@ addServices(...services: Service[]): void
   * **alias** (<code>string</code>)  Additional alias that can be used to access the service from the job's container. __*Optional*__
   * **command** (<code>Array<string></code>)  Command or script that should be used as the container's command. __*Optional*__
   * **entrypoint** (<code>Array<string></code>)  Command or script that should be executed as the container's entrypoint. __*Optional*__
+  * **pullPolicy** (<code>Array<[gitlab.PullPolicy](#projen-gitlab-pullpolicy)></code>)  The pull policy that the runner uses to fetch the Docker image. __*Optional*__
+  * **variables** (<code>Map<string, string &#124; number></code>)  Additional environment variables that are passed exclusively to the service.. __*Optional*__
 
 
 
@@ -17619,6 +17622,8 @@ Name | Type | Description
 **alias**?🔹 | <code>string</code> | Additional alias that can be used to access the service from the job's container.<br/>__*Optional*__
 **command**?🔹 | <code>Array<string></code> | Command or script that should be used as the container's command.<br/>__*Optional*__
 **entrypoint**?🔹 | <code>Array<string></code> | Command or script that should be executed as the container's entrypoint.<br/>__*Optional*__
+**pullPolicy**?🔹 | <code>Array<[gitlab.PullPolicy](#projen-gitlab-pullpolicy)></code> | The pull policy that the runner uses to fetch the Docker image.<br/>__*Optional*__
+**variables**?🔹 | <code>Map<string, string &#124; number></code> | Additional environment variables that are passed exclusively to the service..<br/>__*Optional*__
 
 
 
@@ -20996,6 +21001,17 @@ Name | Description
 **OTHER** 🔹|
 **PACKAGE** 🔹|
 **RUNBOOK** 🔹|
+
+
+## enum PullPolicy 🔹 <a id="projen-gitlab-pullpolicy"></a>
+
+Describes the conditions for when to pull an image.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**NEVER** 🔹|
+**IF_NOT_PRESENT** 🔹|
 
 
 ## enum Strategy 🔹 <a id="projen-gitlab-strategy"></a>

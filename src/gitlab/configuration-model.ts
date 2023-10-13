@@ -209,6 +209,20 @@ export interface Service {
   readonly entrypoint?: string[];
   /** Full name of the image that should be used. It should contain the Registry part if needed.*/
   readonly name: string;
+  /** The pull policy that the runner uses to fetch the Docker image */
+  readonly pullPolicy?: PullPolicy[];
+  /** Additional environment variables that are passed exclusively to the service.. */
+  readonly variables?: Record<string, number | string>;
+}
+
+/**
+ * Describes the conditions for when to pull an image.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#servicepull_policy
+ */
+export enum PullPolicy {
+  ALWAYS = "always",
+  NEVER = "never",
+  IF_NOT_PRESENT = "if-not-present",
 }
 
 /**
