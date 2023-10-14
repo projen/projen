@@ -1,6 +1,6 @@
-// copied fro https://github.com/cdk8s-team/cdk8s-core/blob/6b317a7a6a2504e228bc56bf96fc98829f88c2be/src/json-patch.ts
+// copied from https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/json-patch.ts
 // under Apache 2.0 license
-import { applyPatch, Operation } from "fast-json-patch";
+import { applyPatch, deepClone, Operation } from "fast-json-patch";
 
 /**
  * Utility for applying RFC-6902 JSON-Patch to a document.
@@ -27,10 +27,7 @@ export class JsonPatch {
    * @returns The result document
    */
   public static apply(document: any, ...ops: JsonPatch[]): any {
-    const result = applyPatch(
-      document,
-      ops.map((o) => o._toJson())
-    );
+    const result = applyPatch(document, deepClone(ops.map((o) => o._toJson())));
     return result.newDocument;
   }
 
