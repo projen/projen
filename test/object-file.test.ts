@@ -357,6 +357,39 @@ describe("patch", () => {
     });
   });
 
+  test("patch(p, v) can test values", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { third: "test" } },
+      marker: false,
+    });
+    // WHEN
+    file.patch(
+      [
+        JsonPatch.test("/first/second", undefined),
+        JsonPatch.add("/first/second", []),
+      ],
+      JsonPatch.add("/first/second/-", "first extra value"),
+      JsonPatch.add("/first/second/-", "second extra value"),
+      [
+        JsonPatch.test("/first/third", "test"),
+        JsonPatch.replace("/first/third", "test2"),
+      ],
+      [
+        JsonPatch.test("/first/extra", { foo: "bar" }),
+        JsonPatch.add("/first/extra/boo", "far"),
+      ]
+    );
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: ["first extra value", "second extra value"],
+        third: "test2",
+      },
+    });
+  });
+
   test("patch(p, v) can work with lazy values", () => {
     // GIVEN
     const prj = new TestProject();

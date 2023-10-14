@@ -45,7 +45,7 @@ export abstract class ObjectFile extends FileBase {
   /**
    * patches to be applied to `obj` after the resolver is called
    */
-  private readonly patchOperations: JsonPatch[];
+  private readonly patchOperations: (JsonPatch | JsonPatch[])[];
 
   constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
@@ -211,8 +211,22 @@ export abstract class ObjectFile extends FileBase {
    *
    * @param patches - The patch operations to apply
    */
-  public patch(...patches: JsonPatch[]) {
-    this.patchOperations.push(...patches);
+  public patch(...patches: (JsonPatch | JsonPatch[])[]) {
+    // allow test operations only as part of array of patches
+    // as test will stop the whole patching process if it fails
+    if (patches.some((p) => !Array.isArray(p) && p.isTestOperation()))
+      throw new Error(
+        "Test operations are only allowed as part of an array of patches"
+      );
+
+    for (const patch of patches) {
+      // flatten patches that doesn't have tests
+      if (Array.isArray(patch)) {
+        if (patch.some((p) => p.isTestOperation()))
+          this.patchOperations.push(patch);
+        else this.patchOperations.push(...patch);
+      } else this.patchOperations.push(patch);
+    }
   }
 
   /**
@@ -234,7 +248,33 @@ export abstract class ObjectFile extends FileBase {
     if (resolved) {
       deepMerge([resolved, this.rawOverrides], true);
     }
-    const patched = JsonPatch.apply(resolved, ...this.patchOperations);
+
+    let patched = resolved;
+    // apply patches batching single operations and skipping test failures
+    for (const operations of (function* (patches: (JsonPatch | JsonPatch[])[]) {
+      const ops = [];
+      for (const patch of patches) {
+        if (Array.isArray(patch)) {
+          if (ops.length) {
+            yield ops;
+            ops.length = 0;
+          }
+          yield patch;
+        } else {
+          ops.push(patch);
+        }
+      }
+      if (ops.length) yield ops;
+    })(this.patchOperations)) {
+      try {
+        patched = JsonPatch.apply(patched, ...operations);
+      } catch (err) {
+        if (err instanceof Error && err.name === "TEST_OPERATION_FAILED")
+          continue;
+        throw err;
+      }
+    }
+
     return patched ? JSON.stringify(patched, undefined, 2) : undefined;
   }
 }

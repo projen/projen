@@ -2089,10 +2089,10 @@ would result in the following object file
 ```
 
 ```ts
-patch(...patches: JsonPatch[]): void
+patch(...patches: JsonPatch &#124; Array<JsonPatch>[]): void
 ```
 
-* **patches** (<code>[JsonPatch](#projen-jsonpatch)</code>)  - The patch operations to apply.
+* **patches** (<code>[JsonPatch](#projen-jsonpatch) &#124; Array<[JsonPatch](#projen-jsonpatch)></code>)  - The patch operations to apply.
 
 
 
