@@ -1523,6 +1523,18 @@ Operations can be created using the factory methods `JsonPatch.add()`,
 ### Methods
 
 
+#### isTestOperation()🔹 <a id="projen-jsonpatch-istestoperation"></a>
+
+
+
+```ts
+isTestOperation(): boolean
+```
+
+
+__Returns__:
+* <code>boolean</code>
+
 #### *static* add(path, value)🔹 <a id="projen-jsonpatch-add"></a>
 
 Adds a value to an object or inserts it into an array.
@@ -1571,6 +1583,19 @@ static copy(from: string, path: string): JsonPatch
 
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* escapePathComponent(path)🔹 <a id="projen-jsonpatch-escapepathcomponent"></a>
+
+Escapes a json pointer path.
+
+```ts
+static escapePathComponent(path: string): string
+```
+
+* **path** (<code>string</code>)  The raw pointer.
+
+__Returns__:
+* <code>string</code>
 
 #### *static* move(from, path)🔹 <a id="projen-jsonpatch-move"></a>
 

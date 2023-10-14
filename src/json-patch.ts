@@ -1,6 +1,17 @@
-// copied from https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/json-patch.ts
+// inspired by https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/json-patch.ts
 // under Apache 2.0 license
-import { applyPatch, deepClone, Operation } from "fast-json-patch";
+import {
+  applyPatch,
+  deepClone,
+  Operation,
+  AddOperation,
+  RemoveOperation,
+  ReplaceOperation,
+  MoveOperation,
+  CopyOperation,
+  TestOperation,
+  escapePathComponent,
+} from "fast-json-patch";
 
 /**
  * Utility for applying RFC-6902 JSON-Patch to a document.
@@ -39,7 +50,11 @@ export class JsonPatch {
    * @example JsonPatch.add('/biscuits/1', { "name": "Ginger Nut" })
    */
   public static add(path: string, value: any) {
-    return new JsonPatch({ op: "add", path, value });
+    return new JsonPatch({
+      op: "add",
+      path,
+      value,
+    } satisfies AddOperation<any>);
   }
 
   /**
@@ -49,7 +64,7 @@ export class JsonPatch {
    * @example JsonPatch.remove('/biscuits/0')
    */
   public static remove(path: string) {
-    return new JsonPatch({ op: "remove", path });
+    return new JsonPatch({ op: "remove", path } satisfies RemoveOperation);
   }
 
   /**
@@ -58,7 +73,11 @@ export class JsonPatch {
    * @example JsonPatch.replace('/biscuits/0/name', 'Chocolate Digestive')
    */
   public static replace(path: string, value: any) {
-    return new JsonPatch({ op: "replace", path, value });
+    return new JsonPatch({
+      op: "replace",
+      path,
+      value,
+    } satisfies ReplaceOperation<any>);
   }
 
   /**
@@ -68,7 +87,7 @@ export class JsonPatch {
    * @example JsonPatch.copy('/biscuits/0', '/best_biscuit')
    */
   public static copy(from: string, path: string) {
-    return new JsonPatch({ op: "copy", from, path });
+    return new JsonPatch({ op: "copy", from, path } satisfies CopyOperation);
   }
 
   /**
@@ -77,7 +96,7 @@ export class JsonPatch {
    * @example JsonPatch.move('/biscuits', '/cookies')
    */
   public static move(from: string, path: string) {
-    return new JsonPatch({ op: "move", from, path });
+    return new JsonPatch({ op: "move", from, path } satisfies MoveOperation);
   }
 
   /**
@@ -87,10 +106,30 @@ export class JsonPatch {
    * @example JsonPatch.test('/best_biscuit/name', 'Choco Leibniz')
    */
   public static test(path: string, value: any) {
-    return new JsonPatch({ op: "test", path, value });
+    return new JsonPatch({
+      op: "test",
+      path,
+      value,
+    } satisfies TestOperation<any>);
+  }
+
+  /**
+   * Escapes a json pointer path
+   * @param path The raw pointer
+   * @return the Escaped path
+   */
+  public static escapePathComponent(path: string): string {
+    return escapePathComponent(path);
   }
 
   private constructor(private readonly operation: Operation) {}
+
+  /**
+   * @returns true if this is a test operation
+   */
+  public isTestOperation(): this is TestOperation<unknown> {
+    return this.operation.op === "test";
+  }
 
   /**
    * Returns the JSON representation of this JSON patch operation.
