@@ -23,10 +23,12 @@ export class VsCodeRecommendedExtensions extends Component {
    */
   private readonly unwantedRecommendations: string[] = [];
 
+  public readonly file: JsonFile;
+
   constructor(vscode: VsCode) {
     super(vscode.project);
 
-    new JsonFile(vscode.project, ".vscode/extensions.json", {
+    this.file = new JsonFile(vscode.project, ".vscode/extensions.json", {
       omitEmpty: true,
       allowComments: true,
       obj: {
