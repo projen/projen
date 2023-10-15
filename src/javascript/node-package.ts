@@ -1085,6 +1085,11 @@ export class NodePackage extends Component {
         return frozen
           ? "pnpm i --frozen-lockfile"
           : "pnpm i --no-frozen-lockfile";
+      case NodePackageManager.BUN:
+        return [
+          "bun install",
+          ...(frozen ? ["--frozen-lockfile"] : []),
+        ].join(" ");
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
@@ -1356,6 +1361,7 @@ export class NodePackage extends Component {
         return { pnpm: { overrides: render } };
       case NodePackageManager.YARN:
       case NodePackageManager.YARN2:
+      case NodePackageManager.BUN:
       default:
         return { resolutions: render };
     }
@@ -1572,6 +1578,8 @@ function determineLockfile(packageManager: NodePackageManager) {
     return "package-lock.json";
   } else if (packageManager === NodePackageManager.PNPM) {
     return "pnpm-lock.yaml";
+  } else if (packageManager === NodePackageManager.BUN) {
+    return "bun.lockb";
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);
