@@ -101,7 +101,7 @@ export interface EslintOverride {
    * Pattern(s) to exclude from this override.
    * If a file matches any of the excluded patterns, the configuration won’t apply.
    */
-  readonly excludedFiles?: string | string[];
+  readonly excludedFiles?: string[];
 
   /**
    * The overriden rules
@@ -116,7 +116,7 @@ export interface EslintOverride {
   /**
    * Config(s) to extend in this override
    */
-  readonly extends?: string | string[];
+  readonly extends?: string[];
 
   /**
    * `plugins` override

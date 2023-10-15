@@ -8595,8 +8595,8 @@ addOverride(override: EslintOverride): void
 
 * **override** (<code>[javascript.EslintOverride](#projen-javascript-eslintoverride)</code>)  *No description*
   * **files** (<code>Array<string></code>)  Files or file patterns on which to apply the override. 
-  * **excludedFiles** (<code>string &#124; Array<string></code>)  Pattern(s) to exclude from this override. __*Optional*__
-  * **extends** (<code>string &#124; Array<string></code>)  Config(s) to extend in this override. __*Optional*__
+  * **excludedFiles** (<code>Array<string></code>)  Pattern(s) to exclude from this override. __*Optional*__
+  * **extends** (<code>Array<string></code>)  Config(s) to extend in this override. __*Optional*__
   * **parser** (<code>string</code>)  The overridden parser. __*Optional*__
   * **plugins** (<code>Array<string></code>)  `plugins` override. __*Optional*__
   * **rules** (<code>Map<string, any></code>)  The overriden rules. __*Optional*__
@@ -18107,8 +18107,8 @@ eslint rules override.
 Name | Type | Description 
 -----|------|-------------
 **files**🔹 | <code>Array<string></code> | Files or file patterns on which to apply the override.
-**excludedFiles**?🔹 | <code>string &#124; Array<string></code> | Pattern(s) to exclude from this override.<br/>__*Optional*__
-**extends**?🔹 | <code>string &#124; Array<string></code> | Config(s) to extend in this override.<br/>__*Optional*__
+**excludedFiles**?🔹 | <code>Array<string></code> | Pattern(s) to exclude from this override.<br/>__*Optional*__
+**extends**?🔹 | <code>Array<string></code> | Config(s) to extend in this override.<br/>__*Optional*__
 **parser**?🔹 | <code>string</code> | The overridden parser.<br/>__*Optional*__
 **plugins**?🔹 | <code>Array<string></code> | `plugins` override.<br/>__*Optional*__
 **rules**?🔹 | <code>Map<string, any></code> | The overriden rules.<br/>__*Optional*__
