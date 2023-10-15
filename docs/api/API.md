@@ -11971,6 +11971,14 @@ new vscode.VsCodeLaunchConfig(vscode: VsCode)
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+
 ### Methods
 
 
@@ -12032,6 +12040,14 @@ new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+
 ### Methods
 
 
@@ -12084,6 +12100,14 @@ new vscode.VsCodeSettings(vscode: VsCode)
 
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 
 ### Methods
 

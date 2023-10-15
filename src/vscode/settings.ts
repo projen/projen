@@ -8,13 +8,14 @@ import { JsonFile } from "../json";
  */
 export class VsCodeSettings extends Component {
   private readonly content: any;
+  public readonly file: JsonFile;
 
   constructor(vscode: VsCode) {
     super(vscode.project);
 
     this.content = {};
 
-    new JsonFile(vscode.project, ".vscode/settings.json", {
+    this.file = new JsonFile(vscode.project, ".vscode/settings.json", {
       omitEmpty: false,
       obj: this.content,
     });
