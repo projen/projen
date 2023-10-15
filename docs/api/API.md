@@ -11974,6 +11974,14 @@ new vscode.VsCodeLaunchConfig(vscode: VsCode)
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+
 ### Methods
 
 
@@ -12035,6 +12043,14 @@ new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+
 ### Methods
 
 
@@ -12087,6 +12103,14 @@ new vscode.VsCodeSettings(vscode: VsCode)
 
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 
 ### Methods
 
@@ -17209,6 +17233,7 @@ Cache Definition.
 
 Name | Type | Description 
 -----|------|-------------
+**fallbackKeys**?🔹 | <code>Array<string></code> | Use cache:fallback_keys to specify a list of keys to try to restore cache from if there is no cache found for the cache:key.<br/>__*Optional*__
 **key**?🔹 | <code>string &#124; [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)</code> | Used the to give each cache a unique identifying key.<br/>__*Optional*__
 **paths**?🔹 | <code>Array<string></code> | Defines which files or directories to cache.<br/>__*Optional*__
 **policy**?🔹 | <code>[gitlab.CachePolicy](#projen-gitlab-cachepolicy)</code> | Defines the upload and download behaviour of the cache.<br/>__*Optional*__
@@ -18568,6 +18593,7 @@ Name | Type | Description
 **customConditions**?🔹 | <code>Array<string></code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.<br/>__*Default*__: undefined
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
+**declarationMap**?🔹 | <code>boolean</code> | Generates a source map for .d.ts files which map back to the original .ts source file. This will allow editors such as VS Code to go to the original .ts file when using features like Go to Definition.<br/>__*Optional*__
 **emitDeclarationOnly**?🔹 | <code>boolean</code> | Only emit .d.ts files; do not emit .js files.<br/>__*Default*__: false
 **emitDecoratorMetadata**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: undefined
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
@@ -18608,6 +18634,7 @@ Name | Type | Description
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
 **stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.<br/>__*Default*__: true
 **target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
+**types**?🔹 | <code>Array<string></code> | If types is specified, only packages listed will be included in the global scope.<br/>__*Optional*__
 **useUnknownInCatchVariables**?🔹 | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer.<br/>__*Default*__: true
 **verbatimModuleSyntax**?🔹 | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
