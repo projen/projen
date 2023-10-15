@@ -180,6 +180,13 @@ export interface TypeScriptCompilerOptions {
   readonly declaration?: boolean;
 
   /**
+   * Generates a source map for .d.ts files which map back to the original .ts source file.
+   * This will allow editors such as VS Code to go to the original .ts file when using features like Go to Definition.
+   * @see {@link https://www.typescriptlang.org/tsconfig#declarationMap}
+   */
+  readonly declarationMap?: boolean;
+
+  /**
    * List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.
    *
    * @see https://www.typescriptlang.org/tsconfig#customConditions
@@ -525,6 +532,12 @@ export interface TypeScriptCompilerOptions {
    * paths lets you declare how TypeScript should resolve an import in your require/imports.
    */
   readonly paths?: { [key: string]: string[] };
+
+  /**
+   * If types is specified, only packages listed will be included in the global scope
+   * @see {@link https://www.typescriptlang.org/tsconfig#types}
+   */
+  readonly types?: string[];
 }
 
 /**
