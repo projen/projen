@@ -98,6 +98,12 @@ export interface EslintOverride {
   readonly files: string[];
 
   /**
+   * Pattern(s) to exclude from this override.
+   * If a file matches any of the excluded patterns, the configuration won’t apply.
+   */
+  readonly excludedFiles?: string | string[];
+
+  /**
    * The overriden rules
    */
   readonly rules?: { [rule: string]: any };
@@ -106,6 +112,16 @@ export interface EslintOverride {
    * The overridden parser
    */
   readonly parser?: string;
+
+  /**
+   * Config(s) to extend in this override
+   */
+  readonly extends?: string | string[];
+
+  /**
+   * `plugins` override
+   */
+  readonly plugins?: string[];
 }
 
 /**
