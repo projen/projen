@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Getting Started
 
-_projen_ doesn't need to be installed. You will be using [npx](https://docs.npmjs.com/cli/v7/commands/npx) to run _projen_ which takes care of all required setup steps.
+projen doesn't need to be installed. You will be using [npx](https://docs.npmjs.com/cli/v7/commands/npx) to run _projen_ which takes care of all required setup steps.
 
 :::tip
 To make things easier from here on out, we recommend you create an alias for projen:
