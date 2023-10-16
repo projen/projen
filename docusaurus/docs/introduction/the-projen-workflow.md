@@ -21,6 +21,8 @@ projen allows you to "take over" an existing project.
 A directory does NOT need to be empty to run the `npx projen new` command and start a new project.
 However, it will overwrite any existing files that are managed by projen. 
 Make sure you have all your changes committed before running `npx projen new`.
+
+Once you do this, a new git commit will be in your history that shows you all the changes that were made.
 :::
 
 If the directory is not empty, it will overwrite the contents of any files it assumes under its control.
