@@ -57,4 +57,4 @@ project.synth()
 
 Run the `projen` command again to re-synthesize your project with the new dependencies. That's it! You now have the libraries you need to get started with your Django application.
 
-For more information on handling packaging, environments, testing, and publishing with projen, [see the hello world quick start](/docs/quick-starts/python/hello-world).
+For more information on handling packaging, environments, testing, and publishing with projen, [see the Python "hello world" quick start](/docs/quick-starts/python/hello-world).
