@@ -6,7 +6,7 @@ sidebar_position: 2
 
 The projen workflow is very simple:
 
-1. Initialize a project type using the cli (`npx projen`).
+1. Initialize a project type using the cli (`npx projen new`).
 2. Edit configuration in the .projenrc(.ts/.js/.py/.json) file.
 3. Run `npx projen` to apply changes.
 
