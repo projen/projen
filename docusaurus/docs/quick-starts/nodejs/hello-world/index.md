@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Hello World with NodeJS
 
-This quick start will help you create a NodeJS application using _projen_'s NodeJS project.
+This quick start will help you create a NodeJS application using projen's NodeJS project.
 To begin, make sure you have the version of NodeJS you want to use set up in your terminal.
 Running `which node` in bash/zsh/other POSIX shells, or `Get-Command node` in Powershell,
 should print the path to the NodeJS version you want to use. [`nvm`](https://github.com/nvm-sh/nvm)
@@ -17,7 +17,7 @@ To create a new NodeJS project, use `npx projen new node`:
 npx projen new node --name=my-project
 ```
 
-This will synthesize a standard project directory structure. Notably, the _projen_ NodeJS project will not create
+This will synthesize a standard project directory structure. Notably, the projen NodeJS project will not create
 sample code for you by default - you need to add your `src` or other code directory, as well as any tests and
 test libraries you want.
 
