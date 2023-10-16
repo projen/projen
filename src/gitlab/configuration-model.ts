@@ -212,7 +212,7 @@ export interface Service {
   /** The pull policy that the runner uses to fetch the Docker image */
   readonly pullPolicy?: PullPolicy[];
   /** Additional environment variables that are passed exclusively to the service.. */
-  readonly variables?: Record<string, number | string>;
+  readonly variables?: Record<string, string>;
 }
 
 /**
@@ -263,7 +263,7 @@ export interface IncludeRule {
   /* Execute scripts after a waiting period written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly startIn?: string;
   /* Use variables in rules to define variables for specific conditions. */
-  readonly variables?: Record<string, number | string>;
+  readonly variables?: Record<string, string>;
   /* Conditions for when to run the job. Defaults to 'on_success' */
   readonly when?: JobWhen;
 }
@@ -355,7 +355,7 @@ export interface Job {
   /** Trigger allows you to define downstream pipeline trigger. When a job created from trigger definition is started by GitLab, a downstream pipeline gets created. Read more: https://docs.gitlab.com/ee/ci/yaml/README.html#trigger*/
   readonly trigger?: Trigger | string;
   /** Configurable values that are passed to the Job. */
-  readonly variables?: Record<string, number | string>;
+  readonly variables?: Record<string, string>;
   /** Describes the conditions for when to run the job. Defaults to 'on_success'. */
   readonly when?: JobWhen;
 }

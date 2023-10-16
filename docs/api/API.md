@@ -7899,7 +7899,7 @@ addServices(...services: Service[]): void
   * **command** (<code>Array<string></code>)  Command or script that should be used as the container's command. __*Optional*__
   * **entrypoint** (<code>Array<string></code>)  Command or script that should be executed as the container's entrypoint. __*Optional*__
   * **pullPolicy** (<code>Array<[gitlab.PullPolicy](#projen-gitlab-pullpolicy)></code>)  The pull policy that the runner uses to fetch the Docker image. __*Optional*__
-  * **variables** (<code>Map<string, string &#124; number></code>)  Additional environment variables that are passed exclusively to the service.. __*Optional*__
+  * **variables** (<code>Map<string, string></code>)  Additional environment variables that are passed exclusively to the service.. __*Optional*__
 
 
 
@@ -17400,7 +17400,7 @@ Name | Type | Description
 **exists**?🔹 | <code>Array<string></code> | __*Optional*__
 **if**?🔹 | <code>string</code> | __*Optional*__
 **startIn**?🔹 | <code>string</code> | __*Optional*__
-**variables**?🔹 | <code>Map<string, string &#124; number></code> | __*Optional*__
+**variables**?🔹 | <code>Map<string, string></code> | __*Optional*__
 **when**?🔹 | <code>[gitlab.JobWhen](#projen-gitlab-jobwhen)</code> | __*Optional*__
 
 
@@ -17462,7 +17462,7 @@ Name | Type | Description
 **tags**?🔹 | <code>Array<string></code> | __*Optional*__
 **timeout**?🔹 | <code>string</code> | __*Optional*__
 **trigger**?🔹 | <code>string &#124; [gitlab.Trigger](#projen-gitlab-trigger)</code> | Trigger allows you to define downstream pipeline trigger.<br/>__*Optional*__
-**variables**?🔹 | <code>Map<string, string &#124; number></code> | Configurable values that are passed to the Job.<br/>__*Optional*__
+**variables**?🔹 | <code>Map<string, string></code> | Configurable values that are passed to the Job.<br/>__*Optional*__
 **when**?🔹 | <code>[gitlab.JobWhen](#projen-gitlab-jobwhen)</code> | Describes the conditions for when to run the job.<br/>__*Optional*__
 
 
@@ -17623,7 +17623,7 @@ Name | Type | Description
 **command**?🔹 | <code>Array<string></code> | Command or script that should be used as the container's command.<br/>__*Optional*__
 **entrypoint**?🔹 | <code>Array<string></code> | Command or script that should be executed as the container's entrypoint.<br/>__*Optional*__
 **pullPolicy**?🔹 | <code>Array<[gitlab.PullPolicy](#projen-gitlab-pullpolicy)></code> | The pull policy that the runner uses to fetch the Docker image.<br/>__*Optional*__
-**variables**?🔹 | <code>Map<string, string &#124; number></code> | Additional environment variables that are passed exclusively to the service..<br/>__*Optional*__
+**variables**?🔹 | <code>Map<string, string></code> | Additional environment variables that are passed exclusively to the service..<br/>__*Optional*__
 
 
 
