@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Create a Django Application
 
-This quick start will help you create a Django application using _projen_'s Python project.
+This quick start will help you create a Django application using projen's Python project.
 
 Before creating a new project, make sure you have the version of Python you want
 to use set up in your terminal. Running `which python` in bash/zsh/other POSIX shells, or
@@ -57,4 +57,4 @@ project.synth()
 
 Run the `projen` command again to re-synthesize your project with the new dependencies. That's it! You now have the libraries you need to get started with your Django application.
 
-For more information on handling packaging, environments, testing, and publishing with _projen_, [see the hello world quick start](/docs/quick-starts/python/hello-world).
+For more information on handling packaging, environments, testing, and publishing with projen, [see the hello world quick start](/docs/quick-starts/python/hello-world).

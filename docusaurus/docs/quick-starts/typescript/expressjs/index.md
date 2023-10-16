@@ -5,8 +5,8 @@ sidebar_position: 2
 # Create an ExpressJS Application
 
 This quick start will help you create an [Express.js](https://expressjs.com/) application using
-_projen_'s TypeScript project. The NodeJS project is a little feature-light, so to show off
-more of _projen_'s features, we'll use the TypeScript project instead.
+projen's TypeScript project. The NodeJS project is a little feature-light, so to show off
+more of projen's features, we'll use the TypeScript project instead.
 
 To begin, make sure you have the version of NodeJS you want to use set up in your terminal.
 Running `which node` in bash/zsh/other POSIX shells, or `Get-Command node` in Powershell,
@@ -20,7 +20,7 @@ To create a new TypeScript project, use `npx projen new typescript`:
 npx projen new typescript --name=express-project
 ```
 
-_projen_ does not officially maintain a project for Express.js, so we need to install the dependencies
+projen does not officially maintain a project for Express.js, so we need to install the dependencies
 and write some boilerplate code.
 
 ## Dependencies
@@ -63,7 +63,7 @@ app.listen(port, () => {
 
 ## Running the app
 
-You have code now, but you need to run it! To do that, we'll add a `start` task to _projen_:
+You have code now, but you need to run it! To do that, we'll add a `start` task to projen:
 
 ```ts
 project.tasks.addTask("start", {
@@ -73,7 +73,7 @@ project.tasks.addTask("start", {
 ```
 
 This will run the `ts-node src/index.ts` command when you run `npx projen start`. It also makes it
-possible to run `npm start`, `pnpm start` or `yarn start`, since _projen_ updates `package.json`.
+possible to run `npm start`, `pnpm start` or `yarn start`, since projen updates `package.json`.
 The `receiveArgs` parameter allows you to pass additional arguments to the command.
 
 ## Testing
@@ -84,7 +84,7 @@ Testing will require a few more dependencies, so let's add those now:
 project.deps.addDevDeps("supertest", "@types/supertest");
 ```
 
-Jest is added by default to a _projen_ TypeScript project, so you don't need to specify it.
+Jest is added by default to a projen TypeScript project, so you don't need to specify it.
 
 Next, let's update our code to make it testable:
 
@@ -124,7 +124,7 @@ describe("GET /", () => {
 });
 ```
 
-_projen_'s TypeScript project comes with a `test` task already, so we just need to run `npx projen test`.
+projen's TypeScript project comes with a `test` task already, so we just need to run `npx projen test`.
 
 ```shell
  PASS  test/index.test.ts
@@ -150,4 +150,4 @@ Ran all test suites.
 While Express.js can be run from a single file, it usually is not a best practice to do so. Instead,
 consider following the structure created by the [Express.js generator](https://expressjs.com/en/starter/generator.html).
 
-Better yet, challenge yourself to [use _projen_ to create a project for you based on the generator](docs/custom-constructs/index.md)!
+Better yet, challenge yourself to [use projen to create a project for you based on the generator](docs/custom-constructs/index.md)!
