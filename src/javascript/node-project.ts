@@ -474,6 +474,8 @@ export class NodeProject extends GitHubProject {
           return "yarn run";
         case NodePackageManager.PNPM:
           return "pnpm run";
+        case NodePackageManager.BUN:
+          return "bun run";
         default:
           throw new Error(`unexpected package manager ${this.packageManager}`);
       }
@@ -981,6 +983,8 @@ export class NodeProject extends GitHubProject {
           ? "yarn"
           : this.package.packageManager === NodePackageManager.YARN2
           ? "yarn"
+          : this.packageManager === NodePackageManager.BUN
+          ? "bun"
           : this.package.packageManager === NodePackageManager.PNPM
           ? "pnpm"
           : "npm";
