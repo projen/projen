@@ -21,6 +21,9 @@ export interface Cache {
 
   /** Defines when to save the cache, based on the status of the job (Default: Job Success). */
   readonly when?: CacheWhen;
+
+  /** Use cache:fallback_keys to specify a list of keys to try to restore cache from if there is no cache found for the cache:key. Caches are retrieved in the order specified in the fallback_keys section. */
+  readonly fallbackKeys?: string[];
 }
 
 /**
