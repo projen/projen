@@ -21093,6 +21093,7 @@ Name | Description
 **YARN2** 🔹|Use `yarn` versions >= 2 as the package manager.
 **NPM** 🔹|Use `npm` as the package manager.
 **PNPM** 🔹|Use `pnpm` as the package manager.
+**BUN** 🔹|Use `bun` as the package manager.
 
 
 ## enum NpmAccess 🔹 <a id="projen-javascript-npmaccess"></a>

@@ -1086,10 +1086,9 @@ export class NodePackage extends Component {
           ? "pnpm i --frozen-lockfile"
           : "pnpm i --no-frozen-lockfile";
       case NodePackageManager.BUN:
-        return [
-          "bun install",
-          ...(frozen ? ["--frozen-lockfile"] : []),
-        ].join(" ");
+        return ["bun install", ...(frozen ? ["--frozen-lockfile"] : [])].join(
+          " "
+        );
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
