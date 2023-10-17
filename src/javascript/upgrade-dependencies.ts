@@ -329,6 +329,9 @@ export class UpgradeDependencies extends Component {
       case NodePackageManager.PNPM:
         lazy = upgradePackages("pnpm update");
         break;
+      case NodePackageManager.BUN:
+        lazy = upgradePackages("bun update");
+        break;
       default:
         throw new Error(`unexpected package manager ${packageManager}`);
     }
