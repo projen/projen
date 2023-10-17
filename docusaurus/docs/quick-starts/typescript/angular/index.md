@@ -213,9 +213,11 @@ Example:
   ],
 ```
 
+Run `npx projen` and you'll see the contents of `.gitignore` have been updated.
+
 ## README.md
 
-`README.md` is not managed by projen's TypeScript project type. Feel free to update it without
+`README.md` is not managed by projen's TypeScript project. Feel free to update it without
 worrying about projen overwriting it.
 
 That's it! You now have a working Angular application under projen management. Type
