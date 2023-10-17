@@ -101,6 +101,8 @@ export class VsCodeLaunchConfig extends Component {
 
   private readonly content: VsCodeLaunchConfiguration;
 
+  public readonly file: JsonFile;
+
   constructor(vscode: VsCode) {
     super(vscode.project);
 
@@ -109,7 +111,7 @@ export class VsCodeLaunchConfig extends Component {
       configurations: [],
     };
 
-    new JsonFile(vscode.project, ".vscode/launch.json", {
+    this.file = new JsonFile(vscode.project, ".vscode/launch.json", {
       obj: () => ({
         ...this.content,
         configurations: this.content.configurations.map(

@@ -5111,7 +5111,7 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
   * **awsSdkConnectionReuse** (<code>boolean</code>)  Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript. __*Default*__: true
   * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
   * **edgeLambda** (<code>boolean</code>)  Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`. __*Default*__: false
-  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_16_X
+  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_18_X
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
   * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
@@ -5155,7 +5155,7 @@ Name | Type | Description
 *static* **NODEJS_10_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
 *static* **NODEJS_12_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
 *static* **NODEJS_14_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
-*static* **NODEJS_16_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 16.x.
+*static* **NODEJS_16_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 16.x.
 *static* **NODEJS_18_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 18.x.
 
 
@@ -8595,7 +8595,10 @@ addOverride(override: EslintOverride): void
 
 * **override** (<code>[javascript.EslintOverride](#projen-javascript-eslintoverride)</code>)  *No description*
   * **files** (<code>Array<string></code>)  Files or file patterns on which to apply the override. 
+  * **excludedFiles** (<code>Array<string></code>)  Pattern(s) to exclude from this override. __*Optional*__
+  * **extends** (<code>Array<string></code>)  Config(s) to extend in this override. __*Optional*__
   * **parser** (<code>string</code>)  The overridden parser. __*Optional*__
+  * **plugins** (<code>Array<string></code>)  `plugins` override. __*Optional*__
   * **rules** (<code>Map<string, any></code>)  The overriden rules. __*Optional*__
 
 
@@ -10749,7 +10752,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **publibVersion** (<code>string</code>)  Version requirement for `publib`. __*Default*__: "latest"
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 16.x
+  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 18.x
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **workflowRunsOnGroup** (<code>[GroupRunnerOptions](#projen-grouprunneroptions)</code>)  Github Runner Group selection options. __*Optional*__
 
@@ -11011,7 +11014,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
   * **githubRelease** (<code>boolean</code>)  Create a GitHub release for each release. __*Default*__: true
-  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 16.x
+  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 18.x
   * **workflowPermissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions granted to the release workflow job. __*Default*__: `{ contents: JobPermission.WRITE }`
 
 
@@ -11971,6 +11974,14 @@ new vscode.VsCodeLaunchConfig(vscode: VsCode)
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+
 ### Methods
 
 
@@ -12032,6 +12043,14 @@ new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+
 ### Methods
 
 
@@ -12084,6 +12103,14 @@ new vscode.VsCodeSettings(vscode: VsCode)
 
 * **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 
 ### Methods
 
@@ -15035,7 +15062,7 @@ Name | Type | Description
 **awsSdkConnectionReuse**?🔹 | <code>boolean</code> | Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript.<br/>__*Default*__: true
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
-**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_16_X
+**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_18_X
 
 
 
@@ -15055,7 +15082,7 @@ Name | Type | Description
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
-**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_16_X
+**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_18_X
 
 
 
@@ -17206,6 +17233,7 @@ Cache Definition.
 
 Name | Type | Description 
 -----|------|-------------
+**fallbackKeys**?🔹 | <code>Array<string></code> | Use cache:fallback_keys to specify a list of keys to try to restore cache from if there is no cache found for the cache:key.<br/>__*Optional*__
 **key**?🔹 | <code>string &#124; [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)</code> | Used the to give each cache a unique identifying key.<br/>__*Optional*__
 **paths**?🔹 | <code>Array<string></code> | Defines which files or directories to cache.<br/>__*Optional*__
 **policy**?🔹 | <code>[gitlab.CachePolicy](#projen-gitlab-cachepolicy)</code> | Defines the upload and download behaviour of the cache.<br/>__*Optional*__
@@ -18104,7 +18132,10 @@ eslint rules override.
 Name | Type | Description 
 -----|------|-------------
 **files**🔹 | <code>Array<string></code> | Files or file patterns on which to apply the override.
+**excludedFiles**?🔹 | <code>Array<string></code> | Pattern(s) to exclude from this override.<br/>__*Optional*__
+**extends**?🔹 | <code>Array<string></code> | Config(s) to extend in this override.<br/>__*Optional*__
 **parser**?🔹 | <code>string</code> | The overridden parser.<br/>__*Optional*__
+**plugins**?🔹 | <code>Array<string></code> | `plugins` override.<br/>__*Optional*__
 **rules**?🔹 | <code>Map<string, any></code> | The overriden rules.<br/>__*Optional*__
 
 
@@ -18562,6 +18593,7 @@ Name | Type | Description
 **customConditions**?🔹 | <code>Array<string></code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.<br/>__*Default*__: undefined
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
+**declarationMap**?🔹 | <code>boolean</code> | Generates a source map for .d.ts files which map back to the original .ts source file. This will allow editors such as VS Code to go to the original .ts file when using features like Go to Definition.<br/>__*Optional*__
 **emitDeclarationOnly**?🔹 | <code>boolean</code> | Only emit .d.ts files; do not emit .js files.<br/>__*Default*__: false
 **emitDecoratorMetadata**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: undefined
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
@@ -18602,6 +18634,7 @@ Name | Type | Description
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
 **stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.<br/>__*Default*__: true
 **target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/>__*Default*__: "ES2018"
+**types**?🔹 | <code>Array<string></code> | If types is specified, only packages listed will be included in the global scope.<br/>__*Optional*__
 **useUnknownInCatchVariables**?🔹 | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer.<br/>__*Default*__: true
 **verbatimModuleSyntax**?🔹 | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers.<br/>__*Default*__: undefined
 
@@ -19347,7 +19380,7 @@ Name | Type | Description
 **publibVersion**?🔹 | <code>string</code> | Version requirement for `publib`.<br/>__*Default*__: "latest"
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
-**workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 16.x
+**workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 18.x
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 
@@ -19405,7 +19438,7 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
-**workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 16.x
+**workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 18.x
 **workflowPermissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the release workflow job.<br/>__*Default*__: `{ contents: JobPermission.WRITE }`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__

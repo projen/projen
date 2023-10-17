@@ -188,6 +188,23 @@ test("adds correct entries for file-based caching", () => {
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
 });
 
+test("adds correct entries for fallback-keys caching", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: {
+        fallbackKeys: ["pathA", "pathB"],
+      },
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
+});
+
 test("does not snake job names", () => {
   // GIVEN
   const p = new TestProject({

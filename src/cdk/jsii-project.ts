@@ -450,7 +450,7 @@ export class JsiiProject extends TypeScriptProject {
       ),
       permissions: {},
       tools: {
-        node: { version: this.nodeVersion ?? "16.x" },
+        node: { version: this.nodeVersion ?? "18.x" },
         ...pacmak.publishTools,
       },
       steps: pacmak.prePublishSteps ?? [],
