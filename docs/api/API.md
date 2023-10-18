@@ -459,6 +459,7 @@ Name|Description
 [LogLevel](#projen-loglevel)|Logging verbosity.
 [ProjectType](#projen-projecttype)|Which type of project this is.
 [RenovatebotScheduleInterval](#projen-renovatebotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[TestFailureBehavior](#projen-testfailurebehavior)|*No description*
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
 [circleci.JobType](#projen-circleci-jobtype)|A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
@@ -1523,18 +1524,6 @@ Operations can be created using the factory methods `JsonPatch.add()`,
 ### Methods
 
 
-#### isTestOperation()🔹 <a id="projen-jsonpatch-istestoperation"></a>
-
-
-
-```ts
-isTestOperation(): boolean
-```
-
-
-__Returns__:
-* <code>boolean</code>
-
 #### *static* add(path, value)🔹 <a id="projen-jsonpatch-add"></a>
 
 Adds a value to an object or inserts it into an array.
@@ -1642,7 +1631,7 @@ static replace(path: string, value: any): JsonPatch
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
 
-#### *static* test(path, value)🔹 <a id="projen-jsonpatch-test"></a>
+#### *static* test(path, value, failureBehavior?)🔹 <a id="projen-jsonpatch-test"></a>
 
 Tests that the specified value is set in the document.
 
@@ -1650,11 +1639,12 @@ If the test fails,
 then the patch as a whole should not apply.
 
 ```ts
-static test(path: string, value: any): JsonPatch
+static test(path: string, value: any, failureBehavior?: TestFailureBehavior): JsonPatch
 ```
 
 * **path** (<code>string</code>)  *No description*
 * **value** (<code>any</code>)  *No description*
+* **failureBehavior** (<code>[TestFailureBehavior](#projen-testfailurebehavior)</code>)  *No description*
 
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
@@ -2089,10 +2079,10 @@ would result in the following object file
 ```
 
 ```ts
-patch(...patches: JsonPatch &#124; Array<JsonPatch>[]): void
+patch(...patches: JsonPatch[]): void
 ```
 
-* **patches** (<code>[JsonPatch](#projen-jsonpatch) &#124; Array<[JsonPatch](#projen-jsonpatch)></code>)  - The patch operations to apply.
+* **patches** (<code>[JsonPatch](#projen-jsonpatch)</code>)  - The patch operations to apply.
 
 
 
@@ -20840,6 +20830,17 @@ Name | Description
 **QUARTERLY** 🔹|Schedule quarterly.
 **WEEKENDS** 🔹|Schedule for weekends.
 **WEEKDAYS** 🔹|Schedule for weekdays.
+
+
+## enum TestFailureBehavior 🔹 <a id="projen-testfailurebehavior"></a>
+
+
+
+Name | Description
+-----|-----
+**SKIP_PATCH** 🔹|Skip the patch operation and continue with the next operation.
+**THROW** 🔹|Throw an error and stop whole file synthesizes.
+**LOG_ERROR** 🔹|Log an error and continue with the next operation.
 
 
 ## enum ApprovalLevel 🔹 <a id="projen-awscdk-approvallevel"></a>

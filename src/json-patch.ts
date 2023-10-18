@@ -11,7 +11,25 @@ import {
   CopyOperation,
   TestOperation,
   escapePathComponent,
+  JsonPatchError,
 } from "fast-json-patch";
+
+export enum TestFailureBehavior {
+  /**
+   * Skip the patch operation and continue with the next operation.
+   */
+  SKIP_PATCH = "skip",
+  /**
+   * Throw an error and stop whole file synthesizes.
+   */
+  THROW = "trow",
+  /**
+   * Log an error and continue with the next operation.
+   */
+  LOG_ERROR = "log",
+}
+
+const TEST_FAILURE_BEHAVIOR_SYMBOL = Symbol.for("testFailureBehavior");
 
 /**
  * Utility for applying RFC-6902 JSON-Patch to a document.
@@ -38,8 +56,31 @@ export class JsonPatch {
    * @returns The result document
    */
   public static apply(document: any, ...ops: JsonPatch[]): any {
-    const result = applyPatch(document, deepClone(ops.map((o) => o._toJson())));
-    return result.newDocument;
+    try {
+      const result = applyPatch(
+        document,
+        deepClone(ops.map((o) => o._toJson()))
+      );
+      return result.newDocument;
+    } catch (e) {
+      if (e instanceof JsonPatchError && e.name === "TEST_OPERATION_FAILED") {
+        const op = ops[e.index!];
+        if (TEST_FAILURE_BEHAVIOR_SYMBOL in op) {
+          const failureBehavior = op[TEST_FAILURE_BEHAVIOR_SYMBOL];
+          if (failureBehavior === TestFailureBehavior.SKIP_PATCH) {
+            return document;
+          } else if (failureBehavior === TestFailureBehavior.LOG_ERROR) {
+            console.error(
+              `Test operation failed at index ${e.index}: ${JSON.stringify(
+                op._toJson()
+              )}`
+            );
+            return document;
+          }
+        }
+      }
+      throw e;
+    }
   }
 
   /**
@@ -105,12 +146,21 @@ export class JsonPatch {
    *
    * @example JsonPatch.test('/best_biscuit/name', 'Choco Leibniz')
    */
-  public static test(path: string, value: any) {
-    return new JsonPatch({
+  public static test(
+    path: string,
+    value: any,
+    failureBehavior: TestFailureBehavior = TestFailureBehavior.SKIP_PATCH
+  ) {
+    const patch = new JsonPatch({
       op: "test",
       path,
       value,
     } satisfies TestOperation<any>);
+    Object.defineProperty(patch, TEST_FAILURE_BEHAVIOR_SYMBOL, {
+      writable: false,
+      value: failureBehavior,
+    });
+    return patch;
   }
 
   /**
@@ -123,13 +173,6 @@ export class JsonPatch {
   }
 
   private constructor(private readonly operation: Operation) {}
-
-  /**
-   * @returns true if this is a test operation
-   */
-  public isTestOperation(): this is TestOperation<unknown> {
-    return this.operation.op === "test";
-  }
 
   /**
    * Returns the JSON representation of this JSON patch operation.
