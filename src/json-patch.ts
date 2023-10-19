@@ -22,7 +22,7 @@ export enum TestFailureBehavior {
   /**
    * Throw an error and stop whole file synthesizes.
    */
-  THROW = "trow",
+  THROW = "throw",
   /**
    * Log an error and continue with the next operation.
    */
