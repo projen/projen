@@ -1573,12 +1573,12 @@ static copy(from: string, path: string): JsonPatch
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
 
-#### *static* escapePathComponent(path)🔹 <a id="projen-jsonpatch-escapepathcomponent"></a>
+#### *static* escapePath(path)🔹 <a id="projen-jsonpatch-escapepath"></a>
 
 Escapes a json pointer path.
 
 ```ts
-static escapePathComponent(path: string): string
+static escapePath(path: string): string
 ```
 
 * **path** (<code>string</code>)  The raw pointer.
@@ -20838,9 +20838,9 @@ Name | Description
 
 Name | Description
 -----|-----
-**SKIP_PATCH** 🔹|Skip the patch operation and continue with the next operation.
-**THROW** 🔹|Throw an error and stop whole file synthesizes.
-**LOG_ERROR** 🔹|Log an error and continue with the next operation.
+**SKIP** 🔹|Skip the current patch operation and continue with the next operation.
+**WARN** 🔹|Print a warning, but continue with the next operation.
+**FAIL_SYNTHESIS** 🔹|Fail the whole file synthesis.
 
 
 ## enum ApprovalLevel 🔹 <a id="projen-awscdk-approvallevel"></a>
