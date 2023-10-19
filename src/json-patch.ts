@@ -168,7 +168,7 @@ export class JsonPatch {
    * @param path The raw pointer
    * @return the Escaped path
    */
-  public static escapePathComponent(path: string): string {
+  public static escapePath(path: string): string {
     return escapePathComponent(path);
   }
 
