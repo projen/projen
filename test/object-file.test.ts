@@ -401,15 +401,47 @@ describe("patch", () => {
       obj: { first: { third: "test" } },
       marker: false,
     });
+
     // WHEN
     file.patch(
       JsonPatch.add("/first/second", []),
-      JsonPatch.test("/first/third", "not-test", TestFailureBehavior.THROW)
-    ); // this should fail
+      JsonPatch.test(
+        "/first/third",
+        "not-test",
+        TestFailureBehavior.FAIL_SYNTHESIS
+      )
+    );
 
     // THEN
     expect(() => synthSnapshot(prj)["my/object/file.json"]).toThrowError(
       "Test operation failed"
+    );
+  });
+
+  test("patch(p, v) can warn about failing assertions", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const loggerSpy = jest.spyOn(prj.logger, "log");
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { third: "test" } },
+      marker: false,
+    });
+
+    // WHEN
+    file.patch(
+      JsonPatch.test("/first/third", "not-test", TestFailureBehavior.WARN),
+      JsonPatch.add("/first/second", [])
+    );
+
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        third: "test",
+      },
+    });
+    expect(loggerSpy).toHaveBeenCalledWith(
+      "20.warn",
+      expect.stringMatching("JsonPatch Test operation failed")
     );
   });
 

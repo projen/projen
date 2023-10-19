@@ -289,7 +289,7 @@ function splitOnPeriods(x: string): string[] {
 }
 
 function isTestOperationFailure(error: unknown): error is JsonPatchError {
-  return !(
+  return (
     error instanceof JsonPatchError && error.name === "TEST_OPERATION_FAILED"
   );
 }
