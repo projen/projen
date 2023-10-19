@@ -71,7 +71,7 @@ packageJson.patch(
 
 // Fails synthesis completely
 packageJson.patch(
-  JsonPatch.test('/author/name', 'A. Noyed', TestFailureBehavior.THROW),
+  JsonPatch.test('/author/name', 'A. Noyed', TestFailureBehavior.FAIL_SYNTHESIS),
 );
 ```
 
