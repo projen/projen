@@ -142,6 +142,7 @@ new TextFile(project, "projen.bash", {
     "fi",
     "exec bin/projen $@",
   ],
+  executable: true,
 });
 project.npmignore.exclude("/projen.bash");
 
