@@ -1,7 +1,7 @@
 import { synthSnapshot, TestProject } from "./util";
 import { ObjectFile } from "../src";
 import { JsonFile } from "../src/json";
-import { JsonPatch } from "../src/json-patch";
+import { JsonPatch, TestFailureBehavior } from "../src/json-patch";
 
 class ChildObjectFile extends ObjectFile {}
 
@@ -355,6 +355,67 @@ describe("patch", () => {
         },
       },
     });
+  });
+
+  test("patch(p, v) can test values", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { second: [], third: "test" } },
+      marker: false,
+    });
+    // WHEN
+    file.patch(
+      JsonPatch.test("/first/second", undefined),
+      JsonPatch.add("/first/second", [])
+    ); // this `add` expected to be silently skipped
+
+    file.patch(
+      JsonPatch.add("/first/second/-", "first extra value"),
+      JsonPatch.add("/first/second/-", "second extra value")
+    );
+
+    file.patch(
+      JsonPatch.test("/first/third", "test"),
+      JsonPatch.replace("/first/third", "test2")
+    );
+
+    file.patch(
+      JsonPatch.test("/first/extra", { foo: "bar" }),
+      JsonPatch.add("/first/extra/boo", "far")
+    );
+
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: ["first extra value", "second extra value"],
+        third: "test2",
+      },
+    });
+  });
+
+  test("patch(p, v) can assert values", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { third: "test" } },
+      marker: false,
+    });
+
+    // WHEN
+    file.patch(
+      JsonPatch.add("/first/second", []),
+      JsonPatch.test(
+        "/first/third",
+        "not-test",
+        TestFailureBehavior.FAIL_SYNTHESIS
+      )
+    );
+
+    // THEN
+    expect(() => synthSnapshot(prj)["my/object/file.json"]).toThrowError(
+      "Test operation failed"
+    );
   });
 
   test("patch(p, v) can work with lazy values", () => {

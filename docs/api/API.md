@@ -459,6 +459,7 @@ Name|Description
 [LogLevel](#projen-loglevel)|Logging verbosity.
 [ProjectType](#projen-projecttype)|Which type of project this is.
 [RenovatebotScheduleInterval](#projen-renovatebotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[TestFailureBehavior](#projen-testfailurebehavior)|*No description*
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
 [circleci.JobType](#projen-circleci-jobtype)|A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
@@ -1572,6 +1573,19 @@ static copy(from: string, path: string): JsonPatch
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
 
+#### *static* escapePath(path)🔹 <a id="projen-jsonpatch-escapepath"></a>
+
+Escapes a json pointer path.
+
+```ts
+static escapePath(path: string): string
+```
+
+* **path** (<code>string</code>)  The raw pointer.
+
+__Returns__:
+* <code>string</code>
+
 #### *static* move(from, path)🔹 <a id="projen-jsonpatch-move"></a>
 
 Moves a value from one location to the other.
@@ -1617,7 +1631,7 @@ static replace(path: string, value: any): JsonPatch
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
 
-#### *static* test(path, value)🔹 <a id="projen-jsonpatch-test"></a>
+#### *static* test(path, value, failureBehavior?)🔹 <a id="projen-jsonpatch-test"></a>
 
 Tests that the specified value is set in the document.
 
@@ -1625,11 +1639,12 @@ If the test fails,
 then the patch as a whole should not apply.
 
 ```ts
-static test(path: string, value: any): JsonPatch
+static test(path: string, value: any, failureBehavior?: TestFailureBehavior): JsonPatch
 ```
 
 * **path** (<code>string</code>)  *No description*
 * **value** (<code>any</code>)  *No description*
+* **failureBehavior** (<code>[TestFailureBehavior](#projen-testfailurebehavior)</code>)  *No description*
 
 __Returns__:
 * <code>[JsonPatch](#projen-jsonpatch)</code>
@@ -20815,6 +20830,16 @@ Name | Description
 **QUARTERLY** 🔹|Schedule quarterly.
 **WEEKENDS** 🔹|Schedule for weekends.
 **WEEKDAYS** 🔹|Schedule for weekdays.
+
+
+## enum TestFailureBehavior 🔹 <a id="projen-testfailurebehavior"></a>
+
+
+
+Name | Description
+-----|-----
+**SKIP** 🔹|Skip the current patch operation and continue with the next operation.
+**FAIL_SYNTHESIS** 🔹|Fail the whole file synthesis.
 
 
 ## enum ApprovalLevel 🔹 <a id="projen-awscdk-approvallevel"></a>
