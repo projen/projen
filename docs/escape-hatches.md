@@ -53,7 +53,7 @@ By default, atomic operations with failing tests are silently skipped.
 // If the test operation fails, all instructions are disregarded
 packageJson.patch(
   JsonPatch.test('/author/name', 'A. Noyed'),
-  JsonPatch.add('/author/name', 'A. Mused'),
+  JsonPatch.replace('/author/name', 'A. Mused'),
   JsonPatch.add('/author/email', 'amused@example.com'),
 );
 
@@ -61,14 +61,9 @@ packageJson.patch(
 packageJson.patch(JsonPatch.add('/keywords/-', 'productivity'));
 ```
 
-In certain situations you might want to warn about the test failure or even fail the whole synthesis:
+In certain situations you might want to fail the whole synthesis:
 
 ```ts
-// Prints a warning during synthesis
-packageJson.patch(
-  JsonPatch.test('/author/name', 'A. Noyed', TestFailureBehavior.WARN),
-);
-
 // Fails synthesis completely
 packageJson.patch(
   JsonPatch.test('/author/name', 'A. Noyed', TestFailureBehavior.FAIL_SYNTHESIS),

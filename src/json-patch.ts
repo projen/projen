@@ -11,6 +11,7 @@ import {
   CopyOperation,
   TestOperation,
   escapePathComponent,
+  JsonPatchError,
 } from "fast-json-patch";
 
 export enum TestFailureBehavior {
@@ -19,14 +20,12 @@ export enum TestFailureBehavior {
    */
   SKIP = "skip",
   /**
-   * Print a warning, but continue with the next operation.
-   */
-  WARN = "warn",
-  /**
    * Fail the whole file synthesis.
    */
   FAIL_SYNTHESIS = "fail",
 }
+
+const TEST_FAILURE_BEHAVIOR_SYMBOL = Symbol.for("testFailureBehavior");
 
 /**
  * Utility for applying RFC-6902 JSON-Patch to a document.
@@ -53,8 +52,24 @@ export class JsonPatch {
    * @returns The result document
    */
   public static apply(document: any, ...ops: JsonPatch[]): any {
-    const result = applyPatch(document, deepClone(ops.map((o) => o._toJson())));
-    return result.newDocument;
+    try {
+      const result = applyPatch(
+        document,
+        deepClone(ops.map((o) => o._toJson()))
+      );
+      return result.newDocument;
+    } catch (e) {
+      if (e instanceof JsonPatchError && e.name === "TEST_OPERATION_FAILED") {
+        const op = ops[e.index!];
+        if (TEST_FAILURE_BEHAVIOR_SYMBOL in op) {
+          const failureBehavior = op[TEST_FAILURE_BEHAVIOR_SYMBOL];
+          if (failureBehavior === TestFailureBehavior.SKIP) {
+            return document;
+          }
+        }
+      }
+      throw e;
+    }
   }
 
   /**
@@ -125,15 +140,15 @@ export class JsonPatch {
     value: any,
     failureBehavior: TestFailureBehavior = TestFailureBehavior.SKIP
   ) {
-    const patch = new JsonPatch(
-      {
-        op: "test",
-        path,
-        value,
-      } satisfies TestOperation<any>,
-      failureBehavior
-    );
-
+    const patch = new JsonPatch({
+      op: "test",
+      path,
+      value,
+    } satisfies TestOperation<any>);
+    Object.defineProperty(patch, TEST_FAILURE_BEHAVIOR_SYMBOL, {
+      writable: false,
+      value: failureBehavior,
+    });
     return patch;
   }
 
@@ -146,20 +161,7 @@ export class JsonPatch {
     return escapePathComponent(path);
   }
 
-  private constructor(
-    private readonly operation: Operation,
-    private failureBehavior?: TestFailureBehavior
-  ) {}
-
-  /**
-   * Returns the test failure behavior, if the operation is a test operation.
-   * Otherwise `undefined`.
-   *
-   * @internal
-   */
-  public get _failureBehavior(): TestFailureBehavior | undefined {
-    return this.failureBehavior;
-  }
+  private constructor(private readonly operation: Operation) {}
 
   /**
    * Returns the JSON representation of this JSON patch operation.

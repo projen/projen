@@ -20839,7 +20839,6 @@ Name | Description
 Name | Description
 -----|-----
 **SKIP** 🔹|Skip the current patch operation and continue with the next operation.
-**WARN** 🔹|Print a warning, but continue with the next operation.
 **FAIL_SYNTHESIS** 🔹|Fail the whole file synthesis.
 
 

@@ -418,33 +418,6 @@ describe("patch", () => {
     );
   });
 
-  test("patch(p, v) can warn about failing assertions", () => {
-    // GIVEN
-    const prj = new TestProject();
-    const loggerSpy = jest.spyOn(prj.logger, "log");
-    const file = new JsonFile(prj, "my/object/file.json", {
-      obj: { first: { third: "test" } },
-      marker: false,
-    });
-
-    // WHEN
-    file.patch(
-      JsonPatch.test("/first/third", "not-test", TestFailureBehavior.WARN),
-      JsonPatch.add("/first/second", [])
-    );
-
-    // THEN
-    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
-      first: {
-        third: "test",
-      },
-    });
-    expect(loggerSpy).toHaveBeenCalledWith(
-      "20.warn",
-      expect.stringMatching("JsonPatch Test operation failed")
-    );
-  });
-
   test("patch(p, v) can work with lazy values", () => {
     // GIVEN
     const prj = new TestProject();

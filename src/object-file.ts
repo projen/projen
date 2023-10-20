@@ -1,6 +1,5 @@
-import { JsonPatchError } from "fast-json-patch";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
-import { JsonPatch, TestFailureBehavior } from "./json-patch";
+import { JsonPatch } from "./json-patch";
 import { Project } from "./project";
 import { deepMerge } from "./util";
 
@@ -237,29 +236,8 @@ export abstract class ObjectFile extends FileBase {
     }
 
     let patched = resolved;
-    for (const ops of this.patchOperations) {
-      try {
-        patched = JsonPatch.apply(patched, ...ops);
-      } catch (error) {
-        if (!isTestOperationFailure(error)) {
-          throw error;
-        }
-        const currentOp = ops[error.index!];
-        switch (currentOp?._failureBehavior) {
-          case TestFailureBehavior.FAIL_SYNTHESIS:
-            throw error;
-          case TestFailureBehavior.WARN:
-            this.project.logger.warn(
-              `JsonPatch Test operation failed at index ${
-                error.index
-              }: ${JSON.stringify(currentOp._toJson())}`
-            );
-            continue;
-          case TestFailureBehavior.SKIP:
-          default:
-            continue;
-        }
-      }
+    for (const operation of this.patchOperations) {
+      patched = JsonPatch.apply(patched, ...operation);
     }
 
     return patched ? JSON.stringify(patched, undefined, 2) : undefined;
@@ -286,10 +264,4 @@ function splitOnPeriods(x: string): string[] {
 
   ret.reverse();
   return ret;
-}
-
-function isTestOperationFailure(error: unknown): error is JsonPatchError {
-  return (
-    error instanceof JsonPatchError && error.name === "TEST_OPERATION_FAILED"
-  );
 }
