@@ -42,7 +42,7 @@ according to the package manager being used. This can be configured:
 ```ts
 const project = new javascript.NodeProject({
   // ...
-  packageManager: javascript.NodePackageManager.YARN, // or NPM, PNPM, etc.
+  packageManager: javascript.NodePackageManager.YARN_CLASSIC, // or NPM, PNPM, etc.
 });
 ```
 

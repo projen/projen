@@ -1500,7 +1500,7 @@ export enum NodePackageManager {
   /**
    * Use `yarn` as the package manager.
    *
-   * @deprecated for `yarn` 1.x use `YARN_CLASSIC` for `yarn` >= 2 use `YARN_BERRY`
+   * @deprecated For `yarn` 1.x use `YARN_CLASSIC` for `yarn` >= 2 use `YARN_BERRY`. Currently, `NodePackageManager.YARN` means `YARN_CLASSIC`. In the future, we might repurpose it to mean `YARN_BERRY`.
    */
   YARN = "yarn",
 
@@ -1517,7 +1517,7 @@ export enum NodePackageManager {
   YARN_CLASSIC = "yarn_classic",
 
   /**
-   * Use `yarn` >= 2 as the package manager.
+   * Use `yarn` versions >= 2 as the package manager.
    */
   YARN_BERRY = "yarn_berry",
 
