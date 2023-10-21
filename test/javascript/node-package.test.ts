@@ -444,30 +444,33 @@ test("local dependencies can be specified using 'file:' prefix", () => {
   expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
 });
 
-[NodePackageManager.YARN, NodePackageManager.YARN2].forEach(
-  (packageManager) => {
-    test(`${packageManager} resolutions`, () => {
-      const project = new TestProject();
+[
+  NodePackageManager.YARN,
+  NodePackageManager.YARN2,
+  NodePackageManager.YARN_CLASSIC,
+  NodePackageManager.YARN_BERRY,
+].forEach((packageManager) => {
+  test(`${packageManager} resolutions`, () => {
+    const project = new TestProject();
 
-      const pkg = new NodePackage(project, {
-        packageManager,
-      });
-
-      pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
-
-      expect(
-        project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
-      ).toEqual([
-        { name: "other-dep", type: "override" },
-        { name: "some-dep", type: "override", version: "1.0.0" },
-      ]);
-      const snps = synthSnapshot(project);
-
-      expect(snps["package.json"].resolutions).toBeDefined();
-      expect(snps["package.json"]).toMatchSnapshot();
+    const pkg = new NodePackage(project, {
+      packageManager,
     });
-  }
-);
+
+    pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+    expect(
+      project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+    ).toEqual([
+      { name: "other-dep", type: "override" },
+      { name: "some-dep", type: "override", version: "1.0.0" },
+    ]);
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].resolutions).toBeDefined();
+    expect(snps["package.json"]).toMatchSnapshot();
+  });
+});
 
 test("npm overrides", () => {
   const project = new TestProject();

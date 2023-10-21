@@ -1051,15 +1051,15 @@ describe("workflowPackageCache", () => {
       name: "yarn to be enabled",
       options: {
         workflowPackageCache: true,
-        packageManager: NodePackageManager.YARN,
+        packageManager: NodePackageManager.YARN_CLASSIC,
       },
       expected: "yarn",
     },
     {
-      name: "yarn2 to be enabled",
+      name: "yarn berry to be enabled",
       options: {
         workflowPackageCache: true,
-        packageManager: NodePackageManager.YARN2,
+        packageManager: NodePackageManager.YARN_BERRY,
       },
       expected: "yarn",
     },
@@ -1684,7 +1684,15 @@ describe("package manager env", () => {
       cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      cmd: '$(npx -c "node --print process.env.PATH")',
+    },
+    {
       packageManager: NodePackageManager.YARN2,
+      cmd: '$(npx -c "node --print process.env.PATH")',
+    },
+    {
+      packageManager: NodePackageManager.YARN_BERRY,
       cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {

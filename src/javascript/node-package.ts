@@ -513,7 +513,8 @@ export class NodePackage extends Component {
       ...options.peerDependencyOptions,
     };
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
-    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+    this.packageManager =
+      options.packageManager ?? NodePackageManager.YARN_CLASSIC;
     this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
 
@@ -1072,12 +1073,14 @@ export class NodePackage extends Component {
   private renderInstallCommand(frozen: boolean) {
     switch (this.packageManager) {
       case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
         return [
           "yarn install",
           "--check-files", // ensure all modules exist (especially projen which was just removed).
           ...(frozen ? ["--frozen-lockfile"] : []),
         ].join(" ");
       case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
         return ["yarn install", ...(frozen ? ["--immutable"] : [])].join(" ");
       case NodePackageManager.NPM:
         return frozen ? "npm ci" : "npm install";
@@ -1360,6 +1363,8 @@ export class NodePackage extends Component {
         return { pnpm: { overrides: render } };
       case NodePackageManager.YARN:
       case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_CLASSIC:
+      case NodePackageManager.YARN_BERRY:
       case NodePackageManager.BUN:
       default:
         return { resolutions: render };
@@ -1584,7 +1589,9 @@ export function defaultNpmToken(
 function determineLockfile(packageManager: NodePackageManager) {
   if (
     packageManager === NodePackageManager.YARN ||
-    packageManager === NodePackageManager.YARN2
+    packageManager === NodePackageManager.YARN2 ||
+    packageManager === NodePackageManager.YARN_CLASSIC ||
+    packageManager === NodePackageManager.YARN_BERRY
   ) {
     return "yarn.lock";
   } else if (packageManager === NodePackageManager.NPM) {
