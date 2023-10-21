@@ -168,7 +168,7 @@ export interface NodePackageOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default NodePackageManager.YARN
+   * @default NodePackageManager.YARN_CLASSIC
    */
   readonly packageManager?: NodePackageManager;
 
@@ -1494,13 +1494,27 @@ export interface PeerDependencyOptions {
 export enum NodePackageManager {
   /**
    * Use `yarn` as the package manager.
+   *
+   * @deprecated for `yarn` 1.x use `YARN_CLASSIC` for `yarn` >= 2 use `YARN_BERRY`
    */
   YARN = "yarn",
 
   /**
    * Use `yarn` versions >= 2 as the package manager.
+   *
+   * @deprecated use YARN_BERRY instead
    */
   YARN2 = "yarn2",
+
+  /**
+   * Use `yarn` 1.x as the package manager.
+   */
+  YARN_CLASSIC = "yarn_classic",
+
+  /**
+   * Use `yarn` >= 2 as the package manager.
+   */
+  YARN_BERRY = "yarn_berry",
 
   /**
    * Use `npm` as the package manager.
