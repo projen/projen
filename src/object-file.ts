@@ -239,7 +239,6 @@ export abstract class ObjectFile extends FileBase {
     for (const operation of this.patchOperations) {
       patched = JsonPatch.apply(patched, ...operation);
     }
-
     return patched ? JSON.stringify(patched, undefined, 2) : undefined;
   }
 }

@@ -1,3 +1,4 @@
+import { types } from "util";
 import { ResolveOptions, IResolvable } from "./file";
 
 function isResolvable(obj: any): obj is IResolvable {
@@ -15,6 +16,23 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
   if (isResolvable(value)) {
     const resolved = value.toJSON();
     return resolve(resolved, options);
+  }
+
+  // Special resolution for few JavaScript built-in types
+  // that by default would be stringified as empty objects ('{}')
+  // as they are missing a `toJSON` implementation.
+  switch (true) {
+    case types.isRegExp(value) && !value.flags:
+      return value.source;
+
+    case types.isSet(value):
+      return resolve(Array.from(value), options);
+
+    case types.isMap(value):
+      return resolve(Object.fromEntries(value), options);
+
+    case types.isBoxedPrimitive(value):
+      return resolve(value.valueOf(), options);
   }
 
   // if value is a function, call it and resolve the result.
