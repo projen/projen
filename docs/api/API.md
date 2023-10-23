@@ -21166,7 +21166,7 @@ Name | Description
 **YARN** 🔹|Use `yarn` as the package manager.
 **YARN2** 🔹|Use `yarn` versions >= 2 as the package manager.
 **YARN_CLASSIC** 🔹|Use `yarn` 1.x as the package manager.
-**YARN_BERRY** 🔹|Use `yarn` >= 2 as the package manager.
+**YARN_BERRY** 🔹|Use `yarn` versions >= 2 as the package manager.
 **NPM** 🔹|Use `npm` as the package manager.
 **PNPM** 🔹|Use `pnpm` as the package manager.
 **BUN** 🔹|Use `bun` as the package manager.
