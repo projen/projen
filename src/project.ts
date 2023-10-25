@@ -46,7 +46,7 @@ export interface ProjectOptions {
    *
    * If this project has a parent, this directory is relative to the parent
    * directory and it cannot be the same as the parent or any of it's other
-   * sub-projects.
+   * subprojects.
    *
    * @default "."
    */
@@ -556,7 +556,7 @@ export class Project {
    *
    * 1. Call "this.preSynthesize()"
    * 2. Delete all generated files
-   * 3. Synthesize all sub-projects
+   * 3. Synthesize all subprojects
    * 4. Synthesize all components of this project
    * 5. Call "postSynthesize()" for all components of this project
    * 6. Call "this.postSynthesize()"
@@ -646,12 +646,12 @@ export class Project {
   }
 
   /**
-   * Adds a sub-project to this project.
+   * Adds a subproject to this project.
    *
    * This is automatically called when a new project is created with `parent`
    * pointing to this project, so there is no real need to call this manually.
    *
-   * @param sub-project The child project to add.
+   * @param subproject The child project to add.
    * @internal
    */
   _addSubProject(subproject: Project) {
@@ -663,7 +663,7 @@ export class Project {
     for (const p of this._subprojects) {
       if (path.resolve(p.outdir) === path.resolve(subproject.outdir)) {
         throw new Error(
-          `there is already a sub-project with "outdir": ${subproject.outdir}`
+          `There is already a subproject with "outdir": ${subproject.outdir}`
         );
       }
     }

@@ -57,9 +57,9 @@ test('running "projen" with task in subdirectory of a project will execute task 
 test('running "projen" with task in root of a subproject will execute task of the subproject', () => {
   const project = new Project({ name: "my-project" });
   const subProject = new Project({
-    name: "my-sub-project",
+    name: "my-subproject",
     parent: project,
-    outdir: "sub-project",
+    outdir: "subproject",
   });
   subProject.testTask?.exec('echo "foo" > bar.txt');
   project.synth();
@@ -73,9 +73,9 @@ test('running "projen" with task in root of a subproject will execute task of th
 test('running "projen" with task in subdirectory of a subproject will execute task of the subproject', () => {
   const project = new Project({ name: "my-project" });
   const subProject = new Project({
-    name: "my-sub-project",
+    name: "my-subproject",
     parent: project,
-    outdir: "sub-project",
+    outdir: "subproject",
   });
   subProject.testTask?.exec('echo "foo" > bar.txt');
   project.synth();
