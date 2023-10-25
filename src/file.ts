@@ -108,7 +108,7 @@ export abstract class FileBase extends Component {
     const existing = project.root.tryFindFile(this.absolutePath);
     if (existing && existing !== this) {
       throw new Error(
-        `there is already a file under ${path.relative(
+        `There is already a file under ${path.relative(
           project.root.outdir,
           this.absolutePath
         )}`
