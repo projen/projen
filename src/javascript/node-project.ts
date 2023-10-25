@@ -471,6 +471,8 @@ export class NodeProject extends GitHubProject {
           return "npm run";
         case NodePackageManager.YARN:
         case NodePackageManager.YARN2:
+        case NodePackageManager.YARN_CLASSIC:
+        case NodePackageManager.YARN_BERRY:
           return "yarn run";
         case NodePackageManager.PNPM:
           return "pnpm run";
@@ -982,6 +984,10 @@ export class NodeProject extends GitHubProject {
         this.package.packageManager === NodePackageManager.YARN
           ? "yarn"
           : this.package.packageManager === NodePackageManager.YARN2
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.YARN_CLASSIC
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.YARN_BERRY
           ? "yarn"
           : this.packageManager === NodePackageManager.BUN
           ? "bun"

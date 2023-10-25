@@ -45,7 +45,7 @@ export abstract class ObjectFile extends FileBase {
   /**
    * patches to be applied to `obj` after the resolver is called
    */
-  private readonly patchOperations: JsonPatch[];
+  private readonly patchOperations: Array<JsonPatch[]>;
 
   constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
@@ -212,7 +212,7 @@ export abstract class ObjectFile extends FileBase {
    * @param patches - The patch operations to apply
    */
   public patch(...patches: JsonPatch[]) {
-    this.patchOperations.push(...patches);
+    this.patchOperations.push(patches);
   }
 
   /**
@@ -234,7 +234,12 @@ export abstract class ObjectFile extends FileBase {
     if (resolved) {
       deepMerge([resolved, this.rawOverrides], true);
     }
-    const patched = JsonPatch.apply(resolved, ...this.patchOperations);
+
+    let patched = resolved;
+    for (const operation of this.patchOperations) {
+      patched = JsonPatch.apply(patched, ...operation);
+    }
+
     return patched ? JSON.stringify(patched, undefined, 2) : undefined;
   }
 }

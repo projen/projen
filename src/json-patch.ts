@@ -1,6 +1,31 @@
-// copied fro https://github.com/cdk8s-team/cdk8s-core/blob/6b317a7a6a2504e228bc56bf96fc98829f88c2be/src/json-patch.ts
+// inspired by https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/json-patch.ts
 // under Apache 2.0 license
-import { applyPatch, Operation } from "fast-json-patch";
+import {
+  applyPatch,
+  deepClone,
+  Operation,
+  AddOperation,
+  RemoveOperation,
+  ReplaceOperation,
+  MoveOperation,
+  CopyOperation,
+  TestOperation,
+  escapePathComponent,
+  JsonPatchError,
+} from "fast-json-patch";
+
+export enum TestFailureBehavior {
+  /**
+   * Skip the current patch operation and continue with the next operation.
+   */
+  SKIP = "skip",
+  /**
+   * Fail the whole file synthesis.
+   */
+  FAIL_SYNTHESIS = "fail",
+}
+
+const TEST_FAILURE_BEHAVIOR_SYMBOL = Symbol.for("testFailureBehavior");
 
 /**
  * Utility for applying RFC-6902 JSON-Patch to a document.
@@ -27,11 +52,24 @@ export class JsonPatch {
    * @returns The result document
    */
   public static apply(document: any, ...ops: JsonPatch[]): any {
-    const result = applyPatch(
-      document,
-      ops.map((o) => o._toJson())
-    );
-    return result.newDocument;
+    try {
+      const result = applyPatch(
+        document,
+        deepClone(ops.map((o) => o._toJson()))
+      );
+      return result.newDocument;
+    } catch (e) {
+      if (e instanceof JsonPatchError && e.name === "TEST_OPERATION_FAILED") {
+        const op = ops[e.index!];
+        if (TEST_FAILURE_BEHAVIOR_SYMBOL in op) {
+          const failureBehavior = op[TEST_FAILURE_BEHAVIOR_SYMBOL];
+          if (failureBehavior === TestFailureBehavior.SKIP) {
+            return document;
+          }
+        }
+      }
+      throw e;
+    }
   }
 
   /**
@@ -42,7 +80,11 @@ export class JsonPatch {
    * @example JsonPatch.add('/biscuits/1', { "name": "Ginger Nut" })
    */
   public static add(path: string, value: any) {
-    return new JsonPatch({ op: "add", path, value });
+    return new JsonPatch({
+      op: "add",
+      path,
+      value,
+    } satisfies AddOperation<any>);
   }
 
   /**
@@ -52,7 +94,7 @@ export class JsonPatch {
    * @example JsonPatch.remove('/biscuits/0')
    */
   public static remove(path: string) {
-    return new JsonPatch({ op: "remove", path });
+    return new JsonPatch({ op: "remove", path } satisfies RemoveOperation);
   }
 
   /**
@@ -61,7 +103,11 @@ export class JsonPatch {
    * @example JsonPatch.replace('/biscuits/0/name', 'Chocolate Digestive')
    */
   public static replace(path: string, value: any) {
-    return new JsonPatch({ op: "replace", path, value });
+    return new JsonPatch({
+      op: "replace",
+      path,
+      value,
+    } satisfies ReplaceOperation<any>);
   }
 
   /**
@@ -71,7 +117,7 @@ export class JsonPatch {
    * @example JsonPatch.copy('/biscuits/0', '/best_biscuit')
    */
   public static copy(from: string, path: string) {
-    return new JsonPatch({ op: "copy", from, path });
+    return new JsonPatch({ op: "copy", from, path } satisfies CopyOperation);
   }
 
   /**
@@ -80,7 +126,7 @@ export class JsonPatch {
    * @example JsonPatch.move('/biscuits', '/cookies')
    */
   public static move(from: string, path: string) {
-    return new JsonPatch({ op: "move", from, path });
+    return new JsonPatch({ op: "move", from, path } satisfies MoveOperation);
   }
 
   /**
@@ -89,8 +135,30 @@ export class JsonPatch {
    *
    * @example JsonPatch.test('/best_biscuit/name', 'Choco Leibniz')
    */
-  public static test(path: string, value: any) {
-    return new JsonPatch({ op: "test", path, value });
+  public static test(
+    path: string,
+    value: any,
+    failureBehavior: TestFailureBehavior = TestFailureBehavior.SKIP
+  ) {
+    const patch = new JsonPatch({
+      op: "test",
+      path,
+      value,
+    } satisfies TestOperation<any>);
+    Object.defineProperty(patch, TEST_FAILURE_BEHAVIOR_SYMBOL, {
+      writable: false,
+      value: failureBehavior,
+    });
+    return patch;
+  }
+
+  /**
+   * Escapes a json pointer path
+   * @param path The raw pointer
+   * @return the Escaped path
+   */
+  public static escapePath(path: string): string {
+    return escapePathComponent(path);
   }
 
   private constructor(private readonly operation: Operation) {}

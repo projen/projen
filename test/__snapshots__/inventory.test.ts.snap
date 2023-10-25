@@ -4170,7 +4170,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -7194,7 +7194,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -11354,7 +11354,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -14165,7 +14165,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -17035,7 +17035,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -20689,7 +20689,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -23226,7 +23226,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -25666,7 +25666,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -28076,7 +28076,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -31566,7 +31566,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -33994,7 +33994,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -36547,7 +36547,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -39078,7 +39078,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
