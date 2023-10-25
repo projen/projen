@@ -554,14 +554,16 @@ describe("git", () => {
       (projectdir) => {
         const defaultBranch = "test-default-branch";
 
-        process.env.XDG_CONFIG_HOME = projectdir;
-        mkdirSync(join(projectdir, "git"));
-        writeFileSync(join(projectdir, "git", "config"), "");
-        execCapture(`git config --global init.defaultBranch ${defaultBranch}`, {
-          cwd: projectdir,
-        });
+        // Simulate git config using env variables
+        // We don't want to change the user's git config
+        const env = {
+          ...process.env,
+          GIT_CONFIG_COUNT: "1",
+          GIT_CONFIG_KEY_0: "init.defaultBranch",
+          GIT_CONFIG_VALUE_0: defaultBranch,
+        };
 
-        execProjenCLI(projectdir, ["new", "project"]);
+        execProjenCLI(projectdir, ["new", "project"], env);
         expect(
           execCapture("git rev-parse --abbrev-ref HEAD", {
             cwd: projectdir,

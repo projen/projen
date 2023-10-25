@@ -71,7 +71,7 @@ export interface UpgradeDependenciesOptions {
    * If this is `false`, only a local projen task is created, which can be executed manually to
    * upgrade the dependencies.
    *
-   * @default - true for root projects, false for sub-projects.
+   * @default - true for root projects, false for subprojects.
    */
   readonly workflow?: boolean;
 
