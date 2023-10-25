@@ -1176,6 +1176,34 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1857826?v=4",
       "profile": "https://github.com/zetashift",
       "contributions": ["code"]
+    },
+    {
+      "login": "ctasada",
+      "name": "Carlos Tasada",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1381772?v=4",
+      "profile": "https://github.com/ctasada",
+      "contributions": ["code"]
+    },
+    {
+      "login": "Liam-Johnston",
+      "name": "Liam Johnston",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30859946?v=4",
+      "profile": "https://github.com/Liam-Johnston",
+      "contributions": ["code"]
+    },
+    {
+      "login": "quesabe",
+      "name": "Roman Vasilev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90195036?v=4",
+      "profile": "https://github.com/quesabe",
+      "contributions": ["code"]
+    },
+    {
+      "login": "scottschreckengaust",
+      "name": "Scott Schreckengaust",
+      "avatar_url": "https://avatars.githubusercontent.com/u/345885?v=4",
+      "profile": "https://github.com/scottschreckengaust",
+      "contributions": ["code"]
     }
   ],
   "contributorsPerLine": 7,
