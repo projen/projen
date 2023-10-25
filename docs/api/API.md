@@ -2327,7 +2327,7 @@ Synthesize all project files into `outdir`.
 
 1. Call "this.preSynthesize()"
 2. Delete all generated files
-3. Synthesize all sub-projects
+3. Synthesize all subprojects
 4. Synthesize all components of this project
 5. Call "postSynthesize()" for all components of this project
 6. Call "this.postSynthesize()"
@@ -9968,7 +9968,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
   * **target** (<code>string</code>)  Determines the target version to upgrade dependencies to. __*Default*__: "minor"
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
   * **types** (<code>Array<[DependencyType](#projen-dependencytype)></code>)  Specify which dependency types the upgrade should operate on. __*Default*__: All dependency types.
-  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
+  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for subprojects.
   * **workflowOptions** (<code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
 
 
@@ -18695,7 +18695,7 @@ Name | Type | Description
 **target**?🔹 | <code>string</code> | Determines the target version to upgrade dependencies to.<br/>__*Default*__: "minor"
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
 **types**?🔹 | <code>Array<[DependencyType](#projen-dependencytype)></code> | Specify which dependency types the upgrade should operate on.<br/>__*Default*__: All dependency types.
-**workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
+**workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for subprojects.
 **workflowOptions**?🔹 | <code>[javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
 
 
