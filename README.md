@@ -19,8 +19,7 @@
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg" alt="Apache 2.0 License"></a>
   <a href="https://gitpod.io/#https://github.com/projen/projen"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod ready-to-code"></a>
-  <a href="https://github.com/projen/projen/actions/workflows/build.yml"><img src="https://github.com/projen/projen/workflows/Build/badge.svg" alt="Build badge"></a>
-  <a href="https://github.com/projen/projen/actions/workflows/release.yml"><img src="https://github.com/projen/projen/workflows/Release/badge.svg" alt="Release badge"></a>
+  <a href="https://github.com/projen/projen/actions/workflows/release.yml"><img src="https://github.com/projen/projen/actions/workflows/release.yml/badge.svg" alt="Release badge"></a>
   <a href="https://github.com/projen/projen/commits/main"><img src="https://img.shields.io/github/commit-activity/w/projen/projen" alt="Commit activity"></a>
 </p>
 

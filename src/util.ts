@@ -18,12 +18,16 @@ const MAX_BUFFER = 10 * 1024 * 1024;
 /**
  * Executes a command with STDOUT > STDERR.
  */
-export function exec(command: string, options: { cwd: string }): void {
+export function exec(
+  command: string,
+  options: { cwd: string; env?: Record<string, string> }
+): void {
   logging.debug(command);
   child_process.execSync(command, {
     stdio: ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
+    env: options.env,
   });
 }
 

@@ -33,10 +33,14 @@ export class TestProject extends GitHubProject {
   }
 }
 
-export function execProjenCLI(workdir: string, args: string[] = []) {
+export function execProjenCLI(
+  workdir: string,
+  args: string[] = [],
+  env?: Record<string, string>
+) {
   const command = [process.execPath, PROJEN_CLI, ...args];
 
-  return exec(command.map((x) => `"${x}"`).join(" "), { cwd: workdir });
+  return exec(command.map((x) => `"${x}"`).join(" "), { cwd: workdir, env });
 }
 
 const autoRemove = new Set<string>();

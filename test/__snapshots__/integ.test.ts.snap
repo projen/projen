@@ -248,7 +248,6 @@ exports[`cdk-watchful 1`] = `
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
 /.npmignore linguist-generated
-/.npmrc linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
@@ -775,7 +774,6 @@ junit.xml
 !/.mergify.yml
 !/.github/workflows/upgrade-master.yml
 !/.github/pull_request_template.md
-!/.npmrc
 !/test/
 !/tsconfig.dev.json
 !/src/
@@ -858,7 +856,6 @@ tsconfig.tsbuildinfo
     ".github/workflows/upgrade-master.yml",
     ".gitignore",
     ".mergify.yml",
-    ".npmrc",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
@@ -1755,7 +1752,6 @@ exports[`cdk8s 1`] = `
 /.github/workflows/upgrade.yml linguist-generated
 /.gitignore linguist-generated
 /.npmignore linguist-generated
-/.npmrc linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
@@ -1920,7 +1916,6 @@ jspm_packages/
 junit.xml
 /coverage/
 !/.github/workflows/upgrade.yml
-!/.npmrc
 !/test/
 !/tsconfig.dev.json
 !/src/
@@ -1961,7 +1956,6 @@ tsconfig.tsbuildinfo
     ".github/workflows/pull-request-lint.yml",
     ".github/workflows/upgrade.yml",
     ".gitignore",
-    ".npmrc",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
@@ -2956,7 +2950,6 @@ exports[`cdk8s-cli 1`] = `
 /.github/workflows/upgrade.yml linguist-generated
 /.gitignore linguist-generated
 /.npmignore linguist-generated
-/.npmrc linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
@@ -3121,7 +3114,6 @@ jspm_packages/
 junit.xml
 /coverage/
 !/.github/workflows/upgrade.yml
-!/.npmrc
 !/test/
 !/tsconfig.json
 !/tsconfig.dev.json
@@ -3159,7 +3151,6 @@ tsconfig.tsbuildinfo
     ".github/workflows/upgrade.yml",
     ".gitignore",
     ".npmignore",
-    ".npmrc",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
