@@ -349,7 +349,13 @@ export class NodeProject extends GitHubProject {
   /**
    * The .npmrc file
    */
-  public readonly npmrc: NpmConfig;
+  public get npmrc(): NpmConfig {
+    if (!this._npmrc) {
+      this._npmrc = new NpmConfig(this, { omitEmpty: true });
+    }
+    return this._npmrc;
+  }
+  private _npmrc?: NpmConfig;
 
   /**
    * @deprecated use `package.allowLibraryDependencies`
@@ -761,11 +767,6 @@ export class NodeProject extends GitHubProject {
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
-
-    // Create the .npmrc file
-    this.npmrc = new NpmConfig(this, {
-      omitEmpty: true,
-    });
 
     // For PNPM, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
     // resolved to the lowest available version, which is unlikely to be expected behaviour for users. We set resolution
