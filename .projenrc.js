@@ -206,6 +206,9 @@ project.addTask("contributors:update", {
 });
 project.npmignore.exclude("/.all-contributorsrc");
 
+project.npmignore.exclude("/docs/");
+project.npmignore.exclude("/logo/");
+project.npmignore.exclude("/rfcs/");
 project.npmignore.exclude("/scripts/");
 project.npmignore.exclude("/ARCHITECTURE.md");
 project.npmignore.exclude("/CODE_OF_CONDUCT.md");
@@ -214,6 +217,8 @@ project.npmignore.exclude("/VISION.md");
 project.npmignore.exclude("/SECURITY.md");
 project.npmignore.exclude("/.gitattributes");
 project.npmignore.exclude("/.gitpod.yml");
+project.npmignore.exclude("/.prettierignore");
+project.npmignore.exclude("/.prettierrc.json");
 
 function setupIntegTest() {
   const pythonCompatTask = project.addTask("integ:python-compat", {
