@@ -546,6 +546,7 @@ export class NodeProject extends GitHubProject {
     if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
+      this.addDevDeps(`constructs@^10.0.0`);
     }
 
     if (!options.defaultReleaseBranch) {

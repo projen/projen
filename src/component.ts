@@ -1,14 +1,16 @@
 import { Construct, IConstruct } from "constructs";
 import { Project } from "./project";
 import {
-  COMPONENT_SYMBOL,
   isComponent,
   findClosestProject,
+  tagAsComponent,
 } from "./util/constructs";
 
-let currentId = 0;
-const componentId = () => {
-  return `AutoId${++currentId}`;
+const autoIds = new WeakMap<IConstruct, number>();
+const componentId = (scope: IConstruct) => {
+  const nextId = (autoIds.get(scope) ?? 0) + 1;
+  autoIds.set(scope, nextId);
+  return `AutoId${nextId}`;
 };
 
 /**
@@ -27,8 +29,8 @@ export class Component extends Construct {
   public readonly project: Project;
 
   constructor(scope: IConstruct, id?: string) {
-    super(scope, id || `${new.target.name}#${componentId()}`);
-    Object.defineProperty(this, COMPONENT_SYMBOL, { value: true });
+    super(scope, id || `${new.target.name}#${componentId(scope)}`);
+    tagAsComponent(this);
     this.node.addMetadata("type", "component");
     this.node.addMetadata("construct", new.target.name);
 

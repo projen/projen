@@ -39,10 +39,22 @@ export function findClosestProject(construct: IConstruct): Project {
   return project;
 }
 
-export function isProject(x: any): x is Project {
+export function isProject(x: unknown): x is Project {
   return x !== null && typeof x === "object" && PROJECT_SYMBOL in x;
 }
 
-export function isComponent(x: any): x is Component {
+export function isComponent(x: unknown): x is Component {
   return x !== null && typeof x === "object" && COMPONENT_SYMBOL in x;
+}
+
+function tagAs(scope: IConstruct, tag: symbol) {
+  Object.defineProperty(scope, tag, { value: true });
+}
+
+export function tagAsProject(scope: IConstruct) {
+  tagAs(scope, PROJECT_SYMBOL);
+}
+
+export function tagAsComponent(scope: IConstruct) {
+  tagAs(scope, COMPONENT_SYMBOL);
 }

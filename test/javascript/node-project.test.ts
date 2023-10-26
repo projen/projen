@@ -144,6 +144,7 @@ describe("deps", () => {
       "jest",
       "jest-junit",
       "projen",
+      "constructs",
       "standard-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
@@ -168,6 +169,7 @@ describe("deps", () => {
       "jest",
       "jest-junit",
       "projen",
+      "constructs",
       "standard-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
@@ -847,6 +849,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "constructs",
     "jest-junit",
     "npm-check-updates",
     "standard-version",
@@ -873,6 +876,7 @@ test("renovatebot ignored dependency overrides", () => {
   //       as JSON object path delimiters.
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "constructs",
     "jest-junit",
     "npm-check-updates",
     "standard-version",
