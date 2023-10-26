@@ -6,6 +6,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+  markdown: {
+    format: 'md'
+  },
   title: 'projen',
   tagline: 'Define and maintain complex project configuration through code.',
   favicon: 'img/favicon.ico',
