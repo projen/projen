@@ -22,11 +22,7 @@ import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy } from "./util";
-import {
-  PROJECT_SYMBOL,
-  isProject,
-  findClosestProject,
-} from "./util/constructs";
+import { isProject, findClosestProject, tagAsProject } from "./util/constructs";
 
 /**
  * Options for `Project`.
@@ -256,7 +252,7 @@ export class Project extends Construct {
     }
 
     super(options.parent as any, autoId);
-    Object.defineProperty(this, PROJECT_SYMBOL, { value: true });
+    tagAsProject(this);
     this.node.addMetadata("type", "project");
     this.node.addMetadata("construct", new.target.name);
 

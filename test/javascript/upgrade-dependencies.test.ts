@@ -38,13 +38,13 @@ test("allows configuring specific dependency types", () => {
         "exec": "yarn upgrade npm-check-updates",
       },
       {
-        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=prod,dev --filter=some-dep,jest,jest-junit,npm-check-updates,projen,standard-version",
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=prod,dev --filter=some-dep,constructs,jest,jest-junit,npm-check-updates,projen,standard-version",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade some-dep jest jest-junit npm-check-updates projen standard-version",
+        "exec": "yarn upgrade some-dep constructs jest jest-junit npm-check-updates projen standard-version",
       },
       {
         "exec": "npx projen",
@@ -67,7 +67,7 @@ test("upgrade command includes only dependencies of configured types", () => {
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[3].exec).toStrictEqual(
-    `yarn upgrade jest jest-junit npm-check-updates projen some-dev-dep standard-version`
+    `yarn upgrade constructs jest jest-junit npm-check-updates projen some-dev-dep standard-version`
   );
 });
 
@@ -83,13 +83,13 @@ test("upgrades command includes all dependencies", () => {
         "exec": "yarn upgrade npm-check-updates",
       },
       {
-        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep",
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version some-dep",
       },
       {
         "exec": "npx projen",
@@ -113,13 +113,13 @@ test("upgrades command includes dependencies added post instantiation", () => {
         "exec": "yarn upgrade npm-check-updates",
       },
       {
-        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version some-dep",
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version some-dep",
       },
       {
         "exec": "npx projen",
@@ -146,13 +146,13 @@ test("upgrades command doesn't include ignored packages", () => {
         "exec": "yarn upgrade npm-check-updates",
       },
       {
-        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,jest-junit,npm-check-updates,projen,standard-version,dep1",
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,dep1",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version dep1",
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version dep1",
       },
       {
         "exec": "npx projen",
@@ -403,13 +403,13 @@ test("upgrade task created without projen defined versions at NodeProject", () =
         "exec": "yarn upgrade npm-check-updates",
       },
       {
-        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,jest-junit,npm-check-updates,projen,standard-version,npm",
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,npm",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade jest jest-junit npm-check-updates projen standard-version npm",
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version npm",
       },
       {
         "exec": "npx projen",
@@ -425,6 +425,7 @@ test("empty upgrade list", () => {
   const project = createProject({
     depsUpgradeOptions: {
       exclude: [
+        "constructs",
         "jest",
         "jest-junit",
         "npm-check-updates",

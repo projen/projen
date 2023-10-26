@@ -268,6 +268,10 @@ export abstract class AwsCdkDeps extends Component {
         break;
     }
 
+    // First remove the version added by projen
+    this.project.deps.removeDependency("constructs", DependencyType.BUILD);
+
+    // Add the version for CDK
     this.project.deps.addDependency(
       `${this._packageNames.constructs}@${versionRequirement}`,
       this.dependencyType
