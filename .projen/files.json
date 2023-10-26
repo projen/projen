@@ -18,6 +18,7 @@
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
+    ".projen/tree.json",
     ".vscode/launch.json",
     "LICENSE",
     "projen.bash",

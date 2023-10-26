@@ -1,9 +1,10 @@
 import * as chalk from "chalk";
+import { IConstruct } from "constructs";
 import { IS_TEST_RUN } from "./common";
 import { Component } from "./component";
 import { ICON } from "./logging";
-import { Project } from "./project";
 import { isTruthy } from "./util";
+import { findClosestProject } from "./util/constructs";
 
 /**
  * Options for logging utilities.
@@ -32,8 +33,9 @@ export class Logger extends Component {
   private readonly level: LogLevel;
   private readonly usePrefix: boolean;
 
-  constructor(project: Project, options: LoggerOptions = {}) {
-    super(project);
+  constructor(scope: IConstruct, options: LoggerOptions = {}) {
+    const project = findClosestProject(scope);
+    super(scope, `${new.target.name}#${project.name}`);
 
     // if we are running inside a test, default to no logs
     const defaultLevel = IS_TEST_RUN ? LogLevel.OFF : LogLevel.INFO;

@@ -1,6 +1,6 @@
+import { IConstruct } from "constructs";
 import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
-import { Project } from "./project";
 
 /**
  * Options for `JsonFile`.
@@ -26,8 +26,8 @@ export class JsonFile extends ObjectFile {
   private readonly newline: boolean;
   readonly supportsComments: boolean;
 
-  constructor(project: Project, filePath: string, options: JsonFileOptions) {
-    super(project, filePath, options);
+  constructor(scope: IConstruct, filePath: string, options: JsonFileOptions) {
+    super(scope, filePath, options);
 
     this.newline = options.newline ?? true;
     this.supportsComments =
