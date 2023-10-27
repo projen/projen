@@ -157,6 +157,8 @@ new UpgradeDependencies(project, {
     ...project.deps.all
       .filter((d) => d.type === DependencyType.BUNDLED)
       .map((d) => d.name),
+    // constructs version constraint should not be changed
+    "constructs",
     // markmac depends on projen, we are excluding it here to avoid a circular update loop
     "markmac",
   ],
