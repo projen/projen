@@ -168,165 +168,165 @@ export interface YarnrcOptionsV3 {
   /** https://v3.yarnpkg.com/configuration/yarnrc#cacheFolder */
   readonly cacheFolder?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#caFilePath */
-  readonly caFilePath: string;
+  readonly caFilePath?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#changesetBaseRefs */
-  readonly changesetBaseRefs: string[];
+  readonly changesetBaseRefs?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns */
-  readonly changesetIgnorePatterns: string[];
+  readonly changesetIgnorePatterns?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#checksumBehavior */
-  readonly checksumBehavior: YarnChecksumBehaviorV3;
+  readonly checksumBehavior?: YarnChecksumBehaviorV3;
   /** https://v3.yarnpkg.com/configuration/yarnrc#cloneConcurrency */
-  readonly cloneConcurrency: number;
+  readonly cloneConcurrency?: number;
   /** https://v3.yarnpkg.com/configuration/yarnrc#compressionLevel */
-  readonly compressionLevel: number | string;
+  readonly compressionLevel?: number | string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#constraintsPath */
-  readonly constraintsPath: string;
+  readonly constraintsPath?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#defaultLanguageName */
-  readonly defaultLanguageName: string;
+  readonly defaultLanguageName?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#defaultProtocol */
-  readonly defaultProtocol: string;
+  readonly defaultProtocol?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix */
-  readonly defaultSemverRangePrefix: YarnDefaultSemverRangePrefix;
+  readonly defaultSemverRangePrefix?: YarnDefaultSemverRangePrefix;
   /** https://v3.yarnpkg.com/configuration/yarnrc#deferredVersionFolder */
-  readonly deferredVersionFolder: string;
+  readonly deferredVersionFolder?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableColors */
-  readonly enableColors: boolean;
+  readonly enableColors?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableGlobalCache */
-  readonly enableGlobalCache: boolean;
+  readonly enableGlobalCache?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableHyperlinks */
-  readonly enableHyperlinks: boolean;
+  readonly enableHyperlinks?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableCache */
-  readonly enableImmutableCache: boolean;
+  readonly enableImmutableCache?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableInstalls */
-  readonly enableImmutableInstalls: boolean;
+  readonly enableImmutableInstalls?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableInlineBuilds */
-  readonly enableInlineBuilds: boolean;
+  readonly enableInlineBuilds?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableMessageNames */
-  readonly enableMessageNames: boolean;
+  readonly enableMessageNames?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableMirror */
-  readonly enableMirror: boolean;
+  readonly enableMirror?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableNetwork */
-  readonly enableNetwork: boolean;
+  readonly enableNetwork?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableProgressBars */
-  readonly enableProgressBars: boolean;
+  readonly enableProgressBars?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableScripts */
-  readonly enableScripts: boolean;
+  readonly enableScripts?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableStrictSsl */
-  readonly enableStrictSsl: boolean;
+  readonly enableStrictSsl?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableTelemetry */
-  readonly enableTelemetry: boolean;
+  readonly enableTelemetry?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableTimers */
-  readonly enableTimers: boolean;
+  readonly enableTimers?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces */
-  readonly enableTransparentWorkspaces: boolean;
+  readonly enableTransparentWorkspaces?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#globalFolder */
-  readonly globalFolder: string;
+  readonly globalFolder?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#httpProxy */
-  readonly httpProxy: string;
+  readonly httpProxy?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#httpRetry */
-  readonly httpRetry: number;
+  readonly httpRetry?: number;
   /** https://v3.yarnpkg.com/configuration/yarnrc#httpTimeout */
-  readonly httpTimeout: number;
+  readonly httpTimeout?: number;
   /** https://v3.yarnpkg.com/configuration/yarnrc#httpsCertFilePath */
-  readonly httpsCertFilePath: string;
+  readonly httpsCertFilePath?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#httpsKeyFilePath */
-  readonly httpsKeyFilePath: string;
+  readonly httpsKeyFilePath?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#httpsProxy */
-  readonly httpsProxy: string;
+  readonly httpsProxy?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd */
-  readonly ignoreCwd: boolean;
+  readonly ignoreCwd?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#ignorePath */
-  readonly ignorePath: boolean;
+  readonly ignorePath?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#immutablePatterns */
-  readonly immutablePatterns: string[];
+  readonly immutablePatterns?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#initScope */
-  readonly initScope: string;
+  readonly initScope?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#initFields */
-  readonly initFields: Record<string, any>;
+  readonly initFields?: Record<string, any>;
   /** https://v3.yarnpkg.com/configuration/yarnrc#installStatePath */
-  readonly installStatePath: string;
+  readonly installStatePath?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#logFilters */
-  readonly logFilters: YarnLogFilter[];
+  readonly logFilters?: YarnLogFilter[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename */
-  readonly lockfileFilename: string;
+  readonly lockfileFilename?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#networkConcurrency */
-  readonly networkConcurrency: number;
+  readonly networkConcurrency?: number;
   /** https://v3.yarnpkg.com/configuration/yarnrc#networkSettings */
-  readonly networkSettings: Record<string, YarnNetworkSettingV3>;
+  readonly networkSettings?: Record<string, YarnNetworkSettingV3>;
   /** https://v3.yarnpkg.com/configuration/yarnrc#nmHoistingLimits */
-  readonly nmHoistingLimits: YarnNmHoistingLimit;
+  readonly nmHoistingLimits?: YarnNmHoistingLimit;
   /** https://v3.yarnpkg.com/configuration/yarnrc#nmSelfReferences */
-  readonly nmSelfReferences: boolean;
+  readonly nmSelfReferences?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#nmMode */
-  readonly nmMode: YarnNmMode;
+  readonly nmMode?: YarnNmMode;
   /** https://v3.yarnpkg.com/configuration/yarnrc#nodeLinker */
-  readonly nodeLinker: YarnNodeLinker;
+  readonly nodeLinker?: YarnNodeLinker;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmAlwaysAuth */
-  readonly npmAlwaysAuth: boolean;
+  readonly npmAlwaysAuth?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuditRegistry */
-  readonly npmAuditRegistry: string;
+  readonly npmAuditRegistry?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuthIdent */
-  readonly npmAuthIdent: string;
+  readonly npmAuthIdent?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuthToken */
-  readonly npmAuthToken: string;
+  readonly npmAuthToken?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmPublishAccess */
-  readonly npmPublishAccess: YarnNpmPublishAccess;
+  readonly npmPublishAccess?: YarnNpmPublishAccess;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages */
-  readonly npmAuditExcludePackages: string[];
+  readonly npmAuditExcludePackages?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories */
-  readonly npmAuditIgnoreAdvisories: string[];
+  readonly npmAuditIgnoreAdvisories?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmPublishRegistry */
-  readonly npmPublishRegistry: string;
+  readonly npmPublishRegistry?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmRegistries */
-  readonly npmRegistries: Record<string, YarnNpmRegistry>;
+  readonly npmRegistries?: Record<string, YarnNpmRegistry>;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmRegistryServer */
-  readonly npmRegistryServer: string;
+  readonly npmRegistryServer?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#npmScopes */
-  readonly npmScopes: Record<string, YarnNpmScope>;
+  readonly npmScopes?: Record<string, YarnNpmScope>;
   /** https://v3.yarnpkg.com/configuration/yarnrc#packageExtensions */
-  readonly packageExtensions: Record<string, YarnPackageExtension>;
+  readonly packageExtensions?: Record<string, YarnPackageExtension>;
   /** https://v3.yarnpkg.com/configuration/yarnrc#patchFolder */
-  readonly patchFolder: string;
+  readonly patchFolder?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath */
-  readonly pnpDataPath: string;
+  readonly pnpDataPath?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader */
-  readonly pnpEnableEsmLoader: boolean;
+  readonly pnpEnableEsmLoader?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableInlining */
-  readonly pnpEnableInlining: boolean;
+  readonly pnpEnableInlining?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpFallbackMode */
-  readonly pnpFallbackMode: YarnPnpFallbackMode;
+  readonly pnpFallbackMode?: YarnPnpFallbackMode;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns */
-  readonly pnpIgnorePatterns: string[];
+  readonly pnpIgnorePatterns?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpMode */
-  readonly pnpMode: YarnPnpMode;
+  readonly pnpMode?: YarnPnpMode;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpShebang */
-  readonly pnpShebang: string;
+  readonly pnpShebang?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder */
-  readonly pnpUnpluggedFolder: string;
+  readonly pnpUnpluggedFolder?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo */
-  readonly preferAggregateCacheInfo: boolean;
+  readonly preferAggregateCacheInfo?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#preferDeferredVersions */
-  readonly preferDeferredVersions: boolean;
+  readonly preferDeferredVersions?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#preferInteractive */
-  readonly preferInteractive: boolean;
+  readonly preferInteractive?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#preferTruncatedLines */
-  readonly preferTruncatedLines: boolean;
+  readonly preferTruncatedLines?: boolean;
   /** https://v3.yarnpkg.com/configuration/yarnrc#progressBarStyle */
-  readonly progressBarStyle: YarnProgressBarStyle;
+  readonly progressBarStyle?: YarnProgressBarStyle;
   /** https://v3.yarnpkg.com/configuration/yarnrc#rcFilename */
-  readonly rcFilename: string;
+  readonly rcFilename?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#supportedArchitectures */
-  readonly supportedArchitectures: YarnSupportedArchitectures;
+  readonly supportedArchitectures?: YarnSupportedArchitectures;
   /** https://v3.yarnpkg.com/configuration/yarnrc#telemetryInterval */
-  readonly telemetryInterval: number;
+  readonly telemetryInterval?: number;
   /** https://v3.yarnpkg.com/configuration/yarnrc#telemetryUserId */
-  readonly telemetryUserId: string;
+  readonly telemetryUserId?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist */
-  readonly unsafeHttpWhitelist: string[];
+  readonly unsafeHttpWhitelist?: string[];
   /** https://v3.yarnpkg.com/configuration/yarnrc#virtualFolder */
-  readonly virtualFolder: string;
+  readonly virtualFolder?: string;
   /** https://v3.yarnpkg.com/configuration/yarnrc#yarnPath */
-  readonly yarnPath: string;
+  readonly yarnPath?: string;
 }
 
 /** Configuration for .yarnrc.yml in Yarn Berry v4 */
@@ -338,27 +338,27 @@ export interface YarnrcOptionsV4 {
   /** https://yarnpkg.com/configuration/yarnrc#httpsCaFilePath */
   readonly httpsCaFilePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#changesetBaseRefs */
-  readonly changesetBaseRefs: string[];
+  readonly changesetBaseRefs?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns */
-  readonly changesetIgnorePatterns: string[];
+  readonly changesetIgnorePatterns?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */
-  readonly checksumBehavior: YarnChecksumBehavior;
+  readonly checksumBehavior?: YarnChecksumBehavior;
   /** https://yarnpkg.com/configuration/yarnrc#cloneConcurrency */
-  readonly cloneConcurrency: number;
+  readonly cloneConcurrency?: number;
   /** https://yarnpkg.com/configuration/yarnrc#compressionLevel */
-  readonly compressionLevel: number | string;
+  readonly compressionLevel?: number | string;
   /** https://yarnpkg.com/configuration/yarnrc#constraintsPath */
-  readonly constraintsPath: string;
+  readonly constraintsPath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#defaultLanguageName */
-  readonly defaultLanguageName: string;
+  readonly defaultLanguageName?: string;
   /** https://yarnpkg.com/configuration/yarnrc#defaultProtocol */
-  readonly defaultProtocol: string;
+  readonly defaultProtocol?: string;
   /** https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix */
-  readonly defaultSemverRangePrefix: YarnDefaultSemverRangePrefix;
+  readonly defaultSemverRangePrefix?: YarnDefaultSemverRangePrefix;
   /** https://yarnpkg.com/configuration/yarnrc#deferredVersionFolder */
-  readonly deferredVersionFolder: string;
+  readonly deferredVersionFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#enableColors */
-  readonly enableColors: boolean;
+  readonly enableColors?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableConstraintsCheck */
   readonly enableConstraintsCheck?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableGlobalCache */
@@ -366,147 +366,147 @@ export interface YarnrcOptionsV4 {
   /** https://yarnpkg.com/configuration/yarnrc#enableHardenedMode */
   readonly enableHardenedMode?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableHyperlinks */
-  readonly enableHyperlinks: boolean;
+  readonly enableHyperlinks?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableImmutableCache */
-  readonly enableImmutableCache: boolean;
+  readonly enableImmutableCache?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableImmutableInstalls */
-  readonly enableImmutableInstalls: boolean;
+  readonly enableImmutableInstalls?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableInlineBuilds */
-  readonly enableInlineBuilds: boolean;
+  readonly enableInlineBuilds?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableInlineHunks */
-  readonly enableInlineHunks: boolean;
+  readonly enableInlineHunks?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableMessageNames */
-  readonly enableMessageNames: boolean;
+  readonly enableMessageNames?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableMirror */
-  readonly enableMirror: boolean;
+  readonly enableMirror?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableNetwork */
-  readonly enableNetwork: boolean;
+  readonly enableNetwork?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableOfflineMode */
-  readonly enableOfflineMode: boolean;
+  readonly enableOfflineMode?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableProgressBars */
-  readonly enableProgressBars: boolean;
+  readonly enableProgressBars?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableScripts */
-  readonly enableScripts: boolean;
+  readonly enableScripts?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableStrictSsl */
-  readonly enableStrictSsl: boolean;
+  readonly enableStrictSsl?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableTelemetry */
-  readonly enableTelemetry: boolean;
+  readonly enableTelemetry?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableTimers */
-  readonly enableTimers: boolean;
+  readonly enableTimers?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces */
-  readonly enableTransparentWorkspaces: boolean;
+  readonly enableTransparentWorkspaces?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#globalFolder */
-  readonly globalFolder: string;
+  readonly globalFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#httpProxy */
-  readonly httpProxy: string;
+  readonly httpProxy?: string;
   /** https://yarnpkg.com/configuration/yarnrc#httpRetry */
-  readonly httpRetry: number;
+  readonly httpRetry?: number;
   /** https://yarnpkg.com/configuration/yarnrc#httpTimeout */
-  readonly httpTimeout: number;
+  readonly httpTimeout?: number;
   /** https://yarnpkg.com/configuration/yarnrc#httpsCertFilePath */
-  readonly httpsCertFilePath: string;
+  readonly httpsCertFilePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#httpsKeyFilePath */
-  readonly httpsKeyFilePath: string;
+  readonly httpsKeyFilePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#httpsProxy */
-  readonly httpsProxy: string;
+  readonly httpsProxy?: string;
   /** https://yarnpkg.com/configuration/yarnrc#ignorePath */
-  readonly ignorePath: boolean;
+  readonly ignorePath?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#immutablePatterns */
-  readonly immutablePatterns: string[];
+  readonly immutablePatterns?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#initScope */
-  readonly initScope: string;
+  readonly initScope?: string;
   /** https://yarnpkg.com/configuration/yarnrc#initFields */
-  readonly initFields: Record<string, any>;
+  readonly initFields?: Record<string, any>;
   /** https://yarnpkg.com/configuration/yarnrc#injectEnvironmentFiles */
-  readonly injectEnvironmentFiles: string[];
+  readonly injectEnvironmentFiles?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#installStatePath */
-  readonly installStatePath: string;
+  readonly installStatePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#logFilters */
-  readonly logFilters: YarnLogFilter[];
+  readonly logFilters?: YarnLogFilter[];
   /** https://yarnpkg.com/configuration/yarnrc#networkConcurrency */
-  readonly networkConcurrency: number;
+  readonly networkConcurrency?: number;
   /** https://yarnpkg.com/configuration/yarnrc#networkSettings */
-  readonly networkSettings: Record<string, YarnNetworkSetting>;
+  readonly networkSettings?: Record<string, YarnNetworkSetting>;
   /** https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits */
-  readonly nmHoistingLimits: YarnNmHoistingLimit;
+  readonly nmHoistingLimits?: YarnNmHoistingLimit;
   /** https://yarnpkg.com/configuration/yarnrc#nmSelfReferences */
-  readonly nmSelfReferences: boolean;
+  readonly nmSelfReferences?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#nmMode */
-  readonly nmMode: YarnNmMode;
+  readonly nmMode?: YarnNmMode;
   /** https://yarnpkg.com/configuration/yarnrc#nodeLinker */
-  readonly nodeLinker: YarnNodeLinker;
+  readonly nodeLinker?: YarnNodeLinker;
   /** https://yarnpkg.com/configuration/yarnrc#winLinkType */
-  readonly winLinkType: YarnWinLinkType;
+  readonly winLinkType?: YarnWinLinkType;
   /** https://yarnpkg.com/configuration/yarnrc#npmAlwaysAuth */
-  readonly npmAlwaysAuth: boolean;
+  readonly npmAlwaysAuth?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#npmAuditRegistry */
-  readonly npmAuditRegistry: string;
+  readonly npmAuditRegistry?: string;
   /** https://yarnpkg.com/configuration/yarnrc#npmAuthIdent */
-  readonly npmAuthIdent: string;
+  readonly npmAuthIdent?: string;
   /** https://yarnpkg.com/configuration/yarnrc#npmAuthToken */
-  readonly npmAuthToken: string;
+  readonly npmAuthToken?: string;
   /** https://yarnpkg.com/configuration/yarnrc#npmPublishAccess */
-  readonly npmPublishAccess: YarnNpmPublishAccess;
+  readonly npmPublishAccess?: YarnNpmPublishAccess;
   /** https://yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages */
-  readonly npmAuditExcludePackages: string[];
+  readonly npmAuditExcludePackages?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories */
-  readonly npmAuditIgnoreAdvisories: string[];
+  readonly npmAuditIgnoreAdvisories?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#npmPublishRegistry */
-  readonly npmPublishRegistry: string;
+  readonly npmPublishRegistry?: string;
   /** https://yarnpkg.com/configuration/yarnrc#npmRegistries */
-  readonly npmRegistries: Record<string, YarnNpmRegistry>;
+  readonly npmRegistries?: Record<string, YarnNpmRegistry>;
   /** https://yarnpkg.com/configuration/yarnrc#npmRegistryServer */
-  readonly npmRegistryServer: string;
+  readonly npmRegistryServer?: string;
   /** https://yarnpkg.com/configuration/yarnrc#npmScopes */
-  readonly npmScopes: Record<string, YarnNpmScope>;
+  readonly npmScopes?: Record<string, YarnNpmScope>;
   /** https://yarnpkg.com/configuration/yarnrc#packageExtensions */
-  readonly packageExtensions: Record<string, YarnPackageExtension>;
+  readonly packageExtensions?: Record<string, YarnPackageExtension>;
   /** https://yarnpkg.com/configuration/yarnrc#patchFolder */
-  readonly patchFolder: string;
+  readonly patchFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader */
-  readonly pnpEnableEsmLoader: boolean;
+  readonly pnpEnableEsmLoader?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#pnpEnableInlining */
-  readonly pnpEnableInlining: boolean;
+  readonly pnpEnableInlining?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode */
-  readonly pnpFallbackMode: YarnPnpFallbackMode;
+  readonly pnpFallbackMode?: YarnPnpFallbackMode;
   /** https://yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns */
-  readonly pnpIgnorePatterns: string[];
+  readonly pnpIgnorePatterns?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#pnpMode */
-  readonly pnpMode: YarnPnpMode;
+  readonly pnpMode?: YarnPnpMode;
   /** https://yarnpkg.com/configuration/yarnrc#pnpShebang */
-  readonly pnpShebang: string;
+  readonly pnpShebang?: string;
   /** https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder */
-  readonly pnpUnpluggedFolder: string;
+  readonly pnpUnpluggedFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions */
-  readonly preferDeferredVersions: boolean;
+  readonly preferDeferredVersions?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferInteractive */
-  readonly preferInteractive: boolean;
+  readonly preferInteractive?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferReuse */
-  readonly preferReuse: boolean;
+  readonly preferReuse?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferTruncatedLines */
-  readonly preferTruncatedLines: boolean;
+  readonly preferTruncatedLines?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#progressBarStyle */
-  readonly progressBarStyle: YarnProgressBarStyle;
+  readonly progressBarStyle?: YarnProgressBarStyle;
   /** https://yarnpkg.com/configuration/yarnrc#rcFilename */
-  readonly rcFilename: string;
+  readonly rcFilename?: string;
   /** https://yarnpkg.com/configuration/yarnrc#supportedArchitectures */
-  readonly supportedArchitectures: YarnSupportedArchitectures;
+  readonly supportedArchitectures?: YarnSupportedArchitectures;
   /** https://yarnpkg.com/configuration/yarnrc#taskPoolConcurrency */
-  readonly taskPoolConcurrency: string;
+  readonly taskPoolConcurrency?: string;
   /** https://yarnpkg.com/configuration/yarnrc#workerPoolMode */
-  readonly workerPoolMode: YarnWorkerPoolMode;
+  readonly workerPoolMode?: YarnWorkerPoolMode;
   /** https://yarnpkg.com/configuration/yarnrc#telemetryInterval */
-  readonly telemetryInterval: number;
+  readonly telemetryInterval?: number;
   /** https://yarnpkg.com/configuration/yarnrc#telemetryUserId */
-  readonly telemetryUserId: string;
+  readonly telemetryUserId?: string;
   /** https://yarnpkg.com/configuration/yarnrc#tsEnableAutoTypes */
-  readonly tsEnableAutoTypes: boolean;
+  readonly tsEnableAutoTypes?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist */
-  readonly unsafeHttpWhitelist: string[];
+  readonly unsafeHttpWhitelist?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#virtualFolder */
-  readonly virtualFolder: string;
+  readonly virtualFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#yarnPath */
-  readonly yarnPath: string;
+  readonly yarnPath?: string;
 }
 
 export class Yarnrc extends Component {}
