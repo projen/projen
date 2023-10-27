@@ -42,7 +42,7 @@ according to the package manager being used. This can be configured:
 ```ts
 const project = new javascript.NodeProject({
   // ...
-  packageManager: javascript.NodePackageManager.YARN_CLASSIC, // or NPM, PNPM, etc.
+  packageManager: javascript.NodePackageManager.YARN_CLASSIC, // or YARN_BERRY, NPM, PNPM, etc.
 });
 ```
 
@@ -110,6 +110,34 @@ You can also use dependabot or renovatebot to get Pull requests on dependency up
 [GitHub workflow]: ./github.md#workflows
 [create-pull-request#48]: https://github.com/peter-evans/create-pull-request/issues/48
 [GitHub API access]: ./github.md#github-api-access
+
+### Yarn Berry Configuration
+
+We support usage of Yarn Berry (> v1) as a package manager. Specify `YARN_BERRY` as your package manager:
+
+```ts
+const project = new javascript.NodeProject({
+  // ...
+  packageManager: javascript.NodePackageManager.YARN_BERRY,
+});
+```
+
+When using Yarn Berry, `projen` controls the `.yarnrc.yml` configuration file. You can configure it using the
+`yarnBerryOptions` property:
+
+```ts
+const project = new javascript.NodeProject({
+  // ...
+  packageManager: javascript.NodePackageManager.YARN_BERRY,
+  yarnBerryOptions: {
+    version: "4.0.0",
+    zeroInstalls: false,
+    yarnRcOptions: {
+      nodeLinker: YarnNodeLinker.NODE_MODULES
+    },
+  }
+});
+```
 
 ## Pull Request Builds (CI)
 
