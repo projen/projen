@@ -21,6 +21,7 @@ import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { isTruthy, sorted, writeFile } from "../util";
+import { YarnrcOptionsV4, YarnrcOptionsV3 } from "./yarnrc";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -307,6 +308,13 @@ export interface NodePackageOptions {
    * @default - fetch all scoped packages from the public npm registry
    */
   readonly scopedPackagesOptions?: ScopedPackagesOptions[];
+
+  /**
+   * Options for Yarn Berry
+   *
+   * @default - Yarn Berry v4 with all default options
+   */
+  readonly yarnBerryOptions?: YarnBerryOptions;
 }
 
 /**
@@ -1550,6 +1558,33 @@ export enum NpmAccess {
    * Package can only be accessed with credentials.
    */
   RESTRICTED = "restricted",
+}
+
+/**
+ * Configure Yarn Berry
+ */
+export interface YarnBerryOptions {
+  /**
+   * A fully specified version to use for yarn (e.g., 4.0.0)
+   *
+   * @default - 4.0.0
+   */
+  readonly version?: string;
+
+  /**
+   * The yarnrc configuration.
+   *
+   * @default - a blank Yarn RC file
+   */
+  readonly yarnRcOptions?: YarnrcOptionsV3 | YarnrcOptionsV4;
+
+  /**
+   * Should zero-installs be enabled?
+   * Learn more at: https://yarnpkg.com/features/caching#zero-installs
+   *
+   * @default false
+   */
+  readonly zeroInstalls?: boolean;
 }
 
 interface NpmDependencies {
