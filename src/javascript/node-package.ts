@@ -586,6 +586,14 @@ export class NodePackage extends Component {
           : undefined,
     };
 
+    // Configure Yarn Berry if using
+    if (
+      this.packageManager === NodePackageManager.YARN_BERRY ||
+      this.packageManager === NodePackageManager.YARN2
+    ) {
+      this.configureYarnBerry(project, options);
+    }
+
     // add tasks for scripts from options (if specified)
     // @deprecated
     for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
@@ -630,13 +638,6 @@ export class NodePackage extends Component {
       description: "Install project dependencies using frozen lockfile",
       exec: this.installCommand,
     });
-
-    if (
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2
-    ) {
-      new Yarnrc(this, project, options.yarnBerryOptions);
-    }
   }
 
   /**
@@ -1497,6 +1498,45 @@ export class NodePackage extends Component {
       ? this.installCiTask
       : this.installTask;
     runtime.runTask(taskToRun.name);
+  }
+
+  private configureYarnBerry(
+    project: Project,
+    { yarnBerryOptions }: NodePackageOptions
+  ) {
+    const {
+      version = "4.0.0",
+      yarnRcOptions = {},
+      zeroInstalls = false,
+    } = yarnBerryOptions || {};
+
+    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
+    // of `yarn` to use.
+    this.addField("packageManager", `yarn@${version}`);
+    this.configureYarnBerryGitignore(zeroInstalls);
+
+    new Yarnrc(project, yarnRcOptions);
+  }
+
+  /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
+  private configureYarnBerryGitignore(zeroInstalls: boolean) {
+    const { gitignore } = this.project;
+
+    // These patterns are the same whether or not you're using zero-installs
+    gitignore.addPatterns(
+      ".yarn/*",
+      "!.yarn/patches",
+      "!.yarn/plugins",
+      "!.yarn/releases",
+      "!.yarn/sdks",
+      "!.yarn/versions"
+    );
+
+    if (zeroInstalls) {
+      gitignore.addPatterns("!.yarn/cache");
+    } else {
+      gitignore.addPatterns("*.pnp.*");
+    }
   }
 }
 

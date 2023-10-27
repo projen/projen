@@ -10290,14 +10290,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new javascript.Yarnrc(project: NodeProject, options: YarnBerryOptions)
+new javascript.Yarnrc(project: Project, options?: YarnrcOptionsV3 &#124; YarnrcOptionsV4)
 ```
 
-* **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
-* **options** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  *No description*
-  * **version** (<code>string</code>)  A fully specified version to use for yarn (e.g., 4.0.0). __*Default*__: 4.0.0
-  * **yarnRcOptions** (<code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code>)  The yarnrc configuration. __*Default*__: a blank Yarn RC file
-  * **zeroInstalls** (<code>boolean</code>)  Should zero-installs be enabled? __*Default*__: false
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code>)  *No description*
 
 
 
