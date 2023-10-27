@@ -110,7 +110,10 @@ const project = new cdk.JsiiProject({
     },
   },
 
+  // To reduce the release frequency we only release features and fixes
+  // This is important because PyPI has limits on the total storage amount used, and extensions need to be manually requested
   releasableCommits: ReleasableCommits.featuresAndFixes(),
+
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
     mavenGroupId: "io.github.cdklabs",
