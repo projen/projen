@@ -1,5 +1,14 @@
-const { cdk, javascript, JsonFile, ProjectTree, TextFile } = require("./lib");
-const { PROJEN_MARKER } = require("./lib/common");
+const {
+  cdk,
+  javascript,
+  JsonFile,
+  ProjectTree,
+  TextFile,
+  ReleasableCommits,
+  PROJEN_MARKER,
+  DependencyType,
+} = require("./lib");
+const { UpgradeDependencies } = require("./lib/javascript");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -64,16 +73,7 @@ const project = new cdk.JsiiProject({
 
   peerDeps: ["constructs@^10.0.0"],
 
-  depsUpgradeOptions: {
-    // markmac depends on projen, we are excluding it here to avoid a circular update loop
-    exclude: ["markmac"],
-    workflowOptions: {
-      // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
-      schedule: javascript.UpgradeDependenciesSchedule.expressions([
-        "0 12 * * *",
-      ]),
-    },
-  },
+  depsUpgrade: false, // configured below
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
@@ -111,6 +111,7 @@ const project = new cdk.JsiiProject({
     },
   },
 
+  releasableCommits: ReleasableCommits.featuresAndFixes(),
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
     mavenGroupId: "io.github.cdklabs",
@@ -131,6 +132,33 @@ const project = new cdk.JsiiProject({
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
   docgenFilePath: "docs/api/API.md",
+});
+
+// Upgrade Dependencies in two parts:
+// a) Upgrade bundled dependencies as a releasable fix
+// b) Upgrade devDependencies as a chore
+new UpgradeDependencies(project, {
+  taskName: "upgrade:bundled",
+  types: [DependencyType.BUNDLED],
+  semanticCommit: "fix",
+  pullRequestTitle: "upgrade bundled dependencies",
+  workflowOptions: {
+    // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
+    schedule: javascript.UpgradeDependenciesSchedule.expressions([
+      "0 12 * * *",
+    ]),
+  },
+});
+new UpgradeDependencies(project, {
+  taskName: "upgrade:deps",
+  exclude: [
+    // exclude the bundled deps
+    ...project.deps.all
+      .filter((d) => d.type === DependencyType.BUNDLED)
+      .map((d) => d.name),
+    // markmac depends on projen, we are excluding it here to avoid a circular update loop
+    "markmac",
+  ],
 });
 
 // this script is what we use as the projen command in this project

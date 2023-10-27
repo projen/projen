@@ -257,25 +257,6 @@
           "path": ".mergify.yml"
         }
       },
-      "UpgradeDependencies#AutoId20": {
-        "metadata": {
-          "type": "component",
-          "construct": "UpgradeDependencies"
-        }
-      },
-      "GithubWorkflow#upgrade-main": {
-        "metadata": {
-          "type": "component",
-          "construct": "GithubWorkflow"
-        }
-      },
-      "YamlFile@.github--workflows--upgrade-main.yml": {
-        "metadata": {
-          "type": "file",
-          "construct": "YamlFile",
-          "path": ".github/workflows/upgrade-main.yml"
-        }
-      },
       "PullRequestTemplate@.github--pull_request_template.md": {
         "metadata": {
           "type": "file",
@@ -283,19 +264,19 @@
           "path": ".github/pull_request_template.md"
         }
       },
-      "Projenrc#AutoId21": {
+      "Projenrc#AutoId20": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "Bundler#AutoId22": {
+      "Bundler#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "Bundler"
         }
       },
-      "Prettier#AutoId23": {
+      "Prettier#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "Prettier"
@@ -315,7 +296,7 @@
           "path": ".prettierrc.json"
         }
       },
-      "TypescriptConfig#AutoId24": {
+      "TypescriptConfig#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -328,7 +309,7 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId25": {
+      "Eslint#AutoId24": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -341,10 +322,16 @@
           "path": ".eslintrc.json"
         }
       },
-      "SampleCode#AutoId26": {
+      "SampleCode#AutoId25": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
+        }
+      },
+      "SampleDir#AutoId26": {
+        "metadata": {
+          "type": "component",
+          "construct": "SampleDir"
         }
       },
       "SampleDir#AutoId27": {
@@ -353,10 +340,42 @@
           "construct": "SampleDir"
         }
       },
-      "SampleDir#AutoId28": {
+      "UpgradeDependencies#AutoId28": {
         "metadata": {
           "type": "component",
-          "construct": "SampleDir"
+          "construct": "UpgradeDependencies"
+        }
+      },
+      "GithubWorkflow#upgrade:bundled-main": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--upgrade:bundled-main.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/upgrade:bundled-main.yml"
+        }
+      },
+      "UpgradeDependencies#AutoId29": {
+        "metadata": {
+          "type": "component",
+          "construct": "UpgradeDependencies"
+        }
+      },
+      "GithubWorkflow#upgrade:deps-main": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--upgrade:deps-main.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/upgrade:deps-main.yml"
         }
       },
       "TextFile@projen.bash": {
@@ -373,7 +392,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId29": {
+      "VsCodeLaunchConfig#AutoId30": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"

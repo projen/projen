@@ -37,7 +37,8 @@
     "test": "/bin/bash ./projen.bash test",
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "unbump": "/bin/bash ./projen.bash unbump",
-    "upgrade": "/bin/bash ./projen.bash upgrade",
+    "upgrade:bundled": "/bin/bash ./projen.bash upgrade:bundled",
+    "upgrade:deps": "/bin/bash ./projen.bash upgrade:deps",
     "watch": "/bin/bash ./projen.bash watch",
     "projen": "/bin/bash ./projen.bash"
   },
