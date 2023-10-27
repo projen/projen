@@ -143,6 +143,7 @@ new UpgradeDependencies(project, {
   semanticCommit: "fix",
   pullRequestTitle: "upgrade bundled dependencies",
   workflowOptions: {
+    labels: ["auto-approve"],
     // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
     schedule: javascript.UpgradeDependenciesSchedule.expressions([
       "0 12 * * *",
@@ -159,6 +160,9 @@ new UpgradeDependencies(project, {
     // markmac depends on projen, we are excluding it here to avoid a circular update loop
     "markmac",
   ],
+  workflowOptions: {
+    labels: ["auto-approve"],
+  },
 });
 
 // this script is what we use as the projen command in this project
