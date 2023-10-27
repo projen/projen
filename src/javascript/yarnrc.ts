@@ -20,19 +20,19 @@ export enum YarnLogFilterLevel {
 }
 
 export interface YarnLogFilter {
-  code?: string;
-  text?: string;
-  level?: YarnLogFilterLevel;
-  pattern?: string;
+  readonly code?: string;
+  readonly text?: string;
+  readonly level?: YarnLogFilterLevel;
+  readonly pattern?: string;
 }
 
 export interface YarnNetworkSetting {
-  caFilePath?: string;
-  enableNetwork?: boolean;
-  httpProxy?: string;
-  httpsProxy?: string;
-  httpsKeyFilePath?: string;
-  httpsCertFilePath?: string;
+  readonly caFilePath?: string;
+  readonly enableNetwork?: boolean;
+  readonly httpProxy?: string;
+  readonly httpsProxy?: string;
+  readonly httpsKeyFilePath?: string;
+  readonly httpsCertFilePath?: string;
 }
 
 export enum YarnHoistingLimit {
@@ -59,27 +59,30 @@ export enum YarnNpmPublishAccess {
 }
 
 export interface YarnNpmRegistry {
-  npmAlwaysAuth?: boolean;
-  npmAuthIdent?: string;
-  npmAuthToken?: string;
+  readonly npmAlwaysAuth?: boolean;
+  readonly npmAuthIdent?: string;
+  readonly npmAuthToken?: string;
 }
 
 export interface YarnNpmScope {
-  npmPublishRegistry?: string;
-  npmRegistryServer?: string;
-  npmAlwaysAuth?: boolean;
-  npmAuthIdent?: string;
-  npmAuthToken?: string;
+  readonly npmPublishRegistry?: string;
+  readonly npmRegistryServer?: string;
+  readonly npmAlwaysAuth?: boolean;
+  readonly npmAuthIdent?: string;
+  readonly npmAuthToken?: string;
 }
 
 export interface YarnPeerDependencyMeta {
-  optional?: boolean;
+  readonly optional?: boolean;
 }
 
 export interface YarnPackageExtension {
-  dependencies?: Record<string, string>;
-  peerDependencies?: Record<string, string>;
-  peerDependenciesMeta?: Record<string, Record<string, YarnPeerDependencyMeta>>;
+  readonly dependencies?: Record<string, string>;
+  readonly peerDependencies?: Record<string, string>;
+  readonly peerDependenciesMeta?: Record<
+    string,
+    Record<string, YarnPeerDependencyMeta>
+  >;
 }
 
 export enum YarnPnpFallbackMode {
@@ -102,93 +105,93 @@ export enum YarnProgressBarStyle {
 }
 
 export interface YarnSupportedArchitectures {
-  os?: string[];
-  cpu?: string[];
-  libc?: string[];
+  readonly os?: string[];
+  readonly cpu?: string[];
+  readonly libc?: string[];
 }
 
-export interface YarnOptions {
-  cacheFolder?: string;
-  caFilePath?: string;
-  changesetBaseRefs?: string[];
-  changesetIgnorePatterns?: string[];
-  checksumBehavior?: YarnChecksumBehavior;
-  cloneConcurrency?: number;
-  compressionLevel?: number | string;
-  constraintsPath?: string;
-  defaultLanguageName?: string;
-  defaultProtocol?: string;
-  defaultSemverRangePrefix?: YarnDefaultSemverRangePrefix;
-  deferredVersionFolder?: string;
-  enableColors?: boolean;
-  enableGlobalCache?: boolean;
-  enableHyperlinks?: boolean;
-  enableImmutableCache?: boolean;
-  enableImmutableInstalls?: boolean;
-  enableInlineBuilds?: boolean;
-  enableMessageNames?: boolean;
-  enableMirror?: boolean;
-  enableNetwork?: boolean;
-  enableProgressBars?: boolean;
-  enableScripts?: boolean;
-  enableStrictSsl?: boolean;
-  enableTelemetry?: boolean;
-  enableTimers?: boolean;
-  enableTransparentWorkspaces?: boolean;
-  globalFolder?: string;
-  httpProxy?: string;
-  httpRetry?: number;
-  httpTimeout?: number;
-  httpsCertFilePath?: string;
-  httpsKeyFilePath?: string;
-  httpsProxy?: string;
-  ignoreCwd?: boolean;
-  ignorePath?: boolean;
-  immutablePatterns?: string[];
-  initScope?: string;
-  initFields?: Record<string, any>;
-  installStatePath?: string;
-  logFilters?: YarnLogFilter[];
-  lockfileFilename?: string;
-  networkConcurrency?: number;
-  networkSettings?: Record<string, YarnNetworkSetting>;
-  nmHoistingLimits?: YarnHoistingLimit;
-  nmSelfReferences?: boolean;
-  nmMode?: YarnNmMode;
-  nodeLinker?: YarnNodeLinker;
-  npmAlwaysAuth?: boolean;
-  npmAuditRegistry?: string;
-  npmAuthIdent?: string;
-  npmAuthToken?: string;
-  npmPublishAccess?: YarnNpmPublishAccess;
-  npmAuditExcludePackages?: string[];
-  npmAuditIgnoreAdvisories?: string[];
-  npmPublishRegistry?: string;
-  npmRegistries?: Record<string, YarnNpmRegistry>;
-  npmRegistryServer?: string;
-  npmScopes?: Record<string, YarnNpmScope>;
-  packageExtensions?: Record<string, YarnPackageExtension>;
-  patchFolder?: string;
-  pnpDataPath?: string;
-  pnpEnableEsmLoader?: boolean;
-  pnpEnableInlining?: boolean;
-  pnpFallbackMode?: YarnPnpFallbackMode;
-  pnpIgnorePatterns?: string[];
-  pnpMode?: YarnPnpMode;
-  pnpShebang?: string;
-  pnpUnpluggedFolder?: string;
-  preferAggregateCacheInfo?: boolean;
-  preferDeferredVersions?: boolean;
-  preferInteractive?: boolean;
-  preferTruncatedLines?: boolean;
-  progressBarStyle?: YarnProgressBarStyle;
-  rcFilename?: string;
-  supportedArchitectures?: YarnSupportedArchitectures;
-  telemetryInterval?: number;
-  telemetryUserId: string;
-  unsafeHttpWhitelist?: string[];
-  virtualFolder?: string;
-  yarnPath?: string;
+export interface Yarnrc3Options {
+  readonly cacheFolder?: string;
+  readonly caFilePath?: string;
+  readonly changesetBaseRefs?: string[];
+  readonly changesetIgnorePatterns?: string[];
+  readonly checksumBehavior?: YarnChecksumBehavior;
+  readonly cloneConcurrency?: number;
+  readonly compressionLevel?: number | string;
+  readonly constraintsPath?: string;
+  readonly defaultLanguageName?: string;
+  readonly defaultProtocol?: string;
+  readonly defaultSemverRangePrefix?: YarnDefaultSemverRangePrefix;
+  readonly deferredVersionFolder?: string;
+  readonly enableColors?: boolean;
+  readonly enableGlobalCache?: boolean;
+  readonly enableHyperlinks?: boolean;
+  readonly enableImmutableCache?: boolean;
+  readonly enableImmutableInstalls?: boolean;
+  readonly enableInlineBuilds?: boolean;
+  readonly enableMessageNames?: boolean;
+  readonly enableMirror?: boolean;
+  readonly enableNetwork?: boolean;
+  readonly enableProgressBars?: boolean;
+  readonly enableScripts?: boolean;
+  readonly enableStrictSsl?: boolean;
+  readonly enableTelemetry?: boolean;
+  readonly enableTimers?: boolean;
+  readonly enableTransparentWorkspaces?: boolean;
+  readonly globalFolder?: string;
+  readonly httpProxy?: string;
+  readonly httpRetry?: number;
+  readonly httpTimeout?: number;
+  readonly httpsCertFilePath?: string;
+  readonly httpsKeyFilePath?: string;
+  readonly httpsProxy?: string;
+  readonly ignoreCwd?: boolean;
+  readonly ignorePath?: boolean;
+  readonly immutablePatterns?: string[];
+  readonly initScope?: string;
+  readonly initFields?: Record<string, any>;
+  readonly installStatePath?: string;
+  readonly logFilters?: YarnLogFilter[];
+  readonly lockfileFilename?: string;
+  readonly networkConcurrency?: number;
+  readonly networkSettings?: Record<string, YarnNetworkSetting>;
+  readonly nmHoistingLimits?: YarnHoistingLimit;
+  readonly nmSelfReferences?: boolean;
+  readonly nmMode?: YarnNmMode;
+  readonly nodeLinker?: YarnNodeLinker;
+  readonly npmAlwaysAuth?: boolean;
+  readonly npmAuditRegistry?: string;
+  readonly npmAuthIdent?: string;
+  readonly npmAuthToken?: string;
+  readonly npmPublishAccess?: YarnNpmPublishAccess;
+  readonly npmAuditExcludePackages?: string[];
+  readonly npmAuditIgnoreAdvisories?: string[];
+  readonly npmPublishRegistry?: string;
+  readonly npmRegistries?: Record<string, YarnNpmRegistry>;
+  readonly npmRegistryServer?: string;
+  readonly npmScopes?: Record<string, YarnNpmScope>;
+  readonly packageExtensions?: Record<string, YarnPackageExtension>;
+  readonly patchFolder?: string;
+  readonly pnpDataPath?: string;
+  readonly pnpEnableEsmLoader?: boolean;
+  readonly pnpEnableInlining?: boolean;
+  readonly pnpFallbackMode?: YarnPnpFallbackMode;
+  readonly pnpIgnorePatterns?: string[];
+  readonly pnpMode?: YarnPnpMode;
+  readonly pnpShebang?: string;
+  readonly pnpUnpluggedFolder?: string;
+  readonly preferAggregateCacheInfo?: boolean;
+  readonly preferDeferredVersions?: boolean;
+  readonly preferInteractive?: boolean;
+  readonly preferTruncatedLines?: boolean;
+  readonly progressBarStyle?: YarnProgressBarStyle;
+  readonly rcFilename?: string;
+  readonly supportedArchitectures?: YarnSupportedArchitectures;
+  readonly telemetryInterval?: number;
+  readonly telemetryUserId: string;
+  readonly unsafeHttpWhitelist?: string[];
+  readonly virtualFolder?: string;
+  readonly yarnPath?: string;
 }
 
 export class Yarnrc extends Component {}
