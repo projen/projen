@@ -1,4 +1,5 @@
 import { Component } from "../component";
+import { YamlFile } from "../yaml";
 import { YarnBerryOptions } from "./node-package";
 import { NodeProject } from "./node-project";
 
@@ -523,6 +524,10 @@ export class Yarnrc extends Component {
     // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
     // of `yarn` to use.
     project.addFields({ packageManager: `yarn@${version}` });
+
+    new YamlFile(project, ".yarnrc.yml", {
+      obj: yarnRcOptions,
+    });
 
     this.configureGitignore(project, zeroInstalls);
   }
