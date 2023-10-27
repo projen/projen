@@ -1506,6 +1506,11 @@ export class NodePackage extends Component {
   ) {
     const {
       version = "4.0.0",
+      // TODO: figure out how to use top-level NPM settings here (e.g., the result of `this.parseNpmOptions`)
+      // Some of these settings have overlap with `yarnrc.yml`. Questions:
+      // - Do we remove these options from the Yarnrc options interfaces and rely on them being set in the top-level options?
+      // - Do we add a parsing method, similar to `this.parseNpmOptions` that check for conflicts in the two configs?
+      // - Do we duplicate the logic, and set the relevant options here, too? (e.g., if this.npmRegistryUrl is set, set the relevant yarnrc option)
       yarnRcOptions = {},
       zeroInstalls = false,
     } = yarnBerryOptions || {};
