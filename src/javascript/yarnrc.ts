@@ -1,4 +1,6 @@
 import { Component } from "../component";
+import { YarnBerryOptions } from "./node-package";
+import { NodeProject } from "./node-project";
 
 /** https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior */
 export enum YarnChecksumBehaviorV3 {
@@ -509,4 +511,40 @@ export interface YarnrcOptionsV4 {
   readonly yarnPath?: string;
 }
 
-export class Yarnrc extends Component {}
+export class Yarnrc extends Component {
+  constructor(project: NodeProject, options: YarnBerryOptions) {
+    super(project);
+    const {
+      version = "4.0.0",
+      yarnRcOptions = {},
+      zeroInstalls = false,
+    } = options;
+
+    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
+    // of `yarn` to use.
+    project.addFields({ packageManager: `yarn@${version}` });
+
+    this.configureGitignore(project, zeroInstalls);
+  }
+
+  /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
+  private configureGitignore(project: NodeProject, zeroInstalls: boolean) {
+    const { gitignore } = project;
+
+    // These patterns are the same whether or not you're using zero-installs
+    gitignore.addPatterns(
+      ".yarn/*",
+      "!.yarn/patches",
+      "!.yarn/plugins",
+      "!.yarn/releases",
+      "!.yarn/sdks",
+      "!.yarn/versions"
+    );
+
+    if (zeroInstalls) {
+      gitignore.addPatterns("!.yarn/cache");
+    } else {
+      gitignore.addPatterns("*.pnp.*");
+    }
+  }
+}
