@@ -12,7 +12,7 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
-import { YarnrcOptionsV4, YarnrcOptionsV3 } from "./yarnrc";
+import { YarnrcOptionsV4, YarnrcOptionsV3, Yarnrc } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -630,6 +630,13 @@ export class NodePackage extends Component {
       description: "Install project dependencies using frozen lockfile",
       exec: this.installCommand,
     });
+
+    if (
+      this.packageManager === NodePackageManager.YARN_BERRY ||
+      this.packageManager === NodePackageManager.YARN2
+    ) {
+      new Yarnrc(this, project, options.yarnBerryOptions);
+    }
   }
 
   /**

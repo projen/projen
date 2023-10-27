@@ -1,6 +1,6 @@
-import { YarnBerryOptions } from "./node-package";
-import { NodeProject } from "./node-project";
+import { NodePackage, YarnBerryOptions } from "./node-package";
 import { Component } from "../component";
+import { Project } from "../project";
 import { YamlFile } from "../yaml";
 
 /** https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior */
@@ -513,7 +513,11 @@ export interface YarnrcOptionsV4 {
 }
 
 export class Yarnrc extends Component {
-  constructor(project: NodeProject, options: YarnBerryOptions) {
+  constructor(
+    nodePackage: NodePackage,
+    project: Project,
+    options: YarnBerryOptions = {}
+  ) {
     super(project);
     const {
       version = "4.0.0",
@@ -523,7 +527,7 @@ export class Yarnrc extends Component {
 
     // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
     // of `yarn` to use.
-    project.addFields({ packageManager: `yarn@${version}` });
+    nodePackage.addField("packageManager", `yarn@${version}`);
 
     new YamlFile(project, ".yarnrc.yml", {
       obj: yarnRcOptions,
@@ -533,7 +537,7 @@ export class Yarnrc extends Component {
   }
 
   /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
-  private configureGitignore(project: NodeProject, zeroInstalls: boolean) {
+  private configureGitignore(project: Project, zeroInstalls: boolean) {
     const { gitignore } = project;
 
     // These patterns are the same whether or not you're using zero-installs
