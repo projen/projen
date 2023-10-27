@@ -139,6 +139,14 @@ const project = new javascript.NodeProject({
 });
 ```
 
+#### Yarn Berry Corepack
+
+Following [Yarn's recommendation](https://yarnpkg.com/getting-started/install), we expect that
+[`corepack`](https://nodejs.org/api/corepack.html) is enabled on your machine. `corepack` transparently manages the
+`yarn` version based on the `packageManager` field in `package.json`.
+
+See [Yarn's installation documentation](https://yarnpkg.com/getting-started/install) for more information.
+
 ## Pull Request Builds (CI)
 
 TODO
