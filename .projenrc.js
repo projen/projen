@@ -8,7 +8,6 @@ const {
   PROJEN_MARKER,
   DependencyType,
 } = require("./lib");
-const { UpgradeDependencies } = require("./lib/javascript");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -137,7 +136,7 @@ const project = new cdk.JsiiProject({
 // Upgrade Dependencies in two parts:
 // a) Upgrade bundled dependencies as a releasable fix
 // b) Upgrade devDependencies as a chore
-new UpgradeDependencies(project, {
+new javascript.UpgradeDependencies(project, {
   taskName: "upgrade-bundled",
   types: [DependencyType.BUNDLED],
   semanticCommit: "fix",
@@ -150,7 +149,7 @@ new UpgradeDependencies(project, {
     ]),
   },
 });
-new UpgradeDependencies(project, {
+new javascript.UpgradeDependencies(project, {
   taskName: "upgrade",
   exclude: [
     // exclude the bundled deps
