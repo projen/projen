@@ -42,7 +42,6 @@ junit.xml
 /dist/version.txt
 !/.github/workflows/release.yml
 !/.mergify.yml
-!/.github/workflows/upgrade-main.yml
 !/.github/pull_request_template.md
 !/.prettierignore
 !/.prettierrc.json
@@ -55,6 +54,8 @@ junit.xml
 .jsii
 tsconfig.json
 !/docs/api/API.md
+!/.github/workflows/upgrade-bundled-main.yml
+!/.github/workflows/upgrade-main.yml
 !/projen.bash
 !templates/**
 /.idea
