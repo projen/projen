@@ -5,9 +5,9 @@ const {
   ProjectTree,
   TextFile,
   ReleasableCommits,
-  PROJEN_MARKER,
   DependencyType,
 } = require("./lib");
+const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
   name: "projen",
