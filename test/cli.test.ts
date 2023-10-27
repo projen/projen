@@ -44,6 +44,15 @@ test('running "projen" with task in root of a project will execute task of the p
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
+test('running "projen" with task in root of a project that receives args will pass through --help flag', () => {
+  const project = new Project({ name: "my-project" });
+  project.testTask?.exec('echo "$@" > bar.txt', { receiveArgs: true });
+  project.synth();
+
+  execProjenCLI(project.outdir, ["test", "something", "--help"]);
+  expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("something --help\n");
+});
+
 test('running "projen" with task in subdirectory of a project will execute task of the project', () => {
   const project = new Project({ name: "my-project" });
   project.testTask?.exec('echo "foo" > bar.txt');
