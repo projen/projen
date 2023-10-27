@@ -12,6 +12,7 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
+import { YarnrcOptionsV4, YarnrcOptionsV3 } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -21,7 +22,6 @@ import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { isTruthy, sorted, writeFile } from "../util";
-import { YarnrcOptionsV4, YarnrcOptionsV3 } from "./yarnrc";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";

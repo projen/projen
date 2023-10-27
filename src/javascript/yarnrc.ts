@@ -1,7 +1,7 @@
-import { Component } from "../component";
-import { YamlFile } from "../yaml";
 import { YarnBerryOptions } from "./node-package";
 import { NodeProject } from "./node-project";
+import { Component } from "../component";
+import { YamlFile } from "../yaml";
 
 /** https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior */
 export enum YarnChecksumBehaviorV3 {
@@ -129,7 +129,7 @@ export enum YarnPnpFallbackMode {
 /** https://yarnpkg.com/configuration/yarnrc#pnpMode */
 export enum YarnPnpMode {
   STRICT = "strict",
-  loose = "loose",
+  LOOSE = "loose",
 }
 
 /** https://yarnpkg.com/configuration/yarnrc#progressBarStyle */

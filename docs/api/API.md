@@ -120,6 +120,7 @@ Name|Description
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
 [javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
 [javascript.WatchPlugin](#projen-javascript-watchplugin)|*No description*
+[javascript.Yarnrc](#projen-javascript-yarnrc)|*No description*
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
@@ -371,6 +372,17 @@ Name|Description
 [javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)|*No description*
 [javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)|Options for `UpgradeDependencies`.
 [javascript.UpgradeDependenciesWorkflowOptions](#projen-javascript-upgradedependenciesworkflowoptions)|Options for `UpgradeDependencies.workflowOptions`.
+[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)|Configure Yarn Berry.
+[javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)|https://yarnpkg.com/configuration/yarnrc#logFilters.
+[javascript.YarnNetworkSetting](#projen-javascript-yarnnetworksetting)|https://yarnpkg.com/configuration/yarnrc#networkSettings.
+[javascript.YarnNetworkSettingV3](#projen-javascript-yarnnetworksettingv3)|https://v3.yarnpkg.com/configuration/yarnrc#networkSettings.
+[javascript.YarnNpmRegistry](#projen-javascript-yarnnpmregistry)|https://yarnpkg.com/configuration/yarnrc#npmRegistries.
+[javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)|https://yarnpkg.com/configuration/yarnrc#npmScopes.
+[javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)|https://yarnpkg.com/configuration/yarnrc#packageExtensions.
+[javascript.YarnPeerDependencyMeta](#projen-javascript-yarnpeerdependencymeta)|https://yarnpkg.com/configuration/yarnrc#packageExtensions.
+[javascript.YarnSupportedArchitectures](#projen-javascript-yarnsupportedarchitectures)|https://yarnpkg.com/configuration/yarnrc#supportedArchitectures.
+[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3)|Configuration for .yarnrc.yml in Yarn Berry v3.
+[javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)|Configuration for .yarnrc.yml in Yarn Berry v4.
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|Poetry-specific options.
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|Poetry-specific options.
@@ -496,6 +508,20 @@ Name|Description
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
+[javascript.YarnCacheMigrationMode](#projen-javascript-yarncachemigrationmode)|https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode.
+[javascript.YarnChecksumBehavior](#projen-javascript-yarnchecksumbehavior)|https://yarnpkg.com/configuration/yarnrc#checksumBehavior.
+[javascript.YarnChecksumBehaviorV3](#projen-javascript-yarnchecksumbehaviorv3)|https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior.
+[javascript.YarnDefaultSemverRangePrefix](#projen-javascript-yarndefaultsemverrangeprefix)|https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix.
+[javascript.YarnLogFilterLevel](#projen-javascript-yarnlogfilterlevel)|https://v3.yarnpkg.com/configuration/yarnrc#logFilters.0.level.
+[javascript.YarnNmHoistingLimit](#projen-javascript-yarnnmhoistinglimit)|https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits.
+[javascript.YarnNmMode](#projen-javascript-yarnnmmode)|https://yarnpkg.com/configuration/yarnrc#nmMode.
+[javascript.YarnNodeLinker](#projen-javascript-yarnnodelinker)|https://yarnpkg.com/configuration/yarnrc#nodeLinker.
+[javascript.YarnNpmPublishAccess](#projen-javascript-yarnnpmpublishaccess)|https://yarnpkg.com/configuration/yarnrc#npmPublishAccess.
+[javascript.YarnPnpFallbackMode](#projen-javascript-yarnpnpfallbackmode)|https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode.
+[javascript.YarnPnpMode](#projen-javascript-yarnpnpmode)|https://yarnpkg.com/configuration/yarnrc#pnpMode.
+[javascript.YarnProgressBarStyle](#projen-javascript-yarnprogressbarstyle)|https://yarnpkg.com/configuration/yarnrc#progressBarStyle.
+[javascript.YarnWinLinkType](#projen-javascript-yarnwinlinktype)|https://yarnpkg.com/configuration/yarnrc#winLinkType.
+[javascript.YarnWorkerPoolMode](#projen-javascript-yarnworkerpoolmode)|*No description*
 [release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
 [vscode.Console](#projen-vscode-console)|Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -3892,6 +3918,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -4601,6 +4628,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -4922,6 +4950,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -5572,6 +5601,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -5841,6 +5871,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -6270,6 +6301,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -6460,6 +6492,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -6712,6 +6745,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -9068,6 +9102,7 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -9405,6 +9440,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -10235,6 +10271,33 @@ new javascript.WatchPlugin(name: string, options?: any)
 
 * **name** (<code>string</code>)  *No description*
 * **options** (<code>any</code>)  *No description*
+
+
+
+
+## class Yarnrc 🔹 <a id="projen-javascript-yarnrc"></a>
+
+
+
+__Implements__: [IConstruct](#constructs-iconstruct), [IDependable](#constructs-idependable)
+__Submodule__: javascript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new javascript.Yarnrc(project: NodeProject, options: YarnBerryOptions)
+```
+
+* **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
+* **options** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  *No description*
+  * **version** (<code>string</code>)  A fully specified version to use for yarn (e.g., 4.0.0). __*Default*__: 4.0.0
+  * **yarnRcOptions** (<code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code>)  The yarnrc configuration. __*Default*__: a blank Yarn RC file
+  * **zeroInstalls** (<code>boolean</code>)  Should zero-installs be enabled? __*Default*__: false
 
 
 
@@ -11567,6 +11630,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -11730,6 +11794,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -11893,6 +11958,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -12462,6 +12528,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -12622,6 +12689,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -12856,6 +12924,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -13059,6 +13128,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **yarnBerryOptions** (<code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code>)  Options for Yarn Berry. __*Default*__: Yarn Berry v4 with all default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
@@ -14511,6 +14581,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -14904,6 +14975,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -15126,6 +15198,7 @@ Name | Type | Description
 **workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?⚠️ | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?⚠️ | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -15562,6 +15635,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -15842,6 +15916,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -16188,6 +16263,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -16363,6 +16439,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -16563,6 +16640,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -18515,6 +18593,7 @@ Name | Type | Description
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
 **scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -18650,6 +18729,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -18913,6 +18993,341 @@ Name | Type | Description
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **runsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
 **schedule**?🔹 | <code>[javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
+
+
+
+## struct YarnBerryOptions 🔹 <a id="projen-javascript-yarnberryoptions"></a>
+
+
+Configure Yarn Berry.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**version**?🔹 | <code>string</code> | A fully specified version to use for yarn (e.g., 4.0.0).<br/>__*Default*__: 4.0.0
+**yarnRcOptions**?🔹 | <code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code> | The yarnrc configuration.<br/>__*Default*__: a blank Yarn RC file
+**zeroInstalls**?🔹 | <code>boolean</code> | Should zero-installs be enabled?<br/>__*Default*__: false
+
+
+
+## struct YarnLogFilter 🔹 <a id="projen-javascript-yarnlogfilter"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#logFilters.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**code**?🔹 | <code>string</code> | __*Optional*__
+**level**?🔹 | <code>[javascript.YarnLogFilterLevel](#projen-javascript-yarnlogfilterlevel)</code> | __*Optional*__
+**pattern**?🔹 | <code>string</code> | __*Optional*__
+**text**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct YarnNetworkSetting 🔹 <a id="projen-javascript-yarnnetworksetting"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#networkSettings.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**enableNetwork**?🔹 | <code>boolean</code> | __*Optional*__
+**httpProxy**?🔹 | <code>string</code> | __*Optional*__
+**httpsCaFilePath**?🔹 | <code>string</code> | __*Optional*__
+**httpsCertFilePath**?🔹 | <code>string</code> | __*Optional*__
+**httpsKeyFilePath**?🔹 | <code>string</code> | __*Optional*__
+**httpsProxy**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct YarnNetworkSettingV3 🔹 <a id="projen-javascript-yarnnetworksettingv3"></a>
+
+
+https://v3.yarnpkg.com/configuration/yarnrc#networkSettings.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**caFilePath**?🔹 | <code>string</code> | __*Optional*__
+**enableNetwork**?🔹 | <code>boolean</code> | __*Optional*__
+**httpProxy**?🔹 | <code>string</code> | __*Optional*__
+**httpsCertFilePath**?🔹 | <code>string</code> | __*Optional*__
+**httpsKeyFilePath**?🔹 | <code>string</code> | __*Optional*__
+**httpsProxy**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct YarnNpmRegistry 🔹 <a id="projen-javascript-yarnnpmregistry"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#npmRegistries.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**npmAlwaysAuth**?🔹 | <code>boolean</code> | __*Optional*__
+**npmAuthIdent**?🔹 | <code>string</code> | __*Optional*__
+**npmAuthToken**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct YarnNpmScope 🔹 <a id="projen-javascript-yarnnpmscope"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#npmScopes.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**npmAlwaysAuth**?🔹 | <code>boolean</code> | __*Optional*__
+**npmAuthIdent**?🔹 | <code>string</code> | __*Optional*__
+**npmAuthToken**?🔹 | <code>string</code> | __*Optional*__
+**npmPublishRegistry**?🔹 | <code>string</code> | __*Optional*__
+**npmRegistryServer**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct YarnPackageExtension 🔹 <a id="projen-javascript-yarnpackageextension"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#packageExtensions.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependencies**?🔹 | <code>Map<string, string></code> | __*Optional*__
+**peerDependencies**?🔹 | <code>Map<string, string></code> | __*Optional*__
+**peerDependenciesMeta**?🔹 | <code>Map<string, Map<string, [javascript.YarnPeerDependencyMeta](#projen-javascript-yarnpeerdependencymeta)>></code> | __*Optional*__
+
+
+
+## struct YarnPeerDependencyMeta 🔹 <a id="projen-javascript-yarnpeerdependencymeta"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#packageExtensions.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**optional**?🔹 | <code>boolean</code> | __*Optional*__
+
+
+
+## struct YarnSupportedArchitectures 🔹 <a id="projen-javascript-yarnsupportedarchitectures"></a>
+
+
+https://yarnpkg.com/configuration/yarnrc#supportedArchitectures.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cpu**?🔹 | <code>Array<string></code> | __*Optional*__
+**libc**?🔹 | <code>Array<string></code> | __*Optional*__
+**os**?🔹 | <code>Array<string></code> | __*Optional*__
+
+
+
+## struct YarnrcOptionsV3 🔹 <a id="projen-javascript-yarnrcoptionsv3"></a>
+
+
+Configuration for .yarnrc.yml in Yarn Berry v3.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**caFilePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#caFilePath.<br/>__*Optional*__
+**cacheFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#cacheFolder.<br/>__*Optional*__
+**changesetBaseRefs**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#changesetBaseRefs.<br/>__*Optional*__
+**changesetIgnorePatterns**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns.<br/>__*Optional*__
+**checksumBehavior**?🔹 | <code>[javascript.YarnChecksumBehaviorV3](#projen-javascript-yarnchecksumbehaviorv3)</code> | https://v3.yarnpkg.com/configuration/yarnrc#checksumBehavior.<br/>__*Optional*__
+**cloneConcurrency**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#cloneConcurrency.<br/>__*Optional*__
+**compressionLevel**?🔹 | <code>string &#124; number</code> | https://v3.yarnpkg.com/configuration/yarnrc#compressionLevel.<br/>__*Optional*__
+**constraintsPath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#constraintsPath.<br/>__*Optional*__
+**defaultLanguageName**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#defaultLanguageName.<br/>__*Optional*__
+**defaultProtocol**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#defaultProtocol.<br/>__*Optional*__
+**defaultSemverRangePrefix**?🔹 | <code>[javascript.YarnDefaultSemverRangePrefix](#projen-javascript-yarndefaultsemverrangeprefix)</code> | https://v3.yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix.<br/>__*Optional*__
+**deferredVersionFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#deferredVersionFolder.<br/>__*Optional*__
+**enableColors**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableColors.<br/>__*Optional*__
+**enableGlobalCache**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableGlobalCache.<br/>__*Optional*__
+**enableHyperlinks**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableHyperlinks.<br/>__*Optional*__
+**enableImmutableCache**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableCache.<br/>__*Optional*__
+**enableImmutableInstalls**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableInstalls.<br/>__*Optional*__
+**enableInlineBuilds**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableInlineBuilds.<br/>__*Optional*__
+**enableMessageNames**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableMessageNames.<br/>__*Optional*__
+**enableMirror**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableMirror.<br/>__*Optional*__
+**enableNetwork**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableNetwork.<br/>__*Optional*__
+**enableProgressBars**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableProgressBars.<br/>__*Optional*__
+**enableScripts**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableScripts.<br/>__*Optional*__
+**enableStrictSsl**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableStrictSsl.<br/>__*Optional*__
+**enableTelemetry**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableTelemetry.<br/>__*Optional*__
+**enableTimers**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableTimers.<br/>__*Optional*__
+**enableTransparentWorkspaces**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces.<br/>__*Optional*__
+**globalFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#globalFolder.<br/>__*Optional*__
+**httpProxy**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpProxy.<br/>__*Optional*__
+**httpRetry**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpRetry.<br/>__*Optional*__
+**httpTimeout**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpTimeout.<br/>__*Optional*__
+**httpsCertFilePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpsCertFilePath.<br/>__*Optional*__
+**httpsKeyFilePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpsKeyFilePath.<br/>__*Optional*__
+**httpsProxy**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpsProxy.<br/>__*Optional*__
+**ignoreCwd**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd.<br/>__*Optional*__
+**ignorePath**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#ignorePath.<br/>__*Optional*__
+**immutablePatterns**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#immutablePatterns.<br/>__*Optional*__
+**initFields**?🔹 | <code>Map<string, any></code> | https://v3.yarnpkg.com/configuration/yarnrc#initFields.<br/>__*Optional*__
+**initScope**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#initScope.<br/>__*Optional*__
+**installStatePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#installStatePath.<br/>__*Optional*__
+**lockfileFilename**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename.<br/>__*Optional*__
+**logFilters**?🔹 | <code>Array<[javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)></code> | https://v3.yarnpkg.com/configuration/yarnrc#logFilters.<br/>__*Optional*__
+**networkConcurrency**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#networkConcurrency.<br/>__*Optional*__
+**networkSettings**?🔹 | <code>Map<string, [javascript.YarnNetworkSettingV3](#projen-javascript-yarnnetworksettingv3)></code> | https://v3.yarnpkg.com/configuration/yarnrc#networkSettings.<br/>__*Optional*__
+**nmHoistingLimits**?🔹 | <code>[javascript.YarnNmHoistingLimit](#projen-javascript-yarnnmhoistinglimit)</code> | https://v3.yarnpkg.com/configuration/yarnrc#nmHoistingLimits.<br/>__*Optional*__
+**nmMode**?🔹 | <code>[javascript.YarnNmMode](#projen-javascript-yarnnmmode)</code> | https://v3.yarnpkg.com/configuration/yarnrc#nmMode.<br/>__*Optional*__
+**nmSelfReferences**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#nmSelfReferences.<br/>__*Optional*__
+**nodeLinker**?🔹 | <code>[javascript.YarnNodeLinker](#projen-javascript-yarnnodelinker)</code> | https://v3.yarnpkg.com/configuration/yarnrc#nodeLinker.<br/>__*Optional*__
+**npmAlwaysAuth**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAlwaysAuth.<br/>__*Optional*__
+**npmAuditExcludePackages**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages.<br/>__*Optional*__
+**npmAuditIgnoreAdvisories**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories.<br/>__*Optional*__
+**npmAuditRegistry**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuditRegistry.<br/>__*Optional*__
+**npmAuthIdent**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuthIdent.<br/>__*Optional*__
+**npmAuthToken**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuthToken.<br/>__*Optional*__
+**npmPublishAccess**?🔹 | <code>[javascript.YarnNpmPublishAccess](#projen-javascript-yarnnpmpublishaccess)</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmPublishAccess.<br/>__*Optional*__
+**npmPublishRegistry**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmPublishRegistry.<br/>__*Optional*__
+**npmRegistries**?🔹 | <code>Map<string, [javascript.YarnNpmRegistry](#projen-javascript-yarnnpmregistry)></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmRegistries.<br/>__*Optional*__
+**npmRegistryServer**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmRegistryServer.<br/>__*Optional*__
+**npmScopes**?🔹 | <code>Map<string, [javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmScopes.<br/>__*Optional*__
+**packageExtensions**?🔹 | <code>Map<string, [javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)></code> | https://v3.yarnpkg.com/configuration/yarnrc#packageExtensions.<br/>__*Optional*__
+**patchFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#patchFolder.<br/>__*Optional*__
+**pnpDataPath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath.<br/>__*Optional*__
+**pnpEnableEsmLoader**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader.<br/>__*Optional*__
+**pnpEnableInlining**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableInlining.<br/>__*Optional*__
+**pnpFallbackMode**?🔹 | <code>[javascript.YarnPnpFallbackMode](#projen-javascript-yarnpnpfallbackmode)</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpFallbackMode.<br/>__*Optional*__
+**pnpIgnorePatterns**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns.<br/>__*Optional*__
+**pnpMode**?🔹 | <code>[javascript.YarnPnpMode](#projen-javascript-yarnpnpmode)</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpMode.<br/>__*Optional*__
+**pnpShebang**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpShebang.<br/>__*Optional*__
+**pnpUnpluggedFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder.<br/>__*Optional*__
+**preferAggregateCacheInfo**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo.<br/>__*Optional*__
+**preferDeferredVersions**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferDeferredVersions.<br/>__*Optional*__
+**preferInteractive**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferInteractive.<br/>__*Optional*__
+**preferTruncatedLines**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferTruncatedLines.<br/>__*Optional*__
+**progressBarStyle**?🔹 | <code>[javascript.YarnProgressBarStyle](#projen-javascript-yarnprogressbarstyle)</code> | https://v3.yarnpkg.com/configuration/yarnrc#progressBarStyle.<br/>__*Optional*__
+**rcFilename**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#rcFilename.<br/>__*Optional*__
+**supportedArchitectures**?🔹 | <code>[javascript.YarnSupportedArchitectures](#projen-javascript-yarnsupportedarchitectures)</code> | https://v3.yarnpkg.com/configuration/yarnrc#supportedArchitectures.<br/>__*Optional*__
+**telemetryInterval**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#telemetryInterval.<br/>__*Optional*__
+**telemetryUserId**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#telemetryUserId.<br/>__*Optional*__
+**unsafeHttpWhitelist**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist.<br/>__*Optional*__
+**virtualFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#virtualFolder.<br/>__*Optional*__
+**yarnPath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#yarnPath.<br/>__*Optional*__
+
+
+
+## struct YarnrcOptionsV4 🔹 <a id="projen-javascript-yarnrcoptionsv4"></a>
+
+
+Configuration for .yarnrc.yml in Yarn Berry v4.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cacheFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#cacheFolder.<br/>__*Optional*__
+**cacheMigrationMode**?🔹 | <code>[javascript.YarnCacheMigrationMode](#projen-javascript-yarncachemigrationmode)</code> | https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode.<br/>__*Optional*__
+**changesetBaseRefs**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#changesetBaseRefs.<br/>__*Optional*__
+**changesetIgnorePatterns**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns.<br/>__*Optional*__
+**checksumBehavior**?🔹 | <code>[javascript.YarnChecksumBehavior](#projen-javascript-yarnchecksumbehavior)</code> | https://yarnpkg.com/configuration/yarnrc#checksumBehavior.<br/>__*Optional*__
+**cloneConcurrency**?🔹 | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#cloneConcurrency.<br/>__*Optional*__
+**compressionLevel**?🔹 | <code>string &#124; number</code> | https://yarnpkg.com/configuration/yarnrc#compressionLevel.<br/>__*Optional*__
+**constraintsPath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#constraintsPath.<br/>__*Optional*__
+**defaultLanguageName**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#defaultLanguageName.<br/>__*Optional*__
+**defaultProtocol**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#defaultProtocol.<br/>__*Optional*__
+**defaultSemverRangePrefix**?🔹 | <code>[javascript.YarnDefaultSemverRangePrefix](#projen-javascript-yarndefaultsemverrangeprefix)</code> | https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix.<br/>__*Optional*__
+**deferredVersionFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#deferredVersionFolder.<br/>__*Optional*__
+**enableColors**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableColors.<br/>__*Optional*__
+**enableConstraintsCheck**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableConstraintsCheck.<br/>__*Optional*__
+**enableGlobalCache**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableGlobalCache.<br/>__*Optional*__
+**enableHardenedMode**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableHardenedMode.<br/>__*Optional*__
+**enableHyperlinks**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableHyperlinks.<br/>__*Optional*__
+**enableImmutableCache**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableImmutableCache.<br/>__*Optional*__
+**enableImmutableInstalls**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableImmutableInstalls.<br/>__*Optional*__
+**enableInlineBuilds**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableInlineBuilds.<br/>__*Optional*__
+**enableInlineHunks**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableInlineHunks.<br/>__*Optional*__
+**enableMessageNames**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableMessageNames.<br/>__*Optional*__
+**enableMirror**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableMirror.<br/>__*Optional*__
+**enableNetwork**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableNetwork.<br/>__*Optional*__
+**enableOfflineMode**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableOfflineMode.<br/>__*Optional*__
+**enableProgressBars**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableProgressBars.<br/>__*Optional*__
+**enableScripts**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableScripts.<br/>__*Optional*__
+**enableStrictSsl**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableStrictSsl.<br/>__*Optional*__
+**enableTelemetry**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableTelemetry.<br/>__*Optional*__
+**enableTimers**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableTimers.<br/>__*Optional*__
+**enableTransparentWorkspaces**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces.<br/>__*Optional*__
+**globalFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#globalFolder.<br/>__*Optional*__
+**httpProxy**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpProxy.<br/>__*Optional*__
+**httpRetry**?🔹 | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#httpRetry.<br/>__*Optional*__
+**httpTimeout**?🔹 | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#httpTimeout.<br/>__*Optional*__
+**httpsCaFilePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsCaFilePath.<br/>__*Optional*__
+**httpsCertFilePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsCertFilePath.<br/>__*Optional*__
+**httpsKeyFilePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsKeyFilePath.<br/>__*Optional*__
+**httpsProxy**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsProxy.<br/>__*Optional*__
+**ignorePath**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#ignorePath.<br/>__*Optional*__
+**immutablePatterns**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#immutablePatterns.<br/>__*Optional*__
+**initFields**?🔹 | <code>Map<string, any></code> | https://yarnpkg.com/configuration/yarnrc#initFields.<br/>__*Optional*__
+**initScope**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#initScope.<br/>__*Optional*__
+**injectEnvironmentFiles**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#injectEnvironmentFiles.<br/>__*Optional*__
+**installStatePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#installStatePath.<br/>__*Optional*__
+**logFilters**?🔹 | <code>Array<[javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)></code> | https://yarnpkg.com/configuration/yarnrc#logFilters.<br/>__*Optional*__
+**networkConcurrency**?🔹 | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#networkConcurrency.<br/>__*Optional*__
+**networkSettings**?🔹 | <code>Map<string, [javascript.YarnNetworkSetting](#projen-javascript-yarnnetworksetting)></code> | https://yarnpkg.com/configuration/yarnrc#networkSettings.<br/>__*Optional*__
+**nmHoistingLimits**?🔹 | <code>[javascript.YarnNmHoistingLimit](#projen-javascript-yarnnmhoistinglimit)</code> | https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits.<br/>__*Optional*__
+**nmMode**?🔹 | <code>[javascript.YarnNmMode](#projen-javascript-yarnnmmode)</code> | https://yarnpkg.com/configuration/yarnrc#nmMode.<br/>__*Optional*__
+**nmSelfReferences**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#nmSelfReferences.<br/>__*Optional*__
+**nodeLinker**?🔹 | <code>[javascript.YarnNodeLinker](#projen-javascript-yarnnodelinker)</code> | https://yarnpkg.com/configuration/yarnrc#nodeLinker.<br/>__*Optional*__
+**npmAlwaysAuth**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#npmAlwaysAuth.<br/>__*Optional*__
+**npmAuditExcludePackages**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages.<br/>__*Optional*__
+**npmAuditIgnoreAdvisories**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories.<br/>__*Optional*__
+**npmAuditRegistry**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmAuditRegistry.<br/>__*Optional*__
+**npmAuthIdent**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmAuthIdent.<br/>__*Optional*__
+**npmAuthToken**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmAuthToken.<br/>__*Optional*__
+**npmPublishAccess**?🔹 | <code>[javascript.YarnNpmPublishAccess](#projen-javascript-yarnnpmpublishaccess)</code> | https://yarnpkg.com/configuration/yarnrc#npmPublishAccess.<br/>__*Optional*__
+**npmPublishRegistry**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmPublishRegistry.<br/>__*Optional*__
+**npmRegistries**?🔹 | <code>Map<string, [javascript.YarnNpmRegistry](#projen-javascript-yarnnpmregistry)></code> | https://yarnpkg.com/configuration/yarnrc#npmRegistries.<br/>__*Optional*__
+**npmRegistryServer**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmRegistryServer.<br/>__*Optional*__
+**npmScopes**?🔹 | <code>Map<string, [javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)></code> | https://yarnpkg.com/configuration/yarnrc#npmScopes.<br/>__*Optional*__
+**packageExtensions**?🔹 | <code>Map<string, [javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)></code> | https://yarnpkg.com/configuration/yarnrc#packageExtensions.<br/>__*Optional*__
+**patchFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#patchFolder.<br/>__*Optional*__
+**pnpEnableEsmLoader**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader.<br/>__*Optional*__
+**pnpEnableInlining**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#pnpEnableInlining.<br/>__*Optional*__
+**pnpFallbackMode**?🔹 | <code>[javascript.YarnPnpFallbackMode](#projen-javascript-yarnpnpfallbackmode)</code> | https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode.<br/>__*Optional*__
+**pnpIgnorePatterns**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns.<br/>__*Optional*__
+**pnpMode**?🔹 | <code>[javascript.YarnPnpMode](#projen-javascript-yarnpnpmode)</code> | https://yarnpkg.com/configuration/yarnrc#pnpMode.<br/>__*Optional*__
+**pnpShebang**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpShebang.<br/>__*Optional*__
+**pnpUnpluggedFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder.<br/>__*Optional*__
+**preferDeferredVersions**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions.<br/>__*Optional*__
+**preferInteractive**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferInteractive.<br/>__*Optional*__
+**preferReuse**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferReuse.<br/>__*Optional*__
+**preferTruncatedLines**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferTruncatedLines.<br/>__*Optional*__
+**progressBarStyle**?🔹 | <code>[javascript.YarnProgressBarStyle](#projen-javascript-yarnprogressbarstyle)</code> | https://yarnpkg.com/configuration/yarnrc#progressBarStyle.<br/>__*Optional*__
+**rcFilename**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#rcFilename.<br/>__*Optional*__
+**supportedArchitectures**?🔹 | <code>[javascript.YarnSupportedArchitectures](#projen-javascript-yarnsupportedarchitectures)</code> | https://yarnpkg.com/configuration/yarnrc#supportedArchitectures.<br/>__*Optional*__
+**taskPoolConcurrency**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#taskPoolConcurrency.<br/>__*Optional*__
+**telemetryInterval**?🔹 | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#telemetryInterval.<br/>__*Optional*__
+**telemetryUserId**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#telemetryUserId.<br/>__*Optional*__
+**tsEnableAutoTypes**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#tsEnableAutoTypes.<br/>__*Optional*__
+**unsafeHttpWhitelist**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist.<br/>__*Optional*__
+**virtualFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#virtualFolder.<br/>__*Optional*__
+**winLinkType**?🔹 | <code>[javascript.YarnWinLinkType](#projen-javascript-yarnwinlinktype)</code> | https://yarnpkg.com/configuration/yarnrc#winLinkType.<br/>__*Optional*__
+**workerPoolMode**?🔹 | <code>[javascript.YarnWorkerPoolMode](#projen-javascript-yarnworkerpoolmode)</code> | https://yarnpkg.com/configuration/yarnrc#workerPoolMode.<br/>__*Optional*__
+**yarnPath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#yarnPath.<br/>__*Optional*__
 
 
 
@@ -19885,6 +20300,7 @@ Name | Type | Description
 **workflowPackageCache**?⚠️ | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?⚠️ | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?⚠️ | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -20037,6 +20453,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -20379,6 +20796,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -20533,6 +20951,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -20700,6 +21119,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -20883,6 +21303,7 @@ Name | Type | Description
 **workflowPackageCache**?🔹 | <code>boolean</code> | Enable Node.js package cache in GitHub workflows.<br/>__*Default*__: false
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowRunsOnGroup**?🔹 | <code>[GroupRunnerOptions](#projen-grouprunneroptions)</code> | Github Runner Group selection options.<br/>__*Optional*__
+**yarnBerryOptions**?🔹 | <code>[javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)</code> | Options for Yarn Berry.<br/>__*Default*__: Yarn Berry v4 with all default options
 
 
 
@@ -21454,6 +21875,160 @@ Name | Description
 -----|-----
 **ALWAYS** 🔹|Always update snapshots in "test" task.
 **NEVER** 🔹|Never update snapshots in "test" task and create a separate "test:update" task.
+
+
+## enum YarnCacheMigrationMode 🔹 <a id="projen-javascript-yarncachemigrationmode"></a>
+
+https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode.
+
+Name | Description
+-----|-----
+**REQUIRED_ONLY** 🔹|
+**MATCH_SPEC** 🔹|
+**ALWAYS** 🔹|
+
+
+## enum YarnChecksumBehavior 🔹 <a id="projen-javascript-yarnchecksumbehavior"></a>
+
+https://yarnpkg.com/configuration/yarnrc#checksumBehavior.
+
+Name | Description
+-----|-----
+**THROW** 🔹|
+**UPDATE** 🔹|
+**RESET** 🔹|
+**IGNORE** 🔹|
+
+
+## enum YarnChecksumBehaviorV3 🔹 <a id="projen-javascript-yarnchecksumbehaviorv3"></a>
+
+https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior.
+
+Name | Description
+-----|-----
+**THROW** 🔹|
+**UPDATE** 🔹|
+**IGNORE** 🔹|
+
+
+## enum YarnDefaultSemverRangePrefix 🔹 <a id="projen-javascript-yarndefaultsemverrangeprefix"></a>
+
+https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix.
+
+Name | Description
+-----|-----
+**CARET** 🔹|
+**TILDE** 🔹|
+**EMPTY_STRING** 🔹|
+
+
+## enum YarnLogFilterLevel 🔹 <a id="projen-javascript-yarnlogfilterlevel"></a>
+
+https://v3.yarnpkg.com/configuration/yarnrc#logFilters.0.level.
+
+Name | Description
+-----|-----
+**INFO** 🔹|
+**WARNING** 🔹|
+**ERROR** 🔹|
+**DISCARD** 🔹|
+
+
+## enum YarnNmHoistingLimit 🔹 <a id="projen-javascript-yarnnmhoistinglimit"></a>
+
+https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits.
+
+Name | Description
+-----|-----
+**DEPENDENCIES** 🔹|
+**NONE** 🔹|
+**WORKSPACES** 🔹|
+
+
+## enum YarnNmMode 🔹 <a id="projen-javascript-yarnnmmode"></a>
+
+https://yarnpkg.com/configuration/yarnrc#nmMode.
+
+Name | Description
+-----|-----
+**CLASSIC** 🔹|
+**HARDLINKS_LOCAL** 🔹|
+**HARDLINKS_GLOBAL** 🔹|
+
+
+## enum YarnNodeLinker 🔹 <a id="projen-javascript-yarnnodelinker"></a>
+
+https://yarnpkg.com/configuration/yarnrc#nodeLinker.
+
+Name | Description
+-----|-----
+**PNP** 🔹|
+**PNPM** 🔹|
+**NODE_MODULES** 🔹|
+
+
+## enum YarnNpmPublishAccess 🔹 <a id="projen-javascript-yarnnpmpublishaccess"></a>
+
+https://yarnpkg.com/configuration/yarnrc#npmPublishAccess.
+
+Name | Description
+-----|-----
+**PUBLIC** 🔹|
+**RESTRICTED** 🔹|
+
+
+## enum YarnPnpFallbackMode 🔹 <a id="projen-javascript-yarnpnpfallbackmode"></a>
+
+https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode.
+
+Name | Description
+-----|-----
+**NONE** 🔹|
+**DEPENDENCIES_ONLY** 🔹|
+**ALL** 🔹|
+
+
+## enum YarnPnpMode 🔹 <a id="projen-javascript-yarnpnpmode"></a>
+
+https://yarnpkg.com/configuration/yarnrc#pnpMode.
+
+Name | Description
+-----|-----
+**STRICT** 🔹|
+**LOOSE** 🔹|
+
+
+## enum YarnProgressBarStyle 🔹 <a id="projen-javascript-yarnprogressbarstyle"></a>
+
+https://yarnpkg.com/configuration/yarnrc#progressBarStyle.
+
+Name | Description
+-----|-----
+**PATRICK** 🔹|
+**SIMBA** 🔹|
+**JACK** 🔹|
+**HOGSFATHER** 🔹|
+**DEFAULT** 🔹|
+
+
+## enum YarnWinLinkType 🔹 <a id="projen-javascript-yarnwinlinktype"></a>
+
+https://yarnpkg.com/configuration/yarnrc#winLinkType.
+
+Name | Description
+-----|-----
+**JUNCTIONS** 🔹|
+**SYMLINKS** 🔹|
+
+
+## enum YarnWorkerPoolMode 🔹 <a id="projen-javascript-yarnworkerpoolmode"></a>
+
+
+
+Name | Description
+-----|-----
+**ASYNC** 🔹|
+**WORKERS** 🔹|
 
 
 ## enum CodeArtifactAuthProvider 🔹 <a id="projen-release-codeartifactauthprovider"></a>

@@ -97,7 +97,7 @@ You can also use dependabot or renovatebot to get Pull requests on dependency up
     // dependabotOptions: { ... }
   })
   ```
-* Renovatebot: 
+* Renovatebot:
   ```ts
   new javascript.NodeProject({
     depsUpgrade: false,
