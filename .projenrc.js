@@ -138,7 +138,7 @@ const project = new cdk.JsiiProject({
 // a) Upgrade bundled dependencies as a releasable fix
 // b) Upgrade devDependencies as a chore
 new UpgradeDependencies(project, {
-  taskName: "upgrade:bundled",
+  taskName: "upgrade-bundled",
   types: [DependencyType.BUNDLED],
   semanticCommit: "fix",
   pullRequestTitle: "upgrade bundled dependencies",
@@ -150,7 +150,7 @@ new UpgradeDependencies(project, {
   },
 });
 new UpgradeDependencies(project, {
-  taskName: "upgrade:deps",
+  taskName: "upgrade",
   exclude: [
     // exclude the bundled deps
     ...project.deps.all

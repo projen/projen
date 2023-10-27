@@ -346,17 +346,17 @@
           "construct": "UpgradeDependencies"
         }
       },
-      "GithubWorkflow#upgrade:bundled-main": {
+      "GithubWorkflow#upgrade-bundled-main": {
         "metadata": {
           "type": "component",
           "construct": "GithubWorkflow"
         }
       },
-      "YamlFile@.github--workflows--upgrade:bundled-main.yml": {
+      "YamlFile@.github--workflows--upgrade-bundled-main.yml": {
         "metadata": {
           "type": "file",
           "construct": "YamlFile",
-          "path": ".github/workflows/upgrade:bundled-main.yml"
+          "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
       "UpgradeDependencies#AutoId29": {
@@ -365,17 +365,17 @@
           "construct": "UpgradeDependencies"
         }
       },
-      "GithubWorkflow#upgrade:deps-main": {
+      "GithubWorkflow#upgrade-main": {
         "metadata": {
           "type": "component",
           "construct": "GithubWorkflow"
         }
       },
-      "YamlFile@.github--workflows--upgrade:deps-main.yml": {
+      "YamlFile@.github--workflows--upgrade-main.yml": {
         "metadata": {
           "type": "file",
           "construct": "YamlFile",
-          "path": ".github/workflows/upgrade:deps-main.yml"
+          "path": ".github/workflows/upgrade-main.yml"
         }
       },
       "TextFile@projen.bash": {

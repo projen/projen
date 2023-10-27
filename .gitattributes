@@ -9,8 +9,8 @@
 /.github/workflows/build.yml linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
 /.github/workflows/release.yml linguist-generated
-/.github/workflows/upgrade:bundled-main.yml linguist-generated
-/.github/workflows/upgrade:deps-main.yml linguist-generated
+/.github/workflows/upgrade-bundled-main.yml linguist-generated
+/.github/workflows/upgrade-main.yml linguist-generated
 /.gitignore linguist-generated
 /.gitpod.yml linguist-generated
 /.markdownlint.json linguist-generated

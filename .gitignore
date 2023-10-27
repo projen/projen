@@ -54,8 +54,8 @@ junit.xml
 .jsii
 tsconfig.json
 !/docs/api/API.md
-!/.github/workflows/upgrade:bundled-main.yml
-!/.github/workflows/upgrade:deps-main.yml
+!/.github/workflows/upgrade-bundled-main.yml
+!/.github/workflows/upgrade-main.yml
 !/projen.bash
 !templates/**
 /.idea

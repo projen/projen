@@ -375,35 +375,8 @@
         }
       ]
     },
-    "upgrade:bundled": {
-      "name": "upgrade:bundled",
-      "description": "upgrade bundled dependencies",
-      "env": {
-        "CI": "0"
-      },
-      "steps": [
-        {
-          "exec": "yarn upgrade npm-check-updates"
-        },
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --peer --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-json-patch,glob,ini,semver,shx,xmlbuilder2,yaml,yargs"
-        },
-        {
-          "exec": "yarn install --check-files"
-        },
-        {
-          "exec": "yarn upgrade @iarna/toml case chalk conventional-changelog-config-spec fast-json-patch glob ini semver shx xmlbuilder2 yaml yargs"
-        },
-        {
-          "exec": "/bin/bash ./projen.bash"
-        },
-        {
-          "spawn": "post-upgrade"
-        }
-      ]
-    },
-    "upgrade:deps": {
-      "name": "upgrade:deps",
+    "upgrade": {
+      "name": "upgrade",
       "description": "upgrade dependencies",
       "env": {
         "CI": "0"
@@ -420,6 +393,33 @@
         },
         {
           "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak npm-check-updates prettier standard-version ts-jest constructs"
+        },
+        {
+          "exec": "/bin/bash ./projen.bash"
+        },
+        {
+          "spawn": "post-upgrade"
+        }
+      ]
+    },
+    "upgrade-bundled": {
+      "name": "upgrade-bundled",
+      "description": "upgrade bundled dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "yarn upgrade npm-check-updates"
+        },
+        {
+          "exec": "npm-check-updates --upgrade --target=minor --peer --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-json-patch,glob,ini,semver,shx,xmlbuilder2,yaml,yargs"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade @iarna/toml case chalk conventional-changelog-config-spec fast-json-patch glob ini semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "/bin/bash ./projen.bash"
