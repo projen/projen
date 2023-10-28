@@ -6,10 +6,12 @@ import { Project, DependencyType, Component } from "../../src";
 import {
   NodePackage,
   NodePackageManager,
+  NpmAccess,
 } from "../../src/javascript/node-package";
 import { minVersion } from "../../src/javascript/util";
 import { TaskRuntime } from "../../src/task-runtime";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
+import { YarnNpmPublishAccess } from "../../src/javascript";
 
 /**
  * Mocks a yarn install, writing to yarn.lock
@@ -682,4 +684,94 @@ test("project components should be able to change dependencies during preSynthes
     "test-dev-dep-2",
     "2.0.0"
   );
+});
+
+describe("yarn berry", () => {
+  describe("gitignore", () => {
+    test("produces the expected gitignore for zero-installs", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+        yarnBerryOptions: {
+          zeroInstalls: true,
+        },
+      });
+
+      const snps = synthSnapshot(project);
+      const gitignoreLines = snps[".gitignore"].split("\n");
+      expect(gitignoreLines).toEqual(
+        expect.arrayContaining([
+          ".yarn/*",
+          "!.yarn/cache",
+          "!.yarn/patches",
+          "!.yarn/plugins",
+          "!.yarn/releases",
+          "!.yarn/sdks",
+          "!.yarn/versions",
+        ])
+      );
+    });
+
+    test("produces the expected gitignore when not using zero-installs", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+        yarnBerryOptions: {
+          zeroInstalls: false,
+        },
+      });
+
+      const snps = synthSnapshot(project);
+      const gitignoreLines = snps[".gitignore"].split("\n");
+      expect(gitignoreLines).toEqual(
+        expect.arrayContaining([
+          ".pnp.*",
+          ".yarn/*",
+          "!.yarn/patches",
+          "!.yarn/plugins",
+          "!.yarn/releases",
+          "!.yarn/sdks",
+          "!.yarn/versions",
+        ])
+      );
+    });
+  });
+
+  describe("conflicting options", () => {
+    test("throws an error if npmRegistryUrl and npmRegistryServer are both set", () => {
+      const project = new TestProject();
+      expect(
+        () =>
+          new NodePackage(project, {
+            packageManager: NodePackageManager.YARN_BERRY,
+            npmRegistryUrl: "https://registry.npmjs.org/",
+            yarnBerryOptions: {
+              yarnRcOptions: {
+                npmRegistryServer: "https://registry.npmjs.org/",
+              },
+            },
+          })
+      ).toThrow(
+        "Cannot set npmRegistryUrl and yarnRcOptions.npmRegistryServer at the same time."
+      );
+    });
+
+    test("throws an error if npmAccess and npmPublishAccess are both set", () => {
+      const project = new TestProject();
+      expect(
+        () =>
+          new NodePackage(project, {
+            packageManager: NodePackageManager.YARN_BERRY,
+            npmAccess: NpmAccess.PUBLIC,
+            yarnBerryOptions: {
+              yarnRcOptions: {
+                npmPublishAccess: YarnNpmPublishAccess.PUBLIC,
+              },
+            },
+          })
+      ).toThrow(
+        "Cannot set npmAccess and yarnRcOptions.npmPublishAccess at the same time."
+      );
+    });
+  });
 });

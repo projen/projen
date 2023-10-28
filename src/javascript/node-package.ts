@@ -1537,19 +1537,19 @@ export class NodePackage extends Component {
     const { gitignore } = this.project;
 
     // These patterns are the same whether or not you're using zero-installs
-    gitignore.addPatterns(
-      ".yarn/*",
-      "!.yarn/patches",
-      "!.yarn/plugins",
-      "!.yarn/releases",
-      "!.yarn/sdks",
-      "!.yarn/versions"
+    gitignore.exclude(".yarn/*");
+    gitignore.include(
+      ".yarn/patches",
+      ".yarn/plugins",
+      ".yarn/releases",
+      ".yarn/sdks",
+      ".yarn/versions"
     );
 
     if (zeroInstalls) {
-      gitignore.addPatterns("!.yarn/cache");
+      gitignore.include("!.yarn/cache");
     } else {
-      gitignore.addPatterns("*.pnp.*");
+      gitignore.exclude(".pnp.*");
     }
   }
 }
