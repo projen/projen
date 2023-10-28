@@ -3,7 +3,7 @@ import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType, Component } from "../../src";
-import { YarnNpmPublishAccess } from "../../src/javascript";
+import { YarnNodeLinker, YarnNpmPublishAccess } from "../../src/javascript";
 import {
   NodePackage,
   NodePackageManager,
@@ -701,15 +701,21 @@ describe("yarn berry", () => {
     expect(snps["package.json"]).toHaveProperty("packageManager", "yarn@3.6.4");
   });
 
-  test("renders .yarnrc.yml file", () => {
+  test("renders .yarnrc.yml file with specified properties", () => {
     const project = new TestProject();
     new NodePackage(project, {
       packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: {
+        yarnRcOptions: {
+          nodeLinker: YarnNodeLinker.NODE_MODULES,
+        },
+      },
     });
 
     const snps = synthSnapshot(project);
+    const yarnrcLines = snps[".yarnrc.yml"].split("\n");
 
-    expect(snps[".yarnrc.yml"]).toBeDefined();
+    expect(yarnrcLines).toContain("nodeLinker: node-modules");
   });
 
   describe("gitignore", () => {
