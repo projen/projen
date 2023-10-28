@@ -3,6 +3,7 @@ import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType, Component } from "../../src";
+import { YarnNpmPublishAccess } from "../../src/javascript";
 import {
   NodePackage,
   NodePackageManager,
@@ -11,7 +12,6 @@ import {
 import { minVersion } from "../../src/javascript/util";
 import { TaskRuntime } from "../../src/task-runtime";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
-import { YarnNpmPublishAccess } from "../../src/javascript";
 
 /**
  * Mocks a yarn install, writing to yarn.lock
@@ -687,6 +687,31 @@ test("project components should be able to change dependencies during preSynthes
 });
 
 describe("yarn berry", () => {
+  test("adds the packageManager directive to package.json", () => {
+    const project = new TestProject();
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: {
+        version: "3.6.4",
+      },
+    });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"]).toHaveProperty("packageManager", "yarn@3.6.4");
+  });
+
+  test("renders .yarnrc.yml file", () => {
+    const project = new TestProject();
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps[".yarnrc.yml"]).toBeDefined();
+  });
+
   describe("gitignore", () => {
     test("produces the expected gitignore for zero-installs", () => {
       const project = new TestProject();
