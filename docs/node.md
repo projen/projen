@@ -10,8 +10,8 @@ You can specify the minimum version of node that your project supports, and the 
 ```js
 const project = new javascript.NodeProject({
   // ...
-  minNodeVersion: '16.0.0',
-  workflowNodeVersion: '16.1.0', // defaults to minNodeVersion
+  minNodeVersion: "16.0.0",
+  workflowNodeVersion: "16.1.0", // defaults to minNodeVersion
 });
 ```
 
@@ -75,12 +75,12 @@ It's possible to create a separate workflow and task just for upgrading projen:
 const project = new javascript.NodeProject({
   depsUpgrade: true,
   depsUpgradeOptions: {
-    exclude: ['projen'],
+    exclude: ["projen"],
   },
 });
 
 new javascript.UpgradeDependencies(project, {
-  include: ['projen'],
+  include: ["projen"],
   taskName: "upgrade-projen",
   workflow: false, // or true
   // workflowOptions: { ... }
@@ -89,21 +89,21 @@ new javascript.UpgradeDependencies(project, {
 
 You can also use dependabot or renovatebot to get Pull requests on dependency updates
 
-* Dependabot:
+- Dependabot:
   ```ts
   new javascript.NodeProject({
     depsUpgrade: false,
     dependabot: true,
     // dependabotOptions: { ... }
-  })
+  });
   ```
-* Renovatebot:
+- Renovatebot:
   ```ts
   new javascript.NodeProject({
     depsUpgrade: false,
     renovatebot: true,
     // renovatebotOptions: { ... }
-  })
+  });
   ```
 
 [task]: ./tasks.md
@@ -130,12 +130,12 @@ const project = new javascript.NodeProject({
   // ...
   packageManager: javascript.NodePackageManager.YARN_BERRY,
   yarnBerryOptions: {
-    version: "4.0.0",
+    version: "4.0.1",
     zeroInstalls: false,
     yarnRcOptions: {
-      nodeLinker: YarnNodeLinker.NODE_MODULES
+      nodeLinker: YarnNodeLinker.NODE_MODULES,
     },
-  }
+  },
 });
 ```
 
@@ -170,17 +170,18 @@ Currently, it only supports fetching packages from AWS CodeArtifact, either by d
 Multiple scoped package options may be specified if required.
 
 example
+
 ```js
-const { javascript } = require('projen');
+const { javascript } = require("projen");
 const project = new javascript.NodeProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: "main",
+  name: "my-project",
   scopedPackagesOptions: [
-      {
-          registryUrl: '<code-artifact-registry-url>',
-          scope: '@somescope',
-      }
-  ]
+    {
+      registryUrl: "<code-artifact-registry-url>",
+      scope: "@somescope",
+    },
+  ],
 });
 project.synth();
 ```

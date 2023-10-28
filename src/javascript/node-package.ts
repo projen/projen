@@ -1505,7 +1505,7 @@ export class NodePackage extends Component {
     { yarnBerryOptions }: NodePackageOptions
   ) {
     const {
-      version = "4.0.0",
+      version = "4.0.1",
       // TODO: figure out how to use top-level NPM settings here (e.g., the result of `this.parseNpmOptions`)
       // Some of these settings have overlap with `yarnrc.yml`. Questions:
       // - Do we remove these options from the Yarnrc options interfaces and rely on them being set in the top-level options?
@@ -1617,9 +1617,9 @@ export enum NpmAccess {
  */
 export interface YarnBerryOptions {
   /**
-   * A fully specified version to use for yarn (e.g., 4.0.0)
+   * A fully specified version to use for yarn (e.g., x.x.x)
    *
-   * @default - 4.0.0
+   * @default - 4.0.1
    */
   readonly version?: string;
 

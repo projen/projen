@@ -19002,7 +19002,7 @@ Configure Yarn Berry.
 
 Name | Type | Description 
 -----|------|-------------
-**version**?🔹 | <code>string</code> | A fully specified version to use for yarn (e.g., 4.0.0).<br/>__*Default*__: 4.0.0
+**version**?🔹 | <code>string</code> | A fully specified version to use for yarn (e.g., x.x.x).<br/>__*Default*__: 4.0.1
 **yarnRcOptions**?🔹 | <code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code> | The yarnrc configuration.<br/>__*Default*__: a blank Yarn RC file
 **zeroInstalls**?🔹 | <code>boolean</code> | Should zero-installs be enabled?<br/>__*Default*__: false
 
