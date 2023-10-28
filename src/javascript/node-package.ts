@@ -1500,20 +1500,13 @@ export class NodePackage extends Component {
     runtime.runTask(taskToRun.name);
   }
 
-  private configureYarnBerry(
-    project: Project,
-    { yarnBerryOptions }: NodePackageOptions
-  ) {
+  private configureYarnBerry(project: Project, options: NodePackageOptions) {
     const {
       version = "4.0.1",
-      // TODO: figure out how to use top-level NPM settings here (e.g., the result of `this.parseNpmOptions`)
-      // Some of these settings have overlap with `yarnrc.yml`. Questions:
-      // - Do we remove these options from the Yarnrc options interfaces and rely on them being set in the top-level options?
-      // - Do we add a parsing method, similar to `this.parseNpmOptions` that check for conflicts in the two configs?
-      // - Do we duplicate the logic, and set the relevant options here, too? (e.g., if this.npmRegistryUrl is set, set the relevant yarnrc option)
       yarnRcOptions = {},
       zeroInstalls = false,
-    } = yarnBerryOptions || {};
+    } = options.yarnBerryOptions || {};
+    this.checkForConflictingYarnOptions(yarnRcOptions);
 
     // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
     // of `yarn` to use.
@@ -1521,6 +1514,22 @@ export class NodePackage extends Component {
     this.configureYarnBerryGitignore(zeroInstalls);
 
     new Yarnrc(project, yarnRcOptions);
+  }
+
+  private checkForConflictingYarnOptions(
+    yarnRcOptions: YarnrcOptionsV3 | YarnrcOptionsV4
+  ) {
+    if (this.npmAccess && yarnRcOptions.npmPublishAccess) {
+      throw new Error(
+        "Cannot set npmAccess and yarnRcOptions.npmPublishAccess at the same time."
+      );
+    }
+
+    if (this.npmRegistryUrl && yarnRcOptions.npmRegistryServer) {
+      throw new Error(
+        "Cannot set npmRegistryUrl and yarnRcOptions.npmRegistryServer at the same time."
+      );
+    }
   }
 
   /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
