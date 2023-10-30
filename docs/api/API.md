@@ -15392,7 +15392,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **announce**?🔹 | <code>boolean</code> | Should we announce new versions?<br/>__*Default*__: true
-**X**?🔹 | <code>string</code> | X account to.<br/>__*Optional*__
+**twitter**?🔹 | <code>string</code> | Twitter account to.<br/>__*Optional*__
 
 
 
