@@ -387,14 +387,10 @@ export class Project extends Construct {
   }
 
   /**
-   * All files in this project and all subprojects.
+   * All files in this project.
    */
   public get files(): FileBase[] {
-    const isFile = (c: IConstruct): c is FileBase =>
-      isComponent(c) && c instanceof FileBase;
-
-    return this.node
-      .findAll()
+    return this.components
       .filter(isFile)
       .sort((f1, f2) => f1.path.localeCompare(f2.path));
   }
@@ -452,13 +448,15 @@ export class Project extends Construct {
     const absolute = path.isAbsolute(filePath)
       ? filePath
       : path.resolve(this.outdir, filePath);
-    for (const file of this.files) {
-      if (absolute === file.absolutePath) {
-        return file;
-      }
-    }
 
-    return undefined;
+    const candidate = this.node
+      .findAll()
+      .find(
+        (c): c is FileBase =>
+          isComponent(c) && isFile(c) && c.absolutePath === absolute
+      );
+
+    return candidate;
   }
 
   /**
@@ -510,18 +508,11 @@ export class Project extends Construct {
    * the file was not found.
    */
   public tryRemoveFile(filePath: string): FileBase | undefined {
-    const absolute = path.isAbsolute(filePath)
-      ? filePath
-      : path.resolve(this.outdir, filePath);
-    const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-
-    const candidate = this.node
-      .findAll()
-      .find((c) => isComponent(c) && isFile(c) && c.absolutePath === absolute);
+    const candidate = this.tryFindFile(filePath);
 
     if (candidate) {
       candidate.node.scope?.node.tryRemoveChild(candidate.node.id);
-      return candidate as FileBase;
+      return candidate;
     }
 
     return undefined;
@@ -755,4 +746,8 @@ function determineOutdir(parent?: Project, outdirOption?: string) {
   }
 
   return path.resolve(outdirOption ?? ".");
+}
+
+function isFile(c: Component): c is FileBase {
+  return c instanceof FileBase;
 }
