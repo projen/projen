@@ -22,7 +22,12 @@ import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy } from "./util";
-import { isProject, findClosestProject, tagAsProject } from "./util/constructs";
+import {
+  isProject,
+  findClosestProject,
+  tagAsProject,
+  isComponent,
+} from "./util/constructs";
 
 /**
  * Options for `Project`.
@@ -180,11 +185,6 @@ export class Project extends Construct {
   public readonly outdir: string;
 
   /**
-   * The root project.
-   **/
-  public readonly root: Project;
-
-  /**
    * Project tasks.
    */
   public readonly tasks: Tasks;
@@ -235,8 +235,6 @@ export class Project extends Construct {
    */
   public readonly commitGenerated: boolean;
 
-  private readonly _components = new Array<Component>();
-  private readonly _subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
@@ -271,10 +269,6 @@ export class Project extends Construct {
     }
 
     this.outdir = outdir;
-    this.root = this.parent ? this.parent.root : this;
-
-    // must happen after this.outdir, this.parent and this.root are initialized
-    this.parent?._addSubProject(this);
 
     // ------------------------------------------------------------------------
 
@@ -362,25 +356,36 @@ export class Project extends Construct {
   }
 
   /**
+   * The root project.
+   */
+  public get root(): Project {
+    return isProject(this.node.root) ? this.node.root : this;
+  }
+
+  /**
    * Returns all the components within this project.
    */
-  public get components() {
-    return [...this._components];
+  public get components(): Component[] {
+    return this.node
+      .findAll()
+      .filter(
+        (c): c is Component =>
+          isComponent(c) && c.project.node.path === this.node.path
+      );
   }
 
   /**
    * Returns all the subprojects within this project.
    */
-  public get subprojects() {
-    return [...this._subprojects];
+  public get subprojects(): Project[] {
+    return this.node.children.filter(isProject);
   }
 
   /**
    * All files in this project.
    */
   public get files(): FileBase[] {
-    const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    return this._components
+    return this.components
       .filter(isFile)
       .sort((f1, f2) => f1.path.localeCompare(f2.path));
   }
@@ -438,20 +443,15 @@ export class Project extends Construct {
     const absolute = path.isAbsolute(filePath)
       ? filePath
       : path.resolve(this.outdir, filePath);
-    for (const file of this.files) {
-      if (absolute === file.absolutePath) {
-        return file;
-      }
-    }
 
-    for (const child of this._subprojects) {
-      const file = child.tryFindFile(absolute);
-      if (file) {
-        return file;
-      }
-    }
+    const candidate = this.node
+      .findAll()
+      .find(
+        (c): c is FileBase =>
+          isComponent(c) && isFile(c) && c.absolutePath === absolute
+      );
 
-    return undefined;
+    return candidate;
   }
 
   /**
@@ -503,25 +503,11 @@ export class Project extends Construct {
    * the file was not found.
    */
   public tryRemoveFile(filePath: string): FileBase | undefined {
-    const absolute = path.isAbsolute(filePath)
-      ? filePath
-      : path.resolve(this.outdir, filePath);
-    const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    const index = this._components.findIndex(
-      (c) => isFile(c) && c.absolutePath === absolute
-    );
+    const candidate = this.tryFindFile(filePath);
 
-    if (index !== -1) {
-      const file = this._components.splice(index, 1)[0] as FileBase;
-      this.node.tryRemoveChild(file.node.id);
-      return file;
-    }
-
-    for (const child of this._subprojects) {
-      const file = child.tryRemoveFile(absolute);
-      if (file) {
-        return file;
-      }
+    if (candidate) {
+      candidate.node.scope?.node.tryRemoveChild(candidate.node.id);
+      return candidate;
     }
 
     return undefined;
@@ -602,13 +588,13 @@ export class Project extends Construct {
 
     this.preSynthesize();
 
-    for (const comp of this._components) {
+    for (const comp of this.components) {
       comp.preSynthesize();
     }
 
     // we exclude all subproject directories to ensure that when subproject.synth()
     // gets called below after cleanup(), subproject generated files are left intact
-    for (const subproject of this._subprojects) {
+    for (const subproject of this.subprojects) {
       this.addExcludeFromCleanup(subproject.outdir + "/**");
     }
 
@@ -619,16 +605,16 @@ export class Project extends Construct {
       this.excludeFromCleanup
     );
 
-    for (const subproject of this._subprojects) {
+    for (const subproject of this.subprojects) {
       subproject.synth();
     }
 
-    for (const comp of this._components) {
+    for (const comp of this.components) {
       comp.synthesize();
     }
 
     if (!isTruthy(process.env.PROJEN_DISABLE_POST)) {
-      for (const comp of this._components) {
+      for (const comp of this.components) {
         comp.postSynthesize();
       }
 
@@ -671,40 +657,6 @@ export class Project extends Construct {
    * Called after all components are synthesized. Order is *not* guaranteed.
    */
   public postSynthesize() {}
-
-  /**
-   * Adds a component to the project.
-   * @internal
-   */
-  public _addComponent(component: Component) {
-    this._components.push(component);
-  }
-
-  /**
-   * Adds a subproject to this project.
-   *
-   * This is automatically called when a new project is created with `parent`
-   * pointing to this project, so there is no real need to call this manually.
-   *
-   * @param subproject The child project to add.
-   * @internal
-   */
-  _addSubProject(subproject: Project) {
-    if (subproject.parent !== this) {
-      throw new Error('"parent" of child project must be this project');
-    }
-
-    // check that `outdir` is exclusive
-    for (const p of this._subprojects) {
-      if (path.resolve(p.outdir) === path.resolve(subproject.outdir)) {
-        throw new Error(
-          `There is already a subproject with "outdir": ${subproject.outdir}`
-        );
-      }
-    }
-
-    this._subprojects.push(subproject);
-  }
 }
 
 /**
@@ -789,4 +741,8 @@ function determineOutdir(parent?: Project, outdirOption?: string) {
   }
 
   return path.resolve(outdirOption ?? ".");
+}
+
+function isFile(c: Component): c is FileBase {
+  return c instanceof FileBase;
 }

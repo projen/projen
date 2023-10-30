@@ -190,7 +190,7 @@ To disable JUnit tests, set `junit: false` when you define the `MavenProject`.
 
 ## Packaging
 
-Java projects include definitionds for producing an output that is
+Java projects include definitions for producing an output that is
 ready-to-publish to Maven using tools like
 [jsii-release](https://www.npmjs.com/package/jsii-release). In future versions
 of projen we will also support auto-publishing through CI/CD.

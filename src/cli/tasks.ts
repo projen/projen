@@ -23,6 +23,7 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
       );
       let taskArgs: Array<string | number> = [];
       if (taskReceivesArgs) {
+        args.help(false);
         args.strict(false);
         args.strictCommands(false);
         taskArgs = hideBin(process.argv).slice(1);
