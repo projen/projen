@@ -2173,7 +2173,7 @@ Name | Type | Description
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
 **deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
 **ejected**🔹 | <code>boolean</code> | Whether or not the project is being ejected.
-**files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project and all subprojects.
+**files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitattributes**🔹 | <code>[GitAttributesFile](#projen-gitattributesfile)</code> | The .gitattributes file for this repository.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **logger**🔹 | <code>[Logger](#projen-logger)</code> | Logging utilities.

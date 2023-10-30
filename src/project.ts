@@ -359,7 +359,7 @@ export class Project extends Construct {
    * The root project.
    */
   public get root(): Project {
-    return this.node.scopes.find(isProject) ?? this;
+    return isProject(this.node.root) ? this.node.root : this;
   }
 
   /**
@@ -378,12 +378,7 @@ export class Project extends Construct {
    * Returns all the subprojects within this project.
    */
   public get subprojects(): Project[] {
-    return this.node
-      .findAll()
-      .filter(
-        (p): p is Project =>
-          isProject(p) && p.parent?.node.path === this.node.path
-      );
+    return this.node.children.filter(isProject);
   }
 
   /**
