@@ -12,7 +12,7 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
-import { YarnrcOptionsV4, YarnrcOptionsV3, Yarnrc } from "./yarnrc";
+import { Yarnrc, YarnrcOptions } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -1513,12 +1513,10 @@ export class NodePackage extends Component {
     this.addField("packageManager", `yarn@${version}`);
     this.configureYarnBerryGitignore(zeroInstalls);
 
-    new Yarnrc(project, yarnRcOptions);
+    new Yarnrc(project, version, yarnRcOptions);
   }
 
-  private checkForConflictingYarnOptions(
-    yarnRcOptions: YarnrcOptionsV3 | YarnrcOptionsV4
-  ) {
+  private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
     if (this.npmAccess && yarnRcOptions.npmPublishAccess) {
       throw new Error(
         "Cannot set npmAccess and yarnRcOptions.npmPublishAccess at the same time."
@@ -1637,7 +1635,7 @@ export interface YarnBerryOptions {
    *
    * @default - a blank Yarn RC file
    */
-  readonly yarnRcOptions?: YarnrcOptionsV3 | YarnrcOptionsV4;
+  readonly yarnRcOptions?: YarnrcOptions;
 
   /**
    * Should zero-installs be enabled?

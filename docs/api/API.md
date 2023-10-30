@@ -375,14 +375,12 @@ Name|Description
 [javascript.YarnBerryOptions](#projen-javascript-yarnberryoptions)|Configure Yarn Berry.
 [javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)|https://yarnpkg.com/configuration/yarnrc#logFilters.
 [javascript.YarnNetworkSetting](#projen-javascript-yarnnetworksetting)|https://yarnpkg.com/configuration/yarnrc#networkSettings.
-[javascript.YarnNetworkSettingV3](#projen-javascript-yarnnetworksettingv3)|https://v3.yarnpkg.com/configuration/yarnrc#networkSettings.
 [javascript.YarnNpmRegistry](#projen-javascript-yarnnpmregistry)|https://yarnpkg.com/configuration/yarnrc#npmRegistries.
 [javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)|https://yarnpkg.com/configuration/yarnrc#npmScopes.
 [javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)|https://yarnpkg.com/configuration/yarnrc#packageExtensions.
 [javascript.YarnPeerDependencyMeta](#projen-javascript-yarnpeerdependencymeta)|https://yarnpkg.com/configuration/yarnrc#packageExtensions.
 [javascript.YarnSupportedArchitectures](#projen-javascript-yarnsupportedarchitectures)|https://yarnpkg.com/configuration/yarnrc#supportedArchitectures.
-[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3)|Configuration for .yarnrc.yml in Yarn Berry v3.
-[javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)|Configuration for .yarnrc.yml in Yarn Berry v4.
+[javascript.YarnrcOptions](#projen-javascript-yarnrcoptions)|Configuration for .yarnrc.yml in Yarn Berry v4.
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|Poetry-specific options.
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|Poetry-specific options.
@@ -510,7 +508,6 @@ Name|Description
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
 [javascript.YarnCacheMigrationMode](#projen-javascript-yarncachemigrationmode)|https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode.
 [javascript.YarnChecksumBehavior](#projen-javascript-yarnchecksumbehavior)|https://yarnpkg.com/configuration/yarnrc#checksumBehavior.
-[javascript.YarnChecksumBehaviorV3](#projen-javascript-yarnchecksumbehaviorv3)|https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior.
 [javascript.YarnDefaultSemverRangePrefix](#projen-javascript-yarndefaultsemverrangeprefix)|https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix.
 [javascript.YarnLogFilterLevel](#projen-javascript-yarnlogfilterlevel)|https://v3.yarnpkg.com/configuration/yarnrc#logFilters.0.level.
 [javascript.YarnNmHoistingLimit](#projen-javascript-yarnnmhoistinglimit)|https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits.
@@ -10290,11 +10287,104 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new javascript.Yarnrc(project: Project, options?: YarnrcOptionsV3 &#124; YarnrcOptionsV4)
+new javascript.Yarnrc(project: Project, version: string, options?: YarnrcOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code>)  *No description*
+* **version** (<code>string</code>)  *No description*
+* **options** (<code>[javascript.YarnrcOptions](#projen-javascript-yarnrcoptions)</code>)  *No description*
+  * **cacheFolder** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#cacheFolder. __*Optional*__
+  * **cacheMigrationMode** (<code>[javascript.YarnCacheMigrationMode](#projen-javascript-yarncachemigrationmode)</code>)  https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode. __*Optional*__
+  * **changesetBaseRefs** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#changesetBaseRefs. __*Optional*__
+  * **changesetIgnorePatterns** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns. __*Optional*__
+  * **checksumBehavior** (<code>[javascript.YarnChecksumBehavior](#projen-javascript-yarnchecksumbehavior)</code>)  https://yarnpkg.com/configuration/yarnrc#checksumBehavior. __*Optional*__
+  * **cloneConcurrency** (<code>number</code>)  https://yarnpkg.com/configuration/yarnrc#cloneConcurrency. __*Optional*__
+  * **compressionLevel** (<code>string &#124; number</code>)  https://yarnpkg.com/configuration/yarnrc#compressionLevel. __*Optional*__
+  * **constraintsPath** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#constraintsPath. __*Optional*__
+  * **defaultLanguageName** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#defaultLanguageName. __*Optional*__
+  * **defaultProtocol** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#defaultProtocol. __*Optional*__
+  * **defaultSemverRangePrefix** (<code>[javascript.YarnDefaultSemverRangePrefix](#projen-javascript-yarndefaultsemverrangeprefix)</code>)  https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix. __*Optional*__
+  * **deferredVersionFolder** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#deferredVersionFolder. __*Optional*__
+  * **enableColors** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableColors. __*Optional*__
+  * **enableConstraintsCheck** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableConstraintsCheck. __*Optional*__
+  * **enableGlobalCache** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableGlobalCache. __*Optional*__
+  * **enableHardenedMode** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableHardenedMode. __*Optional*__
+  * **enableHyperlinks** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableHyperlinks. __*Optional*__
+  * **enableImmutableCache** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableImmutableCache. __*Optional*__
+  * **enableImmutableInstalls** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableImmutableInstalls. __*Optional*__
+  * **enableInlineBuilds** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableInlineBuilds. __*Optional*__
+  * **enableInlineHunks** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableInlineHunks. __*Optional*__
+  * **enableMessageNames** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableMessageNames. __*Optional*__
+  * **enableMirror** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableMirror. __*Optional*__
+  * **enableNetwork** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableNetwork. __*Optional*__
+  * **enableOfflineMode** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableOfflineMode. __*Optional*__
+  * **enableProgressBars** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableProgressBars. __*Optional*__
+  * **enableScripts** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableScripts. __*Optional*__
+  * **enableStrictSsl** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableStrictSsl. __*Optional*__
+  * **enableTelemetry** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableTelemetry. __*Optional*__
+  * **enableTimers** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableTimers. __*Optional*__
+  * **enableTransparentWorkspaces** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces. __*Optional*__
+  * **globalFolder** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#globalFolder. __*Optional*__
+  * **httpProxy** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#httpProxy. __*Optional*__
+  * **httpRetry** (<code>number</code>)  https://yarnpkg.com/configuration/yarnrc#httpRetry. __*Optional*__
+  * **httpsCaFilePath** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#httpsCaFilePath. __*Optional*__
+  * **httpsCertFilePath** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#httpsCertFilePath. __*Optional*__
+  * **httpsKeyFilePath** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#httpsKeyFilePath. __*Optional*__
+  * **httpsProxy** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#httpsProxy. __*Optional*__
+  * **httpTimeout** (<code>number</code>)  https://yarnpkg.com/configuration/yarnrc#httpTimeout. __*Optional*__
+  * **ignoreCwd** (<code>boolean</code>)  https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd. __*Optional*__
+  * **ignorePath** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#ignorePath. __*Optional*__
+  * **immutablePatterns** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#immutablePatterns. __*Optional*__
+  * **initFields** (<code>Map<string, any></code>)  https://yarnpkg.com/configuration/yarnrc#initFields. __*Optional*__
+  * **initScope** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#initScope. __*Optional*__
+  * **injectEnvironmentFiles** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#injectEnvironmentFiles. __*Optional*__
+  * **installStatePath** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#installStatePath. __*Optional*__
+  * **lockfileFilename** (<code>string</code>)  https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename. __*Optional*__
+  * **logFilters** (<code>Array<[javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)></code>)  https://yarnpkg.com/configuration/yarnrc#logFilters. __*Optional*__
+  * **networkConcurrency** (<code>number</code>)  https://yarnpkg.com/configuration/yarnrc#networkConcurrency. __*Optional*__
+  * **networkSettings** (<code>Map<string, [javascript.YarnNetworkSetting](#projen-javascript-yarnnetworksetting)></code>)  https://yarnpkg.com/configuration/yarnrc#networkSettings. __*Optional*__
+  * **nmHoistingLimits** (<code>[javascript.YarnNmHoistingLimit](#projen-javascript-yarnnmhoistinglimit)</code>)  https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits. __*Optional*__
+  * **nmMode** (<code>[javascript.YarnNmMode](#projen-javascript-yarnnmmode)</code>)  https://yarnpkg.com/configuration/yarnrc#nmMode. __*Optional*__
+  * **nmSelfReferences** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#nmSelfReferences. __*Optional*__
+  * **nodeLinker** (<code>[javascript.YarnNodeLinker](#projen-javascript-yarnnodelinker)</code>)  https://yarnpkg.com/configuration/yarnrc#nodeLinker. __*Optional*__
+  * **npmAlwaysAuth** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#npmAlwaysAuth. __*Optional*__
+  * **npmAuditExcludePackages** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages. __*Optional*__
+  * **npmAuditIgnoreAdvisories** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories. __*Optional*__
+  * **npmAuditRegistry** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#npmAuditRegistry. __*Optional*__
+  * **npmAuthIdent** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#npmAuthIdent. __*Optional*__
+  * **npmAuthToken** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#npmAuthToken. __*Optional*__
+  * **npmPublishAccess** (<code>[javascript.YarnNpmPublishAccess](#projen-javascript-yarnnpmpublishaccess)</code>)  https://yarnpkg.com/configuration/yarnrc#npmPublishAccess. __*Optional*__
+  * **npmPublishRegistry** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#npmPublishRegistry. __*Optional*__
+  * **npmRegistries** (<code>Map<string, [javascript.YarnNpmRegistry](#projen-javascript-yarnnpmregistry)></code>)  https://yarnpkg.com/configuration/yarnrc#npmRegistries. __*Optional*__
+  * **npmRegistryServer** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#npmRegistryServer. __*Optional*__
+  * **npmScopes** (<code>Map<string, [javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)></code>)  https://yarnpkg.com/configuration/yarnrc#npmScopes. __*Optional*__
+  * **packageExtensions** (<code>Map<string, [javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)></code>)  https://yarnpkg.com/configuration/yarnrc#packageExtensions. __*Optional*__
+  * **patchFolder** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#patchFolder. __*Optional*__
+  * **pnpDataPath** (<code>string</code>)  https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath. __*Optional*__
+  * **pnpEnableEsmLoader** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader. __*Optional*__
+  * **pnpEnableInlining** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#pnpEnableInlining. __*Optional*__
+  * **pnpFallbackMode** (<code>[javascript.YarnPnpFallbackMode](#projen-javascript-yarnpnpfallbackmode)</code>)  https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode. __*Optional*__
+  * **pnpIgnorePatterns** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns. __*Optional*__
+  * **pnpMode** (<code>[javascript.YarnPnpMode](#projen-javascript-yarnpnpmode)</code>)  https://yarnpkg.com/configuration/yarnrc#pnpMode. __*Optional*__
+  * **pnpShebang** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#pnpShebang. __*Optional*__
+  * **pnpUnpluggedFolder** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder. __*Optional*__
+  * **preferAggregateCacheInfo** (<code>boolean</code>)  https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo. __*Optional*__
+  * **preferDeferredVersions** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions. __*Optional*__
+  * **preferInteractive** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#preferInteractive. __*Optional*__
+  * **preferReuse** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#preferReuse. __*Optional*__
+  * **preferTruncatedLines** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#preferTruncatedLines. __*Optional*__
+  * **progressBarStyle** (<code>[javascript.YarnProgressBarStyle](#projen-javascript-yarnprogressbarstyle)</code>)  https://yarnpkg.com/configuration/yarnrc#progressBarStyle. __*Optional*__
+  * **rcFilename** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#rcFilename. __*Optional*__
+  * **supportedArchitectures** (<code>[javascript.YarnSupportedArchitectures](#projen-javascript-yarnsupportedarchitectures)</code>)  https://yarnpkg.com/configuration/yarnrc#supportedArchitectures. __*Optional*__
+  * **taskPoolConcurrency** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#taskPoolConcurrency. __*Optional*__
+  * **telemetryInterval** (<code>number</code>)  https://yarnpkg.com/configuration/yarnrc#telemetryInterval. __*Optional*__
+  * **telemetryUserId** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#telemetryUserId. __*Optional*__
+  * **tsEnableAutoTypes** (<code>boolean</code>)  https://yarnpkg.com/configuration/yarnrc#tsEnableAutoTypes. __*Optional*__
+  * **unsafeHttpWhitelist** (<code>Array<string></code>)  https://yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist. __*Optional*__
+  * **virtualFolder** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#virtualFolder. __*Optional*__
+  * **winLinkType** (<code>[javascript.YarnWinLinkType](#projen-javascript-yarnwinlinktype)</code>)  https://yarnpkg.com/configuration/yarnrc#winLinkType. __*Optional*__
+  * **workerPoolMode** (<code>[javascript.YarnWorkerPoolMode](#projen-javascript-yarnworkerpoolmode)</code>)  https://yarnpkg.com/configuration/yarnrc#workerPoolMode. __*Optional*__
+  * **yarnPath** (<code>string</code>)  https://yarnpkg.com/configuration/yarnrc#yarnPath. __*Optional*__
 
 
 
@@ -19003,7 +19093,7 @@ Configure Yarn Berry.
 Name | Type | Description 
 -----|------|-------------
 **version**?🔹 | <code>string</code> | A fully specified version to use for yarn (e.g., x.x.x).<br/>__*Default*__: 4.0.1
-**yarnRcOptions**?🔹 | <code>[javascript.YarnrcOptionsV3](#projen-javascript-yarnrcoptionsv3) &#124; [javascript.YarnrcOptionsV4](#projen-javascript-yarnrcoptionsv4)</code> | The yarnrc configuration.<br/>__*Default*__: a blank Yarn RC file
+**yarnRcOptions**?🔹 | <code>[javascript.YarnrcOptions](#projen-javascript-yarnrcoptions)</code> | The yarnrc configuration.<br/>__*Default*__: a blank Yarn RC file
 **zeroInstalls**?🔹 | <code>boolean</code> | Should zero-installs be enabled?<br/>__*Default*__: false
 
 
@@ -19033,27 +19123,10 @@ https://yarnpkg.com/configuration/yarnrc#networkSettings.
 
 Name | Type | Description 
 -----|------|-------------
+**caFilePath**?⚠️ | <code>string</code> | __*Optional*__
 **enableNetwork**?🔹 | <code>boolean</code> | __*Optional*__
 **httpProxy**?🔹 | <code>string</code> | __*Optional*__
 **httpsCaFilePath**?🔹 | <code>string</code> | __*Optional*__
-**httpsCertFilePath**?🔹 | <code>string</code> | __*Optional*__
-**httpsKeyFilePath**?🔹 | <code>string</code> | __*Optional*__
-**httpsProxy**?🔹 | <code>string</code> | __*Optional*__
-
-
-
-## struct YarnNetworkSettingV3 🔹 <a id="projen-javascript-yarnnetworksettingv3"></a>
-
-
-https://v3.yarnpkg.com/configuration/yarnrc#networkSettings.
-
-
-
-Name | Type | Description 
------|------|-------------
-**caFilePath**?🔹 | <code>string</code> | __*Optional*__
-**enableNetwork**?🔹 | <code>boolean</code> | __*Optional*__
-**httpProxy**?🔹 | <code>string</code> | __*Optional*__
 **httpsCertFilePath**?🔹 | <code>string</code> | __*Optional*__
 **httpsKeyFilePath**?🔹 | <code>string</code> | __*Optional*__
 **httpsProxy**?🔹 | <code>string</code> | __*Optional*__
@@ -19135,100 +19208,7 @@ Name | Type | Description
 
 
 
-## struct YarnrcOptionsV3 🔹 <a id="projen-javascript-yarnrcoptionsv3"></a>
-
-
-Configuration for .yarnrc.yml in Yarn Berry v3.
-
-
-
-Name | Type | Description 
------|------|-------------
-**caFilePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#caFilePath.<br/>__*Optional*__
-**cacheFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#cacheFolder.<br/>__*Optional*__
-**changesetBaseRefs**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#changesetBaseRefs.<br/>__*Optional*__
-**changesetIgnorePatterns**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns.<br/>__*Optional*__
-**checksumBehavior**?🔹 | <code>[javascript.YarnChecksumBehaviorV3](#projen-javascript-yarnchecksumbehaviorv3)</code> | https://v3.yarnpkg.com/configuration/yarnrc#checksumBehavior.<br/>__*Optional*__
-**cloneConcurrency**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#cloneConcurrency.<br/>__*Optional*__
-**compressionLevel**?🔹 | <code>string &#124; number</code> | https://v3.yarnpkg.com/configuration/yarnrc#compressionLevel.<br/>__*Optional*__
-**constraintsPath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#constraintsPath.<br/>__*Optional*__
-**defaultLanguageName**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#defaultLanguageName.<br/>__*Optional*__
-**defaultProtocol**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#defaultProtocol.<br/>__*Optional*__
-**defaultSemverRangePrefix**?🔹 | <code>[javascript.YarnDefaultSemverRangePrefix](#projen-javascript-yarndefaultsemverrangeprefix)</code> | https://v3.yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix.<br/>__*Optional*__
-**deferredVersionFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#deferredVersionFolder.<br/>__*Optional*__
-**enableColors**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableColors.<br/>__*Optional*__
-**enableGlobalCache**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableGlobalCache.<br/>__*Optional*__
-**enableHyperlinks**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableHyperlinks.<br/>__*Optional*__
-**enableImmutableCache**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableCache.<br/>__*Optional*__
-**enableImmutableInstalls**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableInstalls.<br/>__*Optional*__
-**enableInlineBuilds**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableInlineBuilds.<br/>__*Optional*__
-**enableMessageNames**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableMessageNames.<br/>__*Optional*__
-**enableMirror**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableMirror.<br/>__*Optional*__
-**enableNetwork**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableNetwork.<br/>__*Optional*__
-**enableProgressBars**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableProgressBars.<br/>__*Optional*__
-**enableScripts**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableScripts.<br/>__*Optional*__
-**enableStrictSsl**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableStrictSsl.<br/>__*Optional*__
-**enableTelemetry**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableTelemetry.<br/>__*Optional*__
-**enableTimers**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableTimers.<br/>__*Optional*__
-**enableTransparentWorkspaces**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces.<br/>__*Optional*__
-**globalFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#globalFolder.<br/>__*Optional*__
-**httpProxy**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpProxy.<br/>__*Optional*__
-**httpRetry**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpRetry.<br/>__*Optional*__
-**httpTimeout**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpTimeout.<br/>__*Optional*__
-**httpsCertFilePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpsCertFilePath.<br/>__*Optional*__
-**httpsKeyFilePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpsKeyFilePath.<br/>__*Optional*__
-**httpsProxy**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#httpsProxy.<br/>__*Optional*__
-**ignoreCwd**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd.<br/>__*Optional*__
-**ignorePath**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#ignorePath.<br/>__*Optional*__
-**immutablePatterns**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#immutablePatterns.<br/>__*Optional*__
-**initFields**?🔹 | <code>Map<string, any></code> | https://v3.yarnpkg.com/configuration/yarnrc#initFields.<br/>__*Optional*__
-**initScope**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#initScope.<br/>__*Optional*__
-**installStatePath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#installStatePath.<br/>__*Optional*__
-**lockfileFilename**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename.<br/>__*Optional*__
-**logFilters**?🔹 | <code>Array<[javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)></code> | https://v3.yarnpkg.com/configuration/yarnrc#logFilters.<br/>__*Optional*__
-**networkConcurrency**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#networkConcurrency.<br/>__*Optional*__
-**networkSettings**?🔹 | <code>Map<string, [javascript.YarnNetworkSettingV3](#projen-javascript-yarnnetworksettingv3)></code> | https://v3.yarnpkg.com/configuration/yarnrc#networkSettings.<br/>__*Optional*__
-**nmHoistingLimits**?🔹 | <code>[javascript.YarnNmHoistingLimit](#projen-javascript-yarnnmhoistinglimit)</code> | https://v3.yarnpkg.com/configuration/yarnrc#nmHoistingLimits.<br/>__*Optional*__
-**nmMode**?🔹 | <code>[javascript.YarnNmMode](#projen-javascript-yarnnmmode)</code> | https://v3.yarnpkg.com/configuration/yarnrc#nmMode.<br/>__*Optional*__
-**nmSelfReferences**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#nmSelfReferences.<br/>__*Optional*__
-**nodeLinker**?🔹 | <code>[javascript.YarnNodeLinker](#projen-javascript-yarnnodelinker)</code> | https://v3.yarnpkg.com/configuration/yarnrc#nodeLinker.<br/>__*Optional*__
-**npmAlwaysAuth**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAlwaysAuth.<br/>__*Optional*__
-**npmAuditExcludePackages**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages.<br/>__*Optional*__
-**npmAuditIgnoreAdvisories**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories.<br/>__*Optional*__
-**npmAuditRegistry**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuditRegistry.<br/>__*Optional*__
-**npmAuthIdent**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuthIdent.<br/>__*Optional*__
-**npmAuthToken**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmAuthToken.<br/>__*Optional*__
-**npmPublishAccess**?🔹 | <code>[javascript.YarnNpmPublishAccess](#projen-javascript-yarnnpmpublishaccess)</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmPublishAccess.<br/>__*Optional*__
-**npmPublishRegistry**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmPublishRegistry.<br/>__*Optional*__
-**npmRegistries**?🔹 | <code>Map<string, [javascript.YarnNpmRegistry](#projen-javascript-yarnnpmregistry)></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmRegistries.<br/>__*Optional*__
-**npmRegistryServer**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#npmRegistryServer.<br/>__*Optional*__
-**npmScopes**?🔹 | <code>Map<string, [javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)></code> | https://v3.yarnpkg.com/configuration/yarnrc#npmScopes.<br/>__*Optional*__
-**packageExtensions**?🔹 | <code>Map<string, [javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)></code> | https://v3.yarnpkg.com/configuration/yarnrc#packageExtensions.<br/>__*Optional*__
-**patchFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#patchFolder.<br/>__*Optional*__
-**pnpDataPath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath.<br/>__*Optional*__
-**pnpEnableEsmLoader**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader.<br/>__*Optional*__
-**pnpEnableInlining**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableInlining.<br/>__*Optional*__
-**pnpFallbackMode**?🔹 | <code>[javascript.YarnPnpFallbackMode](#projen-javascript-yarnpnpfallbackmode)</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpFallbackMode.<br/>__*Optional*__
-**pnpIgnorePatterns**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns.<br/>__*Optional*__
-**pnpMode**?🔹 | <code>[javascript.YarnPnpMode](#projen-javascript-yarnpnpmode)</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpMode.<br/>__*Optional*__
-**pnpShebang**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpShebang.<br/>__*Optional*__
-**pnpUnpluggedFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder.<br/>__*Optional*__
-**preferAggregateCacheInfo**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo.<br/>__*Optional*__
-**preferDeferredVersions**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferDeferredVersions.<br/>__*Optional*__
-**preferInteractive**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferInteractive.<br/>__*Optional*__
-**preferTruncatedLines**?🔹 | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferTruncatedLines.<br/>__*Optional*__
-**progressBarStyle**?🔹 | <code>[javascript.YarnProgressBarStyle](#projen-javascript-yarnprogressbarstyle)</code> | https://v3.yarnpkg.com/configuration/yarnrc#progressBarStyle.<br/>__*Optional*__
-**rcFilename**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#rcFilename.<br/>__*Optional*__
-**supportedArchitectures**?🔹 | <code>[javascript.YarnSupportedArchitectures](#projen-javascript-yarnsupportedarchitectures)</code> | https://v3.yarnpkg.com/configuration/yarnrc#supportedArchitectures.<br/>__*Optional*__
-**telemetryInterval**?🔹 | <code>number</code> | https://v3.yarnpkg.com/configuration/yarnrc#telemetryInterval.<br/>__*Optional*__
-**telemetryUserId**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#telemetryUserId.<br/>__*Optional*__
-**unsafeHttpWhitelist**?🔹 | <code>Array<string></code> | https://v3.yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist.<br/>__*Optional*__
-**virtualFolder**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#virtualFolder.<br/>__*Optional*__
-**yarnPath**?🔹 | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#yarnPath.<br/>__*Optional*__
-
-
-
-## struct YarnrcOptionsV4 🔹 <a id="projen-javascript-yarnrcoptionsv4"></a>
+## struct YarnrcOptions 🔹 <a id="projen-javascript-yarnrcoptions"></a>
 
 
 Configuration for .yarnrc.yml in Yarn Berry v4.
@@ -19276,12 +19256,14 @@ Name | Type | Description
 **httpsCertFilePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsCertFilePath.<br/>__*Optional*__
 **httpsKeyFilePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsKeyFilePath.<br/>__*Optional*__
 **httpsProxy**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#httpsProxy.<br/>__*Optional*__
+**ignoreCwd**?⚠️ | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd.<br/>__*Optional*__
 **ignorePath**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#ignorePath.<br/>__*Optional*__
 **immutablePatterns**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#immutablePatterns.<br/>__*Optional*__
 **initFields**?🔹 | <code>Map<string, any></code> | https://yarnpkg.com/configuration/yarnrc#initFields.<br/>__*Optional*__
 **initScope**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#initScope.<br/>__*Optional*__
 **injectEnvironmentFiles**?🔹 | <code>Array<string></code> | https://yarnpkg.com/configuration/yarnrc#injectEnvironmentFiles.<br/>__*Optional*__
 **installStatePath**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#installStatePath.<br/>__*Optional*__
+**lockfileFilename**?⚠️ | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename.<br/>__*Optional*__
 **logFilters**?🔹 | <code>Array<[javascript.YarnLogFilter](#projen-javascript-yarnlogfilter)></code> | https://yarnpkg.com/configuration/yarnrc#logFilters.<br/>__*Optional*__
 **networkConcurrency**?🔹 | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#networkConcurrency.<br/>__*Optional*__
 **networkSettings**?🔹 | <code>Map<string, [javascript.YarnNetworkSetting](#projen-javascript-yarnnetworksetting)></code> | https://yarnpkg.com/configuration/yarnrc#networkSettings.<br/>__*Optional*__
@@ -19302,6 +19284,7 @@ Name | Type | Description
 **npmScopes**?🔹 | <code>Map<string, [javascript.YarnNpmScope](#projen-javascript-yarnnpmscope)></code> | https://yarnpkg.com/configuration/yarnrc#npmScopes.<br/>__*Optional*__
 **packageExtensions**?🔹 | <code>Map<string, [javascript.YarnPackageExtension](#projen-javascript-yarnpackageextension)></code> | https://yarnpkg.com/configuration/yarnrc#packageExtensions.<br/>__*Optional*__
 **patchFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#patchFolder.<br/>__*Optional*__
+**pnpDataPath**?⚠️ | <code>string</code> | https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath.<br/>__*Optional*__
 **pnpEnableEsmLoader**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader.<br/>__*Optional*__
 **pnpEnableInlining**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#pnpEnableInlining.<br/>__*Optional*__
 **pnpFallbackMode**?🔹 | <code>[javascript.YarnPnpFallbackMode](#projen-javascript-yarnpnpfallbackmode)</code> | https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode.<br/>__*Optional*__
@@ -19309,6 +19292,7 @@ Name | Type | Description
 **pnpMode**?🔹 | <code>[javascript.YarnPnpMode](#projen-javascript-yarnpnpmode)</code> | https://yarnpkg.com/configuration/yarnrc#pnpMode.<br/>__*Optional*__
 **pnpShebang**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpShebang.<br/>__*Optional*__
 **pnpUnpluggedFolder**?🔹 | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder.<br/>__*Optional*__
+**preferAggregateCacheInfo**?⚠️ | <code>boolean</code> | https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo.<br/>__*Optional*__
 **preferDeferredVersions**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions.<br/>__*Optional*__
 **preferInteractive**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferInteractive.<br/>__*Optional*__
 **preferReuse**?🔹 | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferReuse.<br/>__*Optional*__
@@ -21894,17 +21878,6 @@ Name | Description
 **THROW** 🔹|
 **UPDATE** 🔹|
 **RESET** 🔹|
-**IGNORE** 🔹|
-
-
-## enum YarnChecksumBehaviorV3 🔹 <a id="projen-javascript-yarnchecksumbehaviorv3"></a>
-
-https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior.
-
-Name | Description
------|-----
-**THROW** 🔹|
-**UPDATE** 🔹|
 **IGNORE** 🔹|
 
 

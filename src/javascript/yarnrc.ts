@@ -1,13 +1,7 @@
+import * as semver from "semver";
 import { Component } from "../component";
 import { Project } from "../project";
 import { YamlFile } from "../yaml";
-
-/** https:/v3.yarnpkg.com/configuration/yarnrc#checksumBehavior */
-export enum YarnChecksumBehaviorV3 {
-  THROW = "throw",
-  UPDATE = "update",
-  IGNORE = "ignore",
-}
 
 /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */
 export enum YarnChecksumBehavior {
@@ -40,18 +34,10 @@ export interface YarnLogFilter {
   readonly pattern?: string;
 }
 
-/** https://v3.yarnpkg.com/configuration/yarnrc#networkSettings */
-export interface YarnNetworkSettingV3 {
-  readonly caFilePath?: string;
-  readonly enableNetwork?: boolean;
-  readonly httpProxy?: string;
-  readonly httpsProxy?: string;
-  readonly httpsKeyFilePath?: string;
-  readonly httpsCertFilePath?: string;
-}
-
 /** https://yarnpkg.com/configuration/yarnrc#networkSettings */
 export interface YarnNetworkSetting {
+  /** @deprecated - use httpsCaFilePath in Yarn v4 and newer */
+  readonly caFilePath?: string;
   readonly httpsCaFilePath?: string;
   readonly enableNetwork?: boolean;
   readonly httpProxy?: string;
@@ -165,174 +151,8 @@ export enum YarnWorkerPoolMode {
   WORKERS = "workers",
 }
 
-/** Configuration for .yarnrc.yml in Yarn Berry v3 */
-export interface YarnrcOptionsV3 {
-  /** https://v3.yarnpkg.com/configuration/yarnrc#cacheFolder */
-  readonly cacheFolder?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#caFilePath */
-  readonly caFilePath?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#changesetBaseRefs */
-  readonly changesetBaseRefs?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns */
-  readonly changesetIgnorePatterns?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#checksumBehavior */
-  readonly checksumBehavior?: YarnChecksumBehaviorV3;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#cloneConcurrency */
-  readonly cloneConcurrency?: number;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#compressionLevel */
-  readonly compressionLevel?: number | string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#constraintsPath */
-  readonly constraintsPath?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#defaultLanguageName */
-  readonly defaultLanguageName?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#defaultProtocol */
-  readonly defaultProtocol?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix */
-  readonly defaultSemverRangePrefix?: YarnDefaultSemverRangePrefix;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#deferredVersionFolder */
-  readonly deferredVersionFolder?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableColors */
-  readonly enableColors?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableGlobalCache */
-  readonly enableGlobalCache?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableHyperlinks */
-  readonly enableHyperlinks?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableCache */
-  readonly enableImmutableCache?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableImmutableInstalls */
-  readonly enableImmutableInstalls?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableInlineBuilds */
-  readonly enableInlineBuilds?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableMessageNames */
-  readonly enableMessageNames?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableMirror */
-  readonly enableMirror?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableNetwork */
-  readonly enableNetwork?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableProgressBars */
-  readonly enableProgressBars?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableScripts */
-  readonly enableScripts?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableStrictSsl */
-  readonly enableStrictSsl?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableTelemetry */
-  readonly enableTelemetry?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableTimers */
-  readonly enableTimers?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#enableTransparentWorkspaces */
-  readonly enableTransparentWorkspaces?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#globalFolder */
-  readonly globalFolder?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#httpProxy */
-  readonly httpProxy?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#httpRetry */
-  readonly httpRetry?: number;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#httpTimeout */
-  readonly httpTimeout?: number;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#httpsCertFilePath */
-  readonly httpsCertFilePath?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#httpsKeyFilePath */
-  readonly httpsKeyFilePath?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#httpsProxy */
-  readonly httpsProxy?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd */
-  readonly ignoreCwd?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#ignorePath */
-  readonly ignorePath?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#immutablePatterns */
-  readonly immutablePatterns?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#initScope */
-  readonly initScope?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#initFields */
-  readonly initFields?: Record<string, any>;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#installStatePath */
-  readonly installStatePath?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#logFilters */
-  readonly logFilters?: YarnLogFilter[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename */
-  readonly lockfileFilename?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#networkConcurrency */
-  readonly networkConcurrency?: number;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#networkSettings */
-  readonly networkSettings?: Record<string, YarnNetworkSettingV3>;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#nmHoistingLimits */
-  readonly nmHoistingLimits?: YarnNmHoistingLimit;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#nmSelfReferences */
-  readonly nmSelfReferences?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#nmMode */
-  readonly nmMode?: YarnNmMode;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#nodeLinker */
-  readonly nodeLinker?: YarnNodeLinker;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmAlwaysAuth */
-  readonly npmAlwaysAuth?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuditRegistry */
-  readonly npmAuditRegistry?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuthIdent */
-  readonly npmAuthIdent?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuthToken */
-  readonly npmAuthToken?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmPublishAccess */
-  readonly npmPublishAccess?: YarnNpmPublishAccess;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages */
-  readonly npmAuditExcludePackages?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories */
-  readonly npmAuditIgnoreAdvisories?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmPublishRegistry */
-  readonly npmPublishRegistry?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmRegistries */
-  readonly npmRegistries?: Record<string, YarnNpmRegistry>;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmRegistryServer */
-  readonly npmRegistryServer?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#npmScopes */
-  readonly npmScopes?: Record<string, YarnNpmScope>;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#packageExtensions */
-  readonly packageExtensions?: Record<string, YarnPackageExtension>;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#patchFolder */
-  readonly patchFolder?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath */
-  readonly pnpDataPath?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader */
-  readonly pnpEnableEsmLoader?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpEnableInlining */
-  readonly pnpEnableInlining?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpFallbackMode */
-  readonly pnpFallbackMode?: YarnPnpFallbackMode;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns */
-  readonly pnpIgnorePatterns?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpMode */
-  readonly pnpMode?: YarnPnpMode;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpShebang */
-  readonly pnpShebang?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder */
-  readonly pnpUnpluggedFolder?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo */
-  readonly preferAggregateCacheInfo?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#preferDeferredVersions */
-  readonly preferDeferredVersions?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#preferInteractive */
-  readonly preferInteractive?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#preferTruncatedLines */
-  readonly preferTruncatedLines?: boolean;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#progressBarStyle */
-  readonly progressBarStyle?: YarnProgressBarStyle;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#rcFilename */
-  readonly rcFilename?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#supportedArchitectures */
-  readonly supportedArchitectures?: YarnSupportedArchitectures;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#telemetryInterval */
-  readonly telemetryInterval?: number;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#telemetryUserId */
-  readonly telemetryUserId?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist */
-  readonly unsafeHttpWhitelist?: string[];
-  /** https://v3.yarnpkg.com/configuration/yarnrc#virtualFolder */
-  readonly virtualFolder?: string;
-  /** https://v3.yarnpkg.com/configuration/yarnrc#yarnPath */
-  readonly yarnPath?: string;
-}
-
 /** Configuration for .yarnrc.yml in Yarn Berry v4 */
-export interface YarnrcOptionsV4 {
+export interface YarnrcOptions {
   /** https://yarnpkg.com/configuration/yarnrc#cacheFolder */
   readonly cacheFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode */
@@ -411,6 +231,12 @@ export interface YarnrcOptionsV4 {
   readonly httpsKeyFilePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#httpsProxy */
   readonly httpsProxy?: string;
+  /**
+   * https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd
+   *
+   * @deprecated - removed in Yarn v4 and newer
+   */
+  readonly ignoreCwd?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#ignorePath */
   readonly ignorePath?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#immutablePatterns */
@@ -425,6 +251,12 @@ export interface YarnrcOptionsV4 {
   readonly installStatePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#logFilters */
   readonly logFilters?: YarnLogFilter[];
+  /**
+   * https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename
+   *
+   * @deprecated - removed in Yarn v4 and newer
+   */
+  readonly lockfileFilename?: string;
   /** https://yarnpkg.com/configuration/yarnrc#networkConcurrency */
   readonly networkConcurrency?: number;
   /** https://yarnpkg.com/configuration/yarnrc#networkSettings */
@@ -465,6 +297,12 @@ export interface YarnrcOptionsV4 {
   readonly packageExtensions?: Record<string, YarnPackageExtension>;
   /** https://yarnpkg.com/configuration/yarnrc#patchFolder */
   readonly patchFolder?: string;
+  /**
+   * https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath
+   *
+   * @deprecated - removed in Yarn v4 and newer
+   */
+  readonly pnpDataPath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader */
   readonly pnpEnableEsmLoader?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#pnpEnableInlining */
@@ -479,6 +317,12 @@ export interface YarnrcOptionsV4 {
   readonly pnpShebang?: string;
   /** https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder */
   readonly pnpUnpluggedFolder?: string;
+  /**
+   * https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo
+   *
+   * @deprecated - removed in Yarn v4 and newer
+   */
+  readonly preferAggregateCacheInfo?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions */
   readonly preferDeferredVersions?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferInteractive */
@@ -512,14 +356,74 @@ export interface YarnrcOptionsV4 {
 }
 
 export class Yarnrc extends Component {
-  constructor(
-    project: Project,
-    options: YarnrcOptionsV3 | YarnrcOptionsV4 = {}
-  ) {
+  constructor(project: Project, version: string, options: YarnrcOptions = {}) {
     super(project);
+
+    this.validateOptionsForVersion(semver.major(version), options);
 
     new YamlFile(project, ".yarnrc.yml", {
       obj: options,
     });
+  }
+
+  private validateOptionsForVersion(
+    majorVersion: number,
+    options: YarnrcOptions
+  ) {
+    const removedInV4: Array<keyof YarnrcOptions> = [
+      "ignoreCwd",
+      "lockfileFilename",
+      "pnpDataPath",
+      "preferAggregateCacheInfo",
+    ];
+    const newInV4: Array<keyof YarnrcOptions> = [
+      "cacheMigrationMode",
+      "httpsCaFilePath",
+      "enableConstraintsCheck",
+      "enableHardenedMode",
+      "enableInlineHunks",
+      "enableOfflineMode",
+      "injectEnvironmentFiles",
+      "winLinkType",
+      "preferReuse",
+      "taskPoolConcurrency",
+      "workerPoolMode",
+      "tsEnableAutoTypes",
+    ];
+
+    if (majorVersion >= 4) {
+      const invalidOptions = Object.keys(options).filter((option) =>
+        (removedInV4 as string[]).includes(option)
+      );
+
+      if (invalidOptions.length > 0) {
+        throw new Error(
+          `The following options are not available in Yarn >= 4: ${invalidOptions.join(
+            ", "
+          )}`
+        );
+      }
+    } else {
+      const invalidOptions = Object.keys(options).filter((option) =>
+        (newInV4 as string[]).includes(option)
+      );
+
+      if (invalidOptions.length > 0) {
+        throw new Error(
+          `The following options are only available in Yarn v4 and newer: ${invalidOptions.join(
+            ", "
+          )}`
+        );
+      }
+
+      if (
+        options.checksumBehavior &&
+        options.checksumBehavior === YarnChecksumBehavior.RESET
+      ) {
+        throw new Error(
+          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer."
+        );
+      }
+    }
   }
 }
