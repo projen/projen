@@ -35,7 +35,6 @@ export class Component extends Construct {
     this.node.addMetadata("construct", new.target.name);
 
     this.project = findClosestProject(scope);
-    this.project._addComponent(this);
   }
 
   /**
