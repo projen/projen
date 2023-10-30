@@ -50,7 +50,9 @@ test('running "projen" with task in root of a project that receives args will pa
   project.synth();
 
   execProjenCLI(project.outdir, ["test", "something", "--help"]);
-  expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("something --help\n");
+  expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual(
+    "something --help\n"
+  );
 });
 
 test('running "projen" with task in subdirectory of a project will execute task of the project', () => {
