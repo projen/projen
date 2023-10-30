@@ -12,7 +12,7 @@ files in the repos. These include things like branch protection rules,
 auto-merge options, and most noteable are repository secrets. Projen heavily
 relies on repository secrets for things like publishing tokens.
 
-When maintaining many projects, manaing publishing secrets becomes a major
+When maintaining many projects, managing publishing secrets becomes a major
 burden. It is also error prone and has potential security implications. Ideally
 these secrets should be managed by tooling and not by humans.
 
@@ -60,9 +60,9 @@ Done
 
 _not sure that’s feasible:_ You will also notice that your
 `.github/workflows/release.yml` workflow was updated and now includes a check
-that verifeis that your repository has the desired secrets. This is sort of an
+that verifies that your repository has the desired secrets. This is sort of an
 "anti-tamper check" for external settings. If your repository does not have the
-needed secerts, an error will be displayed with instructions on how to store
+needed secrets, an error will be displayed with instructions on how to store
 them.
 
 A similar approach can be taken to configure other non-source-code repository
