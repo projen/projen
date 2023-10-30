@@ -7,11 +7,11 @@ export interface ConstructLibraryOptions extends JsiiProjectOptions {
    *
    *     https://awscdk.io/packages/[@SCOPE/]PACKAGE@VERSION
    *
-   * The catalog will also post a tweet to https://twitter.com/awscdkio with the
+   * The catalog will also post a tweet to https://x.com/awscdkio with the
    * package name, description and the above link. You can disable these tweets
    * through `{ announce: false }`.
    *
-   * You can also add a Twitter handle through `{ twitter: 'xx' }` which will be
+   * You can also add a X handle through `{ X: 'xx' }` which will be
    * mentioned in the tweet.
    *
    * @see https://github.com/construct-catalog/catalog
@@ -23,7 +23,7 @@ export interface ConstructLibraryOptions extends JsiiProjectOptions {
 
 export interface Catalog {
   /**
-   * Twitter account to @mention in announcement tweet.
+   * X account to @mention in announcement tweet.
    */
   readonly twitter?: string;
 
