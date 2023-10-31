@@ -532,6 +532,30 @@ test("pnpm overrides", () => {
   expect(snps["package.json"]).toMatchSnapshot();
 });
 
+test("pnpm overrides in root project only, not subprojects", () => {
+  const project = new TestProject();
+  new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const subProject = new Project({
+    name: "sub-project",
+    parent: project,
+    outdir: "packages/sub-project",
+  });
+  new NodePackage(subProject, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].pnpm).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+
+  expect(snps["packages/sub-project/package.json"].pnpm).not.toBeDefined();
+  expect(snps["packages/sub-project/package.json"]).toMatchSnapshot();
+});
+
 test("typesVersions is not managed by projen, but can be manipulated", () => {
   // ARRANGE
   const outdir = mkdtemp();

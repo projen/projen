@@ -1360,7 +1360,9 @@ export class NodePackage extends Component {
       case NodePackageManager.NPM:
         return { overrides: render };
       case NodePackageManager.PNPM:
-        return { pnpm: { overrides: render } };
+        return this.project.parent
+          ? undefined
+          : { pnpm: { overrides: render } };
       case NodePackageManager.YARN:
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_CLASSIC:
