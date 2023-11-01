@@ -22,7 +22,11 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
   // that by default would be stringified as empty objects ('{}')
   // as they are missing a `toJSON` implementation.
   switch (true) {
-    case types.isRegExp(value) && !value.flags:
+    case types.isRegExp(value):
+      if (value.flags)
+        throw new Error(
+          "RegExp with flags should be explicitly converted to a string"
+        );
       return value.source;
 
     case types.isSet(value):
