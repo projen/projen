@@ -183,7 +183,7 @@ projen completion >> ~/.zshrc
 ```
 ## Features
 
-Some examples for features built-in to project types:
+Some examples of features built-in to project types:
 
 * Fully synthesize `package.json`
 * Standard npm scripts like `compile`, `build`, `test`, `package`
