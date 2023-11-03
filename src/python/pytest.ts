@@ -6,7 +6,7 @@ export interface PytestOptions {
   /**
    * Pytest version
    *
-   * @default "6.2.1"
+   * @default "7.4.3"
    */
   readonly version?: string;
 
