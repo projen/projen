@@ -346,6 +346,27 @@ describe("addToArray", () => {
       },
     });
   });
+
+  test("addToArray(p, v) respects pre-existing overrides", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: {},
+      marker: false,
+    });
+
+    // WHEN
+    file.addToArray("first.second.array", "first extra value");
+    file.addToArray("first.second.array", "second extra value");
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["first extra value", "second extra value"],
+        },
+      },
+    });
+  });
 });
 
 describe("patch", () => {
