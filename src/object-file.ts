@@ -11,7 +11,13 @@ export interface ObjectFileOptions extends FileBaseOptions {
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
    *
-   * @default {} an empty object (use `file.obj` to mutate).
+   * Serialization of the object is similar to JSON.stringify with few enhancements:
+   * - values that are functions will be called during synthesis and the result will be serialized - this allow to have lazy values.
+   * - `Set` will be converted to array
+   * - `Map` will be converted to a plain object ({ key: value, ... }})
+   * - `RegExp` without flags will be converted to string representation of the source
+   *
+   *  @default {} an empty object (use `file.obj` to mutate).
    */
   readonly obj?: any;
 
