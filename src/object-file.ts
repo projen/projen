@@ -177,7 +177,9 @@ export abstract class ObjectFile extends FileBase {
     if (Array.isArray(curr[lastKey])) {
       curr[lastKey].push(...values);
     } else {
-      curr[lastKey] = { __$APPEND: values };
+      curr[lastKey] = {
+        __$APPEND: [...(curr[lastKey]?.__$APPEND ?? []), ...values],
+      };
     }
   }
 
