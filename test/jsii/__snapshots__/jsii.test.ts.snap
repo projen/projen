@@ -2192,7 +2192,7 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^16",
+        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -2811,7 +2811,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "*",
-      "@types/node": "^16",
+      "@types/node": "^18",
       "@typescript-eslint/eslint-plugin": "^6",
       "@typescript-eslint/parser": "^6",
       "constructs": "^10.0.0",
@@ -3665,7 +3665,7 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^16",
+        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -4298,7 +4298,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "^27",
-      "@types/node": "^16",
+      "@types/node": "^18",
       "@typescript-eslint/eslint-plugin": "^6",
       "@typescript-eslint/parser": "^6",
       "constructs": "^10.0.0",
@@ -5155,7 +5155,7 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^16",
+        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -5776,7 +5776,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "*",
-      "@types/node": "^16",
+      "@types/node": "^18",
       "@typescript-eslint/eslint-plugin": "^6",
       "@typescript-eslint/parser": "^6",
       "constructs": "^10.0.0",

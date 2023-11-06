@@ -1,4 +1,4 @@
-import { Range } from "semver";
+import { Range, major } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import { Task } from "..";
@@ -425,6 +425,13 @@ export class JsiiProject extends TypeScriptProject {
 
       // https://github.com/projen/projen/issues/2264
       this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
+
+      if ((options.jsiiVersion ?? "1.x").startsWith("1.")) {
+        this.addDevDeps(
+          // https://github.com/projen/projen/pull/3076
+          `@types/node@^${major(this.package.minNodeVersion ?? "16.0.0")}`
+        );
+      }
     }
   }
 
