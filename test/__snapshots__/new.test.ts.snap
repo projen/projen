@@ -68,7 +68,7 @@ exports[`projen new --from external 1`] = `
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "0.0.333",
     "@types/jest": "*",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.1.0",
@@ -192,7 +192,7 @@ exports[`projen new --from external tarball 1`] = `
   "devDependencies": {
     "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "@types/jest": "*",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.1.0",
