@@ -29,6 +29,16 @@ test("first release, with major", async () => {
   expect(result.tag).toStrictEqual("v2.0.0");
 });
 
+test("first release, with minMajorVersion", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+  });
+  expect(result.version).toStrictEqual("1.0.0");
+  expect(result.changelog).toMatch(/.*## 1\.0\.0 \(\d{4}-\d{2}-\d{2}\).*/); // ## 1.0.0 (2021-01-01)
+  expect(result.bumpfile).toStrictEqual("1.0.0");
+  expect(result.tag).toStrictEqual("v1.0.0");
+});
+
 test("first release, with minor", async () => {
   const result = await testBump({
     options: { majorVersion: 2, minorVersion: 1 },

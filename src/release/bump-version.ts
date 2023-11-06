@@ -187,7 +187,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   );
 
   const cmd = ["npx", "standard-version@^9"];
-  if (isFirstRelease) {
+  if (isFirstRelease && !minMajorVersion) {
     cmd.push("--first-release");
   }
   if (prefix) {
