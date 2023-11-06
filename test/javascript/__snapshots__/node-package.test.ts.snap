@@ -135,6 +135,7 @@ exports[`yarn_berry resolutions 1`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "my-project",
+  "packageManager": "yarn@4.0.1",
   "resolutions": {
     "other-dep": "*",
     "some-dep": "1.0.0",
@@ -183,6 +184,7 @@ exports[`yarn2 resolutions 1`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "my-project",
+  "packageManager": "yarn@4.0.1",
   "resolutions": {
     "other-dep": "*",
     "some-dep": "1.0.0",
