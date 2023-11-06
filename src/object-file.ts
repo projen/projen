@@ -11,7 +11,13 @@ export interface ObjectFileOptions extends FileBaseOptions {
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
    *
-   * @default {} an empty object (use `file.obj` to mutate).
+   * Serialization of the object is similar to JSON.stringify with few enhancements:
+   * - values that are functions will be called during synthesis and the result will be serialized - this allow to have lazy values.
+   * - `Set` will be converted to array
+   * - `Map` will be converted to a plain object ({ key: value, ... }})
+   * - `RegExp` without flags will be converted to string representation of the source
+   *
+   *  @default {} an empty object (use `file.obj` to mutate).
    */
   readonly obj?: any;
 
@@ -177,7 +183,9 @@ export abstract class ObjectFile extends FileBase {
     if (Array.isArray(curr[lastKey])) {
       curr[lastKey].push(...values);
     } else {
-      curr[lastKey] = { __$APPEND: values };
+      curr[lastKey] = {
+        __$APPEND: [...(curr[lastKey]?.__$APPEND ?? []), ...values],
+      };
     }
   }
 
@@ -239,7 +247,6 @@ export abstract class ObjectFile extends FileBase {
     for (const operation of this.patchOperations) {
       patched = JsonPatch.apply(patched, ...operation);
     }
-
     return patched ? JSON.stringify(patched, undefined, 2) : undefined;
   }
 }
