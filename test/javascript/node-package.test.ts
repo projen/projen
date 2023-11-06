@@ -747,6 +747,36 @@ describe("yarn berry", () => {
     expect(yarnrcLines).toContain("nodeLinker: node-modules");
   });
 
+  test("allows installing plugins", () => {
+    const project = new TestProject();
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: {
+        yarnRcOptions: {
+          plugins: [
+            {
+              path: ".yarn/plugins/@yarnpkg/plugin-foo.cjs",
+              spec: "https://raw.githubusercontent.com/blimmer/yarn-plugin-foo/main/bundles/%40yarnpkg/plugin-foo.js",
+            },
+            {
+              path: ".yarn/plugins/@yarnpkg/plugin-bar.cjs",
+              spec: "https://raw.githubusercontent.com/blimmer/yarn-plugin-bar/main/bundles/%40yarnpkg/plugin-bar.js",
+            },
+          ],
+        },
+      },
+    });
+
+    const snps = synthSnapshot(project);
+    const yarnrc = snps[".yarnrc.yml"];
+
+    expect(yarnrc).toContain(`plugins:
+  - path: .yarn/plugins/@yarnpkg/plugin-foo.cjs
+    spec: https://raw.githubusercontent.com/blimmer/yarn-plugin-foo/main/bundles/%40yarnpkg/plugin-foo.js
+  - path: .yarn/plugins/@yarnpkg/plugin-bar.cjs
+    spec: https://raw.githubusercontent.com/blimmer/yarn-plugin-bar/main/bundles/%40yarnpkg/plugin-bar.js`);
+  });
+
   describe("gitignore", () => {
     test("produces the expected gitignore for zero-installs", () => {
       const project = new TestProject();
