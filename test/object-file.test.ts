@@ -25,6 +25,46 @@ test("json object can be mutated before synthesis", () => {
   });
 });
 
+test("object file serializes RegExp, Set and Map", () => {
+  const prj = new TestProject();
+
+  class SpecialSet extends Set {
+    toJSON() {
+      return [...this].join(",");
+    }
+  }
+
+  const obj: any = {
+    standardSet: new Set(["a", "b", "c"]),
+    specialSet: new SpecialSet(["a", "b", "c"]),
+    someRegExp: /^hello$/,
+    someBoxedString: new String("hello"),
+    someMap: new Map([
+      ["a", 1],
+      ["b", 2],
+    ]),
+  };
+
+  new ChildObjectFile(prj, "my/object/file.json", { obj, marker: false });
+
+  expect(synthSnapshot(prj)["my/object/file.json"]).toMatchInlineSnapshot(`
+    {
+      "someBoxedString": "hello",
+      "someMap": {
+        "a": 1,
+        "b": 2,
+      },
+      "someRegExp": "^hello$",
+      "specialSet": "a,b,c",
+      "standardSet": [
+        "a",
+        "b",
+        "c",
+      ],
+    }
+  `);
+});
+
 describe("overrides", () => {
   test("addOverride(p, v) allows assigning arbitrary values to synthesized resource definitions", () => {
     // GIVEN
@@ -302,6 +342,27 @@ describe("addToArray", () => {
       first: {
         second: {
           array: ["initial value", "first extra value", "second extra value"],
+        },
+      },
+    });
+  });
+
+  test("addToArray(p, v) respects pre-existing overrides", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: {},
+      marker: false,
+    });
+
+    // WHEN
+    file.addToArray("first.second.array", "first extra value");
+    file.addToArray("first.second.array", "second extra value");
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["first extra value", "second extra value"],
         },
       },
     });

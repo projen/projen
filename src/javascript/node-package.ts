@@ -12,6 +12,7 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
+import { Yarnrc, YarnrcOptions } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -307,6 +308,13 @@ export interface NodePackageOptions {
    * @default - fetch all scoped packages from the public npm registry
    */
   readonly scopedPackagesOptions?: ScopedPackagesOptions[];
+
+  /**
+   * Options for Yarn Berry
+   *
+   * @default - Yarn Berry v4 with all default options
+   */
+  readonly yarnBerryOptions?: YarnBerryOptions;
 }
 
 /**
@@ -577,6 +585,14 @@ export class NodePackage extends Component {
             }
           : undefined,
     };
+
+    // Configure Yarn Berry if using
+    if (
+      this.packageManager === NodePackageManager.YARN_BERRY ||
+      this.packageManager === NodePackageManager.YARN2
+    ) {
+      this.configureYarnBerry(project, options);
+    }
 
     // add tasks for scripts from options (if specified)
     // @deprecated
@@ -1485,6 +1501,57 @@ export class NodePackage extends Component {
       : this.installTask;
     runtime.runTask(taskToRun.name);
   }
+
+  private configureYarnBerry(project: Project, options: NodePackageOptions) {
+    const {
+      version = "4.0.1",
+      yarnRcOptions = {},
+      zeroInstalls = false,
+    } = options.yarnBerryOptions || {};
+    this.checkForConflictingYarnOptions(yarnRcOptions);
+
+    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
+    // of `yarn` to use.
+    this.addField("packageManager", `yarn@${version}`);
+    this.configureYarnBerryGitignore(zeroInstalls);
+
+    new Yarnrc(project, version, yarnRcOptions);
+  }
+
+  private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
+    if (this.npmAccess && yarnRcOptions.npmPublishAccess) {
+      throw new Error(
+        "Cannot set npmAccess and yarnRcOptions.npmPublishAccess at the same time."
+      );
+    }
+
+    if (this.npmRegistryUrl && yarnRcOptions.npmRegistryServer) {
+      throw new Error(
+        "Cannot set npmRegistryUrl and yarnRcOptions.npmRegistryServer at the same time."
+      );
+    }
+  }
+
+  /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
+  private configureYarnBerryGitignore(zeroInstalls: boolean) {
+    const { gitignore } = this.project;
+
+    // These patterns are the same whether or not you're using zero-installs
+    gitignore.exclude(".yarn/*");
+    gitignore.include(
+      ".yarn/patches",
+      ".yarn/plugins",
+      ".yarn/releases",
+      ".yarn/sdks",
+      ".yarn/versions"
+    );
+
+    if (zeroInstalls) {
+      gitignore.include("!.yarn/cache");
+    } else {
+      gitignore.exclude(".pnp.*");
+    }
+  }
 }
 
 export interface PeerDependencyOptions {
@@ -1552,6 +1619,33 @@ export enum NpmAccess {
    * Package can only be accessed with credentials.
    */
   RESTRICTED = "restricted",
+}
+
+/**
+ * Configure Yarn Berry
+ */
+export interface YarnBerryOptions {
+  /**
+   * A fully specified version to use for yarn (e.g., x.x.x)
+   *
+   * @default - 4.0.1
+   */
+  readonly version?: string;
+
+  /**
+   * The yarnrc configuration.
+   *
+   * @default - a blank Yarn RC file
+   */
+  readonly yarnRcOptions?: YarnrcOptions;
+
+  /**
+   * Should zero-installs be enabled?
+   * Learn more at: https://yarnpkg.com/features/caching#zero-installs
+   *
+   * @default false
+   */
+  readonly zeroInstalls?: boolean;
 }
 
 interface NpmDependencies {
