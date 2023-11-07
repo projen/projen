@@ -798,7 +798,7 @@ describe("yarn berry", () => {
   });
 
   describe("conflicting options", () => {
-    test("throws an error if npmRegistryUrl and npmRegistryServer are both set", () => {
+    test("throws an error if npmRegistryUrl and npmRegistryServer are set to different values", () => {
       const project = new TestProject();
       expect(
         () =>
@@ -807,16 +807,16 @@ describe("yarn berry", () => {
             npmRegistryUrl: "https://registry.npmjs.org/",
             yarnBerryOptions: {
               yarnRcOptions: {
-                npmRegistryServer: "https://registry.npmjs.org/",
+                npmRegistryServer: "https://npm.pkg.github.com",
               },
             },
           })
       ).toThrow(
-        "Cannot set npmRegistryUrl and yarnRcOptions.npmRegistryServer at the same time."
+        "Cannot set npmRegistryUrl (https://registry.npmjs.org/) and yarnRcOptions.npmRegistryServer (https://npm.pkg.github.com) to different values."
       );
     });
 
-    test("throws an error if npmAccess and npmPublishAccess are both set", () => {
+    test("throws an error if npmAccess and npmPublishAccess are set to different values", () => {
       const project = new TestProject();
       expect(
         () =>
@@ -825,12 +825,12 @@ describe("yarn berry", () => {
             npmAccess: NpmAccess.PUBLIC,
             yarnBerryOptions: {
               yarnRcOptions: {
-                npmPublishAccess: YarnNpmPublishAccess.PUBLIC,
+                npmPublishAccess: YarnNpmPublishAccess.RESTRICTED,
               },
             },
           })
       ).toThrow(
-        "Cannot set npmAccess and yarnRcOptions.npmPublishAccess at the same time."
+        "Cannot set npmAccess (public) and yarnRcOptions.npmPublishAccess (restricted) to different values."
       );
     });
   });

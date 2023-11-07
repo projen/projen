@@ -1519,15 +1519,23 @@ export class NodePackage extends Component {
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
-    if (this.npmAccess && yarnRcOptions.npmPublishAccess) {
+    if (
+      this.npmAccess &&
+      yarnRcOptions.npmPublishAccess &&
+      this.npmAccess.toString() !== yarnRcOptions.npmPublishAccess.toString()
+    ) {
       throw new Error(
-        "Cannot set npmAccess and yarnRcOptions.npmPublishAccess at the same time."
+        `Cannot set npmAccess (${this.npmAccess}) and yarnRcOptions.npmPublishAccess (${yarnRcOptions.npmPublishAccess}) to different values.`
       );
     }
 
-    if (this.npmRegistryUrl && yarnRcOptions.npmRegistryServer) {
+    if (
+      this.npmRegistryUrl &&
+      yarnRcOptions.npmRegistryServer &&
+      this.npmRegistryUrl !== yarnRcOptions.npmRegistryServer
+    ) {
       throw new Error(
-        "Cannot set npmRegistryUrl and yarnRcOptions.npmRegistryServer at the same time."
+        `Cannot set npmRegistryUrl (${this.npmRegistryUrl}) and yarnRcOptions.npmRegistryServer (${yarnRcOptions.npmRegistryServer}) to different values.`
       );
     }
   }
