@@ -30,7 +30,7 @@ readme = "README.md"
 
   [tool.poetry.dev-dependencies]
   projen = "99.99.99"
-  pytest = "6.2.1"
+  pytest = "7.4.3"
 "
 `;
 
@@ -186,7 +186,7 @@ cython_debug/
       {
         "name": "pytest",
         "type": "test",
-        "version": "6.2.1",
+        "version": "7.4.3",
       },
     ],
   },
@@ -370,7 +370,7 @@ exclude = [ "my_package/excluded.py" ]
 
   [tool.poetry.dev-dependencies]
   projen = "99.99.99"
-  pytest = "6.2.1"
+  pytest = "7.4.3"
 ",
   "test_python_project/__init__.py": "__version__ = "0.1.0"
 ",

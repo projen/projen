@@ -29,7 +29,7 @@ export class Pytest extends Component {
   constructor(project: Project, options: PytestOptions = {}) {
     super(project);
 
-    const version = options.version ?? "6.2.1";
+    const version = options.version ?? "7.4.3";
 
     this.testdir = options.testdir ?? "tests";
 
