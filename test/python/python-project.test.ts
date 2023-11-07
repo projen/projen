@@ -42,6 +42,14 @@ test("pytest maxfailures", () => {
   ).toContain("--maxfail=3");
 });
 
+test("pytest without sample code", () => {
+  const p = new TestPythonProject({
+    pytest: true,
+    sample: false,
+  });
+  expect(synthSnapshot(p)).not.toHaveProperty("tests/__init__.py");
+});
+
 test("cannot specify multiple projenrc types", () => {
   expect(
     () =>
