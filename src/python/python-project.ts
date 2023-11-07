@@ -370,10 +370,12 @@ export class PythonProject extends GitHubProject {
 
     if (options.pytest ?? true) {
       this.pytest = new Pytest(this, options.pytestOptions);
-      new PytestSample(this, {
-        moduleName: this.moduleName,
-        testdir: this.pytest.testdir,
-      });
+      if (options.sample ?? true) {
+        new PytestSample(this, {
+          moduleName: this.moduleName,
+          testdir: this.pytest.testdir,
+        });
+      }
     }
 
     if (options.sample ?? true) {
