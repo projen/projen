@@ -2,6 +2,7 @@ import * as yaml from "yaml";
 import { DependencyType } from "../../src";
 import { GithubCredentials, workflows } from "../../src/github";
 import {
+  NodePackageManager,
   NodeProject,
   NodeProjectOptions,
   UpgradeDependenciesSchedule,
@@ -438,6 +439,36 @@ test("empty upgrade list", () => {
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(
     "echo No dependencies to upgrade."
   );
+});
+
+test("uses the proper yarn berry upgrade command", () => {
+  const project = createProject({
+    packageManager: NodePackageManager.YARN_BERRY,
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn up npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version",
+      },
+      {
+        "exec": "yarn install",
+      },
+      {
+        "exec": "yarn up constructs jest jest-junit npm-check-updates projen standard-version",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 function createProject(
