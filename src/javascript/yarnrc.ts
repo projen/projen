@@ -360,10 +360,24 @@ export class Yarnrc extends Component {
     super(project);
 
     this.validateOptionsForVersion(semver.major(version), options);
+    this.updateGitAttributes();
 
     new YamlFile(project, ".yarnrc.yml", {
       obj: options,
     });
+  }
+
+  private updateGitAttributes() {
+    const { project } = this;
+
+    project.gitattributes.addAttributes("/.yarn/**", "linguist-vendored");
+    project.gitattributes.addAttributes("/.yarn/releases/*", "binary");
+    project.gitattributes.addAttributes("/.yarn/plugins/**/*", "binary");
+    project.gitattributes.addAttributes(
+      "/.pnp.*",
+      "binary",
+      "linguist-vendored"
+    );
   }
 
   private validateOptionsForVersion(
