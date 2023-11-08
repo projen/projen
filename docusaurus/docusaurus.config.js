@@ -115,7 +115,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()}. Built with Docusaurus by Defiance Digital with ❤️.`,
       },
       prism: {
-        theme: prismThemes.dracula,
+        darkTheme: prismThemes.dracula,
       },
     }),
   plugins: [
