@@ -190,53 +190,239 @@ You should get some results showing you the test passed as well as some code cov
 ## Adding a PR template component
 
 Let's add a [GitHub Pull Request template](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates) to our project. 
-Looking at the docs we can see that we need to create a file called `.github/pull_request_template.md` in our project.
 
-We could just create the file, but we want to do this in a way that is reusable and consistent with other projen projects.
-We'll first create a new [component](/docs/concepts/components#projects--components) called PullRequestTemplate.
-
-Add a new file `src/pull-request-template.ts`. 
-Since the docs tell us Pull Request templates are markdown files, we'll extend the `TextFile` component.'
-There isn't a MarkdownFile component, but TextFile will work just fine.
-
-We'll keep this simple for now.
-Three static lines will be added: 
-1. a 'fixes' prompt for the related issue
-2. a description header
-3. a comment prompting for a full description for the changes
-
-Additionally, an optional parameter can be passed in the `options` that will, if supplied, add an @mention to the 
-Pull Request template.
+projen ships with a [PullRequestTemplate](/docs/API#projen-github-pullrequesttemplate) component that can be used to add a PR template to your project. Start by creating a new instance of it inside our new project type's constructor:
 
 ```typescript
-import { IConstruct } from 'constructs';
-import { TextFile, TextFileOptions } from 'projen';
+export class MyMicroserviceProject extends TypeScriptProject {
+  constructor(options: MyMicroserviceProjectOptions) {
+    super(options);
 
-export interface PullRequestTemplateOptions extends TextFileOptions {
-  /**
-   * A @mention that should be notified when a PR is created.
-   *
-   * @default - no notification
-   */
-  readonly defaultMention?: string;
-}
+    new PullRequestTemplate(this.github!, {
 
-export class PullRequestTemplate extends TextFile {
-  constructor(scope: IConstruct, options: PullRequestTemplateOptions) {
-    super(scope, '.github/pull_request_template.md', options);
-    this.addLine('Fixes # ');
-    this.addLine('# Description of changes:');
-    this.addLine('<!-- replace this comment with a description of what you changed in the code>');
-    if (options.defaultMention) {
-      this.addLine(`@${options.defaultMention.replace('@', '')}`);
-    }
+    });
   }
 }
 ```
 
-### Testing the PR template component
+But if we tried running this code, it would fail to synthesize with the following error:
 
-Let's go ahead and write some tests for this component. 
-We'll start with creating a new file for the tests, at `test/pull-request-template.test.ts`.
+```text
+Error: There is already a file under .github/pull_request_template.md
+```
+
+This happens because the base project, `TypeScriptProject`, already defines a PR template.
+We need to start by disabling that:
 
 ```typescript
+export class MyMicroserviceProject extends TypeScriptProject {
+  constructor(options: MyMicroserviceProjectOptions) {
+    super({
+      ...options,
+      pullRequestTemplate: false,
+    });
+ 
+    new PullRequestTemplate(this.github!, {
+
+    });
+  }
+}
+```
+
+This tells the base project not to create the PullRequestTemplate component so we can do it later.
+
+The `PullRequestTemplate` component only has one option, the lines of text you'd like in the PR template.
+Let's add a few:
+
+```typescript
+export class MyMicroserviceProject extends TypeScriptProject {
+  export class MyMicroserviceProject extends TypeScriptProject {
+  constructor(options: MyMicroserviceProjectOptions) {
+    super({
+      ...options,
+      pullRequestTemplate: false,
+    });
+
+    const lines = [
+      '### What does this PR change?',
+      '<!--- Describe your changes in detail -->',
+    ];
+
+    new PullRequestTemplate(this.github!, {
+      lines: lines,
+    });
+  }
+}
+```
+
+Let's also add an optional `mention` property that will mention a specific user in the PR template.
+We start by making this property part of the incoming `options` object in the constructor, so modify the `MyMicroserviceProjectOptions` interface:
+
+```typescript
+export class MyMicroserviceProject extends TypeScriptProject {
+  constructor(options: MyMicroserviceProjectOptions) {
+    super({
+      ...options,
+      pullRequestTemplate: false,
+    });
+
+    const lines = [
+      '### What does this PR change?',
+      '<!--- Describe your changes in detail -->',
+    ];
+
+    if (options.prMention) {
+      lines.push(`cc @${options.prMention.replace('@', '')}`);
+    }
+
+    new PullRequestTemplate(this.github!, {
+      lines: lines,
+    });
+  }
+}
+```
+
+Now, we can add the `prMention` property to the options object when we create a new instance of our project type:
+
+```typescript
+const project = new MyMicroserviceProject({
+  name: 'my-microservice',
+  defaultReleaseBranch: 'main',
+  prMention: '@someuser',
+});
+```
+
+## Testing the new PR template change
+
+Of course, we need to test this change, so let's go back to our existing unit test file and add a new test. 
+This test will verify that the PR template is set correctly.
+
+```typescript
+import { synthSnapshot } from 'projen/lib/util/synth';
+import { MyMicroserviceProject } from '../src';
+
+describe('MyMicroserviceProject', () => {
+  test('project name is set properly', () => {
+   // ... the existing test
+  });
+
+  test('PR template is prMention when not provided', () => {
+    // GIVEN
+    const project = new MyMicroserviceProject({
+      name: 'my-microservice',
+      defaultReleaseBranch: 'main',
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot['.github/pull_request_template.md']).toBe(
+      [
+        '### What does this PR change?',
+        '<!--- Describe your changes in detail -->',
+      ].join('\n'),
+    )
+  });
+});
+```
+
+Now we also need to write a test for when the prMention property is set:
+
+```typescript
+  test('PR template is created when is provided', () => {
+    // GIVEN
+    const project = new MyMicroserviceProject({
+      name: 'my-microservice',
+      defaultReleaseBranch: 'main',
+      prMention: 'someoone',
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot['.github/pull_request_template.md']).toBe(
+      [
+        '### What does this PR change?',
+        '<!--- Describe your changes in detail -->',
+        'cc @someoone',
+      ].join('\n'),
+    );
+  });
+```
+
+And finally, one more test to make sure that any provided '@' in the `prMention` property doesn't result in a '@@':
+
+```typescript
+  test('PR template doesn\'t double @@', () => {
+  // GIVEN
+  const project = new MyMicroserviceProject({
+    name: 'my-microservice',
+    defaultReleaseBranch: 'main',
+    prMention: '@someoone',
+  });
+
+  // WHEN
+  const snapshot = synthSnapshot(project);
+
+  // THEN
+  expect(snapshot['.github/pull_request_template.md']).toBe(
+    [
+      '### What does this PR change?',
+      '<!--- Describe your changes in detail -->',
+      'cc @someoone',
+    ].join('\n'),
+  );
+});
+```
+
+Now we've got good tests in place to verify our code is working as expected.
+But let's make one more change that should make things a little cleaner. 
+Right now we've got a few lines of code directly in the constructor of our new project type, but this will grow over 
+time and become harder to maintain. Let's refactor things a little bit. 
+
+Go back to the project type, and let's move all of our PR code into a new protected method:
+
+```typescript
+export class MyMicroserviceProject extends TypeScriptProject {
+  constructor(options: MyMicroserviceProjectOptions) {
+    super({
+      ...options,
+      pullRequestTemplate: false,
+    });
+
+    this.createPullRequestTemplate(options);
+  }
+
+  protected createPullRequestTemplate(options: MyMicroserviceProjectOptions) {
+    const lines = [
+      '### What does this PR change?',
+      '<!--- Describe your changes in detail -->',
+    ];
+
+    if (options.prMention) {
+      lines.push(`cc @${options.prMention.replace('@', '')}`);
+    }
+
+    new PullRequestTemplate(this.github!, {
+      lines: lines,
+    });
+  }
+}
+```
+
+And to make sure we didn't break anything after this refactor, let's run the tests again:
+
+```shell
+$ npx projen test
+```
+
+![all the tests are passing](all-test-passing.png)
+
+There you go! 
+We've got a new project type that adds a PR template to our project.
+We could keep adding additional components and build this out for all our needs, but I think this is good to illustrate the point.
+
+
+
