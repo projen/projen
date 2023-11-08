@@ -242,3 +242,20 @@ Similar to overriding tasks, you can extend tasks by adding additional steps to 
 ```ts
 project.tasks.tryFind("build")?.exec("echo Build completed successfully.");
 ```
+
+## Patching an existing task vs. creating a new task
+
+The choice between patching an existing task and creating a new task is largely personal
+or organizational preference. However, there are some general guidelines:
+
+- If you're adding a new task that is conceptually similar to an existing task, it's probably
+  best to patch the existing task. For example, if you're running tests using `pytest` and
+  also leveraging Cypress for end-to-end testing, it's probably best to add a new step to the
+  existing `test` task to run Cypress tests.
+- If you're combining tasks that already exist with a new series of tasks that are not very
+  similar, it is probably best to add a new task. An example would be if you have specific linters
+  you run during CI, you may want to create a `lint` task.
+  - The exception to the above guideline is when you want to run everything as part of an existing
+    CI/CD pipeline. In that case, you may want to use the existing `build` task to spawn a
+    a custom `ci` task, or simply add steps. It's largely up to your preference, but
+    keep in mind the default CI/CD workflows for projen GitHub projects already executes `build`.
