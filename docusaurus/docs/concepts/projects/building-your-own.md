@@ -330,6 +330,14 @@ describe('MyMicroserviceProject', () => {
 Now we also need to write a test for when the prMention property is set:
 
 ```typescript
+import { synthSnapshot } from 'projen/lib/util/synth';
+import { MyMicroserviceProject } from '../src';
+
+describe('MyMicroserviceProject', () => {
+  test('project name is set properly', () => {
+    // ... the existing test
+  });
+
   test('PR template is created when is provided', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
@@ -350,30 +358,40 @@ Now we also need to write a test for when the prMention property is set:
       ].join('\n'),
     );
   });
+});
 ```
 
 And finally, one more test to make sure that any provided '@' in the `prMention` property doesn't result in a '@@':
 
 ```typescript
-  test('PR template doesn\'t double @@', () => {
-  // GIVEN
-  const project = new MyMicroserviceProject({
-    name: 'my-microservice',
-    defaultReleaseBranch: 'main',
-    prMention: '@someoone',
+import { synthSnapshot } from 'projen/lib/util/synth';
+import { MyMicroserviceProject } from '../src';
+
+describe('MyMicroserviceProject', () => {
+  test('project name is set properly', () => {
+    // ... the existing test
   });
 
-  // WHEN
-  const snapshot = synthSnapshot(project);
+  test('PR template doesn\'t double @@', () => {
+    // GIVEN
+    const project = new MyMicroserviceProject({
+      name: 'my-microservice',
+      defaultReleaseBranch: 'main',
+      prMention: '@someoone',
+    });
 
-  // THEN
-  expect(snapshot['.github/pull_request_template.md']).toBe(
-    [
-      '### What does this PR change?',
-      '<!--- Describe your changes in detail -->',
-      'cc @someoone',
-    ].join('\n'),
-  );
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot['.github/pull_request_template.md']).toBe(
+      [
+        '### What does this PR change?',
+        '<!--- Describe your changes in detail -->',
+        'cc @someoone',
+      ].join('\n'),
+    );
+  });
 });
 ```
 
