@@ -1,13 +1,12 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
+import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   markdown: {
-    format: 'md'
+    format: 'detect'
+    // format: 'md'
   },
   title: 'projen',
   tagline: 'Define and maintain complex project configuration through code.',
@@ -116,8 +115,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()}. Built with Docusaurus by Defiance Digital with ❤️.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: prismThemes.dracula,
       },
     }),
   plugins: [

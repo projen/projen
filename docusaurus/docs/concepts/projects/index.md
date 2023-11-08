@@ -22,3 +22,4 @@ const project = new typescript.TypeScriptAppProject({
 project.synth();
 ```
 
+This produces a baseline Typescript application and adds the express dependency to the `package.json` file.
