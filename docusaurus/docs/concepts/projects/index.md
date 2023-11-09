@@ -1,7 +1,7 @@
 # Projects
 
 Projects are the top level component in projen and the entry point for all other components.
-They encompass many components and represent a specific type of codebase and are opinionated, yet flexible.
+They encompass many components, represent a specific type of codebase, and are opinionated, yet flexible.
 
 For example, the [AwsCdkTypeScriptApp](docs/API#projen-awscdk-awscdktypescriptapp) represents an [AWS CDK](https://aws.amazon.com/cdk/) application written in TypeScript. 
 It includes opinionated defaults for the location of source files, the testing framework to use, and automation tools using GitHub Actions. 
