@@ -3,27 +3,35 @@ sidebar_position: 1
 ---
 
 # Introduction
+Welcome to the projen documentation! This page introduces projen and why you should use it.
 
-projen synthesizes project configuration files such as `package.json`,
-`tsconfig.json`, `.gitignore`, GitHub Workflows, eslint, jest, etc. from a
-well-typed definition written in any [jsii](https://github.com/aws/jsii)-compatible language.
+## You will learn
+- What is the purpose of projen
+- What kind of projects can be created with projen
 
-projen is NOT exclusively for JavaScript/TypeScript projects - it can be used for any number of languages and project types.
-It can also be managed from any jsii-supported language (currently TypeScript, Python, Java, .NET and Golang).
+## What is projen?
+Projen allows you to define and maintain complex project configuration through code. It lets you generate, or synthesize 
+project configuration files from a well-typed definition. These definitions can be written in any 
+[jsii](https://github.com/aws/jsii)-compatible language. For example, you can define a projen project in TypeScript 
+and synthesize a `package.json` file, a `tsconfig.json` file, a `.gitignore` file, a GitHub workflow file and more. 
+Projen can be used with TypeScript, Python, Java, .NET and Golang.
 
-As opposed to existing templating/scaffolding tools, projen is not a one-off
-generator. Synthesized files should never be manually edited (in fact, projen
-enforces that). To modify your project setup, users interact with rich
-strongly-typed class and execute the projen cli (`npx projen`) to update their project configuration
-files.
+Whether you're a single developer or working on large scale teams, projen is designed to let you seamlessly 
+manage project configurations by independent people, teams, and organizations. You do this all through code. As your 
+project grows, you can easily add new configuration files and workflows to your project. 
 
-By defining a custom project type and using projen in multiple repositories, it's
-possible to update configuration files and CI/CD workflows across dozens (or
-hundreds!?) of projects.
+It's important to understand that projen is not a one-off scaffolding tool or template generator. Any time you make
+a change, you'll apply those changes in your strongly-typed classes. The generated, or synthesized, files should never 
+be manually edited (in fact, projen enforces that). Apply your changes by executing the projen cli.
+
+Many organizations require consistency across their code repositories. With projen, you can define a 
+custom project type, which is a pre-defined template that allows organizations to build consistent, 
+repeatable project templates across their source code repositories. It's possible to update configuration files and 
+CI/CD workflows across dozens (or hundreds!?) of projects.
 
 Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creator.
 
-### Project types
+## What kind of projects can be created with projen?
 
 Projen ships with a number of different project types. Currently, there are:
 
@@ -47,5 +55,7 @@ Projen ships with a number of different project types. Currently, there are:
 * typescript - TypeScript project.
 * typescript-app - TypeScript app.
 
-On top of these built-in types, you can (and should) create your own project types. 
+Projen's goal is to help your teams manage projects efficiently. In addition to the starter projects listed above,
+it's recommended that you extend these projects to create your own. This allows you to define your own project types
+that are specific to your organization.
 See [Building your own project type](/docs/concepts/projects/building-your-own) for more information. 
