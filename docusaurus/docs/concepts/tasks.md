@@ -243,6 +243,22 @@ Similar to overriding tasks, you can extend tasks by adding additional steps to 
 project.tasks.tryFind("build")?.exec("echo Build completed successfully.");
 ```
 
+## Saying things
+
+There is an additional `say` step that can be used to print a message to the console:
+
+```ts
+project.tasks.tryFind("build")!.say("Build completed successfully.");
+```
+
+Once the task is complete, an additional message will be printed to the console:
+
+```shell
+... other build steps here
+👾 build | Build completed successfully.
+```
+
+
 ## Patching an existing task vs. creating a new task
 
 The choice between patching an existing task and creating a new task is largely personal

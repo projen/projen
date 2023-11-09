@@ -31,6 +31,10 @@ packageJson.patch(JsonPatch.add('/author/name','A. Mused'));
 packageJson.addOverride('bundledDependencies.3', 'react');
 ```
 
+:::note
+JsonPatch is a standard format for describing changes to JSON documents. See [the JsonPatch documentation](https://tools.ietf.org/html/rfc6902) for more information about the spec and [fast-json-patch](https://www.npmjs.com/package/fast-json-patch) for the implementation used by projen.
+:::
+
 ## Removing files
 
 You can remove a file from the project through `tryRemoveFile` method on the

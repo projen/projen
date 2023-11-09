@@ -18,6 +18,15 @@ To add a dependency you can use a project-type specific API such as
 project.deps.addDependency(dep, type);
 ```
 
+Dependencies can often be specified on the `options` for the project type, such as:
+
+```typescript
+const project = new cdk.JsiiProject({
+  // ...
+  deps: ['constructs', 'projen'],
+});
+```
+
 By default, `npx projen` will automatically install dependencies in your
 project if they are not already installed.
 
@@ -27,6 +36,11 @@ The first argument (`dep`) is a string in the form `MODULE[@VERSION]` where
 `MODULE` is the package-manager specific name of the dependency (i.e. for node
 projects, this is the npm module name) and `VERSION` is an optional [semantic
 version] requirement (e.g. `@^7`).
+
+:::note
+Regardless of which type of project and package manager you use, whether it by Python/PyPi, Node.js/NPM, Java/Maven,
+this method for defining dependencies will always be the same.
+:::
 
 ## Dependency Types
 
