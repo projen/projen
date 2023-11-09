@@ -21,7 +21,7 @@ manage project configurations by independent people, teams, and organizations. Y
 project grows, you can easily add new configuration files and workflows to your project. 
 
 It's important to understand that projen is not a one-off scaffolding tool or template generator. Any time you make
-a change, you'll apply those changes in your strongly-typed classes. The generated, or synthesized files should never 
+a change, you'll apply those changes in your strongly-typed classes. The generated, or synthesized, files should never 
 be manually edited (in fact, projen enforces that). Apply your changes by executing the projen cli.
 
 Many organizations require consistency across their code repositories. With projen, you can define a 
