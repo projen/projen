@@ -178,7 +178,6 @@ export class Eslint extends Component {
       "eslint@^8",
       "@typescript-eslint/eslint-plugin@^6",
       "@typescript-eslint/parser@^6",
-      "eslint-import-resolver-node",
       "eslint-import-resolver-typescript",
       "eslint-plugin-import"
     );
