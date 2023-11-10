@@ -141,7 +141,7 @@
       "description": "Generate API.md from .jsii manifest",
       "steps": [
         {
-          "exec": "jsii-docgen -o docs/api/API.md"
+          "exec": "jsii-docgen -o docusaurus/docs/API.md"
         }
       ]
     },
