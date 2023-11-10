@@ -12,6 +12,7 @@ import {
 import * as path from "path";
 import * as Case from "case";
 import * as logging from "./logging";
+import { OsInspector } from "./util/os";
 
 const MAX_BUFFER = 10 * 1024 * 1024;
 
@@ -419,8 +420,20 @@ export function isWritable(file: string) {
 }
 
 export function isExecutable(file: string) {
+  const os = new OsInspector();
+
   try {
+    // It will behave like testing file existence on Windows
+    // https://nodejs.org/api/fs.html#file-access-constants
     accessSync(file, fs_constants.X_OK);
+
+    // On Windows, check that the file has a valid executable extension
+    if (os.isWindows) {
+      const fileExtension = path.extname(file);
+
+      return os.pathExt.has(fileExtension);
+    }
+
     return true;
   } catch (e) {
     return false;
