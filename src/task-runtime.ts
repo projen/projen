@@ -363,7 +363,7 @@ class RunTask {
     const program = require.resolve(
       join(moduleRoot, "lib", `${builtin}.task.js`)
     );
-    return `${process.execPath} ${program}`;
+    return `'${process.execPath}' '${program}'`;
   }
 }
 
