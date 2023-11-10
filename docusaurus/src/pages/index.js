@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 import {ClipboardCopy} from "@site/src/components/clipboardCopy";
+import ProjenOverview from './projen-overview.png'
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -35,20 +36,23 @@ export default function Home() {
     >
       <HomepageHeader/>
       <main>
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
 
-          <p className="text-2xl p-4">As opposed to existing templating/scaffolding tools, <strong>projen</strong> is
-            not a one-off
-            generator. Synthesized files should never be manually edited (in fact, projen
-            enforces that). To modify your project setup, users interact with rich
-            strongly-typed class and execute <code>projen</code> to update their project configuration
-            files.
-          </p>
-          <p className="text-2xl p-4">By defining a custom project type and using projen in multiple repositories, it's
-            possible to update configuration files and CI/CD workflows across dozens (or
-            hundreds!?) of projects.
-          </p>
-          <p className="text-4xl p-4">Please continue to the <a href="/docs/introduction">docs</a> to learn more.</p>
+          <div className="flex flex-row justify-between">
+
+            <img src={ProjenOverview} alt={"diagram of what projen does"} style={{maxWidth: '50%'}}/>
+            <div className="text-2xl p-4 flex flex-col justify-center">
+              <p>As opposed to existing templating/scaffolding
+                tools, <strong>projen</strong> is
+                not a one-off generator. </p>
+              <p><strong>projen</strong> encapsulates file content in resusable components.</p>
+              <p>Those components are synthesized into the files using the <code>npx projen</code> cli</p>
+              <p>Components can be shared across projects and updated independently.</p>
+            </div>
+          </div>
+
+          <p className="text-2xl p-4 underline text-center"><a href="/docs/introduction">Please continue to the docs to learn
+            more.</a></p>
         </div>
       </main>
     </Layout>
