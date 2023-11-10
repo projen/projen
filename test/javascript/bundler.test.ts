@@ -307,3 +307,25 @@ test("loaders configured via addBundle overwrite bundlerOptions", () => {
   expect(watchCommand).not.toContain("--loader:.txt=some-loader");
   expect(watchCommand).not.toContain("--loader:.txt=some-loader");
 });
+
+test("format can be set to esm", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "node",
+    target: "node18",
+    sourcemap: false,
+    format: "esm",
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+
+  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  expect(bundleCommand).toContain("--format=esm");
+  expect(watchCommand).toContain("--format=esm");
+});
