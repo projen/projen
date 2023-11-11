@@ -38,7 +38,7 @@ export class OsInspector {
   public readonly isWindows: boolean;
 
   /**
-   * Contains a list of file extensions that the current Windows installation considers to be executable files
+   * List of file extensions that the current Windows installation considers for executable files
    */
   private _pathExt?: Set<string>;
 
@@ -52,6 +52,9 @@ export class OsInspector {
     this.isSunos = process.platform === "sunos";
   }
 
+  /**
+   * List of file extensions that the current Windows installation considers for executable files
+   */
   public get pathExt(): Set<string> {
     if (!this.isWindows) {
       throw new Error("pathExt is only available on Windows");
