@@ -230,9 +230,9 @@ export function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
   // projen.web.ReactProject -> web.ReactProject
   const typename = fqn.substring(fqn.indexOf(".") + 1);
 
-  const docsurl = `https://projen.io/api/API.html#projen-${typename
-    .toLocaleLowerCase()
-    .replace(/\./g, "-")}`;
+  const docsurl = `https://projen.io/api/API.html#${typename
+    .substring(typename.indexOf(".") + 1)
+    .toLowerCase()}-`;
   let pjid =
     typeinfo.docs?.custom?.pjid ?? snake(typename).replace(/_project$/, "");
   return {
