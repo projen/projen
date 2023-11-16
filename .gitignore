@@ -57,6 +57,8 @@ tsconfig.json
 !/.github/workflows/upgrade-bundled-main.yml
 !/.github/workflows/upgrade-main.yml
 !/docusaurus/docs/API.md
+!/API.md
+docusaurus/docs/api/
 !/projen.bash
 !templates/**
 /.idea

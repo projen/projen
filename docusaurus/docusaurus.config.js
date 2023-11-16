@@ -2,6 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 import {themes as prismThemes} from 'prism-react-renderer';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   markdown: {
@@ -41,20 +42,23 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/projen/projen/tree/main/docusaurus/',
+          path: 'docs',
+          async sidebarItemsGenerator({defaultSidebarItemsGenerator, ...args}) {
+            const sidebarItems = await defaultSidebarItemsGenerator(args);
+            return sidebarItems.filter(x => x.label !== 'API Reference');
+          }
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
-        },
+        }
       }),
     ],
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: 'img/projen.svg',
       navbar: {
@@ -66,9 +70,15 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'docsSidebar',
             position: 'left',
             label: 'Docs',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'apiSidebar',
+            label: 'API Reference',
+            position: 'left',
           },
           {
             href: 'https://github.com/projen/projen',
@@ -129,7 +139,7 @@ const config = {
           return postcssOptions;
         },
       };
-    },
+    }
   ],
 };
 

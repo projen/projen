@@ -95,6 +95,7 @@ const project = new cdk.JsiiProject({
     compilerOptions: {
       esModuleInterop: false,
     },
+    exclude: ["docusaurus/**/*"],
   },
 
   jestOptions: {
@@ -131,9 +132,7 @@ const project = new cdk.JsiiProject({
   releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
-  autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
-
-  docgenFilePath: "docusaurus/docs/API.md",
+  autoApproveOptions: {allowedUsernames: ["cdklabs-automation"]},
 });
 
 // Upgrade Dependencies in two parts:
@@ -169,6 +168,8 @@ new javascript.UpgradeDependencies(project, {
   },
 });
 
+project.tasks.tryFind("docgen").reset(`jsii-docgen .jsii -o docusaurus/docs/api --split-by-submodule`)
+project.gitignore.addPatterns("docusaurus/docs/api/");
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
 new TextFile(project, "projen.bash", {
@@ -274,7 +275,7 @@ function setupIntegTest() {
   integTask.spawn(pythonCompatTask);
 
   project.buildWorkflow.addPostBuildJobTask(integTask, {
-    tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
+    tools: {python: {version: "3.x"}, go: {version: "1.16.x"}},
   });
 }
 
