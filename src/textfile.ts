@@ -1,5 +1,5 @@
+import { IConstruct } from "constructs";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
-import { Project } from "./project";
 
 /**
  * Options for `TextFile`.
@@ -27,11 +27,11 @@ export class TextFile extends FileBase {
    * @param options Options
    */
   constructor(
-    project: Project,
+    scope: IConstruct,
     filePath: string,
     options: TextFileOptions = {}
   ) {
-    super(project, filePath, options);
+    super(scope, filePath, options);
 
     this.lines = options.lines ?? [];
   }

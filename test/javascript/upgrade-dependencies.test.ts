@@ -1,6 +1,8 @@
 import * as yaml from "yaml";
+import { DependencyType } from "../../src";
 import { GithubCredentials, workflows } from "../../src/github";
 import {
+  NodePackageManager,
   NodeProject,
   NodeProjectOptions,
   UpgradeDependenciesSchedule,
@@ -8,13 +10,96 @@ import {
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot } from "../util";
 
+test("allows configuring semantic commit type", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      semanticCommit: "feat",
+    },
+  });
+
+  project.deps.addDependency("x", DependencyType.DEVENV);
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
+test("allows configuring specific dependency types", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      types: [DependencyType.RUNTIME, DependencyType.BUILD],
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=prod,dev --filter=some-dep,constructs,jest,jest-junit,npm-check-updates,projen,standard-version",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade some-dep constructs jest jest-junit npm-check-updates projen standard-version",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
+});
+
+test("upgrade command includes only dependencies of configured types", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    devDeps: ["some-dev-dep"],
+    depsUpgradeOptions: {
+      // 'devDeps' are added as BUILD
+      types: [DependencyType.BUILD],
+    },
+  });
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[3].exec).toStrictEqual(
+    `yarn upgrade constructs jest jest-junit npm-check-updates projen some-dev-dep standard-version`
+  );
+});
+
 test("upgrades command includes all dependencies", () => {
   const project = createProject({
     deps: ["some-dep"],
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version some-dep",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrades command includes dependencies added post instantiation", () => {
@@ -23,7 +108,28 @@ test("upgrades command includes dependencies added post instantiation", () => {
   project.addDeps("some-dep");
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,some-dep",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version some-dep",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrades command doesn't include ignored packages", () => {
@@ -34,10 +140,29 @@ test("upgrades command doesn't include ignored packages", () => {
     },
   });
 
-  const deps = "jest jest-junit npm-check-updates projen standard-version dep1";
-
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,dep1",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version dep1",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 test("upgrades command includes only included packages", () => {
@@ -48,10 +173,11 @@ test("upgrades command includes only included packages", () => {
     },
   });
 
-  const deps = "dep1";
-
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`); // implicitly all dependencies
+  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
+    `npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=dep1`
+  );
+  expect(tasks.upgrade.steps[3].exec).toStrictEqual(`yarn upgrade dep1`);
 });
 
 test("upgrade task can be overwritten", () => {
@@ -272,9 +398,77 @@ test("upgrade task created without projen defined versions at NodeProject", () =
     deps: ["npm@^8", "axios@~0.20.0", "markdownlint@0.24.0"],
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint'"
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn upgrade npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version,npm",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade constructs jest jest-junit npm-check-updates projen standard-version npm",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
+});
+
+test("empty upgrade list", () => {
+  const project = createProject({
+    depsUpgradeOptions: {
+      exclude: [
+        "constructs",
+        "jest",
+        "jest-junit",
+        "npm-check-updates",
+        "projen",
+        "standard-version",
+      ],
+    },
+  });
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+    "echo No dependencies to upgrade."
   );
+});
+
+test("uses the proper yarn berry upgrade command", () => {
+  const project = createProject({
+    packageManager: NodePackageManager.YARN_BERRY,
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "yarn up npm-check-updates",
+      },
+      {
+        "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,npm-check-updates,projen,standard-version",
+      },
+      {
+        "exec": "yarn install",
+      },
+      {
+        "exec": "yarn up constructs jest jest-junit npm-check-updates projen standard-version",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
 });
 
 function createProject(

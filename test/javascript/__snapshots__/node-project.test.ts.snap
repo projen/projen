@@ -42,7 +42,7 @@ git config user.email "github-actions@github.com"",
         "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
 
-[Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+[Workflow Run]: \${{ github.server_url }}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
 
 ------
 
@@ -52,7 +52,7 @@ git config user.email "github-actions@github.com"",
 
 Upgrades project dependencies. See details in [workflow run].
 
-[Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+[Workflow Run]: \${{ github.server_url }}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
 
 ------
 
@@ -120,6 +120,7 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
     "group:monorepos",
   ],
   "ignoreDeps": [
+    "constructs",
     "jest-junit",
     "npm-check-updates",
     "standard-version",
@@ -301,6 +302,7 @@ exports[`renovatebot ignored dependency overrides 1`] = `
     "group:monorepos",
   ],
   "ignoreDeps": [
+    "constructs",
     "jest-junit",
     "npm-check-updates",
     "standard-version",

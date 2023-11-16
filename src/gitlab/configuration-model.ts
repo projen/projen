@@ -21,6 +21,9 @@ export interface Cache {
 
   /** Defines when to save the cache, based on the status of the job (Default: Job Success). */
   readonly when?: CacheWhen;
+
+  /** Use cache:fallback_keys to specify a list of keys to try to restore cache from if there is no cache found for the cache:key. Caches are retrieved in the order specified in the fallback_keys section. */
+  readonly fallbackKeys?: string[];
 }
 
 /**
@@ -165,6 +168,15 @@ export interface Reports {
 }
 
 /**
+ * id_tokens Definition.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#id_tokens
+ */
+export interface IDToken {
+  /** The required aud sub-keyword is used to configure the aud claim for the JWT. */
+  aud: string[] | string;
+}
+
+/**
  * Specifies the docker image to use for the job or globally for all jobs. Job configuration
  * takes precedence over global setting. Requires a certain kind of Gitlab runner executor.
  * @see https://docs.gitlab.com/ee/ci/yaml/#image
@@ -200,6 +212,20 @@ export interface Service {
   readonly entrypoint?: string[];
   /** Full name of the image that should be used. It should contain the Registry part if needed.*/
   readonly name: string;
+  /** The pull policy that the runner uses to fetch the Docker image */
+  readonly pullPolicy?: PullPolicy[];
+  /** Additional environment variables that are passed exclusively to the service.. */
+  readonly variables?: Record<string, string>;
+}
+
+/**
+ * Describes the conditions for when to pull an image.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#servicepull_policy
+ */
+export enum PullPolicy {
+  ALWAYS = "always",
+  NEVER = "never",
+  IF_NOT_PRESENT = "if-not-present",
 }
 
 /**
@@ -240,7 +266,7 @@ export interface IncludeRule {
   /* Execute scripts after a waiting period written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly startIn?: string;
   /* Use variables in rules to define variables for specific conditions. */
-  readonly variables?: Record<string, number | string>;
+  readonly variables?: Record<string, string>;
   /* Conditions for when to run the job. Defaults to 'on_success' */
   readonly when?: JobWhen;
 }
@@ -293,6 +319,8 @@ export interface Job {
   readonly except?: string[] | Filter;
   /** The name of one or more jobs to inherit configuration from.*/
   readonly extends?: string[];
+  /** Configurable ID tokens (JSON Web Tokens) that are used for CI/CD authentication */
+  readonly idTokens?: Record<string, IDToken>;
   /* Specifies the default docker image to used for the job. */
   readonly image?: Image;
   /** Controls inheritance of globally-defined defaults and variables. Boolean values control inheritance of all default: or variables: keywords. To inherit only a subset of default: or variables: keywords, specify what you wish to inherit. Anything not listed is not inherited.*/
@@ -330,7 +358,7 @@ export interface Job {
   /** Trigger allows you to define downstream pipeline trigger. When a job created from trigger definition is started by GitLab, a downstream pipeline gets created. Read more: https://docs.gitlab.com/ee/ci/yaml/README.html#trigger*/
   readonly trigger?: Trigger | string;
   /** Configurable values that are passed to the Job. */
-  readonly variables?: Record<string, number | string>;
+  readonly variables?: Record<string, string>;
   /** Describes the conditions for when to run the job. Defaults to 'on_success'. */
   readonly when?: JobWhen;
 }

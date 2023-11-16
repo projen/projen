@@ -127,6 +127,10 @@ export function renderDockerComposeFile(
         "command",
         serviceDescription.command
       ),
+      ...getObjectWithKeyAndValueIfValueIsDefined(
+        "platform",
+        serviceDescription.platform
+      ),
       ...(Object.keys(serviceDescription.environment).length > 0
         ? { environment: serviceDescription.environment }
         : {}),

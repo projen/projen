@@ -1,6 +1,6 @@
+import { IConstruct } from "constructs";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
 import { JsonPatch } from "./json-patch";
-import { Project } from "./project";
 import { deepMerge } from "./util";
 
 /**
@@ -11,7 +11,13 @@ export interface ObjectFileOptions extends FileBaseOptions {
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
    *
-   * @default {} an empty object (use `file.obj` to mutate).
+   * Serialization of the object is similar to JSON.stringify with few enhancements:
+   * - values that are functions will be called during synthesis and the result will be serialized - this allow to have lazy values.
+   * - `Set` will be converted to array
+   * - `Map` will be converted to a plain object ({ key: value, ... }})
+   * - `RegExp` without flags will be converted to string representation of the source
+   *
+   *  @default {} an empty object (use `file.obj` to mutate).
    */
   readonly obj?: any;
 
@@ -45,10 +51,10 @@ export abstract class ObjectFile extends FileBase {
   /**
    * patches to be applied to `obj` after the resolver is called
    */
-  private readonly patchOperations: JsonPatch[];
+  private readonly patchOperations: Array<JsonPatch[]>;
 
-  constructor(project: Project, filePath: string, options: ObjectFileOptions) {
-    super(project, filePath, options);
+  constructor(scope: IConstruct, filePath: string, options: ObjectFileOptions) {
+    super(scope, filePath, options);
 
     this.obj = options.obj ?? {};
     this.omitEmpty = options.omitEmpty ?? false;
@@ -177,7 +183,9 @@ export abstract class ObjectFile extends FileBase {
     if (Array.isArray(curr[lastKey])) {
       curr[lastKey].push(...values);
     } else {
-      curr[lastKey] = { __$APPEND: values };
+      curr[lastKey] = {
+        __$APPEND: [...(curr[lastKey]?.__$APPEND ?? []), ...values],
+      };
     }
   }
 
@@ -212,7 +220,7 @@ export abstract class ObjectFile extends FileBase {
    * @param patches - The patch operations to apply
    */
   public patch(...patches: JsonPatch[]) {
-    this.patchOperations.push(...patches);
+    this.patchOperations.push(patches);
   }
 
   /**
@@ -234,7 +242,11 @@ export abstract class ObjectFile extends FileBase {
     if (resolved) {
       deepMerge([resolved, this.rawOverrides], true);
     }
-    const patched = JsonPatch.apply(resolved, ...this.patchOperations);
+
+    let patched = resolved;
+    for (const operation of this.patchOperations) {
+      patched = JsonPatch.apply(patched, ...operation);
+    }
     return patched ? JSON.stringify(patched, undefined, 2) : undefined;
   }
 }

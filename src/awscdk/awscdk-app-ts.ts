@@ -5,6 +5,7 @@ import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
 import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
+import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -56,6 +57,14 @@ export interface AwsCdkTypeScriptAppOptions
    * @default true
    */
   readonly integrationTestAutoDiscover?: boolean;
+
+  /**
+   * Enable experimental support for the AWS CDK integ-runner.
+   *
+   * @default false
+   * @experimental
+   */
+  readonly experimentalIntegRunner?: boolean;
 
   /**
    * Common options for all AWS Lambda functions.
@@ -176,6 +185,10 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       lambdaExtensionAutoDiscover: options.lambdaExtensionAutoDiscover ?? true,
       integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });
+
+    if (options.experimentalIntegRunner) {
+      new IntegRunner(this);
+    }
   }
 
   /**

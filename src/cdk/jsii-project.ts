@@ -1,4 +1,4 @@
-import { Range } from "semver";
+import { Range, major } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import { Task } from "..";
@@ -11,6 +11,7 @@ import {
   NugetPublishOptions,
   PyPiPublishOptions,
 } from "../release";
+import { filteredRunsOnOptions } from "../runner-options";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { deepMerge } from "../util";
 
@@ -299,7 +300,7 @@ export class JsiiProject extends TypeScriptProject {
     );
 
     const extraJobOptions: Partial<Job> = {
-      ...(options.workflowRunsOn ? { runsOn: options.workflowRunsOn } : {}),
+      ...this.getJobRunsOnConfig(options),
       ...(options.workflowContainerImage
         ? { container: { image: options.workflowContainerImage } }
         : {}),
@@ -397,7 +398,12 @@ export class JsiiProject extends TypeScriptProject {
           ""
         : // Otherwise, use `jsiiVersion` or fall back to `1.x`.
           `@${options.jsiiVersion ?? "1.x"}`;
-    this.addDevDeps(`jsii${jsiiSuffix}`, "jsii-diff", "jsii-pacmak");
+    this.addDevDeps(
+      `jsii${jsiiSuffix}`,
+      `jsii-rosetta${jsiiSuffix}`,
+      "jsii-diff",
+      "jsii-pacmak"
+    );
 
     this.gitignore.exclude(".jsii", "tsconfig.json");
     this.npmignore?.include(".jsii");
@@ -419,6 +425,13 @@ export class JsiiProject extends TypeScriptProject {
 
       // https://github.com/projen/projen/issues/2264
       this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
+
+      if ((options.jsiiVersion ?? "1.x").startsWith("1.")) {
+        this.addDevDeps(
+          // https://github.com/projen/projen/pull/3076
+          `@types/node@^${major(this.package.minNodeVersion ?? "16.0.0")}`
+        );
+      }
     }
   }
 
@@ -438,10 +451,13 @@ export class JsiiProject extends TypeScriptProject {
     const pacmak = this.pacmakForLanguage(language, packTask);
 
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
-      runsOn: ["ubuntu-latest"],
+      ...filteredRunsOnOptions(
+        extraJobOptions.runsOn,
+        extraJobOptions.runsOnGroup
+      ),
       permissions: {},
       tools: {
-        node: { version: this.nodeVersion ?? "16.x" },
+        node: { version: this.nodeVersion ?? "18.x" },
         ...pacmak.publishTools,
       },
       steps: pacmak.prePublishSteps ?? [],
@@ -499,6 +515,20 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps,
     };
+  }
+
+  /**
+   * Generates the runs-on config for Jobs.
+   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
+   *
+   * @param options - 'runsOn' or 'runsOnGroup'.
+   */
+  private getJobRunsOnConfig(options: JsiiProjectOptions) {
+    return options.workflowRunsOnGroup
+      ? { runsOnGroup: options.workflowRunsOnGroup }
+      : options.workflowRunsOn
+      ? { runsOn: options.workflowRunsOn }
+      : {};
   }
 }
 

@@ -58,10 +58,16 @@ In the initial development phase of major version zero, breaking changes will ne
 You can release multiple major versions from different branches at the same time through the `releaseBranches` option.
 A separate workflow will be created for each release branch to publish the commits to this branch.
 
-Each release branch must be associated with a different major version.
+Each release branch must be associated with a different version. 
+
+Normally it is sufficient to specify only `majorVersion`. If fixes to an earlier minor version should be released, `minorVersion` can also be specified.
 
 ```js
 releaseBranches: {
+  '2.0': {
+    majorVersion: 2,
+    minorVersion: 0,
+  },
   '2.x': {
     majorVersion: 2,
   },
@@ -80,6 +86,25 @@ changelogs.
 
 ```js
 releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
+```
+
+## Selective Releases
+
+It is possible to only bump the version on a subset of commits.
+For example you could only release a new version for every feature and fix that was added to the repo.
+
+```js
+releasableCommits: ReleasableCommits.featuresAndFixes(),
+```
+
+This check only runs according to the release trigger, but serves as an additional check to not create unnecessary releases.
+
+A custom check can be implemented `ReleasableCommits.exec()`.
+This command should return a list of commit hashes that are considered releasable.
+I.e. to not not bump the version, the command must print nothing and exit successfully.
+
+```js
+releasableCommits: ReleasableCommits.exec("./custom-script.sh"),
 ```
 
 ## Manual Releases

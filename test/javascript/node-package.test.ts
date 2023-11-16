@@ -2,10 +2,17 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
-import { Project, DependencyType } from "../../src";
+import { Project, DependencyType, Component } from "../../src";
+import {
+  YarnCacheMigrationMode,
+  YarnChecksumBehavior,
+  YarnNodeLinker,
+  YarnNpmPublishAccess,
+} from "../../src/javascript";
 import {
   NodePackage,
   NodePackageManager,
+  NpmAccess,
 } from "../../src/javascript/node-package";
 import { minVersion } from "../../src/javascript/util";
 import { TaskRuntime } from "../../src/task-runtime";
@@ -286,12 +293,6 @@ test("manually set devDependencies are not changed when a peerDependency is adde
     });
 
   const project = new Project({ name: "test" });
-  const pkg = new NodePackage(project, {
-    peerDependencyOptions: {
-      pinnedDevDependency: true,
-    },
-  });
-
   const orig = {
     name: "test",
     devDependencies: {
@@ -307,6 +308,12 @@ test("manually set devDependencies are not changed when a peerDependency is adde
     join(project.outdir, "package.json"),
     JSON.stringify(orig, undefined, 2)
   );
+
+  const pkg = new NodePackage(project, {
+    peerDependencyOptions: {
+      pinnedDevDependency: true,
+    },
+  });
 
   pkg.addPeerDeps("ms");
 
@@ -444,30 +451,33 @@ test("local dependencies can be specified using 'file:' prefix", () => {
   expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
 });
 
-[NodePackageManager.YARN, NodePackageManager.YARN2].forEach(
-  (packageManager) => {
-    test(`${packageManager} resolutions`, () => {
-      const project = new TestProject();
+[
+  NodePackageManager.YARN,
+  NodePackageManager.YARN2,
+  NodePackageManager.YARN_CLASSIC,
+  NodePackageManager.YARN_BERRY,
+].forEach((packageManager) => {
+  test(`${packageManager} resolutions`, () => {
+    const project = new TestProject();
 
-      const pkg = new NodePackage(project, {
-        packageManager,
-      });
-
-      pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
-
-      expect(
-        project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
-      ).toEqual([
-        { name: "other-dep", type: "override" },
-        { name: "some-dep", type: "override", version: "1.0.0" },
-      ]);
-      const snps = synthSnapshot(project);
-
-      expect(snps["package.json"].resolutions).toBeDefined();
-      expect(snps["package.json"]).toMatchSnapshot();
+    const pkg = new NodePackage(project, {
+      packageManager,
     });
-  }
-);
+
+    pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+    expect(
+      project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+    ).toEqual([
+      { name: "other-dep", type: "override" },
+      { name: "some-dep", type: "override", version: "1.0.0" },
+    ]);
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].resolutions).toBeDefined();
+    expect(snps["package.json"]).toMatchSnapshot();
+  });
+});
 
 test("npm overrides", () => {
   const project = new TestProject();
@@ -527,6 +537,30 @@ test("pnpm overrides", () => {
 
   expect(snps["package.json"].pnpm.overrides).toBeDefined();
   expect(snps["package.json"]).toMatchSnapshot();
+});
+
+test("pnpm overrides in root project only, not subprojects", () => {
+  const project = new TestProject();
+  new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const subProject = new Project({
+    name: "sub-project",
+    parent: project,
+    outdir: "packages/sub-project",
+  });
+  new NodePackage(subProject, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].pnpm).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+
+  expect(snps["packages/sub-project/package.json"].pnpm).not.toBeDefined();
+  expect(snps["packages/sub-project/package.json"]).toMatchSnapshot();
 });
 
 test("typesVersions is not managed by projen, but can be manipulated", () => {
@@ -655,4 +689,211 @@ test("tryResolveDependencyVersion resolves with no package.json or default expor
 
   expect(project.deps.tryGetDependency("@types/js-yaml")?.version).toEqual("*");
   expect(pkg.tryResolveDependencyVersion("@types/js-yaml")).toEqual("4.0.5");
+});
+
+test("project components should be able to change dependencies during preSynthesize", () => {
+  const project = new TestProject();
+  const pkg = new NodePackage(project);
+  pkg.addDevDeps("test-dev-dep-1@1.0.0");
+
+  new (class extends Component {
+    public preSynthesize(): void {
+      project.deps.removeDependency("test-dev-dep-1", DependencyType.BUILD);
+      project.deps.addDependency(
+        "test-dev-dep-2@2.0.0",
+        DependencyType.RUNTIME
+      );
+    }
+  })(project);
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].devDependencies).toBeUndefined();
+  expect(snps["package.json"].dependencies).toHaveProperty(
+    "test-dev-dep-2",
+    "2.0.0"
+  );
+});
+
+describe("yarn berry", () => {
+  test("adds the packageManager directive to package.json", () => {
+    const project = new TestProject();
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: {
+        version: "3.6.4",
+      },
+    });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"]).toHaveProperty("packageManager", "yarn@3.6.4");
+  });
+
+  test("renders .yarnrc.yml file with specified properties", () => {
+    const project = new TestProject();
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: {
+        yarnRcOptions: {
+          nodeLinker: YarnNodeLinker.NODE_MODULES,
+        },
+      },
+    });
+
+    const snps = synthSnapshot(project);
+    const yarnrcLines = snps[".yarnrc.yml"].split("\n");
+
+    expect(yarnrcLines).toContain("nodeLinker: node-modules");
+  });
+
+  describe("gitignore", () => {
+    test("produces the expected gitignore for zero-installs", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+        yarnBerryOptions: {
+          zeroInstalls: true,
+        },
+      });
+
+      const snps = synthSnapshot(project);
+      const gitignoreLines = snps[".gitignore"].split("\n");
+      expect(gitignoreLines).toEqual(
+        expect.arrayContaining([
+          ".yarn/*",
+          "!.yarn/cache",
+          "!.yarn/patches",
+          "!.yarn/plugins",
+          "!.yarn/releases",
+          "!.yarn/sdks",
+          "!.yarn/versions",
+        ])
+      );
+    });
+
+    test("produces the expected gitignore when not using zero-installs", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+        yarnBerryOptions: {
+          zeroInstalls: false,
+        },
+      });
+
+      const snps = synthSnapshot(project);
+      const gitignoreLines = snps[".gitignore"].split("\n");
+      expect(gitignoreLines).toEqual(
+        expect.arrayContaining([
+          ".pnp.*",
+          ".yarn/*",
+          "!.yarn/patches",
+          "!.yarn/plugins",
+          "!.yarn/releases",
+          "!.yarn/sdks",
+          "!.yarn/versions",
+        ])
+      );
+    });
+  });
+
+  describe("conflicting options", () => {
+    test("throws an error if npmRegistryUrl and npmRegistryServer are set to different values", () => {
+      const project = new TestProject();
+      expect(
+        () =>
+          new NodePackage(project, {
+            packageManager: NodePackageManager.YARN_BERRY,
+            npmRegistryUrl: "https://registry.npmjs.org/",
+            yarnBerryOptions: {
+              yarnRcOptions: {
+                npmRegistryServer: "https://npm.pkg.github.com",
+              },
+            },
+          })
+      ).toThrow(
+        "Cannot set npmRegistryUrl (https://registry.npmjs.org/) and yarnRcOptions.npmRegistryServer (https://npm.pkg.github.com) to different values."
+      );
+    });
+
+    test("throws an error if npmAccess and npmPublishAccess are set to different values", () => {
+      const project = new TestProject();
+      expect(
+        () =>
+          new NodePackage(project, {
+            packageManager: NodePackageManager.YARN_BERRY,
+            npmAccess: NpmAccess.PUBLIC,
+            yarnBerryOptions: {
+              yarnRcOptions: {
+                npmPublishAccess: YarnNpmPublishAccess.RESTRICTED,
+              },
+            },
+          })
+      ).toThrow(
+        "Cannot set npmAccess (public) and yarnRcOptions.npmPublishAccess (restricted) to different values."
+      );
+    });
+  });
+
+  describe("invalid options", () => {
+    describe("using v4", () => {
+      test("throws an error if a v3 setting is used in v4", () => {
+        const project = new TestProject();
+        expect(
+          () =>
+            new NodePackage(project, {
+              packageManager: NodePackageManager.YARN_BERRY,
+              yarnBerryOptions: {
+                version: "4.0.1",
+                yarnRcOptions: {
+                  ignoreCwd: true,
+                  lockfileFilename: "something-else.lock",
+                },
+              },
+            })
+        ).toThrow(
+          "The following options are not available in Yarn >= 4: ignoreCwd, lockfileFilename"
+        );
+      });
+    });
+
+    describe("using v3", () => {
+      test("throws an error if a v4 setting is used in v3", () => {
+        const project = new TestProject();
+        expect(
+          () =>
+            new NodePackage(project, {
+              packageManager: NodePackageManager.YARN_BERRY,
+              yarnBerryOptions: {
+                version: "3.6.4",
+                yarnRcOptions: {
+                  cacheMigrationMode: YarnCacheMigrationMode.ALWAYS,
+                  httpsCaFilePath: "/etc/foo/bar",
+                },
+              },
+            })
+        ).toThrow(
+          "The following options are only available in Yarn v4 and newer: cacheMigrationMode, httpsCaFilePath"
+        );
+      });
+
+      test("throws an error if a v4 checksumBehavior setting is used in v3", () => {
+        const project = new TestProject();
+        expect(
+          () =>
+            new NodePackage(project, {
+              packageManager: NodePackageManager.YARN_BERRY,
+              yarnBerryOptions: {
+                version: "3.6.4",
+                yarnRcOptions: {
+                  checksumBehavior: YarnChecksumBehavior.RESET,
+                },
+              },
+            })
+        ).toThrow(
+          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer."
+        );
+      });
+    });
+  });
 });

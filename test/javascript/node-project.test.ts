@@ -144,6 +144,7 @@ describe("deps", () => {
       "jest",
       "jest-junit",
       "projen",
+      "constructs",
       "standard-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
@@ -168,6 +169,7 @@ describe("deps", () => {
       "jest",
       "jest-junit",
       "projen",
+      "constructs",
       "standard-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
@@ -847,6 +849,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "constructs",
     "jest-junit",
     "npm-check-updates",
     "standard-version",
@@ -873,6 +876,7 @@ test("renovatebot ignored dependency overrides", () => {
   //       as JSON object path delimiters.
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "constructs",
     "jest-junit",
     "npm-check-updates",
     "standard-version",
@@ -1051,15 +1055,15 @@ describe("workflowPackageCache", () => {
       name: "yarn to be enabled",
       options: {
         workflowPackageCache: true,
-        packageManager: NodePackageManager.YARN,
+        packageManager: NodePackageManager.YARN_CLASSIC,
       },
       expected: "yarn",
     },
     {
-      name: "yarn2 to be enabled",
+      name: "yarn berry to be enabled",
       options: {
         workflowPackageCache: true,
-        packageManager: NodePackageManager.YARN2,
+        packageManager: NodePackageManager.YARN_BERRY,
       },
       expected: "yarn",
     },
@@ -1115,6 +1119,33 @@ describe("workflowRunsOn", () => {
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
       "self-hosted"
     );
+  });
+
+  test("use github runner group specified in workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux", "x64"],
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const build = yaml.parse(output[".github/workflows/build.yml"]);
+
+    expect(build).toHaveProperty("jobs.build.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.build.runs-on.labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
+    expect(build).toHaveProperty("jobs.self-mutation.runs-on.group", "Default");
+    expect(build).toHaveProperty("jobs.self-mutation.runs-on.labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
   });
 });
 
@@ -1558,6 +1589,33 @@ describe("scoped private packages", () => {
     });
   });
 
+  test("adds ca:login script without always-auth when min node version is greater than 16", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+      minNodeVersion: "18.11.0",
+    });
+    const output = synthSnapshot(project);
+
+    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["ca:login"]).toEqual({
+      name: "ca:login",
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: [
+        {
+          exec: "which aws",
+        },
+        {
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+        },
+      ],
+    });
+  });
+
   test("adds ca:login script when multiple scoped packages defined", () => {
     const accountId2 = "123456789013";
     const domain2 = "my-domain-2";
@@ -1630,7 +1688,15 @@ describe("package manager env", () => {
       cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      cmd: '$(npx -c "node --print process.env.PATH")',
+    },
+    {
       packageManager: NodePackageManager.YARN2,
+      cmd: '$(npx -c "node --print process.env.PATH")',
+    },
+    {
+      packageManager: NodePackageManager.YARN_BERRY,
       cmd: '$(npx -c "node --print process.env.PATH")',
     },
     {

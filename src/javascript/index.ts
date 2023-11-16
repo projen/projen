@@ -8,3 +8,4 @@ export * from "./prettier";
 export * from "./projenrc";
 export * from "./typescript-config";
 export * from "./upgrade-dependencies";
+export * from "./yarnrc";

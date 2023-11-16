@@ -65,7 +65,7 @@ test("errors when paths overlap", () => {
         parent: comp,
         outdir: path.join("packages", "foo"),
       })
-  ).toThrowError(/there is already a sub-project with/i);
+  ).toThrowError(/There is already a subproject with/i);
 });
 
 test("multiple levels", () => {
@@ -88,14 +88,14 @@ test("multiple levels", () => {
 test("subprojects cannot introduce files that override each other", () => {
   const root = new TestProject();
   const child = new Project({
-    name: "sub-project",
+    name: "subproject",
     parent: root,
-    outdir: "sub-project",
+    outdir: "subproject",
   });
 
-  new TextFile(root, "sub-project/file.txt");
+  new TextFile(root, "subproject/file.txt");
   expect(() => new TextFile(child, "file.txt")).toThrow(
-    /there is already a file under sub-project(\\|\/)file\.txt/
+    /There is already a file under subproject(\\|\/)file\.txt/
   );
 });
 
@@ -108,7 +108,7 @@ test('"outdir" for subprojects must be relative', () => {
 
 test("subproject generated files do not get cleaned up by parent project", () => {
   const root = new TestProject();
-  const child = new PreSynthProject({ parent: root, outdir: "sub-project" });
+  const child = new PreSynthProject({ parent: root, outdir: "subproject" });
 
   // no files have been generated yet
   expect(fs.existsSync(child.file.absolutePath)).toEqual(false);
@@ -126,7 +126,7 @@ test("subproject generated files do not get cleaned up by parent project", () =>
 
 test("subproject generated json files can be synthed", () => {
   const root = new TestProject();
-  const child = new PreSynthProject({ parent: root, outdir: "sub-project" });
+  const child = new PreSynthProject({ parent: root, outdir: "subproject" });
   new JsonFile(child, "test.jsonc", {
     marker: true,
     allowComments: true,
@@ -136,7 +136,7 @@ test("subproject generated json files can be synthed", () => {
   });
 
   const out = synthSnapshot(root);
-  expect(out["sub-project/test.jsonc"]).toMatchInlineSnapshot(`
+  expect(out["subproject/test.jsonc"]).toMatchInlineSnapshot(`
     {
       "test": "data",
     }

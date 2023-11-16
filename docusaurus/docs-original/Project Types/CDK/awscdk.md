@@ -299,6 +299,46 @@ new Trigger(stack, 'RunAssertions', {
 
 [cdk-trigger-docs]:https://docs.aws.amazon.com/cdk/api/v1/docs/triggers-readme.html
 
+## Experimental `integ-runner` integration tests
+
+For TypeScript-based AWS CDK projects, Projen provides experimental support
+for using the [`integ-runner`][integ-runner] tool and [library][integ-library]
+for integration testing. To enable this feature, you specify
+`experimentalIntegRunner: true` in your project options.
+
+[integ-runner]: https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk/integ-runner
+[integ-library]: https://docs.aws.amazon.com/cdk/api/v2/docs/integ-tests-alpha-readme.html
+
+
+```typescript
+import { awscdk } from 'projen';
+
+new awscdk.AwsCdkConstructLibrary({
+  // ...
+  experimentalIntegRunner: true
+});
+```
+
+After enabling experimental `integ-runner` support, all `integ.*.ts` files in
+the `test` directory will be automatically discovered and treated as
+integration tests. Projen will check that these integration tests match the
+committed snapshots at build-time, or whenever the test task is run.
+
+Projen also provides two new commands:
+
+`projen integ [...test names]` - Verifies integration test snapshots. If test
+names are provided, only the provided integration tests will be checked.
+Otherwise, all integration tests will be checked.
+
+`projen integ:update [...test names]` - Verifies integration test snapshots or
+updates the integration test snapshot by re-running the integration test on
+failure. Like `projen integ`, you may specify zero or more test names.
+
+> Tests are named based on their file path. For instance, with an integration
+> test contained in `test/r53writer/integ.ddbStreamHandler.ts`, the test name
+> is `r53writer/integ.ddbStreamHandler`, and you could update the test's
+> snapshot by running `projen integ:update r53writer/integ.ddbStreamHandler`.
+
 ## Watch
 
 > Only relevant for app projects

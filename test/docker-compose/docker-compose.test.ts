@@ -1,7 +1,7 @@
 import * as child_process from "child_process";
 import * as fs from "fs";
 import * as path from "path";
-import { DockerCompose, DockerComposeProtocol } from "../../src/";
+import { DockerCompose, DockerComposeProtocol, YamlFile } from "../../src/";
 import * as logging from "../../src/logging";
 import { TestProject } from "../util";
 
@@ -51,6 +51,22 @@ describe("docker-compose", () => {
           },
         })
     ).toThrow(/Version tag needs to be a number/i);
+  });
+
+  test("exposes file as property", () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      schemaVersion: "3.1",
+      services: {
+        myservice: {
+          image: "nginx",
+        },
+      },
+    });
+
+    expect(dc.file).toBeInstanceOf(YamlFile);
+    expect(dc.file.path).toEqual("docker-compose.yml");
   });
 
   test("version tag explicit set and created as float", () => {
@@ -167,7 +183,7 @@ describe("docker-compose", () => {
 
   test("can choose a name suffix for the docker-compose.yml", () => {
     const project = new TestProject();
-    new DockerCompose(project, {
+    const dc = new DockerCompose(project, {
       nameSuffix: "myname",
       services: {
         myservice: {
@@ -177,6 +193,7 @@ describe("docker-compose", () => {
     });
 
     project.synth();
+    expect(dc.file.path).toEqual("docker-compose.myname.yml");
     expect(
       fs.existsSync(path.join(project.outdir, "docker-compose.myname.yml"))
     );
@@ -907,6 +924,32 @@ describe("docker-compose", () => {
       );
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+  });
+  describe("can add a platform", () => {
+    test("declaratively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project, {
+        services: {
+          myservice: {
+            image: "nginx",
+            platform: "linux/amd64",
+          },
+        },
+      });
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            platform: "linux/amd64",
+          },
+        },
+      });
 
       project.synth();
       assertDockerComposeFileValidates(project.outdir);

@@ -20,7 +20,7 @@ export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
-   * @default Runtime.NODEJS_16_X
+   * @default Runtime.NODEJS_18_X
    */
   readonly runtime?: LambdaRuntime;
 
@@ -134,7 +134,7 @@ export class LambdaFunction extends Component {
       );
     }
 
-    const runtime = options.runtime ?? LambdaRuntime.NODEJS_16_X;
+    const runtime = options.runtime ?? LambdaRuntime.NODEJS_18_X;
 
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
@@ -301,7 +301,7 @@ export interface LambdaRuntimeOptions {
 export class LambdaRuntime {
   /**
    * Node.js 10.x
-   * @deprecated NodeJS10 has been deprecated
+   * @deprecated NodeJS10 has been deprecated on February 14, 2022
    */
   public static readonly NODEJS_10_X = new LambdaRuntime(
     "nodejs10.x",
@@ -311,7 +311,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 12.x
-   * @deprecated NodeJS12 has been deprecated
+   * @deprecated NodeJS12 has been deprecated on April 30, 2023
    */
   public static readonly NODEJS_12_X = new LambdaRuntime(
     "nodejs12.x",
@@ -321,7 +321,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 14.x
-   * @deprecated NodeJS14 has been deprecated
+   * @deprecated NodeJS14 will be deprecated on November 27, 2023
    */
   public static readonly NODEJS_14_X = new LambdaRuntime(
     "nodejs14.x",
@@ -331,6 +331,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 16.x
+   * @deprecated NodeJS16 will be deprecated on March 11, 2024
    */
   public static readonly NODEJS_16_X = new LambdaRuntime(
     "nodejs16.x",

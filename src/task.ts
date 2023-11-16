@@ -237,6 +237,12 @@ export class Task {
   }
 
   /**
+   * Returns all environment variables in the task level
+   */
+  public get envVars(): Readonly<{ [name: string]: string }> {
+    return this._env;
+  }
+  /**
    * Returns an immutable copy of all the step specifications of the task.
    */
   public get steps() {

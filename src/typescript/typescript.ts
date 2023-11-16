@@ -192,7 +192,7 @@ export class TypeScriptProject extends NodeProject {
         ...options.jestOptions,
         jestConfig: {
           ...options.jestOptions?.jestConfig,
-          testMatch: [],
+          testMatch: options.jestOptions?.jestConfig?.testMatch ?? [],
         },
       },
     });
@@ -366,10 +366,10 @@ export class TypeScriptProject extends NodeProject {
       // include API changes, `@types/node@12.20.x` is the "correct" version to use. As it is not
       // possible to easily determine the correct version to use, we pick up the latest version.
       //
-      // Additionally, we default to tracking the 12.x line, as the current earliest LTS release of
-      // node is 12.x, so this is what corresponds to the broadest compatibility with supported node
+      // Additionally, we default to tracking the 18.x line, as the current earliest LTS release of
+      // node is 18.x, so this is what corresponds to the broadest compatibility with supported node
       // runtimes.
-      `@types/node@^${semver.major(this.package.minNodeVersion ?? "16.0.0")}`
+      `@types/node@^${semver.major(this.package.minNodeVersion ?? "18.0.0")}`
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.

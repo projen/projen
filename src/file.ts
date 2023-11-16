@@ -1,11 +1,12 @@
 import { rmSync } from "fs";
 import * as path from "path";
+import { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
-import { Project } from "./project";
 import { ProjenrcFile } from "./projenrc";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
+import { findClosestProject } from "./util/constructs";
 
 export interface FileBaseOptions {
   /**
@@ -47,7 +48,7 @@ export interface FileBaseOptions {
 
 export abstract class FileBase extends Component {
   /**
-   * The file path, relative to the project root.
+   * The file path, relative to the project's outdir.
    */
   public readonly path: string;
 
@@ -81,19 +82,35 @@ export abstract class FileBase extends Component {
 
     // `marker` is empty if project is being ejected or if explicitly disabled
     const projenrc = ProjenrcFile.of(this.project)?.filePath ?? PROJEN_RC;
-    return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "npx projen".`;
+    return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "${this.project.projenCommand}".`;
   }
 
   constructor(
-    project: Project,
+    scope: IConstruct,
     filePath: string,
     options: FileBaseOptions = {}
   ) {
-    super(project);
+    const project = findClosestProject(scope);
+    const root = project.root;
+    const projectPath = path.normalize(filePath);
+    const absolutePath = path.resolve(project.outdir, projectPath);
+    const rootProjectPath = path.relative(root.outdir, absolutePath);
+    const autoId = `${new.target.name}@${projectPath}`;
+
+    // Before actually creating the file, ensure the file path is unique within the full project tree
+    // This is required because projects can create files inside their subprojects
+    if (root.tryFindFile(absolutePath) || scope.node.tryFindChild(autoId)) {
+      throw new Error(`There is already a file under ${rootProjectPath}`);
+    }
+
+    super(scope, autoId);
+    this.node.addMetadata("type", "file");
+    this.node.addMetadata("path", rootProjectPath);
 
     this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
-    this.path = filePath;
+    this.path = projectPath;
+    this.absolutePath = absolutePath;
     this.shouldAddMarker = options.marker ?? true;
 
     const globPattern = `/${this.path}`;
@@ -101,20 +118,6 @@ export abstract class FileBase extends Component {
     if (committed && filePath !== ".gitattributes") {
       project.annotateGenerated(`/${filePath}`);
     }
-
-    this.absolutePath = path.resolve(project.outdir, filePath);
-
-    // verify file path is unique within project tree
-    const existing = project.root.tryFindFile(this.absolutePath);
-    if (existing && existing !== this) {
-      throw new Error(
-        `there is already a file under ${path.relative(
-          project.root.outdir,
-          this.absolutePath
-        )}`
-      );
-    }
-
     const editGitignore = options.editGitignore ?? true;
     if (editGitignore) {
       this.project.addGitIgnore(`${committed ? "!" : ""}${globPattern}`);

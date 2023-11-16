@@ -12,6 +12,7 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
+import { Yarnrc, YarnrcOptions } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -168,7 +169,7 @@ export interface NodePackageOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default NodePackageManager.YARN
+   * @default NodePackageManager.YARN_CLASSIC
    */
   readonly packageManager?: NodePackageManager;
 
@@ -307,6 +308,13 @@ export interface NodePackageOptions {
    * @default - fetch all scoped packages from the public npm registry
    */
   readonly scopedPackagesOptions?: ScopedPackagesOptions[];
+
+  /**
+   * Options for Yarn Berry
+   *
+   * @default - Yarn Berry v4 with all default options
+   */
+  readonly yarnBerryOptions?: YarnBerryOptions;
 }
 
 /**
@@ -501,6 +509,7 @@ export class NodePackage extends Component {
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
+  private readonly _prev?: Record<string, any>;
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -512,7 +521,8 @@ export class NodePackage extends Component {
       ...options.peerDependencyOptions,
     };
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
-    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+    this.packageManager =
+      options.packageManager ?? NodePackageManager.YARN_CLASSIC;
     this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
 
@@ -535,9 +545,7 @@ export class NodePackage extends Component {
 
     this.processDeps(options);
 
-    this.addCodeArtifactLoginScript();
-
-    const prev = this.readPackageJson() ?? {};
+    this._prev = this.readPackageJson();
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
@@ -564,11 +572,11 @@ export class NodePackage extends Component {
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
-      typesVersions: prev?.typesVersions,
+      typesVersions: this._prev?.typesVersions,
 
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
-      version: this.determineVersion(prev?.version),
+      version: this.determineVersion(this._prev?.version),
       bugs:
         options.bugsEmail || options.bugsUrl
           ? {
@@ -578,13 +586,21 @@ export class NodePackage extends Component {
           : undefined,
     };
 
+    // Configure Yarn Berry if using
+    if (
+      this.packageManager === NodePackageManager.YARN_BERRY ||
+      this.packageManager === NodePackageManager.YARN2
+    ) {
+      this.configureYarnBerry(project, options);
+    }
+
     // add tasks for scripts from options (if specified)
     // @deprecated
     for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
       project.addTask(cmdname, { exec: shell });
     }
 
-    this.file = new JsonFile(this.project, "package.json", {
+    this.file = new JsonFile(this, "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
       newline: true, // all package managers prefer a newline, see https://github.com/projen/projen/issues/2076
@@ -604,6 +620,8 @@ export class NodePackage extends Component {
     this.maxNodeVersion = options.maxNodeVersion;
     this.pnpmVersion = options.pnpmVersion ?? "7";
     this.addNodeEngine();
+
+    this.addCodeArtifactLoginScript();
 
     // license
     if (options.licensed ?? true) {
@@ -805,53 +823,6 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Render a package manager specific command to upgrade all requested dependencies.
-   */
-  public renderUpgradePackagesCommand(
-    exclude: string[],
-    include?: string[]
-  ): string {
-    const project = this.project;
-    function upgradePackages(command: string) {
-      return () => {
-        if (exclude.length === 0 && !include) {
-          // request to upgrade all packages
-          // separated for asthetic reasons.
-          return command;
-        }
-
-        // filter by exclude and include.
-        return `${command} ${project.deps.all
-          .filter((d) => d.type !== DependencyType.OVERRIDE)
-          .map((d) => d.name)
-          .filter((d) => (include ? include.includes(d) : true))
-          .filter((d) => !exclude.includes(d))
-          .join(" ")}`;
-      };
-    }
-
-    let lazy = undefined;
-    switch (this.packageManager) {
-      case NodePackageManager.YARN:
-      case NodePackageManager.YARN2:
-        lazy = upgradePackages("yarn upgrade");
-        break;
-      case NodePackageManager.NPM:
-        lazy = upgradePackages("npm update");
-        break;
-      case NodePackageManager.PNPM:
-        lazy = upgradePackages("pnpm update");
-        break;
-      default:
-        throw new Error(`unexpected package manager ${this.packageManager}`);
-    }
-
-    // return a lazy function so that dependencies include ones that were
-    // added post project instantiation (i.e using project.addDeps)
-    return lazy as unknown as string;
-  }
-
-  /**
    * Attempt to resolve the currently installed version for a given dependency.
    *
    * @remarks
@@ -878,10 +849,9 @@ export class NodePackage extends Component {
   }
 
   // ---------------------------------------------------------------------------------------
-
-  public preSynthesize() {
-    super.preSynthesize();
+  public synthesize() {
     this._renderedDeps = this.renderDependencies();
+    super.synthesize();
   }
 
   public postSynthesize() {
@@ -1082,8 +1052,9 @@ export class NodePackage extends Component {
             `npm config set ${scope}:registry ${registryUrl}`,
             `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
             `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
-            `npm config set //${registry}:always-auth=true`,
           ];
+          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16)
+            commands.push(`npm config set //${registry}:always-auth=true`);
           return {
             exec: commands.join("; "),
           };
@@ -1118,12 +1089,14 @@ export class NodePackage extends Component {
   private renderInstallCommand(frozen: boolean) {
     switch (this.packageManager) {
       case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
         return [
           "yarn install",
           "--check-files", // ensure all modules exist (especially projen which was just removed).
           ...(frozen ? ["--frozen-lockfile"] : []),
         ].join(" ");
       case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
         return ["yarn install", ...(frozen ? ["--immutable"] : [])].join(" ");
       case NodePackageManager.NPM:
         return frozen ? "npm ci" : "npm install";
@@ -1131,6 +1104,10 @@ export class NodePackage extends Component {
         return frozen
           ? "pnpm i --frozen-lockfile"
           : "pnpm i --no-frozen-lockfile";
+      case NodePackageManager.BUN:
+        return ["bun install", ...(frozen ? ["--frozen-lockfile"] : [])].join(
+          " "
+        );
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
@@ -1240,8 +1217,7 @@ export class NodePackage extends Component {
     this.manifest.bundledDependencies = sorted(bundledDependencies);
 
     // nothing further to do if package.json file does not exist
-    const pkg = this.readPackageJson();
-    if (!pkg) {
+    if (!this._prev) {
       return { devDependencies, peerDependencies, dependencies };
     }
 
@@ -1269,9 +1245,9 @@ export class NodePackage extends Component {
       }
     };
 
-    readDeps(devDependencies, pkg.devDependencies);
-    readDeps(dependencies, pkg.dependencies);
-    readDeps(peerDependencies, pkg.peerDependencies);
+    readDeps(devDependencies, this._prev.devDependencies);
+    readDeps(dependencies, this._prev.dependencies);
+    readDeps(peerDependencies, this._prev.peerDependencies);
 
     return { devDependencies, dependencies, peerDependencies };
   }
@@ -1400,9 +1376,14 @@ export class NodePackage extends Component {
       case NodePackageManager.NPM:
         return { overrides: render };
       case NodePackageManager.PNPM:
-        return { pnpm: { overrides: render } };
+        return this.project.parent
+          ? undefined
+          : { pnpm: { overrides: render } };
       case NodePackageManager.YARN:
       case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_CLASSIC:
+      case NodePackageManager.YARN_BERRY:
+      case NodePackageManager.BUN:
       default:
         return { resolutions: render };
     }
@@ -1520,6 +1501,65 @@ export class NodePackage extends Component {
       : this.installTask;
     runtime.runTask(taskToRun.name);
   }
+
+  private configureYarnBerry(project: Project, options: NodePackageOptions) {
+    const {
+      version = "4.0.1",
+      yarnRcOptions = {},
+      zeroInstalls = false,
+    } = options.yarnBerryOptions || {};
+    this.checkForConflictingYarnOptions(yarnRcOptions);
+
+    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
+    // of `yarn` to use.
+    this.addField("packageManager", `yarn@${version}`);
+    this.configureYarnBerryGitignore(zeroInstalls);
+
+    new Yarnrc(project, version, yarnRcOptions);
+  }
+
+  private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
+    if (
+      this.npmAccess &&
+      yarnRcOptions.npmPublishAccess &&
+      this.npmAccess.toString() !== yarnRcOptions.npmPublishAccess.toString()
+    ) {
+      throw new Error(
+        `Cannot set npmAccess (${this.npmAccess}) and yarnRcOptions.npmPublishAccess (${yarnRcOptions.npmPublishAccess}) to different values.`
+      );
+    }
+
+    if (
+      this.npmRegistryUrl &&
+      yarnRcOptions.npmRegistryServer &&
+      this.npmRegistryUrl !== yarnRcOptions.npmRegistryServer
+    ) {
+      throw new Error(
+        `Cannot set npmRegistryUrl (${this.npmRegistryUrl}) and yarnRcOptions.npmRegistryServer (${yarnRcOptions.npmRegistryServer}) to different values.`
+      );
+    }
+  }
+
+  /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
+  private configureYarnBerryGitignore(zeroInstalls: boolean) {
+    const { gitignore } = this.project;
+
+    // These patterns are the same whether or not you're using zero-installs
+    gitignore.exclude(".yarn/*");
+    gitignore.include(
+      ".yarn/patches",
+      ".yarn/plugins",
+      ".yarn/releases",
+      ".yarn/sdks",
+      ".yarn/versions"
+    );
+
+    if (zeroInstalls) {
+      gitignore.include("!.yarn/cache");
+    } else {
+      gitignore.exclude(".pnp.*");
+    }
+  }
 }
 
 export interface PeerDependencyOptions {
@@ -1536,13 +1576,27 @@ export interface PeerDependencyOptions {
 export enum NodePackageManager {
   /**
    * Use `yarn` as the package manager.
+   *
+   * @deprecated For `yarn` 1.x use `YARN_CLASSIC` for `yarn` >= 2 use `YARN_BERRY`. Currently, `NodePackageManager.YARN` means `YARN_CLASSIC`. In the future, we might repurpose it to mean `YARN_BERRY`.
    */
   YARN = "yarn",
 
   /**
    * Use `yarn` versions >= 2 as the package manager.
+   *
+   * @deprecated use YARN_BERRY instead
    */
   YARN2 = "yarn2",
+
+  /**
+   * Use `yarn` 1.x as the package manager.
+   */
+  YARN_CLASSIC = "yarn_classic",
+
+  /**
+   * Use `yarn` versions >= 2 as the package manager.
+   */
+  YARN_BERRY = "yarn_berry",
 
   /**
    * Use `npm` as the package manager.
@@ -1553,6 +1607,11 @@ export enum NodePackageManager {
    * Use `pnpm` as the package manager.
    */
   PNPM = "pnpm",
+
+  /**
+   * Use `bun` as the package manager
+   */
+  BUN = "bun",
 }
 
 /**
@@ -1568,6 +1627,33 @@ export enum NpmAccess {
    * Package can only be accessed with credentials.
    */
   RESTRICTED = "restricted",
+}
+
+/**
+ * Configure Yarn Berry
+ */
+export interface YarnBerryOptions {
+  /**
+   * A fully specified version to use for yarn (e.g., x.x.x)
+   *
+   * @default - 4.0.1
+   */
+  readonly version?: string;
+
+  /**
+   * The yarnrc configuration.
+   *
+   * @default - a blank Yarn RC file
+   */
+  readonly yarnRcOptions?: YarnrcOptions;
+
+  /**
+   * Should zero-installs be enabled?
+   * Learn more at: https://yarnpkg.com/features/caching#zero-installs
+   *
+   * @default false
+   */
+  readonly zeroInstalls?: boolean;
 }
 
 interface NpmDependencies {
@@ -1607,13 +1693,17 @@ export function defaultNpmToken(
 function determineLockfile(packageManager: NodePackageManager) {
   if (
     packageManager === NodePackageManager.YARN ||
-    packageManager === NodePackageManager.YARN2
+    packageManager === NodePackageManager.YARN2 ||
+    packageManager === NodePackageManager.YARN_CLASSIC ||
+    packageManager === NodePackageManager.YARN_BERRY
   ) {
     return "yarn.lock";
   } else if (packageManager === NodePackageManager.NPM) {
     return "package-lock.json";
   } else if (packageManager === NodePackageManager.PNPM) {
     return "pnpm-lock.yaml";
+  } else if (packageManager === NodePackageManager.BUN) {
+    return "bun.lockb";
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);

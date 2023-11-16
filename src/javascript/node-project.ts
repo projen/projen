@@ -44,6 +44,7 @@ import {
   Release,
   ReleaseProjectOptions,
 } from "../release";
+import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
@@ -186,7 +187,7 @@ export interface NodeProjectOptions
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * Use github workflows to handle dependency upgrades.
+   * Use tasks and github workflows to handle dependency upgrades.
    * Cannot be used in conjunction with `dependabot`.
    *
    * @default true
@@ -348,7 +349,13 @@ export class NodeProject extends GitHubProject {
   /**
    * The .npmrc file
    */
-  public readonly npmrc: NpmConfig;
+  public get npmrc(): NpmConfig {
+    if (!this._npmrc) {
+      this._npmrc = new NpmConfig(this, { omitEmpty: true });
+    }
+    return this._npmrc;
+  }
+  private _npmrc?: NpmConfig;
 
   /**
    * @deprecated use `package.allowLibraryDependencies`
@@ -470,9 +477,13 @@ export class NodeProject extends GitHubProject {
           return "npm run";
         case NodePackageManager.YARN:
         case NodePackageManager.YARN2:
+        case NodePackageManager.YARN_CLASSIC:
+        case NodePackageManager.YARN_BERRY:
           return "yarn run";
         case NodePackageManager.PNPM:
           return "pnpm run";
+        case NodePackageManager.BUN:
+          return "bun run";
         default:
           throw new Error(`unexpected package manager ${this.packageManager}`);
       }
@@ -535,6 +546,7 @@ export class NodeProject extends GitHubProject {
     if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
+      this.addDevDeps(`constructs@^10.0.0`);
     }
 
     if (!options.defaultReleaseBranch) {
@@ -571,7 +583,10 @@ export class NodeProject extends GitHubProject {
           mutable: options.mutableBuild ?? true,
         }),
         postBuildSteps: options.postBuildSteps,
-        runsOn: options.workflowRunsOn,
+        ...filteredRunsOnOptions(
+          options.workflowRunsOn,
+          options.workflowRunsOnGroup
+        ),
         workflowTriggers: options.buildWorkflowTriggers,
         permissions: workflowPermissions,
       });
@@ -753,11 +768,6 @@ export class NodeProject extends GitHubProject {
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
-
-    // Create the .npmrc file
-    this.npmrc = new NpmConfig(this, {
-      omitEmpty: true,
-    });
 
     // For PNPM, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
     // resolved to the lowest available version, which is unlikely to be expected behaviour for users. We set resolution
@@ -977,6 +987,12 @@ export class NodeProject extends GitHubProject {
           ? "yarn"
           : this.package.packageManager === NodePackageManager.YARN2
           ? "yarn"
+          : this.package.packageManager === NodePackageManager.YARN_CLASSIC
+          ? "yarn"
+          : this.package.packageManager === NodePackageManager.YARN_BERRY
+          ? "yarn"
+          : this.packageManager === NodePackageManager.BUN
+          ? "bun"
           : this.package.packageManager === NodePackageManager.PNPM
           ? "pnpm"
           : "npm";

@@ -29,6 +29,14 @@ export interface VersionOptions {
    * The tag prefix corresponding to this version.
    */
   readonly tagPrefix?: string;
+
+  /**
+   * Find commits that should be considered releasable
+   * Used to decide if a release is required.
+   *
+   * @default ReleasableCommits.everyCommit()
+   */
+  readonly releasableCommits?: ReleasableCommits;
 }
 
 export class Version extends Component {
@@ -80,7 +88,7 @@ export class Version extends Component {
       this.releaseTagFileName
     );
 
-    const env = {
+    const env: Record<string, string> = {
       OUTFILE: versionInputFile,
       CHANGELOG: changelogFile,
       BUMPFILE: bumpFile,
@@ -89,6 +97,10 @@ export class Version extends Component {
       // doesn't work if custom configuration is long
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
     };
+
+    if (options.releasableCommits) {
+      env.RELEASABLE_COMMITS = options.releasableCommits.cmd;
+    }
 
     this.bumpTask = project.addTask("bump", {
       description:
@@ -111,4 +123,81 @@ export class Version extends Component {
     project.addPackageIgnore(`/${changelogFile}`);
     project.addPackageIgnore(`/${bumpFile}`);
   }
+}
+
+/**
+ * Find commits that should be considered releasable to decide if a release is required.
+ */
+export class ReleasableCommits {
+  /**
+   * Release every commit
+   *
+   * This will only not release if the most recent commit is tagged with the latest matching tag.
+   *
+   * @param path Consider only commits that are enough to explain how the files that match the specified paths came to be.
+   * This path is relative to the current working dir of the `bump` task, i.e. to only consider commits of a subproject use `"."`.
+   */
+  static everyCommit(path?: string) {
+    const cmd = `git log --oneline $LATEST_TAG..HEAD`;
+    return new ReleasableCommits(withPath(cmd, path));
+  }
+
+  /**
+   * Limit commits by their conventional commit type
+   *
+   * This will only release commit that match one of the provided types.
+   * Commits are required to follow the conventional commit spec and will be ignored otherwise.
+   *
+   * @param types List of conventional commit types that should be released
+   * @param path Consider only commits that are enough to explain how the files that match the specified paths came to be.
+   * This path is relative to the current working dir of the `bump` task, i.e. to only consider commits of a subproject use `"."`.
+   */
+  static ofType(types: string[], path?: string) {
+    const allowedTypes = types.join("|");
+
+    // @see: https://github.com/conventional-commits/parser/blob/eeefb961ebf5b9dfea0fea8b06f8ad34a1e439b9/lib/parser.js
+    // -E requires this to be POSIX Extended Regular Expression, which comes with certain limitations
+    // see https://en.wikibooks.org/wiki/Regular_Expressions/POSIX-Extended_Regular_Expressions for details
+    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(${allowedTypes}){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'`;
+
+    return new ReleasableCommits(withPath(cmd, path));
+  }
+
+  /**
+   * Release only features and fixes
+   *
+   * Shorthand for `ReleasableCommits.onlyOfType(['feat', 'fix'])`.
+   *
+   * @param path Consider only commits that are enough to explain how the files that match the specified paths came to be.
+   * This path is relative to the current working dir of the `bump` task, i.e. to only consider commits of a subproject use `"."`.
+   */
+  static featuresAndFixes(path?: string) {
+    return ReleasableCommits.ofType(["feat", "fix"], path);
+  }
+
+  /**
+   * Use an arbitrary shell command to find releasable commits since the latest tag.
+   *
+   * A new release will be initiated, if the number of returned commits is greater than zero.
+   * Must return a newline separate list of commits that should considered releasable.
+   * `$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.*
+   *
+   * @example "git log --oneline $LATEST_TAG..HEAD -- ."
+   */
+  static exec(cmd: string) {
+    return new ReleasableCommits(cmd);
+  }
+
+  private constructor(public cmd: string) {}
+}
+
+/**
+ * Append a path argument to a git command if one is provided
+ */
+function withPath(cmd: string, path?: string): string {
+  if (path !== undefined) {
+    return `${cmd} -- ${path}`;
+  }
+
+  return cmd;
 }

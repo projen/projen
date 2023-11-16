@@ -227,7 +227,7 @@ describe("node version in workflow", () => {
         expect.objectContaining({
           uses: "actions/setup-node@v3",
           with: {
-            "node-version": "16.x",
+            "node-version": "18.x",
           },
         }),
       ])
@@ -300,6 +300,36 @@ describe("workflow container image", () => {
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
       "my-custom-image"
+    );
+  });
+});
+
+describe("integ-runner", () => {
+  test('adds "integ-runner" to devDependencies', () => {
+    const project = new TestProject({
+      cdkVersion: "2.12.0",
+      experimentalIntegRunner: true,
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-runner"]
+    ).toStrictEqual("latest");
+    expect(
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"]
+    ).toStrictEqual("latest");
+    expect(project.tasks.tryFind("integ")?.steps).toEqual([
+      { exec: "integ-runner $@ --language typescript", receiveArgs: true },
+    ]);
+    expect(project.tasks.tryFind("integ:update")?.steps).toEqual([
+      {
+        exec: "integ-runner $@ --language typescript --update-on-failed",
+        receiveArgs: true,
+      },
+    ]);
+    expect(project.testTask.steps).toEqual(
+      expect.arrayContaining([{ spawn: "integ" }])
     );
   });
 });

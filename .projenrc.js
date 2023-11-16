@@ -1,4 +1,12 @@
-const { cdk, javascript, JsonFile, TextFile } = require("./lib");
+const {
+  cdk,
+  javascript,
+  JsonFile,
+  ProjectTree,
+  TextFile,
+  ReleasableCommits,
+  DependencyType,
+} = require("./lib");
 const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
@@ -20,13 +28,20 @@ const project = new cdk.JsiiProject({
     "cdk",
   ],
 
-  pullRequestTemplateContents: [
-    "---",
-    "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
-  ],
+  githubOptions: {
+    pullRequestLintOptions: {
+      contributorStatement:
+        "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
+      contributorStatementOptions: {
+        exemptUsers: ["cdklabs-automation", "dependabot[bot]"],
+      },
+    },
+  },
 
-  jsiiVersion: "5.x",
-  typescriptVersion: "5.x",
+  jsiiVersion: "5.1.x",
+  typescriptVersion: "5.1.x",
+
+  deps: ["constructs@^10.0.0"],
 
   bundledDeps: [
     "conventional-changelog-config-spec",
@@ -55,21 +70,14 @@ const project = new cdk.JsiiProject({
     "all-contributors-cli",
   ],
 
-  depsUpgradeOptions: {
-    // markmac depends on projen, we are excluding it here to avoid a circular update loop
-    exclude: ["markmac"],
-    workflowOptions: {
-      // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
-      schedule: javascript.UpgradeDependenciesSchedule.expressions([
-        "0 12 * * *",
-      ]),
-    },
-  },
+  peerDeps: ["constructs@^10.0.0"],
+
+  depsUpgrade: false, // configured below
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
-  minNodeVersion: "14.0.0", // Do not change this before a version has been EOL for a while
-  workflowNodeVersion: "16.14.0",
+  minNodeVersion: "16.0.0", // Do not change this before a version has been EOL for a while
+  workflowNodeVersion: "18.14.0",
 
   codeCov: true,
   prettier: true,
@@ -102,6 +110,10 @@ const project = new cdk.JsiiProject({
     },
   },
 
+  // To reduce the release frequency we only release features and fixes
+  // This is important because PyPI has limits on the total storage amount used, and extensions need to be manually requested
+  releasableCommits: ReleasableCommits.featuresAndFixes(),
+
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
     mavenGroupId: "io.github.cdklabs",
@@ -124,6 +136,39 @@ const project = new cdk.JsiiProject({
   docgenFilePath: "docusaurus/docs/API.md",
 });
 
+// Upgrade Dependencies in two parts:
+// a) Upgrade bundled dependencies as a releasable fix
+// b) Upgrade devDependencies as a chore
+new javascript.UpgradeDependencies(project, {
+  taskName: "upgrade-bundled",
+  types: [DependencyType.BUNDLED],
+  semanticCommit: "fix",
+  pullRequestTitle: "upgrade bundled dependencies",
+  workflowOptions: {
+    labels: ["auto-approve"],
+    // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
+    schedule: javascript.UpgradeDependenciesSchedule.expressions([
+      "0 12 * * *",
+    ]),
+  },
+});
+new javascript.UpgradeDependencies(project, {
+  taskName: "upgrade",
+  exclude: [
+    // exclude the bundled deps
+    ...project.deps.all
+      .filter((d) => d.type === DependencyType.BUNDLED)
+      .map((d) => d.name),
+    // constructs version constraint should not be changed
+    "constructs",
+    // markmac depends on projen, we are excluding it here to avoid a circular update loop
+    "markmac",
+  ],
+  workflowOptions: {
+    labels: ["auto-approve"],
+  },
+});
+
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
 new TextFile(project, "projen.bash", {
@@ -137,6 +182,7 @@ new TextFile(project, "projen.bash", {
     "fi",
     "exec bin/projen $@",
   ],
+  executable: true,
 });
 project.npmignore.exclude("/projen.bash");
 
@@ -200,6 +246,9 @@ project.addTask("contributors:update", {
 });
 project.npmignore.exclude("/.all-contributorsrc");
 
+project.npmignore.exclude("/docs/");
+project.npmignore.exclude("/logo/");
+project.npmignore.exclude("/rfcs/");
 project.npmignore.exclude("/scripts/");
 project.npmignore.exclude("/ARCHITECTURE.md");
 project.npmignore.exclude("/CODE_OF_CONDUCT.md");
@@ -208,6 +257,8 @@ project.npmignore.exclude("/VISION.md");
 project.npmignore.exclude("/SECURITY.md");
 project.npmignore.exclude("/.gitattributes");
 project.npmignore.exclude("/.gitpod.yml");
+project.npmignore.exclude("/.prettierignore");
+project.npmignore.exclude("/.prettierrc.json");
 
 function setupIntegTest() {
   const pythonCompatTask = project.addTask("integ:python-compat", {
@@ -256,5 +307,7 @@ setupBundleTaskRunner();
 // fixes feedback loop where projen contibutors run "build"
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
+
+new ProjectTree(project);
 
 project.synth();

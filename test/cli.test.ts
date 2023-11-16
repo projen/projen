@@ -44,6 +44,17 @@ test('running "projen" with task in root of a project will execute task of the p
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
+test('running "projen" with task in root of a project that receives args will pass through --help flag', () => {
+  const project = new Project({ name: "my-project" });
+  project.testTask?.exec('echo "$@" > bar.txt', { receiveArgs: true });
+  project.synth();
+
+  execProjenCLI(project.outdir, ["test", "something", "--help"]);
+  expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual(
+    "something --help\n"
+  );
+});
+
 test('running "projen" with task in subdirectory of a project will execute task of the project', () => {
   const project = new Project({ name: "my-project" });
   project.testTask?.exec('echo "foo" > bar.txt');
@@ -57,9 +68,9 @@ test('running "projen" with task in subdirectory of a project will execute task 
 test('running "projen" with task in root of a subproject will execute task of the subproject', () => {
   const project = new Project({ name: "my-project" });
   const subProject = new Project({
-    name: "my-sub-project",
+    name: "my-subproject",
     parent: project,
-    outdir: "sub-project",
+    outdir: "subproject",
   });
   subProject.testTask?.exec('echo "foo" > bar.txt');
   project.synth();
@@ -73,9 +84,9 @@ test('running "projen" with task in root of a subproject will execute task of th
 test('running "projen" with task in subdirectory of a subproject will execute task of the subproject', () => {
   const project = new Project({ name: "my-project" });
   const subProject = new Project({
-    name: "my-sub-project",
+    name: "my-subproject",
     parent: project,
-    outdir: "sub-project",
+    outdir: "subproject",
   });
   subProject.testTask?.exec('echo "foo" > bar.txt');
   project.synth();

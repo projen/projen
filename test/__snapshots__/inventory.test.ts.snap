@@ -4,7 +4,7 @@ exports[`inventory 1`] = `
 [
   {
     "docs": "AWS CDK app in Java.",
-    "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdkjavaapp",
+    "docsurl": "https://projen.io/api/API.html#awscdkjavaapp-",
     "fqn": "projen.awscdk.AwsCdkJavaApp",
     "moduleName": "projen",
     "options": [
@@ -1142,7 +1142,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK app in Python.",
-    "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdkpythonapp",
+    "docsurl": "https://projen.io/api/API.html#awscdkpythonapp-",
     "fqn": "projen.awscdk.AwsCdkPythonApp",
     "moduleName": "projen",
     "options": [
@@ -2493,7 +2493,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK app in TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdktypescriptapp",
+    "docsurl": "https://projen.io/api/API.html#awscdktypescriptapp-",
     "fqn": "projen.awscdk.AwsCdkTypeScriptApp",
     "moduleName": "projen",
     "options": [
@@ -3231,7 +3231,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -3474,6 +3474,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "EslintOptions",
         "switch": "eslint-options",
+      },
+      {
+        "default": "false",
+        "docs": "Enable experimental support for the AWS CDK integ-runner.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "experimentalIntegRunner",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": [
+          "experimentalIntegRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "experimental-integ-runner",
       },
       {
         "default": "true",
@@ -4153,7 +4170,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -4645,6 +4662,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -5369,13 +5405,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "awscdk-app-ts",
     "typename": "awscdk.AwsCdkTypeScriptApp",
   },
   {
     "docs": "AWS CDK construct library project.",
-    "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdkconstructlibrary",
+    "docsurl": "https://projen.io/api/API.html#awscdkconstructlibrary-",
     "fqn": "projen.awscdk.AwsCdkConstructLibrary",
     "moduleName": "projen",
     "options": [
@@ -6144,7 +6217,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6443,6 +6516,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "exclude-typescript",
+      },
+      {
+        "default": "false",
+        "docs": "Enable experimental support for the AWS CDK integ-runner.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "experimentalIntegRunner",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": [
+          "experimentalIntegRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "experimental-integ-runner",
       },
       {
         "default": "true",
@@ -7123,7 +7213,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -7709,6 +7799,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -8403,13 +8512,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "awscdk-construct",
     "typename": "awscdk.AwsCdkConstructLibrary",
   },
   {
     "docs": "CDK8s app in Python.",
-    "docsurl": "https://projen.io/api/API.html#projen-cdk8s-cdk8spythonapp",
+    "docsurl": "https://projen.io/api/API.html#cdk8spythonapp-",
     "fqn": "projen.cdk8s.Cdk8sPythonApp",
     "moduleName": "projen",
     "options": [
@@ -8521,7 +8667,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.28"",
-        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "docs": "Minimum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8594,7 +8740,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.0-rc.26"",
-        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "docs": "Minimum version of the cdk8s-plus-XX to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8628,7 +8774,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.3.33"",
-        "docs": "Minumum version of the cdk8s to depend on.",
+        "docs": "Minimum version of the cdk8s to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -9668,7 +9814,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s app in TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#projen-cdk8s-cdk8stypescriptapp",
+    "docsurl": "https://projen.io/api/API.html#cdk8stypescriptapp-",
     "fqn": "projen.cdk8s.Cdk8sTypeScriptApp",
     "moduleName": "projen",
     "options": [
@@ -10006,7 +10152,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.28"",
-        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "docs": "Minimum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10079,7 +10225,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.0-rc.26"",
-        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "docs": "Minimum version of the cdk8s-plus-XX to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10113,7 +10259,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.3.33"",
-        "docs": "Minumum version of the cdk8s to depend on.",
+        "docs": "Minimum version of the cdk8s to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10377,7 +10523,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -11246,7 +11392,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -11738,6 +11884,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -12399,13 +12564,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "cdk8s-app-ts",
     "typename": "cdk8s.Cdk8sTypeScriptApp",
   },
   {
     "docs": "CDK8s construct library project.",
-    "docsurl": "https://projen.io/api/API.html#projen-cdk8s-constructlibrarycdk8s",
+    "docsurl": "https://projen.io/api/API.html#constructlibrarycdk8s-",
     "fqn": "projen.cdk8s.ConstructLibraryCdk8s",
     "moduleName": "projen",
     "options": [
@@ -13111,7 +13313,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -14020,7 +14222,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -14606,6 +14808,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -15300,13 +15521,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "cdk8s-construct",
     "typename": "cdk8s.ConstructLibraryCdk8s",
   },
   {
     "docs": "CDKTF construct library project.",
-    "docsurl": "https://projen.io/api/API.html#projen-cdktf-constructlibrarycdktf",
+    "docsurl": "https://projen.io/api/API.html#constructlibrarycdktf-",
     "fqn": "projen.cdktf.ConstructLibraryCdktf",
     "moduleName": "projen",
     "options": [
@@ -15961,7 +16219,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -16853,7 +17111,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -17439,6 +17697,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -18133,13 +18410,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "cdktf-construct",
     "typename": "cdktf.ConstructLibraryCdktf",
   },
   {
     "docs": "Java project.",
-    "docsurl": "https://projen.io/api/API.html#projen-java-javaproject",
+    "docsurl": "https://projen.io/api/API.html#javaproject-",
     "fqn": "projen.java.JavaProject",
     "moduleName": "projen",
     "options": [
@@ -18976,7 +19290,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Multi-language jsii library project.",
-    "docsurl": "https://projen.io/api/API.html#projen-cdk-jsiiproject",
+    "docsurl": "https://projen.io/api/API.html#jsiiproject-",
     "fqn": "projen.cdk.JsiiProject",
     "moduleName": "projen",
     "options": [
@@ -19578,7 +19892,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -20470,7 +20784,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -21056,6 +21370,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -21750,13 +22083,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "jsii",
     "typename": "cdk.JsiiProject",
   },
   {
     "docs": "Next.js project without TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#projen-web-nextjsproject",
+    "docsurl": "https://projen.io/api/API.html#nextjsproject-",
     "fqn": "projen.web.NextJsProject",
     "moduleName": "projen",
     "options": [
@@ -22290,7 +22660,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -22970,7 +23340,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -23426,6 +23796,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -24015,13 +24404,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "nextjs",
     "typename": "web.NextJsProject",
   },
   {
     "docs": "Next.js project with TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#projen-web-nextjstypescriptproject",
+    "docsurl": "https://projen.io/api/API.html#nextjstypescriptproject-",
     "fqn": "projen.web.NextJsTypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -24555,7 +24981,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -25373,7 +25799,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -25865,6 +26291,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -26543,13 +26988,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "nextjs-ts",
     "typename": "web.NextJsTypeScriptProject",
   },
   {
     "docs": "Node.js project.",
-    "docsurl": "https://projen.io/api/API.html#projen-javascript-nodeproject",
+    "docsurl": "https://projen.io/api/API.html#nodeproject-",
     "fqn": "projen.javascript.NodeProject",
     "moduleName": "projen",
     "options": [
@@ -27066,7 +27548,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -27746,7 +28228,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -28202,6 +28684,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -28740,13 +29241,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "node",
     "typename": "javascript.NodeProject",
   },
   {
     "docs": "Base project.",
-    "docsurl": "https://projen.io/api/API.html#projen-project",
+    "docsurl": "https://projen.io/api/API.html#project-",
     "fqn": "projen.Project",
     "moduleName": "projen",
     "options": [
@@ -28969,7 +29507,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Python project.",
-    "docsurl": "https://projen.io/api/API.html#projen-python-pythonproject",
+    "docsurl": "https://projen.io/api/API.html#pythonproject-",
     "fqn": "projen.python.PythonProject",
     "moduleName": "projen",
     "options": [
@@ -30002,7 +30540,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "React project without TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#projen-web-reactproject",
+    "docsurl": "https://projen.io/api/API.html#reactproject-",
     "fqn": "projen.web.ReactProject",
     "moduleName": "projen",
     "options": [
@@ -30519,7 +31057,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -31199,7 +31737,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -31655,6 +32193,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -32249,13 +32806,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "react",
     "typename": "web.ReactProject",
   },
   {
     "docs": "React project with TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#projen-web-reacttypescriptproject",
+    "docsurl": "https://projen.io/api/API.html#reacttypescriptproject-",
     "fqn": "projen.web.ReactTypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -32772,7 +33366,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -33590,7 +34184,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -34082,6 +34676,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -34765,13 +35378,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "react-ts",
     "typename": "web.ReactTypeScriptProject",
   },
   {
     "docs": "TypeScript project.",
-    "docsurl": "https://projen.io/api/API.html#projen-typescript-typescriptproject",
+    "docsurl": "https://projen.io/api/API.html#typescriptproject-",
     "fqn": "projen.typescript.TypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -35288,7 +35938,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36106,7 +36756,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -36598,6 +37248,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -37259,13 +37928,50 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "typescript",
     "typename": "typescript.TypeScriptProject",
   },
   {
     "docs": "TypeScript app.",
-    "docsurl": "https://projen.io/api/API.html#projen-typescript-typescriptappproject",
+    "docsurl": "https://projen.io/api/API.html#typescriptappproject-",
     "fqn": "projen.typescript.TypeScriptAppProject",
     "moduleName": "projen",
     "options": [
@@ -37782,7 +38488,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Use github workflows to handle dependency upgrades.",
+        "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -38600,7 +39306,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -39092,6 +39798,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      {
+        "default": "ReleasableCommits.everyCommit()",
+        "docs": "Find commits that should be considered releasable Used to decide if a release is required.",
+        "featured": false,
+        "fqn": "projen.ReleasableCommits",
+        "fullType": {
+          "fqn": "projen.ReleasableCommits",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "releasableCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releasableCommits",
+        ],
+        "simpleType": "ReleasableCommits",
+        "switch": "releasable-commits",
       },
       {
         "default": "- true (false for subprojects)",
@@ -39752,6 +40477,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "typescript-app",

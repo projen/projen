@@ -135,6 +135,11 @@ export class Bundler extends Component {
       args.push("--sourcemap");
     }
 
+    const format = options.format;
+    if (format) {
+      args.push(`--format=${format}`);
+    }
+
     const loaders =
       options.loaders ?? false ? options.loaders : this.loaders ?? false;
     if (loaders) {
@@ -289,4 +294,21 @@ export interface AddBundleOptions extends BundlingOptions {
    * Loaders are appended to the esbuild command by `--loader:.extension=loader`
    */
   readonly loaders?: { [key: string]: string };
+
+  /**
+   * Output format for the generated JavaScript files. There are currently three possible values that can be configured: `"iife"`, `"cjs"`, and `"esm"`.
+   *
+   * If not set (`undefined`), esbuild picks an output format for you based on `platform`:
+   * - `"cjs"` if `platform` is `"node"`
+   * - `"iife"` if `platform` is `"browser"`
+   * - `"esm"` if `platform` is `"neutral"`
+   *
+   * Note: If making a bundle to run under node with ESM, set `format` to `"esm"` instead of setting `platform` to `"neutral"`.
+   *
+   * @default undefined
+   *
+   * @see https://esbuild.github.io/api/#format
+   */
+
+  readonly format?: string;
 }

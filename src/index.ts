@@ -5,6 +5,7 @@ export * from "./docker-compose";
 export * from "./file";
 export * from "./gitattributes";
 export * from "./gitpod";
+export * from "./runner-options";
 export * from "./ignore-file";
 export * from "./ini";
 export * from "./json";
@@ -16,6 +17,7 @@ export * from "./object-file";
 export * from "./option-hints";
 export * from "./project";
 export * from "./project-build";
+export * from "./project-tree";
 export * from "./projects";
 export * from "./projenrc";
 export * from "./projenrc-json";
@@ -35,7 +37,7 @@ export * from "./version";
 export * from "./yaml";
 export * from "./xmlfile";
 
-// export submobules
+// export submodules
 export * as web from "./web";
 export * as github from "./github";
 export * as gitlab from "./gitlab";

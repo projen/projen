@@ -2,6 +2,7 @@ import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for `Stale`.
@@ -26,8 +27,17 @@ export interface StaleOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -123,7 +133,7 @@ export class Stale extends Component {
 
     stale.addJobs({
       stale: {
-        runsOn: options.runsOn ?? ["ubuntu-latest"],
+        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
         permissions: {
           issues: JobPermission.WRITE,
           pullRequests: JobPermission.WRITE,

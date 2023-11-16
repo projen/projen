@@ -56,10 +56,6 @@ export interface CiConfigurationOptions {
  */
 export class CiConfiguration extends Component {
   /**
-   * The project the configuration belongs to.
-   */
-  public readonly project: Project;
-  /**
    * The name of the configuration.
    */
   public readonly name: string;
@@ -148,7 +144,6 @@ export class CiConfiguration extends Component {
     options?: CiConfigurationOptions
   ) {
     super(project);
-    this.project = project;
     this.name = path.parse(name).name;
     this.path =
       this.name === "gitlab-ci"
@@ -374,7 +369,12 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
 
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
-    if (typeof v === "object" && v != null && k !== "variables") {
+    if (
+      typeof v === "object" &&
+      v != null &&
+      k !== "variables" &&
+      k !== "idTokens"
+    ) {
       v = snakeCaseKeys(v);
     }
     result[skipTopLevel ? k : snake(k)] = v;

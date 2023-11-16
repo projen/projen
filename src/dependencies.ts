@@ -322,4 +322,10 @@ export enum DependencyType {
    * Available for Node packages
    */
   OVERRIDE = "override",
+
+  /**
+   * An optional dependency that may be used at runtime if available, but is not required.
+   * It is expected to be installed by the consumer.
+   */
+  OPTIONAL = "optional",
 }

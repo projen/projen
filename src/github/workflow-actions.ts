@@ -8,7 +8,8 @@ function context(value: string) {
 
 const REPO = context("github.repository");
 const RUN_ID = context("github.run_id");
-const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
+const SERVER_URL = context("github.server_url");
+const RUN_URL = `${SERVER_URL}/${REPO}/actions/runs/${RUN_ID}`;
 const GIT_PATCH_FILE_DEFAULT = ".repo.patch";
 const RUNNER_TEMP = "${{ runner.temp }}";
 

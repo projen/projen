@@ -16,8 +16,9 @@ import {
   JobPermission,
   JobPermissions,
 } from "../github/workflows-model";
-import { NodeProject } from "../javascript";
+import { NodePackageManager, NodeProject } from "../javascript";
 import { Release } from "../release";
+import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
 
@@ -43,13 +44,34 @@ export interface UpgradeDependenciesOptions {
   readonly include?: string[];
 
   /**
+   * Determines the target version to upgrade dependencies to.
+   *
+   * @see https://github.com/raineorshine/npm-check-updates#target
+   *
+   * @default "minor"
+   */
+  readonly target?: string;
+
+  /**
+   * Check peer dependencies of installed packages and filter updates to compatible versions.
+   *
+   * By default, the upgrade workflow will adhere to version constraints from peer dependencies.
+   * Sometimes this is not desirable and can be disabled.
+   *
+   * @see https://github.com/raineorshine/npm-check-updates#peer
+   *
+   * @default true
+   */
+  readonly satisfyPeerDependencies?: boolean;
+
+  /**
    * Include a github workflow for creating PR's that upgrades the
    * required dependencies, either by manual dispatch, or by a schedule.
    *
    * If this is `false`, only a local projen task is created, which can be executed manually to
    * upgrade the dependencies.
    *
-   * @default - true for root projects, false for sub-projects.
+   * @default - true for root projects, false for subprojects.
    */
   readonly workflow?: boolean;
 
@@ -76,11 +98,25 @@ export interface UpgradeDependenciesOptions {
   readonly pullRequestTitle?: string;
 
   /**
+   * The semantic commit type.
+   *
+   * @default 'chore'
+   */
+  readonly semanticCommit?: string;
+
+  /**
    * Add Signed-off-by line by the committer at the end of the commit log message.
    *
    * @default true
    */
   readonly signoff?: boolean;
+
+  /**
+   * Specify which dependency types the upgrade should operate on.
+   *
+   * @default - All dependency types.
+   */
+  readonly types?: DependencyType[];
 }
 
 /**
@@ -114,12 +150,26 @@ export class UpgradeDependencies extends Component {
   private readonly gitIdentity: GitIdentity;
   private readonly postBuildSteps: JobStep[];
   private readonly permissions: JobPermissions;
+  private readonly depTypes: DependencyType[];
+  private readonly upgradeTarget: string;
+  private readonly satisfyPeerDependencies: boolean;
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
     this._project = project;
     this.options = options;
+    this.depTypes = this.options.types ?? [
+      DependencyType.BUILD,
+      DependencyType.BUNDLED,
+      DependencyType.DEVENV,
+      DependencyType.PEER,
+      DependencyType.RUNTIME,
+      DependencyType.TEST,
+      DependencyType.OPTIONAL,
+    ];
+    this.upgradeTarget = this.options.target ?? "minor";
+    this.satisfyPeerDependencies = this.options.satisfyPeerDependencies ?? true;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -180,84 +230,139 @@ export class UpgradeDependencies extends Component {
   }
 
   private renderTaskSteps(): TaskStep[] {
-    const exclude = this.options.exclude ?? [];
+    const steps = new Array<TaskStep>();
 
-    // exclude depedencies that has already version pinned (fully or with patch version) by Projen with ncu (but not package manager upgrade)
-    // Getting only unique values through set
-    const ncuExcludes = [
-      ...new Set(
-        this.project.deps.all
-          .filter(
-            (dep) =>
-              dep.version &&
-              dep.version[0] !== "^" &&
-              dep.type !== DependencyType.OVERRIDE
-          )
-          .map((dep) => dep.name)
-          .concat(exclude)
-      ),
-    ];
-
-    const ncuIncludes = this.options.include?.filter(
-      (item) => !ncuExcludes.includes(item)
+    const include = Array.from(
+      new Set(this.options.include ?? this.filterDependencies())
     );
 
-    const includeLength = this.options.include?.length ?? 0;
-    const ncuIncludesLength = ncuIncludes?.length ?? 0;
-
-    // If all explicit includes already have version pinned, don't add task.
-    // Note that without explicit includes task gets added
-    if (includeLength > 0 && ncuIncludesLength === 0) {
+    if (include.length === 0) {
       return [{ exec: "echo No dependencies to upgrade." }];
     }
-
-    const steps = new Array<TaskStep>();
 
     // update npm-check-updates before everything else, in case there is a bug
     // in it or one of its dependencies. This will make upgrade workflows
     // slightly more stable and resilient to upstream changes.
-    steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
-        [],
-        ["npm-check-updates"]
-      ),
-    });
+    const ncuDep = this.project.deps.all.find(
+      (d) => d.name === "npm-check-updates"
+    )!;
+    steps.push({ exec: this.renderUpgradePackagesCommand([ncuDep.name]) });
 
-    for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
-      const ncuCommand = [
-        "npm-check-updates",
-        "--dep",
-        dep,
-        "--upgrade",
-        "--target=minor",
-      ];
-      // Don't add includes and excludes same time
-      if (ncuIncludes) {
-        ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
-      } else if (ncuExcludes.length > 0) {
-        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
-      }
-
-      steps.push({ exec: ncuCommand.join(" ") });
-    }
+    const ncuCommand = [
+      "npm-check-updates",
+      "--upgrade",
+      `--target=${this.upgradeTarget}`,
+      `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
+      `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
+      `--filter=${include.join(",")}`,
+    ];
+    // bump versions in package.json
+    steps.push({ exec: ncuCommand.join(" ") });
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
     steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
-        exclude,
-        this.options.include
-      ),
+      exec: this.renderUpgradePackagesCommand(include),
     });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     steps.push({ exec: this._project.projenCommand });
-
     steps.push({ spawn: this.postUpgradeTask.name });
 
     return steps;
+  }
+
+  /**
+   * Render projen dependencies types to a list of ncu compatible types
+   */
+  private renderNcuDependencyTypes(types: DependencyType[]) {
+    return Array.from(
+      new Set(
+        types
+          .map((type) => {
+            switch (type) {
+              case DependencyType.PEER:
+                return "peer";
+              case DependencyType.RUNTIME:
+                return "prod";
+              case DependencyType.OPTIONAL:
+                return "optional";
+
+              case DependencyType.TEST:
+              case DependencyType.DEVENV:
+              case DependencyType.BUILD:
+                return "dev";
+
+              case DependencyType.BUNDLED:
+              default:
+                return false;
+            }
+          })
+          .filter((type) => Boolean(type))
+      )
+    ).join(",");
+  }
+
+  /**
+   * Render a package manager specific command to upgrade all requested dependencies.
+   */
+  private renderUpgradePackagesCommand(include: string[]): string {
+    function upgradePackages(command: string) {
+      return () => {
+        return `${command} ${include.join(" ")}`;
+      };
+    }
+
+    const packageManager = this._project.package.packageManager;
+
+    let lazy = undefined;
+    switch (packageManager) {
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
+        lazy = upgradePackages("yarn upgrade");
+        break;
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        lazy = upgradePackages("yarn up");
+        break;
+      case NodePackageManager.NPM:
+        lazy = upgradePackages("npm update");
+        break;
+      case NodePackageManager.PNPM:
+        lazy = upgradePackages("pnpm update");
+        break;
+      case NodePackageManager.BUN:
+        lazy = upgradePackages("bun update");
+        break;
+      default:
+        throw new Error(`unexpected package manager ${packageManager}`);
+    }
+
+    // return a lazy function so that dependencies include ones that were
+    // added post project instantiation (i.e using project.addDeps)
+    return lazy as unknown as string;
+  }
+
+  private filterDependencies(): string[] {
+    const depedencies = [];
+
+    const deps = this.project.deps.all
+      // remove those that have a pinned version
+      .filter((d) => !d.version || d.version[0] === "^")
+      // remove overriden dependencies
+      .filter((d) => d.type !== DependencyType.OVERRIDE);
+
+    for (const type of this.depTypes) {
+      depedencies.push(
+        ...deps
+          .filter((d) => d.type === type)
+          .filter((d) => !(this.options.exclude ?? []).includes(d.name))
+      );
+    }
+
+    return depedencies.map((d) => d.name);
   }
 
   private createWorkflow(
@@ -294,8 +399,6 @@ export class UpgradeDependencies extends Component {
   }
 
   private createUpgrade(task: Task, github: GitHub, branch?: string): Upgrade {
-    const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
-
     const with_ = {
       ...(branch ? { ref: branch } : {}),
       ...(github.downloadLfs ? { lfs: true } : {}),
@@ -327,7 +430,10 @@ export class UpgradeDependencies extends Component {
         name: "Upgrade",
         container: this.containerOptions,
         permissions: this.permissions,
-        runsOn: runsOn ?? ["ubuntu-latest"],
+        ...filteredRunsOnOptions(
+          this.options.workflowOptions?.runsOn,
+          this.options.workflowOptions?.runsOnGroup
+        ),
         steps: steps,
         outputs: {
           [PATCH_CREATED_OUTPUT]: {
@@ -346,6 +452,8 @@ export class UpgradeDependencies extends Component {
       this.options.workflowOptions?.projenCredentials ??
       workflow.projenCredentials;
 
+    const semanticCommit = this.options.semanticCommit ?? "chore";
+
     return {
       job: WorkflowJobs.pullRequestFromPatch({
         patch: {
@@ -355,8 +463,11 @@ export class UpgradeDependencies extends Component {
         },
         workflowName: workflow.name,
         credentials,
-        runsOn: this.options.workflowOptions?.runsOn,
-        pullRequestTitle: `chore(deps): ${this.pullRequestTitle}`,
+        ...filteredRunsOnOptions(
+          this.options.workflowOptions?.runsOn,
+          this.options.workflowOptions?.runsOnGroup
+        ),
+        pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,
         assignees: this.options.workflowOptions?.assignees,
@@ -440,8 +551,17 @@ export interface UpgradeDependenciesWorkflowOptions {
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Permissions granted to the upgrade job

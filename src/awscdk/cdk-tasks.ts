@@ -67,7 +67,7 @@ export class CdkTasks extends Component {
       exec: "cdk diff",
     });
 
-    // typescript projects already have a "watch" task, we we will repurpose it
+    // typescript projects already have a "watch" task, we will repurpose it
     const watch = project.tasks.tryFind("watch") ?? project.addTask("watch");
 
     watch.reset();

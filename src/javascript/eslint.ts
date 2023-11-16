@@ -98,6 +98,12 @@ export interface EslintOverride {
   readonly files: string[];
 
   /**
+   * Pattern(s) to exclude from this override.
+   * If a file matches any of the excluded patterns, the configuration won’t apply.
+   */
+  readonly excludedFiles?: string[];
+
+  /**
    * The overriden rules
    */
   readonly rules?: { [rule: string]: any };
@@ -106,6 +112,16 @@ export interface EslintOverride {
    * The overridden parser
    */
   readonly parser?: string;
+
+  /**
+   * Config(s) to extend in this override
+   */
+  readonly extends?: string[];
+
+  /**
+   * `plugins` override
+   */
+  readonly plugins?: string[];
 }
 
 /**
@@ -147,10 +163,10 @@ export class Eslint extends Component {
 
   private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
-  private readonly _plugins = new Array<string>();
-  private readonly _extends = new Array<string>();
-  private readonly _fileExtensions: string[];
-  private readonly _lintPatterns: string[];
+  private readonly _plugins = new Set<string>();
+  private readonly _extends = new Set<string>();
+  private readonly _fileExtensions: Set<string>;
+  private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintOptions) {
@@ -160,9 +176,8 @@ export class Eslint extends Component {
 
     project.addDevDeps(
       "eslint@^8",
-      "@typescript-eslint/eslint-plugin@^5",
-      "@typescript-eslint/parser@^5",
-      "eslint-import-resolver-node",
+      "@typescript-eslint/eslint-plugin@^6",
+      "@typescript-eslint/parser@^6",
       "eslint-import-resolver-typescript",
       "eslint-plugin-import"
     );
@@ -176,12 +191,12 @@ export class Eslint extends Component {
 
     const devdirs = options.devdirs ?? [];
 
-    this._lintPatterns = [
+    this._lintPatterns = new Set([
       ...options.dirs,
       ...devdirs,
       ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
-    ];
-    this._fileExtensions = options.fileExtensions ?? [".ts"];
+    ]);
+    this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
 
@@ -356,14 +371,14 @@ export class Eslint extends Component {
         node: true,
       },
       root: true,
-      plugins: () => this._plugins,
+      plugins: this._plugins,
       parser: "@typescript-eslint/parser",
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
         project: tsconfig,
       },
-      extends: () => this._extends,
+      extends: this._extends,
       settings: {
         "import/parsers": {
           "@typescript-eslint/parser": [".ts", ".tsx"],
@@ -412,7 +427,7 @@ export class Eslint extends Component {
    * Add a file, glob pattern or directory with source files to lint (e.g. [ "src" ])
    */
   public addLintPattern(pattern: string) {
-    this._lintPatterns.push(pattern);
+    this._lintPatterns.add(pattern);
     this.updateTask();
   }
 
@@ -430,7 +445,9 @@ export class Eslint extends Component {
    * @param plugins The names of plugins to add
    */
   public addPlugins(...plugins: string[]) {
-    this._plugins.push(...plugins);
+    for (const plugin of plugins) {
+      this._plugins.add(plugin);
+    }
   }
 
   /**
@@ -452,7 +469,9 @@ export class Eslint extends Component {
    * @param extendList The list of "extends" to add.
    */
   public addExtends(...extendList: string[]) {
-    this._extends.push(...extendList);
+    for (const extend of extendList) {
+      this._extends.add(extend);
+    }
   }
 
   /**
@@ -493,7 +512,7 @@ export class Eslint extends Component {
     this.eslintTask.reset(
       [
         "eslint",
-        `--ext ${this._fileExtensions.join(",")}`,
+        `--ext ${[...this._fileExtensions].join(",")}`,
         "--fix",
         "--no-error-on-unmatched-pattern",
         ...this._lintPatterns,

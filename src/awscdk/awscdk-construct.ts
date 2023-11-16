@@ -2,6 +2,7 @@ import * as semver from "semver";
 import { AutoDiscover } from "./auto-discover";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
+import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 import { DependencyType } from "../dependencies";
@@ -49,6 +50,14 @@ export interface AwsCdkConstructLibraryOptions
   readonly integrationTestAutoDiscover?: boolean;
 
   /**
+   * Enable experimental support for the AWS CDK integ-runner.
+   *
+   * @default false
+   * @experimental
+   */
+  readonly experimentalIntegRunner?: boolean;
+
+  /**
    * Common options for all AWS Lambda functions.
    *
    * @default - default options
@@ -78,7 +87,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
               pinnedDevDependency: false,
             }
           : undefined,
-      workflowNodeVersion: options.minNodeVersion ?? "16.x",
+      workflowNodeVersion: options.minNodeVersion ?? "18.x",
       ...options,
     });
 
@@ -99,6 +108,10 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       lambdaExtensionAutoDiscover: options.lambdaExtensionAutoDiscover ?? true,
       integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });
+
+    if (options.experimentalIntegRunner) {
+      new IntegRunner(this);
+    }
   }
 
   /**
