@@ -47,7 +47,7 @@ const config = {
           path: 'docs',
           async sidebarItemsGenerator({defaultSidebarItemsGenerator, ...args}) {
             const sidebarItems = await defaultSidebarItemsGenerator(args);
-            return sidebarItems.filter(x => x.label !== 'API Reference');
+            return sidebarItems.filter(x => x.label !== 'api');
           }
         },
         theme: {
