@@ -19,7 +19,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.7"'); // default python version
+  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"'); // default python version
 });
 
 test("poetry and venv fails", () => {
@@ -82,7 +82,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.7"'); // default python version
+  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"'); // default python version
 });
 
 test("poetry enabled with specified python version", () => {
@@ -93,10 +93,10 @@ test("poetry enabled with specified python version", () => {
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
   });
-  p.addDependency("python@^3.7,<=3.9");
+  p.addDependency("python@^3.8,<=3.11");
 
   const snapshot = synthSnapshot(p);
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.7,<=3.9"');
+  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8,<=3.11"');
 });
 
 test("poetry enabled with poetry-specific options", () => {
