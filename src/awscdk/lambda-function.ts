@@ -353,7 +353,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_20_X = new LambdaRuntime(
     "nodejs20.x",
     "node20"
-  );  
+  );
 
   public readonly esbuildPlatform = "node";
 
