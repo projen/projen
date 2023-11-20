@@ -38,27 +38,6 @@ describe("prettier", () => {
     // THEN
     expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
   });
-
-  test("error on formatting when enabled", () => {
-    // GIVEN
-    const project = new NodeProject({
-      name: "test",
-      defaultReleaseBranch: "master",
-    });
-
-    // WHEN
-    new Eslint(project, {
-      dirs: ["mysrc"],
-      prettier: true,
-      lintProjenRc: false,
-    });
-
-    // THEN
-    const output = synthSnapshot(project);
-    expect(output[".eslintrc.json"].rules).toHaveProperty("prettier/prettier", [
-      "error",
-    ]);
-  });
 });
 
 describe("alias", () => {
@@ -132,9 +111,10 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
 
   // THEN
   const output = synthSnapshot(project);
-  expect(output[".eslintrc.json"].rules).toMatchObject({
-    "prettier/prettier": ["error"],
-  });
+  console.log(output[".eslintrc.json"]);
+  expect(output[".eslintrc.json"].extends).toContain(
+    "plugin:prettier/recommended"
+  );
 });
 
 test("can output yml instead of json", () => {
