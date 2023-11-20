@@ -335,11 +335,6 @@ tsconfig.tsbuildinfo
         "version": "^10.0.0",
       },
       {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      {
         "name": "projen",
         "type": "build",
       },
@@ -538,16 +533,13 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          {
-            "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/node,@types/react,@types/react-dom,constructs,npm-check-updates,projen,typescript,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/node,@types/react,@types/react-dom,constructs,projen,typescript,autoprefixer,next,postcss,react,react-dom,tailwindcss",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @types/node @types/react @types/react-dom constructs npm-check-updates projen typescript autoprefixer next postcss react react-dom tailwindcss",
+            "exec": "yarn upgrade @types/node @types/react @types/react-dom constructs projen typescript autoprefixer next postcss react react-dom tailwindcss",
           },
           {
             "exec": "npx projen",
@@ -793,7 +785,6 @@ tsconfig.tsbuildinfo
       "@types/react": "*",
       "@types/react-dom": "*",
       "constructs": "^10.0.0",
-      "npm-check-updates": "^16",
       "projen": "*",
       "typescript": "*",
     },

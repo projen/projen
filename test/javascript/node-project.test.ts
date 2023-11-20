@@ -851,7 +851,6 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "constructs",
     "jest-junit",
-    "npm-check-updates",
     "standard-version",
     "projen",
   ]);
@@ -878,7 +877,6 @@ test("renovatebot ignored dependency overrides", () => {
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "constructs",
     "jest-junit",
-    "npm-check-updates",
     "standard-version",
     "axios",
     "some-overriden-package",
