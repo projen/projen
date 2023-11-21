@@ -229,6 +229,21 @@ export class UpgradeDependencies extends Component {
   }
 
   private renderTaskSteps(): TaskStep[] {
+    function executeCommand(packageManager: NodePackageManager): string {
+      switch (packageManager) {
+        case NodePackageManager.NPM:
+        case NodePackageManager.YARN:
+        case NodePackageManager.YARN_CLASSIC:
+          return "npx";
+        case NodePackageManager.PNPM:
+          return "pnpx";
+        case NodePackageManager.YARN2:
+        case NodePackageManager.YARN_BERRY:
+          return "yarn dlx";
+        case NodePackageManager.BUN:
+          return "bunx";
+      }
+    }
     const steps = new Array<TaskStep>();
 
     const include = Array.from(
@@ -240,7 +255,9 @@ export class UpgradeDependencies extends Component {
     }
 
     const ncuCommand = [
-      "npx npm-check-updates@latest",
+      `${executeCommand(
+        this._project.package.packageManager
+      )} npm-check-updates@latest`,
       "--upgrade",
       `--target=${this.upgradeTarget}`,
       `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,

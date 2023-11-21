@@ -4442,7 +4442,7 @@ resolution-mode=highest
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=aws-sdk,constructs,jest,jest-junit,projen,standard-version,esbuild"
+          "exec": "pnpx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=aws-sdk,constructs,jest,jest-junit,projen,standard-version,esbuild"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
