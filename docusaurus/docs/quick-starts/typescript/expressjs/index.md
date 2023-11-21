@@ -150,4 +150,4 @@ Ran all test suites.
 While Express.js can be run from a single file, it usually is not a best practice to do so. Instead,
 consider following the structure created by the [Express.js generator](https://expressjs.com/en/starter/generator.html).
 
-Better yet, challenge yourself to [use projen to create a project for you based on the generator](docs/custom-constructs/index.md)!
+Better yet, challenge yourself to [use projen to create a project for you based on the generator](/docs/custom/)!
