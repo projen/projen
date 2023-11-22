@@ -608,7 +608,7 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,constructs,projen,standard-version,react,react-dom,react-scripts,web-vitals",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,constructs,projen,standard-version,react,react-dom,react-scripts,web-vitals",
           },
           {
             "exec": "yarn install --check-files",

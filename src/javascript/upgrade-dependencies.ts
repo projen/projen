@@ -254,10 +254,13 @@ export class UpgradeDependencies extends Component {
       return [{ exec: "echo No dependencies to upgrade." }];
     }
 
+    // Removing `npm-check-updates` from our dependency tree because it depends on a package
+    // that uses an npm-specific feature that causes an invalid dependency tree when using Yarn 1.
+    // See https://github.com/projen/projen/pull/3136 for more details.
     const ncuCommand = [
       `${executeCommand(
         this._project.package.packageManager
-      )} npm-check-updates@latest`,
+      )} npm-check-updates@16`,
       "--upgrade",
       `--target=${this.upgradeTarget}`,
       `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,

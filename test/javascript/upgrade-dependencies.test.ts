@@ -36,7 +36,7 @@ test("allows configuring specific dependency types", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=prod,dev --filter=some-dep,constructs,jest,jest-junit,projen,standard-version",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=prod,dev --filter=some-dep,constructs,jest,jest-junit,projen,standard-version",
       },
       {
         "exec": "yarn install --check-files",
@@ -78,7 +78,7 @@ test("upgrades command includes all dependencies", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,some-dep",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -105,7 +105,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,some-dep",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -135,7 +135,7 @@ test("upgrades command doesn't include ignored packages", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,dep1",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,dep1",
       },
       {
         "exec": "yarn install --check-files",
@@ -389,7 +389,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,npm",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version,npm",
       },
       {
         "exec": "yarn install --check-files",
@@ -435,7 +435,7 @@ test("uses the proper yarn berry upgrade command", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "yarn dlx npm-check-updates@latest --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version",
+        "exec": "yarn dlx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version",
       },
       {
         "exec": "yarn install",
