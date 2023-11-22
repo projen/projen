@@ -378,11 +378,6 @@ permissions-backup.acl
         "version": "^10.0.0",
       },
       {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      {
         "name": "projen",
         "type": "build",
       },
@@ -613,16 +608,13 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          {
-            "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,constructs,npm-check-updates,projen,standard-version,react,react-dom,react-scripts,web-vitals",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,constructs,projen,standard-version,react,react-dom,react-scripts,web-vitals",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event constructs npm-check-updates projen standard-version react react-dom react-scripts web-vitals",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event constructs projen standard-version react react-dom react-scripts web-vitals",
           },
           {
             "exec": "npx projen",
@@ -863,7 +855,6 @@ permissions-backup.acl
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
       "constructs": "^10.0.0",
-      "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
     },
