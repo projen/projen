@@ -950,9 +950,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.9.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.5.tgz#bb441014bcb91c63742b0e1fe25b902f5d581faa"
-  integrity sha512-Uq2xbNq0chGg+/WQEU0LJTSs/1nKxz6u1iemLcGomkSnKokbW1fbLqc3HOqCf2JP7KjlL4QkS7oZZTrOQHQYgQ==
+  version "20.10.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.0.tgz#16ddf9c0a72b832ec4fcce35b8249cf149214617"
+  integrity sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1983,9 +1983,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.535:
-  version "1.4.593"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.593.tgz#f71b157f7382f3d3a164f73ff2da772d4b3fd984"
-  integrity sha512-c7+Hhj87zWmdpmjDONbvNKNo24tvmD4mjal1+qqTYTrlF0/sNpAcDlU0Ki84ftA/5yj3BF2QhSGEC0Rky6larg==
+  version "1.4.594"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.594.tgz#f69f207fba80735a44a988df42f3f439115d0515"
+  integrity sha512-xT1HVAu5xFn7bDfkjGQi9dNpMqGchUkebwf1GL7cZN32NSwwlHRPMSDJ1KN6HkS0bWUtndbSQZqvpQftKG2uFQ==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -3507,10 +3507,10 @@ jsii-diff@^1.92.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.2.2:
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.2.2.tgz#beb56f69a28d60ac808986c92994c7f4c3245010"
-  integrity sha512-MyaHFU84SYJc7jOcqyT8Ve5pVVAgbgpn9uvTAhX+s7l3wYKY7vrXCBUHmM2XX1nrKuhs0J8nknQDXLiwQXXfDQ==
+jsii-docgen@^10.2.3:
+  version "10.2.3"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.2.3.tgz#bb5f81fabd519f958e7e76af5de331d55f85445c"
+  integrity sha512-nQAarmHBV01lexGKlAaGNPd9Aae3f2cOwMFuAATLN8jb4x8Pkim4h0FMruSwze7HikM4NAw8vm6ra/XPH0FnSg==
   dependencies:
     "@jsii/spec" "^1.92.0"
     case "^1.6.3"
