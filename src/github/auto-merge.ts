@@ -13,6 +13,18 @@ export interface AutoMergeOptions {
    * @default ['do-not-merge']
    */
   readonly blockingLabels?: string[];
+
+  /**
+   * Name of the mergify rule
+   * @default 'Automatic merge on approval and successful build'
+   */
+  readonly ruleName?: string;
+
+  /**
+   * Name of the mergify queue
+   * @default 'default'
+   */
+  readonly queueName?: string;
 }
 
 /**
@@ -63,14 +75,18 @@ export class AutoMerge extends Component {
     this.addConditions(`#approved-reviews-by>=${approvedReviews}`);
     this.addConditions(...blockingCondition);
 
+    const ruleName =
+      options.ruleName ?? "Automatic merge on approval and successful build";
+    const queueName = options.queueName ?? "default";
+
     mergify.addRule({
-      name: "Automatic merge on approval and successful build",
+      name: ruleName,
       actions: mergeAction,
       conditions: (() => this.renderConditions()) as any,
     });
 
     mergify.addQueue({
-      name: "default",
+      name: queueName,
       updateMethod: "merge",
       conditions: (() => this.renderConditions()) as any,
     });
