@@ -384,11 +384,6 @@ permissions-backup.acl
         "version": "^10.0.0",
       },
       {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      {
         "name": "projen",
         "type": "build",
       },
@@ -650,16 +645,13 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          {
-            "exec": "npm-check-updates --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,npm-check-updates,projen,standard-version,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,projen,standard-version,autoprefixer,next,postcss,react,react-dom,tailwindcss",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade constructs npm-check-updates projen standard-version autoprefixer next postcss react react-dom tailwindcss",
+            "exec": "yarn upgrade constructs projen standard-version autoprefixer next postcss react react-dom tailwindcss",
           },
           {
             "exec": "npx projen",
@@ -893,7 +885,6 @@ permissions-backup.acl
     },
     "devDependencies": {
       "constructs": "^10.0.0",
-      "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
     },
