@@ -179,7 +179,6 @@ export class UpgradeDependencies extends Component {
     };
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-    project.addDevDeps("npm-check-updates@^16");
 
     this.postUpgradeTask =
       project.tasks.tryFind("post-upgrade") ??
@@ -230,6 +229,21 @@ export class UpgradeDependencies extends Component {
   }
 
   private renderTaskSteps(): TaskStep[] {
+    function executeCommand(packageManager: NodePackageManager): string {
+      switch (packageManager) {
+        case NodePackageManager.NPM:
+        case NodePackageManager.YARN:
+        case NodePackageManager.YARN_CLASSIC:
+          return "npx";
+        case NodePackageManager.PNPM:
+          return "pnpx";
+        case NodePackageManager.YARN2:
+        case NodePackageManager.YARN_BERRY:
+          return "yarn dlx";
+        case NodePackageManager.BUN:
+          return "bunx";
+      }
+    }
     const steps = new Array<TaskStep>();
 
     const include = Array.from(
@@ -240,16 +254,13 @@ export class UpgradeDependencies extends Component {
       return [{ exec: "echo No dependencies to upgrade." }];
     }
 
-    // update npm-check-updates before everything else, in case there is a bug
-    // in it or one of its dependencies. This will make upgrade workflows
-    // slightly more stable and resilient to upstream changes.
-    const ncuDep = this.project.deps.all.find(
-      (d) => d.name === "npm-check-updates"
-    )!;
-    steps.push({ exec: this.renderUpgradePackagesCommand([ncuDep.name]) });
-
+    // Removing `npm-check-updates` from our dependency tree because it depends on a package
+    // that uses an npm-specific feature that causes an invalid dependency tree when using Yarn 1.
+    // See https://github.com/projen/projen/pull/3136 for more details.
     const ncuCommand = [
-      "npm-check-updates",
+      `${executeCommand(
+        this._project.package.packageManager
+      )} npm-check-updates@16`,
       "--upgrade",
       `--target=${this.upgradeTarget}`,
       `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
