@@ -80,9 +80,9 @@ export class CiConfiguration extends Component {
    */
   public readonly defaultBeforeScript: string[] = [];
   /**
-   * A default list of files and directories to cache between jobs. You can only use paths that are in the local working copy.
+   * A default list of cache definitions with the files and directories to cache between jobs. You can only use paths that are in the local working copy.
    */
-  public readonly defaultCache?: Cache;
+  public readonly defaultCache?: Cache[];
   /**
    * Specifies the default docker image to use globally for all jobs.
    */

@@ -157,10 +157,40 @@ test("adds correct entries for path-based caching", () => {
   });
   new CiConfiguration(p, "foo", {
     default: {
-      cache: {
-        paths: ["node_modules"],
-        key: "${CI_COMMIT_REF_SLUG}",
-      },
+      cache: [
+        {
+          key: "${CI_COMMIT_REF_SLUG}",
+          paths: ["node_modules"],
+        },
+      ],
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
+});
+
+test("adds correct entries for multiple caches", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: [
+        {
+          key: {
+            files: ["Gemfile.lock"],
+          },
+          paths: ["vendor/ruby"],
+        },
+        {
+          key: {
+            files: ["yarn.lock"],
+          },
+          paths: [".yarn-cache/"],
+        },
+      ],
     },
   });
   const snapshot = synthSnapshot(p);
@@ -175,12 +205,14 @@ test("adds correct entries for file-based caching", () => {
   });
   new CiConfiguration(p, "foo", {
     default: {
-      cache: {
-        key: {
-          files: ["Gemfile.lock", "package.json"],
-          prefix: "${CI_COMMIT_REF_SLUG}",
+      cache: [
+        {
+          key: {
+            files: ["Gemfile.lock", "package.json"],
+            prefix: "${CI_COMMIT_REF_SLUG}",
+          },
         },
-      },
+      ],
     },
   });
   const snapshot = synthSnapshot(p);
@@ -195,9 +227,11 @@ test("adds correct entries for fallback-keys caching", () => {
   });
   new CiConfiguration(p, "foo", {
     default: {
-      cache: {
-        fallbackKeys: ["pathA", "pathB"],
-      },
+      cache: [
+        {
+          fallbackKeys: ["pathA", "pathB"],
+        },
+      ],
     },
   });
   const snapshot = synthSnapshot(p);

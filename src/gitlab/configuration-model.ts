@@ -74,8 +74,8 @@ export interface Default {
   readonly artifacts?: Artifacts;
   /* Defines scripts that should run *before* all jobs. Can be overriden by the job level `afterScript`. */
   readonly beforeScript?: string[];
-  /* A list of files and directories to cache between jobs. You can only use paths that are in the local working copy. */
-  readonly cache?: Cache;
+  /* A list of cache definitions with the files and directories to cache between jobs. You can only use paths that are in the local working copy. */
+  readonly cache?: Cache[];
   /* Specifies the default docker image to use globally for all jobs. */
   readonly image?: Image;
   /* If a job should be canceled when a newer pipeline starts before the job completes (Default: false).*/
