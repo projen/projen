@@ -114,7 +114,7 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
 {
   "extends": [
     ":preserveSemverRanges",
-    "config:base",
+    "config:recommended",
     "group:allNonMajor",
     "group:recommended",
     "group:monorepos",
@@ -294,7 +294,7 @@ exports[`renovatebot ignored dependency overrides 1`] = `
 {
   "extends": [
     ":preserveSemverRanges",
-    "config:base",
+    "config:recommended",
     "group:allNonMajor",
     "group:recommended",
     "group:monorepos",

@@ -156,7 +156,7 @@ export class Renovatebot extends Component {
       schedule: this.scheduleInterval,
       extends: [
         ":preserveSemverRanges",
-        "config:base",
+        "config:recommended",
         "group:allNonMajor",
         "group:recommended",
         "group:monorepos",

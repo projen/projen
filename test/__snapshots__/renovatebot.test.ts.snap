@@ -17,7 +17,7 @@ exports[`renovatebot renovatebot: true creates renovatebot configuration 1`] = `
 {
   "extends": [
     ":preserveSemverRanges",
-    "config:base",
+    "config:recommended",
     "group:allNonMajor",
     "group:recommended",
     "group:monorepos",
