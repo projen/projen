@@ -242,7 +242,6 @@ exports[`prettier snapshot 1`] = `
   },
   "extends": [
     "plugin:import/typescript",
-    "prettier",
     "plugin:prettier/recommended",
   ],
   "ignorePatterns": [
@@ -273,7 +272,6 @@ exports[`prettier snapshot 1`] = `
   "plugins": [
     "@typescript-eslint",
     "import",
-    "prettier",
   ],
   "root": true,
   "rules": {
@@ -351,9 +349,6 @@ exports[`prettier snapshot 1`] = `
       "off",
     ],
     "no-trailing-spaces": [
-      "error",
-    ],
-    "prettier/prettier": [
       "error",
     ],
   },

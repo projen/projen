@@ -492,13 +492,9 @@ export class Eslint extends Component {
       "eslint-config-prettier"
     );
 
-    this.addPlugins("prettier");
+    this._formattingRules = {};
 
-    this._formattingRules = {
-      "prettier/prettier": ["error"],
-    };
-
-    this.addExtends("prettier", "plugin:prettier/recommended");
+    this.addExtends("plugin:prettier/recommended");
   }
 
   private renderDevDepsAllowList() {
