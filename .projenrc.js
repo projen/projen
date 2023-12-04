@@ -76,7 +76,7 @@ const project = new cdk.JsiiProject({
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
-  minNodeVersion: "18.14.0",
+  minNodeVersion: "18.12.0",
   workflowNodeVersion: "18.14.0",
 
   codeCov: true,
