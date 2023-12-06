@@ -897,10 +897,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ini@^1.3.33":
-  version "1.3.33"
-  resolved "https://registry.yarnpkg.com/@types/ini/-/ini-1.3.33.tgz#d5f885e5da6dcb1a3ee9133d84a823d4a046fe25"
-  integrity sha512-YZDzdPTDxy084i5eVxUKfAHLenhAMVHupzCIg1dzFJNs6xp/UGyWk+8Lp1YxoZH+Hvv7C9OcHEDPndSMwaPVsQ==
+"@types/ini@^1.3.34":
+  version "1.3.34"
+  resolved "https://registry.yarnpkg.com/@types/ini/-/ini-1.3.34.tgz#99a69ecfccdfc3f6e91b411d4208aaa3c4cc9685"
+  integrity sha512-FafeLhwmWucTi31ZYg/6aHBZNyrogQ35aDvSW7zMAz3HMhUqQ4G/NBya8c5pe2jwoYsDFwra8O9/yZotong76g==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.6"
@@ -1983,9 +1983,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.601:
-  version "1.4.603"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.603.tgz#446907c21d333b55d0beaba1cb5b48430775a8a7"
-  integrity sha512-Dvo5OGjnl7AZTU632dFJtWj0uJK835eeOVQIuRcmBmsFsTNn3cL05FqOyHAfGQDIoHfLhyJ1Tya3PJ0ceMz54g==
+  version "1.4.604"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.604.tgz#8a53d70adb8ebb7206df082aa58cffb48e44b501"
+  integrity sha512-JAJ4lyLJYudlgJPYJicimU9R+qZ/3iyeyQS99bfT7PWi7psYWeN84lPswTjpHxQueU34PKxM/IJzQS6poYlovQ==
 
 emittery@^0.13.1:
   version "0.13.1"
