@@ -95,6 +95,7 @@ const project = new cdk.JsiiProject({
     compilerOptions: {
       esModuleInterop: false,
     },
+    exclude: ["docusaurus/**/*"],
   },
 
   jestOptions: {
@@ -132,8 +133,6 @@ const project = new cdk.JsiiProject({
 
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
-
-  docgenFilePath: "docusaurus/docs/API.md",
 });
 
 // Upgrade Dependencies in two parts:
@@ -168,6 +167,13 @@ new javascript.UpgradeDependencies(project, {
     labels: ["auto-approve"],
   },
 });
+
+project.tasks
+  .tryFind("docgen")
+  .reset(
+    "jsii-docgen .jsii -o docusaurus/docs/api/projen --split-by-submodule"
+  );
+project.gitignore.addPatterns("docusaurus/docs/api/");
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.

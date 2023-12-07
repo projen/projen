@@ -191,7 +191,7 @@ You should get some results showing you the test passed as well as some code cov
 
 Let's add a [GitHub Pull Request template](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates) to our project. 
 
-projen ships with a [PullRequestTemplate](/docs/API#projen-github-pullrequesttemplate) component that can be used to add a PR template to your project. Start by creating a new instance of it inside our new project type's constructor:
+projen ships with a [PullRequestTemplate](/docs/api/github#pullrequesttemplate-) component that can be used to add a PR template to your project. Start by creating a new instance of it inside our new project type's constructor:
 
 ```typescript
 export class MyMicroserviceProject extends TypeScriptProject {
