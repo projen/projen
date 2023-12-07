@@ -15,15 +15,12 @@ function getSidebarItems(allFilenames) {
 
     const extensionStrippedFilename = curr.replace('.md', '');
     const itemPath = `api/${extensionStrippedFilename}`;
-
     acc[curr] = {
       type: 'doc',
       id: itemPath,
       label: subModule, // because this is actually the class name for TLC
     };
     return acc;
-
-
   }, {});
 }
 

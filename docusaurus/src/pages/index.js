@@ -16,7 +16,7 @@ function HomepageHeader() {
         <p className="text-2xl mt-8 p-4">
           <strong>projen</strong> synthesizes project configuration files such as <code>package.json</code>,
           <code>tsconfig.json</code>, <code>.gitignore</code>, GitHub Workflows, eslint, jest, etc. from a
-          well-typed definition written in JavaScript.
+          well-typed definition written in TypeScript.
         </p>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/SOWMPzXtTCw" title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
