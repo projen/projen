@@ -89,8 +89,8 @@ export class Poetry
       }
     }
     if (!pythonDefined) {
-      // Python version must be defined for poetry projects. Default to ^3.7.
-      dependencies.python = "^3.7";
+      // Python version must be defined for poetry projects. Default to ^3.8.
+      dependencies.python = "^3.8";
     }
     return this.permitDependenciesWithMetadata(dependencies);
   }

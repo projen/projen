@@ -81,14 +81,15 @@ export class SetupPy extends FileBase {
     this.setupConfig = {
       name: project.name,
       packages: options.packages,
-      python_requires: ">=3.7",
+      python_requires: ">=3.8",
       classifiers: [
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
       ],
       ...(options ? this.renameFields(options) : []),
     };

@@ -347,6 +347,14 @@ export class LambdaRuntime {
     "node18"
   );
 
+  /**
+   * Node.js 20.x
+   */
+  public static readonly NODEJS_20_X = new LambdaRuntime(
+    "nodejs20.x",
+    "node20"
+  );
+
   public readonly esbuildPlatform = "node";
 
   public readonly defaultExternals: string[];

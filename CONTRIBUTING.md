@@ -115,7 +115,7 @@ $ yarn unlink projen
 ### Version bumping
 
 Currently projen bumps versions automatically thru a GitHub action when a commit
-pushed to master successfully builds. Projen follows [semantic versioning](https://semver.org/)
+pushed to `main` successfully builds. Projen follows [semantic versioning](https://semver.org/)
 through the [standard-version](https://github.com/conventional-changelog/standard-version)
 npm utility.
 
