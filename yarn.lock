@@ -950,16 +950,16 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.10.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.3.tgz#4900adcc7fc189d5af5bb41da8f543cea6962030"
-  integrity sha512-XJavIpZqiXID5Yxnxv3RUDKTN5b81ddNC3ecsA0SoFXz/QU8OGBwZGMomiq0zw+uuqbL/krztv/DINAQ/EV4gg==
+  version "20.10.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.4.tgz#b246fd84d55d5b1b71bf51f964bd514409347198"
+  integrity sha512-D08YG6rr8X90YB56tSIuBaddy/UXAA9RKJoFvrsnogAum/0pmjkgi4+2nx96A330FmioegBWmEYQ+syqCFaveg==
   dependencies:
     undici-types "~5.26.4"
 
 "@types/node@^16":
-  version "16.18.67"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.67.tgz#518feb681958dedf2d187b8b4d20bf3530afe1fb"
-  integrity sha512-gUa0tDO9oxyAYO9V9tqxDJguVMDpqUwH5I5Q9ASYBCso+8CUdJlKPKDYS1YSS9kyZWIduDafZvucGM0zGNKFjg==
+  version "16.18.68"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.68.tgz#3155f64a961b3d8d10246c80657f9a7292e3421a"
+  integrity sha512-sG3hPIQwJLoewrN7cr0dwEy+yF5nD4D/4FxtQpFciRD/xwUzgD+G05uxZHv5mhfXo4F9Jkp13jjn0CC2q325sg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.4"
@@ -1983,9 +1983,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.601:
-  version "1.4.606"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.606.tgz#d9f83f7d06a253ccdd99475dccbbd38d4758ba2f"
-  integrity sha512-Zdv0XuhfyWZUsQ5Uq59d43ZmZOdoGZNWjeN4WCxxlQaP8crAWdnWcTxfHKcaJl6PW2SWpHx6DsxSx7v6KcGCuw==
+  version "1.4.608"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.608.tgz#ff567c51dde4892ae330860c7d9f19571e9e1d69"
+  integrity sha512-J2f/3iIIm3Mo0npneITZ2UPe4B1bg8fTNrFjD8715F/k1BvbviRuqYGkET1PgprrczXYTHFvotbBOmUp6KE0uA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -3507,10 +3507,10 @@ jsii-diff@^1.92.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.2.3:
-  version "10.2.3"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.2.3.tgz#bb5f81fabd519f958e7e76af5de331d55f85445c"
-  integrity sha512-nQAarmHBV01lexGKlAaGNPd9Aae3f2cOwMFuAATLN8jb4x8Pkim4h0FMruSwze7HikM4NAw8vm6ra/XPH0FnSg==
+jsii-docgen@^10.2.4:
+  version "10.2.4"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.2.4.tgz#64964a0c211e7574ebce09a3c87530d2f0097721"
+  integrity sha512-aAuSr01itSSQAw4QlpIrnYLYlsc1b6Ts4j10+N1Vt3ReBs24x8hS0/Cnpml+2tgWoSxLn/mM7KjVCudqSykNUw==
   dependencies:
     "@jsii/spec" "^1.92.0"
     case "^1.6.3"
