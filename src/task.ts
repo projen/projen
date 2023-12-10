@@ -374,7 +374,7 @@ export class Task {
     recurse(target);
 
     function recurse(src: Task) {
-      console.log('comparing', src.name, 'to', target.name);
+      console.log("comparing", src.name, "to", target.name);
       if (src.name == self.name) {
         throw new Error(
           `Cannot add dependency from task ${self.name} to ${target.name}: ${target.name} already depends on ${self.name}`

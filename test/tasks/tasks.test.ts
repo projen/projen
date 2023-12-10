@@ -520,17 +520,19 @@ test("tasks are not executed twice", () => {
   logSpy.mockRestore();
 });
 
-test('cannot add circular dependency between tasks', () => {
+test("cannot add circular dependency between tasks", () => {
   const p = new TestProject();
   const hello1 = p.addTask("hello1", {
-    steps: [{ say: 'hello1' }],
+    steps: [{ say: "hello1" }],
   });
   const hello2 = p.addTask("hello2", {
-    steps: [{ say: 'hello2' }],
+    steps: [{ say: "hello2" }],
     dependsOnTasks: [hello1],
   });
 
-  expect(() => hello1.addTaskDependency(hello2)).toThrow(/Cannot add dependency/);
+  expect(() => hello1.addTaskDependency(hello2)).toThrow(
+    /Cannot add dependency/
+  );
 });
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
