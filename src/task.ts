@@ -342,8 +342,8 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this.cwd,
-      dependsOn: omitEmptyArray(this.dependsOn.map(t => t.name)),
-      implies: omitEmptyArray(this.implies.map(t => t.name)),
+      dependsOn: omitEmptyArray(this.dependsOn.map((t) => t.name)),
+      implies: omitEmptyArray(this.implies.map((t) => t.name)),
     };
   }
 
@@ -375,7 +375,9 @@ export class Task {
 
     function recurse(src: Task) {
       if (src == target) {
-        throw new Error(`Cannot add a dependency from task ${self.name} to ${target.name}: circular dependency`);
+        throw new Error(
+          `Cannot add a dependency from task ${self.name} to ${target.name}: circular dependency`
+        );
       }
       for (const d of src.dependsOn) {
         recurse(d);

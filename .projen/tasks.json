@@ -107,6 +107,12 @@
         {
           "exec": "jsii --silence-warnings=reserved-word"
         }
+      ],
+      "dependsOn": [
+        "pre-compile"
+      ],
+      "implies": [
+        "post-compile"
       ]
     },
     "contributors:update": {
@@ -288,6 +294,9 @@
         {
           "spawn": "default"
         }
+      ],
+      "dependsOn": [
+        "compile"
       ]
     },
     "post-upgrade": {

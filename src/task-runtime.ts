@@ -81,10 +81,9 @@ export class TaskRuntime {
     parents: string[] = [],
     args: Array<string | number> = []
   ) {
-    const tasks = this
-      .findSortedDependenciesOf(name)
+    const tasks = this.findSortedDependenciesOf(name)
       // Retain requested and non-empty tasks
-      .filter(t => t.name === name || (t.steps ?? []).length > 0);
+      .filter((t) => t.name === name || (t.steps ?? []).length > 0);
 
     for (const task of tasks) {
       this.runOne(task, parents, args);
@@ -94,7 +93,7 @@ export class TaskRuntime {
   private runOne(
     task: TaskSpec,
     parents: string[],
-    args: Array<string | number>,
+    args: Array<string | number>
   ) {
     const key = taskKey(task.name, args);
     if (this.alreadyRun.has(key)) {
@@ -116,7 +115,7 @@ export class TaskRuntime {
     return topologicalSort(
       Object.values(ret),
       (t) => t.name,
-      (t) => t.dependsOn ?? [],
+      (t) => t.dependsOn ?? []
     ).flat();
 
     function recurse(name: string) {
@@ -440,5 +439,5 @@ interface ShellOptions {
 }
 
 function taskKey(name: string, args: Array<string | number>) {
-return [name, ...args.map(x => `${x}`)].join('::');
+  return [name, ...args.map((x) => `${x}`)].join("::");
 }
