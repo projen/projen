@@ -111,7 +111,6 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
 
   // THEN
   const output = synthSnapshot(project);
-  console.log(output[".eslintrc.json"]);
   expect(output[".eslintrc.json"].extends).toContain(
     "plugin:prettier/recommended"
   );
