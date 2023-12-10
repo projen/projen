@@ -105,6 +105,7 @@ export class TaskRuntime {
       logging.debug(gray(`.. skipping ${task.name} (already run)`));
       return;
     }
+    this.alreadyRun.add(key);
 
     new RunTask(this, task, parents, args).run();
   }
