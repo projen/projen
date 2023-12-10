@@ -8,6 +8,7 @@ import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
+import { topologicalSort } from "./util/toposort";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
@@ -33,6 +34,11 @@ export class TaskRuntime {
    * The root directory of the project and the cwd for executing tasks.
    */
   public readonly workdir: string;
+
+  /**
+   * The set of tasks that have already been run
+   */
+  private readonly alreadyRun = new Set<string>();
 
   constructor(workdir: string) {
     this.workdir = resolve(workdir);
@@ -61,6 +67,13 @@ export class TaskRuntime {
 
   /**
    * Runs the task.
+   *
+   * Also runs all dependencies of the given task.
+   *
+   * This method may end up being called more than once, for example when a task
+   * contains the 'spawn' command. The same task will not be run more than once
+   * with the same arguments each session.
+   *
    * @param name The task name.
    */
   public runTask(
@@ -68,39 +81,85 @@ export class TaskRuntime {
     parents: string[] = [],
     args: Array<string | number> = []
   ) {
-    const task = this.tryFindTask(name);
-    if (!task) {
-      throw new Error(`cannot find command ${task}`);
+    const tasks = this
+      .findSortedDependenciesOf(name)
+      // Retain requested and non-empty tasks
+      .filter(t => t.name === name || (t.steps ?? []).length > 0);
+
+    for (const task of tasks) {
+      this.runOne(task, parents, args);
+    }
+  }
+
+  private runOne(
+    task: TaskSpec,
+    parents: string[],
+    args: Array<string | number>,
+  ) {
+    const key = taskKey(task.name, args);
+    if (this.alreadyRun.has(key)) {
+      logging.debug(gray(`.. skipping ${task.name} (already run)`));
+      return;
     }
 
-    new RunTask(this, task, parents, args);
+    new RunTask(this, task, parents, args).run();
+  }
+
+  /**
+   * Return the task itself and all of its transitive dependencies
+   */
+  private findSortedDependenciesOf(taskName: string): TaskSpec[] {
+    const self = this;
+
+    const ret: Record<string, TaskSpec> = {};
+    recurse(taskName);
+    return topologicalSort(
+      Object.values(ret),
+      (t) => t.name,
+      (t) => t.dependsOn ?? [],
+    ).flat();
+
+    function recurse(name: string) {
+      if (name in ret) {
+        return;
+      }
+      const task = self.tryFindTask(name);
+      if (!task) {
+        throw new Error(`cannot find command ${task}`);
+      }
+      ret[name] = task;
+      for (const t of task.dependsOn ?? []) {
+        recurse(t);
+      }
+      for (const t of task.implies ?? []) {
+        recurse(t);
+      }
+    }
   }
 }
 
 class RunTask {
   private readonly env: { [name: string]: string | undefined } = {};
-  private readonly parents: string[];
-
   private readonly workdir: string;
 
   constructor(
     private readonly runtime: TaskRuntime,
     private readonly task: TaskSpec,
-    parents: string[] = [],
-    args: Array<string | number> = []
+    private readonly parents: string[] = [],
+    private readonly args: Array<string | number> = []
   ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
-
     this.parents = parents;
+    this.env = this.resolveEnvironment(parents);
+  }
 
-    if (!task.steps || task.steps.length === 0) {
+  public run() {
+    if (!this.task.steps || this.task.steps.length === 0) {
       this.logDebug(gray("No actions have been specified for this task."));
       return;
     }
 
-    this.env = this.resolveEnvironment(parents);
-
-    const envlogs = [];
+    const envlogs = new Array<string>();
     for (const [k, v] of Object.entries(this.env)) {
       const vv = v ?? "";
       const trimmed =
@@ -113,7 +172,7 @@ class RunTask {
     }
 
     // evaluate condition
-    if (!this.evalCondition(task)) {
+    if (!this.evalCondition(this.task)) {
       this.log("condition exited with non-zero - skipping");
       return;
     }
@@ -121,7 +180,7 @@ class RunTask {
     // verify we required environment variables are defined
     const merged = { ...process.env, ...this.env };
     const missing = new Array<string>();
-    for (const name of task.requiredEnv ?? []) {
+    for (const name of this.task.requiredEnv ?? []) {
       if (!(name in merged)) {
         missing.push(name);
       }
@@ -133,7 +192,7 @@ class RunTask {
       );
     }
 
-    for (const step of task.steps) {
+    for (const step of this.task.steps ?? []) {
       // evaluate step condition
       if (!this.evalCondition(step)) {
         this.log("condition exited with non-zero - skipping");
@@ -142,7 +201,7 @@ class RunTask {
 
       const argsList: string[] = [
         ...(step.args || []),
-        ...(step.receiveArgs ? args : []),
+        ...(step.receiveArgs ? this.args : []),
       ].map((a) => a.toString());
 
       if (step.say) {
@@ -378,4 +437,8 @@ interface ShellOptions {
   /** @default false */
   readonly quiet?: boolean;
   readonly extraEnv?: { [name: string]: string | undefined };
+}
+
+function taskKey(name: string, args: Array<string | number>) {
+return [name, ...args.map(x => `${x}`)].join('::');
 }

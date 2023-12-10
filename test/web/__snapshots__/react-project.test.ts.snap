@@ -471,7 +471,13 @@ permissions-backup.acl
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
         "steps": [
           {
@@ -540,6 +546,9 @@ permissions-backup.acl
         ],
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },

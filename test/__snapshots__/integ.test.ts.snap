@@ -956,6 +956,12 @@ tsconfig.tsbuildinfo
         {
           "exec": "jsii --silence-warnings=reserved-word"
         }
+      ],
+      "dependsOn": [
+        "pre-compile"
+      ],
+      "implies": [
+        "post-compile"
       ]
     },
     "default": {
@@ -1073,6 +1079,9 @@ tsconfig.tsbuildinfo
         {
           "spawn": "docgen"
         }
+      ],
+      "dependsOn": [
+        "compile"
       ]
     },
     "post-upgrade": {
@@ -2039,6 +2048,12 @@ tsconfig.tsbuildinfo
         {
           "exec": "cp src/_loadurl.js lib/"
         }
+      ],
+      "dependsOn": [
+        "pre-compile"
+      ],
+      "implies": [
+        "post-compile"
       ]
     },
     "default": {
@@ -2168,6 +2183,9 @@ tsconfig.tsbuildinfo
         {
           "spawn": "docgen"
         }
+      ],
+      "dependsOn": [
+        "compile"
       ]
     },
     "post-upgrade": {
@@ -3220,6 +3238,12 @@ tsconfig.tsbuildinfo
         {
           "exec": "tsc --build"
         }
+      ],
+      "dependsOn": [
+        "pre-compile"
+      ],
+      "implies": [
+        "post-compile"
       ]
     },
     "default": {
@@ -3284,7 +3308,10 @@ tsconfig.tsbuildinfo
     },
     "post-compile": {
       "name": "post-compile",
-      "description": "Runs after successful compilation"
+      "description": "Runs after successful compilation",
+      "dependsOn": [
+        "compile"
+      ]
     },
     "post-upgrade": {
       "name": "post-upgrade",
@@ -4310,7 +4337,13 @@ resolution-mode=highest
     },
     "compile": {
       "name": "compile",
-      "description": "Only compile"
+      "description": "Only compile",
+      "dependsOn": [
+        "pre-compile"
+      ],
+      "implies": [
+        "post-compile"
+      ]
     },
     "default": {
       "name": "default",
@@ -4365,7 +4398,10 @@ resolution-mode=highest
     },
     "post-compile": {
       "name": "post-compile",
-      "description": "Runs after successful compilation"
+      "description": "Runs after successful compilation",
+      "dependsOn": [
+        "compile"
+      ]
     },
     "post-upgrade": {
       "name": "post-upgrade",

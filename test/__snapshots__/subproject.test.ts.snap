@@ -26,7 +26,13 @@ exports[`subprojects use root level default task 1`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -44,6 +50,9 @@ exports[`subprojects use root level default task 1`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },
@@ -85,7 +94,13 @@ exports[`subprojects use root level default task 2`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -103,6 +118,9 @@ exports[`subprojects use root level default task 2`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },

@@ -203,7 +203,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -227,6 +233,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -524,7 +533,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -548,6 +563,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -849,7 +867,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -873,6 +897,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -1167,7 +1194,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -1191,6 +1224,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -1603,7 +1639,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -1627,6 +1669,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -2097,7 +2142,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -2121,6 +2172,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -2450,7 +2504,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -2474,6 +2534,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -2934,7 +2997,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -2958,6 +3027,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -3205,7 +3277,13 @@ exports[`majorVersion can be 0 2`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -3229,6 +3307,9 @@ exports[`majorVersion can be 0 2`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },
@@ -3348,7 +3429,13 @@ exports[`minMajorVersion can be 1 1`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -3372,6 +3459,9 @@ exports[`minMajorVersion can be 1 1`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },
@@ -3622,7 +3712,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -3646,6 +3742,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -3838,7 +3937,13 @@ exports[`prerelease can be specified per branch 3`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -3862,6 +3967,9 @@ exports[`prerelease can be specified per branch 3`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },
@@ -4230,7 +4338,13 @@ exports[`publisher (defaults) 2`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -4254,6 +4368,9 @@ exports[`publisher (defaults) 2`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },
@@ -4660,7 +4777,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -4684,6 +4807,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -5120,7 +5246,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -5144,6 +5276,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -5481,7 +5616,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -5505,6 +5646,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -5757,7 +5901,13 @@ node_modules/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -5781,6 +5931,9 @@ node_modules/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },

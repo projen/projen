@@ -247,7 +247,13 @@ dist/java
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
         "steps": [
           {
@@ -295,6 +301,9 @@ dist/java
         ],
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -979,7 +988,13 @@ dist/java
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
         "steps": [
           {
@@ -1027,6 +1042,9 @@ dist/java
         ],
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },

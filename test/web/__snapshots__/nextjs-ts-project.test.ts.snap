@@ -419,7 +419,13 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
         "steps": [
           {
@@ -492,6 +498,9 @@ tsconfig.tsbuildinfo
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },

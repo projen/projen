@@ -29,7 +29,13 @@ exports[`default tasks 1`] = `
       ],
     },
     "compile": {
+      "dependsOn": [
+        "pre-compile",
+      ],
       "description": "Only compile",
+      "implies": [
+        "post-compile",
+      ],
       "name": "compile",
     },
     "default": {
@@ -53,6 +59,9 @@ exports[`default tasks 1`] = `
       "name": "package",
     },
     "post-compile": {
+      "dependsOn": [
+        "compile",
+      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
     },

@@ -33,6 +33,28 @@ export interface TaskOptions extends TaskCommonOptions {
    * @default - no arguments are passed to the step
    */
   readonly args?: string[];
+
+  /**
+   * Other tasks that this task depends on
+   *
+   * Dependency tasks will be run automatically whenever a task needs to run.
+   *
+   * @default - No dependencies
+   */
+  readonly dependsOnTasks?: Task[];
+
+  /**
+   * Tasks that should run after this task is run.
+   *
+   * Implied tasks will be run automatically whenever a task needs to run.
+   *
+   * Implies is the inverse of a dependency, and it also implies a trigger: `A
+   * implies B` is equivalent to `B depends on A` combined with "whenever A
+   * runs, B must also run".
+   *
+   * @default - No dependencies
+   */
+  readonly impliesTasks?: Task[];
 }
 
 /**
@@ -52,6 +74,8 @@ export class Task {
   private readonly requiredEnv?: string[];
   private _locked: boolean;
   private _description?: string;
+  private dependsOn = new Array<Task>();
+  private implies = new Array<Task>();
 
   constructor(name: string, props: TaskOptions = {}) {
     this.name = name;
@@ -63,6 +87,13 @@ export class Task {
 
     this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
+
+    for (const t of props.dependsOnTasks ?? []) {
+      this.addTaskDependency(t);
+    }
+    for (const t of props.impliesTasks ?? []) {
+      this.addImpliedTask(t);
+    }
 
     if (props.exec && props.steps) {
       throw new Error("cannot specify both exec and steps");
@@ -255,6 +286,22 @@ export class Task {
   }
 
   /**
+   * Add a task that needs to be run before this task
+   */
+  public addTaskDependency(task: Task) {
+    this.validateNoCircularDependency(task);
+    this.dependsOn.push(task);
+  }
+
+  /**
+   * Add a task that should to be run after this task
+   */
+  public addImpliedTask(task: Task) {
+    task.addTaskDependency(this);
+    this.implies.push(task);
+  }
+
+  /**
    * Renders a task spec into the manifest.
    *
    * @internal
@@ -295,6 +342,8 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this.cwd,
+      dependsOn: omitEmptyArray(this.dependsOn.map(t => t.name)),
+      implies: omitEmptyArray(this.implies.map(t => t.name)),
     };
   }
 
@@ -318,4 +367,23 @@ export class Task {
       return value;
     }
   }
+
+  private validateNoCircularDependency(target: Task) {
+    const self = this;
+
+    recurse(this);
+
+    function recurse(src: Task) {
+      if (src == target) {
+        throw new Error(`Cannot add a dependency from task ${self.name} to ${target.name}: circular dependency`);
+      }
+      for (const d of src.dependsOn) {
+        recurse(d);
+      }
+    }
+  }
+}
+
+function omitEmptyArray<A>(xs: A[]): A[] | undefined {
+  return xs.length > 0 ? xs : undefined;
 }

@@ -62,6 +62,20 @@ export interface TaskSpec extends TaskCommonOptions {
    * Task steps.
    */
   readonly steps?: TaskStep[];
+
+  /**
+   * The tasks a given task depends on
+   *
+   * @default - No dependencies
+   */
+  readonly dependsOn?: string[];
+
+  /**
+   * The tasks a given task implies
+   *
+   * @default - No implications
+   */
+  readonly implies?: string[];
 }
 
 /**

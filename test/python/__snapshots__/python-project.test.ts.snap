@@ -189,7 +189,13 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -233,6 +239,9 @@ cython_debug/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -499,7 +508,13 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -543,6 +558,9 @@ cython_debug/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -811,7 +829,13 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -855,6 +879,9 @@ cython_debug/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
@@ -1104,7 +1131,13 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          "pre-compile",
+        ],
         "description": "Only compile",
+        "implies": [
+          "post-compile",
+        ],
         "name": "compile",
       },
       "default": {
@@ -1148,6 +1181,9 @@ cython_debug/
         "name": "package",
       },
       "post-compile": {
+        "dependsOn": [
+          "compile",
+        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
