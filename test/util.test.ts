@@ -10,6 +10,7 @@ import {
   formatAsPythonModule,
   getGitVersion,
   isRoot,
+  assertExecutablePermissions,
 } from "../src/util";
 
 describe("decamelizeRecursively", () => {
@@ -278,5 +279,41 @@ describe("isRoot", () => {
     test("will return false for path to dir", () => {
       expect(isRoot("C:\\Users\\me\\code", win32)).toBe(false);
     });
+  });
+});
+
+describe("assertExecutablePermissions", () => {
+  const originalPlatform = process.platform;
+
+  it("returns true when platform is win32, regardless of shouldBeExecutable", () => {
+    // Mock the platform to be "win32"
+    Object.defineProperty(process, "platform", { value: "win32" });
+
+    expect(assertExecutablePermissions(true)).toBe(true);
+    expect(assertExecutablePermissions(false)).toBe(true);
+
+    // Restore the original platform
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+  });
+
+  it("returns value of shouldBeExecutable when platform is not win32", () => {
+    // Mock the platform to be "linux"
+    Object.defineProperty(process, "platform", { value: "linux" });
+
+    expect(assertExecutablePermissions(true)).toBe(true);
+    expect(assertExecutablePermissions(false)).toBe(false);
+
+    // Restore the original platform
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+  });
+
+  it("returns false by default when platform is not win32", () => {
+    // Mock the platform to be "linux"
+    Object.defineProperty(process, "platform", { value: "linux" });
+
+    expect(assertExecutablePermissions()).toBe(false);
+
+    // Restore the original platform
+    Object.defineProperty(process, "platform", { value: originalPlatform });
   });
 });

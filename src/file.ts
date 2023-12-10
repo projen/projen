@@ -5,7 +5,13 @@ import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { ProjenrcFile } from "./projenrc";
-import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
+import {
+  assertExecutablePermissions,
+  isExecutable,
+  isWritable,
+  tryReadFileSync,
+  writeFile,
+} from "./util";
 import { findClosestProject } from "./util/constructs";
 
 export interface FileBaseOptions {
@@ -108,7 +114,7 @@ export abstract class FileBase extends Component {
     this.node.addMetadata("path", rootProjectPath);
 
     this.readonly = !project.ejected && (options.readonly ?? true);
-    this.executable = options.executable ?? false;
+    this.executable = assertExecutablePermissions(options.executable);
     this.path = projectPath;
     this.absolutePath = absolutePath;
     this.shouldAddMarker = options.marker ?? true;
