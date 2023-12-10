@@ -371,12 +371,13 @@ export class Task {
   private validateNoCircularDependency(target: Task) {
     const self = this;
 
-    recurse(this);
+    recurse(target);
 
     function recurse(src: Task) {
-      if (src == target) {
+      console.log('comparing', src.name, 'to', target.name);
+      if (src.name == self.name) {
         throw new Error(
-          `Cannot add a dependency from task ${self.name} to ${target.name}: circular dependency`
+          `Cannot add dependency from task ${self.name} to ${target.name}: ${target.name} already depends on ${self.name}`
         );
       }
       for (const d of src.dependsOn) {
