@@ -40,12 +40,17 @@ export class TaskRuntime {
    */
   private readonly alreadyRun = new Set<string>();
 
-  constructor(workdir: string) {
+  constructor(workdir: string, manifest?: TasksManifest) {
     this.workdir = resolve(workdir);
-    const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
-    this.manifest = existsSync(manifestPath)
-      ? JSON.parse(readFileSync(manifestPath, "utf-8"))
-      : { tasks: {} };
+
+    if (manifest) {
+      this.manifest = manifest;
+    } else {
+      const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
+      this.manifest = existsSync(manifestPath)
+        ? JSON.parse(readFileSync(manifestPath, "utf-8"))
+        : { tasks: {} };
+    }
   }
 
   /**

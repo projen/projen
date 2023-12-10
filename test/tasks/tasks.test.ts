@@ -1,6 +1,7 @@
 import { Project, TaskRuntime } from "../../src";
 import { TasksManifest, TaskStep } from "../../src/task-model";
 import { TestProject, synthSnapshot } from "../util";
+import * as logging from "../../src/logging";
 
 test("default tasks", () => {
   const p = new TestProject();
@@ -448,6 +449,75 @@ test("steps can receive args", () => {
       },
     },
   });
+});
+
+test('dependencies are respected', () => {
+  const p = new TestProject();
+  const logSpy = jest.spyOn(logging, "info");
+
+  // WHEN
+  const hello1 = p.addTask("hello1", {
+    steps: [{ say: 'hello1' }],
+  });
+  p.addTask("hello2", {
+    steps: [{ say: 'hello2' }],
+    dependsOnTasks: [hello1],
+  });
+
+  // THEN
+  const runtime = new TaskRuntime('.', synthTasksManifest(p));
+  runtime.runTask('hello2');
+  expect(logSpy).nthCalledWith(1, expect.stringContaining('hello1'));
+  expect(logSpy).nthCalledWith(2, expect.stringContaining('hello2'));
+
+  logSpy.mockRestore();
+});
+
+test('implications are respected', () => {
+  const p = new TestProject();
+  const logSpy = jest.spyOn(logging, "info");
+
+  // WHEN
+  const hello2 = p.addTask("hello2", {
+    steps: [{ say: 'hello2' }],
+  });
+  p.addTask("hello1", {
+    steps: [{ say: 'hello1' }],
+    impliesTasks: [hello2],
+  });
+
+  // THEN
+  const runtime = new TaskRuntime('.', synthTasksManifest(p));
+  runtime.runTask('hello1');
+  expect(logSpy).nthCalledWith(1, expect.stringContaining('hello1'));
+  expect(logSpy).nthCalledWith(2, expect.stringContaining('hello2'));
+
+  logSpy.mockRestore();
+});
+
+test('tasks are not executed twice', () => {
+  const p = new TestProject();
+  const logSpy = jest.spyOn(logging, "info");
+
+  // WHEN
+  const hello1 = p.addTask("hello1", {
+    steps: [{ say: 'hello1' }],
+  });
+  const hello2 = p.addTask("hello2", {
+    steps: [{ say: 'hello2' }],
+    dependsOnTasks: [hello1],
+  });
+  const compound = p.addTask('compound');
+  compound.spawn(hello1);
+  compound.spawn(hello2);
+
+  // THEN
+  const runtime = new TaskRuntime('.', synthTasksManifest(p));
+  runtime.runTask('compound');
+  expect(logSpy).nthCalledWith(1, expect.stringContaining('hello1'));
+  expect(logSpy).nthCalledWith(2, expect.stringContaining('hello2'));
+
+  logSpy.mockRestore();
 });
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
