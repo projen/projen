@@ -74,8 +74,8 @@ export class Task {
   private readonly requiredEnv?: string[];
   private _locked: boolean;
   private _description?: string;
-  private dependsOn = new Array<Task>();
-  private implies = new Array<Task>();
+  private runFirst = new Array<Task>();
+  private alsoRun = new Array<Task>();
 
   constructor(name: string, props: TaskOptions = {}) {
     this.name = name;
@@ -92,7 +92,7 @@ export class Task {
       this.addTaskDependency(t);
     }
     for (const t of props.impliesTasks ?? []) {
-      this.addImpliedTask(t);
+      this.addTaskImplication(t);
     }
 
     if (props.exec && props.steps) {
@@ -289,16 +289,24 @@ export class Task {
    * Add a task that needs to be run before this task
    */
   public addTaskDependency(task: Task) {
+    if (this.runFirst.includes(task)) {
+      return;
+    }
     this.validateNoCircularDependency(task);
-    this.dependsOn.push(task);
+    this.runFirst.push(task);
+    this.alsoRun.push(task);
   }
 
   /**
    * Add a task that should to be run after this task
    */
-  public addImpliedTask(task: Task) {
-    task.addTaskDependency(this);
-    this.implies.push(task);
+  public addTaskImplication(task: Task) {
+    task.validateNoCircularDependency(this);
+    task.runFirst.push(this);
+    // This bit is different from a purely reverse dependency;
+    // Implication is an ordering dependency from B to A, but
+    // a selection dependency from A to B.
+    this.alsoRun.push(task);
   }
 
   /**
@@ -342,8 +350,8 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this.cwd,
-      dependsOn: omitEmptyArray(this.dependsOn.map((t) => t.name)),
-      implies: omitEmptyArray(this.implies.map((t) => t.name)),
+      runFirst: omitEmptyArray(this.runFirst.map((t) => t.name)),
+      alsoRun: omitEmptyArray(this.alsoRun.map((t) => t.name)),
     };
   }
 
@@ -374,13 +382,12 @@ export class Task {
     recurse(target);
 
     function recurse(src: Task) {
-      console.log("comparing", src.name, "to", target.name);
       if (src.name == self.name) {
         throw new Error(
           `Cannot add dependency from task ${self.name} to ${target.name}: ${target.name} already depends on ${self.name}`
         );
       }
-      for (const d of src.dependsOn) {
+      for (const d of src.runFirst) {
         recurse(d);
       }
     }

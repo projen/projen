@@ -473,26 +473,38 @@ test("dependencies are respected", () => {
   logSpy.mockRestore();
 });
 
-test("implications are respected", () => {
-  const p = new TestProject();
-  const logSpy = jest.spyOn(logging, "info");
+describe("with task implications", () => {
+  let logSpy: jest.SpyInstance<void, any[]>;
+  let runtime: TaskRuntime;
+  beforeEach(() => {
+    const p = new TestProject();
+    logSpy = jest.spyOn(logging, "info");
 
-  // WHEN
-  const hello2 = p.addTask("hello2", {
-    steps: [{ say: "hello2" }],
+    // WHEN
+    const hello2 = p.addTask("hello2", {
+      steps: [{ say: "hello2" }],
+    });
+    p.addTask("hello1", {
+      steps: [{ say: "hello1" }],
+      impliesTasks: [hello2],
+    });
+
+    runtime = new TaskRuntime(".", synthTasksManifest(p));
   });
-  p.addTask("hello1", {
-    steps: [{ say: "hello1" }],
-    impliesTasks: [hello2],
+  afterEach(() => {
+    logSpy.mockRestore();
   });
 
-  // THEN
-  const runtime = new TaskRuntime(".", synthTasksManifest(p));
-  runtime.runTask("hello1");
-  expect(logSpy).nthCalledWith(1, expect.stringContaining("hello1"));
-  expect(logSpy).nthCalledWith(2, expect.stringContaining("hello2"));
+  test("implications are respected", () => {
+    runtime.runTask("hello1");
+    expect(logSpy).nthCalledWith(1, expect.stringContaining("hello1"));
+    expect(logSpy).nthCalledWith(2, expect.stringContaining("hello2"));
+  });
 
-  logSpy.mockRestore();
+  test("source task is not run when target task is requested", () => {
+    runtime.runTask("hello2");
+    expect(logSpy).not.toBeCalledWith(expect.stringContaining("hello1"));
+  });
 });
 
 test("tasks are not executed twice", () => {

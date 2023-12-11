@@ -64,18 +64,18 @@ export interface TaskSpec extends TaskCommonOptions {
   readonly steps?: TaskStep[];
 
   /**
-   * The tasks a given task depends on
+   * Tasks that, when selected, should be run before this task
    *
-   * @default - No dependencies
+   * @default - No ordering constraints
    */
-  readonly dependsOn?: string[];
+  readonly runFirst?: string[];
 
   /**
-   * The tasks a given task implies
+   * The tasks that should be selected when this task is selected
    *
-   * @default - No implications
+   * @default - No additional selections
    */
-  readonly implies?: string[];
+  readonly alsoRun?: string[];
 }
 
 /**

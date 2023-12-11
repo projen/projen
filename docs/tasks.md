@@ -71,9 +71,79 @@ world
 hello
 ```
 
-## Subtasks
+## Tasks running other tasks
 
-Tasks can also spawn sub-tasks as a step:
+There are two ways to specify that when a task is run, another
+one should be run as well:
+
+* Dependencies and implications
+* Subtasks (spawn)
+
+Those will be explained below.
+
+### Dependencies and implications
+
+It is possible to establish a _dependency_ between two tasks by specifying the
+dependency task at initialization time, or after initialization time using a
+method:
+
+```ts
+const hello = project.addTask('hello', {
+  exec: 'echo hello',
+});
+
+const world = project.addTask('world', {
+  exec: 'echo world!',
+  dependsOnTasks: [hello],
+});
+// This is equivalent to specifying 'dependsOnTasks'
+world.addTaskDependency(hello);
+```
+
+This dependency will ensure that when task `world` is run, the task `hello`
+will automatically be run beforehand:
+
+```shell
+$ projen world
+🤖 hello | echo hello
+hello
+🤖 world | echo world!
+world!
+```
+
+The reverse is also possible: it is possible for a task to _imply_ another task.
+That means that when task `A` is run, task `B` will automatically be run afterwards:
+
+```ts
+const hello = project.addTask('hello', {
+  exec: 'echo hello',
+});
+
+const world = project.addTask('world', {
+  exec: 'echo world!',
+});
+// Or specify 'impliesTasks' at initialization time
+hello.addTaskImplication(world);
+```
+
+When `hello` is run, `world` will automatically be run as well:
+
+```shell
+$ projen hello
+🤖 hello | echo hello
+hello
+🤖 world | echo world!
+world!
+```
+
+In the default projen task setup, dependencies are used for the `compile` task:
+`pre-compile` will automatically be run _before_ `compile`, and `post-compile`
+will automatically be run _after_ `compile`.
+
+### Subtasks (spawn)
+
+The other way for tasks to trigger other tasks is to explicitly
+spawn sub-tasks as step:
 
 ```ts
 const world = project.addTask('world');
@@ -98,6 +168,13 @@ echo hello
 world:
    echo world!
 ```
+
+The difference between dependencies and subtasks is that subtasks will inherit
+the parent task's environment (see below), while dependencies do not.
+
+If in the course of a single `projen` invocation a single task is requested to
+be run multiple times (for example, both by `spawn` as well as by dependencies),
+all invocations after the first will be skipped.
 
 ## Environment
 

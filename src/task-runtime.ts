@@ -86,7 +86,7 @@ export class TaskRuntime {
     parents: string[] = [],
     args: Array<string | number> = []
   ) {
-    const tasks = this.findSortedDependenciesOf(name)
+    const tasks = this.selectRelatedTasks(name)
       // Retain requested and non-empty tasks
       .filter((t) => t.name === name || (t.steps ?? []).length > 0);
 
@@ -111,9 +111,13 @@ export class TaskRuntime {
   }
 
   /**
-   * Return the task itself and all of its transitive dependencies
+   * Return the task itself and all of automatically selected sibling tasks
+   *
+   * Returns a topologically sorted list of tasks.
+   *
+   * Selects by `alsoRun`, then sorts by `runFirst`.
    */
-  private findSortedDependenciesOf(taskName: string): TaskSpec[] {
+  private selectRelatedTasks(taskName: string): TaskSpec[] {
     const self = this;
 
     const ret: Record<string, TaskSpec> = {};
@@ -121,7 +125,7 @@ export class TaskRuntime {
     return topologicalSort(
       Object.values(ret),
       (t) => t.name,
-      (t) => t.dependsOn ?? []
+      (t) => t.runFirst ?? []
     ).flat();
 
     function recurse(name: string) {
@@ -133,10 +137,7 @@ export class TaskRuntime {
         throw new Error(`cannot find command ${task}`);
       }
       ret[name] = task;
-      for (const t of task.dependsOn ?? []) {
-        recurse(t);
-      }
-      for (const t of task.implies ?? []) {
+      for (const t of task.alsoRun ?? []) {
         recurse(t);
       }
     }
