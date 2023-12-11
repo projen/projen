@@ -486,14 +486,15 @@ permissions-backup.acl
         ],
       },
       "compile": {
-        "dependsOn": [
+        "alsoRun": [
           "pre-compile",
-        ],
-        "description": "Only compile",
-        "implies": [
           "post-compile",
         ],
+        "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "next build",
@@ -570,11 +571,11 @@ permissions-backup.acl
         ],
       },
       "post-compile": {
-        "dependsOn": [
-          "compile",
-        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
+        "runFirst": [
+          "compile",
+        ],
       },
       "post-upgrade": {
         "description": "Runs after upgrading dependencies",

@@ -247,14 +247,15 @@ dist/java
         ],
       },
       "compile": {
-        "dependsOn": [
+        "alsoRun": [
           "pre-compile",
-        ],
-        "description": "Only compile",
-        "implies": [
           "post-compile",
         ],
+        "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "mvn compiler:compile",
@@ -301,11 +302,11 @@ dist/java
         ],
       },
       "post-compile": {
-        "dependsOn": [
-          "compile",
-        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
+        "runFirst": [
+          "compile",
+        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -988,14 +989,15 @@ dist/java
         ],
       },
       "compile": {
-        "dependsOn": [
+        "alsoRun": [
           "pre-compile",
-        ],
-        "description": "Only compile",
-        "implies": [
           "post-compile",
         ],
+        "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "mvn compiler:compile",
@@ -1042,11 +1044,11 @@ dist/java
         ],
       },
       "post-compile": {
-        "dependsOn": [
-          "compile",
-        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
+        "runFirst": [
+          "compile",
+        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",

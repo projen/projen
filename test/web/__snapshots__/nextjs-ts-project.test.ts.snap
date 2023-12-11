@@ -419,14 +419,15 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": {
-        "dependsOn": [
+        "alsoRun": [
           "pre-compile",
-        ],
-        "description": "Only compile",
-        "implies": [
           "post-compile",
         ],
+        "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "tsc --build",
@@ -498,11 +499,11 @@ tsconfig.tsbuildinfo
         "name": "package",
       },
       "post-compile": {
-        "dependsOn": [
-          "compile",
-        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
+        "runFirst": [
+          "compile",
+        ],
       },
       "post-upgrade": {
         "description": "Runs after upgrading dependencies",

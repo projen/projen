@@ -904,14 +904,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": {
-        "dependsOn": [
+        "alsoRun": [
           "pre-compile",
-        ],
-        "description": "Only compile",
-        "implies": [
           "post-compile",
         ],
+        "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "jsii --silence-warnings=reserved-word",
@@ -1003,11 +1004,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "post-compile": {
-        "dependsOn": [
-          "compile",
-        ],
         "description": "Runs after successful compilation",
         "name": "post-compile",
+        "runFirst": [
+          "compile",
+        ],
         "steps": [
           {
             "spawn": "docgen",
