@@ -26,14 +26,15 @@ exports[`subprojects use root level default task 1`] = `
       ],
     },
     "compile": {
-      "dependsOn": [
+      "alsoRun": [
         "pre-compile",
-      ],
-      "description": "Only compile",
-      "implies": [
         "post-compile",
       ],
+      "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -50,11 +51,11 @@ exports[`subprojects use root level default task 1`] = `
       "name": "package",
     },
     "post-compile": {
-      "dependsOn": [
-        "compile",
-      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
+      "runFirst": [
+        "compile",
+      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",
@@ -94,14 +95,15 @@ exports[`subprojects use root level default task 2`] = `
       ],
     },
     "compile": {
-      "dependsOn": [
+      "alsoRun": [
         "pre-compile",
-      ],
-      "description": "Only compile",
-      "implies": [
         "post-compile",
       ],
+      "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -118,11 +120,11 @@ exports[`subprojects use root level default task 2`] = `
       "name": "package",
     },
     "post-compile": {
-      "dependsOn": [
-        "compile",
-      ],
       "description": "Runs after successful compilation",
       "name": "post-compile",
+      "runFirst": [
+        "compile",
+      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",

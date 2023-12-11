@@ -112,7 +112,8 @@
         "pre-compile"
       ],
       "alsoRun": [
-        "pre-compile"
+        "pre-compile",
+        "post-compile"
       ]
     },
     "contributors:update": {
@@ -294,6 +295,9 @@
         {
           "spawn": "default"
         }
+      ],
+      "runFirst": [
+        "compile"
       ]
     },
     "post-upgrade": {

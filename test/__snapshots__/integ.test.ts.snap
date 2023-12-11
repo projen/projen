@@ -957,10 +957,11 @@ tsconfig.tsbuildinfo
           "exec": "jsii --silence-warnings=reserved-word"
         }
       ],
-      "dependsOn": [
+      "runFirst": [
         "pre-compile"
       ],
-      "implies": [
+      "alsoRun": [
+        "pre-compile",
         "post-compile"
       ]
     },
@@ -1080,7 +1081,7 @@ tsconfig.tsbuildinfo
           "spawn": "docgen"
         }
       ],
-      "dependsOn": [
+      "runFirst": [
         "compile"
       ]
     },
@@ -2049,10 +2050,11 @@ tsconfig.tsbuildinfo
           "exec": "cp src/_loadurl.js lib/"
         }
       ],
-      "dependsOn": [
+      "runFirst": [
         "pre-compile"
       ],
-      "implies": [
+      "alsoRun": [
+        "pre-compile",
         "post-compile"
       ]
     },
@@ -2184,7 +2186,7 @@ tsconfig.tsbuildinfo
           "spawn": "docgen"
         }
       ],
-      "dependsOn": [
+      "runFirst": [
         "compile"
       ]
     },
@@ -3239,10 +3241,11 @@ tsconfig.tsbuildinfo
           "exec": "tsc --build"
         }
       ],
-      "dependsOn": [
+      "runFirst": [
         "pre-compile"
       ],
-      "implies": [
+      "alsoRun": [
+        "pre-compile",
         "post-compile"
       ]
     },
@@ -3309,7 +3312,7 @@ tsconfig.tsbuildinfo
     "post-compile": {
       "name": "post-compile",
       "description": "Runs after successful compilation",
-      "dependsOn": [
+      "runFirst": [
         "compile"
       ]
     },
@@ -4338,10 +4341,11 @@ resolution-mode=highest
     "compile": {
       "name": "compile",
       "description": "Only compile",
-      "dependsOn": [
+      "runFirst": [
         "pre-compile"
       ],
-      "implies": [
+      "alsoRun": [
+        "pre-compile",
         "post-compile"
       ]
     },
@@ -4399,7 +4403,7 @@ resolution-mode=highest
     "post-compile": {
       "name": "post-compile",
       "description": "Runs after successful compilation",
-      "dependsOn": [
+      "runFirst": [
         "compile"
       ]
     },
