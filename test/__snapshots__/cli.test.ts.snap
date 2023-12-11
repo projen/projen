@@ -49,7 +49,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -80,9 +79,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -147,7 +143,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -178,9 +173,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",

@@ -421,7 +421,6 @@ tsconfig.tsbuildinfo
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -501,9 +500,6 @@ tsconfig.tsbuildinfo
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "post-upgrade": {
         "description": "Runs after upgrading dependencies",

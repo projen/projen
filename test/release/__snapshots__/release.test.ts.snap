@@ -205,7 +205,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -236,9 +235,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -536,7 +532,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -567,9 +562,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -871,7 +863,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -902,9 +893,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -1199,7 +1187,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -1230,9 +1217,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -1645,7 +1629,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -1676,9 +1659,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -2149,7 +2129,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -2180,9 +2159,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -2512,7 +2488,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -2543,9 +2518,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -3006,7 +2978,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -3037,9 +3008,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -3287,7 +3255,6 @@ exports[`majorVersion can be 0 2`] = `
     "compile": {
       "alsoRun": [
         "pre-compile",
-        "post-compile",
       ],
       "description": "Only compile",
       "name": "compile",
@@ -3318,9 +3285,6 @@ exports[`majorVersion can be 0 2`] = `
     "post-compile": {
       "description": "Runs after successful compilation",
       "name": "post-compile",
-      "runFirst": [
-        "compile",
-      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",
@@ -3440,7 +3404,6 @@ exports[`minMajorVersion can be 1 1`] = `
     "compile": {
       "alsoRun": [
         "pre-compile",
-        "post-compile",
       ],
       "description": "Only compile",
       "name": "compile",
@@ -3471,9 +3434,6 @@ exports[`minMajorVersion can be 1 1`] = `
     "post-compile": {
       "description": "Runs after successful compilation",
       "name": "post-compile",
-      "runFirst": [
-        "compile",
-      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",
@@ -3724,7 +3684,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -3755,9 +3714,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -3950,7 +3906,6 @@ exports[`prerelease can be specified per branch 3`] = `
     "compile": {
       "alsoRun": [
         "pre-compile",
-        "post-compile",
       ],
       "description": "Only compile",
       "name": "compile",
@@ -3981,9 +3936,6 @@ exports[`prerelease can be specified per branch 3`] = `
     "post-compile": {
       "description": "Runs after successful compilation",
       "name": "post-compile",
-      "runFirst": [
-        "compile",
-      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",
@@ -4352,7 +4304,6 @@ exports[`publisher (defaults) 2`] = `
     "compile": {
       "alsoRun": [
         "pre-compile",
-        "post-compile",
       ],
       "description": "Only compile",
       "name": "compile",
@@ -4383,9 +4334,6 @@ exports[`publisher (defaults) 2`] = `
     "post-compile": {
       "description": "Runs after successful compilation",
       "name": "post-compile",
-      "runFirst": [
-        "compile",
-      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",
@@ -4792,7 +4740,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -4823,9 +4770,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -5262,7 +5206,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -5293,9 +5236,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -5633,7 +5573,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -5664,9 +5603,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -5919,7 +5855,6 @@ node_modules/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -5950,9 +5885,6 @@ node_modules/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",

@@ -961,8 +961,7 @@ tsconfig.tsbuildinfo
         "pre-compile"
       ],
       "alsoRun": [
-        "pre-compile",
-        "post-compile"
+        "pre-compile"
       ]
     },
     "default": {
@@ -1080,9 +1079,6 @@ tsconfig.tsbuildinfo
         {
           "spawn": "docgen"
         }
-      ],
-      "runFirst": [
-        "compile"
       ]
     },
     "post-upgrade": {
@@ -2054,8 +2050,7 @@ tsconfig.tsbuildinfo
         "pre-compile"
       ],
       "alsoRun": [
-        "pre-compile",
-        "post-compile"
+        "pre-compile"
       ]
     },
     "default": {
@@ -2185,9 +2180,6 @@ tsconfig.tsbuildinfo
         {
           "spawn": "docgen"
         }
-      ],
-      "runFirst": [
-        "compile"
       ]
     },
     "post-upgrade": {
@@ -3245,8 +3237,7 @@ tsconfig.tsbuildinfo
         "pre-compile"
       ],
       "alsoRun": [
-        "pre-compile",
-        "post-compile"
+        "pre-compile"
       ]
     },
     "default": {
@@ -3311,10 +3302,7 @@ tsconfig.tsbuildinfo
     },
     "post-compile": {
       "name": "post-compile",
-      "description": "Runs after successful compilation",
-      "runFirst": [
-        "compile"
-      ]
+      "description": "Runs after successful compilation"
     },
     "post-upgrade": {
       "name": "post-upgrade",
@@ -4345,8 +4333,7 @@ resolution-mode=highest
         "pre-compile"
       ],
       "alsoRun": [
-        "pre-compile",
-        "post-compile"
+        "pre-compile"
       ]
     },
     "default": {
@@ -4402,10 +4389,7 @@ resolution-mode=highest
     },
     "post-compile": {
       "name": "post-compile",
-      "description": "Runs after successful compilation",
-      "runFirst": [
-        "compile"
-      ]
+      "description": "Runs after successful compilation"
     },
     "post-upgrade": {
       "name": "post-upgrade",

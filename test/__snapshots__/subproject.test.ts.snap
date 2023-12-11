@@ -28,7 +28,6 @@ exports[`subprojects use root level default task 1`] = `
     "compile": {
       "alsoRun": [
         "pre-compile",
-        "post-compile",
       ],
       "description": "Only compile",
       "name": "compile",
@@ -53,9 +52,6 @@ exports[`subprojects use root level default task 1`] = `
     "post-compile": {
       "description": "Runs after successful compilation",
       "name": "post-compile",
-      "runFirst": [
-        "compile",
-      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",
@@ -97,7 +93,6 @@ exports[`subprojects use root level default task 2`] = `
     "compile": {
       "alsoRun": [
         "pre-compile",
-        "post-compile",
       ],
       "description": "Only compile",
       "name": "compile",
@@ -122,9 +117,6 @@ exports[`subprojects use root level default task 2`] = `
     "post-compile": {
       "description": "Runs after successful compilation",
       "name": "post-compile",
-      "runFirst": [
-        "compile",
-      ],
     },
     "pre-compile": {
       "description": "Prepare the project for compilation",

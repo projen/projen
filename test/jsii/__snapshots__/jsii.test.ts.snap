@@ -906,7 +906,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -1006,9 +1005,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
         "steps": [
           {
             "spawn": "docgen",
@@ -2378,7 +2374,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -2478,9 +2473,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
         "steps": [
           {
             "spawn": "docgen",
@@ -3861,7 +3853,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -3961,9 +3952,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
         "steps": [
           {
             "spawn": "docgen",
@@ -5335,7 +5323,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -5435,9 +5422,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
         "steps": [
           {
             "spawn": "docgen",

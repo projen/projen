@@ -191,7 +191,6 @@ cython_debug/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -242,9 +241,6 @@ cython_debug/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -511,7 +507,6 @@ cython_debug/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -562,9 +557,6 @@ cython_debug/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -833,7 +825,6 @@ cython_debug/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -884,9 +875,6 @@ cython_debug/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
@@ -1136,7 +1124,6 @@ cython_debug/
       "compile": {
         "alsoRun": [
           "pre-compile",
-          "post-compile",
         ],
         "description": "Only compile",
         "name": "compile",
@@ -1187,9 +1174,6 @@ cython_debug/
       "post-compile": {
         "description": "Runs after successful compilation",
         "name": "post-compile",
-        "runFirst": [
-          "compile",
-        ],
       },
       "pre-compile": {
         "description": "Prepare the project for compilation",
