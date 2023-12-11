@@ -75,5 +75,15 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
         writeln(`- builtin: ${step.builtin}`);
       }
     }
+
+    if ((task.alsoRun ?? []).length > 0) {
+      writeln(`${chalk.underline("task relationships")}:`);
+      for (const t of task.alsoRun ?? []) {
+        const kind = (task.runFirst ?? []).includes(t)
+          ? "depends on"
+          : "implies";
+        writeln(`- ${chalk.bold(kind)} ${t}`);
+      }
+    }
   }
 }

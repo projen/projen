@@ -51,14 +51,13 @@ export class ProjectBuild extends Component {
       description: "Prepare the project for compilation",
     });
 
-    this.postCompileTask = project.tasks.addTask("post-compile", {
-      description: "Runs after successful compilation",
-    });
-
     this.compileTask = project.tasks.addTask("compile", {
       description: "Only compile",
       dependsOnTasks: [this.preCompileTask],
-      impliesTasks: [this.postCompileTask],
+    });
+
+    this.postCompileTask = project.tasks.addTask("post-compile", {
+      description: "Runs after successful compilation",
     });
 
     this.testTask = project.tasks.addTask("test", {

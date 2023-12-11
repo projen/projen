@@ -137,8 +137,7 @@ world!
 ```
 
 In the default projen task setup, dependencies are used for the `compile` task:
-`pre-compile` will automatically be run _before_ `compile`, and `post-compile`
-will automatically be run _after_ `compile`.
+`pre-compile` will automatically be run _before_ `compile`.
 
 ### Subtasks (spawn)
 
@@ -174,7 +173,8 @@ the parent task's environment (see below), while dependencies do not.
 
 If in the course of a single `projen` invocation a single task is requested to
 be run multiple times (for example, both by `spawn` as well as by dependencies),
-all invocations after the first will be skipped.
+all invocations after the first will be skipped, so that tasks aren't unnecessarily
+run twice.
 
 ## Environment
 
