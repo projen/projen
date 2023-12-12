@@ -80,6 +80,45 @@ export interface VsCodeLaunchConfigurationEntry {
 }
 
 /**
+ * Base options for a 'VsCodeLaunchInputEntry'
+ * Source: https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
+ */
+export interface VsCodeLaunchInputEntry {
+  readonly id: string;
+}
+
+/**
+ * Options for a 'VsCodeLaunchPromptStringInputEntry'
+ * Source: https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
+ */
+export interface VsCodeLaunchPromptStringInputEntry
+  extends VsCodeLaunchInputEntry {
+  readonly description: string;
+  readonly default?: string;
+  readonly password?: boolean;
+}
+
+/**
+ * Options for a 'VsCodeLaunchPickStringInputEntry'
+ * Source: https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
+ */
+export interface VsCodeLaunchPickStringInputEntry
+  extends VsCodeLaunchInputEntry {
+  readonly description: string;
+  readonly default?: string;
+  readonly options: string[];
+}
+
+/**
+ * Options for a 'VsCodeLaunchCommandInputEntry'
+ * Source: https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
+ */
+export interface VsCodeLaunchCommandInputEntry extends VsCodeLaunchInputEntry {
+  readonly command: string;
+  readonly args?: unknown;
+}
+
+/**
  * VSCode launch configuration file (launch.json), useful for enabling in-editor debugger
  */
 export class VsCodeLaunchConfig extends Component {
@@ -109,6 +148,7 @@ export class VsCodeLaunchConfig extends Component {
     this.content = {
       version: "0.2.0",
       configurations: [],
+      inputs: [],
     };
 
     this.file = new JsonFile(vscode.project, ".vscode/launch.json", {
@@ -130,9 +170,59 @@ export class VsCodeLaunchConfig extends Component {
   public addConfiguration(cfg: VsCodeLaunchConfigurationEntry) {
     this.content.configurations.push(cfg);
   }
+
+  /**
+   * Adds an input variable with type `promptString` to `.vscode/launch.json`.
+   *
+   * See https://code.visualstudio.com/docs/editor/variables-reference#_input-variables for details.
+   * @param cfg VsCodeLaunchPromptStringInputEntry
+   */
+  public addPromptStringInput(cfg: VsCodeLaunchPromptStringInputEntry) {
+    this.content.inputs.push({
+      ...cfg,
+      type: InputCommandType.PROMPT_STRING,
+    });
+  }
+
+  /**
+   * Adds an input variable with type `pickString` to `.vscode/launch.json`.
+   *
+   * See https://code.visualstudio.com/docs/editor/variables-reference#_input-variables for details.
+   * @param cfg VsCodeLaunchPickStringInputEntry
+   */
+  public addPickStringInput(cfg: VsCodeLaunchPickStringInputEntry) {
+    this.content.inputs.push({
+      ...cfg,
+      type: InputCommandType.PICK_STRING,
+    });
+  }
+
+  /**
+   * Adds an input variable with type `command` to `.vscode/launch.json`.
+   *
+   * See https://code.visualstudio.com/docs/editor/variables-reference#_input-variables for details.
+   * @param cfg VsCodeLaunchCommandInputEntry
+   */
+  public addCommandInput(cfg: VsCodeLaunchCommandInputEntry) {
+    this.content.inputs.push({
+      ...cfg,
+      type: InputCommandType.COMMAND,
+    });
+  }
+}
+
+enum InputCommandType {
+  PROMPT_STRING = "promptString",
+  PICK_STRING = "pickString",
+  COMMAND = "command",
+}
+
+interface VsCodeLaunchInputEntryWithType extends VsCodeLaunchInputEntry {
+  readonly type: InputCommandType;
 }
 
 interface VsCodeLaunchConfiguration {
   version: string;
   configurations: VsCodeLaunchConfigurationEntry[];
+  inputs: VsCodeLaunchInputEntryWithType[];
 }
