@@ -22,7 +22,9 @@ jobs:
 
       - name: Build docs
         working-directory: docusaurus
-        run: npm run build
+        run: |
+          npm install 
+          npm run build
 
       - name: Deploy to GitHub Pages
         uses: actions/upload-pages-artifact@v2
