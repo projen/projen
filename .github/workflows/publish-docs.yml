@@ -22,6 +22,7 @@ jobs:
 
       - name: Generate JSII docs
         run: |
+          npm install
           npm run build
 
       - name: Build docs
