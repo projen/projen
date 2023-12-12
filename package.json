@@ -72,6 +72,7 @@
     "jsii-pacmak": "^1.93.0",
     "jsii-rosetta": "5.1.x",
     "markmac": "^0.1.146",
+    "npm-check-updates": "^16",
     "prettier": "^2.8.8",
     "standard-version": "^9",
     "ts-jest": "^29",
