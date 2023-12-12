@@ -25,6 +25,6 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: actions/upload-pages-artifact
+        uses: actions/upload-pages-artifact@v2
         with:
           path: "docusaurus/build"
