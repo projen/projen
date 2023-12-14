@@ -491,6 +491,11 @@ export class JsiiProject extends TypeScriptProject {
         uses: "pnpm/action-setup@v2.2.4",
         with: { version: this.package.pnpmVersion },
       });
+    } else if (this.package.packageManager === NodePackageManager.BUN) {
+      prePublishSteps.push({
+        name: "Setup bun",
+        uses: "oven-sh/setup-bun@v1",
+      });
     }
 
     prePublishSteps.push(

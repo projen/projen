@@ -982,6 +982,61 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
   });
 });
 
+describe("Setup bun", () => {
+  const setupBunIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Setup bun");
+  const setupNodeIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Setup Node.js");
+
+  test("Setup bun should not run without bun selected as the package manager", () => {
+    // WHEN
+    const options = {};
+
+    const project = new TestNodeProject(options);
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(setupBunIndex(buildWorkflow.jobs.build)).toEqual(-1);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(setupBunIndex(releaseWorkflow.jobs.release)).toEqual(-1);
+    const upgradeWorkflow = yaml.parse(
+      output[".github/workflows/upgrade-main.yml"]
+    );
+    expect(setupBunIndex(upgradeWorkflow.jobs.upgrade)).toEqual(-1);
+  });
+
+  test("Setup Node.js should not be used if bun is selected as the package manager", () => {
+    // WHEN
+    const options = {
+      workflowPackageCache: true,
+      packageManager: NodePackageManager.BUN,
+    };
+
+    const project = new TestNodeProject(options);
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(setupBunIndex(buildWorkflow.jobs.build)).toBeGreaterThanOrEqual(0);
+    expect(setupNodeIndex(buildWorkflow.jobs.build)).toEqual(-1);
+
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(setupBunIndex(releaseWorkflow.jobs.release)).toBeGreaterThanOrEqual(
+      0
+    );
+    expect(setupNodeIndex(releaseWorkflow.jobs.release)).toEqual(-1);
+
+    const upgradeWorkflow = yaml.parse(
+      output[".github/workflows/upgrade-main.yml"]
+    );
+    expect(setupBunIndex(upgradeWorkflow.jobs.upgrade)).toBeGreaterThanOrEqual(
+      0
+    );
+    expect(setupNodeIndex(upgradeWorkflow.jobs.upgrade)).toEqual(-1);
+  });
+});
+
 describe("Setup pnpm", () => {
   const setupPnpmIndex = (job: any) =>
     job.steps.findIndex((step: any) => step.name === "Setup pnpm");

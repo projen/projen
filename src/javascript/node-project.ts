@@ -981,6 +981,11 @@ export class NodeProject extends GitHubProject {
         uses: "pnpm/action-setup@v2.2.4",
         with: { version: this.package.pnpmVersion },
       });
+    } else if (this.package.packageManager === NodePackageManager.BUN) {
+      install.push({
+        name: "Setup bun",
+        uses: "oven-sh/setup-bun@v1",
+      });
     }
 
     if (this.nodeVersion || this.workflowPackageCache) {
@@ -998,18 +1003,20 @@ export class NodeProject extends GitHubProject {
           : this.package.packageManager === NodePackageManager.PNPM
           ? "pnpm"
           : "npm";
-      install.push({
-        name: "Setup Node.js",
-        uses: "actions/setup-node@v3",
-        with: {
-          ...(this.nodeVersion && {
-            "node-version": this.nodeVersion,
-          }),
-          ...(this.workflowPackageCache && {
-            cache,
-          }),
-        },
-      });
+      if (this.package.packageManager !== NodePackageManager.BUN) {
+        install.push({
+          name: "Setup Node.js",
+          uses: "actions/setup-node@v3",
+          with: {
+            ...(this.nodeVersion && {
+              "node-version": this.nodeVersion,
+            }),
+            ...(this.workflowPackageCache && {
+              cache,
+            }),
+          },
+        });
+      }
     }
 
     const mutable = options.mutable ?? false;
