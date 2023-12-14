@@ -94,6 +94,91 @@ test("throws when adding an existing includes", () => {
   );
 });
 
+test("throws when adding a job with more than 4 caches configured", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  // THEN
+  expect(
+    () =>
+      new CiConfiguration(p, "foo", {
+        jobs: {
+          build: {
+            cache: [
+              {
+                key: {
+                  files: ["$CI_COMMIT_REF_SLUG"],
+                },
+                paths: ["vendor/"],
+              },
+              {
+                key: {
+                  files: ["$CI_COMMIT_REF_SLUG"],
+                },
+                paths: ["vendor/"],
+              },
+              {
+                key: {
+                  files: ["yarn.lock"],
+                },
+              },
+              {
+                key: {
+                  files: ["$CI_COMMIT_REF_SLUG"],
+                },
+                paths: ["vendor/"],
+              },
+              {
+                key: {
+                  files: ["yarn.lock"],
+                },
+              },
+            ],
+            variables: { AWS_REGION: "eu-central-1" },
+          },
+        },
+      })
+  ).toThrowError(/foo: GitLab CI defines more than 4 caches./);
+});
+
+test("throws when adding more than 4 default caches", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  // THEN
+  expect(
+    () =>
+      new CiConfiguration(p, "foo", {
+        default: {
+          cache: [
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+          ],
+        },
+      })
+  ).toThrowError(/foo: GitLab CI defines more than 4 caches./);
+});
+
 test("respected the original format when variables are added to jobs", () => {
   // GIVEN
   const p = new TestProject({

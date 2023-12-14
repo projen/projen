@@ -82,7 +82,7 @@ export class CiConfiguration extends Component {
   /**
    * A default list of cache definitions (máx. 4) with the files and directories to cache between jobs. You can only use paths that are in the local working copy.
    */
-  public readonly defaultCache?: [Cache?, Cache?, Cache?, Cache?];
+  public defaultCache?: Cache[];
   /**
    * Specifies the default docker image to use globally for all jobs.
    */
@@ -160,7 +160,7 @@ export class CiConfiguration extends Component {
       this.defaultArtifacts = defaults.artifacts;
       defaults.beforeScript &&
         this.defaultBeforeScript.push(...defaults.beforeScript);
-      this.defaultCache = defaults.cache;
+      defaults.cache && this.addDefaultCaches(defaults.cache);
       this.defaultImage = defaults.image;
       this.defaultInterruptible = defaults.interruptible;
       this.defaultRetry = defaults.retry;
@@ -308,7 +308,30 @@ export class CiConfiguration extends Component {
       if (value.stage) {
         this.addStages(value.stage);
       }
+      if (value.cache) {
+        this.assertIsValidCacheSetup(value.cache);
+      }
     }
+  }
+
+  private isValidCacheSetup(caches: Cache[]): Boolean {
+    const MAX_CONFIGURABLE_CACHES = 4;
+    return caches.length <= MAX_CONFIGURABLE_CACHES;
+  }
+
+  private assertIsValidCacheSetup(caches: Cache[]) {
+    if (!this.isValidCacheSetup(caches)) {
+      throw new Error(`${this.name}: GitLab CI defines more than 4 caches.`);
+    }
+  }
+
+  /**
+   * Adds up to 4 default caches configuration to the CI configuration.
+   * @param caches Caches to add.
+   */
+  public addDefaultCaches(caches: Cache[]) {
+    this.assertIsValidCacheSetup(caches);
+    this.defaultCache = caches;
   }
 
   private renderCI() {
