@@ -4359,7 +4359,7 @@ resolution-mode=highest
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "mv $(npm pack) dist/js/"
+          "exec": "mv $(pnpm pack) dist/js/"
         }
       ]
     },

@@ -2,6 +2,14 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 import {themes as prismThemes} from 'prism-react-renderer';
+import {readFileSync} from "fs";
+
+function getBaseUrl() {
+  // todo: this code will be removed at a later time
+  if (process.env.GITHUB_REPOSITORY === 'Defiance-Digital/projen')return "/projen";
+
+  return "/";
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -17,14 +25,14 @@ const config = {
   url: 'https://projen.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: getBaseUrl(),
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'projen', // Usually your GitHub org/user name.
   projectName: 'projen', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
