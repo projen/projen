@@ -52,7 +52,7 @@ export default function Home() {
 
             <div className="lg:grid lg:grid-cols-4">
               <div className="lg:col-start-2 lg:col-span-2">
-                <p className="text-center">
+                <p className="text-xl lg:text-2xl text-center">
                   Synthesize project configuration files from a well-typed definitions, written in
                   {' '}<a href="https://github.com/aws/jsii" target="_blank" className="text-blue-500 dark:text-blue-300 underline">jsii</a>{' '}
                   compatible languages reducing project configuration management fatigue, increasing
@@ -105,7 +105,7 @@ export default function Home() {
 
             <div className="lg:grid lg:grid-cols-4">
               <div className="lg:col-start-2 lg:col-span-2">
-                <p className="text-center">
+                <p className="text-xl lg:text-2xl text-center">
                   Tasks allow you to define commands backed by shell scripts. You can use tasks to implement custom
                   workflows accessible through the projen CLI. Focus more on business requirements, less on managing
                   project configuration.
@@ -128,7 +128,7 @@ export default function Home() {
 
             <div className="lg:grid lg:grid-cols-4 mb-8">
               <div className="lg:col-start-2 lg:col-span-2">
-                <p className="text-center">
+                <p className="text-xl lg:text-2xl text-center">
                   You’re not alone. Developers from all over the world manage their complex configurations using
                   projen. Get started today and get these benefits:
                 </p>
