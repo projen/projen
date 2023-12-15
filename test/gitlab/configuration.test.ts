@@ -139,7 +139,7 @@ test("throws when adding a job with more than 4 caches configured", () => {
           },
         },
       })
-  ).toThrowError(/foo: GitLab CI defines more than 4 caches./);
+  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
 });
 
 test("throws when adding more than 4 default caches", () => {
@@ -176,7 +176,7 @@ test("throws when adding more than 4 default caches", () => {
           ],
         },
       })
-  ).toThrowError(/foo: GitLab CI defines more than 4 caches./);
+  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
 });
 
 test("respected the original format when variables are added to jobs", () => {

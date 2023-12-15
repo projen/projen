@@ -83,8 +83,8 @@ export class CiConfiguration extends Component {
    * A default list of cache definitions (máx. 4) with the files and directories to cache between jobs. You can only use paths that are in the local working copy.
    */
   private _defaultCache?: Cache[];
-  
-  public get defaultCache: Cache[] | undefined {
+
+  public get defaultCache(): Cache[] | undefined {
     return this._defaultCache;
   }
   /**
@@ -325,7 +325,9 @@ export class CiConfiguration extends Component {
 
   private assertIsValidCacheSetup(caches: Cache[]) {
     if (!this.isValidCacheSetup(caches)) {
-      throw new Error(`${this.name}: GitLab CI can only define up to 4 caches, got: ${caches.length}`);
+      throw new Error(
+        `${this.name}: GitLab CI can only define up to 4 caches, got: ${caches.length}`
+      );
     }
   }
 
@@ -335,7 +337,7 @@ export class CiConfiguration extends Component {
    */
   public addDefaultCaches(caches: Cache[]) {
     this.assertIsValidCacheSetup(caches);
-    this.defaultCache = caches;
+    this._defaultCache = caches;
   }
 
   private renderCI() {
