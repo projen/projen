@@ -19,30 +19,25 @@ export default function Home() {
         {/* SECTION 1 */}
         <section className="dark:bg-slate-800 py-16 lg:py-36">
           <div className="container mx-auto text-center">
-            <img src={siteConfig.themeConfig.image} alt="projen" className="mx-auto mb-8 lg:w-36" />
+            <img src={siteConfig.themeConfig.image} alt="projen" className="mx-auto mb-8 lg:w-36"/>
             <h1 className="text-6xl font-bold dark:text-white mb-8">{siteConfig.title}</h1>
-            <h2 className="text-2xl font-medium dark:text-white">{siteConfig.tagline}</h2>
+            <div className="container mx-auto text-center relative z-10">
+              <h2 className="text-2xl lg:text-5xl font-medium text-white mb-16 lg:mb-24">
+                Rapidly build modern applications
+                <span className="lg:block mt-3"> with advanced configuration management</span>
+              </h2>
+              <a href="/docs/getting-started/"
+                 className="rounded text-white bg-blue-500 py-3 px-8 inline-block lg:mb-36">Get Started</a>
+            </div>
+            <img src={Section2Image} alt="projen"
+                 className="mx-auto mb-8 opacity-25 absolute -left-48 top-24 lg:top-48 z-0"/>
+
           </div>
         </section>
 
         <hr className="m-0 bg-slate-600"/>
 
-        {/* SECTION 2 */}
-        <section className="bg-slate-800 pt-16 pb-36 lg:py-36 relative overflow-hidden">
-          <div className="container mx-auto text-center relative z-10">
-            <h2 className="text-2xl lg:text-5xl font-medium text-white mb-16 lg:mb-24">
-              Rapidly build modern applications
-              <span className="lg:block mt-3"> with advanced configuration management</span>
-            </h2>
-            <a href="/docs/getting-started/"
-               className="rounded text-white bg-blue-500 py-3 px-8 inline-block lg:mb-36">Get Started</a>
-          </div>
-          <img src={Section2Image} alt="projen" className="mx-auto mb-8 opacity-25 absolute -left-48 top-24 lg:top-48 z-0" />
-        </section>
-
-        <hr className="m-0 bg-slate-600"/>
-
-      {/* SECTION 3 */}
+        {/* SECTION 3 */}
         <section className="dark:bg-slate-800 pt-16 pb-36 lg:py-36">
           <div className="container mx-auto text-center relative z-10">
             <h2 className="text-2xl lg:text-5xl font-medium dark:text-white mb-16 lg:mb-24">
