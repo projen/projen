@@ -59,8 +59,9 @@ tsconfig.json
 docusaurus/docs/api/
 !/projen.bash
 !templates/**
-/.idea
 !test/inventory/**
+/.idea
+**/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
 !/.projen/tree.json

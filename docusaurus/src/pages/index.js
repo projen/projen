@@ -17,19 +17,19 @@ export default function Home() {
     >
       <main>
         {/* SECTION 1 */}
-        <section className="dark:bg-slate-800 py-16 lg:py-36 relative overflow-hidden">
+        <section className="bg-slate-800 text-white py-16 lg:py-36 relative overflow-hidden">
           <div className="container mx-auto text-center">
-            <img src={siteConfig.themeConfig.image} alt="projen" className="mx-auto mb-8 lg:w-36"/>
-            <h1 className="text-6xl font-bold dark:text-white mb-8">{siteConfig.title}</h1>
+            <img src={siteConfig.themeConfig.image} alt="The projen logo containing three boxes stacked in a pyramid shape with the bottom right box having the letters 'pj' in it" className="mx-auto mb-8 lg:w-36"/>
+            <h1 className="text-6xl font-bold mb-8">{siteConfig.title}</h1>
             <div className="container mx-auto text-center relative z-10">
               <h2 className="text-2xl lg:text-5xl font-medium text-white mb-16 lg:mb-24">
                 Rapidly build modern applications
                 <span className="lg:block mt-3"> with advanced configuration management</span>
               </h2>
-              <a href="/docs/getting-started/"
+              <a href="/projen/docs/getting-started/"
                  className="rounded text-white bg-blue-500 py-3 px-8 inline-block lg:mb-36">Get Started</a>
             </div>
-            <img src={Section2Image} alt="projen"
+            <img src={Section2Image} alt="An illustration containing various lines, shapes in blues, reds and whites making a larger cube centered inside of a circular pattern."
                  className="mx-auto mb-8 opacity-25 absolute -left-48 top-24 lg:top-48 z-0"/>
 
           </div>
@@ -108,7 +108,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <img src={Section5Image} alt="projen" className="mx-auto mb-8 opacity-25 absolute -right-48 top-24 lg:top-48 z-0" />
+          <img src={Section5Image} alt="A vector illustration of a cube made from red, yellow and blue puzzle pieces." className="mx-auto mb-8 opacity-25 absolute -right-48 top-24 lg:top-48 z-0" />
         </section>
 
         <hr className="m-0 bg-slate-600"/>
