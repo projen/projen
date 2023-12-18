@@ -1,8 +1,8 @@
 import React from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Section2Image from '../../static/img/backgrounds/1.png';
-import Section5Image from '../../static/img/backgrounds/2.png';
+import Image1 from '../../static/img/backgrounds/1.png';
+import Image2 from '../../static/img/backgrounds/2.png';
 import TypeScriptLogo from '../../static/img/languages/ts.png';
 import GoLogo from '../../static/img/languages/go.png';
 import DotNetLogo from '../../static/img/languages/dotnet.png';
@@ -32,7 +32,7 @@ export default function Home() {
                                className="rounded text-white bg-blue-500 hover:text-white py-3 px-8 inline-block lg:mb-36">Get
                                 Started</a>
                         </div>
-                        <img src={Section2Image}
+                        <img src={Image1}
                              alt="An illustration containing various lines, shapes in blues, reds and whites making a larger cube centered inside of a circular pattern."
                              className="mx-auto mb-8 opacity-25 absolute -left-48 top-24 lg:top-48 z-0"/>
 
@@ -41,7 +41,7 @@ export default function Home() {
 
                 <hr className="m-0 bg-slate-600"/>
 
-                {/* SECTION 3 */}
+                {/* SECTION 2 */}
                 <section className="dark:bg-slate-800 pt-16 pb-36 lg:py-36">
                     <div className="p-8 lg:p-0 lg:container lg:mx-auto text-center relative z-10">
                         <h2 className="text-2xl lg:text-5xl font-medium dark:text-white mb-16 lg:mb-24">
@@ -65,7 +65,7 @@ export default function Home() {
 
                 <hr className="m-0 bg-slate-600"/>
 
-                {/* SECTION 4 */}
+                {/* SECTION 3 */}
                 <section className="dark:bg-slate-800 pt-16 pb-36 lg:py-36">
                     <div className="p-8 lg:p-0 lg:container lg:mx-auto text-center relative z-10">
                         <h2 className="text-2xl lg:text-5xl font-medium dark:text-white mb-16 lg:mb-24">
@@ -95,7 +95,7 @@ export default function Home() {
 
                 <hr className="m-0 bg-slate-600"/>
 
-                {/* SECTION 5 */}
+                {/* SECTION 4 */}
                 <section className="dark:bg-slate-800 pt-16 pb-36 lg:py-36 relative overflow-hidden">
                     <div className="p-8 lg:p-0 lg:container lg:mx-auto text-center relative z-10">
                         <h2 className="text-2xl lg:text-5xl font-medium dark:text-white mb-16 lg:mb-24">
@@ -113,14 +113,14 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <img src={Section5Image}
+                    <img src={Image2}
                          alt="A vector illustration of a cube made from red, yellow and blue puzzle pieces."
                          className="mx-auto mb-8 opacity-[.10] lg:opacity-25 absolute -right-48 top-24 lg:top-48 z-0"/>
                 </section>
 
                 <hr className="m-0 bg-slate-600"/>
 
-                {/* SECTION 6 */}
+                {/* SECTION 5 */}
                 <section className="dark:bg-slate-800 pt-16 pb-36 lg:py-36 relative overflow-hidden">
                     <div className="p-8 lg:p-0 lg:container lg:mx-auto text-center relative z-10">
                         <h2 className="text-2xl lg:text-5xl font-medium dark:text-white mb-16 lg:mb-24">
