@@ -17,7 +17,7 @@ export default function Home() {
     >
       <main>
         {/* SECTION 1 */}
-        <section className="dark:bg-slate-800 py-16 lg:py-36">
+        <section className="dark:bg-slate-800 py-16 lg:py-36 relative overflow-hidden">
           <div className="container mx-auto text-center">
             <img src={siteConfig.themeConfig.image} alt="projen" className="mx-auto mb-8 lg:w-36"/>
             <h1 className="text-6xl font-bold dark:text-white mb-8">{siteConfig.title}</h1>
