@@ -3,6 +3,9 @@
 set -euo pipefail
 if [ ! -f lib/cli/index.js ]; then
   echo "bootstrapping..."
+  if [ ! -f node_modules/.bin/jsii ]; then
+    yarn install --frozen-lockfile --check-files --non-interactive
+  fi
   npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies
 fi
 exec bin/projen $@

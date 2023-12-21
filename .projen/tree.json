@@ -296,6 +296,12 @@
           "path": ".prettierrc.json"
         }
       },
+      "LicenseChecker#check-licenses": {
+        "metadata": {
+          "type": "component",
+          "construct": "LicenseChecker"
+        }
+      },
       "TypescriptConfig#AutoId23": {
         "metadata": {
           "type": "component",
@@ -338,6 +344,19 @@
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
+        }
+      },
+      "TaskWorkflow#check-licenses": {
+        "metadata": {
+          "type": "component",
+          "construct": "TaskWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--check-licenses.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/check-licenses.yml"
         }
       },
       "UpgradeDependencies#AutoId28": {
