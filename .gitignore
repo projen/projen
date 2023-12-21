@@ -54,6 +54,7 @@ junit.xml
 .jsii
 tsconfig.json
 !/docs/api/API.md
+!/.github/workflows/check-licenses.yml
 !/.github/workflows/upgrade-bundled-main.yml
 !/.github/workflows/upgrade-main.yml
 !/projen.bash
