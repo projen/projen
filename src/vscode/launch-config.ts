@@ -148,7 +148,6 @@ export class VsCodeLaunchConfig extends Component {
     this.content = {
       version: "0.2.0",
       configurations: [],
-      inputs: [],
     };
 
     this.file = new JsonFile(vscode.project, ".vscode/launch.json", {
@@ -178,7 +177,7 @@ export class VsCodeLaunchConfig extends Component {
    * @param cfg VsCodeLaunchPromptStringInputEntry
    */
   public addPromptStringInput(cfg: VsCodeLaunchPromptStringInputEntry) {
-    this.content.inputs.push({
+    this.addInput({
       ...cfg,
       type: InputCommandType.PROMPT_STRING,
     });
@@ -191,7 +190,7 @@ export class VsCodeLaunchConfig extends Component {
    * @param cfg VsCodeLaunchPickStringInputEntry
    */
   public addPickStringInput(cfg: VsCodeLaunchPickStringInputEntry) {
-    this.content.inputs.push({
+    this.addInput({
       ...cfg,
       type: InputCommandType.PICK_STRING,
     });
@@ -204,10 +203,15 @@ export class VsCodeLaunchConfig extends Component {
    * @param cfg VsCodeLaunchCommandInputEntry
    */
   public addCommandInput(cfg: VsCodeLaunchCommandInputEntry) {
-    this.content.inputs.push({
+    this.addInput({
       ...cfg,
       type: InputCommandType.COMMAND,
     });
+  }
+
+  private addInput(input: VsCodeLaunchInputEntryWithType) {
+    this.content.inputs ??= [];
+    this.content.inputs.push(input);
   }
 }
 
@@ -224,5 +228,5 @@ interface VsCodeLaunchInputEntryWithType extends VsCodeLaunchInputEntry {
 interface VsCodeLaunchConfiguration {
   version: string;
   configurations: VsCodeLaunchConfigurationEntry[];
-  inputs: VsCodeLaunchInputEntryWithType[];
+  inputs?: VsCodeLaunchInputEntryWithType[];
 }

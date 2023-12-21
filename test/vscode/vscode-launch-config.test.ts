@@ -15,7 +15,6 @@ test("empty launch configuration", () => {
     "//": expect.anything(),
     version: "0.2.0",
     configurations: [],
-    inputs: [],
   });
 });
 
@@ -50,7 +49,6 @@ test("adding a launch configuration entry", () => {
         console: "externalTerminal",
       },
     ],
-    inputs: [],
   });
 });
 
@@ -121,7 +119,6 @@ test("adding multiple launch configuration entries", () => {
         debugServer: 4711,
       },
     ],
-    inputs: [],
   });
 });
 
@@ -156,7 +153,6 @@ test("check correct env output", () => {
         },
       },
     ],
-    inputs: [],
   });
 });
 
