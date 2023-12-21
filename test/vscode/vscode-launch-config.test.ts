@@ -155,3 +155,63 @@ test("check correct env output", () => {
     ],
   });
 });
+
+test("adding multiple launch configuration inputs", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  const launchConfig = project.vscode?.launchConfiguration;
+  launchConfig?.addPromptStringInput({
+    id: "promptStringInput",
+    description: "Enter a value",
+    password: true,
+    default: "default value",
+  });
+
+  launchConfig?.addPickStringInput({
+    id: "pickStringInput",
+    description: "Pick a value",
+    options: ["option 1", "option 2"],
+  });
+
+  launchConfig?.addCommandInput({
+    id: "commandInput",
+    command: "example.command",
+    args: {
+      arg1: "value1",
+      arg2: "value2",
+    },
+  });
+
+  // THEN
+  expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
+    "//": expect.anything(),
+    version: "0.2.0",
+    configurations: [],
+    inputs: [
+      {
+        id: "promptStringInput",
+        description: "Enter a value",
+        password: true,
+        default: "default value",
+        type: "promptString",
+      },
+      {
+        id: "pickStringInput",
+        description: "Pick a value",
+        options: ["option 1", "option 2"],
+        type: "pickString",
+      },
+      {
+        id: "commandInput",
+        command: "example.command",
+        args: {
+          arg1: "value1",
+          arg2: "value2",
+        },
+        type: "command",
+      },
+    ],
+  });
+});
