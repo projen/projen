@@ -1,5 +1,6 @@
 const {
   cdk,
+  github,
   javascript,
   JsonFile,
   ProjectTree,
@@ -134,6 +135,30 @@ const project = new cdk.JsiiProject({
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
   docgenFilePath: "docs/api/API.md",
+
+  // Only allow certain open source licenses
+  checkLicenses: {
+    allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
+  },
+});
+
+// Run license checker as a separate CI job
+new github.TaskWorkflow(project.github, {
+  name: "check-licenses",
+  jobId: "check-licenses",
+  triggers: {
+    pullRequest: {},
+    workflowDispatch: {},
+    push: { branches: ["main"] },
+  },
+  permissions: {},
+  preBuildSteps: [
+    {
+      name: "Install dependencies",
+      run: project.runTaskCommand(project.tasks.tryFind("install:ci")),
+    },
+  ],
+  task: project.tasks.tryFind("check-licenses"),
 });
 
 // Upgrade Dependencies in two parts:
@@ -178,6 +203,9 @@ new TextFile(project, "projen.bash", {
     "set -euo pipefail",
     "if [ ! -f lib/cli/index.js ]; then",
     '  echo "bootstrapping..."',
+    "  if [ ! -f node_modules/.bin/jsii ]; then",
+    "    yarn install --frozen-lockfile --check-files --non-interactive",
+    "  fi",
     "  npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
     "fi",
     "exec bin/projen $@",

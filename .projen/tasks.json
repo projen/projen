@@ -59,6 +59,15 @@
         }
       ]
     },
+    "check-licenses": {
+      "name": "check-licenses",
+      "steps": [
+        {
+          "exec": "license-checker --summary --production --onlyAllow \"MIT;ISC;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0\"",
+          "receiveArgs": true
+        }
+      ]
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -296,7 +305,12 @@
     },
     "pre-compile": {
       "name": "pre-compile",
-      "description": "Prepare the project for compilation"
+      "description": "Prepare the project for compilation",
+      "steps": [
+        {
+          "spawn": "check-licenses"
+        }
+      ]
     },
     "readme-macros": {
       "name": "readme-macros",
@@ -383,13 +397,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/node,@types/semver,@types/yargs,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,eslint,jest,jest-junit,jsii-diff,jsii-docgen,jsii-pacmak,prettier,standard-version,ts-jest"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/node,@types/semver,@types/yargs,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,eslint,jest,jest-junit,jsii-diff,jsii-docgen,jsii-pacmak,license-checker,prettier,standard-version,ts-jest"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak prettier standard-version ts-jest"
+          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak license-checker prettier standard-version ts-jest"
         },
         {
           "exec": "/bin/bash ./projen.bash"
