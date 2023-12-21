@@ -42,7 +42,7 @@ const project = new cdk.JsiiProject({
   jsiiVersion: "5.1.x",
   typescriptVersion: "5.1.x",
 
-  deps: ["constructs@^10.0.0"],
+  deps: ["constructs@^10.0.0", "gpl-3.0"],
 
   bundledDeps: [
     "conventional-changelog-config-spec",
