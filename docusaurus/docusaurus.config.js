@@ -55,6 +55,7 @@ const config = {
           path: 'docs',
           async sidebarItemsGenerator({defaultSidebarItemsGenerator, ...args}) {
             const sidebarItems = await defaultSidebarItemsGenerator(args);
+            // @ts-ignore
             return sidebarItems.filter(x => x.label !== 'api');
           }
         },
@@ -103,7 +104,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/docs/Introduction/index',
+                to: '/docs/Introduction',
               },
             ],
           },
@@ -130,7 +131,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()}. Built with Docusaurus by Defiance Digital with ❤️.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc.`,
       },
       prism: {
         darkTheme: prismThemes.dracula,
