@@ -107,6 +107,7 @@
     "conventional-changelog-config-spec",
     "fast-json-patch",
     "glob",
+    "gpl-3.0",
     "ini",
     "semver",
     "shx",

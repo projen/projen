@@ -156,6 +156,10 @@
       "type": "bundled"
     },
     {
+      "name": "gpl-3.0",
+      "type": "bundled"
+    },
+    {
       "name": "ini",
       "type": "bundled"
     },
@@ -188,10 +192,6 @@
     {
       "name": "constructs",
       "version": "^10.0.0",
-      "type": "runtime"
-    },
-    {
-      "name": "gpl-3.0",
       "type": "runtime"
     }
   ],
