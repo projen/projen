@@ -268,6 +268,53 @@ test("upgrade task ignores pinned versions", () => {
 });
 
 describe("jestConfig", () => {
+  describe("Modern", () => {
+    test("uses default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {
+            globals: {
+              "ts-jest": {
+                shouldBePreserved: true,
+              },
+            },
+          },
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+
+      expect(true).toBeFalsy();
+    });
+
+    test("overrides default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {
+            preset: "foo",
+            globals: {
+              shouldBePreserved: true,
+              "ts-jest": {
+                tsconfig: "bar",
+              },
+            },
+          },
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      expect(jest.preset).toStrictEqual("foo");
+      expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("bar");
+      expect(jest.globals.shouldBePreserved).toStrictEqual(true);
+    });
+  });
+
   describe("Legacy", () => {
     test("uses default values", () => {
       const prj = new TypeScriptProject({
