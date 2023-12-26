@@ -8,6 +8,7 @@ import {
   Jest,
   NodeProject,
   NodeProjectOptions,
+  Transform,
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
@@ -21,6 +22,78 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge } from "../util";
+
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options
+ */
+export interface TsJestTransformOptions {
+  /**
+   * Custom TypeScript AST transformers
+   *
+   * @default auto
+   */
+  readonly astTransformers?: Record<string, any>;
+  /**
+   * Babel(Jest) related configuration.
+   *
+   * @default false
+   */
+  readonly babelConfig?: boolean | string | Record<string, any>;
+  /**
+   * TypeScript module to use as compiler.
+   *
+   * @default "typescript"
+   */
+  readonly compiler?: string;
+  /**
+   * Diagnostics related configuration.
+   *
+   * @default true
+   */
+  readonly diagnostics?: boolean | Record<string, any>;
+  /**
+   * Run ts-jest tests with this TSConfig isolatedModules setting.
+   *
+   * You'll lose type-checking ability and some features such as const enum, but in the case you plan on using Jest with the cache disabled (jest --no-cache), your tests will then run much faster.
+   * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/isolatedModules
+   *
+   * @default false
+   */
+  readonly isolatedModules?: boolean;
+  /**
+   * Files which will become modules returning self content.
+   *
+   * @default disabled
+   */
+  readonly stringifyContentPathRegex?: string | RegExp;
+  /**
+   * TypeScript compiler related configuration.
+   *
+   * @default Your project's tsconfig dev file.
+   */
+  readonly tsconfig?: boolean | string | TypescriptConfigOptions;
+  /**
+   * Enable ESM support
+   *
+   * @default auto
+   */
+  readonly useEsm?: boolean;
+}
+
+export interface TsJestOptions {
+  /**
+   * Which files should ts-jest act upon.
+   *
+   * @see https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+   *
+   * @default "^.+\\.[t]sx?$"
+   */
+  readonly tranformPattern?: string;
+  /**
+   * Override the default ts-jest transformer configuration.
+   */
+  readonly transformOptions?: TsJestTransformOptions;
+}
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -143,6 +216,11 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * Options for .projenrc.ts
    */
   readonly projenrcTsOptions?: ProjenrcTsOptions;
+
+  /**
+   * Options for ts-jest
+   */
+  readonly tsJestOptions?: TsJestOptions;
 }
 
 /**
@@ -150,6 +228,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
  * @pjid typescript
  */
 export class TypeScriptProject extends NodeProject {
+  public static readonly DEFAULT_TS_JEST_TRANFORM_PATTERN = "^.+\\.[t]sx?$";
+
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
@@ -333,7 +413,7 @@ export class TypeScriptProject extends NodeProject {
       if (compiledTests) {
         this.addJestCompiled(this.jest);
       } else {
-        this.addJestNoCompile(this.jest);
+        this.addJestNoCompile(this.jest, options?.tsJestOptions);
       }
     }
 
@@ -435,7 +515,10 @@ export class TypeScriptProject extends NodeProject {
     jest.addSnapshotResolver(`./${resolver.path}`);
   }
 
-  private addJestNoCompile(jest: Jest) {
+  private addJestNoCompile(
+    jest: Jest,
+    tsJestOptions: TsJestOptions | undefined
+  ) {
     this.addDevDeps(
       `@types/jest${jest.jestVersion}`,
       `ts-jest${jest.jestVersion}`
@@ -446,7 +529,43 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
+    const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
     // add relevant deps
+    if (!jestMajorVersion || jestMajorVersion >= 29) {
+      return this.addJestNoCompileModern(jest, tsJestOptions);
+    }
+    this.addJestNoCompileLegacy(jest, tsJestOptions);
+  }
+
+  // Warning from ts-jest: If you are using custom transform config, please remove preset from your Jest config to avoid issues that Jest doesn't transform files correctly.
+  private addJestNoCompileModern(
+    jest: Jest,
+    tsJestOptions: TsJestOptions | undefined
+  ) {
+    jest.config.transform = deepMerge([
+      {
+        [tsJestOptions?.tranformPattern ??
+        TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN]: new Transform(
+          "ts-jest",
+          {
+            tsconfig: this.tsconfigDev.fileName,
+            ...(tsJestOptions?.transformOptions ?? {}),
+          }
+        ),
+      },
+      jest.config.transform,
+    ]);
+  }
+
+  private addJestNoCompileLegacy(
+    jest: Jest,
+    tsJestOptions: TsJestOptions | undefined
+  ) {
+    if (tsJestOptions) {
+      this.logger.warn(
+        "You are using a legacy version of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+      );
+    }
     if (!jest.config.preset) {
       jest.config.preset = "ts-jest";
     }
