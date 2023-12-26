@@ -268,48 +268,54 @@ test("upgrade task ignores pinned versions", () => {
 });
 
 describe("jestConfig", () => {
-  test("uses default values", () => {
-    const prj = new TypeScriptProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      jestOptions: {
-        jestConfig: {
-          globals: {
-            "ts-jest": {
-              shouldBePreserved: true,
+  describe("Legacy", () => {
+    test("uses default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          jestVersion: "@^26",
+          jestConfig: {
+            globals: {
+              "ts-jest": {
+                shouldBePreserved: true,
+              },
             },
           },
         },
-      },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      expect(jest.preset).toStrictEqual("ts-jest");
+      expect(jest.globals["ts-jest"].tsconfig).toStrictEqual(
+        "tsconfig.dev.json"
+      );
+      expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
     });
-    const snapshot = synthSnapshot(prj);
-    const jest = snapshot["package.json"].jest;
-    expect(jest.preset).toStrictEqual("ts-jest");
-    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("tsconfig.dev.json");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
-  });
 
-  test("overrides default values", () => {
-    const prj = new TypeScriptProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      jestOptions: {
-        jestConfig: {
-          preset: "foo",
-          globals: {
-            "ts-jest": {
-              shouldBePreserved: true,
-              tsconfig: "bar",
+    test("overrides default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          jestConfig: {
+            preset: "foo",
+            jestVersion: "@^26",
+            globals: {
+              "ts-jest": {
+                shouldBePreserved: true,
+                tsconfig: "bar",
+              },
             },
           },
         },
-      },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      expect(jest.preset).toStrictEqual("foo");
+      expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("bar");
+      expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
     });
-    const snapshot = synthSnapshot(prj);
-    const jest = snapshot["package.json"].jest;
-    expect(jest.preset).toStrictEqual("foo");
-    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("bar");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
   });
 });
 
