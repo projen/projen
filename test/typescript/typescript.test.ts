@@ -274,7 +274,7 @@ describe("jestConfig", () => {
         defaultReleaseBranch: "main",
         name: "test",
         jestOptions: {
-          jestVersion: "@^26",
+          jestVersion: "26",
           jestConfig: {
             globals: {
               "ts-jest": {
@@ -298,9 +298,9 @@ describe("jestConfig", () => {
         defaultReleaseBranch: "main",
         name: "test",
         jestOptions: {
+          jestVersion: "26",
           jestConfig: {
             preset: "foo",
-            jestVersion: "@^26",
             globals: {
               "ts-jest": {
                 shouldBePreserved: true,
