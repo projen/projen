@@ -49,6 +49,32 @@ export class TsJestBabelConfig {
   }
 }
 
+export class TsJestDiagnostics {
+  public static default() {
+    return new TsJestDiagnostics(true);
+  }
+
+  public static disabled() {
+    return new TsJestDiagnostics(false);
+  }
+
+  public static custom(config: Record<string, any>) {
+    return new TsJestDiagnostics(config);
+  }
+
+  private constructor(
+    private readonly config: boolean | string | Record<string, any>
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): boolean | string | Record<string, any> {
+    return this.config;
+  }
+}
+
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options
  */
@@ -76,7 +102,7 @@ export interface TsJestTransformOptions {
    *
    * @default true
    */
-  readonly diagnostics?: boolean | Record<string, any>;
+  readonly diagnostics?: TsJestDiagnostics;
   /**
    * Run ts-jest tests with this TSConfig isolatedModules setting.
    *
