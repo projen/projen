@@ -33,7 +33,7 @@ export class TsJestBabelConfig {
   public static disabled() {
     return new TsJestBabelConfig(false);
   }
-  
+
   /**
    * Enables Babel processing
    *
@@ -45,13 +45,13 @@ export class TsJestBabelConfig {
 
   /**
    * Path to a babelrc file
-   * 
+   *
    * The path should be relative to the current working directory where you start Jest from. You can also use `<rootDir>` in the path.
    */
   public static fromFile(filePath: string) {
     return new TsJestBabelConfig(filePath);
   }
-  
+
   /**
    * Inline compiler options
    * @see https://babeljs.io/docs/options
@@ -77,25 +77,25 @@ export class TsJestBabelConfig {
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
  */
 export class TsJestDiagnostics {
-/**
- * Enable all diagnostics.
- */
+  /**
+   * Enable all diagnostics.
+   */
   public static all() {
     return new TsJestDiagnostics(true);
   }
 
-/**
- * Disable all diagnostics.
- */
+  /**
+   * Disable all diagnostics.
+   */
   public static none() {
     return new TsJestDiagnostics(false);
   }
 
-/**
- * Provide a custom diagnostics configuration.
- *
- * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
- */
+  /**
+   * Provide a custom diagnostics configuration.
+   *
+   * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
+   */
   public static custom(config: Record<string, any>) {
     return new TsJestDiagnostics(config);
   }
