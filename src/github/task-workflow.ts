@@ -15,18 +15,7 @@ import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
 
-export interface TaskWorkflowOptions {
-  /**
-   * The workflow name.
-   */
-  readonly name: string;
-
-  /**
-   * The primary job id.
-   * @default "build"
-   */
-  readonly jobId?: string;
-
+export interface TaskWorkflowJobOptions {
   /**
    * @default - default image
    */
@@ -45,13 +34,6 @@ export interface TaskWorkflowOptions {
    * @default - not set
    */
   readonly artifactsDirectory?: string;
-
-  /**
-   * The triggers for the workflow.
-   *
-   * @default - by default workflows can only be triggered by manually.
-   */
-  readonly triggers?: Triggers;
 
   /**
    * Initial steps to run before the source code checkout.
@@ -132,35 +114,38 @@ export interface TaskWorkflowOptions {
   readonly downloadLfs?: boolean;
 }
 
+export interface TaskWorkflowOptions extends TaskWorkflowJobOptions {
+  /**
+   * The workflow name.
+   */
+  readonly name: string;
+
+  /**
+   * The primary job id.
+   * @default "build"
+   */
+  readonly jobId?: string;
+
+  /**
+   * The triggers for the workflow.
+   *
+   * @default - by default workflows can only be triggered by manually.
+   */
+  readonly triggers?: Triggers;
+}
+
 /**
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskWorkflow extends GithubWorkflow {
-  private readonly github: GitHub;
-  public readonly jobId: string;
-  public readonly artifactsDirectory?: string;
-
-  constructor(github: GitHub, options: TaskWorkflowOptions) {
-    super(github, options.name);
-    this.jobId = options.jobId ?? DEFAULT_JOB_ID;
-    this.github = github;
-    this.artifactsDirectory = options.artifactsDirectory;
-
-    if (options.triggers) {
-      if (options.triggers.issueComment) {
-        // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
-        throw new Error(
-          'Trigger "issueComment" should not be used due to a security concern'
-        );
-      }
-
-      this.on(options.triggers);
-    }
-
-    this.on({
-      workflowDispatch: {}, // allow manual triggering
-    });
-
+  /**
+   * Allows for more flexible construction of a Workflow that is similar, but not identical, to the TaskWorkflow.
+   *
+   * @param github GitHub containing the information about the project being released (source project).
+   * @param options TaskWorkflowJobOptions
+   * @returns The job that would be created as part of the TaskWorkflow
+   */
+  public static buildJob(github: GitHub, options: TaskWorkflowJobOptions): Job {
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
     const checkoutWith: { lfs?: boolean } = {};
@@ -174,7 +159,7 @@ export class TaskWorkflow extends GithubWorkflow {
     const postBuildSteps = options.postBuildSteps ?? [];
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
-    if (this.artifactsDirectory) {
+    if (options.artifactsDirectory) {
       postBuildSteps.push({
         name: "Upload artifact",
         uses: "actions/upload-artifact@v3",
@@ -182,13 +167,13 @@ export class TaskWorkflow extends GithubWorkflow {
         // the previous ones have failed (e.g. coverage report, internal logs, etc)
         if: "always()",
         with: {
-          name: this.artifactsDirectory,
-          path: this.artifactsDirectory,
+          name: options.artifactsDirectory,
+          path: options.artifactsDirectory,
         },
       });
     }
 
-    const job: Job = {
+    return {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.container,
       env: options.env,
@@ -209,12 +194,38 @@ export class TaskWorkflow extends GithubWorkflow {
         // run the main build task
         {
           name: options.task.name,
-          run: this.github.project.runTaskCommand(options.task),
+          run: github.project.runTaskCommand(options.task),
         },
 
         ...postBuildSteps,
       ],
     };
+  }
+
+  public readonly jobId: string;
+  public readonly artifactsDirectory?: string;
+
+  constructor(github: GitHub, options: TaskWorkflowOptions) {
+    super(github, options.name);
+    this.jobId = options.jobId ?? DEFAULT_JOB_ID;
+    this.artifactsDirectory = options.artifactsDirectory;
+
+    if (options.triggers) {
+      if (options.triggers.issueComment) {
+        // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
+        throw new Error(
+          'Trigger "issueComment" should not be used due to a security concern'
+        );
+      }
+
+      this.on(options.triggers);
+    }
+
+    this.on({
+      workflowDispatch: {}, // allow manual triggering
+    });
+
+    const job: Job = TaskWorkflow.buildJob(github, options);
 
     this.addJobs({ [this.jobId]: job });
   }
