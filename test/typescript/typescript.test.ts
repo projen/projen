@@ -1,7 +1,11 @@
 import { Logger, TaskRuntime } from "../../src";
 import { PROJEN_RC } from "../../src/common";
 import { Transform } from "../../src/javascript";
-import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
+import {
+  mergeTsconfigOptions,
+  TsJestTsconfig,
+  TypeScriptProject,
+} from "../../src/typescript";
 import { execProjenCLI, synthSnapshot } from "../util";
 
 describe("TypeScriptProject with default settings", () => {
@@ -348,7 +352,7 @@ describe("jestConfig", () => {
         tsJestOptions: {
           transformOptions: {
             isolatedModules: true,
-            tsconfig: "bar",
+            tsconfig: TsJestTsconfig.fromFile("bar"),
           },
         },
       });
