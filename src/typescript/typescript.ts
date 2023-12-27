@@ -165,7 +165,7 @@ export interface TsJestTransformOptions {
   /**
    * TypeScript compiler related configuration.
    *
-   * @default Your project's tsconfig dev file.
+   * @default - Your project's `tsconfigDev` file.
    */
   readonly tsconfig?: TsJestTsconfig;
   /**
