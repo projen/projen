@@ -132,7 +132,7 @@ export interface TsJestTransformOptions {
   /**
    * Babel(Jest) related configuration.
    *
-   * @default false
+   * @default TsJestBabelConfig.disabled()
    */
   readonly babelConfig?: TsJestBabelConfig;
   /**
