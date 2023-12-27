@@ -643,7 +643,7 @@ export class TypeScriptProject extends NodeProject {
         TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN]: new Transform(
           "ts-jest",
           {
-            tsconfig: this.tsconfigDev.fileName,
+            tsconfig: TsJestTsconfig.fromFile(this.tsconfigDev.fileName),
             ...(tsJestOptions?.transformOptions ?? {}),
           }
         ),
