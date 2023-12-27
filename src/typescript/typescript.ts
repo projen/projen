@@ -562,7 +562,7 @@ export class TypeScriptProject extends NodeProject {
   ) {
     if (tsJestOptions) {
       this.logger.warn(
-        "You are using a legacy version of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+        "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored."
       );
     }
     if (!jest.config.preset) {
