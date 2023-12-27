@@ -373,12 +373,22 @@ export class Project extends Construct {
           isComponent(c) && c.project.node.path === this.node.path
       );
   }
-
   /**
    * Returns all the subprojects within this project.
    */
   public get subprojects(): Project[] {
     return this.node.children.filter(isProject);
+  }
+
+  /**
+   * Returns the highest parent of this project, if one exists.
+   */
+  public get topLevelParent(): Project | undefined {
+    let parent = this.parent;
+    while (parent?.parent) {
+      parent = parent.parent;
+    }
+    return parent;
   }
 
   /**
