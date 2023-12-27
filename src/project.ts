@@ -55,7 +55,7 @@ export interface ProjectOptions {
    * directory and it cannot be the same as the parent or any of it's other
    * subprojects.
    *
-   * @default "."
+   * @default DEFAULT_OUTDIR
    */
   readonly outdir?: string;
 
@@ -131,11 +131,12 @@ export interface GitOptions {
    */
   readonly lfsPatterns?: string[];
 }
-
 /**
  * Base project
  */
 export class Project extends Construct {
+  public static readonly DEFAULT_OUTDIR = ".";
+
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
@@ -183,6 +184,11 @@ export class Project extends Construct {
    * Absolute output directory of this project.
    */
   public readonly outdir: string;
+
+  /**
+   * Relative output directory of this project.
+   */
+  public readonly relativeOutdir: string;
 
   /**
    * Project tasks.
@@ -269,6 +275,7 @@ export class Project extends Construct {
     }
 
     this.outdir = outdir;
+    this.relativeOutdir = options.outdir ?? Project.DEFAULT_OUTDIR;
 
     // ------------------------------------------------------------------------
 
@@ -744,13 +751,13 @@ function determineOutdir(parent?: Project, outdirOption?: string) {
     const realTmp = realpathSync(tmpdir());
 
     if (realCwd.startsWith(realTmp)) {
-      return path.resolve(realCwd, outdirOption ?? ".");
+      return path.resolve(realCwd, outdirOption ?? Project.DEFAULT_OUTDIR);
     }
 
     return mkdtempSync(path.join(tmpdir(), "projen."));
   }
 
-  return path.resolve(outdirOption ?? ".");
+  return path.resolve(outdirOption ?? Project.DEFAULT_OUTDIR);
 }
 
 function isFile(c: Component): c is FileBase {
