@@ -22,9 +22,10 @@ export class WorkflowSteps {
     });
 
     return {
-      id: options?.id,
-      if: options?.if,
-      name: options?.name ?? "Checkout",
+      ...this._buildCommonWorkflowSteps({
+        ...options,
+        name: options.name ?? "Checkout",
+      }),
       uses: "actions/checkout@v3",
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
     };
@@ -35,13 +36,26 @@ export class WorkflowSteps {
    * @param id The identity to use
    * @returns Job steps
    */
-  public static setupGitIdentity(id: GitIdentity): JobStep {
+  public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
-      name: "Set git identity",
+      ...this._buildCommonWorkflowSteps({
+        ...options,
+        name: options.name ?? "Set git identity",
+      }),
       run: [
-        `git config user.name "${id.name}"`,
-        `git config user.email "${id.email}"`,
+        `git config user.name "${options.gitIdentity.name}"`,
+        `git config user.email "${options.gitIdentity.email}"`,
       ].join("\n"),
+    };
+  }
+
+  private static _buildCommonWorkflowSteps(
+    options: CommonWorkflowStepOptions
+  ): JobStep {
+    return {
+      id: options?.id,
+      if: options?.if,
+      name: options?.name,
     };
   }
 }
@@ -107,4 +121,11 @@ export interface CheckoutWith {
    * @default - the default GITHUB_TOKEN is implicitly used
    */
   readonly token?: string;
+}
+
+export interface SetupGitIdentityOptions extends CommonWorkflowStepOptions {
+  /**
+   * The identity to use.
+   */
+  readonly gitIdentity: GitIdentity;
 }

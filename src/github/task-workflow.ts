@@ -202,7 +202,7 @@ export class TaskWorkflow extends GithubWorkflow {
         WorkflowSteps.checkout({ with: checkoutWith }),
 
         // sets git identity so we can push later
-        WorkflowSteps.setupGitIdentity(gitIdentity),
+        WorkflowSteps.setupGitIdentity({ gitIdentity }),
 
         ...preBuildSteps,
 

@@ -27,7 +27,7 @@ export class WorkflowJobs {
     const steps: JobStep[] = [
       ...(options.credentials?.setupSteps || []),
       ...WorkflowActions.checkoutWithPatch(options.patch),
-      WorkflowSteps.setupGitIdentity(gitIdentity),
+      WorkflowSteps.setupGitIdentity({ gitIdentity }),
       ...WorkflowActions.createPullRequest({
         ...options,
         gitIdentity,
