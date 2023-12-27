@@ -40,10 +40,19 @@ export class TsJestBabelConfig {
     return new TsJestBabelConfig(true);
   }
 
+  /**
+   * Path to a babelrc file
+   * 
+   * The path should be relative to the current working directory where you start Jest from. You can also use `<rootDir>` in the path.
+   */
   public static fromFile(filePath: string) {
     return new TsJestBabelConfig(filePath);
   }
-
+  
+  /**
+   * Inline compiler options
+   * @see https://babeljs.io/docs/options
+   */
   public static custom(config: Record<string, any>) {
     return new TsJestBabelConfig(config);
   }
