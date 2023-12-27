@@ -23,7 +23,7 @@ import {
 } from "../typescript";
 import { deepMerge } from "../util";
 
-class TsJestBabelConfig {
+export class TsJestBabelConfig {
   public static default() {
     return new TsJestBabelConfig(true);
   }
