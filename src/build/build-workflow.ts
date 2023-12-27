@@ -1,6 +1,6 @@
 import { Task } from "..";
 import { Component } from "../component";
-import { GitHub, GithubWorkflow, GitIdentity } from "../github";
+import { GitHub, GithubWorkflow, GitIdentity, WorkflowSteps } from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -309,10 +309,12 @@ export class BuildWorkflow extends Component {
 
     if (options?.checkoutRepo) {
       steps.push(
-        ...WorkflowActions.checkout({
-          ref: PULL_REQUEST_REF,
-          repository: PULL_REQUEST_REPOSITORY,
-          ...(this.github.downloadLfs ? { lfs: true } : {}),
+        WorkflowSteps.checkout({
+          with: {
+            ref: PULL_REQUEST_REF,
+            repository: PULL_REQUEST_REPOSITORY,
+            ...(this.github.downloadLfs ? { lfs: true } : {}),
+          },
         })
       );
     }
@@ -378,10 +380,12 @@ export class BuildWorkflow extends Component {
    */
   private renderBuildSteps(): JobStep[] {
     return [
-      ...WorkflowActions.checkout({
-        ref: PULL_REQUEST_REF,
-        repository: PULL_REQUEST_REPOSITORY,
-        ...(this.github.downloadLfs ? { lfs: true } : {}),
+      WorkflowSteps.checkout({
+        with: {
+          ref: PULL_REQUEST_REF,
+          repository: PULL_REQUEST_REPOSITORY,
+          ...(this.github.downloadLfs ? { lfs: true } : {}),
+        },
       }),
 
       ...this.preBuildSteps,

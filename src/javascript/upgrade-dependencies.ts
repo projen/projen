@@ -7,6 +7,7 @@ import {
   GitIdentity,
   workflows,
   WorkflowJobs,
+  WorkflowSteps,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
@@ -416,7 +417,7 @@ export class UpgradeDependencies extends Component {
     };
 
     const steps: workflows.JobStep[] = [
-      ...WorkflowActions.checkout(with_),
+      WorkflowSteps.checkout({ with: with_ }),
       ...this._project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",

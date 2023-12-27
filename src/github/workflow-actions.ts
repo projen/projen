@@ -1,5 +1,6 @@
 import { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
+import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { JobStep } from "./workflows-model";
 
 function context(value: string) {
@@ -61,33 +62,6 @@ export class WorkflowActions {
 
     return steps;
   }
-
-  /**
-   * Checks out a repository.
-   *
-   * @param options Options
-   * @returns Job steps
-   */
-  public static checkout(options: CheckoutOptions = {}): JobStep[] {
-    const checkoutWith = Object.fromEntries(
-      Object.entries({
-        "fetch-depth": options.fetchDepth,
-        token: options.token,
-        ref: options.ref,
-        repository: options.repository,
-        ...(options.lfs ? { lfs: true } : {}),
-      }).filter(([_, value]) => value !== undefined)
-    );
-
-    return [
-      {
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
-      },
-    ];
-  }
-
   /**
    * Checks out a repository and applies a git patch that was created using
    * `uploadGitPatch`.
@@ -102,7 +76,7 @@ export class WorkflowActions {
     const GIT_PATCH_FILE = options.patchFile ?? GIT_PATCH_FILE_DEFAULT;
 
     return [
-      ...WorkflowActions.checkout(restOfOptions),
+      WorkflowSteps.checkout({ with: restOfOptions }),
       {
         name: "Download patch",
         uses: "actions/download-artifact@v3",
@@ -188,48 +162,9 @@ export class WorkflowActions {
 }
 
 /**
- * Options for `checkout`.
- */
-export interface CheckoutOptions {
-  /**
-   * Number of commits to fetch. 0 indicates all history for all branches and tags.
-   *
-   * @default 1
-   */
-  readonly fetchDepth?: number;
-  /**
-   * Whether LFS is enabled for the GitHub repository
-   *
-   * @default false
-   */
-  readonly lfs?: boolean;
-
-  /**
-   * Branch or tag name.
-   * @default - the default branch is implicitly used
-   */
-  readonly ref?: string;
-
-  /**
-   * The repository (owner/repo) to use.
-   * @default - the default repository is implicitly used
-   */
-  readonly repository?: string;
-
-  /**
-   * A GitHub token to use when checking out the repository.
-   *
-   * If the intent is to push changes back to the branch, then you must use a
-   * PAT with `repo` (and possibly `workflows`) permissions.
-   * @default - the default GITHUB_TOKEN is implicitly used
-   */
-  readonly token?: string;
-}
-
-/**
  * Options for `checkoutWithPatch`.
  */
-export interface CheckoutWithPatchOptions extends CheckoutOptions {
+export interface CheckoutWithPatchOptions extends CheckoutWith {
   /**
    * The name of the artifact the patch is stored as.
    * @default ".repo.patch"

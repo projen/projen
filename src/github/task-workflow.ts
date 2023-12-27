@@ -1,6 +1,7 @@
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitHub } from "./github";
-import { CheckoutOptions, WorkflowActions } from "./workflow-actions";
+import { WorkflowActions } from "./workflow-actions";
+import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { GithubWorkflow } from "./workflows";
 import {
   ContainerOptions,
@@ -65,7 +66,7 @@ export interface TaskWorkflowOptions {
    *
    * @default - not set
    */
-  readonly checkoutWith?: CheckoutOptions;
+  readonly checkoutWith?: CheckoutWith;
 
   /**
    * Steps to run before the main build step.
@@ -199,7 +200,7 @@ export class TaskWorkflow extends GithubWorkflow {
         ...preCheckoutSteps,
 
         // check out sources.
-        ...WorkflowActions.checkout(checkoutWith),
+        WorkflowSteps.checkout({ with: checkoutWith }),
 
         // sets git identity so we can push later
         ...WorkflowActions.setupGitIdentity(gitIdentity),
