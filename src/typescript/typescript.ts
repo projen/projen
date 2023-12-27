@@ -73,6 +73,9 @@ export class TsJestBabelConfig {
   }
 }
 
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
+ */
 export class TsJestDiagnostics {
 /**
  * Enable all diagnostics.
