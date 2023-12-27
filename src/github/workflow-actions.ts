@@ -142,6 +142,17 @@ export class WorkflowActions {
       },
     ];
   }
+
+  /**
+   * Configures the git identity (user name and email).
+   * @param id The identity to use
+   * @returns Job steps
+   *
+   * @deprecated use `WorkflowSteps.setupGitIdentity` instead
+   */
+  public static setupGitIdentity(id: GitIdentity): JobStep[] {
+    return [WorkflowSteps.setupGitIdentity({ gitIdentity: id })];
+  }
 }
 
 /**
