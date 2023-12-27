@@ -1,5 +1,6 @@
 import { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
+import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { JobStep } from "./workflows-model";
 
 function context(value: string) {
@@ -61,7 +62,6 @@ export class WorkflowActions {
 
     return steps;
   }
-
   /**
    * Checks out a repository and applies a git patch that was created using
    * `uploadGitPatch`.
@@ -72,19 +72,11 @@ export class WorkflowActions {
   public static checkoutWithPatch(
     options: CheckoutWithPatchOptions = {}
   ): JobStep[] {
+    const { patchFile, ...restOfOptions } = options;
     const GIT_PATCH_FILE = options.patchFile ?? GIT_PATCH_FILE_DEFAULT;
 
     return [
-      {
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: {
-          token: options.token,
-          ref: options.ref,
-          repository: options.repository,
-          ...(options.lfs ? { lfs: true } : {}),
-        },
-      },
+      WorkflowSteps.checkout({ with: restOfOptions }),
       {
         name: "Download patch",
         uses: "actions/download-artifact@v3",
@@ -93,23 +85,6 @@ export class WorkflowActions {
       {
         name: "Apply patch",
         run: `[ -s ${RUNNER_TEMP}/${GIT_PATCH_FILE} ] && git apply ${RUNNER_TEMP}/${GIT_PATCH_FILE} || echo "Empty patch. Skipping."`,
-      },
-    ];
-  }
-
-  /**
-   * Configures the git identity (user name and email).
-   * @param id The identity to use
-   * @returns Job steps
-   */
-  public static setupGitIdentity(id: GitIdentity): JobStep[] {
-    return [
-      {
-        name: "Set git identity",
-        run: [
-          `git config user.name "${id.name}"`,
-          `git config user.email "${id.email}"`,
-        ].join("\n"),
       },
     ];
   }
@@ -167,45 +142,28 @@ export class WorkflowActions {
       },
     ];
   }
+
+  /**
+   * Configures the git identity (user name and email).
+   * @param id The identity to use
+   * @returns Job steps
+   *
+   * @deprecated use `WorkflowSteps.setupGitIdentity` instead
+   */
+  public static setupGitIdentity(id: GitIdentity): JobStep[] {
+    return [WorkflowSteps.setupGitIdentity({ gitIdentity: id })];
+  }
 }
 
 /**
  * Options for `checkoutWithPatch`.
  */
-export interface CheckoutWithPatchOptions {
+export interface CheckoutWithPatchOptions extends CheckoutWith {
   /**
    * The name of the artifact the patch is stored as.
    * @default ".repo.patch"
    */
   readonly patchFile?: string;
-
-  /**
-   * A GitHub token to use when checking out the repository.
-   *
-   * If the intent is to push changes back to the branch, then you must use a
-   * PAT with `repo` (and possibly `workflows`) permissions.
-   * @default - the default GITHUB_TOKEN is implicitly used
-   */
-  readonly token?: string;
-
-  /**
-   * Branch or tag name.
-   * @default - the default branch is implicitly used
-   */
-  readonly ref?: string;
-
-  /**
-   * The repository (owner/repo) to use.
-   * @default - the default repository is implicitly used
-   */
-  readonly repository?: string;
-
-  /**
-   * Whether LFS is enabled for the GitHub repository
-   *
-   * @default false
-   */
-  readonly lfs?: boolean;
 }
 
 /**
