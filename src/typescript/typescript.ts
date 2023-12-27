@@ -24,7 +24,19 @@ import {
 import { deepMerge } from "../util";
 
 export class TsJestBabelConfig {
-  public static default() {
+  /**
+   * Disables the use of Babel
+   */
+  public static disabled() {
+    return new TsJestBabelConfig(false);
+  }
+  
+  /**
+   * Enables Babel processing
+   *
+   * `ts-jest` will try to find an existing Babel configuration and pass it to the `babel-jest` processor.
+   */
+  public static autoDetectConfig() {
     return new TsJestBabelConfig(true);
   }
 
