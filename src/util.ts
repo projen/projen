@@ -425,7 +425,7 @@ export function isWritable(file: string) {
  *
  * @param filePath The path to the file
  * @param shouldBeExecutable Whether the file should be executable
- * @returns true if the file should be executable or if the platform is Windows, false otherwise
+ * @returns true if `filePath` executable attribute matches `shouldBeExecutable` or if the platform is Windows, false otherwise
  */
 export function assertExecutablePermissions(
   filePath: string,
