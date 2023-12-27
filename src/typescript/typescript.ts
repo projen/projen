@@ -144,7 +144,7 @@ export interface TsJestTransformOptions {
   /**
    * Diagnostics related configuration.
    *
-   * @default true
+   * @default TsJestDiagnostics.all()
    */
   readonly diagnostics?: TsJestDiagnostics;
   /**
