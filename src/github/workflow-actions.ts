@@ -63,6 +63,32 @@ export class WorkflowActions {
   }
 
   /**
+   * Checks out a repository.
+   *
+   * @param options Options
+   * @returns Job steps
+   */
+  public static checkout(options: CheckoutOptions = {}): JobStep[] {
+    const checkoutWith = Object.fromEntries(
+      Object.entries({
+        "fetch-depth": options.fetchDepth,
+        token: options.token,
+        ref: options.ref,
+        repository: options.repository,
+        ...(options.lfs ? { lfs: true } : {}),
+      }).filter(([_, value]) => value !== undefined)
+    );
+
+    return [
+      {
+        name: "Checkout",
+        uses: "actions/checkout@v3",
+        with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
+      },
+    ];
+  }
+
+  /**
    * Checks out a repository and applies a git patch that was created using
    * `uploadGitPatch`.
    *
@@ -72,19 +98,11 @@ export class WorkflowActions {
   public static checkoutWithPatch(
     options: CheckoutWithPatchOptions = {}
   ): JobStep[] {
+    const { patchFile, ...restOfOptions } = options;
     const GIT_PATCH_FILE = options.patchFile ?? GIT_PATCH_FILE_DEFAULT;
 
     return [
-      {
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: {
-          token: options.token,
-          ref: options.ref,
-          repository: options.repository,
-          ...(options.lfs ? { lfs: true } : {}),
-        },
-      },
+      ...WorkflowActions.checkout(restOfOptions),
       {
         name: "Download patch",
         uses: "actions/download-artifact@v3",
@@ -170,23 +188,21 @@ export class WorkflowActions {
 }
 
 /**
- * Options for `checkoutWithPatch`.
+ * Options for `checkout`.
  */
-export interface CheckoutWithPatchOptions {
+export interface CheckoutOptions {
   /**
-   * The name of the artifact the patch is stored as.
-   * @default ".repo.patch"
-   */
-  readonly patchFile?: string;
-
-  /**
-   * A GitHub token to use when checking out the repository.
+   * Number of commits to fetch. 0 indicates all history for all branches and tags.
    *
-   * If the intent is to push changes back to the branch, then you must use a
-   * PAT with `repo` (and possibly `workflows`) permissions.
-   * @default - the default GITHUB_TOKEN is implicitly used
+   * @default 1
    */
-  readonly token?: string;
+  readonly fetchDepth?: number;
+  /**
+   * Whether LFS is enabled for the GitHub repository
+   *
+   * @default false
+   */
+  readonly lfs?: boolean;
 
   /**
    * Branch or tag name.
@@ -201,11 +217,24 @@ export interface CheckoutWithPatchOptions {
   readonly repository?: string;
 
   /**
-   * Whether LFS is enabled for the GitHub repository
+   * A GitHub token to use when checking out the repository.
    *
-   * @default false
+   * If the intent is to push changes back to the branch, then you must use a
+   * PAT with `repo` (and possibly `workflows`) permissions.
+   * @default - the default GITHUB_TOKEN is implicitly used
    */
-  readonly lfs?: boolean;
+  readonly token?: string;
+}
+
+/**
+ * Options for `checkoutWithPatch`.
+ */
+export interface CheckoutWithPatchOptions extends CheckoutOptions {
+  /**
+   * The name of the artifact the patch is stored as.
+   * @default ".repo.patch"
+   */
+  readonly patchFile?: string;
 }
 
 /**

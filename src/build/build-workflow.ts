@@ -308,15 +308,13 @@ export class BuildWorkflow extends Component {
     const steps = [];
 
     if (options?.checkoutRepo) {
-      steps.push({
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: {
+      steps.push(
+        ...WorkflowActions.checkout({
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
           ...(this.github.downloadLfs ? { lfs: true } : {}),
-        },
-      });
+        })
+      );
     }
 
     if (
@@ -380,15 +378,11 @@ export class BuildWorkflow extends Component {
    */
   private renderBuildSteps(): JobStep[] {
     return [
-      {
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: {
-          ref: PULL_REQUEST_REF,
-          repository: PULL_REQUEST_REPOSITORY,
-          ...(this.github.downloadLfs ? { lfs: true } : {}),
-        },
-      },
+      ...WorkflowActions.checkout({
+        ref: PULL_REQUEST_REF,
+        repository: PULL_REQUEST_REPOSITORY,
+        ...(this.github.downloadLfs ? { lfs: true } : {}),
+      }),
 
       ...this.preBuildSteps,
 

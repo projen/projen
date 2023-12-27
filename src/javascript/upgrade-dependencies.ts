@@ -416,11 +416,7 @@ export class UpgradeDependencies extends Component {
     };
 
     const steps: workflows.JobStep[] = [
-      {
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: Object.keys(with_).length > 0 ? with_ : undefined,
-      },
+      ...WorkflowActions.checkout(with_),
       ...this._project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",
