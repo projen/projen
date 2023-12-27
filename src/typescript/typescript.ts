@@ -74,7 +74,10 @@ export class TsJestBabelConfig {
 }
 
 export class TsJestDiagnostics {
-  public static default() {
+/**
+ * Enable all diagnostics.
+ */
+  public static all() {
     return new TsJestDiagnostics(true);
   }
 
