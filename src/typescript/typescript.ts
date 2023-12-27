@@ -81,7 +81,10 @@ export class TsJestTsconfig {
     return new TsJestTsconfig(true);
   }
 
-  public static disabled() {
+  /**
+   * Force` ts-jest` to use its built-in defaults even if there is a `tsconfig.json` in your project.
+   */
+  public static builtInDefaults() {
     return new TsJestTsconfig(false);
   }
 
