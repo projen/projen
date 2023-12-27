@@ -23,6 +23,9 @@ import {
 } from "../typescript";
 import { deepMerge } from "../util";
 
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
+ */
 export class TsJestBabelConfig {
   /**
    * Disables the use of Babel
