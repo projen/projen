@@ -73,6 +73,9 @@ export class TsJestDiagnostics {
   }
 }
 
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig/
+ */
 export class TsJestTsconfig {
   /**
    * Uses `tsconfig.json` if found, or the built-in default TypeScript compiler options.
