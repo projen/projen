@@ -62,15 +62,43 @@ export class TsJestDiagnostics {
     return new TsJestDiagnostics(config);
   }
 
+  private constructor(private readonly config: boolean | Record<string, any>) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): boolean | Record<string, any> {
+    return this.config;
+  }
+}
+
+export class TsJestTsconfig {
+  public static default() {
+    return new TsJestTsconfig(true);
+  }
+
+  public static disabled() {
+    return new TsJestTsconfig(false);
+  }
+
+  public static fromFile(filePath: string) {
+    return new TsJestTsconfig(filePath);
+  }
+
+  public static custom(config: TypescriptConfigOptions) {
+    return new TsJestTsconfig(config);
+  }
+
   private constructor(
-    private readonly config: boolean | string | Record<string, any>
+    private readonly config: boolean | string | TypescriptConfigOptions
   ) {}
 
   /**
    * @jsii ignore
    * @internal
    */
-  public toJSON(): boolean | string | Record<string, any> {
+  public toJSON(): boolean | string | TypescriptConfigOptions {
     return this.config;
   }
 }
@@ -123,7 +151,7 @@ export interface TsJestTransformOptions {
    *
    * @default Your project's tsconfig dev file.
    */
-  readonly tsconfig?: boolean | string | TypescriptConfigOptions;
+  readonly tsconfig?: TsJestTsconfig;
   /**
    * Enable ESM support
    *
