@@ -437,7 +437,7 @@ describe("jestConfig", () => {
     });
 
     expect(loggerWarnSpy).toHaveBeenCalledWith(
-      "You are using a legacy version of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+      "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored."
     );
 
     loggerWarnSpy.mockRestore();
