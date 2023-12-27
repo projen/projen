@@ -78,7 +78,10 @@ export class TsJestDiagnostics {
     return new TsJestDiagnostics(true);
   }
 
-  public static disabled() {
+/**
+ * Disable all diagnostics.
+ */
+  public static none() {
     return new TsJestDiagnostics(false);
   }
 
