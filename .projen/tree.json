@@ -231,10 +231,10 @@
           "construct": "Publisher"
         }
       },
-      "TaskWorkflow#release": {
+      "GithubWorkflow#release": {
         "metadata": {
           "type": "component",
-          "construct": "TaskWorkflow"
+          "construct": "GithubWorkflow"
         }
       },
       "YamlFile@.github--workflows--release.yml": {

@@ -203,19 +203,17 @@ export class TaskWorkflow extends GithubWorkflow {
 
   public static prepareWorkflow(
     workflow: GithubWorkflow,
-    options: {
-      readonly triggers?: Triggers;
-    }
+    triggers?: Triggers
   ): void {
-    if (options.triggers) {
-      if (options.triggers.issueComment) {
+    if (triggers) {
+      if (triggers.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
         throw new Error(
           'Trigger "issueComment" should not be used due to a security concern'
         );
       }
 
-      workflow.on(options.triggers);
+      workflow.on(triggers);
     }
 
     workflow.on({
@@ -231,9 +229,7 @@ export class TaskWorkflow extends GithubWorkflow {
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
     this.artifactsDirectory = options.artifactsDirectory;
 
-    TaskWorkflow.prepareWorkflow(this, {
-      triggers: options.triggers,
-    });
+    TaskWorkflow.prepareWorkflow(this, options.triggers);
 
     const job: Job = TaskWorkflow.buildJob(github, options);
 

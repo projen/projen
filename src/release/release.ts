@@ -657,14 +657,12 @@ export class Release extends Component {
       const workflow = new GithubWorkflow(workflowTargetGitHub, workflowName);
 
       TaskWorkflow.prepareWorkflow(workflow, {
-        triggers: {
-          schedule: this.releaseTrigger.schedule
-            ? [{ cron: this.releaseTrigger.schedule }]
-            : undefined,
-          push: this.releaseTrigger.isContinuous
-            ? { branches: [branchName] }
-            : undefined,
-        },
+        schedule: this.releaseTrigger.schedule
+          ? [{ cron: this.releaseTrigger.schedule }]
+          : undefined,
+        push: this.releaseTrigger.isContinuous
+          ? { branches: [branchName] }
+          : undefined,
       });
 
       // Create job based on child (only?) project GitHub
