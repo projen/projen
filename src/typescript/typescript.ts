@@ -23,6 +23,32 @@ import {
 } from "../typescript";
 import { deepMerge } from "../util";
 
+class TsJestBabelConfig {
+  public static default() {
+    return new TsJestBabelConfig(true);
+  }
+
+  public static fromFile(filePath: string) {
+    return new TsJestBabelConfig(filePath);
+  }
+
+  public static custom(config: Record<string, any>) {
+    return new TsJestBabelConfig(config);
+  }
+
+  private constructor(
+    private readonly config: boolean | string | Record<string, any>
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): boolean | string | Record<string, any> {
+    return this.config;
+  }
+}
+
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options
  */
@@ -38,7 +64,7 @@ export interface TsJestTransformOptions {
    *
    * @default false
    */
-  readonly babelConfig?: boolean | string | Record<string, any>;
+  readonly babelConfig?: TsJestBabelConfig;
   /**
    * TypeScript module to use as compiler.
    *
