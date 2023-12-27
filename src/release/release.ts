@@ -675,7 +675,7 @@ export class Release extends Component {
           // fetch-depth= indicates all history for all branches and tags
           // we must use this in order to fetch all tags
           // and to inspect the history to decide if we should release
-          "fetch-depth": 0,
+          fetchDepth: 0,
         },
         preBuildSteps,
         task: releaseTask,
