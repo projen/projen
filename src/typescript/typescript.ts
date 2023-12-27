@@ -74,7 +74,10 @@ export class TsJestDiagnostics {
 }
 
 export class TsJestTsconfig {
-  public static default() {
+  /**
+   * Uses `tsconfig.json` if found, or the built-in default TypeScript compiler options.
+   */
+  public static auto() {
     return new TsJestTsconfig(true);
   }
 
