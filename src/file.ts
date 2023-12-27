@@ -7,7 +7,6 @@ import { Component } from "./component";
 import { ProjenrcFile } from "./projenrc";
 import {
   assertExecutablePermissions,
-  isExecutable,
   isWritable,
   tryReadFileSync,
   writeFile,
@@ -114,7 +113,7 @@ export abstract class FileBase extends Component {
     this.node.addMetadata("path", rootProjectPath);
 
     this.readonly = !project.ejected && (options.readonly ?? true);
-    this.executable = assertExecutablePermissions(options.executable);
+    this.executable = options.executable ?? false;
     this.path = projectPath;
     this.absolutePath = absolutePath;
     this.shouldAddMarker = options.marker ?? true;
@@ -164,12 +163,15 @@ export abstract class FileBase extends Component {
     // check if the file was changed.
     const prev = tryReadFileSync(filePath);
     const prevReadonly = !isWritable(filePath);
-    const prevExecutable = isExecutable(filePath);
+    const successfulExecutableAssertion = assertExecutablePermissions(
+      filePath,
+      this.executable
+    );
     if (
       prev !== undefined &&
       content === prev &&
       prevReadonly === this.readonly &&
-      prevExecutable === this.executable
+      successfulExecutableAssertion
     ) {
       this.project.logger.debug(`no change in ${filePath}`);
       this._changed = false;
