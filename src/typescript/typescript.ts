@@ -537,7 +537,6 @@ export class TypeScriptProject extends NodeProject {
     this.addJestNoCompileLegacy(jest, tsJestOptions);
   }
 
-  // Warning from ts-jest: If you are using custom transform config, please remove preset from your Jest config to avoid issues that Jest doesn't transform files correctly.
   private addJestNoCompileModern(
     jest: Jest,
     tsJestOptions: TsJestOptions | undefined
