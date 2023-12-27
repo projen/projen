@@ -82,6 +82,11 @@ export class TsJestDiagnostics {
     return new TsJestDiagnostics(false);
   }
 
+/**
+ * Provide a custom diagnostics configuration.
+ *
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
+ */
   public static custom(config: Record<string, any>) {
     return new TsJestDiagnostics(config);
   }
