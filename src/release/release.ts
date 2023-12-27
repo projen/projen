@@ -2,7 +2,13 @@ import * as path from "path";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 import { Component } from "../component";
-import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
+import {
+  GitHub,
+  GitHubProject,
+  GithubWorkflow,
+  TaskWorkflow,
+  WorkflowSteps,
+} from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
@@ -635,15 +641,13 @@ export class Release extends Component {
         continueOnError: true,
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
-      {
-        name: "Upload artifact",
+      WorkflowSteps.uploadArtifact({
         if: noNewCommits,
-        uses: "actions/upload-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,
         },
-      }
+      })
     );
 
     if (this.github && !this.releaseTrigger.isManual) {

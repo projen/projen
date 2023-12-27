@@ -160,17 +160,17 @@ export class TaskWorkflow extends GithubWorkflow {
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     if (options.artifactsDirectory) {
-      postBuildSteps.push({
-        name: "Upload artifact",
-        uses: "actions/upload-artifact@v3",
-        // Setting to always will ensure that this step will run even if
-        // the previous ones have failed (e.g. coverage report, internal logs, etc)
-        if: "always()",
-        with: {
-          name: options.artifactsDirectory,
-          path: options.artifactsDirectory,
-        },
-      });
+      postBuildSteps.push(
+        WorkflowSteps.uploadArtifact({
+          // Setting to always will ensure that this step will run even if
+          // the previous ones have failed (e.g. coverage report, internal logs, etc)
+          if: "always()",
+          with: {
+            name: options.artifactsDirectory,
+            path: options.artifactsDirectory,
+          },
+        })
+      );
     }
 
     return {
