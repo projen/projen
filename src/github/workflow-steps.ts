@@ -1,6 +1,10 @@
 import { GitIdentity } from "./task-workflow";
 import { JobStep } from "./workflows-model";
+import { removeNullOrUndefinedProperties } from "../util/object";
 
+/**
+ * A collection of very commonly used, individual, GitHub Workflow Job steps.
+ */
 export class WorkflowSteps {
   /**
    * Checks out a repository.
@@ -9,15 +13,13 @@ export class WorkflowSteps {
    * @returns Job steps
    */
   public static checkout(options: CheckoutOptions = {}): JobStep {
-    const checkoutWith = Object.fromEntries(
-      Object.entries({
-        "fetch-depth": options?.with?.fetchDepth,
-        token: options?.with?.token,
-        ref: options?.with?.ref,
-        repository: options?.with?.repository,
-        ...(options?.with?.lfs ? { lfs: true } : {}),
-      }).filter(([_, value]) => value !== undefined)
-    );
+    const checkoutWith = removeNullOrUndefinedProperties({
+      "fetch-depth": options?.with?.fetchDepth,
+      token: options?.with?.token,
+      ref: options?.with?.ref,
+      repository: options?.with?.repository,
+      ...(options?.with?.lfs ? { lfs: true } : {}),
+    });
 
     return {
       id: options?.id,
