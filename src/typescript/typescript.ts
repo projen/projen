@@ -88,10 +88,20 @@ export class TsJestTsconfig {
     return new TsJestTsconfig(false);
   }
 
+  /**
+   * Path to a `tsconfig` file
+   *
+   * The path should be relative to the current working directory where you start Jest from. You can also use `<rootDir>` in the path to start from the project root dir.
+   */
   public static fromFile(filePath: string) {
     return new TsJestTsconfig(filePath);
   }
 
+  /**
+   * Inline compiler options
+   *
+   * @see TypescriptConfigOptions
+   */
   public static custom(config: TypescriptConfigOptions) {
     return new TsJestTsconfig(config);
   }
