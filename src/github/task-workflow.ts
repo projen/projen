@@ -172,7 +172,6 @@ export class TaskWorkflow extends GithubWorkflow {
         })
       );
     }
-
     return {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.container,
@@ -202,14 +201,12 @@ export class TaskWorkflow extends GithubWorkflow {
     };
   }
 
-  public readonly jobId: string;
-  public readonly artifactsDirectory?: string;
-
-  constructor(github: GitHub, options: TaskWorkflowOptions) {
-    super(github, options.name);
-    this.jobId = options.jobId ?? DEFAULT_JOB_ID;
-    this.artifactsDirectory = options.artifactsDirectory;
-
+  public static prepareWorkflow(
+    workflow: GithubWorkflow,
+    options: {
+      readonly triggers?: Triggers;
+    }
+  ): void {
     if (options.triggers) {
       if (options.triggers.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
@@ -218,11 +215,24 @@ export class TaskWorkflow extends GithubWorkflow {
         );
       }
 
-      this.on(options.triggers);
+      workflow.on(options.triggers);
     }
 
-    this.on({
+    workflow.on({
       workflowDispatch: {}, // allow manual triggering
+    });
+  }
+
+  public readonly jobId: string;
+  public readonly artifactsDirectory?: string;
+
+  constructor(github: GitHub, options: TaskWorkflowOptions) {
+    super(github, options.name);
+    this.jobId = options.jobId ?? DEFAULT_JOB_ID;
+    this.artifactsDirectory = options.artifactsDirectory;
+
+    TaskWorkflow.prepareWorkflow(this, {
+      triggers: options.triggers,
     });
 
     const job: Job = TaskWorkflow.buildJob(github, options);

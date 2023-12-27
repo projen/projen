@@ -541,7 +541,7 @@ export class Release extends Component {
   private createWorkflow(
     branchName: string,
     branch: Partial<BranchOptions>
-  ): TaskWorkflow | undefined {
+  ): GithubWorkflow | undefined {
     const workflowName = branch.workflowName ?? `release-${branchName}`;
 
     // to avoid race conditions between two commits trying to release the same
@@ -650,16 +650,13 @@ export class Release extends Component {
       })
     );
 
-    if (this.github && !this.releaseTrigger.isManual) {
-      return new TaskWorkflow(this.github, {
-        name: workflowName,
-        jobId: BUILD_JOBID,
-        outputs: {
-          latest_commit: {
-            stepId: GIT_REMOTE_STEPID,
-            outputName: LATEST_COMMIT_OUTPUT,
-          },
-        },
+    const workflowTargetGitHub = this._findTargetGitHubForWorkflow();
+
+    if (workflowTargetGitHub && this.github && !this.releaseTrigger.isManual) {
+      // Use target (possible parent) GitHub to create the workflow
+      const workflow = new GithubWorkflow(workflowTargetGitHub, workflowName);
+
+      TaskWorkflow.prepareWorkflow(workflow, {
         triggers: {
           schedule: this.releaseTrigger.schedule
             ? [{ cron: this.releaseTrigger.schedule }]
@@ -667,6 +664,16 @@ export class Release extends Component {
           push: this.releaseTrigger.isContinuous
             ? { branches: [branchName] }
             : undefined,
+        },
+      });
+
+      // Create job based on child (only?) project GitHub
+      const taskjob = TaskWorkflow.buildJob(this.github, {
+        outputs: {
+          latest_commit: {
+            stepId: GIT_REMOTE_STEPID,
+            outputName: LATEST_COMMIT_OUTPUT,
+          },
         },
         container: this.containerImage
           ? { image: this.containerImage }
@@ -686,9 +693,39 @@ export class Release extends Component {
         postBuildSteps,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
+
+      workflow.addJob(BUILD_JOBID, taskjob);
+
+      return workflow;
     } else {
       return undefined;
     }
+  }
+
+  private _findTargetGitHubForWorkflow(): GitHub | undefined {
+    if (!this.github) {
+      return;
+    }
+
+    const topLevelParentProject = this.project.topLevelParent;
+
+    if (topLevelParentProject) {
+      if (!(topLevelParentProject instanceof GitHubProject)) {
+        throw new Error(
+          `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${topLevelParentProject.name} because it is not a GitHub project.`
+        );
+      }
+
+      if (!topLevelParentProject.github) {
+        throw new Error(
+          `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${topLevelParentProject.name} because it does not have GitHub activated. Please set "github" to true.`
+        );
+      }
+
+      return topLevelParentProject.github;
+    }
+
+    return this.github;
   }
 }
 
