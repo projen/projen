@@ -65,7 +65,7 @@ export interface TsJestTransformOptions {
    *
    * @default disabled
    */
-  readonly stringifyContentPathRegex?: string | RegExp;
+  readonly stringifyContentPathRegex?: string;
   /**
    * TypeScript compiler related configuration.
    *
