@@ -1,5 +1,5 @@
 import { GitIdentity } from "./task-workflow";
-import { JobStep } from "./workflows-model";
+import { CommonJobStep, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
 
 /**
@@ -22,7 +22,7 @@ export class WorkflowSteps {
     });
 
     return {
-      ...this._adaptJobStep({
+      ...this._adaptCommonJobStep({
         ...options,
         name: options.name ?? "Checkout",
       }),
@@ -38,7 +38,7 @@ export class WorkflowSteps {
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
-      ...this._adaptJobStep({
+      ...this._adaptCommonJobStep({
         ...options,
         name: options.name ?? "Set git identity",
       }),
@@ -60,7 +60,7 @@ export class WorkflowSteps {
       });
 
     return {
-      ...this._adaptJobStep({
+      ...this._adaptCommonJobStep({
         ...options,
         name: options.name ?? "Upload artifact",
       }),
@@ -69,22 +69,19 @@ export class WorkflowSteps {
     };
   }
 
-  private static _adaptJobStep(options: JobStep): JobStep {
+  private static _adaptCommonJobStep(options: CommonJobStep): CommonJobStep {
     return {
       continueOnError: options?.continueOnError,
       env: options?.env,
       id: options?.id,
       if: options?.if,
       name: options?.name,
-      run: options?.run,
       timeoutMinutes: options?.timeoutMinutes,
-      with: options?.with,
-      uses: options?.uses,
       workingDirectory: options?.workingDirectory,
     };
   }
 }
-export interface CheckoutOptions extends JobStep {
+export interface CheckoutOptions extends CommonJobStep {
   /**
    * Options for `checkout`.
    */
@@ -130,7 +127,7 @@ export interface CheckoutWith {
   readonly token?: string;
 }
 
-export interface SetupGitIdentityOptions extends JobStep {
+export interface SetupGitIdentityOptions extends CommonJobStep {
   /**
    * The identity to use.
    */
@@ -182,7 +179,7 @@ export interface UploadArtifactWith {
   readonly compressionLevel?: number;
 }
 
-export interface UploadArtifactOptions extends JobStep {
+export interface UploadArtifactOptions extends CommonJobStep {
   /**
    * Options for `upload-artifact`.
    */

@@ -356,10 +356,7 @@ export interface RunSettings {
   readonly workingDirectory?: string;
 }
 
-/**
- * A generic step
- */
-export interface Step {
+export interface CommonStep {
   /**
    * A unique identifier for the step. You can use the id to reference the
    * step in contexts.
@@ -378,6 +375,23 @@ export interface Step {
    */
   readonly name?: string;
 
+  /**
+   * Sets environment variables for steps to use in the runner environment.
+   * You can also set environment variables for the entire workflow or a job.
+   */
+  readonly env?: Record<string, string>;
+
+  /**
+   * Specifies a working directory for a step.
+   * Overrides a job's working directory.
+   */
+  readonly workingDirectory?: string;
+}
+
+/**
+ * A generic step
+ */
+export interface Step extends CommonStep {
   /**
    * Selects an action to run as part of a step in your job. An action is a
    * reusable unit of code. You can use an action defined in the same
@@ -399,24 +413,9 @@ export interface Step {
    * The variable is prefixed with INPUT_ and converted to upper case.
    */
   readonly with?: Record<string, any>;
-
-  /**
-   * Sets environment variables for steps to use in the runner environment.
-   * You can also set environment variables for the entire workflow or a job.
-   */
-  readonly env?: Record<string, string>;
-
-  /**
-   * Specifies a working directory for a step.
-   * Overrides a job's working directory.
-   */
-  readonly workingDirectory?: string;
 }
 
-/**
- * A job step
- */
-export interface JobStep extends Step {
+export interface UniqueJobStep {
   /**
    * Prevents a job from failing when a step fails. Set to true to allow a job
    * to pass when this step fails.
@@ -428,6 +427,13 @@ export interface JobStep extends Step {
    */
   readonly timeoutMinutes?: number;
 }
+
+export interface CommonJobStep extends CommonStep, UniqueJobStep {}
+
+/**
+ * A job step
+ */
+export interface JobStep extends Step, UniqueJobStep {}
 
 /**
  * A strategy creates a build matrix for your jobs. You can define different
