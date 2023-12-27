@@ -90,23 +90,6 @@ export class WorkflowActions {
   }
 
   /**
-   * Configures the git identity (user name and email).
-   * @param id The identity to use
-   * @returns Job steps
-   */
-  public static setupGitIdentity(id: GitIdentity): JobStep[] {
-    return [
-      {
-        name: "Set git identity",
-        run: [
-          `git config user.name "${id.name}"`,
-          `git config user.email "${id.email}"`,
-        ].join("\n"),
-      },
-    ];
-  }
-
-  /**
    * A step that creates a pull request based on the current repo state.
    *
    * @param options Options

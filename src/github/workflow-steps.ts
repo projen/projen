@@ -1,3 +1,4 @@
+import { GitIdentity } from "./task-workflow";
 import { JobStep } from "./workflows-model";
 
 export class WorkflowSteps {
@@ -24,6 +25,21 @@ export class WorkflowSteps {
       name: options?.name ?? "Checkout",
       uses: "actions/checkout@v3",
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
+    };
+  }
+
+  /**
+   * Configures the git identity (user name and email).
+   * @param id The identity to use
+   * @returns Job steps
+   */
+  public static setupGitIdentity(id: GitIdentity): JobStep {
+    return {
+      name: "Set git identity",
+      run: [
+        `git config user.name "${id.name}"`,
+        `git config user.email "${id.email}"`,
+      ].join("\n"),
     };
   }
 }

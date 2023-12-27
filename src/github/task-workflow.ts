@@ -1,6 +1,5 @@
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitHub } from "./github";
-import { WorkflowActions } from "./workflow-actions";
 import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { GithubWorkflow } from "./workflows";
 import {
@@ -203,7 +202,7 @@ export class TaskWorkflow extends GithubWorkflow {
         WorkflowSteps.checkout({ with: checkoutWith }),
 
         // sets git identity so we can push later
-        ...WorkflowActions.setupGitIdentity(gitIdentity),
+        WorkflowSteps.setupGitIdentity(gitIdentity),
 
         ...preBuildSteps,
 

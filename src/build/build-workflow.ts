@@ -359,7 +359,7 @@ export class BuildWorkflow extends Component {
           repository: PULL_REQUEST_REPOSITORY,
           lfs: this.github.downloadLfs,
         }),
-        ...WorkflowActions.setupGitIdentity(this.gitIdentity),
+        WorkflowSteps.setupGitIdentity(this.gitIdentity),
         {
           name: "Push changes",
           env: {
