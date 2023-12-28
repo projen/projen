@@ -5,6 +5,7 @@ import { GithubWorkflow } from "./workflows";
 import {
   ContainerOptions,
   Job,
+  JobDefaults,
   JobPermissions,
   JobStep,
   JobStepOutput,
@@ -117,10 +118,9 @@ export interface TaskWorkflowJobOptions {
   readonly downloadLfs?: boolean;
 
   /**
-   * The workingDirectory within which to run the Job.
-   * This sets the default workingDirectory for all steps within the Job.
+   * Default settings for all steps in the TaskWorkflow Job.
    */
-  readonly workingDirectory?: string;
+  readonly jobDefaults?: JobDefaults;
 }
 
 /**
@@ -189,13 +189,7 @@ export class TaskWorkflow extends GithubWorkflow {
       container: options.container,
       env: options.env,
       permissions: options.permissions,
-      defaults: options.workingDirectory
-        ? {
-            run: {
-              workingDirectory: options.workingDirectory,
-            },
-          }
-        : undefined,
+      defaults: options?.jobDefaults,
       if: options.condition,
       outputs: options.outputs,
       steps: [

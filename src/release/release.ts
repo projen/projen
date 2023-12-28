@@ -700,8 +700,9 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
-        workingDirectory: this.project.topLevelParent
-          ? `./${this.project.relativeOutdir}`
+        jobDefaults: this.project.topLevelParent
+          ? // If this is a subproject, we need to set the working directory to the outdir of the subproject
+            { run: { workingDirectory: `./${this.project.relativeOutdir}` } }
           : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
