@@ -1,5 +1,7 @@
 import * as YAML from "yaml";
+import { Project } from "../../src";
 import { JobPermission, JobStep } from "../../src/github/workflows-model";
+import { NodeProject } from "../../src/javascript";
 import {
   Publisher,
   Release,
@@ -862,5 +864,114 @@ describe("Single Project", () => {
         job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:')
       ).toBeTruthy();
     }
+  });
+});
+
+describe("Subproject", () => {
+  test("require rootProject to be a GitHub Project", () => {
+    // GIVEN
+    const rootProject = new Project({
+      name: "parent",
+    });
+    const project = new TestProject({
+      parent: rootProject,
+      github: true,
+      outdir: "packages/subproject",
+    });
+
+    // WHEN
+    expect(
+      () =>
+        new Release(project, {
+          task: project.buildTask,
+          versionFile: "version.json",
+          branch: "main",
+          publishTasks: true, // to increase coverage
+          artifactsDirectory: "dist",
+        })
+    ).toThrow(
+      "Subproject my-project cannot create a release workflow to its top-level parent parent because it is not a GitHub project."
+    );
+  });
+
+  test("require rootProject to have github enabled", () => {
+    // GIVEN
+    const rootProject = new NodeProject({
+      name: "parent",
+      defaultReleaseBranch: "main",
+      github: false,
+    });
+    const project = new TestProject({
+      parent: rootProject,
+      github: true,
+      outdir: "packages/subproject",
+    });
+
+    // WHEN
+    expect(
+      () =>
+        new Release(project, {
+          task: project.buildTask,
+          versionFile: "version.json",
+          branch: "main",
+          publishTasks: true, // to increase coverage
+          artifactsDirectory: "dist",
+        })
+    ).toThrow(
+      'Subproject my-project cannot create a release workflow to its top-level parent parent because it does not have GitHub activated. Please set "github" to true.'
+    );
+  });
+
+  test("rootProject should contain release my-project.yml", () => {
+    // GIVEN
+    const rootProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "parent",
+    });
+    const project = new TestProject({
+      parent: rootProject,
+      github: true,
+      outdir: "packages/subproject",
+    });
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    const outdir = synthSnapshot(rootProject);
+    expect(outdir[".github/workflows/release_my-project.yml"]).toBeDefined();
+    expect(outdir).toMatchSnapshot();
+  });
+
+  test("childProject should contain no github workflows", () => {
+    // GIVEN
+    const rootProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "parent",
+    });
+    const project = new TestProject({
+      parent: rootProject,
+      github: true,
+      outdir: "packages/subproject",
+    });
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    const outdir = synthSnapshot(project);
+    expect(outdir[".github/workflows/pull-request-lint.yml"]).toBeUndefined();
+    expect(outdir[".github/workflows/release my-project.yml"]).toBeUndefined();
+    expect(outdir).toMatchSnapshot();
   });
 });

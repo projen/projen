@@ -612,22 +612,16 @@ export class NodeProject extends GitHubProject {
       (this.parent ? false : true);
     if (release) {
       this.addDevDeps(Version.STANDARD_VERSION);
-
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,
         branch: options.defaultReleaseBranch ?? "main",
         ...options,
 
-        artifactsDirectory: this.topLevelParent
-          ? `${this.relativeOutdir}/${this.artifactsDirectory}`
-          : this.artifactsDirectory,
+        artifactsDirectory: this.artifactsDirectory,
         releaseWorkflowSetupSteps: [
           ...this.renderWorkflowSetup({
-            installWorkingDirectory:
-              !this.topLevelParent?.relativeOutdir?.startsWith(".")
-                ? this.topLevelParent?.relativeOutdir
-                : `./${this.topLevelParent?.relativeOutdir}`,
+            installWorkingDirectory: this.determineInstallWorkingDirectory(),
             mutable: false,
           }),
           ...(options.releaseWorkflowSetupSteps ?? []),
@@ -799,6 +793,16 @@ export class NodeProject extends GitHubProject {
     if (options.checkLicenses) {
       new LicenseChecker(this, options.checkLicenses);
     }
+  }
+
+  private determineInstallWorkingDirectory(): string | undefined {
+    if (this.topLevelParent) {
+      if (this.topLevelParent.relativeOutdir.startsWith(".")) {
+        return this.topLevelParent.relativeOutdir;
+      }
+      return `./${this.topLevelParent.relativeOutdir}`;
+    }
+    return;
   }
 
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {

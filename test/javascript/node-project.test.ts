@@ -1713,3 +1713,26 @@ describe("package manager env", () => {
     });
   });
 });
+
+describe("Subproject", () => {
+  test("Subproject should create a release workflow in the parent project", () => {
+    // GIVEN / WHEN
+    const root = new TestNodeProject();
+    new TestNodeProject({
+      parent: root,
+      outdir: "child",
+      github: true,
+      release: true,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(root);
+
+    expect(snapshot).toHaveProperty([
+      ".github/workflows/release_test-node-project.yml",
+    ]);
+    expect(snapshot[".github/workflows/release_test-node-project.yml"]).toEqual(
+      expect.stringContaining("working-directory: .") // NodeProject is responsible for setting the install working directory to root
+    );
+  });
+});

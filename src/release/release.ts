@@ -634,6 +634,10 @@ export class Release extends Component {
       run: `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
     });
 
+    const fileSafeProjectName = this.project.name
+      .replace("@", "")
+      .replace(/\//, "-");
+
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
@@ -644,8 +648,10 @@ export class Release extends Component {
       WorkflowSteps.uploadArtifact({
         if: noNewCommits,
         with: {
-          name: BUILD_ARTIFACT_NAME,
-          path: this.artifactsDirectory,
+          name: `${fileSafeProjectName}_${BUILD_ARTIFACT_NAME}`,
+          path: this.project.topLevelParent
+            ? `${this.project.relativeOutdir}/${this.artifactsDirectory}`
+            : this.artifactsDirectory,
         },
       })
     );
@@ -654,7 +660,12 @@ export class Release extends Component {
 
     if (workflowTargetGitHub && this.github && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
-      const workflow = new GithubWorkflow(workflowTargetGitHub, workflowName);
+      const workflow = new GithubWorkflow(
+        workflowTargetGitHub,
+        this.project.parent
+          ? `${workflowName}_${fileSafeProjectName}`
+          : workflowName
+      );
 
       TaskWorkflow.prepareWorkflow(workflow, {
         schedule: this.releaseTrigger.schedule
