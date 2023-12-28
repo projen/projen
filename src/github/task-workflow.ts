@@ -14,6 +14,10 @@ import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
+
+/**
+ * Options to create the Job associated with a TaskWorkflow.
+ */
 export interface TaskWorkflowJobOptions {
   /**
    * @default - default image
@@ -119,6 +123,9 @@ export interface TaskWorkflowJobOptions {
   readonly workingDirectory?: string;
 }
 
+/**
+ * Options to create a TaskWorkflow.
+ */
 export interface TaskWorkflowOptions extends TaskWorkflowJobOptions {
   /**
    * The workflow name.
@@ -213,6 +220,12 @@ export class TaskWorkflow extends GithubWorkflow {
     };
   }
 
+  /**
+   * Prepares a workflow to be used as a TaskWorkflow.
+   *
+   * @param workflow The workflow to prepare.
+   * @param triggers The triggers to add to the workflow.
+   */
   public static prepareWorkflow(
     workflow: GithubWorkflow,
     triggers?: Triggers
