@@ -5918,7 +5918,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
+          "RELEASE_TAG_PREFIX": "my-project@",
         },
         "name": "bump",
         "steps": [
@@ -5974,6 +5974,7 @@ node_modules/
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
+          "RELEASE_TAG_PREFIX": "my-project@",
         },
         "name": "release",
         "steps": [
@@ -6005,7 +6006,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
+          "RELEASE_TAG_PREFIX": "my-project@",
         },
         "name": "unbump",
         "steps": [
@@ -7061,7 +7062,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
+          "RELEASE_TAG_PREFIX": "my-project@",
         },
         "name": "bump",
         "steps": [
@@ -7117,6 +7118,7 @@ node_modules/
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
+          "RELEASE_TAG_PREFIX": "my-project@",
         },
         "name": "release",
         "steps": [
@@ -7148,7 +7150,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
+          "RELEASE_TAG_PREFIX": "my-project@",
         },
         "name": "unbump",
         "steps": [

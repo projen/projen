@@ -1723,6 +1723,10 @@ describe("Subproject", () => {
       outdir: "child",
       github: true,
       release: true,
+      minNodeVersion: "16.0.0",
+      workflowNodeVersion: "18.14.0",
+      releaseTagPrefix: "test-node-project@", // to avoid conflicts with the root project
+      releaseToNpm: true,
     });
 
     // THEN

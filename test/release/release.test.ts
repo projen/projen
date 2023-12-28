@@ -888,6 +888,7 @@ describe("Subproject", () => {
           branch: "main",
           publishTasks: true, // to increase coverage
           artifactsDirectory: "dist",
+          releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
         })
     ).toThrow(
       "Subproject my-project cannot create a release workflow to its top-level parent parent because it is not a GitHub project."
@@ -916,6 +917,7 @@ describe("Subproject", () => {
           branch: "main",
           publishTasks: true, // to increase coverage
           artifactsDirectory: "dist",
+          releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
         })
     ).toThrow(
       'Subproject my-project cannot create a release workflow to its top-level parent parent because it does not have GitHub activated. Please set "github" to true.'
@@ -943,6 +945,7 @@ describe("Subproject", () => {
       branch: "main",
       publishTasks: true, // to increase coverage
       artifactsDirectory,
+      releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
     });
 
     const outdir = synthSnapshot(rootProject);
@@ -982,6 +985,7 @@ describe("Subproject", () => {
       branch: "main",
       publishTasks: true, // to increase coverage
       artifactsDirectory: "dist",
+      releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
     });
 
     const outdir = synthSnapshot(project);
