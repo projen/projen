@@ -340,6 +340,25 @@ describe("cwd", () => {
       /must be an existing directory/
     );
   });
+
+  test("cwd can be passed down to spawn steps", () => {
+    const p = new TestProject();
+    const taskcwd = join(p.outdir, "mypwd");
+    const stepcwd = join(p.outdir, "yourpwd");
+    mkdirSync(taskcwd, { recursive: true });
+    mkdirSync(stepcwd, { recursive: true });
+    const echo = p.addTask("echo", { exec: "echo", receiveArgs: true });
+    const task = p.addTask("testme", { cwd: taskcwd });
+    task.spawn(echo, { args: ["step1=$PWD"] });
+    task.spawn(echo, { args: ["step1=$PWD"], cwd: stepcwd });
+
+    const noCwdSpecified = executeTask(p, "echo", {}, ["$PWD"]);
+    expect(noCwdSpecified[0]).toContain(p.outdir);
+
+    const lines = executeTask(p, "testme");
+    expect(lines[0].includes("mypwd")).toBeTruthy();
+    expect(lines[1].includes("yourpwd")).toBeTruthy();
+  });
 });
 
 describe("say", () => {

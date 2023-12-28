@@ -30,7 +30,7 @@ export class TaskRuntime {
   public readonly manifest: TasksManifest;
 
   /**
-   * The root directory of the project and the cwd for executing tasks.
+   * The root directory of the project and the default cwd for executing tasks.
    */
   public readonly workdir: string;
 
@@ -66,15 +66,23 @@ export class TaskRuntime {
   public runTask(
     name: string,
     parents: string[] = [],
-    args: Array<string | number> = []
+    args: Array<string | number> = [],
+    opts: RunTaskOptions = {}
   ) {
     const task = this.tryFindTask(name);
     if (!task) {
       throw new Error(`cannot find command ${task}`);
     }
 
-    new RunTask(this, task, parents, args);
+    new RunTask(this, task, parents, args, opts);
   }
+}
+
+export interface RunTaskOptions {
+  /**
+   * Working directory for all steps in this task (generally only used to pass cwd to spawned tasks)
+   */
+  readonly cwd?: string;
 }
 
 class RunTask {
@@ -87,9 +95,10 @@ class RunTask {
     private readonly runtime: TaskRuntime,
     private readonly task: TaskSpec,
     parents: string[] = [],
-    args: Array<string | number> = []
+    args: Array<string | number> = [],
+    opts: RunTaskOptions = {}
   ) {
-    this.workdir = task.cwd ?? this.runtime.workdir;
+    this.workdir = opts.cwd ?? task.cwd ?? this.runtime.workdir;
 
     this.parents = parents;
 
@@ -153,7 +162,8 @@ class RunTask {
         this.runtime.runTask(
           step.spawn,
           [...this.parents, this.task.name],
-          argsList
+          argsList,
+          { cwd: step.cwd ?? task.cwd }
         );
       }
 
