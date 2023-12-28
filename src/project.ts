@@ -55,7 +55,7 @@ export interface ProjectOptions {
    * directory and it cannot be the same as the parent or any of it's other
    * subprojects.
    *
-   * @default DEFAULT_OUTDIR
+   * @default "."
    */
   readonly outdir?: string;
 
@@ -135,6 +135,9 @@ export interface GitOptions {
  * Base project
  */
 export class Project extends Construct {
+  /**
+   * The default output directory for a project if none is specified.
+   */
   public static readonly DEFAULT_OUTDIR = ".";
 
   /**

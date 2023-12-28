@@ -176,7 +176,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: test-nextjs-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases

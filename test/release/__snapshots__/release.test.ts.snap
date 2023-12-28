@@ -81,7 +81,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -402,7 +402,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -723,7 +723,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -1044,7 +1044,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -1369,7 +1369,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -1436,7 +1436,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -1503,7 +1503,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -1838,7 +1838,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -1967,7 +1967,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -2352,7 +2352,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -2588,7 +2588,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -2753,7 +2753,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -3129,7 +3129,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -3526,7 +3526,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -3760,7 +3760,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -4018,7 +4018,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -4495,7 +4495,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -4562,7 +4562,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -4886,7 +4886,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -4953,7 +4953,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -5020,7 +5020,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -5385,7 +5385,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -5661,7 +5661,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -6020,7 +6020,7 @@ node_modules/
 }
 `;
 
-exports[`Subproject rootProject should contain release my-project.yml 1`] = `
+exports[`Subproject rootProject should contain release_my-project.yml 1`] = `
 {
   ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -6188,7 +6188,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: parent_build-artifact
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -6258,7 +6258,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v3
         with:
-          name: my-project_build-artifact
+          name: build-artifact
           path: packages/subproject/dist
   release_github:
     name: Publish to GitHub Releases

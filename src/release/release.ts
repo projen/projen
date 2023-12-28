@@ -648,7 +648,7 @@ export class Release extends Component {
       WorkflowSteps.uploadArtifact({
         if: noNewCommits,
         with: {
-          name: `${fileSafeProjectName}_${BUILD_ARTIFACT_NAME}`,
+          name: BUILD_ARTIFACT_NAME,
           path: this.project.topLevelParent
             ? `${this.project.relativeOutdir}/${this.artifactsDirectory}`
             : this.artifactsDirectory,

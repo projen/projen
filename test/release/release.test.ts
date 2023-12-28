@@ -922,29 +922,44 @@ describe("Subproject", () => {
     );
   });
 
-  test("rootProject should contain release my-project.yml", () => {
+  test("rootProject should contain release_my-project.yml", () => {
     // GIVEN
     const rootProject = new NodeProject({
       defaultReleaseBranch: "main",
       name: "parent",
     });
+    const subprojectOutdir = "packages/subproject";
     const project = new TestProject({
       parent: rootProject,
       github: true,
-      outdir: "packages/subproject",
+      outdir: subprojectOutdir,
     });
 
     // WHEN
+    const artifactsDirectory = "dist";
     new Release(project, {
       task: project.buildTask,
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
-      artifactsDirectory: "dist",
+      artifactsDirectory,
     });
 
     const outdir = synthSnapshot(rootProject);
+
     expect(outdir[".github/workflows/release_my-project.yml"]).toBeDefined();
+    const subprojectReleaseWorkflow = YAML.parse(
+      outdir[".github/workflows/release_my-project.yml"]
+    );
+    expect(
+      subprojectReleaseWorkflow.jobs.release.defaults.run["working-directory"]
+    ).toEqual(`./${subprojectOutdir}`);
+    expect(
+      subprojectReleaseWorkflow.jobs.release.steps.find(
+        (step: any) => step.name === "Upload artifact"
+      ).with.path
+    ).toEqual(`${subprojectOutdir}/${artifactsDirectory}`);
+
     expect(outdir).toMatchSnapshot();
   });
 
