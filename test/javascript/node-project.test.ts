@@ -1731,8 +1731,16 @@ describe("Subproject", () => {
     expect(snapshot).toHaveProperty([
       ".github/workflows/release_test-node-project.yml",
     ]);
-    expect(snapshot[".github/workflows/release_test-node-project.yml"]).toEqual(
-      expect.stringContaining("working-directory: .") // NodeProject is responsible for setting the install working directory to root
+
+    const subprojectReleaseWorkflow = yaml.parse(
+      snapshot[".github/workflows/release_test-node-project.yml"]
+    );
+    expect(
+      subprojectReleaseWorkflow.jobs.release.steps.find(
+        (step: any) => step.name === "Install dependencies"
+      )["working-directory"]
+    ).toEqual(
+      expect.stringContaining(".") // NodeProject is responsible for setting the install working directory to root
     );
   });
 });
