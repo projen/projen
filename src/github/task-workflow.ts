@@ -14,7 +14,6 @@ import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
-
 export interface TaskWorkflowJobOptions {
   /**
    * @default - default image
@@ -112,6 +111,12 @@ export interface TaskWorkflowJobOptions {
    * @default - Use the setting on the corresponding GitHub project
    */
   readonly downloadLfs?: boolean;
+
+  /**
+   * The workingDirectory within which to run the Job.
+   * This sets the default workingDirectory for all steps within the Job.
+   */
+  readonly workingDirectory?: string;
 }
 
 export interface TaskWorkflowOptions extends TaskWorkflowJobOptions {
@@ -177,6 +182,13 @@ export class TaskWorkflow extends GithubWorkflow {
       container: options.container,
       env: options.env,
       permissions: options.permissions,
+      defaults: options.workingDirectory
+        ? {
+            run: {
+              workingDirectory: options.workingDirectory,
+            },
+          }
+        : undefined,
       if: options.condition,
       outputs: options.outputs,
       steps: [

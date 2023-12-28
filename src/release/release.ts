@@ -689,6 +689,9 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
+        workingDirectory: this.project.topLevelParent
+          ? `./${this.project.relativeOutdir}`
+          : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
 

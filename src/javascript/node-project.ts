@@ -617,11 +617,19 @@ export class NodeProject extends GitHubProject {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,
         branch: options.defaultReleaseBranch ?? "main",
-        artifactsDirectory: this.artifactsDirectory,
         ...options,
 
+        artifactsDirectory: this.topLevelParent
+          ? `${this.relativeOutdir}/${this.artifactsDirectory}`
+          : this.artifactsDirectory,
         releaseWorkflowSetupSteps: [
-          ...this.renderWorkflowSetup({ mutable: false }),
+          ...this.renderWorkflowSetup({
+            installWorkingDirectory:
+              !this.topLevelParent?.relativeOutdir?.startsWith(".")
+                ? this.topLevelParent?.relativeOutdir
+                : `./${this.topLevelParent?.relativeOutdir}`,
+            mutable: false,
+          }),
           ...(options.releaseWorkflowSetupSteps ?? []),
         ],
         postBuildSteps: [
@@ -1039,6 +1047,7 @@ export class NodeProject extends GitHubProject {
       run: mutable
         ? this.package.installAndUpdateLockfileCommand
         : this.package.installCommand,
+      workingDirectory: options.installWorkingDirectory,
     });
 
     return install;
@@ -1192,6 +1201,12 @@ export class NodeProject extends GitHubProject {
  * Options for `renderInstallSteps()`.
  */
 export interface RenderWorkflowSetupOptions {
+  /**
+   * We may be running a Workflow with a default working-directory set, and we must set this in order to install from the root.
+   *
+   * @default - no working directory
+   */
+  readonly installWorkingDirectory?: string;
   /**
    * Should the package lockfile be updated?
    * @default false
