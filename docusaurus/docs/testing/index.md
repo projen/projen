@@ -174,10 +174,15 @@ exists in the project tree with a snapshot test. If it does, then something else
 in your project code is already creating the file, and you'll need to identify
 what that is and either remove it or override it.
 
+#### Example solution
+
 In the example below, we're extending the `NodeProject` class, which already
-creates a `README.md` file. We can remove the `README.md` file from the base
-project, which should allow the one we've added in `CustomNodeProject` to be
-created.
+creates a `README.md` file. In fact, all classes that extend `GitHubProject`
+will create a `README.md` file by default. This behavior is controlled by the
+`readme` option in the `GitHubProjectOptions` interface.
+
+We can remove the `README.md` file from the base project, which should allow
+the one we've hypothetically added in `CustomNodeProject` to be created.
 
 ```ts
 const project = new CustomNodeProject({
@@ -191,3 +196,18 @@ project.synth();
 Alternately, since we know that the `README.md` file is already being created,
 we can remove the code that creates it in `CustomNodeProject` and just use the
 one from the base class.
+
+For classes that do not have a `readme` option, you can use the `tryRemoveFile`
+option to remove the file from the project tree.
+
+```ts
+const project = new CustomNodeProject({
+  // ...
+});
+project.tryRemoveFile("README.md");
+```
+
+Note, however, that this will probably also remove the `README.md` file created
+from `CustomNodeProject`, so in this particular case, it's probably better to
+just disable the `README.md` file in the base class or use it instead of a
+custom implementation.
