@@ -5211,6 +5211,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -8379,6 +8397,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "tsconfig-dev-file",
+      },
+      {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
       },
       {
         "default": ""latest"",
@@ -12452,6 +12488,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -15428,6 +15482,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -18334,6 +18406,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "tsconfig-dev-file",
+      },
+      {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
       },
       {
         "default": ""latest"",
@@ -22026,6 +22116,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "tsconfig-dev-file",
+      },
+      {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
       },
       {
         "default": ""latest"",
@@ -26969,6 +27077,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "tsconfig-dev-file",
+      },
+      {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
       },
       {
         "default": ""latest"",
@@ -35418,6 +35544,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -37987,6 +38131,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -40554,6 +40716,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "tsconfig-dev-file",
+      },
+      {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
       },
       {
         "default": ""latest"",

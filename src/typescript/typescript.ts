@@ -8,6 +8,7 @@ import {
   Jest,
   NodeProject,
   NodeProjectOptions,
+  Transform,
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
@@ -21,6 +22,215 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge } from "../util";
+
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
+ */
+export class TsJestBabelConfig {
+  /**
+   * Disables the use of Babel
+   */
+  public static disabled() {
+    return new TsJestBabelConfig(false);
+  }
+
+  /**
+   * Enables Babel processing
+   *
+   * `ts-jest` will try to find an existing Babel configuration and pass it to the `babel-jest` processor.
+   */
+  public static autoDetectConfig() {
+    return new TsJestBabelConfig(true);
+  }
+
+  /**
+   * Path to a babelrc file
+   *
+   * The path should be relative to the current working directory where you start Jest from. You can also use `<rootDir>` in the path.
+   */
+  public static fromFile(filePath: string) {
+    return new TsJestBabelConfig(filePath);
+  }
+
+  /**
+   * Inline compiler options
+   * @see https://babeljs.io/docs/options
+   */
+  public static custom(config: Record<string, any>) {
+    return new TsJestBabelConfig(config);
+  }
+
+  private constructor(
+    private readonly config: boolean | string | Record<string, any>
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): boolean | string | Record<string, any> {
+    return this.config;
+  }
+}
+
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
+ */
+export class TsJestDiagnostics {
+  /**
+   * Enable all diagnostics.
+   */
+  public static all() {
+    return new TsJestDiagnostics(true);
+  }
+
+  /**
+   * Disable all diagnostics.
+   */
+  public static none() {
+    return new TsJestDiagnostics(false);
+  }
+
+  /**
+   * Provide a custom diagnostics configuration.
+   *
+   * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/diagnostics/
+   */
+  public static custom(config: Record<string, any>) {
+    return new TsJestDiagnostics(config);
+  }
+
+  private constructor(private readonly config: boolean | Record<string, any>) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): boolean | Record<string, any> {
+    return this.config;
+  }
+}
+
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig/
+ */
+export class TsJestTsconfig {
+  /**
+   * Uses `tsconfig.json` if found, or the built-in default TypeScript compiler options.
+   */
+  public static auto() {
+    return new TsJestTsconfig(true);
+  }
+
+  /**
+   * Force` ts-jest` to use its built-in defaults even if there is a `tsconfig.json` in your project.
+   */
+  public static builtInDefaults() {
+    return new TsJestTsconfig(false);
+  }
+
+  /**
+   * Path to a `tsconfig` file
+   *
+   * The path should be relative to the current working directory where you start Jest from. You can also use `<rootDir>` in the path to start from the project root dir.
+   */
+  public static fromFile(filePath: string) {
+    return new TsJestTsconfig(filePath);
+  }
+
+  /**
+   * Inline compiler options
+   *
+   * @see TypescriptConfigOptions
+   */
+  public static custom(config: TypescriptConfigOptions) {
+    return new TsJestTsconfig(config);
+  }
+
+  private constructor(
+    private readonly config: boolean | string | TypescriptConfigOptions
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): boolean | string | TypescriptConfigOptions {
+    return this.config;
+  }
+}
+
+/**
+ * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options
+ */
+export interface TsJestTransformOptions {
+  /**
+   * Custom TypeScript AST transformers
+   *
+   * @default auto
+   */
+  readonly astTransformers?: Record<string, any>;
+  /**
+   * Babel(Jest) related configuration.
+   *
+   * @default TsJestBabelConfig.disabled()
+   */
+  readonly babelConfig?: TsJestBabelConfig;
+  /**
+   * TypeScript module to use as compiler.
+   *
+   * @default "typescript"
+   */
+  readonly compiler?: string;
+  /**
+   * Diagnostics related configuration.
+   *
+   * @default TsJestDiagnostics.all()
+   */
+  readonly diagnostics?: TsJestDiagnostics;
+  /**
+   * Run ts-jest tests with this TSConfig isolatedModules setting.
+   *
+   * You'll lose type-checking ability and some features such as const enum, but in the case you plan on using Jest with the cache disabled (jest --no-cache), your tests will then run much faster.
+   * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/isolatedModules
+   *
+   * @default false
+   */
+  readonly isolatedModules?: boolean;
+  /**
+   * Files which will become modules returning self content.
+   *
+   * @default disabled
+   */
+  readonly stringifyContentPathRegex?: string;
+  /**
+   * TypeScript compiler related configuration.
+   *
+   * @default - Your project's `tsconfigDev` file.
+   */
+  readonly tsconfig?: TsJestTsconfig;
+  /**
+   * Enable ESM support
+   *
+   * @default auto
+   */
+  readonly useEsm?: boolean;
+}
+
+export interface TsJestOptions {
+  /**
+   * Which files should ts-jest act upon.
+   *
+   * @see https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+   *
+   * @default "^.+\\.[t]sx?$"
+   */
+  readonly tranformPattern?: string;
+  /**
+   * Override the default ts-jest transformer configuration.
+   */
+  readonly transformOptions?: TsJestTransformOptions;
+}
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -143,6 +353,11 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * Options for .projenrc.ts
    */
   readonly projenrcTsOptions?: ProjenrcTsOptions;
+
+  /**
+   * Options for ts-jest
+   */
+  readonly tsJestOptions?: TsJestOptions;
 }
 
 /**
@@ -150,6 +365,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
  * @pjid typescript
  */
 export class TypeScriptProject extends NodeProject {
+  public static readonly DEFAULT_TS_JEST_TRANFORM_PATTERN = "^.+\\.[t]sx?$";
+
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
@@ -333,7 +550,7 @@ export class TypeScriptProject extends NodeProject {
       if (compiledTests) {
         this.addJestCompiled(this.jest);
       } else {
-        this.addJestNoCompile(this.jest);
+        this.addJestNoCompile(this.jest, options?.tsJestOptions);
       }
     }
 
@@ -435,7 +652,10 @@ export class TypeScriptProject extends NodeProject {
     jest.addSnapshotResolver(`./${resolver.path}`);
   }
 
-  private addJestNoCompile(jest: Jest) {
+  private addJestNoCompile(
+    jest: Jest,
+    tsJestOptions: TsJestOptions | undefined
+  ) {
     this.addDevDeps(
       `@types/jest${jest.jestVersion}`,
       `ts-jest${jest.jestVersion}`
@@ -446,7 +666,42 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
+    const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
     // add relevant deps
+    if (!jestMajorVersion || jestMajorVersion >= 29) {
+      return this.addJestNoCompileModern(jest, tsJestOptions);
+    }
+    this.addJestNoCompileLegacy(jest, tsJestOptions);
+  }
+
+  private addJestNoCompileModern(
+    jest: Jest,
+    tsJestOptions: TsJestOptions | undefined
+  ) {
+    jest.config.transform = deepMerge([
+      {
+        [tsJestOptions?.tranformPattern ??
+        TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN]: new Transform(
+          "ts-jest",
+          {
+            tsconfig: TsJestTsconfig.fromFile(this.tsconfigDev.fileName),
+            ...(tsJestOptions?.transformOptions ?? {}),
+          }
+        ),
+      },
+      jest.config.transform,
+    ]);
+  }
+
+  private addJestNoCompileLegacy(
+    jest: Jest,
+    tsJestOptions: TsJestOptions | undefined
+  ) {
+    if (tsJestOptions) {
+      this.logger.warn(
+        "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+      );
+    }
     if (!jest.config.preset) {
       jest.config.preset = "ts-jest";
     }
