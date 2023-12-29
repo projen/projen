@@ -173,3 +173,21 @@ projen project, you can try removing your `README.md` file code and see if it st
 exists in the project tree with a snapshot test. If it does, then something else
 in your project code is already creating the file, and you'll need to identify
 what that is and either remove it or override it.
+
+In the example below, we're extending the `NodeProject` class, which already
+creates a `README.md` file. We can remove the `README.md` file from the base
+project, which should allow the one we've added in `CustomNodeProject` to be
+created.
+
+```ts
+const project = new CustomNodeProject({
+  // ...
+  readme: false, // This will disable the readme file in the underlying NodeProject
+});
+
+project.synth();
+```
+
+Alternately, since we know that the `README.md` file is already being created,
+we can remove the code that creates it in `CustomNodeProject` and just use the
+one from the base class.
