@@ -1,5 +1,5 @@
 import { Prettier } from "./prettier";
-import { Project } from "..";
+import { Project, TaskStepOptions } from "..";
 import { PROJEN_RC } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
@@ -424,6 +424,17 @@ export class Eslint extends Component {
   }
 
   /**
+   * Returns an immutable copy of the lintPatterns being used by this eslint configuration.
+   */
+  public get lintPatterns(): string[] {
+    if (this._lintPatterns && this._lintPatterns.size > 0) {
+      return [...this._lintPatterns];
+    }
+
+    return [];
+  }
+
+  /**
    * Add a file, glob pattern or directory with source files to lint (e.g. [ "src" ])
    */
   public addLintPattern(pattern: string) {
@@ -505,14 +516,52 @@ export class Eslint extends Component {
    * Update the task with the current list of lint patterns and file extensions
    */
   private updateTask() {
+    const taskExecCommand = "eslint";
+    const argsSet = new Set<string>();
+    if (this._fileExtensions.size > 0) {
+      argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
+    }
+    argsSet.add("--fix");
+    argsSet.add("--no-error-on-unmatched-pattern");
+    argsSet.add("$@"); // External args go here
+
+    for (const pattern of this._lintPatterns) {
+      argsSet.add(pattern);
+    }
+
     this.eslintTask.reset(
-      [
-        "eslint",
-        `--ext ${[...this._fileExtensions].join(",")}`,
-        "--fix",
-        "--no-error-on-unmatched-pattern",
-        ...this._lintPatterns,
-      ].join(" ")
+      [taskExecCommand, ...argsSet].join(" "),
+      this.buildTaskStepOptions(taskExecCommand)
     );
+  }
+
+  /**
+   * In case of external editing of the eslint task step, we preserve those changes.
+   * Otherwise, we return the default task step options.
+   *
+   * @param taskExecCommand The command that the ESLint tasks executes
+   * @returns Either the externally edited, or the default task step options
+   */
+  private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
+    const currentEslintTaskStep = this.eslintTask?.steps?.find((step) =>
+      step?.exec?.startsWith?.(taskExecCommand)
+    );
+
+    if (currentEslintTaskStep) {
+      const { args, condition, cwd, env, name, receiveArgs } =
+        currentEslintTaskStep;
+      return {
+        args,
+        condition,
+        cwd,
+        env,
+        name,
+        receiveArgs,
+      };
+    }
+
+    return {
+      receiveArgs: true,
+    };
   }
 }

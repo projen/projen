@@ -220,7 +220,8 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
     name: "eslint",
     steps: [
       {
-        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools projenrc .projenrc.ts",
+        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
+        receiveArgs: true,
       },
     ],
   });
