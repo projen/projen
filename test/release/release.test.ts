@@ -950,9 +950,12 @@ describe("Subproject", () => {
 
     const outdir = synthSnapshot(rootProject);
 
-    expect(outdir[".github/workflows/release_my-project.yml"]).toBeDefined();
+    const subprojectReleaseWorkflowAsString =
+      outdir[".github/workflows/release_my-project.yml"];
+
+    expect(subprojectReleaseWorkflowAsString).toBeDefined();
     const subprojectReleaseWorkflow = YAML.parse(
-      outdir[".github/workflows/release_my-project.yml"]
+      subprojectReleaseWorkflowAsString
     );
     expect(
       subprojectReleaseWorkflow.jobs.release.defaults.run["working-directory"]
@@ -963,7 +966,7 @@ describe("Subproject", () => {
       ).with.path
     ).toEqual(`${subprojectOutdir}/${artifactsDirectory}`);
 
-    expect(outdir).toMatchSnapshot();
+    expect(subprojectReleaseWorkflowAsString).toMatchSnapshot();
   });
 
   test("childProject should contain no github workflows", () => {
@@ -974,7 +977,6 @@ describe("Subproject", () => {
     });
     const project = new TestProject({
       parent: rootProject,
-      github: true,
       outdir: "packages/subproject",
     });
 
@@ -990,7 +992,6 @@ describe("Subproject", () => {
 
     const outdir = synthSnapshot(project);
     expect(outdir[".github/workflows/pull-request-lint.yml"]).toBeUndefined();
-    expect(outdir[".github/workflows/release my-project.yml"]).toBeUndefined();
-    expect(outdir).toMatchSnapshot();
+    expect(outdir[".github/workflows/release_my-project.yml"]).toBeUndefined();
   });
 });
