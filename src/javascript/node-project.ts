@@ -1204,7 +1204,7 @@ export class NodeProject extends GitHubProject {
  */
 export interface RenderWorkflowSetupOptions {
   /**
-   * We may be running a Workflow with a default working-directory set, and we must set this in order to install from the root.
+   * The working directory to run the install command in.
    *
    * @default - no working directory
    */
