@@ -25,6 +25,7 @@ import {
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
 import { Task } from "../task";
+import { formatPathAsDotNotation } from "../util/path";
 import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
@@ -650,7 +651,10 @@ export class Release extends Component {
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.project.parent
-            ? `${this.project.relativeOutdir}/${this.artifactsDirectory}`
+            ? `${path.relative(
+                this.project.root.outdir,
+                this.project.outdir
+              )}/${this.artifactsDirectory}`
             : this.artifactsDirectory,
         },
       })
@@ -702,7 +706,13 @@ export class Release extends Component {
         postBuildSteps,
         jobDefaults: this.project.parent
           ? // If this is a subproject, we need to set the working directory to the outdir of the subproject
-            { run: { workingDirectory: `./${this.project.relativeOutdir}` } }
+            {
+              run: {
+                workingDirectory: formatPathAsDotNotation(
+                  path.relative(this.project.root.outdir, this.project.outdir)
+                ),
+              },
+            }
           : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });

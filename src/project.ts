@@ -187,12 +187,6 @@ export class Project extends Construct {
    * Absolute output directory of this project.
    */
   public readonly outdir: string;
-
-  /**
-   * Relative output directory of this project.
-   */
-  public readonly relativeOutdir: string;
-
   /**
    * Project tasks.
    */
@@ -278,7 +272,6 @@ export class Project extends Construct {
     }
 
     this.outdir = outdir;
-    this.relativeOutdir = options.outdir ?? Project.DEFAULT_OUTDIR;
 
     // ------------------------------------------------------------------------
 

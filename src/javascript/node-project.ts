@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join, relative } from "path";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -798,7 +798,7 @@ export class NodeProject extends GitHubProject {
 
   private determineInstallWorkingDirectory(): string | undefined {
     if (this.parent) {
-      return formatPathAsDotNotation(this.root.relativeOutdir);
+      return formatPathAsDotNotation(relative(".", this.root.outdir));
     }
     return;
   }
