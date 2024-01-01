@@ -22,7 +22,7 @@ export class WorkflowSteps {
     });
 
     return {
-      ...this._adaptCommonJobStep({
+      ...this.buildCommonJobStep({
         ...options,
         name: options.name ?? "Checkout",
       }),
@@ -38,7 +38,7 @@ export class WorkflowSteps {
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
-      ...this._adaptCommonJobStep({
+      ...this.buildCommonJobStep({
         ...options,
         name: options.name ?? "Set git identity",
       }),
@@ -60,7 +60,7 @@ export class WorkflowSteps {
       });
 
     return {
-      ...this._adaptCommonJobStep({
+      ...this.buildCommonJobStep({
         ...options,
         name: options.name ?? "Upload artifact",
       }),
@@ -69,7 +69,7 @@ export class WorkflowSteps {
     };
   }
 
-  private static _adaptCommonJobStep(options: CommonJobStep): CommonJobStep {
+  private static buildCommonJobStep(options: CommonJobStep): CommonJobStep {
     return {
       continueOnError: options?.continueOnError,
       env: options?.env,
