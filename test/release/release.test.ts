@@ -891,7 +891,7 @@ describe("Subproject", () => {
           releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
         })
     ).toThrow(
-      "Subproject my-project cannot create a release workflow to its top-level parent parent because it is not a GitHub project."
+      "Subproject my-project cannot create a release workflow to its top-level parent parent because it is not a GitHub project or does not have github set to true."
     );
   });
 
