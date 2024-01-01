@@ -662,7 +662,7 @@ export class Release extends Component {
 
     const workflowTargetGitHub = this.findTargetGitHubForWorkflow();
 
-    if (workflowTargetGitHub && this.github && !this.releaseTrigger.isManual) {
+    if (workflowTargetGitHub && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
       const workflow = new GithubWorkflow(
         workflowTargetGitHub,
@@ -680,8 +680,13 @@ export class Release extends Component {
           : undefined,
       });
 
+      const taskStep: JobStep = {
+        name: releaseTask.name,
+        run: this.project.runTaskCommand(releaseTask),
+      };
+
       // Create job based on child (only?) project GitHub
-      const taskjob = TaskWorkflow.buildJob(this.github, {
+      const taskjob = TaskWorkflow.buildJob(taskStep, {
         outputs: {
           latest_commit: {
             stepId: GIT_REMOTE_STEPID,
@@ -702,7 +707,6 @@ export class Release extends Component {
           fetchDepth: 0,
         },
         preBuildSteps,
-        task: releaseTask,
         postBuildSteps,
         jobDefaults: this.project.parent
           ? // If this is a subproject, we need to set the working directory to the outdir of the subproject

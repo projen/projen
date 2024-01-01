@@ -61,11 +61,6 @@ export interface TaskWorkflowJobOptions {
   readonly preBuildSteps?: JobStep[];
 
   /**
-   * The main task to be executed.
-   */
-  readonly task: Task;
-
-  /**
    * Actions to run after the main build step.
    *
    * @default - not set
@@ -144,6 +139,11 @@ export interface TaskWorkflowOptions extends TaskWorkflowJobOptions {
    * @default - by default workflows can only be triggered by manually.
    */
   readonly triggers?: Triggers;
+
+  /**
+   * The main task to be executed.
+   */
+  readonly task: Task;
 }
 
 /**
@@ -157,11 +157,14 @@ export class TaskWorkflow extends GithubWorkflow {
    * @param options TaskWorkflowJobOptions
    * @returns The job that would be created as part of the TaskWorkflow
    */
-  public static buildJob(github: GitHub, options: TaskWorkflowJobOptions): Job {
+  public static buildJob(
+    taskStep: JobStep,
+    options: TaskWorkflowJobOptions
+  ): Job {
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
     const checkoutWith: { lfs?: boolean } = {};
-    if (options.downloadLfs ?? github.downloadLfs) {
+    if (options.downloadLfs) {
       checkoutWith.lfs = true;
     }
     // 'checkoutWith' can override 'lfs'
@@ -204,10 +207,7 @@ export class TaskWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        {
-          name: options.task.name,
-          run: github.project.runTaskCommand(options.task),
-        },
+        taskStep,
 
         ...postBuildSteps,
       ],
@@ -250,7 +250,14 @@ export class TaskWorkflow extends GithubWorkflow {
 
     TaskWorkflow.prepareWorkflow(this, options.triggers);
 
-    const job: Job = TaskWorkflow.buildJob(github, options);
+    const taskStep: JobStep = {
+      name: options.task.name,
+      run: github.project.runTaskCommand(options.task),
+    };
+    const job: Job = TaskWorkflow.buildJob(taskStep, {
+      ...options,
+      downloadLfs: options.downloadLfs ?? github.downloadLfs,
+    });
 
     this.addJobs({ [this.jobId]: job });
   }

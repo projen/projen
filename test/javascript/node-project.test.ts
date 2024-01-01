@@ -1721,7 +1721,6 @@ describe("Subproject", () => {
     new TestNodeProject({
       parent: root,
       outdir: "child",
-      github: true,
       release: true,
       minNodeVersion: "16.0.0",
       workflowNodeVersion: "18.14.0",
@@ -1746,5 +1745,42 @@ describe("Subproject", () => {
     ).toEqual(
       expect.stringContaining(".") // NodeProject is responsible for setting the install working directory to root
     );
+  });
+
+  test("Subproject release workflow options should be used in the workflow in the parent project", () => {
+    // GIVEN / WHEN
+    const SETUP_JOB_STEP_NAME = "Build Monorepo Dependencies";
+    const root = new TestNodeProject();
+    new TestNodeProject({
+      parent: root,
+      outdir: "child",
+      release: true,
+      minNodeVersion: "16.0.0",
+      workflowNodeVersion: "18.14.0",
+      releaseTagPrefix: "test-node-project@", // to avoid conflicts with the root project
+      releaseToNpm: true,
+      releaseWorkflowSetupSteps: [
+        {
+          name: SETUP_JOB_STEP_NAME,
+          run: "nx run-many --target=build-deps",
+        },
+      ],
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(root);
+
+    expect(snapshot).toHaveProperty([
+      ".github/workflows/release_test-node-project.yml",
+    ]);
+
+    const subprojectReleaseWorkflow = yaml.parse(
+      snapshot[".github/workflows/release_test-node-project.yml"]
+    );
+    expect(
+      subprojectReleaseWorkflow.jobs.release.steps.find(
+        (step: any) => step.name === SETUP_JOB_STEP_NAME
+      )
+    ).toBeDefined();
   });
 });
