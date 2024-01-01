@@ -415,7 +415,10 @@ export interface Step extends CommonStep {
   readonly with?: Record<string, any>;
 }
 
-export interface UniqueJobStep {
+/**
+ * These settings differentiate a JobStep from a generic Step.
+ */
+export interface JobStepSettings {
   /**
    * Prevents a job from failing when a step fails. Set to true to allow a job
    * to pass when this step fails.
@@ -428,12 +431,15 @@ export interface UniqueJobStep {
   readonly timeoutMinutes?: number;
 }
 
-export interface CommonJobStep extends CommonStep, UniqueJobStep {}
+/**
+ * The common fields that are present on all JobSteps.
+ */
+export interface CommonJobStep extends CommonStep, JobStepSettings {}
 
 /**
- * A job step
+ * A full JobStep
  */
-export interface JobStep extends Step, UniqueJobStep {}
+export interface JobStep extends Step, JobStepSettings {}
 
 /**
  * A strategy creates a build matrix for your jobs. You can define different
