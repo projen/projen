@@ -181,3 +181,67 @@ test("creates a eslint task", () => {
   const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
   expect(eslint.eslintTask._renderSpec()).toMatchObject(manifest.tasks.eslint);
 });
+
+test("omit --ext when no extensions are specified", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    lintProjenRc: false,
+    fileExtensions: [],
+  });
+
+  // THEN
+  const taskStep = eslint.eslintTask.steps[0];
+  expect(taskStep.exec).not.toContain("--ext");
+  expect(taskStep?.args ?? []).not.toContain(expect.stringContaining("--ext"));
+});
+
+test("add --ext when extensions are specified", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    lintProjenRc: false,
+  });
+
+  // THEN
+  const taskStep = eslint.eslintTask.steps[0];
+  expect(taskStep.exec).toContain("--ext");
+});
+
+test("allow modification of the eslint task", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    lintProjenRc: false,
+  });
+
+  const taskStep = eslint.eslintTask.steps[0];
+  const newTestArg = "--foo";
+  eslint.eslintTask.reset(taskStep.exec, { args: [newTestArg] });
+
+  eslint.addLintPattern("bar");
+
+  // THEN
+  expect(eslint.eslintTask.steps[0].args).toContain(newTestArg);
+});
