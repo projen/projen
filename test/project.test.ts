@@ -190,31 +190,3 @@ test("github: false disables github integration", () => {
   // THEN
   expect(p.github).toBeUndefined();
 });
-
-test("topLevelParent returns undefined when no parent exists", () => {
-  // WHEN
-  const p = new TestProject();
-
-  // THEN
-  expect(p.topLevelParent).toBeUndefined();
-});
-
-test("topLevelParent returns the top level parent when it exists", () => {
-  // WHEN
-  const grandparent = new Project({
-    name: "grandparent",
-  });
-  const parent = new Project({
-    name: "parent",
-    parent: grandparent,
-    outdir: "parent",
-  });
-  const child = new Project({
-    name: "child",
-    parent: parent,
-    outdir: "child",
-  });
-
-  // THEN
-  expect(child.topLevelParent).toEqual(grandparent);
-});

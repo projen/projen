@@ -48,6 +48,7 @@ import {
 import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge } from "../util";
+import { formatPathAsDotNotation } from "../util/path";
 import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
@@ -796,11 +797,8 @@ export class NodeProject extends GitHubProject {
   }
 
   private determineInstallWorkingDirectory(): string | undefined {
-    if (this.topLevelParent) {
-      if (this.topLevelParent.relativeOutdir.startsWith(".")) {
-        return this.topLevelParent.relativeOutdir;
-      }
-      return `./${this.topLevelParent.relativeOutdir}`;
+    if (this.parent) {
+      return formatPathAsDotNotation(this.root.relativeOutdir);
     }
     return;
   }

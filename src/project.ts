@@ -391,17 +391,6 @@ export class Project extends Construct {
   }
 
   /**
-   * Returns the highest parent of this project, if one exists.
-   */
-  public get topLevelParent(): Project | undefined {
-    let parent = this.parent;
-    while (parent?.parent) {
-      parent = parent.parent;
-    }
-    return parent;
-  }
-
-  /**
    * All files in this project.
    */
   public get files(): FileBase[] {

@@ -649,7 +649,7 @@ export class Release extends Component {
         if: noNewCommits,
         with: {
           name: BUILD_ARTIFACT_NAME,
-          path: this.project.topLevelParent
+          path: this.project.parent
             ? `${this.project.relativeOutdir}/${this.artifactsDirectory}`
             : this.artifactsDirectory,
         },
@@ -700,7 +700,7 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
-        jobDefaults: this.project.topLevelParent
+        jobDefaults: this.project.parent
           ? // If this is a subproject, we need to set the working directory to the outdir of the subproject
             { run: { workingDirectory: `./${this.project.relativeOutdir}` } }
           : undefined,
@@ -716,26 +716,15 @@ export class Release extends Component {
   }
 
   private findTargetGitHubForWorkflow(): GitHub | undefined {
-    if (!this.github) {
-      return;
-    }
-
-    const topLevelParentProject = this.project.topLevelParent;
-
-    if (topLevelParentProject) {
-      if (!(topLevelParentProject instanceof GitHubProject)) {
+    if (this.project.parent) {
+      const rootGitHub = GitHub.of(this.project.root);
+      if (!rootGitHub) {
         throw new Error(
-          `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${topLevelParentProject.name} because it is not a GitHub project.`
+          `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${this.project.root.name} because it is not a GitHub project or does not have github set to true.`
         );
       }
 
-      if (!topLevelParentProject.github) {
-        throw new Error(
-          `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${topLevelParentProject.name} because it does not have GitHub activated. Please set "github" to true.`
-        );
-      }
-
-      return topLevelParentProject.github;
+      return rootGitHub;
     }
 
     return this.github;
