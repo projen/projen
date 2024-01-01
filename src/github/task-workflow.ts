@@ -153,7 +153,7 @@ export class TaskWorkflow extends GithubWorkflow {
   /**
    * Allows for more flexible construction of a Workflow that is similar, but not identical, to the TaskWorkflow.
    *
-   * @param github GitHub containing the information about the project being released (source project).
+   * @param taskStep The main JobStep to be executed.
    * @param options TaskWorkflowJobOptions
    * @returns The job that would be created as part of the TaskWorkflow
    */
