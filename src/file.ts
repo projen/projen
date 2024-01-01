@@ -5,7 +5,12 @@ import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { ProjenrcFile } from "./projenrc";
-import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
+import {
+  assertExecutablePermissions,
+  isWritable,
+  tryReadFileSync,
+  writeFile,
+} from "./util";
 import { findClosestProject } from "./util/constructs";
 
 export interface FileBaseOptions {
@@ -158,12 +163,15 @@ export abstract class FileBase extends Component {
     // check if the file was changed.
     const prev = tryReadFileSync(filePath);
     const prevReadonly = !isWritable(filePath);
-    const prevExecutable = isExecutable(filePath);
+    const successfulExecutableAssertion = assertExecutablePermissions(
+      filePath,
+      this.executable
+    );
     if (
       prev !== undefined &&
       content === prev &&
       prevReadonly === this.readonly &&
-      prevExecutable === this.executable
+      successfulExecutableAssertion
     ) {
       this.project.logger.debug(`no change in ${filePath}`);
       this._changed = false;

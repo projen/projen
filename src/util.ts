@@ -418,9 +418,33 @@ export function isWritable(file: string) {
   }
 }
 
+/**
+ * Asserts that the file should be executable. Always returns true on Windows.
+ *
+ * In Windows, the executable attribute is stored in the system setting PATHEXT, not in each file. Then, checking for executability is equivalent to checking for existence. To bypass checking for executability, we always return true on Windows.
+ *
+ * @param filePath The path to the file
+ * @param shouldBeExecutable Whether the file should be executable
+ * @returns true if `filePath` executable attribute matches `shouldBeExecutable` or if the platform is Windows, false otherwise
+ */
+export function assertExecutablePermissions(
+  filePath: string,
+  shouldBeExecutable: boolean
+): boolean {
+  const isWindows = process.platform === "win32";
+  if (isWindows) {
+    return true;
+  }
+
+  const prevExecutable = isExecutable(filePath);
+
+  return prevExecutable === shouldBeExecutable;
+}
+
 export function isExecutable(file: string) {
   try {
     accessSync(file, fs_constants.X_OK);
+
     return true;
   } catch (e) {
     return false;
