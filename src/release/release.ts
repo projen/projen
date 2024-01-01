@@ -715,7 +715,7 @@ export class Release extends Component {
     }
   }
 
-  private _findTargetGitHubForWorkflow(): GitHub | undefined {
+  private findTargetGitHubForWorkflow(): GitHub | undefined {
     if (!this.github) {
       return;
     }
