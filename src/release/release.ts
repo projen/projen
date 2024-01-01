@@ -656,7 +656,7 @@ export class Release extends Component {
       })
     );
 
-    const workflowTargetGitHub = this._findTargetGitHubForWorkflow();
+    const workflowTargetGitHub = this.findTargetGitHubForWorkflow();
 
     if (workflowTargetGitHub && this.github && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
