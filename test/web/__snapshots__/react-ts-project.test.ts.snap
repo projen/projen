@@ -1335,7 +1335,6 @@ import '@testing-library/jest-dom';
       ".projenrc.js",
       "src",
       "test",
-      "src",
     ],
   },
   "tsconfig.json": {
@@ -1380,7 +1379,6 @@ import '@testing-library/jest-dom';
       "node_modules",
     ],
     "include": [
-      "src",
       "src",
     ],
   },

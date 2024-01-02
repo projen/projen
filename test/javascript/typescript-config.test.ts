@@ -283,4 +283,66 @@ describe("TypescriptConfig", () => {
       });
     }
   );
+
+  test("Should allow adding to the includes array", () => {
+    const testNodeProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test-node-project",
+    });
+
+    const typescriptConfig = new TypescriptConfig(testNodeProject, {
+      compilerOptions: {},
+    });
+
+    typescriptConfig.addInclude("test/**/*.ts");
+
+    expect(typescriptConfig.include).toContain("test/**/*.ts");
+  });
+
+  test("Should allow adding to the excludes array", () => {
+    const testNodeProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test-node-project",
+    });
+
+    const typescriptConfig = new TypescriptConfig(testNodeProject, {
+      compilerOptions: {},
+    });
+
+    typescriptConfig.addExclude("test/**/*.ts");
+
+    expect(typescriptConfig.exclude).toContain("test/**/*.ts");
+  });
+
+  test("Should allow removing from the includes array", () => {
+    const testNodeProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test-node-project",
+    });
+
+    const typescriptConfig = new TypescriptConfig(testNodeProject, {
+      compilerOptions: {},
+    });
+
+    typescriptConfig.addInclude("test/**/*.ts");
+    typescriptConfig.removeInclude("test/**/*.ts");
+
+    expect(typescriptConfig.include).not.toContain("test/**/*.ts");
+  });
+
+  test("Should allow removing from the excludes array", () => {
+    const testNodeProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test-node-project",
+    });
+
+    const typescriptConfig = new TypescriptConfig(testNodeProject, {
+      compilerOptions: {},
+    });
+
+    typescriptConfig.addExclude("test/**/*.ts");
+    typescriptConfig.removeExclude("test/**/*.ts");
+
+    expect(typescriptConfig.exclude).not.toContain("test/**/*.ts");
+  });
 });
