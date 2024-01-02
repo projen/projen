@@ -1088,6 +1088,7 @@ export default function Home() {
     ],
     "include": [
       ".projenrc.js",
+      ".projenrc.ts",
       "pages/**/*.ts",
       "test/**/*.ts",
       "**/*.ts",

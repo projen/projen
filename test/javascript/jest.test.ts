@@ -1,7 +1,7 @@
 import { PROJEN_RC } from "../../src/common";
 import { Jest, NodeProject, UpdateSnapshot } from "../../src/javascript";
 import * as logging from "../../src/logging";
-import { TypeScriptProject } from "../../src/typescript";
+import { ProjenrcTs, TypeScriptProject } from "../../src/typescript";
 import { mkdtemp, synthSnapshot } from "../util";
 
 logging.disable();
@@ -124,6 +124,7 @@ test("Typescript Project Jest Defaults Configured", () => {
   );
   expect(jestTypescriptConfig.include).toEqual([
     PROJEN_RC,
+    ProjenrcTs.DEFAULT_FILENAME,
     "src/**/*.ts",
     "test/**/*.ts",
   ]);
