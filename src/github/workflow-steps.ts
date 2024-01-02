@@ -33,7 +33,7 @@ export class WorkflowSteps {
 
   /**
    * Configures the git identity (user name and email).
-   * @param options Options to configure the git identity
+   * @param options Options to configure the git identity JobStep
    * @returns Job steps
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
