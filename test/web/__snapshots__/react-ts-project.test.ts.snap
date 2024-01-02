@@ -804,7 +804,7 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": [
           {
-            "exec": "tsc --build -w",
+            "exec": "tsc --build -w tsconfig.json",
           },
         ],
       },

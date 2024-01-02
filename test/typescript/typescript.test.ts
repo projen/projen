@@ -445,6 +445,44 @@ describe("jestConfig", () => {
   });
 });
 
+describe("tsconfig", () => {
+  test("uses tsconfig.json by default", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfig?.fileName).toBe("tsconfig.json");
+    expect(snapshot["tsconfig.json"]).not.toBeUndefined();
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build tsconfig.json");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w tsconfig.json");
+  });
+
+  test("Should allow renaming of tsconfig.json", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      tsconfig: {
+        fileName: "foo.json",
+        compilerOptions: {},
+      },
+      tsconfigDev: {
+        fileName: "dev.json", // You must also give tsconfigDev a name, or it uses foo.json
+        compilerOptions: {},
+      },
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfig?.fileName).toBe("foo.json");
+    expect(snapshot["foo.json"]).not.toBeUndefined();
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build foo.json");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w foo.json");
+  });
+});
+
 describe("tsconfigDev", () => {
   test("uses tsconfig.dev.json by default", () => {
     const prj = new TypeScriptProject({
