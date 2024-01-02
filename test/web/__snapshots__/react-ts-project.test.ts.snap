@@ -1334,7 +1334,6 @@ import '@testing-library/jest-dom';
     ],
     "include": [
       ".projenrc.js",
-      ".projenrc.ts",
       "src/**/*.ts",
       "test/**/*.ts",
       "src",

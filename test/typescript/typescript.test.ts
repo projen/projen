@@ -187,6 +187,8 @@ test("projenrc.ts", () => {
   });
 
   const snapshot = synthSnapshot(prj);
+  expect(snapshot["tsconfig.dev.json"].include).toContain(".projenrc.ts");
+  expect(snapshot["tsconfig.dev.json"].include).not.toContain(".projenrc.js");
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",

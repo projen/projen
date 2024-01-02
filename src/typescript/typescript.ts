@@ -18,7 +18,6 @@ import { Task } from "../task";
 import { TextFile } from "../textfile";
 import {
   Projenrc as ProjenrcTs,
-  ProjenrcTs as RealProjenrcTs,
   ProjenrcOptions as ProjenrcTsOptions,
   TypedocDocgen,
 } from "../typescript";
@@ -361,6 +360,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly tsJestOptions?: TsJestOptions;
 }
 
+const DEFAULT_PROJENRC_TS_FILENAME = "projenrc.ts";
+
 /**
  * TypeScript project
  * @pjid typescript
@@ -496,6 +497,8 @@ export class TypeScriptProject extends NodeProject {
       );
     }
 
+    const projenrcTsShouldBeCreated = !this.parent && options.projenrcTs;
+
     if (options.disableTsconfigDev) {
       this.tsconfigDev = this.tsconfig!;
     } else {
@@ -506,8 +509,10 @@ export class TypeScriptProject extends NodeProject {
           {
             fileName: tsconfigDevFile,
             include: [
-              PROJEN_RC,
-              RealProjenrcTs.DEFAULT_FILENAME,
+              projenrcTsShouldBeCreated
+                ? options.projenrcTsOptions?.filename ??
+                  DEFAULT_PROJENRC_TS_FILENAME
+                : PROJEN_RC,
               `${this.srcdir}/**/*.ts`,
               `${this.testdir}/**/*.ts`,
             ],
@@ -569,7 +574,7 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (!this.parent && options.projenrcTs) {
+    if (projenrcTsShouldBeCreated) {
       new ProjenrcTs(this, options.projenrcTsOptions);
     }
 

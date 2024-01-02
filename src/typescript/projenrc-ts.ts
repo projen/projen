@@ -29,6 +29,8 @@ export interface ProjenrcTsOptions {
   readonly tsconfigFileName?: string;
 }
 
+const DEFAULT_FILENAME = ".projenrc.ts";
+
 /**
  * A projenrc file written in TypeScript
  *
@@ -38,8 +40,6 @@ export interface ProjenrcTsOptions {
  * Requires that `npx` is available.
  */
 export class ProjenrcTs extends ProjenrcFile {
-  public static readonly DEFAULT_FILENAME = ".projenrc.ts";
-
   /**
    * TypeScript configuration file used to compile projen source files
    */
@@ -50,7 +50,7 @@ export class ProjenrcTs extends ProjenrcFile {
   constructor(project: Project, options: ProjenrcTsOptions = {}) {
     super(project);
 
-    this.filePath = options.filename ?? ProjenrcTs.DEFAULT_FILENAME;
+    this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
 
     project.addPackageIgnore(`/${this.filePath}`);
