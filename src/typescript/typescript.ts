@@ -18,6 +18,7 @@ import { Task } from "../task";
 import { TextFile } from "../textfile";
 import {
   Projenrc as ProjenrcTs,
+  ProjenrcTs as RealProjenrcTs,
   ProjenrcOptions as ProjenrcTsOptions,
   TypedocDocgen,
 } from "../typescript";
@@ -506,6 +507,7 @@ export class TypeScriptProject extends NodeProject {
             fileName: tsconfigDevFile,
             include: [
               PROJEN_RC,
+              RealProjenrcTs.DEFAULT_FILENAME,
               `${this.srcdir}/**/*.ts`,
               `${this.testdir}/**/*.ts`,
             ],
