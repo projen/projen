@@ -1495,8 +1495,14 @@ test('hello', () => {
   },
   "include": [
     ".projenrc.js",
-    "src/**/*.ts",
-    "test/**/*.ts"
+    "src/**/*",
+    "test/**/*",
+    "src/**/__mocks__/**/*.spec.*",
+    "src/**/__tests__/**/*.spec.*",
+    "src/**/*.spec.*",
+    "src/**/__mocks__/**/*.test.*",
+    "src/**/__tests__/**/*.test.*",
+    "src/**/*.test.*"
   ],
   "exclude": [
     "node_modules"
@@ -2689,8 +2695,14 @@ test('hello', () => {
   },
   "include": [
     ".projenrc.js",
-    "src/**/*.ts",
-    "test/**/*.ts"
+    "src/**/*",
+    "test/**/*",
+    "src/**/__mocks__/**/*.spec.*",
+    "src/**/__tests__/**/*.spec.*",
+    "src/**/*.spec.*",
+    "src/**/__mocks__/**/*.test.*",
+    "src/**/__tests__/**/*.test.*",
+    "src/**/*.test.*"
   ],
   "exclude": [
     "node_modules"
@@ -3787,8 +3799,14 @@ test('hello', () => {
   },
   "include": [
     ".projenrc.js",
-    "src/**/*.ts",
-    "test/**/*.ts"
+    "src/**/*",
+    "test/**/*",
+    "src/**/__mocks__/**/*.spec.*",
+    "src/**/__tests__/**/*.spec.*",
+    "src/**/*.spec.*",
+    "src/**/__mocks__/**/*.test.*",
+    "src/**/__tests__/**/*.test.*",
+    "src/**/*.test.*"
   ],
   "exclude": [
     "node_modules"
@@ -3827,7 +3845,14 @@ test('hello', () => {
   "include": [
     "src/**/*.ts"
   ],
-  "exclude": []
+  "exclude": [
+    "src/**/__mocks__/**/*.spec.*",
+    "src/**/__tests__/**/*.spec.*",
+    "src/**/*.spec.*",
+    "src/**/__mocks__/**/*.test.*",
+    "src/**/__tests__/**/*.test.*",
+    "src/**/*.test.*"
+  ]
 }
 ",
 }

@@ -1294,8 +1294,10 @@ test('hello', () => {
     ],
     "include": [
       ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
+      "src",
+      "test",
+      "src/**/*.spec.*",
+      "src/**/*.test.*",
     ],
   },
   "tsconfig.json": {
@@ -1326,9 +1328,15 @@ test('hello', () => {
       "stripInternal": true,
       "target": "ES2019",
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+      "**/__mocks__",
+      "**/__tests__",
+      "src/**/*.spec.*",
+      "src/**/*.test.*",
+    ],
     "include": [
-      "src/**/*.ts",
+      "src",
     ],
   },
 }

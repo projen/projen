@@ -19,12 +19,32 @@ export interface TypescriptConfigOptions {
   /**
    * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
    *
-   * @default - all .ts files recursively
+   * include and exclude support wildcard characters to make glob patterns:
+   *
+   * * matches zero or more characters (excluding directory separators)
+   * ? matches any one character (excluding directory separators)
+   * ** matches any directory nested to any level
+   * If the last path segment in a pattern does not contain a file extension or wildcard character, then it is treated as a directory, and files with supported extensions inside that directory are included
+   * (e.g. .ts, .tsx, and .d.ts by default, with .js and .jsx if allowJs is set to true).
+   *
+   * @see https://www.typescriptlang.org/tsconfig#include
+   *
+   * @default - all .ts, .tsx, .d.ts files recursively
    */
   readonly include?: string[];
 
   /**
    * Filters results from the "include" option.
+   *
+   * include and exclude support wildcard characters to make glob patterns:
+   *
+   * * matches zero or more characters (excluding directory separators)
+   * ? matches any one character (excluding directory separators)
+   * ** matches any directory nested to any level
+   * If the last path segment in a pattern does not contain a file extension or wildcard character, then it is treated as a directory, and files with supported extensions inside that directory are included
+   * (e.g. .ts, .tsx, and .d.ts by default, with .js and .jsx if allowJs is set to true).
+   *
+   * @see https://www.typescriptlang.org/tsconfig#exclude
    *
    * @default - node_modules is excluded by default
    */
@@ -594,7 +614,7 @@ export class TypescriptConfig extends Component {
     const fileName = options.fileName ?? "tsconfig.json";
 
     this._extends = options.extends ?? TypescriptConfigExtends.fromPaths([]);
-    this.include = options.include ?? ["**/*.ts"];
+    this.include = options.include ?? ["**/*"];
     this.exclude = options.exclude ?? ["node_modules"];
     this.fileName = fileName;
 

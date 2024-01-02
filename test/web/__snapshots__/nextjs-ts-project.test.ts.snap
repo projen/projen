@@ -1087,8 +1087,8 @@ export default function Home() {
     ],
     "include": [
       ".projenrc.js",
-      "pages/**/*.ts",
-      "test/**/*.ts",
+      "pages",
+      "test",
       "**/*.ts",
       "**/*.tsx",
     ],
@@ -1131,9 +1131,11 @@ export default function Home() {
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
-      "pages/**/*.ts",
+      "pages",
       "**/*.ts",
       "**/*.tsx",
     ],

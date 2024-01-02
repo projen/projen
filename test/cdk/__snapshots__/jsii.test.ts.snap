@@ -1471,8 +1471,10 @@ test('hello', () => {
     ],
     "include": [
       ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
+      "src",
+      "test",
+      "src/**/*.spec.*",
+      "src/**/*.test.*",
     ],
   },
 }

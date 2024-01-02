@@ -124,8 +124,10 @@ test("Typescript Project Jest Defaults Configured", () => {
   );
   expect(jestTypescriptConfig.include).toEqual([
     PROJEN_RC,
-    "src/**/*.ts",
-    "test/**/*.ts",
+    "src",
+    "test",
+    "src/**/*.spec.*",
+    "src/**/*.test.*",
   ]);
   expect(jestTypescriptConfig.exclude).toEqual(["node_modules"]);
 });

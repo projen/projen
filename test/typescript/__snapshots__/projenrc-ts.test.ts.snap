@@ -7,7 +7,7 @@ exports[`Creating rc file within a non-TypeScript project works with defaults 1`
     "node_modules",
   ],
   "include": [
-    "**/*.ts",
+    "**/*",
     ".projenrc.ts",
     "projenrc/**/*.ts",
   ],

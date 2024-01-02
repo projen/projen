@@ -1333,8 +1333,8 @@ import '@testing-library/jest-dom';
     ],
     "include": [
       ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
+      "src",
+      "test",
       "src",
     ],
   },
@@ -1376,9 +1376,11 @@ import '@testing-library/jest-dom';
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
-      "src/**/*.ts",
+      "src",
       "src",
     ],
   },

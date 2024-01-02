@@ -110,10 +110,32 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
 
   expect(out["tsconfig.json"]).toEqual(
     expect.objectContaining({
-      include: expect.arrayContaining([
-        `${prj.srcdir}/**/*.ts`,
-        "typescript.test.ts",
+      include: expect.arrayContaining([prj.srcdir, "typescript.test.ts"]),
+      exclude: expect.arrayContaining([
+        "node_modules",
+        "**/__mocks__",
+        "**/__tests__",
+        "src/**/*.spec.*",
+        "src/**/*.test.*",
       ]),
+      compilerOptions: expect.objectContaining({
+        esModuleInterop: true,
+      }),
+    })
+  );
+
+  const devIncludeExpectation = expect.arrayContaining([
+    PROJEN_RC,
+    prj.srcdir,
+    prj.testdir,
+    "src/**/*.spec.*",
+    "src/**/*.test.*",
+    "typescript.test.ts",
+  ]);
+
+  expect(out["tsconfig.dev.json"]).toEqual(
+    expect.objectContaining({
+      include: devIncludeExpectation,
       compilerOptions: expect.objectContaining({
         esModuleInterop: true,
       }),
@@ -122,26 +144,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
 
   expect(out["tsconfig.dev.json"]).toEqual(
     expect.objectContaining({
-      include: expect.arrayContaining([
-        PROJEN_RC,
-        `${prj.srcdir}/**/*.ts`,
-        `${prj.testdir}/**/*.ts`,
-        "typescript.test.ts",
-      ]),
-      compilerOptions: expect.objectContaining({
-        esModuleInterop: true,
-      }),
-    })
-  );
-
-  expect(out["tsconfig.dev.json"]).toEqual(
-    expect.objectContaining({
-      include: expect.arrayContaining([
-        PROJEN_RC,
-        `${prj.srcdir}/**/*.ts`,
-        `${prj.testdir}/**/*.ts`,
-        "typescript.test.ts",
-      ]),
+      include: devIncludeExpectation,
       compilerOptions: expect.objectContaining({
         esModuleInterop: true,
       }),

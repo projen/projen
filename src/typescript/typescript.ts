@@ -482,8 +482,8 @@ export class TypeScriptProject extends NodeProject {
         this,
         mergeTsconfigOptions(
           {
-            include: [`${this.srcdir}/**/*.ts`],
-            // exclude: ['node_modules'], // TODO: shouldn't we exclude node_modules?
+            include: [this.srcdir],
+            exclude: ["node_modules"],
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,
@@ -504,11 +504,7 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions(
           {
             fileName: tsconfigDevFile,
-            include: [
-              PROJEN_RC,
-              `${this.srcdir}/**/*.ts`,
-              `${this.testdir}/**/*.ts`,
-            ],
+            include: [PROJEN_RC, this.srcdir, this.testdir],
             exclude: ["node_modules"],
             compilerOptions: compilerOptionDefaults,
           },
@@ -666,12 +662,34 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
+    this.handleJestNoCompileTsconfig();
+
     const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
     // add relevant deps
     if (!jestMajorVersion || jestMajorVersion >= 29) {
       return this.addJestNoCompileModern(jest, tsJestOptions);
     }
     this.addJestNoCompileLegacy(jest, tsJestOptions);
+  }
+
+  /**
+   * We need to add test files within the srcdir to the tsconfigDev file, but
+   * exclude these same ones from the main tsconfig file.
+   *
+   * __mocks__ and __tests__ directories are not published as part of Jest convention, no matter what is inside them.
+   * .spec.ts(x) and .test.ts(x) files are default test match files, even in the src directory.
+   */
+  private handleJestNoCompileTsconfig() {
+    this.tsconfig?.addExclude?.("**/__mocks__");
+    this.tsconfig?.addExclude?.("**/__tests__");
+    for (const preExtensionSuffix of ["spec", "test"]) {
+      this.tsconfig?.addExclude?.(
+        `${this.srcdir}/**/*.${preExtensionSuffix}.*`
+      );
+      this.tsconfigDev.addInclude(
+        `${this.srcdir}/**/*.${preExtensionSuffix}.*`
+      );
+    }
   }
 
   private addJestNoCompileModern(
