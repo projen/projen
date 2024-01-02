@@ -214,7 +214,7 @@ export interface TsJestTransformOptions {
    *
    * @default auto
    */
-  readonly useEsm?: boolean;
+  readonly useESM?: boolean;
 }
 
 export interface TsJestOptions {
@@ -225,7 +225,7 @@ export interface TsJestOptions {
    *
    * @default "^.+\\.[t]sx?$"
    */
-  readonly tranformPattern?: string;
+  readonly transformPattern?: string;
   /**
    * Override the default ts-jest transformer configuration.
    */
@@ -680,7 +680,7 @@ export class TypeScriptProject extends NodeProject {
   ) {
     jest.config.transform = deepMerge([
       {
-        [tsJestOptions?.tranformPattern ??
+        [tsJestOptions?.transformPattern ??
         TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN]: new Transform(
           "ts-jest",
           {

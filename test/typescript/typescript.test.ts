@@ -328,7 +328,7 @@ describe("jestConfig", () => {
           jestConfig: {},
         },
         tsJestOptions: {
-          tranformPattern: TS_WITH_JS_PATTERN,
+          transformPattern: TS_WITH_JS_PATTERN,
         },
       });
       const snapshot = synthSnapshot(prj);
