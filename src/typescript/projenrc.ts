@@ -2,7 +2,7 @@ import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
-import { TypeScriptProject } from "../typescript";
+import { ProjenrcTs, TypeScriptProject } from "../typescript";
 
 export interface ProjenrcOptions {
   /**
@@ -40,7 +40,7 @@ export class Projenrc extends ProjenrcFile {
     super(project);
     this._tsProject = project;
 
-    this.filePath = options.filename ?? ".projenrc.ts";
+    this.filePath = options.filename ?? ProjenrcTs.DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
     this._swc = options.swc ?? false;
 
