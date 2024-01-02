@@ -1473,8 +1473,6 @@ test('hello', () => {
       ".projenrc.js",
       "src",
       "test",
-      "src/**/*.spec.*",
-      "src/**/*.test.*",
     ],
   },
 }
@@ -2936,8 +2934,6 @@ test('hello', () => {
       ".projenrc.js",
       "src",
       "test",
-      "src/**/*.spec.*",
-      "src/**/*.test.*",
     ],
   },
 }
@@ -4416,8 +4412,6 @@ test('hello', () => {
       ".projenrc.js",
       "src",
       "test",
-      "src/**/*.spec.*",
-      "src/**/*.test.*",
     ],
   },
 }
@@ -5881,8 +5875,6 @@ test('hello', () => {
       ".projenrc.js",
       "src",
       "test",
-      "src/**/*.spec.*",
-      "src/**/*.test.*",
     ],
   },
 }

@@ -28,9 +28,7 @@
   "include": [
     ".projenrc.js",
     "src",
-    "test",
-    "src/**/*.spec.*",
-    "src/**/*.test.*"
+    "test"
   ],
   "exclude": [
     "node_modules"

@@ -433,6 +433,10 @@ export class JsiiProject extends TypeScriptProject {
         );
       }
     }
+
+    // Discourage use of anything besides an explicit test directory for JSII, since they would be potentially packaged.
+    this.tsconfigDev?.removeInclude(`${this.srcdir}/**/*.spec.*`);
+    this.tsconfigDev?.removeInclude(`${this.srcdir}/**/*.test.*`);
   }
 
   /**
