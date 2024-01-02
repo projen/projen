@@ -1495,13 +1495,9 @@ test('hello', () => {
   },
   "include": [
     ".projenrc.js",
-    "src/**/*",
-    "test/**/*",
-    "src/**/__mocks__/**/*.spec.*",
-    "src/**/__tests__/**/*.spec.*",
+    "src",
+    "test",
     "src/**/*.spec.*",
-    "src/**/__mocks__/**/*.test.*",
-    "src/**/__tests__/**/*.test.*",
     "src/**/*.test.*"
   ],
   "exclude": [
@@ -2695,13 +2691,9 @@ test('hello', () => {
   },
   "include": [
     ".projenrc.js",
-    "src/**/*",
-    "test/**/*",
-    "src/**/__mocks__/**/*.spec.*",
-    "src/**/__tests__/**/*.spec.*",
+    "src",
+    "test",
     "src/**/*.spec.*",
-    "src/**/__mocks__/**/*.test.*",
-    "src/**/__tests__/**/*.test.*",
     "src/**/*.test.*"
   ],
   "exclude": [
@@ -3799,13 +3791,9 @@ test('hello', () => {
   },
   "include": [
     ".projenrc.js",
-    "src/**/*",
-    "test/**/*",
-    "src/**/__mocks__/**/*.spec.*",
-    "src/**/__tests__/**/*.spec.*",
+    "src",
+    "test",
     "src/**/*.spec.*",
-    "src/**/__mocks__/**/*.test.*",
-    "src/**/__tests__/**/*.test.*",
     "src/**/*.test.*"
   ],
   "exclude": [
@@ -3843,14 +3831,13 @@ test('hello', () => {
     "target": "ES2019"
   },
   "include": [
-    "src/**/*.ts"
+    "src"
   ],
   "exclude": [
-    "src/**/__mocks__/**/*.spec.*",
-    "src/**/__tests__/**/*.spec.*",
+    "node_modules",
+    "**/__mocks__",
+    "**/__tests__",
     "src/**/*.spec.*",
-    "src/**/__mocks__/**/*.test.*",
-    "src/**/__tests__/**/*.test.*",
     "src/**/*.test.*"
   ]
 }
