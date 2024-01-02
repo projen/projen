@@ -1,5 +1,6 @@
 import { IConstruct } from "constructs";
 import { IResolver, FileBase } from "./file";
+import { Project } from "./project";
 
 /**
  * Assign attributes to file names in a git repository.
@@ -13,6 +14,9 @@ export class GitAttributesFile extends FileBase {
     super(scope, ".gitattributes", {
       editGitignore: false,
     });
+
+    const project = Project.of(this);
+    project.addPackageIgnore("/.gitattributes");
   }
 
   /**

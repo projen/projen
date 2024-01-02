@@ -284,7 +284,6 @@ project.npmignore.exclude("/CODE_OF_CONDUCT.md");
 project.npmignore.exclude("/CONTRIBUTING.md");
 project.npmignore.exclude("/VISION.md");
 project.npmignore.exclude("/SECURITY.md");
-project.npmignore.exclude("/.gitattributes");
 project.npmignore.exclude("/.gitpod.yml");
 
 function setupIntegTest() {

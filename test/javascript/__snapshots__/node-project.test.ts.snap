@@ -290,6 +290,20 @@ exports[`node project can be ejected 1`] = `
 }
 `;
 
+exports[`npmignore npmignore should have NodeProject's default ignore patterns 1`] = `
+"/.gitattributes
+/.projenrc.js
+/.projen/
+/test-reports/
+junit.xml
+/coverage/
+permissions-backup.acl
+/dist/changelog.md
+/dist/version.txt
+/.mergify.yml
+"
+`;
+
 exports[`renovatebot ignored dependency overrides 1`] = `
 {
   "extends": [

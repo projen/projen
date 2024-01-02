@@ -239,6 +239,12 @@ export class Project extends Construct {
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
 
+  /**
+   * The set of glob patterns that should be excluded from the bundled package.
+   * These are stored for when the ignoreFile in an inheriting project is initialized.
+   */
+  protected readonly initPackageIgnorePatterns = new Array<string>();
+
   constructor(options: ProjectOptions) {
     const outdir = determineOutdir(options.parent, options.outdir);
     const autoId = `${new.target.name}#${options.name}@${path.normalize(
@@ -550,7 +556,7 @@ export class Project extends Construct {
    * @param _pattern The glob pattern to exclude
    */
   public addPackageIgnore(_pattern: string) {
-    // nothing to do at the abstract level
+    this.initPackageIgnorePatterns.push(_pattern);
   }
 
   /**

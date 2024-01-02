@@ -522,6 +522,8 @@ export class NodeProject extends GitHubProject {
         ".npmignore",
         options.npmIgnoreOptions
       );
+
+      this.npmignore.addPatterns(...this.initPackageIgnorePatterns);
     }
 
     this.addDefaultGitIgnore();
@@ -1103,8 +1105,12 @@ export class NodeProject extends GitHubProject {
     return this.package.addBundledDeps(...deps);
   }
 
-  public addPackageIgnore(pattern: string) {
-    this.npmignore?.addPatterns(pattern);
+  public addPackageIgnore(pattern: string): void {
+    if (this.npmignore) {
+      return this.npmignore?.addPatterns(pattern);
+    }
+    // packageIgnore added prior to initialization
+    super.addPackageIgnore(pattern);
   }
 
   private addLicense(options: NodeProjectOptions) {
