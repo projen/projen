@@ -420,12 +420,16 @@ export class TypeScriptProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? "docs/";
 
-    const tsconfigFilename = options.tsconfig?.fileName ?? "tsconfig.json";
-    this.compileTask.exec(["tsc", "--build", tsconfigFilename].join(" "));
+    const tsconfigFilename = options.tsconfig?.fileName;
+    this.compileTask.exec(
+      ["tsc", "--build", tsconfigFilename].filter(Boolean).join(" ")
+    );
 
     this.watchTask = this.addTask("watch", {
       description: "Watch & compile in the background",
-      exec: ["tsc", "--build", "-w", tsconfigFilename].join(" "),
+      exec: ["tsc", "--build", "-w", tsconfigFilename]
+        .filter(Boolean)
+        .join(" "),
     });
 
     this.testdir = options.testdir ?? "test";

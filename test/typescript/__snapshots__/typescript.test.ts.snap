@@ -789,7 +789,7 @@ tsconfig.tsbuildinfo
         "name": "compile",
         "steps": [
           {
-            "exec": "tsc --build tsconfig.json",
+            "exec": "tsc --build",
           },
         ],
       },
@@ -957,7 +957,7 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": [
           {
-            "exec": "tsc --build -w tsconfig.json",
+            "exec": "tsc --build -w",
           },
         ],
       },

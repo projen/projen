@@ -3218,7 +3218,7 @@ tsconfig.tsbuildinfo
       "description": "Only compile",
       "steps": [
         {
-          "exec": "tsc --build tsconfig.json"
+          "exec": "tsc --build"
         }
       ]
     },
@@ -3349,7 +3349,7 @@ tsconfig.tsbuildinfo
       "description": "Watch & compile in the background",
       "steps": [
         {
-          "exec": "tsc --build -w tsconfig.json"
+          "exec": "tsc --build -w"
         }
       ]
     }

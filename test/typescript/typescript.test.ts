@@ -456,8 +456,8 @@ describe("tsconfig", () => {
     const snapshot = synthSnapshot(prj);
     expect(prj.tsconfig?.fileName).toBe("tsconfig.json");
     expect(snapshot["tsconfig.json"]).not.toBeUndefined();
-    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build tsconfig.json");
-    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w tsconfig.json");
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w");
   });
 
   test("Should allow renaming of tsconfig.json", () => {
