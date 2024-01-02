@@ -214,7 +214,7 @@ export interface TsJestTransformOptions {
    *
    * @default auto
    */
-  readonly useEsm?: boolean;
+  readonly useESM?: boolean;
 }
 
 export interface TsJestOptions {
@@ -225,7 +225,7 @@ export interface TsJestOptions {
    *
    * @default "^.+\\.[t]sx?$"
    */
-  readonly tranformPattern?: string;
+  readonly transformPattern?: string;
   /**
    * Override the default ts-jest transformer configuration.
    */
@@ -420,11 +420,16 @@ export class TypeScriptProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? "docs/";
 
-    this.compileTask.exec("tsc --build");
+    const tsconfigFilename = options.tsconfig?.fileName;
+    this.compileTask.exec(
+      ["tsc", "--build", tsconfigFilename].filter(Boolean).join(" ")
+    );
 
     this.watchTask = this.addTask("watch", {
       description: "Watch & compile in the background",
-      exec: "tsc --build -w",
+      exec: ["tsc", "--build", "-w", tsconfigFilename]
+        .filter(Boolean)
+        .join(" "),
     });
 
     this.testdir = options.testdir ?? "test";
@@ -680,7 +685,7 @@ export class TypeScriptProject extends NodeProject {
   ) {
     jest.config.transform = deepMerge([
       {
-        [tsJestOptions?.tranformPattern ??
+        [tsJestOptions?.transformPattern ??
         TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN]: new Transform(
           "ts-jest",
           {
