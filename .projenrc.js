@@ -286,8 +286,6 @@ project.npmignore.exclude("/VISION.md");
 project.npmignore.exclude("/SECURITY.md");
 project.npmignore.exclude("/.gitattributes");
 project.npmignore.exclude("/.gitpod.yml");
-project.npmignore.exclude("/.prettierignore");
-project.npmignore.exclude("/.prettierrc.json");
 
 function setupIntegTest() {
   const pythonCompatTask = project.addTask("integ:python-compat", {

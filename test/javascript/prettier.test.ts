@@ -84,6 +84,19 @@ describe("prettier", () => {
     expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
   });
 
+  test("add ignore file to packageIgnore", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+    new SourceCode(project, "src/example.ts");
+
+    // THEN
+    expect(synthSnapshot(project)[".npmignore"]).toContain(".prettierignore");
+  });
+
   test("overrides", () => {
     // GIVEN
     const override: PrettierOverride = {
@@ -119,5 +132,32 @@ describe("prettier", () => {
     const output = synthSnapshot(project);
     expect(output[".prettierrc.yml"]).toBeDefined();
     expect(output[".prettierrc.json"]).toBeUndefined();
+  });
+
+  test("add prettierrc to packageIgnore", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+
+    // THEN
+    expect(synthSnapshot(project)[".npmignore"]).toContain("/.prettierrc.json");
+  });
+
+  test("add prettierrc.yml to packageIgnore", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+      prettierOptions: {
+        yaml: true,
+      },
+    });
+
+    // THEN
+    expect(synthSnapshot(project)[".npmignore"]).toContain("/.prettierrc.yml");
   });
 });
