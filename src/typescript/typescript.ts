@@ -667,7 +667,7 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
-    this.handleJestNoCompileTsconfig();
+    this.handleJestNoCompileIncludesAndExcludes();
 
     const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
     // add relevant deps
@@ -684,15 +684,21 @@ export class TypeScriptProject extends NodeProject {
    * __mocks__ and __tests__ directories are not published as part of Jest convention, no matter what is inside them.
    * .spec.ts(x) and .test.ts(x) files are default test match files, even in the src directory.
    */
-  private handleJestNoCompileTsconfig() {
+  private handleJestNoCompileIncludesAndExcludes() {
     this.tsconfig?.addExclude?.("**/__mocks__");
+    this.eslint?.allowDevDeps?.("**/__mocks__");
     this.tsconfig?.addExclude?.("**/__tests__");
+    this.eslint?.allowDevDeps?.("**/__tests__");
+
     for (const preExtensionSuffix of ["spec", "test"]) {
       this.tsconfig?.addExclude?.(
         `${this.srcdir}/**/*.${preExtensionSuffix}.*`
       );
       this.tsconfigDev.addInclude(
         `${this.srcdir}/**/*.${preExtensionSuffix}.*`
+      );
+      this.eslint?.allowDevDeps?.(
+        `!${this.srcdir}/**/*.${preExtensionSuffix}.*`
       );
     }
   }
