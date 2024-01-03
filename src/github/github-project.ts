@@ -205,7 +205,6 @@ export class GitHubProject extends Project {
           projenCredentials: options.projenCredentials,
           mergify: options.mergify,
           mergifyOptions: options.mergifyOptions,
-          workflows: this.parent ? false : true, // Don't create workflows for subprojects, in the subproject
           ...options.githubOptions,
         })
       : undefined;
