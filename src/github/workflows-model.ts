@@ -356,7 +356,7 @@ export interface RunSettings {
   readonly workingDirectory?: string;
 }
 
-export interface CommonStep {
+export interface StepConfiguration {
   /**
    * A unique identifier for the step. You can use the id to reference the
    * step in contexts.
@@ -391,7 +391,7 @@ export interface CommonStep {
 /**
  * A generic step
  */
-export interface Step extends CommonStep {
+export interface Step extends StepConfiguration {
   /**
    * Selects an action to run as part of a step in your job. An action is a
    * reusable unit of code. You can use an action defined in the same
@@ -418,7 +418,7 @@ export interface Step extends CommonStep {
 /**
  * These settings differentiate a JobStep from a generic Step.
  */
-export interface JobStepSettings {
+export interface JobStepConfiguration extends StepConfiguration {
   /**
    * Prevents a job from failing when a step fails. Set to true to allow a job
    * to pass when this step fails.
@@ -432,14 +432,9 @@ export interface JobStepSettings {
 }
 
 /**
- * The common fields that are present on all JobSteps.
- */
-export interface CommonJobStep extends CommonStep, JobStepSettings {}
-
-/**
  * A full JobStep
  */
-export interface JobStep extends Step, JobStepSettings {}
+export interface JobStep extends Step, JobStepConfiguration {}
 
 /**
  * A strategy creates a build matrix for your jobs. You can define different

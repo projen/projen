@@ -1,5 +1,5 @@
 import { GitIdentity } from "./task-workflow";
-import { CommonJobStep, JobStep } from "./workflows-model";
+import { JobStepConfiguration, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
 
 /**
@@ -22,7 +22,7 @@ export class WorkflowSteps {
     });
 
     return {
-      ...this.buildCommonJobStep({
+      ...this.buildJobStepConfig({
         ...options,
         name: options.name ?? "Checkout",
       }),
@@ -38,7 +38,7 @@ export class WorkflowSteps {
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
-      ...this.buildCommonJobStep({
+      ...this.buildJobStepConfig({
         ...options,
         name: options.name ?? "Set git identity",
       }),
@@ -60,7 +60,7 @@ export class WorkflowSteps {
       });
 
     return {
-      ...this.buildCommonJobStep({
+      ...this.buildJobStepConfig({
         ...options,
         name: options.name ?? "Upload artifact",
       }),
@@ -69,7 +69,9 @@ export class WorkflowSteps {
     };
   }
 
-  private static buildCommonJobStep(options: CommonJobStep): CommonJobStep {
+  private static buildJobStepConfig(
+    options: JobStepConfiguration
+  ): JobStepConfiguration {
     return {
       continueOnError: options?.continueOnError,
       env: options?.env,
@@ -81,7 +83,7 @@ export class WorkflowSteps {
     };
   }
 }
-export interface CheckoutOptions extends CommonJobStep {
+export interface CheckoutOptions extends JobStepConfiguration {
   /**
    * Options for `checkout`.
    */
@@ -127,7 +129,7 @@ export interface CheckoutWith {
   readonly token?: string;
 }
 
-export interface SetupGitIdentityOptions extends CommonJobStep {
+export interface SetupGitIdentityOptions extends JobStepConfiguration {
   /**
    * The identity to use.
    */
@@ -179,7 +181,7 @@ export interface UploadArtifactWith {
   readonly compressionLevel?: number;
 }
 
-export interface UploadArtifactOptions extends CommonJobStep {
+export interface UploadArtifactOptions extends JobStepConfiguration {
   /**
    * Options for `upload-artifact`.
    */
