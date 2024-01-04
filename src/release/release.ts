@@ -670,14 +670,14 @@ export class Release extends Component {
           ? `${workflowName}_${fileSafeProjectName}`
           : workflowName
       );
-
-      TaskWorkflow.prepareWorkflow(workflow, {
+      workflow.on({
         schedule: this.releaseTrigger.schedule
           ? [{ cron: this.releaseTrigger.schedule }]
           : undefined,
         push: this.releaseTrigger.isContinuous
           ? { branches: [branchName] }
           : undefined,
+        workflowDispatch: {}, // allow manual triggering
       });
 
       const taskStep: JobStep = {

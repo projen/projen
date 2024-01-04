@@ -214,32 +214,6 @@ export class TaskWorkflow extends GithubWorkflow {
     };
   }
 
-  /**
-   * Prepares a workflow to be used as a TaskWorkflow.
-   *
-   * @param workflow The workflow to prepare.
-   * @param triggers The triggers to add to the workflow.
-   */
-  public static prepareWorkflow(
-    workflow: GithubWorkflow,
-    triggers?: Triggers
-  ): void {
-    if (triggers) {
-      if (triggers.issueComment) {
-        // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
-        throw new Error(
-          'Trigger "issueComment" should not be used due to a security concern'
-        );
-      }
-
-      workflow.on(triggers);
-    }
-
-    workflow.on({
-      workflowDispatch: {}, // allow manual triggering
-    });
-  }
-
   public readonly jobId: string;
   public readonly artifactsDirectory?: string;
 
@@ -248,7 +222,20 @@ export class TaskWorkflow extends GithubWorkflow {
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
     this.artifactsDirectory = options.artifactsDirectory;
 
-    TaskWorkflow.prepareWorkflow(this, options.triggers);
+    if (options.triggers) {
+      if (options.triggers.issueComment) {
+        // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
+        throw new Error(
+          'Trigger "issueComment" should not be used due to a security concern'
+        );
+      }
+
+      this.on(options.triggers);
+    }
+
+    this.on({
+      workflowDispatch: {}, // allow manual triggering
+    });
 
     const taskStep: JobStep = {
       name: options.task.name,
