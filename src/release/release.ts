@@ -738,7 +738,7 @@ export class Release extends Component {
     const rootGitHub = GitHub.of(this.project.root);
     if (!rootGitHub) {
       throw new Error(
-        `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${this.project.root.name} because it is not a GitHub project or does not have github set to true.`
+        `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${this.project.root.name} because it does not have GitHub support enabled. Please enable GitHub support for ${this.project.root.name}.`
       );
     }
     return rootGitHub;
