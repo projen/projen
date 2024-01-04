@@ -30,6 +30,11 @@ import {
 } from "./util/constructs";
 
 /**
+ * The default output directory for a project if none is specified.
+ */
+const DEFAULT_OUTDIR = ".";
+
+/**
  * Options for `Project`.
  */
 export interface ProjectOptions {
@@ -135,11 +140,6 @@ export interface GitOptions {
  * Base project
  */
 export class Project extends Construct {
-  /**
-   * The default output directory for a project if none is specified.
-   */
-  public static readonly DEFAULT_OUTDIR = ".";
-
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
@@ -736,13 +736,13 @@ function determineOutdir(parent?: Project, outdirOption?: string) {
     const realTmp = realpathSync(tmpdir());
 
     if (realCwd.startsWith(realTmp)) {
-      return path.resolve(realCwd, outdirOption ?? Project.DEFAULT_OUTDIR);
+      return path.resolve(realCwd, outdirOption ?? DEFAULT_OUTDIR);
     }
 
     return mkdtempSync(path.join(tmpdir(), "projen."));
   }
 
-  return path.resolve(outdirOption ?? Project.DEFAULT_OUTDIR);
+  return path.resolve(outdirOption ?? DEFAULT_OUTDIR);
 }
 
 function isFile(c: Component): c is FileBase {
