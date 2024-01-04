@@ -819,7 +819,8 @@ tsconfig.tsbuildinfo
         "name": "eslint",
         "steps": [
           {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
+            "receiveArgs": true,
           },
         ],
       },
@@ -1198,12 +1199,6 @@ tsconfig.tsbuildinfo
         "cobertura",
         "text",
       ],
-      "globals": {
-        "ts-jest": {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
-      "preset": "ts-jest",
       "reporters": [
         "default",
         [
@@ -1220,6 +1215,14 @@ tsconfig.tsbuildinfo
       "testPathIgnorePatterns": [
         "/node_modules/",
       ],
+      "transform": {
+        "^.+\\.[t]sx?$": [
+          "ts-jest",
+          {
+            "tsconfig": "tsconfig.dev.json",
+          },
+        ],
+      },
       "watchPathIgnorePatterns": [
         "/node_modules/",
       ],

@@ -1,6 +1,11 @@
-import { TaskRuntime } from "../../src";
+import { Logger, TaskRuntime } from "../../src";
 import { PROJEN_RC } from "../../src/common";
-import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
+import { Transform } from "../../src/javascript";
+import {
+  mergeTsconfigOptions,
+  TsJestTsconfig,
+  TypeScriptProject,
+} from "../../src/typescript";
 import { execProjenCLI, synthSnapshot } from "../util";
 
 describe("TypeScriptProject with default settings", () => {
@@ -215,7 +220,8 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
     name: "eslint",
     steps: [
       {
-        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools projenrc .projenrc.ts",
+        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
+        receiveArgs: true,
       },
     ],
   });
@@ -268,48 +274,212 @@ test("upgrade task ignores pinned versions", () => {
 });
 
 describe("jestConfig", () => {
-  test("uses default values", () => {
-    const prj = new TypeScriptProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      jestOptions: {
-        jestConfig: {
-          globals: {
-            "ts-jest": {
-              shouldBePreserved: true,
+  describe("Modern", () => {
+    test("uses default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {},
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      const transformConfig =
+        jest.transform[TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN];
+
+      expect(transformConfig).toBeDefined();
+      expect(transformConfig[0]).toStrictEqual("ts-jest");
+      expect(transformConfig[1]).toStrictEqual({
+        tsconfig: "tsconfig.dev.json",
+      });
+    });
+
+    test("properly merges jest transforms", () => {
+      const JS_PATTERN = "^.+\\.[j]sx?$";
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {
+            transform: {
+              [JS_PATTERN]: new Transform("babel-jest"),
             },
           },
         },
-      },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+
+      expect(Object.keys(jest.transform)).toHaveLength(2);
+      expect(jest.transform[JS_PATTERN]).toStrictEqual("babel-jest");
     });
-    const snapshot = synthSnapshot(prj);
-    const jest = snapshot["package.json"].jest;
-    expect(jest.preset).toStrictEqual("ts-jest");
-    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("tsconfig.dev.json");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+
+    test("allows overriding of ts-jest transform pattern", () => {
+      const TS_WITH_JS_PATTERN = "^.+\\.[tj]sx?$";
+
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {},
+        },
+        tsJestOptions: {
+          transformPattern: TS_WITH_JS_PATTERN,
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      const transformConfig = jest.transform[TS_WITH_JS_PATTERN];
+
+      expect(transformConfig).toBeDefined();
+      expect(transformConfig[0]).toStrictEqual("ts-jest");
+      expect(transformConfig[1]).toStrictEqual({
+        tsconfig: "tsconfig.dev.json",
+      });
+    });
+
+    test("allows overriding of ts-jest transform options", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {},
+        },
+        tsJestOptions: {
+          transformOptions: {
+            isolatedModules: true,
+            tsconfig: TsJestTsconfig.fromFile("bar"),
+          },
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      const transformConfig =
+        jest.transform[TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN];
+
+      expect(transformConfig).toBeDefined();
+      expect(transformConfig[0]).toStrictEqual("ts-jest");
+      expect(transformConfig[1]).toStrictEqual({
+        isolatedModules: true,
+        tsconfig: "bar",
+      });
+    });
   });
 
-  test("overrides default values", () => {
-    const prj = new TypeScriptProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      jestOptions: {
-        jestConfig: {
-          preset: "foo",
-          globals: {
-            "ts-jest": {
-              shouldBePreserved: true,
-              tsconfig: "bar",
+  describe("Legacy", () => {
+    test("uses default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          jestVersion: "26",
+          jestConfig: {
+            globals: {
+              "ts-jest": {
+                shouldBePreserved: true,
+              },
             },
           },
         },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      expect(jest.preset).toStrictEqual("ts-jest");
+      expect(jest.globals["ts-jest"].tsconfig).toStrictEqual(
+        "tsconfig.dev.json"
+      );
+      expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+    });
+
+    test("overrides default values", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          jestVersion: "26",
+          jestConfig: {
+            preset: "foo",
+            globals: {
+              "ts-jest": {
+                shouldBePreserved: true,
+                tsconfig: "bar",
+              },
+            },
+          },
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jest = snapshot["package.json"].jest;
+      expect(jest.preset).toStrictEqual("foo");
+      expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("bar");
+      expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+    });
+  });
+
+  test("Should warn when an attempt to set ts-jest options is made when using a legacy Jest version", () => {
+    const loggerWarnSpy = jest.spyOn(Logger.prototype, "warn");
+
+    new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+      jestOptions: {
+        jestVersion: "26",
+      },
+      tsJestOptions: {
+        transformOptions: {
+          isolatedModules: true,
+        },
       },
     });
+
+    expect(loggerWarnSpy).toHaveBeenCalledWith(
+      "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+    );
+
+    loggerWarnSpy.mockRestore();
+  });
+});
+
+describe("tsconfig", () => {
+  test("uses tsconfig.json by default", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+    });
+
     const snapshot = synthSnapshot(prj);
-    const jest = snapshot["package.json"].jest;
-    expect(jest.preset).toStrictEqual("foo");
-    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("bar");
-    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+    expect(prj.tsconfig?.fileName).toBe("tsconfig.json");
+    expect(snapshot["tsconfig.json"]).not.toBeUndefined();
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w");
+  });
+
+  test("Should allow renaming of tsconfig.json", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      tsconfig: {
+        fileName: "foo.json",
+        compilerOptions: {},
+      },
+      tsconfigDev: {
+        fileName: "dev.json", // You must also give tsconfigDev a name, or it uses foo.json
+        compilerOptions: {},
+      },
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfig?.fileName).toBe("foo.json");
+    expect(snapshot["foo.json"]).not.toBeUndefined();
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build foo.json");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w foo.json");
   });
 });
 
