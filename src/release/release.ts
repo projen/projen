@@ -25,7 +25,7 @@ import {
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
 import { Task } from "../task";
-import { formatPathAsDotNotation } from "../util/path";
+import { ensureRelativePathStartsWithDot } from "../util/path";
 import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
@@ -712,7 +712,7 @@ export class Release extends Component {
           ? // If this is a subproject, we need to set the working directory to the outdir of the subproject
             {
               run: {
-                workingDirectory: formatPathAsDotNotation(
+                workingDirectory: ensureRelativePathStartsWithDot(
                   path.relative(this.project.root.outdir, this.project.outdir)
                 ),
               },

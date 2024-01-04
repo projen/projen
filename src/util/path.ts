@@ -5,7 +5,7 @@
  * @param path - can be formatted as "path", "./path", or "/path"
  * @returns "./path"
  */
-export function formatPathAsDotNotation(path: string): string {
+export function ensureRelativePathStartsWithDot(path: string): string {
   if (path.startsWith(".")) {
     return path;
   }
