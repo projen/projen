@@ -360,8 +360,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly tsJestOptions?: TsJestOptions;
 }
 
-const DEFAULT_PROJENRC_TS_FILENAME = "projenrc.ts";
-
 /**
  * TypeScript project
  * @pjid typescript
@@ -502,8 +500,6 @@ export class TypeScriptProject extends NodeProject {
       );
     }
 
-    const projenrcTsShouldBeCreated = !this.parent && options.projenrcTs;
-
     if (options.disableTsconfigDev) {
       this.tsconfigDev = this.tsconfig!;
     } else {
@@ -513,14 +509,8 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions(
           {
             fileName: tsconfigDevFile,
-            include: [
-              projenrcTsShouldBeCreated
-                ? options.projenrcTsOptions?.filename ??
-                  DEFAULT_PROJENRC_TS_FILENAME
-                : PROJEN_RC,
-              `${this.srcdir}/**/*.ts`,
-              `${this.testdir}/**/*.ts`,
-            ],
+            include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
+
             exclude: ["node_modules"],
             compilerOptions: compilerOptionDefaults,
           },
@@ -579,8 +569,10 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (projenrcTsShouldBeCreated) {
+    if (!this.parent && options.projenrcTs) {
       new ProjenrcTs(this, options.projenrcTsOptions);
+    } else {
+      this.tsconfigDev.addInclude(PROJEN_RC); // projenrc.js created in NodeProject needs to be added in tsconfigDev
     }
 
     const tsver = options.typescriptVersion

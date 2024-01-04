@@ -122,9 +122,9 @@ test("Typescript Project Jest Defaults Configured", () => {
     compilerOptionDefaults
   );
   expect(jestTypescriptConfig.include).toEqual([
-    ".projenrc.js",
     "src/**/*.ts",
     "test/**/*.ts",
+    ".projenrc.js",
   ]);
   expect(jestTypescriptConfig.exclude).toEqual(["node_modules"]);
 });

@@ -1471,9 +1471,9 @@ test('hello', () => {
       "node_modules",
     ],
     "include": [
-      ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",
+      ".projenrc.js",
     ],
   },
 }

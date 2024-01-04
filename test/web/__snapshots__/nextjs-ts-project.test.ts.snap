@@ -1087,11 +1087,11 @@ export default function Home() {
       "node_modules",
     ],
     "include": [
-      ".projenrc.js",
       "pages/**/*.ts",
       "test/**/*.ts",
       "**/*.ts",
       "**/*.tsx",
+      ".projenrc.js",
     ],
   },
   "tsconfig.json": {

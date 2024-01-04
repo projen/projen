@@ -1495,9 +1495,9 @@ test('hello', () => {
     "target": "ES2019"
   },
   "include": [
-    ".projenrc.js",
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    ".projenrc.js"
   ],
   "exclude": [
     "node_modules"
@@ -2690,9 +2690,9 @@ test('hello', () => {
     "target": "ES2019"
   },
   "include": [
-    ".projenrc.js",
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    ".projenrc.js"
   ],
   "exclude": [
     "node_modules"
@@ -3789,9 +3789,9 @@ test('hello', () => {
     "target": "ES2019"
   },
   "include": [
-    ".projenrc.js",
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    ".projenrc.js"
   ],
   "exclude": [
     "node_modules"

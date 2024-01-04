@@ -1333,10 +1333,10 @@ import '@testing-library/jest-dom';
       "node_modules",
     ],
     "include": [
-      ".projenrc.js",
       "src/**/*.ts",
       "test/**/*.ts",
       "src",
+      ".projenrc.js",
     ],
   },
   "tsconfig.json": {
