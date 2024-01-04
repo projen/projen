@@ -261,6 +261,10 @@ export class TaskWorkflowJob {
     };
   }
 
+  /**
+   * @jsii ignore
+   * @internal
+   */
   public toJSON(): Job {
     return this.job;
   }
