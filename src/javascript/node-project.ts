@@ -622,7 +622,9 @@ export class NodeProject extends GitHubProject {
         artifactsDirectory: this.artifactsDirectory,
         releaseWorkflowSetupSteps: [
           ...this.renderWorkflowSetup({
-            installWorkingDirectory: this.determineInstallWorkingDirectory(),
+            installJobStepOverrides: {
+              workingDirectory: this.determineInstallWorkingDirectory(),
+            },
             mutable: false,
           }),
           ...(options.releaseWorkflowSetupSteps ?? []),
@@ -1049,7 +1051,7 @@ export class NodeProject extends GitHubProject {
       run: mutable
         ? this.package.installAndUpdateLockfileCommand
         : this.package.installCommand,
-      workingDirectory: options.installWorkingDirectory,
+      ...(options.installJobStepOverrides ?? {}),
     });
 
     return install;
@@ -1200,15 +1202,18 @@ export class NodeProject extends GitHubProject {
 }
 
 /**
- * Options for `renderInstallSteps()`.
+ * Options for `renderWorkflowSetup()`.
  */
 export interface RenderWorkflowSetupOptions {
   /**
-   * The working directory to run the install command in.
+   * Overrides for the install step in the workflow setup.
    *
-   * @default - no working directory
+   * @default - No overrides of the install step
+   *
+   * @example - { workingDirectory: "rootproject-dir" } for subprojects installing from root.
+   * @example - { env: { NPM_TOKEN: "token" }} for installing from private npm registry.
    */
-  readonly installWorkingDirectory?: string;
+  readonly installJobStepOverrides?: JobStep;
   /**
    * Should the package lockfile be updated?
    * @default false
