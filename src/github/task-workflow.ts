@@ -150,70 +150,6 @@ export interface TaskWorkflowOptions extends TaskWorkflowJobOptions {
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskWorkflow extends GithubWorkflow {
-  /**
-   * Allows for more flexible construction of a Workflow that is similar, but not identical, to the TaskWorkflow.
-   *
-   * @param taskStep The main JobStep to be executed.
-   * @param options TaskWorkflowJobOptions
-   * @returns The job that would be created as part of the TaskWorkflow
-   */
-  public static buildJob(
-    taskStep: JobStep,
-    options: TaskWorkflowJobOptions
-  ): Job {
-    const preCheckoutSteps = options.preCheckoutSteps ?? [];
-
-    const checkoutWith: { lfs?: boolean } = {};
-    if (options.downloadLfs) {
-      checkoutWith.lfs = true;
-    }
-    // 'checkoutWith' can override 'lfs'
-    Object.assign(checkoutWith, options.checkoutWith ?? {});
-
-    const preBuildSteps = options.preBuildSteps ?? [];
-    const postBuildSteps = options.postBuildSteps ?? [];
-    const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
-
-    if (options.artifactsDirectory) {
-      postBuildSteps.push(
-        WorkflowSteps.uploadArtifact({
-          // Setting to always will ensure that this step will run even if
-          // the previous ones have failed (e.g. coverage report, internal logs, etc)
-          if: "always()",
-          with: {
-            name: options.artifactsDirectory,
-            path: options.artifactsDirectory,
-          },
-        })
-      );
-    }
-    return {
-      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
-      container: options.container,
-      env: options.env,
-      permissions: options.permissions,
-      defaults: options?.jobDefaults,
-      if: options.condition,
-      outputs: options.outputs,
-      steps: [
-        ...preCheckoutSteps,
-
-        // check out sources.
-        WorkflowSteps.checkout({ with: checkoutWith }),
-
-        // sets git identity so we can push later
-        WorkflowSteps.setupGitIdentity({ gitIdentity }),
-
-        ...preBuildSteps,
-
-        // run the main build task
-        taskStep,
-
-        ...postBuildSteps,
-      ],
-    };
-  }
-
   public readonly jobId: string;
   public readonly artifactsDirectory?: string;
 
@@ -241,12 +177,12 @@ export class TaskWorkflow extends GithubWorkflow {
       name: options.task.name,
       run: github.project.runTaskCommand(options.task),
     };
-    const job: Job = TaskWorkflow.buildJob(taskStep, {
+    const job = new TaskWorkflowJob(taskStep, {
       ...options,
       downloadLfs: options.downloadLfs ?? github.downloadLfs,
     });
 
-    this.addJobs({ [this.jobId]: job });
+    this.addJobs({ [this.jobId]: job.toJSON() });
   }
 }
 
@@ -263,4 +199,69 @@ export interface GitIdentity {
    * The email address of the git user.
    */
   readonly email: string;
+}
+
+/**
+ * The primary or initial job of a TaskWorkflow.
+ */
+export class TaskWorkflowJob {
+  private readonly job: Job;
+
+  constructor(taskStep: JobStep, options: TaskWorkflowJobOptions) {
+    const preCheckoutSteps = options.preCheckoutSteps ?? [];
+
+    const checkoutWith: { lfs?: boolean } = {};
+    if (options.downloadLfs) {
+      checkoutWith.lfs = true;
+    }
+    // 'checkoutWith' can override 'lfs'
+    Object.assign(checkoutWith, options.checkoutWith ?? {});
+
+    const preBuildSteps = options.preBuildSteps ?? [];
+    const postBuildSteps = options.postBuildSteps ?? [];
+    const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+
+    if (options.artifactsDirectory) {
+      postBuildSteps.push(
+        WorkflowSteps.uploadArtifact({
+          // Setting to always will ensure that this step will run even if
+          // the previous ones have failed (e.g. coverage report, internal logs, etc)
+          if: "always()",
+          with: {
+            name: options.artifactsDirectory,
+            path: options.artifactsDirectory,
+          },
+        })
+      );
+    }
+    this.job = {
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+      container: options.container,
+      env: options.env,
+      permissions: options.permissions,
+      defaults: options?.jobDefaults,
+      if: options.condition,
+      outputs: options.outputs,
+      steps: [
+        ...preCheckoutSteps,
+
+        // check out sources.
+        WorkflowSteps.checkout({ with: checkoutWith }),
+
+        // sets git identity so we can push later
+        WorkflowSteps.setupGitIdentity({ gitIdentity }),
+
+        ...preBuildSteps,
+
+        // run the main build task
+        taskStep,
+
+        ...postBuildSteps,
+      ],
+    };
+  }
+
+  public toJSON(): Job {
+    return this.job;
+  }
 }

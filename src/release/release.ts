@@ -6,7 +6,7 @@ import {
   GitHub,
   GitHubProject,
   GithubWorkflow,
-  TaskWorkflow,
+  TaskWorkflowJob,
   WorkflowSteps,
 } from "../github";
 import {
@@ -686,7 +686,7 @@ export class Release extends Component {
       };
 
       // Create job based on child (only?) project GitHub
-      const taskjob = TaskWorkflow.buildJob(taskStep, {
+      const taskjob = new TaskWorkflowJob(taskStep, {
         outputs: {
           latest_commit: {
             stepId: GIT_REMOTE_STEPID,
@@ -721,7 +721,7 @@ export class Release extends Component {
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
 
-      workflow.addJob(BUILD_JOBID, taskjob);
+      workflow.addJob(BUILD_JOBID, taskjob.toJSON());
 
       return workflow;
     } else {
