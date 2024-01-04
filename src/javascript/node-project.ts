@@ -522,8 +522,6 @@ export class NodeProject extends GitHubProject {
         ".npmignore",
         options.npmIgnoreOptions
       );
-
-      this.npmignore.addPatterns(...this.initPackageIgnorePatterns);
     }
 
     this.addDefaultGitIgnore();
@@ -1105,12 +1103,19 @@ export class NodeProject extends GitHubProject {
     return this.package.addBundledDeps(...deps);
   }
 
+  /**
+   * Adds patterns to be ignored by npm.
+   *
+   * @param pattern The pattern to ignore.
+   *
+   * @remarks
+   * If you are having trouble getting an ignore to populate, try using your construct or component's preSynthesize method to properly delay calling this method.
+   */
   public override addPackageIgnore(pattern: string): void {
     if (this.npmignore) {
       return this.npmignore?.addPatterns(pattern);
     }
-    // packageIgnore added prior to initialization
-    super.addPackageIgnore(pattern);
+    // packageIgnore added prior to initialization or npmignore disabled.
   }
 
   private addLicense(options: NodeProjectOptions) {

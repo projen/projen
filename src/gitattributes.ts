@@ -13,8 +13,6 @@ export class GitAttributesFile extends FileBase {
     super(scope, ".gitattributes", {
       editGitignore: false,
     });
-
-    this.project.addPackageIgnore("/.gitattributes");
   }
 
   /**
@@ -46,6 +44,12 @@ export class GitAttributesFile extends FileBase {
     return Array.from(this.attributes.values()).some((attrs) =>
       attrs.has("filter=lfs")
     );
+  }
+
+  public override preSynthesize(): void {
+    this.project.addPackageIgnore("/.gitattributes");
+
+    super.preSynthesize();
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
