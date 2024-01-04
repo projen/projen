@@ -25,6 +25,7 @@ import {
   JobPermission,
   JobPermissions,
   JobStep,
+  JobStepConfiguration,
   Triggers,
 } from "../github/workflows-model";
 import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
@@ -622,7 +623,7 @@ export class NodeProject extends GitHubProject {
         artifactsDirectory: this.artifactsDirectory,
         releaseWorkflowSetupSteps: [
           ...this.renderWorkflowSetup({
-            installJobStepOverrides: {
+            installStepConfiguration: {
               workingDirectory: this.determineInstallWorkingDirectory(),
             },
             mutable: false,
@@ -1051,7 +1052,7 @@ export class NodeProject extends GitHubProject {
       run: mutable
         ? this.package.installAndUpdateLockfileCommand
         : this.package.installCommand,
-      ...(options.installJobStepOverrides ?? {}),
+      ...(options.installStepConfiguration ?? {}),
     });
 
     return install;
@@ -1206,14 +1207,14 @@ export class NodeProject extends GitHubProject {
  */
 export interface RenderWorkflowSetupOptions {
   /**
-   * Overrides for the install step in the workflow setup.
+   * Configure the install step in the workflow setup.
    *
-   * @default - No overrides of the install step
+   * @default - `{ name: "Install dependencies" }`
    *
    * @example - { workingDirectory: "rootproject-dir" } for subprojects installing from root.
    * @example - { env: { NPM_TOKEN: "token" }} for installing from private npm registry.
    */
-  readonly installJobStepOverrides?: JobStep;
+  readonly installStepConfiguration?: JobStepConfiguration;
   /**
    * Should the package lockfile be updated?
    * @default false
