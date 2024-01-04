@@ -730,18 +730,18 @@ export class Release extends Component {
   }
 
   private findTargetGitHubForWorkflow(): GitHub | undefined {
-    if (this.project.parent) {
-      const rootGitHub = GitHub.of(this.project.root);
-      if (!rootGitHub) {
-        throw new Error(
-          `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${this.project.root.name} because it is not a GitHub project or does not have github set to true.`
-        );
-      }
-
-      return rootGitHub;
+    // this is not a subproject
+    if (!this.project.parent) {
+      return this.github;
     }
 
-    return this.github;
+    const rootGitHub = GitHub.of(this.project.root);
+    if (!rootGitHub) {
+      throw new Error(
+        `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${this.project.root.name} because it is not a GitHub project or does not have github set to true.`
+      );
+    }
+    return rootGitHub;
   }
 }
 
