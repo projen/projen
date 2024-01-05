@@ -4883,7 +4883,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -8057,7 +8057,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -12179,7 +12179,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -15140,7 +15140,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -18066,7 +18066,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -21776,7 +21776,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -24239,7 +24239,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -26753,7 +26753,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -29183,7 +29183,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -32711,7 +32711,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -35213,7 +35213,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -37822,7 +37822,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -40409,7 +40409,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
