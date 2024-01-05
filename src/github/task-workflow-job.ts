@@ -8,6 +8,8 @@ import {
   JobPermissions,
   JobStep,
   JobStepOutput,
+  JobStrategy,
+  Tools,
 } from "./workflows-model";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
@@ -115,10 +117,29 @@ export interface TaskWorkflowJobOptions {
 
 /**
  * The primary or initial job of a TaskWorkflow.
+ *
+ * @implements {Job}
  */
 
 export class TaskWorkflowJob {
-  private readonly job: Job;
+  public readonly runsOn?: string[] | undefined;
+  public readonly runsOnGroup?: GroupRunnerOptions | undefined;
+  public readonly steps: JobStep[];
+  public readonly environment?: unknown;
+  public readonly outputs?: Record<string, JobStepOutput> | undefined;
+  public readonly env?: Record<string, string> | undefined;
+  public readonly defaults?: JobDefaults | undefined;
+  public readonly timeoutMinutes?: number | undefined;
+  public readonly continueOnError?: boolean | undefined;
+  public readonly container?: ContainerOptions | undefined;
+  public readonly services?: Record<string, ContainerOptions> | undefined;
+  public readonly tools?: Tools | undefined;
+  public readonly name?: string | undefined;
+  public readonly needs?: string[] | undefined;
+  public readonly permissions: JobPermissions;
+  public readonly concurrency?: unknown;
+  public readonly if?: string | undefined;
+  public readonly strategy?: JobStrategy | undefined;
 
   constructor(taskStep: JobStep, options: TaskWorkflowJobOptions) {
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
@@ -147,31 +168,37 @@ export class TaskWorkflowJob {
         })
       );
     }
-    this.job = {
-      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
-      container: options.container,
-      env: options.env,
-      permissions: options.permissions,
-      defaults: options?.jobDefaults,
-      if: options.condition,
-      outputs: options.outputs,
-      steps: [
-        ...preCheckoutSteps,
 
-        // check out sources.
-        WorkflowSteps.checkout({ with: checkoutWith }),
+    const runsOnInputs = filteredRunsOnOptions(
+      options.runsOn,
+      options.runsOnGroup
+    );
+    this.runsOn = (runsOnInputs as { runsOn: string[] })?.runsOn;
+    this.runsOnGroup = (
+      runsOnInputs as { runsOnGroup: GroupRunnerOptions }
+    )?.runsOnGroup;
+    this.container = options.container;
+    this.env = options.env;
+    this.permissions = options.permissions;
+    this.defaults = options?.jobDefaults;
+    this.if = options.condition;
+    this.outputs = options.outputs;
+    this.steps = [
+      ...preCheckoutSteps,
 
-        // sets git identity so we can push later
-        WorkflowSteps.setupGitIdentity({ gitIdentity }),
+      // check out sources.
+      WorkflowSteps.checkout({ with: checkoutWith }),
 
-        ...preBuildSteps,
+      // sets git identity so we can push later
+      WorkflowSteps.setupGitIdentity({ gitIdentity }),
 
-        // run the main build task
-        taskStep,
+      ...preBuildSteps,
 
-        ...postBuildSteps,
-      ],
-    };
+      // run the main build task
+      taskStep,
+
+      ...postBuildSteps,
+    ];
   }
 
   /**
@@ -179,6 +206,25 @@ export class TaskWorkflowJob {
    * @internal
    */
   public toJSON(): Job {
-    return this.job;
+    return {
+      runsOn: this.runsOn,
+      runsOnGroup: this.runsOnGroup,
+      steps: this.steps,
+      environment: this.environment,
+      outputs: this.outputs,
+      env: this.env,
+      defaults: this.defaults,
+      timeoutMinutes: this.timeoutMinutes,
+      continueOnError: this.continueOnError,
+      container: this.container,
+      services: this.services,
+      tools: this.tools,
+      name: this.name,
+      needs: this.needs,
+      permissions: this.permissions,
+      concurrency: this.concurrency,
+      if: this.if,
+      strategy: this.strategy,
+    };
   }
 }

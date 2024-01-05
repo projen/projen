@@ -70,7 +70,7 @@ export class TaskWorkflow extends GithubWorkflow {
       downloadLfs: options.downloadLfs ?? github.downloadLfs,
     });
 
-    this.addJobs({ [this.jobId]: job.toJSON() });
+    this.addJobs({ [this.jobId]: job });
   }
 }
 

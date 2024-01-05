@@ -721,7 +721,7 @@ export class Release extends Component {
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
 
-      workflow.addJob(BUILD_JOBID, taskjob.toJSON());
+      workflow.addJob(BUILD_JOBID, taskjob);
 
       return workflow;
     } else {
