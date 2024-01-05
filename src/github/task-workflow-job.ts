@@ -123,7 +123,6 @@ export interface TaskWorkflowJobOptions {
  *
  * @implements {Job}
  */
-
 export class TaskWorkflowJob extends Component {
   public readonly runsOn?: string[] | undefined;
   public readonly runsOnGroup?: GroupRunnerOptions | undefined;
@@ -144,6 +143,11 @@ export class TaskWorkflowJob extends Component {
   public readonly if?: string | undefined;
   public readonly strategy?: JobStrategy | undefined;
 
+  /**
+   * @param scope should be part of the project the Task belongs to.
+   * @param task the main task that is run as part of this job.
+   * @param options options to configure the TaskWorkflowJob.
+   */
   constructor(scope: IConstruct, task: Task, options: TaskWorkflowJobOptions) {
     super(scope, `${new.target.name}#${task.name}`);
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
