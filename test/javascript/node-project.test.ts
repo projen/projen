@@ -1715,7 +1715,7 @@ describe("package manager env", () => {
 });
 
 describe("npmignore", () => {
-  test("npmignore should have NodeProject's default ignore patterns", () => {
+  test("should include sensible default ignore patterns", () => {
     // GIVEN
     const project = new TestNodeProject();
 
