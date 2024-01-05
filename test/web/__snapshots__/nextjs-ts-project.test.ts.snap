@@ -1103,6 +1103,7 @@ export default function Home() {
       "**/*.tsx",
       "next-env.d.ts",
       ".next/types/**/*.ts",
+      ".projenrc.js",
     ],
   },
   "tsconfig.json": {
