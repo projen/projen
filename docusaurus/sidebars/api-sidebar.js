@@ -11,7 +11,7 @@ function sortGroupsInFrontOfTLTopics(a, b) {
 
 function getSidebarItems(allFilenames) {
   return allFilenames.reduce((acc, curr) => {
-    const [subModule] = curr.replace('api/').split('.');
+    const subModule = curr.replace('api/').replace('.md', '');
 
     const extensionStrippedFilename = curr.replace('.md', '');
     const itemPath = `api/${extensionStrippedFilename}`;
