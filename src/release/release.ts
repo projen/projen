@@ -317,7 +317,6 @@ export class Release extends Component {
   private readonly _branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
-  private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
   private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
@@ -338,7 +337,6 @@ export class Release extends Component {
       );
     }
 
-    this.github = project.github;
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
