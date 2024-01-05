@@ -46,6 +46,12 @@ export class GitAttributesFile extends FileBase {
     );
   }
 
+  public override preSynthesize(): void {
+    this.project.addPackageIgnore("/.gitattributes");
+
+    super.preSynthesize();
+  }
+
   protected synthesizeContent(_: IResolver): string | undefined {
     // We can assume the file map is never empty.
     const entries = Array.from(this.attributes.entries()).sort(([l], [r]) =>

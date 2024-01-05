@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as semver from "semver";
-import { PROJEN_DIR, PROJEN_RC } from "../common";
+import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import {
   Eslint,
@@ -8,6 +8,7 @@ import {
   Jest,
   NodeProject,
   NodeProjectOptions,
+  Projenrc as NodeProjectProjenrc,
   Transform,
   TypeScriptCompilerOptions,
   TypescriptConfig,
@@ -509,11 +510,8 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions(
           {
             fileName: tsconfigDevFile,
-            include: [
-              PROJEN_RC,
-              `${this.srcdir}/**/*.ts`,
-              `${this.testdir}/**/*.ts`,
-            ],
+            include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
+
             exclude: ["node_modules"],
             compilerOptions: compilerOptionDefaults,
           },
@@ -572,8 +570,17 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (!this.parent && options.projenrcTs) {
-      new ProjenrcTs(this, options.projenrcTsOptions);
+    // when this is a root project
+    if (!this.parent) {
+      if (options.projenrcTs) {
+        new ProjenrcTs(this, options.projenrcTsOptions);
+      } else {
+        // projenrc.js created in NodeProject needs to be added in tsconfigDev
+        const projenrcJs = NodeProjectProjenrc.of(this);
+        if (projenrcJs) {
+          this.tsconfigDev.addInclude(projenrcJs.filePath);
+        }
+      }
     }
 
     const tsver = options.typescriptVersion
