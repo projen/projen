@@ -1726,5 +1726,4 @@ describe("npmignore", () => {
     expect(output[".npmignore"]).toMatchSnapshot();
     expect(output[".npmignore"]).toContain("/.gitattributes");
   });
-
 });

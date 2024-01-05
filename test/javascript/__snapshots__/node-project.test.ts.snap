@@ -290,7 +290,7 @@ exports[`node project can be ejected 1`] = `
 }
 `;
 
-exports[`npmignore npmignore should have NodeProject's default ignore patterns 1`] = `
+exports[`npmignore should include sensible default ignore patterns 1`] = `
 "/.projenrc.js
 /.projen/
 /test-reports/

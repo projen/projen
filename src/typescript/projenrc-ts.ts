@@ -54,6 +54,7 @@ export class ProjenrcTs extends ProjenrcFile {
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
 
     project.addPackageIgnore(`/${this.filePath}`);
+    project.gitignore.include(`/${this.filePath}`); // This is INCLUDING in .gitignore, not excluding, so it WON'T be ignored
 
     // Create a dedicated tsconfig for projen source files
     this.tsconfig = new TypescriptConfig(project, {

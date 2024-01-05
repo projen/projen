@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as semver from "semver";
-import { PROJEN_DIR, PROJEN_RC } from "../common";
+import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import {
   Eslint,
@@ -8,6 +8,7 @@ import {
   Jest,
   NodeProject,
   NodeProjectOptions,
+  Projenrc as NodeProjectProjenrc,
   Transform,
   TypeScriptCompilerOptions,
   TypescriptConfig,
@@ -575,7 +576,7 @@ export class TypeScriptProject extends NodeProject {
         new ProjenrcTs(this, options.projenrcTsOptions);
       } else {
         // projenrc.js created in NodeProject needs to be added in tsconfigDev
-        const projenrcJs = Projenrc.of(this);
+        const projenrcJs = NodeProjectProjenrc.of(this);
         if (projenrcJs) {
           this.tsconfigDev.addInclude(projenrcJs.filePath);
         }

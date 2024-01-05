@@ -80,7 +80,7 @@ describe("Creating rc file within a non-TypeScript project", () => {
 
     // THEN
     const snapshot = synthSnapshot(p);
-    expect(snapshot[".gitignore"]).toContain("!/.projenrc.ts");
-    expect(snapshot[".npmignore"]).toContain("/.projenrc.ts");
+    expect(snapshot[".gitignore"]).toContain("!/.projenrc.ts"); // Don't ignore here
+    expect(snapshot[".npmignore"]).toContain("/.projenrc.ts"); // Ignore here
   });
 });
