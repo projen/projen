@@ -569,10 +569,17 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (!this.parent && options.projenrcTs) {
-      new ProjenrcTs(this, options.projenrcTsOptions);
-    } else {
-      this.tsconfigDev.addInclude(PROJEN_RC); // projenrc.js created in NodeProject needs to be added in tsconfigDev
+    // when this is a root project
+    if (!this.parent) {
+      if (options.projenrcTs) {
+        new ProjenrcTs(this, options.projenrcTsOptions);
+      } else {
+        // projenrc.js created in NodeProject needs to be added in tsconfigDev
+        const projenrcJs = Projenrc.of(this);
+        if (projenrcJs) {
+          this.tsconfigDev.addInclude(projenrcJs.filePath);
+        }
+      }
     }
 
     const tsver = options.typescriptVersion
