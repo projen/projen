@@ -680,13 +680,8 @@ export class Release extends Component {
         workflowDispatch: {}, // allow manual triggering
       });
 
-      const taskStep: JobStep = {
-        name: releaseTask.name,
-        run: this.project.runTaskCommand(releaseTask),
-      };
-
       // Create job based on child (only?) project GitHub
-      const taskjob = new TaskWorkflowJob(taskStep, {
+      const taskjob = new TaskWorkflowJob(this, releaseTask, {
         outputs: {
           latest_commit: {
             stepId: GIT_REMOTE_STEPID,

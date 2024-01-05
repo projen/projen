@@ -1,3 +1,4 @@
+import { IConstruct } from "constructs";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitIdentity } from "./task-workflow";
 import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
@@ -11,7 +12,9 @@ import {
   JobStrategy,
   Tools,
 } from "./workflows-model";
+import { Component } from "../component";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import { Task } from "../task";
 
 /**
  * Options to create the Job associated with a TaskWorkflow.
@@ -121,7 +124,7 @@ export interface TaskWorkflowJobOptions {
  * @implements {Job}
  */
 
-export class TaskWorkflowJob {
+export class TaskWorkflowJob extends Component {
   public readonly runsOn?: string[] | undefined;
   public readonly runsOnGroup?: GroupRunnerOptions | undefined;
   public readonly steps: JobStep[];
@@ -141,7 +144,8 @@ export class TaskWorkflowJob {
   public readonly if?: string | undefined;
   public readonly strategy?: JobStrategy | undefined;
 
-  constructor(taskStep: JobStep, options: TaskWorkflowJobOptions) {
+  constructor(scope: IConstruct, task: Task, options: TaskWorkflowJobOptions) {
+    super(scope, `${new.target.name}#${task.name}`);
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
     const checkoutWith: { lfs?: boolean } = {};
@@ -195,7 +199,10 @@ export class TaskWorkflowJob {
       ...preBuildSteps,
 
       // run the main build task
-      taskStep,
+      {
+        name: task.name,
+        run: this.project.runTaskCommand(task),
+      },
 
       ...postBuildSteps,
     ];

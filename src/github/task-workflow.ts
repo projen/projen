@@ -1,7 +1,7 @@
 import { GitHub } from "./github";
 import { TaskWorkflowJob, TaskWorkflowJobOptions } from "./task-workflow-job";
 import { GithubWorkflow } from "./workflows";
-import { JobStep, Triggers } from "./workflows-model";
+import { Triggers } from "./workflows-model";
 import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
@@ -61,11 +61,7 @@ export class TaskWorkflow extends GithubWorkflow {
       workflowDispatch: {}, // allow manual triggering
     });
 
-    const taskStep: JobStep = {
-      name: options.task.name,
-      run: github.project.runTaskCommand(options.task),
-    };
-    const job = new TaskWorkflowJob(taskStep, {
+    const job = new TaskWorkflowJob(this, options.task, {
       ...options,
       downloadLfs: options.downloadLfs ?? github.downloadLfs,
     });

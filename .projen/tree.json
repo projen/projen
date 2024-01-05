@@ -217,6 +217,14 @@
         "metadata": {
           "type": "component",
           "construct": "Release"
+        },
+        "nodes": {
+          "TaskWorkflowJob#release": {
+            "metadata": {
+              "type": "component",
+              "construct": "TaskWorkflowJob"
+            }
+          }
         }
       },
       "Version#AutoId17": {
@@ -350,6 +358,14 @@
         "metadata": {
           "type": "component",
           "construct": "TaskWorkflow"
+        },
+        "nodes": {
+          "TaskWorkflowJob#check-licenses": {
+            "metadata": {
+              "type": "component",
+              "construct": "TaskWorkflowJob"
+            }
+          }
         }
       },
       "YamlFile@.github--workflows--check-licenses.yml": {
