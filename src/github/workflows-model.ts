@@ -356,6 +356,12 @@ export interface RunSettings {
   readonly workingDirectory?: string;
 }
 
+/**
+ * Fields that describe the How, Why, When, and Who of a Step.
+ * These fields can have none present, but can be present on every Step, and have no effect on one another.
+ *
+ * This stands in contrast to the Command (non-Configuration) fields, which are mutually exclusive, and describe the What.
+ */
 export interface StepConfiguration {
   /**
    * A unique identifier for the step. You can use the id to reference the
