@@ -50,6 +50,8 @@ export interface NextJsProjectOptions
   readonly sampleCode?: boolean;
 }
 
+const MINIMUM_NEXT_JS_NODE_VERSION = "16.14.0"; // https://nextjs.org/docs/pages/building-your-application/upgrading/version-13
+
 /**
  * Next.js project without TypeScript.
  *
@@ -76,7 +78,7 @@ export class NextJsProject extends NodeProject {
   constructor(options: NextJsProjectOptions) {
     super({
       jest: false,
-      minNodeVersion: "12.22.0", // https://nextjs.org/docs#system-requirements
+      minNodeVersion: MINIMUM_NEXT_JS_NODE_VERSION,
       workflowNodeVersion: "18.x",
       ...options,
     });
@@ -126,16 +128,21 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
     const defaultOptions = {
       srcdir: "pages",
       eslint: false,
-      minNodeVersion: "12.22.0", // https://nextjs.org/docs#system-requirements
+      minNodeVersion: MINIMUM_NEXT_JS_NODE_VERSION,
       jest: false,
       workflowNodeVersion: "18.x",
       tsconfig: {
-        include: ["**/*.ts", "**/*.tsx"],
+        include: [
+          "**/*.ts",
+          "**/*.tsx",
+          "next-env.d.ts",
+          ".next/types/**/*.ts",
+        ],
         compilerOptions: {
-          // required by Next.js
+          // required by Next.js - https://github.com/vercel/next.js/blob/canary/packages/create-next-app/templates/app/ts/tsconfig.json
           esModuleInterop: true,
-          module: "CommonJS",
-          moduleResolution: TypeScriptModuleResolution.NODE,
+          module: "esnext",
+          moduleResolution: TypeScriptModuleResolution.BUNDLER,
           isolatedModules: true,
           resolveJsonModule: true,
           jsx: TypeScriptJsxMode.PRESERVE,
@@ -146,9 +153,17 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           forceConsistentCasingInFileNames: true,
           noEmit: true,
           lib: ["dom", "dom.iterable", "esnext"],
-          strict: false,
+          strict: true,
           target: "es5",
           incremental: true,
+          plugins: [
+            {
+              name: "next",
+            },
+          ],
+          paths: {
+            "@/*": ["./*"],
+          },
         },
       },
     };
