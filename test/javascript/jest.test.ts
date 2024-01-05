@@ -1,4 +1,3 @@
-import { PROJEN_RC } from "../../src/common";
 import { Jest, NodeProject, UpdateSnapshot } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { TypeScriptProject } from "../../src/typescript";
@@ -123,9 +122,9 @@ test("Typescript Project Jest Defaults Configured", () => {
     compilerOptionDefaults
   );
   expect(jestTypescriptConfig.include).toEqual([
-    PROJEN_RC,
     "src/**/*.ts",
     "test/**/*.ts",
+    ".projenrc.js",
   ]);
   expect(jestTypescriptConfig.exclude).toEqual(["node_modules"]);
 });
