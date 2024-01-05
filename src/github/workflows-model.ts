@@ -395,7 +395,12 @@ export interface StepConfiguration {
 }
 
 /**
- * A generic step
+ * This contains the fields that are common amongst both:
+ * - JobStep, which is a step that is part of a Job in Github Actions. This is by far the most common use case.
+ * - The metadata file `action.yaml` that is used to define an Action when you are creating one. As in, if you were creating an Action to be used in a JobStep.
+ * There is some overlap between the two, and this captures that overlap.
+ *
+ * @see https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
  */
 export interface Step extends StepConfiguration {
   /**
@@ -422,7 +427,8 @@ export interface Step extends StepConfiguration {
 }
 
 /**
- * These settings differentiate a JobStep from a generic Step.
+ * These settings are unique to a JobStep from the fields contained within the metadata action.yaml file present in when creating a new GitHub Action.
+ * These fields are not present in action.yml, but are in JobStep, which are using when creating workflows.
  */
 export interface JobStepConfiguration extends StepConfiguration {
   /**
@@ -438,7 +444,9 @@ export interface JobStepConfiguration extends StepConfiguration {
 }
 
 /**
- * A full JobStep
+ * JobSteps run as part of a GitHub Workflow Job.
+ *
+ * @see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps
  */
 export interface JobStep extends Step, JobStepConfiguration {}
 
