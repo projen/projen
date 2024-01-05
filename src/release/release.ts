@@ -685,6 +685,10 @@ export class Release extends Component {
         run: this.project.runTaskCommand(releaseTask),
       };
 
+      const projectPathRelativeToRoot = path.relative(
+        this.project.root.outdir,
+        this.project.outdir
+      );
       // Create job based on child (only?) project GitHub
       const taskjob = new TaskWorkflowJob(taskStep, {
         outputs: {
@@ -708,16 +712,16 @@ export class Release extends Component {
         },
         preBuildSteps,
         postBuildSteps,
-        jobDefaults: this.project.parent
-          ? // If this is a subproject, we need to set the working directory to the outdir of the subproject
-            {
-              run: {
-                workingDirectory: ensureRelativePathStartsWithDot(
-                  path.relative(this.project.root.outdir, this.project.outdir)
-                ),
-              },
-            }
-          : undefined,
+        jobDefaults:
+          projectPathRelativeToRoot && projectPathRelativeToRoot !== "" // is subproject
+            ? {
+                run: {
+                  workingDirectory: ensureRelativePathStartsWithDot(
+                    projectPathRelativeToRoot
+                  ),
+                },
+              }
+            : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
 
