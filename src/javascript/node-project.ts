@@ -1113,7 +1113,6 @@ export class NodeProject extends GitHubProject {
    */
   public override addPackageIgnore(pattern: string): void {
     this.npmignore?.addPatterns(pattern);
-    // packageIgnore added prior to initialization or npmignore disabled.
   }
 
   private addLicense(options: NodeProjectOptions) {
