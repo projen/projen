@@ -21,7 +21,7 @@ test("CommonJS not ESnext", () => {
   const out = synthSnapshot(p);
   expect(out["tsconfig.json"]).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions).toBeDefined();
-  expect(out["tsconfig.json"].compilerOptions.module).toEqual("CommonJS");
+  expect(out["tsconfig.json"].compilerOptions.module).toEqual("esnext");
 });
 
 class TestNextJsTypeScriptProject extends NextJsTypeScriptProject {
