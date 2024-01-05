@@ -33,7 +33,6 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
-!/.projenrc.js
 /test-reports/
 junit.xml
 /coverage/
@@ -66,3 +65,4 @@ docusaurus/docs/api/
 !/.markdownlint.json
 !/.vscode/launch.json
 !/.projen/tree.json
+!/.projenrc.js
