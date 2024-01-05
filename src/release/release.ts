@@ -1,8 +1,14 @@
 import * as path from "path";
+import { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 import { Component } from "../component";
-import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
+import {
+  GitHub,
+  GithubWorkflow,
+  TaskWorkflowJob,
+  WorkflowSteps,
+} from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
@@ -13,12 +19,14 @@ import {
   JobPermissions,
   JobStep,
 } from "../github/workflows-model";
+import { Project } from "../project";
 import {
   GroupRunnerOptions,
   filteredRunsOnOptions,
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
 import { Task } from "../task";
+import { ensureRelativePathStartsWithDot } from "../util/path";
 import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
@@ -125,7 +133,7 @@ export interface ReleaseProjectOptions {
   /**
    * The name of the default release workflow.
    *
-   * @default "Release"
+   * @default "release"
    */
   readonly releaseWorkflowName?: string;
 
@@ -290,7 +298,7 @@ export class Release extends Component {
    * Returns the `Release` component of a project or `undefined` if the project
    * does not have a Release component.
    */
-  public static of(project: GitHubProject): Release | undefined {
+  public static of(project: Project): Release | undefined {
     const isRelease = (c: Component): c is Release => c instanceof Release;
     return project.components.find(isRelease);
   }
@@ -322,8 +330,12 @@ export class Release extends Component {
    */
   public readonly artifactsDirectory: string;
 
-  constructor(project: GitHubProject, options: ReleaseOptions) {
-    super(project);
+  /**
+   * @param scope should be part of the project the Release belongs to.
+   * @param options options to configure the Release Component.
+   */
+  constructor(scope: IConstruct, options: ReleaseOptions) {
+    super(scope);
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error(
@@ -331,7 +343,7 @@ export class Release extends Component {
       );
     }
 
-    this.github = project.github;
+    this.github = GitHub.of(this.project.root);
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
@@ -369,7 +381,7 @@ export class Release extends Component {
       });
     }
 
-    this.version = new Version(project, {
+    this.version = new Version(this.project, {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
       versionrcOptions: options.versionrcOptions,
@@ -377,7 +389,7 @@ export class Release extends Component {
       releasableCommits: options.releasableCommits,
     });
 
-    this.publisher = new Publisher(project, {
+    this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
@@ -417,7 +429,9 @@ export class Release extends Component {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
       minMajorVersion: options.minMajorVersion,
-      workflowName: options.releaseWorkflowName ?? "release",
+      workflowName:
+        options.releaseWorkflowName ??
+        workflowNameForProject("release", this.project),
       tagPrefix: options.releaseTagPrefix,
       npmDistTag: options.npmDistTag,
     });
@@ -535,8 +549,10 @@ export class Release extends Component {
   private createWorkflow(
     branchName: string,
     branch: Partial<BranchOptions>
-  ): TaskWorkflow | undefined {
-    const workflowName = branch.workflowName ?? `release-${branchName}`;
+  ): GithubWorkflow | undefined {
+    const workflowName =
+      branch.workflowName ??
+      workflowNameForProject(`release-${branchName}`, this.project);
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -628,6 +644,10 @@ export class Release extends Component {
       run: `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
     });
 
+    const projectPathRelativeToRoot = path.relative(
+      this.project.root.outdir,
+      this.project.outdir
+    );
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
@@ -635,34 +655,38 @@ export class Release extends Component {
         continueOnError: true,
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
-      {
-        name: "Upload artifact",
+      WorkflowSteps.uploadArtifact({
         if: noNewCommits,
-        uses: "actions/upload-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
-          path: this.artifactsDirectory,
+          path:
+            projectPathRelativeToRoot.length > 0
+              ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+              : this.artifactsDirectory,
         },
-      }
+      })
     );
 
     if (this.github && !this.releaseTrigger.isManual) {
-      return new TaskWorkflow(this.github, {
-        name: workflowName,
-        jobId: BUILD_JOBID,
+      // Use target (possible parent) GitHub to create the workflow
+      const workflow = new GithubWorkflow(this.github, workflowName);
+      workflow.on({
+        schedule: this.releaseTrigger.schedule
+          ? [{ cron: this.releaseTrigger.schedule }]
+          : undefined,
+        push: this.releaseTrigger.isContinuous
+          ? { branches: [branchName] }
+          : undefined,
+        workflowDispatch: {}, // allow manual triggering
+      });
+
+      // Create job based on child (only?) project GitHub
+      const taskjob = new TaskWorkflowJob(this, releaseTask, {
         outputs: {
           latest_commit: {
             stepId: GIT_REMOTE_STEPID,
             outputName: LATEST_COMMIT_OUTPUT,
           },
-        },
-        triggers: {
-          schedule: this.releaseTrigger.schedule
-            ? [{ cron: this.releaseTrigger.schedule }]
-            : undefined,
-          push: this.releaseTrigger.isContinuous
-            ? { branches: [branchName] }
-            : undefined,
         },
         container: this.containerImage
           ? { image: this.containerImage }
@@ -678,14 +702,41 @@ export class Release extends Component {
           fetchDepth: 0,
         },
         preBuildSteps,
-        task: releaseTask,
         postBuildSteps,
+        jobDefaults:
+          projectPathRelativeToRoot.length > 0 // is subproject
+            ? {
+                run: {
+                  workingDirectory: ensureRelativePathStartsWithDot(
+                    projectPathRelativeToRoot
+                  ),
+                },
+              }
+            : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
+
+      workflow.addJob(BUILD_JOBID, taskjob);
+
+      return workflow;
     } else {
       return undefined;
     }
   }
+}
+
+function workflowNameForProject(base: string, project: Project): string {
+  // Subprojects
+  if (project.parent) {
+    return `${base}_${fileSafeName(project.name)}`;
+  }
+
+  // root project doesn't get a suffix
+  return base;
+}
+
+function fileSafeName(name: string): string {
+  return name.replace("@", "").replace(/\//, "-");
 }
 
 /**
