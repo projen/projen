@@ -27,6 +27,8 @@ export interface ProjenrcOptions {
   readonly swc?: boolean;
 }
 
+const DEFAULT_FILENAME = ".projenrc.ts";
+
 /**
  * Sets up a typescript project to use TypeScript for projenrc.
  */
@@ -40,7 +42,7 @@ export class Projenrc extends ProjenrcFile {
     super(project);
     this._tsProject = project;
 
-    this.filePath = options.filename ?? ".projenrc.ts";
+    this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
     this._swc = options.swc ?? false;
 
@@ -69,7 +71,9 @@ export class Projenrc extends ProjenrcFile {
     );
   }
 
-  public preSynthesize(): void {
+  public override preSynthesize(): void {
+    super.preSynthesize();
+
     this._tsProject.tsconfigDev.addInclude(this.filePath);
     this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
 

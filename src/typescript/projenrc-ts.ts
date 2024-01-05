@@ -29,6 +29,8 @@ export interface ProjenrcTsOptions {
   readonly tsconfigFileName?: string;
 }
 
+const DEFAULT_FILENAME = ".projenrc.ts";
+
 /**
  * A projenrc file written in TypeScript
  *
@@ -48,8 +50,10 @@ export class ProjenrcTs extends ProjenrcFile {
   constructor(project: Project, options: ProjenrcTsOptions = {}) {
     super(project);
 
-    this.filePath = options.filename ?? ".projenrc.ts";
+    this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
+
+    project.addPackageIgnore(`/${this.filePath}`);
 
     // Create a dedicated tsconfig for projen source files
     this.tsconfig = new TypescriptConfig(project, {
@@ -65,7 +69,9 @@ export class ProjenrcTs extends ProjenrcFile {
     this.generateProjenrc();
   }
 
-  public preSynthesize(): void {
+  public override preSynthesize(): void {
+    super.preSynthesize();
+
     this.tsconfig.addInclude(this.filePath);
     this.tsconfig.addInclude(`${this._projenCodeDir}/**/*.ts`);
   }

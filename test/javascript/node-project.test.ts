@@ -1784,3 +1784,17 @@ describe("Subproject", () => {
     ).toBeDefined();
   });
 });
+
+describe("npmignore", () => {
+  test("should include sensible default ignore patterns", () => {
+    // GIVEN
+    const project = new TestNodeProject();
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".npmignore"]).toMatchSnapshot();
+    expect(output[".npmignore"]).toContain("/.gitattributes");
+  });
+});

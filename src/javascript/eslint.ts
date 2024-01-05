@@ -1,6 +1,6 @@
 import { Prettier } from "./prettier";
 import { Project, TaskStepOptions } from "..";
-import { PROJEN_RC } from "../common";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
@@ -43,7 +43,7 @@ export interface EslintOptions {
 
   /**
    * Projenrc file to lint. Use empty string to disable.
-   * @default PROJEN_RC
+   * @default "projenrc.js"
    * @deprecated provide as `devdirs`
    */
   readonly lintProjenRcFile?: string;
@@ -187,7 +187,8 @@ export class Eslint extends Component {
     }
 
     const lintProjenRc = options.lintProjenRc ?? true;
-    const lintProjenRcFile = options.lintProjenRcFile ?? PROJEN_RC;
+    const lintProjenRcFile =
+      options.lintProjenRcFile ?? DEFAULT_PROJEN_RC_JS_FILENAME;
 
     const devdirs = options.devdirs ?? [];
 
@@ -340,7 +341,7 @@ export class Eslint extends Component {
     if (lintProjenRc) {
       this.overrides = [
         {
-          files: [lintProjenRcFile || PROJEN_RC],
+          files: [lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME],
           rules: {
             "@typescript-eslint/no-require-imports": "off",
             "import/no-extraneous-dependencies": "off",
@@ -352,7 +353,9 @@ export class Eslint extends Component {
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
       // @deprecated
-      ...(lintProjenRc ? [`!${lintProjenRcFile || PROJEN_RC}`] : []),
+      ...(lintProjenRc
+        ? [`!${lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME}`]
+        : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
