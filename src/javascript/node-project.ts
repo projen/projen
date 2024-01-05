@@ -1112,9 +1112,7 @@ export class NodeProject extends GitHubProject {
    * If you are having trouble getting an ignore to populate, try using your construct or component's preSynthesize method to properly delay calling this method.
    */
   public override addPackageIgnore(pattern: string): void {
-    if (this.npmignore) {
-      return this.npmignore?.addPatterns(pattern);
-    }
+    this.npmignore?.addPatterns(pattern);
     // packageIgnore added prior to initialization or npmignore disabled.
   }
 
