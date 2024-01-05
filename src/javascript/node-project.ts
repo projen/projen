@@ -11,7 +11,7 @@ import {
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 import { BuildWorkflow } from "../build";
-import { PROJEN_DIR, PROJEN_RC } from "../common";
+import { PROJEN_DIR } from "../common";
 import {
   AutoMerge,
   DependabotOptions,
@@ -36,6 +36,7 @@ import {
   UpgradeDependenciesOptions,
 } from "../javascript";
 import { License } from "../license";
+import { ProjenrcJson } from "../projenrc-json";
 import {
   CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
   CodeArtifactAuthProvider,
@@ -548,9 +549,7 @@ export class NodeProject extends GitHubProject {
       this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
     }
 
-    this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
-    this.gitignore.include(`/${PROJEN_RC}`);
 
     const projen = options.projenDevDependency ?? true;
     if (projen && !this.ejected) {
@@ -759,7 +758,14 @@ export class NodeProject extends GitHubProject {
 
     const projenrcJs = options.projenrcJs ?? !options.projenrcJson;
     if (!this.parent && projenrcJs) {
-      new Projenrc(this, options.projenrcJsOptions);
+      const projenrcJsFile = new Projenrc(this, options.projenrcJsOptions);
+
+      this.npmignore?.exclude(`/${projenrcJsFile.filePath}`);
+    } else if (options.projenrcJson) {
+      const projenrcJsonFile = ProjenrcJson.of(this);
+      if (projenrcJsonFile) {
+        this.npmignore?.exclude(`/${projenrcJsonFile.filePath}`);
+      }
     }
 
     // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
@@ -1103,7 +1109,15 @@ export class NodeProject extends GitHubProject {
     return this.package.addBundledDeps(...deps);
   }
 
-  public addPackageIgnore(pattern: string) {
+  /**
+   * Adds patterns to be ignored by npm.
+   *
+   * @param pattern The pattern to ignore.
+   *
+   * @remarks
+   * If you are having trouble getting an ignore to populate, try using your construct or component's preSynthesize method to properly delay calling this method.
+   */
+  public override addPackageIgnore(pattern: string): void {
     this.npmignore?.addPatterns(pattern);
   }
 

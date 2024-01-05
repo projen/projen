@@ -1,4 +1,4 @@
-import { ProjenrcTs } from "../../src/typescript";
+import { ProjenrcTs, TypeScriptProject } from "../../src/typescript";
 import { synthSnapshot, TestProject } from "../util";
 
 describe("Creating rc file within a non-TypeScript project", () => {
@@ -66,5 +66,21 @@ describe("Creating rc file within a non-TypeScript project", () => {
     // THEN
     const snapshot = synthSnapshot(p);
     expect(snapshot[".gitignore"]).toContain("To modify, edit .projenrc.ts");
+  });
+
+  test("adds .projenrc.ts to .gitignore DO NOT IGNORE and packageIgnore IGNORE", () => {
+    // GIVEN
+    const p = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+    });
+
+    // WHEN
+    new ProjenrcTs(p, {});
+
+    // THEN
+    const snapshot = synthSnapshot(p);
+    expect(snapshot[".gitignore"]).toContain("!/.projenrc.ts"); // Don't ignore here
+    expect(snapshot[".npmignore"]).toContain("/.projenrc.ts"); // Ignore here
   });
 });

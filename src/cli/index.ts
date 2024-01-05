@@ -3,12 +3,16 @@ import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
-import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from "../common";
+import {
+  PROJEN_DIR,
+  DEFAULT_PROJEN_RC_JS_FILENAME,
+  PROJEN_VERSION,
+} from "../common";
 import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { findUp, getNodeMajorVersion } from "../util";
 
-const DEFAULT_RC = resolve(PROJEN_RC);
+const DEFAULT_RC = resolve(DEFAULT_PROJEN_RC_JS_FILENAME);
 
 async function main() {
   const ya = yargs;

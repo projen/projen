@@ -2,7 +2,7 @@ import { rmSync } from "fs";
 import * as path from "path";
 import { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
-import { PROJEN_MARKER, PROJEN_RC } from "./common";
+import { PROJEN_MARKER, DEFAULT_PROJEN_RC_JS_FILENAME } from "./common";
 import { Component } from "./component";
 import { ProjenrcFile } from "./projenrc";
 import {
@@ -86,7 +86,8 @@ export abstract class FileBase extends Component {
     }
 
     // `marker` is empty if project is being ejected or if explicitly disabled
-    const projenrc = ProjenrcFile.of(this.project)?.filePath ?? PROJEN_RC;
+    const projenrc =
+      ProjenrcFile.of(this.project)?.filePath ?? DEFAULT_PROJEN_RC_JS_FILENAME;
     return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "${this.project.projenCommand}".`;
   }
 
