@@ -660,7 +660,7 @@ export class Release extends Component {
       })
     );
 
-    const workflowTargetGitHub = this.findTargetGitHubForWorkflow();
+    const workflowTargetGitHub = GitHub.of(this.project.root);
 
     if (workflowTargetGitHub && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
@@ -727,16 +727,6 @@ export class Release extends Component {
     } else {
       return undefined;
     }
-  }
-
-  private findTargetGitHubForWorkflow(): GitHub | undefined {
-    const rootGitHub = GitHub.of(this.project.root);
-    if (!rootGitHub) {
-      throw new Error(
-        `Subproject ${this.project.name} cannot create a release workflow to its top-level parent ${this.project.root.name} because it does not have GitHub support enabled. Please enable GitHub support for ${this.project.root.name}.`
-      );
-    }
-    return rootGitHub;
   }
 }
 

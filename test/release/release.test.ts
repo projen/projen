@@ -868,34 +868,33 @@ describe("Single Project", () => {
 });
 
 describe("Subproject", () => {
-  test("require rootProject to be a GitHub Project", () => {
+  test("require rootProject to be a GitHub Project in order to create release workflow", () => {
     // GIVEN
     const rootProject = new Project({
       name: "parent",
     });
     const project = new TestProject({
       parent: rootProject,
-      github: true,
       outdir: "packages/subproject",
     });
 
     // WHEN
-    expect(
-      () =>
-        new Release(project, {
-          task: project.buildTask,
-          versionFile: "version.json",
-          branch: "main",
-          publishTasks: true, // to increase coverage
-          artifactsDirectory: "dist",
-          releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
-        })
-    ).toThrow(
-      "Subproject my-project cannot create a release workflow to its top-level parent parent because it does not have GitHub support enabled. Please enable GitHub support for parent."
-    );
+
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+      releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
+    });
+
+    const outdir = synthSnapshot(rootProject);
+
+    expect(outdir[".github/workflows/release_my-project.yml"]).toBeUndefined();
   });
 
-  test("require rootProject to have github enabled", () => {
+  test("require rootProject to have github enabled in order to create release workflow", () => {
     // GIVEN
     const rootProject = new NodeProject({
       name: "parent",
@@ -904,24 +903,23 @@ describe("Subproject", () => {
     });
     const project = new TestProject({
       parent: rootProject,
-      github: true,
       outdir: "packages/subproject",
     });
 
     // WHEN
-    expect(
-      () =>
-        new Release(project, {
-          task: project.buildTask,
-          versionFile: "version.json",
-          branch: "main",
-          publishTasks: true, // to increase coverage
-          artifactsDirectory: "dist",
-          releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
-        })
-    ).toThrow(
-      "Subproject my-project cannot create a release workflow to its top-level parent parent because it does not have GitHub support enabled. Please enable GitHub support for parent."
-    );
+
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+      releaseTagPrefix: "my-project@", // to avoid conflicts with the root project
+    });
+
+    const outdir = synthSnapshot(rootProject);
+
+    expect(outdir[".github/workflows/release_my-project.yml"]).toBeUndefined();
   });
 
   test("rootProject should contain release_my-project.yml", () => {
