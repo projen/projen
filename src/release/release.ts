@@ -639,6 +639,10 @@ export class Release extends Component {
       .replace("@", "")
       .replace(/\//, "-");
 
+    const projectPathRelativeToRoot = path.relative(
+      this.project.root.outdir,
+      this.project.outdir
+    );
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
@@ -650,12 +654,10 @@ export class Release extends Component {
         if: noNewCommits,
         with: {
           name: BUILD_ARTIFACT_NAME,
-          path: this.project.parent
-            ? `${path.relative(
-                this.project.root.outdir,
-                this.project.outdir
-              )}/${this.artifactsDirectory}`
-            : this.artifactsDirectory,
+          path:
+            projectPathRelativeToRoot.length > 0
+              ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+              : this.artifactsDirectory,
         },
       })
     );
@@ -685,10 +687,6 @@ export class Release extends Component {
         run: this.project.runTaskCommand(releaseTask),
       };
 
-      const projectPathRelativeToRoot = path.relative(
-        this.project.root.outdir,
-        this.project.outdir
-      );
       // Create job based on child (only?) project GitHub
       const taskjob = new TaskWorkflowJob(taskStep, {
         outputs: {
@@ -713,7 +711,7 @@ export class Release extends Component {
         preBuildSteps,
         postBuildSteps,
         jobDefaults:
-          projectPathRelativeToRoot && projectPathRelativeToRoot !== "" // is subproject
+          projectPathRelativeToRoot.length > 0 // is subproject
             ? {
                 run: {
                   workingDirectory: ensureRelativePathStartsWithDot(
