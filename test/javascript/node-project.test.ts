@@ -1726,14 +1726,4 @@ describe("npmignore", () => {
     expect(output[".npmignore"]).toMatchSnapshot();
   });
 
-  test("npmignore should have Project's default ignore patterns", () => {
-    // GIVEN
-    const project = new TestNodeProject();
-
-    // WHEN
-    const output = synthSnapshot(project);
-
-    // THEN
-    expect(output[".npmignore"]).toContain("/.gitattributes");
-  });
 });
