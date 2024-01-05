@@ -1,10 +1,10 @@
 import * as path from "path";
+import { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 import { Component } from "../component";
 import {
   GitHub,
-  GitHubProject,
   GithubWorkflow,
   TaskWorkflowJob,
   WorkflowSteps,
@@ -19,6 +19,7 @@ import {
   JobPermissions,
   JobStep,
 } from "../github/workflows-model";
+import { Project } from "../project";
 import {
   GroupRunnerOptions,
   filteredRunsOnOptions,
@@ -132,7 +133,7 @@ export interface ReleaseProjectOptions {
   /**
    * The name of the default release workflow.
    *
-   * @default "Release"
+   * @default "release"
    */
   readonly releaseWorkflowName?: string;
 
@@ -297,7 +298,7 @@ export class Release extends Component {
    * Returns the `Release` component of a project or `undefined` if the project
    * does not have a Release component.
    */
-  public static of(project: GitHubProject): Release | undefined {
+  public static of(project: Project): Release | undefined {
     const isRelease = (c: Component): c is Release => c instanceof Release;
     return project.components.find(isRelease);
   }
@@ -317,6 +318,7 @@ export class Release extends Component {
   private readonly _branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
+  private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
   private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
@@ -328,8 +330,12 @@ export class Release extends Component {
    */
   public readonly artifactsDirectory: string;
 
-  constructor(project: GitHubProject, options: ReleaseOptions) {
-    super(project);
+  /**
+   * @param scope should be part of the project the Release belongs to.
+   * @param options options to configure the Release Component.
+   */
+  constructor(scope: IConstruct, options: ReleaseOptions) {
+    super(scope);
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error(
@@ -337,6 +343,7 @@ export class Release extends Component {
       );
     }
 
+    this.github = GitHub.of(this.project.root);
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
@@ -374,7 +381,7 @@ export class Release extends Component {
       });
     }
 
-    this.version = new Version(project, {
+    this.version = new Version(this.project, {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
       versionrcOptions: options.versionrcOptions,
@@ -382,7 +389,7 @@ export class Release extends Component {
       releasableCommits: options.releasableCommits,
     });
 
-    this.publisher = new Publisher(project, {
+    this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
@@ -422,7 +429,9 @@ export class Release extends Component {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
       minMajorVersion: options.minMajorVersion,
-      workflowName: options.releaseWorkflowName ?? "release",
+      workflowName:
+        options.releaseWorkflowName ??
+        workflowNameForProject("release", this.project),
       tagPrefix: options.releaseTagPrefix,
       npmDistTag: options.npmDistTag,
     });
@@ -541,7 +550,9 @@ export class Release extends Component {
     branchName: string,
     branch: Partial<BranchOptions>
   ): GithubWorkflow | undefined {
-    const workflowName = branch.workflowName ?? `release-${branchName}`;
+    const workflowName =
+      branch.workflowName ??
+      workflowNameForProject(`release-${branchName}`, this.project);
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -633,10 +644,6 @@ export class Release extends Component {
       run: `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
     });
 
-    const fileSafeProjectName = this.project.name
-      .replace("@", "")
-      .replace(/\//, "-");
-
     const projectPathRelativeToRoot = path.relative(
       this.project.root.outdir,
       this.project.outdir
@@ -660,16 +667,9 @@ export class Release extends Component {
       })
     );
 
-    const workflowTargetGitHub = GitHub.of(this.project.root);
-
-    if (workflowTargetGitHub && !this.releaseTrigger.isManual) {
+    if (this.github && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
-      const workflow = new GithubWorkflow(
-        workflowTargetGitHub,
-        this.project.parent
-          ? `${workflowName}_${fileSafeProjectName}`
-          : workflowName
-      );
+      const workflow = new GithubWorkflow(this.github, workflowName);
       workflow.on({
         schedule: this.releaseTrigger.schedule
           ? [{ cron: this.releaseTrigger.schedule }]
@@ -723,6 +723,20 @@ export class Release extends Component {
       return undefined;
     }
   }
+}
+
+function workflowNameForProject(base: string, project: Project): string {
+  // Subprojects
+  if (project.parent) {
+    return `${base}_${fileSafeName(project.name)}`;
+  }
+
+  // root project doesn't get a suffix
+  return base;
+}
+
+function fileSafeName(name: string): string {
+  return name.replace("@", "").replace(/\//, "-");
 }
 
 /**
