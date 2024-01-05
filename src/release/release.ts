@@ -732,11 +732,6 @@ export class Release extends Component {
   }
 
   private findTargetGitHubForWorkflow(): GitHub | undefined {
-    // this is not a subproject
-    if (!this.project.parent) {
-      return this.github;
-    }
-
     const rootGitHub = GitHub.of(this.project.root);
     if (!rootGitHub) {
       throw new Error(
