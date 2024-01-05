@@ -2,7 +2,7 @@ import { spawnSync } from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { PROJEN_RC } from "../common";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import * as logging from "../logging";
 import { Project } from "../project";
 import { TaskRuntime } from "../task-runtime";
@@ -31,10 +31,13 @@ export interface SynthOptions {
 
 export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   const workdir = runtime.workdir;
-  const rcfile = path.resolve(workdir, options.rcfile ?? PROJEN_RC); // TODO: support non javascript projenrc (e.g. java projects)
+  const rcfile = path.resolve(
+    workdir,
+    options.rcfile ?? DEFAULT_PROJEN_RC_JS_FILENAME
+  ); // TODO: support non javascript projenrc (e.g. java projects)
 
   // if --rc points to .projenrc.js, then behave as if it wasn't specified.
-  if (rcfile === path.resolve(workdir, PROJEN_RC)) {
+  if (rcfile === path.resolve(workdir, DEFAULT_PROJEN_RC_JS_FILENAME)) {
     delete (options as any).rcfile;
   }
 

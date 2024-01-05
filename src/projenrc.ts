@@ -21,4 +21,8 @@ export abstract class ProjenrcFile extends Component {
    * The path of the projenrc file.
    */
   abstract readonly filePath: string;
+
+  public preSynthesize(): void {
+    this.project.gitignore.include(`/${this.filePath}`); // This is INCLUDING in .gitignore, not excluding, so it WON'T be ignored
+  }
 }

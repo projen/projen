@@ -1,5 +1,5 @@
 import { Logger, TaskRuntime } from "../../src";
-import { PROJEN_RC } from "../../src/common";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
 import { Transform } from "../../src/javascript";
 import {
   mergeTsconfigOptions,
@@ -123,7 +123,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
   expect(out["tsconfig.dev.json"]).toEqual(
     expect.objectContaining({
       include: expect.arrayContaining([
-        PROJEN_RC,
+        DEFAULT_PROJEN_RC_JS_FILENAME,
         `${prj.srcdir}/**/*.ts`,
         `${prj.testdir}/**/*.ts`,
         "typescript.test.ts",
@@ -137,7 +137,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
   expect(out["tsconfig.dev.json"]).toEqual(
     expect.objectContaining({
       include: expect.arrayContaining([
-        PROJEN_RC,
+        DEFAULT_PROJEN_RC_JS_FILENAME,
         `${prj.srcdir}/**/*.ts`,
         `${prj.testdir}/**/*.ts`,
         "typescript.test.ts",
