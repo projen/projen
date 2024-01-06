@@ -20,14 +20,14 @@ jobs:
 
       - name: Generate JSII docs
         run: |
-          npm install
-          npm run build
+          yarn install --check-files --frozen-lockfile
+          /bin/bash ./projen.bash build
 
       - name: Build docs
         working-directory: docusaurus
         run: |
-          npm install 
-          npm run build
+          yarn install --check-files --frozen-lockfile
+          yarn build
       - name: Build website artifact
         uses: actions/upload-pages-artifact@v2
         with:
