@@ -39,9 +39,11 @@ export class WorkflowSteps {
    */
   public static readFile(options: ReadFileOptions): JobStep {
     return {
-      ...options,
-      name: options.name ?? "Read file",
-      id: options?.id ?? "read-file",
+      ...this.buildJobStepConfig({
+        ...options,
+        name: options.name ?? "Read file",
+        id: options?.id ?? "read-file",
+      }),
       uses: "juliangruber/read-file-action@v1",
       with: {
         path: options.path,
@@ -65,6 +67,27 @@ export class WorkflowSteps {
         `git config user.name "${options.gitIdentity.name}"`,
         `git config user.email "${options.gitIdentity.email}"`,
       ].join("\n"),
+    };
+  }
+
+  /**
+   * Checks if a tag exists.
+   *
+   * @param options Options to configure the `tag-exists` JobStep
+   * @returns Job step that checks if the provided tag exists
+   */
+  public static tagExists(options: TagExistsOptions): JobStep {
+    return {
+      ...this.buildJobStepConfig({
+        ...options,
+        name: options.name ?? "Check if tag exists",
+        id: options.id ?? "check-tag",
+      }),
+      with: {
+        uses: "mukunku/tag-exists-action@v1.5.0",
+        repo: options.repo,
+        tag: options.tag,
+      },
     };
   }
 
@@ -174,6 +197,22 @@ export interface SetupGitIdentityOptions extends JobStepConfiguration {
    * The identity to use.
    */
   readonly gitIdentity: GitIdentity;
+}
+
+/**
+ * Options for `tag-exists`.
+ */
+export interface TagExistsOptions extends JobStepConfiguration {
+  /**
+   * The repository to check.
+   *
+   * @default - the repository of the current workflow is implicitly used
+   */
+  readonly repo?: string;
+  /**
+   * The tag to check.
+   */
+  readonly tag: string;
 }
 
 export interface UploadArtifactWith {
