@@ -31,7 +31,11 @@ import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
+const READ_RELEASE_TAG_STEPID = "read_releasetag";
+const TAG_EXISTS_STEPID = "check_tag_exists";
+
 const LATEST_COMMIT_OUTPUT = "latest_commit";
+const TAG_EXISTS_OUTPUT = "tag_exists";
 
 type BranchHook = (branch: string) => void;
 
@@ -391,7 +395,7 @@ export class Release extends Component {
 
     this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
-      condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
+      condition: `needs.${BUILD_JOBID}.outputs.${TAG_EXISTS_OUTPUT} != 'true' && needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
@@ -636,6 +640,21 @@ export class Release extends Component {
 
     const postBuildSteps = [...this.postBuildSteps];
 
+    // Read the releasetag, then check if it already exists.
+    // If it does, we will cancel this release
+    postBuildSteps.push(
+      WorkflowSteps.readFile({
+        name: "Read releasetag.txt file",
+        id: READ_RELEASE_TAG_STEPID,
+        path: `./${this.artifactsDirectory}/${this.version.releaseTagFileName}`,
+      }),
+      WorkflowSteps.tagExists({
+        name: "Check if releasetag already exists",
+        id: TAG_EXISTS_STEPID,
+        tag: `\${{ steps.${READ_RELEASE_TAG_STEPID}.outputs.content }}`,
+      })
+    );
+
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
     postBuildSteps.push({
@@ -683,9 +702,13 @@ export class Release extends Component {
       // Create job based on child (only?) project GitHub
       const taskjob = new TaskWorkflowJob(this, releaseTask, {
         outputs: {
-          latest_commit: {
+          [LATEST_COMMIT_OUTPUT]: {
             stepId: GIT_REMOTE_STEPID,
             outputName: LATEST_COMMIT_OUTPUT,
+          },
+          [TAG_EXISTS_OUTPUT]: {
+            stepId: TAG_EXISTS_STEPID,
+            outputName: "exists",
           },
         },
         container: this.containerImage

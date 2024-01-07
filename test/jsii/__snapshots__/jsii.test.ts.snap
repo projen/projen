@@ -408,6 +408,7 @@ jobs:
       contents: write
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
+      tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
     env:
       CI: "true"
     steps:
@@ -423,6 +424,16 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
+      - name: Read releasetag.txt file
+        id: read_releasetag
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./dist/releasetag.txt
+      - name: Check if releasetag already exists
+        id: check_tag_exists
+        with:
+          uses: mukunku/tag-exists-action@v1.5.0
+          tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -442,7 +453,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -471,7 +482,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -1887,6 +1898,7 @@ jobs:
       contents: write
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
+      tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
     env:
       CI: "true"
     steps:
@@ -1902,6 +1914,16 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
+      - name: Read releasetag.txt file
+        id: read_releasetag
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./dist/releasetag.txt
+      - name: Check if releasetag already exists
+        id: check_tag_exists
+        with:
+          uses: mukunku/tag-exists-action@v1.5.0
+          tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -1921,7 +1943,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -1950,7 +1972,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -3349,6 +3371,7 @@ jobs:
       contents: write
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
+      tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
     env:
       CI: "true"
     steps:
@@ -3364,6 +3387,16 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
+      - name: Read releasetag.txt file
+        id: read_releasetag
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./dist/releasetag.txt
+      - name: Check if releasetag already exists
+        id: check_tag_exists
+        with:
+          uses: mukunku/tag-exists-action@v1.5.0
+          tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -3383,7 +3416,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -3412,7 +3445,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -4828,6 +4861,7 @@ jobs:
       contents: write
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
+      tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
     env:
       CI: "true"
     steps:
@@ -4843,6 +4877,16 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
+      - name: Read releasetag.txt file
+        id: read_releasetag
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./dist/releasetag.txt
+      - name: Check if releasetag already exists
+        id: check_tag_exists
+        with:
+          uses: mukunku/tag-exists-action@v1.5.0
+          tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -4862,7 +4906,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -4891,7 +4935,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    if: needs.release.outputs.latest_commit == github.sha
+    if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v3
         with:
