@@ -300,9 +300,9 @@ export class Release extends Component {
     "git diff --ignore-space-at-eol --exit-code";
 
   /**
-   * Conditional (Github Workflow) to check if a release job should be run.
+   * Conditional (Github Workflow Job `if`) to check if a release job should be run.
    */
-  public static readonly RELEASE_JOB_CONDITIONAL = `needs.${BUILD_JOBID}.outputs.${TAG_EXISTS_OUTPUT} != 'true' && needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`;
+  public static readonly DEPENDENT_JOB_CONDITIONAL = `needs.${BUILD_JOBID}.outputs.${TAG_EXISTS_OUTPUT} != 'true' && needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`;
 
   /**
    * Returns the `Release` component of a project or `undefined` if the project
@@ -401,7 +401,7 @@ export class Release extends Component {
 
     this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
-      condition: Release.RELEASE_JOB_CONDITIONAL,
+      condition: Release.DEPENDENT_JOB_CONDITIONAL,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
