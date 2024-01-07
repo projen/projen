@@ -34,6 +34,9 @@ export class WorkflowSteps {
   /**
    * Reads a file from the repository.
    *
+   * Outputs:
+   * - `content`: The content of the file.
+   *
    * @param options Options to configure the `read-file` JobStep
    * @returns A JobStep that reads any file
    */
@@ -73,8 +76,12 @@ export class WorkflowSteps {
   /**
    * Checks if a tag exists.
    *
+   * Outputs:
+   * - `exists`: A string value of 'true' or 'false' indicating if the tag exists.
+   *
    * @param options Options to configure the `tag-exists` JobStep
    * @returns Job step that checks if the provided tag exists
+   *
    */
   public static tagExists(options: TagExistsOptions): JobStep {
     return {
