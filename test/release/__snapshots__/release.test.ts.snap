@@ -78,8 +78,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -410,8 +410,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -742,8 +742,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -1074,8 +1074,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -1410,8 +1410,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -1488,8 +1488,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -1566,8 +1566,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -1912,8 +1912,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -2052,8 +2052,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -2448,8 +2448,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -2695,8 +2695,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -2871,8 +2871,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -3258,8 +3258,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -3666,8 +3666,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -3911,8 +3911,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -4180,8 +4180,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -4668,8 +4668,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -4746,8 +4746,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -5081,8 +5081,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -5159,8 +5159,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -5237,8 +5237,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -5613,8 +5613,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -5900,8 +5900,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote
@@ -6150,8 +6150,8 @@ jobs:
           path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
+        uses: mukunku/tag-exists-action@v1.5.0
         with:
-          uses: mukunku/tag-exists-action@v1.5.0
           tag: \${{ steps.read_releasetag.outputs.content }}
       - name: Check for new commits
         id: git_remote

@@ -90,8 +90,8 @@ export class WorkflowSteps {
         name: options.name ?? "Check if tag exists",
         id: options.id ?? "check-tag",
       }),
+      uses: "mukunku/tag-exists-action@v1.5.0",
       with: {
-        uses: "mukunku/tag-exists-action@v1.5.0",
         repo: options.repo,
         tag: options.tag,
       },
