@@ -9,8 +9,8 @@ export class WorkflowSteps {
   /**
    * Checks out a repository.
    *
-   * @param options Options
-   * @returns Job steps
+   * @param options Options to configure the `checkout` JobStep
+   * @returns A JobStep that checks out a repository
    */
   public static checkout(options: CheckoutOptions = {}): JobStep {
     const checkoutWith = removeNullOrUndefinedProperties({
@@ -32,9 +32,28 @@ export class WorkflowSteps {
   }
 
   /**
+   * Reads a file from the repository.
+   *
+   * @param options Options to configure the `read-file` JobStep
+   * @returns A JobStep that reads any file
+   */
+  public static readFile(options: ReadFileOptions): JobStep {
+    return {
+      ...options,
+      name: options.name ?? "Read file",
+      id: options?.id ?? "read-file",
+      uses: "juliangruber/read-file-action@v1",
+      with: {
+        path: options.path,
+      },
+    };
+  }
+
+  /**
    * Configures the git identity (user name and email).
+   *
    * @param options Options to configure the git identity JobStep
-   * @returns Job steps
+   * @returns Job step that configures the provided git identity
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
@@ -49,6 +68,12 @@ export class WorkflowSteps {
     };
   }
 
+  /**
+   * Uploads an artifact.
+   *
+   * @param options Options to configure the `upload-artifact` JobStep
+   * @returns A JobStep that uploads an artifact
+   */
   public static uploadArtifact(options: UploadArtifactOptions): JobStep {
     const uploadArtifactWith: UploadArtifactWith =
       removeNullOrUndefinedProperties({
@@ -69,6 +94,9 @@ export class WorkflowSteps {
     };
   }
 
+  /**
+   * Simple adapter to ensure we only include the necessary fields for a JobStepConfiguration.
+   */
   private static buildJobStepConfig(
     options: JobStepConfiguration
   ): JobStepConfiguration {
@@ -127,6 +155,18 @@ export interface CheckoutWith {
    * @default - the default GITHUB_TOKEN is implicitly used
    */
   readonly token?: string;
+}
+
+/**
+ * Options for `read-file`.
+ */
+export interface ReadFileOptions extends JobStepConfiguration {
+  /**
+   * Path to the file to read.
+   *
+   * @example `./path/to/file.txt`.
+   */
+  readonly path: string;
 }
 
 export interface SetupGitIdentityOptions extends JobStepConfiguration {
