@@ -491,16 +491,9 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -4013,16 +4006,9 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: release
         run: npx projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT

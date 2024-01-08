@@ -71,16 +71,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -403,16 +396,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -735,16 +721,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -1067,16 +1046,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -1403,16 +1375,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:10.x
         run: projen release:10.x
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -1481,16 +1446,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:2.x
         run: projen release:2.x
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -1559,16 +1517,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -1905,16 +1856,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:foo
         run: projen release:foo
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -2045,16 +1989,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -2441,16 +2378,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -2688,16 +2618,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -2864,16 +2787,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -3251,16 +3167,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -3659,16 +3568,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -3904,16 +3806,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -4173,16 +4068,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -4661,16 +4549,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:firefox
         run: projen release:firefox
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -4739,16 +4620,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:safari
         run: projen release:safari
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -5074,16 +4948,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:3.x
         run: projen release:3.x
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -5152,16 +5019,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:next
         run: projen release:next
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -5230,16 +5090,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -5606,16 +5459,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:10.x
         run: projen release:10.x
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -5893,16 +5739,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:10.x
         run: projen release:10.x
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -6143,16 +5982,9 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Read releasetag.txt file
-        id: read_releasetag
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./dist/releasetag.txt
       - name: Check if releasetag already exists
         id: check_tag_exists
-        uses: mukunku/tag-exists-action@v1.5.0
-        with:
-          tag: \${{ steps.read_releasetag.outputs.content }}
+        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT

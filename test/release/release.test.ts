@@ -171,7 +171,7 @@ describe("Single Project", () => {
         release_npm: {},
       },
     });
-    expect(wf1.jobs.release.steps.length).toBe(8);
+    expect(wf1.jobs.release.steps.length).toBe(7);
     const wf2 = YAML.parse(outdir[".github/workflows/release-2.x.yml"]);
     expect(wf2).toMatchObject({
       on: { push: { branches: ["2.x"] } },
@@ -182,7 +182,7 @@ describe("Single Project", () => {
         release_npm: {},
       },
     });
-    expect(wf2.jobs.release.steps.length).toBe(8);
+    expect(wf2.jobs.release.steps.length).toBe(7);
   });
 
   test("manual releases do not generate a release workflow", () => {

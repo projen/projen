@@ -31,7 +31,6 @@ import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
-const READ_RELEASE_TAG_STEPID = "read_releasetag";
 const TAG_EXISTS_STEPID = "check_tag_exists";
 
 const LATEST_COMMIT_OUTPUT = "latest_commit";
@@ -649,15 +648,10 @@ export class Release extends Component {
     // Read the releasetag, then check if it already exists.
     // If it does, we will cancel this release
     postBuildSteps.push(
-      WorkflowSteps.readFile({
-        name: "Read releasetag.txt file",
-        id: READ_RELEASE_TAG_STEPID,
-        path: `./${this.artifactsDirectory}/${this.version.releaseTagFileName}`,
-      }),
       WorkflowSteps.tagExists({
         name: "Check if releasetag already exists",
         id: TAG_EXISTS_STEPID,
-        tag: `\${{ steps.${READ_RELEASE_TAG_STEPID}.outputs.content }}`,
+        tag: `\$(cat ./${this.artifactsDirectory}/${this.version.releaseTagFileName})`,
       })
     );
 

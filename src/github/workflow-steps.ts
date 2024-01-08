@@ -53,6 +53,8 @@ export class WorkflowSteps {
   /**
    * Checks if a tag exists.
    *
+   * Requires a checkout step to have been run before this step with "fetch-depth" set to "0".
+   *
    * Outputs:
    * - `exists`: A string value of 'true' or 'false' indicating if the tag exists.
    *
@@ -202,6 +204,7 @@ export interface SetupGitIdentityOptions extends JobStepConfiguration {
 export interface TagExistsOptions extends JobStepConfiguration {
   /**
    * The tag to check.
+   * You may use valid bash code instead of a literal string in this field.
    */
   readonly tag: string;
 }
