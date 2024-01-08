@@ -17,12 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Generate JSII docs
-        run: |
-          yarn install --check-files --frozen-lockfile
-          /bin/bash ./projen.bash build
-
       - name: Build docs
         working-directory: docs
         run: |
