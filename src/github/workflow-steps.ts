@@ -32,29 +32,6 @@ export class WorkflowSteps {
   }
 
   /**
-   * Reads a file from the repository.
-   *
-   * Outputs:
-   * - `content`: The content of the file.
-   *
-   * @param options Options to configure the `read-file` JobStep
-   * @returns A JobStep that reads any file
-   */
-  public static readFile(options: ReadFileOptions): JobStep {
-    return {
-      ...this.buildJobStepConfig({
-        ...options,
-        name: options.name ?? "Read file",
-        id: options?.id ?? "read-file",
-      }),
-      uses: "juliangruber/read-file-action@v1",
-      with: {
-        path: options.path,
-      },
-    };
-  }
-
-  /**
    * Configures the git identity (user name and email).
    *
    * @param options Options to configure the git identity JobStep
@@ -84,17 +61,17 @@ export class WorkflowSteps {
    *
    */
   public static tagExists(options: TagExistsOptions): JobStep {
+    const checkTagExistsCommand = `git ls-remote -q --exit-code --tags origin ${options.tag}`;
+    const setOutputTrueCommand = this.buildSetOutputCommand("exists", "true");
+    const setOutputFalseCommand = this.buildSetOutputCommand("exists", "false");
+
     return {
       ...this.buildJobStepConfig({
         ...options,
         name: options.name ?? "Check if tag exists",
         id: options.id ?? "check-tag",
       }),
-      uses: "mukunku/tag-exists-action@v1.5.0",
-      with: {
-        repo: options.repo,
-        tag: options.tag,
-      },
+      run: `(${checkTagExistsCommand} && (${setOutputTrueCommand})) || (${setOutputFalseCommand})`,
     };
   }
 
@@ -223,12 +200,6 @@ export interface SetupGitIdentityOptions extends JobStepConfiguration {
  * Options for `tag-exists`.
  */
 export interface TagExistsOptions extends JobStepConfiguration {
-  /**
-   * The repository to check.
-   *
-   * @default - the repository of the current workflow is implicitly used
-   */
-  readonly repo?: string;
   /**
    * The tag to check.
    */
