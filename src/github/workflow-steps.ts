@@ -134,7 +134,7 @@ export class WorkflowSteps {
    * @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
    */
   public static buildSetOutputCommand(key: string, value: string): string {
-    return `echo "${key}=${value}" >> $GITHUB_OUTPUT && echo 'Output Key "${key}" set to "${value}"'`;
+    return `echo 'Setting Output Key "${key}" to "${value}"' && echo "${key}=${value}" >> $GITHUB_OUTPUT`;
   }
 
   /**
