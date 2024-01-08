@@ -5,7 +5,6 @@ import Image1 from '../../static/img/backgrounds/1.png';
 import Image2 from '../../static/img/backgrounds/2.png';
 import TypeScriptLogo from '../../static/img/languages/ts.png';
 import GoLogo from '../../static/img/languages/go.png';
-import DotNetLogo from '../../static/img/languages/dotnet.png';
 import JavaLogo from '../../static/img/languages/java.png';
 import PythonLogo from '../../static/img/languages/python.png';
 
@@ -79,9 +78,6 @@ export default function Home() {
                             </li>
                             <li className="list-none mb-12 lg:mb-0 text-center">
                                 <img src={GoLogo} alt="Go" className="h-48 w-auto"/>
-                            </li>
-                            <li className="list-none mb-12 lg:mb-0 text-center">
-                                <img src={DotNetLogo} alt="DotNet" className="h-48 w-auto rounded"/>
                             </li>
                             <li className="list-none mb-12 lg:mb-0 text-center">
                                 <img src={JavaLogo} alt="Java" className="h-48 w-auto"/>
