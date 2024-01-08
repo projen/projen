@@ -130,7 +130,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Built with ❤️ by Defiance Digital. `,
+        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital.</a>`,
       },
       prism: {
         darkTheme: prismThemes.dracula,
