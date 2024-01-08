@@ -36,6 +36,11 @@ const TAG_EXISTS_STEPID = "check_tag_exists";
 const LATEST_COMMIT_OUTPUT = "latest_commit";
 const TAG_EXISTS_OUTPUT = "tag_exists";
 
+/**
+ * Conditional (Github Workflow Job `if`) to check if a release job should be run.
+ */
+const DEPENDENT_JOB_CONDITIONAL = `needs.${BUILD_JOBID}.outputs.${TAG_EXISTS_OUTPUT} != 'true' && needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`;
+
 type BranchHook = (branch: string) => void;
 
 /**
@@ -299,11 +304,6 @@ export class Release extends Component {
     "git diff --ignore-space-at-eol --exit-code";
 
   /**
-   * Conditional (Github Workflow Job `if`) to check if a release job should be run.
-   */
-  public static readonly DEPENDENT_JOB_CONDITIONAL = `needs.${BUILD_JOBID}.outputs.${TAG_EXISTS_OUTPUT} != 'true' && needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`;
-
-  /**
    * Returns the `Release` component of a project or `undefined` if the project
    * does not have a Release component.
    */
@@ -400,7 +400,7 @@ export class Release extends Component {
 
     this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
-      condition: Release.DEPENDENT_JOB_CONDITIONAL,
+      condition: DEPENDENT_JOB_CONDITIONAL,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
