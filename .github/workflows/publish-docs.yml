@@ -17,15 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Build docs
-        working-directory: docs
+        working-directory: docusaurus
         run: |
           yarn install --check-files --frozen-lockfile
           yarn build
       - name: Build website artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: "docs/build"
+          path: "docusaurus/build"
   deploy:
     runs-on: ubuntu-latest
     needs: build
