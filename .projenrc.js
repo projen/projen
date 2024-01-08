@@ -193,9 +193,10 @@ new javascript.UpgradeDependencies(project, {
 
 project.tasks
   .tryFind("docgen")
-  .reset(
-    "jsii-docgen .jsii -o docs/api/projen --split-by-submodule"
-  );
+  .reset("jsii-docgen .jsii -o docs/docs/api/projen --split-by-submodule");
+
+// ignoring the entire docusaurus folder because it's not needed in the published package
+project.npmignore.exclude("/docs/");
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
