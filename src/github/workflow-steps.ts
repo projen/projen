@@ -1,5 +1,5 @@
 import { GitIdentity } from "./task-workflow";
-import { JobStep } from "./workflows-model";
+import { JobStepConfiguration, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
 
 /**
@@ -22,7 +22,7 @@ export class WorkflowSteps {
     });
 
     return {
-      ...this._buildCommonWorkflowSteps({
+      ...this.buildJobStepConfig({
         ...options,
         name: options.name ?? "Checkout",
       }),
@@ -38,7 +38,7 @@ export class WorkflowSteps {
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
-      ...this._buildCommonWorkflowSteps({
+      ...this.buildJobStepConfig({
         ...options,
         name: options.name ?? "Set git identity",
       }),
@@ -49,35 +49,41 @@ export class WorkflowSteps {
     };
   }
 
-  private static _buildCommonWorkflowSteps(
-    options: CommonWorkflowStepOptions
-  ): JobStep {
+  public static uploadArtifact(options: UploadArtifactOptions): JobStep {
+    const uploadArtifactWith: UploadArtifactWith =
+      removeNullOrUndefinedProperties({
+        name: options?.with?.name,
+        path: options?.with?.path,
+        "if-no-files-found": options?.with?.ifNoFilesFound,
+        "retention-days": options?.with?.retentionDays,
+        "compression-level": options?.with?.compressionLevel,
+      });
+
     return {
+      ...this.buildJobStepConfig({
+        ...options,
+        name: options.name ?? "Upload artifact",
+      }),
+      uses: "actions/upload-artifact@v3",
+      with: uploadArtifactWith,
+    };
+  }
+
+  private static buildJobStepConfig(
+    options: JobStepConfiguration
+  ): JobStepConfiguration {
+    return {
+      continueOnError: options?.continueOnError,
+      env: options?.env,
       id: options?.id,
       if: options?.if,
       name: options?.name,
+      timeoutMinutes: options?.timeoutMinutes,
+      workingDirectory: options?.workingDirectory,
     };
   }
 }
-
-export interface CommonWorkflowStepOptions {
-  /**
-   * A unique identifier for the step.
-   */
-  readonly id?: string;
-
-  /**
-   * A condition to determine whether to run this step.
-   */
-  readonly if?: string;
-
-  /**
-   * The name of the step.
-   */
-  readonly name?: string;
-}
-
-export interface CheckoutOptions extends CommonWorkflowStepOptions {
+export interface CheckoutOptions extends JobStepConfiguration {
   /**
    * Options for `checkout`.
    */
@@ -123,9 +129,61 @@ export interface CheckoutWith {
   readonly token?: string;
 }
 
-export interface SetupGitIdentityOptions extends CommonWorkflowStepOptions {
+export interface SetupGitIdentityOptions extends JobStepConfiguration {
   /**
    * The identity to use.
    */
   readonly gitIdentity: GitIdentity;
+}
+
+export interface UploadArtifactWith {
+  /**
+   * Name of the artifact to upload.
+   *
+   * @default "artifact"
+   */
+  readonly name?: string;
+
+  /**
+   * A file, directory or wildcard pattern that describes what to upload
+   */
+  readonly path: string;
+
+  /**
+   * The desired behavior if no files are found using the provided path.
+   * Available Options:
+   *   warn: Output a warning but do not fail the action
+   *   error: Fail the action with an error message
+   *   ignore: Do not output any warnings or errors, the action does not fail
+   *
+   * @default "warn"
+   */
+  readonly ifNoFilesFound?: "error" | "warn" | "ignore";
+
+  /**
+   * Duration after which artifact will expire in days. 0 means using default repository retention.
+   *
+   * Minimum 1 day.
+   * Maximum 90 days unless changed from the repository settings page.
+   *
+   * @default - The default repository retention
+   */
+  readonly retentionDays?: number;
+
+  /**
+   * The level of compression for Zlib to be applied to the artifact archive.
+   *
+   * The value can range from 0 to 9.
+   * For large files that are not easily compressed, a value of 0 is recommended for significantly faster uploads.
+   *
+   * @default 6
+   */
+  readonly compressionLevel?: number;
+}
+
+export interface UploadArtifactOptions extends JobStepConfiguration {
+  /**
+   * Options for `upload-artifact`.
+   */
+  readonly with: UploadArtifactWith;
 }

@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join, relative } from "path";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -25,6 +25,7 @@ import {
   JobPermission,
   JobPermissions,
   JobStep,
+  JobStepConfiguration,
   Triggers,
 } from "../github/workflows-model";
 import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
@@ -49,6 +50,7 @@ import {
 import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge } from "../util";
+import { ensureRelativePathStartsWithDot } from "../util/path";
 import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
@@ -611,16 +613,20 @@ export class NodeProject extends GitHubProject {
       (this.parent ? false : true);
     if (release) {
       this.addDevDeps(Version.STANDARD_VERSION);
-
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,
         branch: options.defaultReleaseBranch ?? "main",
-        artifactsDirectory: this.artifactsDirectory,
         ...options,
 
+        artifactsDirectory: this.artifactsDirectory,
         releaseWorkflowSetupSteps: [
-          ...this.renderWorkflowSetup({ mutable: false }),
+          ...this.renderWorkflowSetup({
+            installStepConfiguration: {
+              workingDirectory: this.determineInstallWorkingDirectory(),
+            },
+            mutable: false,
+          }),
           ...(options.releaseWorkflowSetupSteps ?? []),
         ],
         postBuildSteps: [
@@ -797,6 +803,13 @@ export class NodeProject extends GitHubProject {
     if (options.checkLicenses) {
       new LicenseChecker(this, options.checkLicenses);
     }
+  }
+
+  private determineInstallWorkingDirectory(): string | undefined {
+    if (this.parent) {
+      return ensureRelativePathStartsWithDot(relative(".", this.root.outdir));
+    }
+    return;
   }
 
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
@@ -1045,6 +1058,7 @@ export class NodeProject extends GitHubProject {
       run: mutable
         ? this.package.installAndUpdateLockfileCommand
         : this.package.installCommand,
+      ...(options.installStepConfiguration ?? {}),
     });
 
     return install;
@@ -1203,9 +1217,18 @@ export class NodeProject extends GitHubProject {
 }
 
 /**
- * Options for `renderInstallSteps()`.
+ * Options for `renderWorkflowSetup()`.
  */
 export interface RenderWorkflowSetupOptions {
+  /**
+   * Configure the install step in the workflow setup.
+   *
+   * @default - `{ name: "Install dependencies" }`
+   *
+   * @example - { workingDirectory: "rootproject-dir" } for subprojects installing from root.
+   * @example - { env: { NPM_TOKEN: "token" }} for installing from private npm registry.
+   */
+  readonly installStepConfiguration?: JobStepConfiguration;
   /**
    * Should the package lockfile be updated?
    * @default false
