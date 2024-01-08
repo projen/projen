@@ -24,7 +24,7 @@ jobs:
           /bin/bash ./projen.bash build
 
       - name: Build docs
-        working-directory: docusaurus
+        working-directory: docs
         run: |
           yarn install --check-files --frozen-lockfile
           yarn build
