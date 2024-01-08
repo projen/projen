@@ -107,7 +107,7 @@ export class WorkflowSteps {
    * From a JobStep "run" command, builds a command that sets an output value.
    *
    * @param key The output key
-   * @param value The output value
+   * @param value The output value. This may also be a valid bash command.
    * @returns The CLI Command to set provided output key and value
    *
    * @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter

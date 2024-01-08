@@ -161,7 +161,7 @@ jobs:
         run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (echo 'Setting Output Key "exists" to "true"' && echo "exists=true" >> $GITHUB_OUTPUT)) || (echo 'Setting Output Key "exists" to "false"' && echo "exists=false" >> $GITHUB_OUTPUT)
       - name: Check for new commits
         id: git_remote
-        run: echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+        run: echo 'Setting Output Key "latest_commit" to "$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"' && echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl

@@ -660,7 +660,10 @@ export class Release extends Component {
     postBuildSteps.push({
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
-      run: `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
+      run: WorkflowSteps.buildSetOutputCommand(
+        LATEST_COMMIT_OUTPUT,
+        "$(git ls-remote origin -h ${{ github.ref }} | cut -f1)"
+      ),
     });
 
     const projectPathRelativeToRoot = path.relative(
