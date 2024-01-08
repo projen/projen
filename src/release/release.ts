@@ -762,7 +762,7 @@ function workflowNameForProject(base: string, project: Project): string {
 }
 
 function fileSafeName(name: string): string {
-  return name.replace("@", "").replace(/\//, "-");
+  return name.replace("@", "").replace(/\//g, "-");
 }
 
 /**
