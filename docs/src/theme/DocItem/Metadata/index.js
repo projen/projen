@@ -1,10 +1,11 @@
 import React from 'react';
 import {PageMetadata} from '@docusaurus/theme-common';
 import {useDoc} from '@docusaurus/theme-common/internal';
+import stripHtml from "@site/src/utils/strip-html";
 
 export default function DocItemMetadata() {
   const {metadata, frontMatter, assets} = useDoc();
-  const sanitizedTitle = metadata.title.replace(/<a[^>]*><\/a>/g, '');
+  const sanitizedTitle = stripHtml(metadata.title);
   return (
     <PageMetadata
       title={sanitizedTitle}
