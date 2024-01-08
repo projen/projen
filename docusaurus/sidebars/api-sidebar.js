@@ -26,7 +26,7 @@ function getSidebarItems(allFilenames) {
 
 
 module.exports = () => {
-  const apiDirs = fs.readdirSync(path.join(__dirname, '..', 'docs', 'api'));
+  const apiDirs = fs.readdirSync(path.join(__dirname, '..', '..', 'docs', 'api'));
   const sidebarItems = getSidebarItems(apiDirs);
   return Object.values(sidebarItems).sort(sortGroupsInFrontOfTLTopics);
 };

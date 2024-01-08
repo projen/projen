@@ -2,6 +2,12 @@
 
 The docs for projen are managed in this directory and are powered by [docusaurus](https://docusaurus.io/).
 
+## Contributing
+
+Follow the [docusaurus docs](https://docusaurus.io/docs/en/navigation) to learn how to edit the docs.
+
+All documentation should be in the project's root `/docs` folder, and not in this docusaurus directory.
+
 
 ## Running the docusaurus server
 
@@ -19,8 +25,5 @@ reflected in the docs, you can generate them:
 $ yarn docgen
 ```
 
-This will generate the API docs in `docs/docs/api`.
+This will generate the API docs in `docs/api`.
 
-## Contributing
-
-Follow the [docusaurus docs](https://docusaurus.io/docs/en/navigation) to learn how to edit the docs.

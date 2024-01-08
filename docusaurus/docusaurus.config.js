@@ -5,7 +5,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 function getBaseUrl() {
   // todo: this code will be removed at a later time
-  if (process.env.GITHUB_REPOSITORY === 'Defiance-Digital/projen')return "/projen";
+  if (process.env.GITHUB_REPOSITORY === 'Defiance-Digital/projen') return "/projen";
 
   return "/";
 }
@@ -51,7 +51,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/projen/projen/tree/main/docusaurus/',
-          path: 'docs',
+          path: '../docs',
           async sidebarItemsGenerator({defaultSidebarItemsGenerator, ...args}) {
             const sidebarItems = await defaultSidebarItemsGenerator(args);
             // @ts-ignore

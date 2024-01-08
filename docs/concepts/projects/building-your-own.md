@@ -185,7 +185,7 @@ $ npx projen test
 
 You should get some results showing you the test passed as well as some code coverage numbers:
 
-![run test and get results](./run-tests.png)
+![run test and get results](run-tests.png)
 
 ## Adding a PR template component
 

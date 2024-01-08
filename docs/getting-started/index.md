@@ -91,7 +91,7 @@ project.addTask('hello', {
 project.synth();
 ```
 
-Continue to the [next section](./build-a-simple-nodejs-api.md) to see a more detailed example of building a Node.js API.
+Continue to the [next section](build-a-simple-nodejs-api.md) to see a more detailed example of building a Node.js API.
 
 
 

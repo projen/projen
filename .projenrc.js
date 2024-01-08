@@ -193,9 +193,7 @@ new javascript.UpgradeDependencies(project, {
 
 project.tasks
   .tryFind("docgen")
-  .reset(
-    "jsii-docgen .jsii -o docusaurus/docs/api/projen --split-by-submodule"
-  );
+  .reset("jsii-docgen .jsii -o docs/api/projen --split-by-submodule");
 
 // ignoring the entire docusaurus folder because it's not needed in the published package
 project.npmignore.exclude("/docusaurus/");
