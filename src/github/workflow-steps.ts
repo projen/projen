@@ -125,6 +125,17 @@ export class WorkflowSteps {
   }
 
   /**
+   * From a JobStep "run" command, builds a command that sets an output value.
+   *
+   * @param key The output key
+   * @param value The output value
+   * @returns The CLI Command to set provided output key and value
+   */
+  public static buildSetOutputCommand(key: string, value: string): string {
+    return `echo "${key}=${value}" >> $GITHUB_OUTPUT && echo 'Output Key "${key}" set to "${value}"'`;
+  }
+
+  /**
    * Simple adapter to ensure we only include the necessary fields for a JobStepConfiguration.
    */
   private static buildJobStepConfig(
