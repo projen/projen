@@ -202,7 +202,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -283,14 +283,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.awscdk.AwsCdkConstructLibrary.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -4893,7 +4892,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -4973,14 +4972,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.awscdk.AwsCdkTypeScriptApp.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -6962,7 +6960,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 | <code><a href="#projen.awscdk.ConstructLibraryAws.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.awscdk.ConstructLibraryAws.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -7043,14 +7041,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.awscdk.ConstructLibraryAws.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -11533,7 +11530,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -16710,7 +16707,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -19634,7 +19631,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

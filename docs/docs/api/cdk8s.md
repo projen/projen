@@ -1565,7 +1565,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -1644,14 +1644,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.cdk8s.Cdk8sTypeScriptApp.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -3097,7 +3096,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -3176,14 +3175,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.cdk8s.ConstructLibraryCdk8s.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -7919,7 +7917,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -10316,7 +10314,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

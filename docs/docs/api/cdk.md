@@ -211,7 +211,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 | <code><a href="#projen.cdk.ConstructLibrary.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk.ConstructLibrary.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk.ConstructLibrary.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.cdk.ConstructLibrary.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.cdk.ConstructLibrary.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdk.ConstructLibrary.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk.ConstructLibrary.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.cdk.ConstructLibrary.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -290,14 +290,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.cdk.ConstructLibrary.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -2095,7 +2094,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 | <code><a href="#projen.cdk.JsiiProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk.JsiiProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk.JsiiProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.cdk.JsiiProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.cdk.JsiiProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdk.JsiiProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk.JsiiProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.cdk.JsiiProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -2174,14 +2173,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.cdk.JsiiProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -5051,7 +5049,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -8205,7 +8203,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

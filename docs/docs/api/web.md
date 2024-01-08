@@ -196,7 +196,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
 | <code><a href="#projen.web.NextJsProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.web.NextJsProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.web.NextJsProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.web.NextJsProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.web.NextJsProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.NextJsProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.NextJsProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.web.NextJsProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -275,14 +275,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.web.NextJsProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -1610,7 +1609,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 | <code><a href="#projen.web.NextJsTypeScriptProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.web.NextJsTypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.web.NextJsTypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -1689,14 +1688,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.web.NextJsTypeScriptProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -3305,7 +3303,7 @@ new web.ReactProject(options: ReactProjectOptions)
 | <code><a href="#projen.web.ReactProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.web.ReactProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.web.ReactProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.web.ReactProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.web.ReactProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.ReactProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.ReactProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.web.ReactProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -3384,14 +3382,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.web.ReactProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -4962,7 +4959,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 | <code><a href="#projen.web.ReactTypeScriptProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.web.ReactTypeScriptProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.web.ReactTypeScriptProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.web.ReactTypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.web.ReactTypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.ReactTypeScriptProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.ReactTypeScriptProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.web.ReactTypeScriptProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -5041,14 +5038,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.web.ReactTypeScriptProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -7906,7 +7902,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -9902,7 +9898,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -12194,7 +12190,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -14358,7 +14354,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

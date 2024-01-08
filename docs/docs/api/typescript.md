@@ -445,7 +445,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 | <code><a href="#projen.typescript.TypeScriptAppProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.typescript.TypeScriptAppProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -524,14 +524,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypeScriptAppProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -1947,7 +1946,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -2026,14 +2025,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypeScriptLibraryProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -3569,7 +3567,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 | <code><a href="#projen.typescript.TypeScriptProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.typescript.TypeScriptProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.typescript.TypeScriptProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.typescript.TypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.typescript.TypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.typescript.TypeScriptProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.typescript.TypeScriptProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.typescript.TypeScriptProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -3648,14 +3646,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypeScriptProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -6852,7 +6849,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -9150,7 +9147,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

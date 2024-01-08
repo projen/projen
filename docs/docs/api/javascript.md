@@ -1920,7 +1920,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
 | <code><a href="#projen.javascript.NodeProject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.javascript.NodeProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.javascript.NodeProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.javascript.NodeProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.javascript.NodeProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.javascript.NodeProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.javascript.NodeProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.javascript.NodeProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -1999,14 +1999,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeProject.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -5321,7 +5320,7 @@ public readonly lintProjenRcFile: string;
 ```
 
 - *Type:* string
-- *Default:* PROJEN_RC
+- *Default:* "projenrc.js"
 
 Projenrc file to lint.
 
@@ -8818,7 +8817,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -10044,7 +10043,7 @@ The name of the projenrc file.
 
 ### RenderWorkflowSetupOptions <a name="RenderWorkflowSetupOptions" id="projen.javascript.RenderWorkflowSetupOptions"></a>
 
-Options for `renderInstallSteps()`.
+Options for `renderWorkflowSetup()`.
 
 #### Initializer <a name="Initializer" id="projen.javascript.RenderWorkflowSetupOptions.Initializer"></a>
 
@@ -10058,9 +10057,30 @@ const renderWorkflowSetupOptions: javascript.RenderWorkflowSetupOptions = { ... 
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.RenderWorkflowSetupOptions.property.installStepConfiguration">installStepConfiguration</a></code> | <code>projen.github.workflows.JobStepConfiguration</code> | Configure the install step in the workflow setup. |
 | <code><a href="#projen.javascript.RenderWorkflowSetupOptions.property.mutable">mutable</a></code> | <code>boolean</code> | Should the package lockfile be updated? |
 
 ---
+
+##### `installStepConfiguration`<sup>Optional</sup> <a name="installStepConfiguration" id="projen.javascript.RenderWorkflowSetupOptions.property.installStepConfiguration"></a>
+
+```typescript
+public readonly installStepConfiguration: JobStepConfiguration;
+```
+
+- *Type:* projen.github.workflows.JobStepConfiguration
+- *Default:* `{ name: "Install dependencies" }`
+
+Configure the install step in the workflow setup.
+
+---
+
+*Example*
+
+```typescript
+- { env: { NPM_TOKEN: "token" }} for installing from private npm registry.
+```
+
 
 ##### `mutable`<sup>Optional</sup> <a name="mutable" id="projen.javascript.RenderWorkflowSetupOptions.property.mutable"></a>
 

@@ -3561,6 +3561,382 @@ public readonly artifactsDirectory: string;
 ---
 
 
+### TaskWorkflowJob <a name="TaskWorkflowJob" id="projen.github.TaskWorkflowJob"></a>
+
+The primary or initial job of a TaskWorkflow.
+
+#### Initializers <a name="Initializers" id="projen.github.TaskWorkflowJob.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.TaskWorkflowJob(scope: IConstruct, task: Task, options: TaskWorkflowJobOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.TaskWorkflowJob.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | should be part of the project the Task belongs to. |
+| <code><a href="#projen.github.TaskWorkflowJob.Initializer.parameter.task">task</a></code> | <code>projen.Task</code> | the main task that is run as part of this job. |
+| <code><a href="#projen.github.TaskWorkflowJob.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.TaskWorkflowJobOptions">TaskWorkflowJobOptions</a></code> | options to configure the TaskWorkflowJob. |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.github.TaskWorkflowJob.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+should be part of the project the Task belongs to.
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.github.TaskWorkflowJob.Initializer.parameter.task"></a>
+
+- *Type:* projen.Task
+
+the main task that is run as part of this job.
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.github.TaskWorkflowJob.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.TaskWorkflowJobOptions">TaskWorkflowJobOptions</a>
+
+options to configure the TaskWorkflowJob.
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.TaskWorkflowJob.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.TaskWorkflowJob.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.TaskWorkflowJob.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.TaskWorkflowJob.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.TaskWorkflowJob.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.TaskWorkflowJob.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.TaskWorkflowJob.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.github.TaskWorkflowJob.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.TaskWorkflowJob.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.TaskWorkflowJob.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.TaskWorkflowJob.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.TaskWorkflowJob.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.TaskWorkflowJob.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.TaskWorkflowJob.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.TaskWorkflowJob.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.TaskWorkflowJob.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.TaskWorkflowJob.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.TaskWorkflowJob.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.steps">steps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.concurrency">concurrency</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.defaults">defaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.if">if</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.runsOn">runsOn</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.services">services</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>}</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.strategy">strategy</a></code> | <code><a href="#projen.github.workflows.JobStrategy">JobStrategy</a></code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.tools">tools</a></code> | <code><a href="#projen.github.workflows.Tools">Tools</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.TaskWorkflowJob.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.TaskWorkflowJob.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `permissions`<sup>Required</sup> <a name="permissions" id="projen.github.TaskWorkflowJob.property.permissions"></a>
+
+```typescript
+public readonly permissions: JobPermissions;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobPermissions">JobPermissions</a>
+
+---
+
+##### `steps`<sup>Required</sup> <a name="steps" id="projen.github.TaskWorkflowJob.property.steps"></a>
+
+```typescript
+public readonly steps: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+---
+
+##### `concurrency`<sup>Optional</sup> <a name="concurrency" id="projen.github.TaskWorkflowJob.property.concurrency"></a>
+
+```typescript
+public readonly concurrency: any;
+```
+
+- *Type:* any
+
+---
+
+##### `container`<sup>Optional</sup> <a name="container" id="projen.github.TaskWorkflowJob.property.container"></a>
+
+```typescript
+public readonly container: ContainerOptions;
+```
+
+- *Type:* <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.TaskWorkflowJob.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `defaults`<sup>Optional</sup> <a name="defaults" id="projen.github.TaskWorkflowJob.property.defaults"></a>
+
+```typescript
+public readonly defaults: JobDefaults;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobDefaults">JobDefaults</a>
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TaskWorkflowJob.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJob.property.environment"></a>
+
+```typescript
+public readonly environment: any;
+```
+
+- *Type:* any
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.TaskWorkflowJob.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.TaskWorkflowJob.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+##### `needs`<sup>Optional</sup> <a name="needs" id="projen.github.TaskWorkflowJob.property.needs"></a>
+
+```typescript
+public readonly needs: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.github.TaskWorkflowJob.property.outputs"></a>
+
+```typescript
+public readonly outputs: {[ key: string ]: JobStepOutput};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.TaskWorkflowJob.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.TaskWorkflowJob.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+---
+
+##### `services`<sup>Optional</sup> <a name="services" id="projen.github.TaskWorkflowJob.property.services"></a>
+
+```typescript
+public readonly services: {[ key: string ]: ContainerOptions};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>}
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="strategy" id="projen.github.TaskWorkflowJob.property.strategy"></a>
+
+```typescript
+public readonly strategy: JobStrategy;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStrategy">JobStrategy</a>
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.TaskWorkflowJob.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+---
+
+##### `tools`<sup>Optional</sup> <a name="tools" id="projen.github.TaskWorkflowJob.property.tools"></a>
+
+```typescript
+public readonly tools: Tools;
+```
+
+- *Type:* <a href="#projen.github.workflows.Tools">Tools</a>
+
+---
+
+
 ## Structs <a name="Structs" id="Structs"></a>
 
 ### AutoApproveOptions <a name="AutoApproveOptions" id="projen.github.AutoApproveOptions"></a>
@@ -3746,10 +4122,28 @@ const checkoutOptions: github.CheckoutOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.CheckoutOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
 | <code><a href="#projen.github.CheckoutOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
-| <code><a href="#projen.github.CheckoutOptions.property.if">if</a></code> | <code>string</code> | A condition to determine whether to run this step. |
-| <code><a href="#projen.github.CheckoutOptions.property.name">name</a></code> | <code>string</code> | The name of the step. |
+| <code><a href="#projen.github.CheckoutOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.CheckoutOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.CheckoutOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.CheckoutOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.CheckoutOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
 | <code><a href="#projen.github.CheckoutOptions.property.with">with</a></code> | <code><a href="#projen.github.CheckoutWith">CheckoutWith</a></code> | Options for `checkout`. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.CheckoutOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
 
 ---
 
@@ -3763,6 +4157,9 @@ public readonly id: string;
 
 A unique identifier for the step.
 
+You can use the id to reference the
+step in contexts.
+
 ---
 
 ##### `if`<sup>Optional</sup> <a name="if" id="projen.github.CheckoutOptions.property.if"></a>
@@ -3773,7 +4170,10 @@ public readonly if: string;
 
 - *Type:* string
 
-A condition to determine whether to run this step.
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
 
 ---
 
@@ -3785,7 +4185,48 @@ public readonly name: string;
 
 - *Type:* string
 
-The name of the step.
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.CheckoutOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.CheckoutOptions.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.CheckoutOptions.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
 
 ---
 
@@ -4000,62 +4441,6 @@ public readonly patchFile: string;
 - *Default:* ".repo.patch"
 
 The name of the artifact the patch is stored as.
-
----
-
-### CommonWorkflowStepOptions <a name="CommonWorkflowStepOptions" id="projen.github.CommonWorkflowStepOptions"></a>
-
-#### Initializer <a name="Initializer" id="projen.github.CommonWorkflowStepOptions.Initializer"></a>
-
-```typescript
-import { github } from 'projen'
-
-const commonWorkflowStepOptions: github.CommonWorkflowStepOptions = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.github.CommonWorkflowStepOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
-| <code><a href="#projen.github.CommonWorkflowStepOptions.property.if">if</a></code> | <code>string</code> | A condition to determine whether to run this step. |
-| <code><a href="#projen.github.CommonWorkflowStepOptions.property.name">name</a></code> | <code>string</code> | The name of the step. |
-
----
-
-##### `id`<sup>Optional</sup> <a name="id" id="projen.github.CommonWorkflowStepOptions.property.id"></a>
-
-```typescript
-public readonly id: string;
-```
-
-- *Type:* string
-
-A unique identifier for the step.
-
----
-
-##### `if`<sup>Optional</sup> <a name="if" id="projen.github.CommonWorkflowStepOptions.property.if"></a>
-
-```typescript
-public readonly if: string;
-```
-
-- *Type:* string
-
-A condition to determine whether to run this step.
-
----
-
-##### `name`<sup>Optional</sup> <a name="name" id="projen.github.CommonWorkflowStepOptions.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
-The name of the step.
 
 ---
 
@@ -6338,10 +6723,28 @@ const setupGitIdentityOptions: github.SetupGitIdentityOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
-| <code><a href="#projen.github.SetupGitIdentityOptions.property.if">if</a></code> | <code>string</code> | A condition to determine whether to run this step. |
-| <code><a href="#projen.github.SetupGitIdentityOptions.property.name">name</a></code> | <code>string</code> | The name of the step. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The identity to use. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.SetupGitIdentityOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
 
 ---
 
@@ -6355,6 +6758,9 @@ public readonly id: string;
 
 A unique identifier for the step.
 
+You can use the id to reference the
+step in contexts.
+
 ---
 
 ##### `if`<sup>Optional</sup> <a name="if" id="projen.github.SetupGitIdentityOptions.property.if"></a>
@@ -6365,7 +6771,10 @@ public readonly if: string;
 
 - *Type:* string
 
-A condition to determine whether to run this step.
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
 
 ---
 
@@ -6377,7 +6786,48 @@ public readonly name: string;
 
 - *Type:* string
 
-The name of the step.
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.SetupGitIdentityOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.SetupGitIdentityOptions.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.SetupGitIdentityOptions.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
 
 ---
 
@@ -6592,7 +7042,231 @@ Github Runner Group selection options.
 
 ---
 
+### TaskWorkflowJobOptions <a name="TaskWorkflowJobOptions" id="projen.github.TaskWorkflowJobOptions"></a>
+
+Options to create the Job associated with a TaskWorkflow.
+
+#### Initializer <a name="Initializer" id="projen.github.TaskWorkflowJobOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const taskWorkflowJobOptions: github.TaskWorkflowJobOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | Permissions for the build job. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.checkoutWith">checkoutWith</a></code> | <code><a href="#projen.github.CheckoutWith">CheckoutWith</a></code> | Override for the `with` property of the source code checkout step. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.condition">condition</a></code> | <code>string</code> | Adds an 'if' condition to the workflow. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.jobDefaults">jobDefaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | Default settings for all steps in the TaskWorkflow Job. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | Mapping of job output names to values/expressions. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.postBuildSteps">postBuildSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Actions to run after the main build step. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.preBuildSteps">preBuildSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Steps to run before the main build step. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.preCheckoutSteps">preCheckoutSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Initial steps to run before the source code checkout. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+
+---
+
+##### `permissions`<sup>Required</sup> <a name="permissions" id="projen.github.TaskWorkflowJobOptions.property.permissions"></a>
+
+```typescript
+public readonly permissions: JobPermissions;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobPermissions">JobPermissions</a>
+
+Permissions for the build job.
+
+---
+
+##### `artifactsDirectory`<sup>Optional</sup> <a name="artifactsDirectory" id="projen.github.TaskWorkflowJobOptions.property.artifactsDirectory"></a>
+
+```typescript
+public readonly artifactsDirectory: string;
+```
+
+- *Type:* string
+- *Default:* not set
+
+A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail.
+
+---
+
+##### `checkoutWith`<sup>Optional</sup> <a name="checkoutWith" id="projen.github.TaskWorkflowJobOptions.property.checkoutWith"></a>
+
+```typescript
+public readonly checkoutWith: CheckoutWith;
+```
+
+- *Type:* <a href="#projen.github.CheckoutWith">CheckoutWith</a>
+- *Default:* not set
+
+Override for the `with` property of the source code checkout step.
+
+---
+
+##### `condition`<sup>Optional</sup> <a name="condition" id="projen.github.TaskWorkflowJobOptions.property.condition"></a>
+
+```typescript
+public readonly condition: string;
+```
+
+- *Type:* string
+
+Adds an 'if' condition to the workflow.
+
+---
+
+##### `container`<sup>Optional</sup> <a name="container" id="projen.github.TaskWorkflowJobOptions.property.container"></a>
+
+```typescript
+public readonly container: ContainerOptions;
+```
+
+- *Type:* <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>
+- *Default:* default image
+
+---
+
+##### `downloadLfs`<sup>Optional</sup> <a name="downloadLfs" id="projen.github.TaskWorkflowJobOptions.property.downloadLfs"></a>
+
+```typescript
+public readonly downloadLfs: boolean;
+```
+
+- *Type:* boolean
+- *Default:* Use the setting on the corresponding GitHub project
+
+Whether to download files from Git LFS for this workflow.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TaskWorkflowJobOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Workflow environment variables.
+
+---
+
+##### `gitIdentity`<sup>Optional</sup> <a name="gitIdentity" id="projen.github.TaskWorkflowJobOptions.property.gitIdentity"></a>
+
+```typescript
+public readonly gitIdentity: GitIdentity;
+```
+
+- *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
+
+The git identity to use in this workflow.
+
+---
+
+##### `jobDefaults`<sup>Optional</sup> <a name="jobDefaults" id="projen.github.TaskWorkflowJobOptions.property.jobDefaults"></a>
+
+```typescript
+public readonly jobDefaults: JobDefaults;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobDefaults">JobDefaults</a>
+
+Default settings for all steps in the TaskWorkflow Job.
+
+---
+
+##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.github.TaskWorkflowJobOptions.property.outputs"></a>
+
+```typescript
+public readonly outputs: {[ key: string ]: JobStepOutput};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}
+- *Default:* {}
+
+Mapping of job output names to values/expressions.
+
+---
+
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.github.TaskWorkflowJobOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+- *Default:* not set
+
+Actions to run after the main build step.
+
+---
+
+##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.github.TaskWorkflowJobOptions.property.preBuildSteps"></a>
+
+```typescript
+public readonly preBuildSteps: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+- *Default:* not set
+
+Steps to run before the main build step.
+
+---
+
+##### `preCheckoutSteps`<sup>Optional</sup> <a name="preCheckoutSteps" id="projen.github.TaskWorkflowJobOptions.property.preCheckoutSteps"></a>
+
+```typescript
+public readonly preCheckoutSteps: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+- *Default:* not set
+
+Initial steps to run before the source code checkout.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.TaskWorkflowJobOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.TaskWorkflowJobOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
+
+---
+
 ### TaskWorkflowOptions <a name="TaskWorkflowOptions" id="projen.github.TaskWorkflowOptions"></a>
+
+Options to create a TaskWorkflow.
 
 #### Initializer <a name="Initializer" id="projen.github.TaskWorkflowOptions.Initializer"></a>
 
@@ -6606,9 +7280,7 @@ const taskWorkflowOptions: github.TaskWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.TaskWorkflowOptions.property.name">name</a></code> | <code>string</code> | The workflow name. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | Permissions for the build job. |
-| <code><a href="#projen.github.TaskWorkflowOptions.property.task">task</a></code> | <code>projen.Task</code> | The main task to be executed. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.checkoutWith">checkoutWith</a></code> | <code><a href="#projen.github.CheckoutWith">CheckoutWith</a></code> | Override for the `with` property of the source code checkout step. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.condition">condition</a></code> | <code>string</code> | Adds an 'if' condition to the workflow. |
@@ -6616,26 +7288,17 @@ const taskWorkflowOptions: github.TaskWorkflowOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
-| <code><a href="#projen.github.TaskWorkflowOptions.property.jobId">jobId</a></code> | <code>string</code> | The primary job id. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.jobDefaults">jobDefaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | Default settings for all steps in the TaskWorkflow Job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | Mapping of job output names to values/expressions. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Actions to run after the main build step. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Steps to run before the main build step. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.preCheckoutSteps">preCheckoutSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Initial steps to run before the source code checkout. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.name">name</a></code> | <code>string</code> | The workflow name. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.task">task</a></code> | <code>projen.Task</code> | The main task to be executed. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.jobId">jobId</a></code> | <code>string</code> | The primary job id. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.triggers">triggers</a></code> | <code><a href="#projen.github.workflows.Triggers">Triggers</a></code> | The triggers for the workflow. |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowOptions.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
-The workflow name.
 
 ---
 
@@ -6648,18 +7311,6 @@ public readonly permissions: JobPermissions;
 - *Type:* <a href="#projen.github.workflows.JobPermissions">JobPermissions</a>
 
 Permissions for the build job.
-
----
-
-##### `task`<sup>Required</sup> <a name="task" id="projen.github.TaskWorkflowOptions.property.task"></a>
-
-```typescript
-public readonly task: Task;
-```
-
-- *Type:* projen.Task
-
-The main task to be executed.
 
 ---
 
@@ -6750,16 +7401,15 @@ The git identity to use in this workflow.
 
 ---
 
-##### `jobId`<sup>Optional</sup> <a name="jobId" id="projen.github.TaskWorkflowOptions.property.jobId"></a>
+##### `jobDefaults`<sup>Optional</sup> <a name="jobDefaults" id="projen.github.TaskWorkflowOptions.property.jobDefaults"></a>
 
 ```typescript
-public readonly jobId: string;
+public readonly jobDefaults: JobDefaults;
 ```
 
-- *Type:* string
-- *Default:* "build"
+- *Type:* <a href="#projen.github.workflows.JobDefaults">JobDefaults</a>
 
-The primary job id.
+Default settings for all steps in the TaskWorkflow Job.
 
 ---
 
@@ -6840,6 +7490,43 @@ Github Runner Group selection options.
 
 ---
 
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The workflow name.
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.github.TaskWorkflowOptions.property.task"></a>
+
+```typescript
+public readonly task: Task;
+```
+
+- *Type:* projen.Task
+
+The main task to be executed.
+
+---
+
+##### `jobId`<sup>Optional</sup> <a name="jobId" id="projen.github.TaskWorkflowOptions.property.jobId"></a>
+
+```typescript
+public readonly jobId: string;
+```
+
+- *Type:* string
+- *Default:* "build"
+
+The primary job id.
+
+---
+
 ##### `triggers`<sup>Optional</sup> <a name="triggers" id="projen.github.TaskWorkflowOptions.property.triggers"></a>
 
 ```typescript
@@ -6850,6 +7537,237 @@ public readonly triggers: Triggers;
 - *Default:* by default workflows can only be triggered by manually.
 
 The triggers for the workflow.
+
+---
+
+### UploadArtifactOptions <a name="UploadArtifactOptions" id="projen.github.UploadArtifactOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.UploadArtifactOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const uploadArtifactOptions: github.UploadArtifactOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.UploadArtifactOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.with">with</a></code> | <code><a href="#projen.github.UploadArtifactWith">UploadArtifactWith</a></code> | Options for `upload-artifact`. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.UploadArtifactOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.UploadArtifactOptions.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+A unique identifier for the step.
+
+You can use the id to reference the
+step in contexts.
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.UploadArtifactOptions.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.UploadArtifactOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.UploadArtifactOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.UploadArtifactOptions.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.UploadArtifactOptions.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `with`<sup>Required</sup> <a name="with" id="projen.github.UploadArtifactOptions.property.with"></a>
+
+```typescript
+public readonly with: UploadArtifactWith;
+```
+
+- *Type:* <a href="#projen.github.UploadArtifactWith">UploadArtifactWith</a>
+
+Options for `upload-artifact`.
+
+---
+
+### UploadArtifactWith <a name="UploadArtifactWith" id="projen.github.UploadArtifactWith"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.UploadArtifactWith.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const uploadArtifactWith: github.UploadArtifactWith = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.UploadArtifactWith.property.path">path</a></code> | <code>string</code> | A file, directory or wildcard pattern that describes what to upload. |
+| <code><a href="#projen.github.UploadArtifactWith.property.compressionLevel">compressionLevel</a></code> | <code>number</code> | The level of compression for Zlib to be applied to the artifact archive. |
+| <code><a href="#projen.github.UploadArtifactWith.property.ifNoFilesFound">ifNoFilesFound</a></code> | <code>string</code> | The desired behavior if no files are found using the provided path. |
+| <code><a href="#projen.github.UploadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to upload. |
+| <code><a href="#projen.github.UploadArtifactWith.property.retentionDays">retentionDays</a></code> | <code>number</code> | Duration after which artifact will expire in days. 0 means using default repository retention. |
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.github.UploadArtifactWith.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+A file, directory or wildcard pattern that describes what to upload.
+
+---
+
+##### `compressionLevel`<sup>Optional</sup> <a name="compressionLevel" id="projen.github.UploadArtifactWith.property.compressionLevel"></a>
+
+```typescript
+public readonly compressionLevel: number;
+```
+
+- *Type:* number
+- *Default:* 6
+
+The level of compression for Zlib to be applied to the artifact archive.
+
+The value can range from 0 to 9.
+For large files that are not easily compressed, a value of 0 is recommended for significantly faster uploads.
+
+---
+
+##### `ifNoFilesFound`<sup>Optional</sup> <a name="ifNoFilesFound" id="projen.github.UploadArtifactWith.property.ifNoFilesFound"></a>
+
+```typescript
+public readonly ifNoFilesFound: string;
+```
+
+- *Type:* string
+- *Default:* "warn"
+
+The desired behavior if no files are found using the provided path.
+
+Available Options:
+  warn: Output a warning but do not fail the action
+  error: Fail the action with an error message
+  ignore: Do not output any warnings or errors, the action does not fail
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.UploadArtifactWith.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* "artifact"
+
+Name of the artifact to upload.
+
+---
+
+##### `retentionDays`<sup>Optional</sup> <a name="retentionDays" id="projen.github.UploadArtifactWith.property.retentionDays"></a>
+
+```typescript
+public readonly retentionDays: number;
+```
+
+- *Type:* number
+- *Default:* The default repository retention
+
+Duration after which artifact will expire in days. 0 means using default repository retention.
+
+Minimum 1 day.
+Maximum 90 days unless changed from the repository settings page.
 
 ---
 
@@ -7291,6 +8209,7 @@ new github.WorkflowSteps()
 | --- | --- |
 | <code><a href="#projen.github.WorkflowSteps.checkout">checkout</a></code> | Checks out a repository. |
 | <code><a href="#projen.github.WorkflowSteps.setupGitIdentity">setupGitIdentity</a></code> | Configures the git identity (user name and email). |
+| <code><a href="#projen.github.WorkflowSteps.uploadArtifact">uploadArtifact</a></code> | *No description.* |
 
 ---
 
@@ -7327,6 +8246,20 @@ Configures the git identity (user name and email).
 - *Type:* <a href="#projen.github.SetupGitIdentityOptions">SetupGitIdentityOptions</a>
 
 Options to configure the git identity JobStep.
+
+---
+
+##### `uploadArtifact` <a name="uploadArtifact" id="projen.github.WorkflowSteps.uploadArtifact"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowSteps.uploadArtifact(options: UploadArtifactOptions)
+```
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.github.WorkflowSteps.uploadArtifact.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.UploadArtifactOptions">UploadArtifactOptions</a>
 
 ---
 

@@ -409,25 +409,29 @@ By default, no branches are released. To add branches, call `addBranch()`.
 ```typescript
 import { release } from 'projen'
 
-new release.Release(project: GitHubProject, options: ReleaseOptions)
+new release.Release(scope: IConstruct, options: ReleaseOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.release.Release.Initializer.parameter.project">project</a></code> | <code>projen.github.GitHubProject</code> | *No description.* |
-| <code><a href="#projen.release.Release.Initializer.parameter.options">options</a></code> | <code><a href="#projen.release.ReleaseOptions">ReleaseOptions</a></code> | *No description.* |
+| <code><a href="#projen.release.Release.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | should be part of the project the Release belongs to. |
+| <code><a href="#projen.release.Release.Initializer.parameter.options">options</a></code> | <code><a href="#projen.release.ReleaseOptions">ReleaseOptions</a></code> | options to configure the Release Component. |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.release.Release.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.release.Release.Initializer.parameter.scope"></a>
 
-- *Type:* projen.github.GitHubProject
+- *Type:* constructs.IConstruct
+
+should be part of the project the Release belongs to.
 
 ---
 
 ##### `options`<sup>Required</sup> <a name="options" id="projen.release.Release.Initializer.parameter.options"></a>
 
 - *Type:* <a href="#projen.release.ReleaseOptions">ReleaseOptions</a>
+
+options to configure the Release Component.
 
 ---
 
@@ -585,14 +589,14 @@ Test whether the given construct is a component.
 ```typescript
 import { release } from 'projen'
 
-release.Release.of(project: GitHubProject)
+release.Release.of(project: Project)
 ```
 
 Returns the `Release` component of a project or `undefined` if the project does not have a Release component.
 
 ###### `project`<sup>Required</sup> <a name="project" id="projen.release.Release.of.parameter.project"></a>
 
-- *Type:* projen.github.GitHubProject
+- *Type:* projen.Project
 
 ---
 
@@ -3346,7 +3350,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 
@@ -3812,7 +3816,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

@@ -37,7 +37,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
-| <code><a href="#projen.cdktf.ConstructLibraryCdktf.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktf.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
@@ -116,14 +116,13 @@ The glob pattern to ignore.
 public addPackageIgnore(pattern: string): void
 ```
 
-Exclude these files from the bundled package.
-
-Implemented by project types based on the
-packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+Adds patterns to be ignored by npm.
 
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.cdktf.ConstructLibraryCdktf.addPackageIgnore.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to ignore.
 
 ---
 
@@ -2892,7 +2891,7 @@ public readonly releaseWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "Release"
+- *Default:* "release"
 
 The name of the default release workflow.
 

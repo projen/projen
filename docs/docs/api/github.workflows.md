@@ -1759,7 +1759,9 @@ public readonly statuses: JobPermission;
 
 ### JobStep <a name="JobStep" id="projen.github.workflows.JobStep"></a>
 
-A job step.
+JobSteps run as part of a GitHub Workflow Job.
+
+> [https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps)
 
 #### Initializer <a name="Initializer" id="projen.github.workflows.JobStep.Initializer"></a>
 
@@ -1777,10 +1779,10 @@ const jobStep: github.workflows.JobStep = { ... }
 | <code><a href="#projen.github.workflows.JobStep.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.workflows.JobStep.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.workflows.JobStep.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.JobStep.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.workflows.JobStep.property.run">run</a></code> | <code>string</code> | Runs command-line programs using the operating system's shell. |
 | <code><a href="#projen.github.workflows.JobStep.property.uses">uses</a></code> | <code>string</code> | Selects an action to run as part of a step in your job. |
 | <code><a href="#projen.github.workflows.JobStep.property.with">with</a></code> | <code>{[ key: string ]: any}</code> | A map of the input parameters defined by the action. |
-| <code><a href="#projen.github.workflows.JobStep.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.workflows.JobStep.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.workflows.JobStep.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
 
@@ -1842,6 +1844,20 @@ A name for your step to display on GitHub.
 
 ---
 
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.workflows.JobStep.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
 ##### `run`<sup>Optional</sup> <a name="run" id="projen.github.workflows.JobStep.property.run"></a>
 
 ```typescript
@@ -1891,20 +1907,6 @@ The variable is prefixed with INPUT_ and converted to upper case.
 
 ---
 
-##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.workflows.JobStep.property.workingDirectory"></a>
-
-```typescript
-public readonly workingDirectory: string;
-```
-
-- *Type:* string
-
-Specifies a working directory for a step.
-
-Overrides a job's working directory.
-
----
-
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.workflows.JobStep.property.continueOnError"></a>
 
 ```typescript
@@ -1921,6 +1923,129 @@ to pass when this step fails.
 ---
 
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.workflows.JobStep.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
+
+---
+
+### JobStepConfiguration <a name="JobStepConfiguration" id="projen.github.workflows.JobStepConfiguration"></a>
+
+These settings are unique to a JobStep from the fields contained within the metadata action.yaml file present in when creating a new GitHub Action. These fields are not present in action.yml, but are in JobStep, which are using when creating workflows.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.JobStepConfiguration.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const jobStepConfiguration: github.workflows.JobStepConfiguration = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.workflows.JobStepConfiguration.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.workflows.JobStepConfiguration.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+A unique identifier for the step.
+
+You can use the id to reference the
+step in contexts.
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.workflows.JobStepConfiguration.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.workflows.JobStepConfiguration.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.workflows.JobStepConfiguration.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.workflows.JobStepConfiguration.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.workflows.JobStepConfiguration.property.timeoutMinutes"></a>
 
 ```typescript
 public readonly timeoutMinutes: number;
@@ -2759,7 +2884,13 @@ const statusOptions: github.workflows.StatusOptions = { ... }
 
 ### Step <a name="Step" id="projen.github.workflows.Step"></a>
 
-A generic step.
+This contains the fields that are common amongst both: - JobStep, which is a step that is part of a Job in Github Actions.
+
+This is by far the most common use case.
+- The metadata file `action.yaml` that is used to define an Action when you are creating one. As in, if you were creating an Action to be used in a JobStep.
+There is some overlap between the two, and this captures that overlap.
+
+> [https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
 
 #### Initializer <a name="Initializer" id="projen.github.workflows.Step.Initializer"></a>
 
@@ -2777,10 +2908,10 @@ const step: github.workflows.Step = { ... }
 | <code><a href="#projen.github.workflows.Step.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.workflows.Step.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.workflows.Step.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.Step.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.workflows.Step.property.run">run</a></code> | <code>string</code> | Runs command-line programs using the operating system's shell. |
 | <code><a href="#projen.github.workflows.Step.property.uses">uses</a></code> | <code>string</code> | Selects an action to run as part of a step in your job. |
 | <code><a href="#projen.github.workflows.Step.property.with">with</a></code> | <code>{[ key: string ]: any}</code> | A map of the input parameters defined by the action. |
-| <code><a href="#projen.github.workflows.Step.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 
 ---
 
@@ -2840,6 +2971,20 @@ A name for your step to display on GitHub.
 
 ---
 
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.workflows.Step.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
 ##### `run`<sup>Optional</sup> <a name="run" id="projen.github.workflows.Step.property.run"></a>
 
 ```typescript
@@ -2889,7 +3034,91 @@ The variable is prefixed with INPUT_ and converted to upper case.
 
 ---
 
-##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.workflows.Step.property.workingDirectory"></a>
+### StepConfiguration <a name="StepConfiguration" id="projen.github.workflows.StepConfiguration"></a>
+
+Fields that describe the How, Why, When, and Who of a Step.
+
+These fields can have none present, but can be present on every Step, and have no effect on one another.
+
+This stands in contrast to the Command (non-Configuration) fields, which are mutually exclusive, and describe the What.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.StepConfiguration.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const stepConfiguration: github.workflows.StepConfiguration = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.StepConfiguration.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
+| <code><a href="#projen.github.workflows.StepConfiguration.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
+| <code><a href="#projen.github.workflows.StepConfiguration.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.workflows.StepConfiguration.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.StepConfiguration.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.workflows.StepConfiguration.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.workflows.StepConfiguration.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+A unique identifier for the step.
+
+You can use the id to reference the
+step in contexts.
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.workflows.StepConfiguration.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.workflows.StepConfiguration.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.workflows.StepConfiguration.property.workingDirectory"></a>
 
 ```typescript
 public readonly workingDirectory: string;
