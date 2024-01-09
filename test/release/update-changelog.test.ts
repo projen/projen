@@ -54,6 +54,41 @@ test("matches first changelog entry missing brackets around the version", async 
   expect(result.lastCommitContent).toMatch(/.*CHANGELOG\.md.*/g);
 });
 
+test("different version types do not conflict", async () => {
+  const version = "0.0.1";
+  const beta_version = `${version}-beta.0`;
+  const beta_version_result = await testUpdateChangelog({
+    testOptions: {
+      version: beta_version,
+      inputChangelogContent: `### [${beta_version}](https://examplerepourl.com/diff/path) (2024-01-07)`,
+    },
+  });
+
+  // write new version to version file
+  await fs.writeFile(
+    join(beta_version_result.cwd, DEFAULT_VERSION_FILE),
+    version
+  );
+  // write new changelog to input-changelog file
+  await fs.writeFile(
+    join(beta_version_result.cwd, DEFAULT_INPUT_CHANGELOG),
+    `### [${version}](https://examplerepourl.com/diff/path) (2024-01-08)`
+  );
+
+  const default_version_result = await testUpdateChangelog({
+    testOptions: {
+      cwd: beta_version_result.cwd,
+    },
+  });
+
+  expect(default_version_result.projectChangelogContent).toMatch(
+    `### [${beta_version}]`
+  );
+  expect(default_version_result.projectChangelogContent).toMatch(
+    `### [${version}]`
+  );
+});
+
 test("duplicate release tag update is idempotent", async () => {
   const result1 = await testUpdateChangelog();
   const result2 = await testUpdateChangelog({
