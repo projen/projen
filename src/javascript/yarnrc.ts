@@ -133,6 +133,12 @@ export interface YarnSupportedArchitectures {
   readonly libc?: string[];
 }
 
+export interface YarnPlugin {
+  readonly checksum?: string;
+  readonly path: string;
+  readonly spec: string;
+}
+
 /** https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode */
 export enum YarnCacheMigrationMode {
   REQUIRED_ONLY = "requied-only",
@@ -353,6 +359,22 @@ export interface YarnrcOptions {
   readonly virtualFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#yarnPath */
   readonly yarnPath?: string;
+
+  /**
+   * To add a plugin, you need to:
+   *
+   * 1. Run `yarn plugin import <plugin-name>` locally. This will download the plugin and place it in the `.yarn/plugins` directory.
+   * 2. Make a note of the `plugins` section of `.yarnrc.yml`. Copy the `spec`, `path`, and (optionally) `checksum` values to this config.
+   * 3. Run `yarn projen` to update your config.
+   *
+   * This process could be improved in the future. This is just an MVP solution to allow using plugins with `projen`
+   * and Yarn Berry.
+   *
+   * Note that Yarn v4+ includes all official plugins (e.g., workspace-tools, interactive-tools) by default: https://yarnpkg.com/blog/release/4.0#breaking-changes
+   *
+   * See https://yarnpkg.com/cli/plugin/import for more details.
+   */
+  readonly plugins?: YarnPlugin[];
 }
 
 export class Yarnrc extends Component {
