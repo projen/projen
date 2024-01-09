@@ -957,6 +957,12 @@ tsconfig.tsbuildinfo
         {
           "exec": "jsii --silence-warnings=reserved-word"
         }
+      ],
+      "runFirst": [
+        "pre-compile"
+      ],
+      "alsoRun": [
+        "pre-compile"
       ]
     },
     "default": {
@@ -2041,6 +2047,12 @@ tsconfig.tsbuildinfo
         {
           "exec": "cp src/_loadurl.js lib/"
         }
+      ],
+      "runFirst": [
+        "pre-compile"
+      ],
+      "alsoRun": [
+        "pre-compile"
       ]
     },
     "default": {
@@ -3223,6 +3235,12 @@ tsconfig.tsbuildinfo
         {
           "exec": "tsc --build"
         }
+      ],
+      "runFirst": [
+        "pre-compile"
+      ],
+      "alsoRun": [
+        "pre-compile"
       ]
     },
     "default": {
@@ -4315,7 +4333,13 @@ resolution-mode=highest
     },
     "compile": {
       "name": "compile",
-      "description": "Only compile"
+      "description": "Only compile",
+      "runFirst": [
+        "pre-compile"
+      ],
+      "alsoRun": [
+        "pre-compile"
+      ]
     },
     "default": {
       "name": "default",

@@ -248,8 +248,14 @@ dist/java
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "mvn compiler:compile",
@@ -981,8 +987,14 @@ dist/java
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "mvn compiler:compile",

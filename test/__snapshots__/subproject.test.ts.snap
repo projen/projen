@@ -26,8 +26,14 @@ exports[`subprojects use root level default task 1`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -85,8 +91,14 @@ exports[`subprojects use root level default task 2`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",

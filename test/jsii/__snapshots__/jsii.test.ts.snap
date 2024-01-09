@@ -905,8 +905,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "jsii --silence-warnings=reserved-word",
@@ -2369,8 +2375,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "jsii --silence-warnings=reserved-word",
@@ -3846,8 +3858,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "jsii --silence-warnings=reserved-word",
@@ -5312,8 +5330,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "jsii --silence-warnings=reserved-word",

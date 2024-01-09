@@ -33,6 +33,28 @@ export interface TaskOptions extends TaskCommonOptions {
    * @default - no arguments are passed to the step
    */
   readonly args?: string[];
+
+  /**
+   * Other tasks that this task depends on
+   *
+   * Dependency tasks will be run automatically whenever a task needs to run.
+   *
+   * @default - No dependencies
+   */
+  readonly dependsOnTasks?: Task[];
+
+  /**
+   * Tasks that should run after this task is run.
+   *
+   * Implied tasks will be run automatically whenever a task needs to run.
+   *
+   * Implies is the inverse of a dependency, and it also implies a trigger: `A
+   * implies B` is equivalent to `B depends on A` combined with "whenever A
+   * runs, B must also run".
+   *
+   * @default - No dependencies
+   */
+  readonly impliesTasks?: Task[];
 }
 
 /**
@@ -52,6 +74,8 @@ export class Task {
   private readonly requiredEnv?: string[];
   private _locked: boolean;
   private _description?: string;
+  private runFirst = new Array<Task>();
+  private alsoRun = new Array<Task>();
 
   constructor(name: string, props: TaskOptions = {}) {
     this.name = name;
@@ -63,6 +87,13 @@ export class Task {
 
     this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
+
+    for (const t of props.dependsOnTasks ?? []) {
+      this.addTaskDependency(t);
+    }
+    for (const t of props.impliesTasks ?? []) {
+      this.addTaskImplication(t);
+    }
 
     if (props.exec && props.steps) {
       throw new Error("cannot specify both exec and steps");
@@ -255,6 +286,30 @@ export class Task {
   }
 
   /**
+   * Add a task that needs to be run before this task
+   */
+  public addTaskDependency(task: Task) {
+    if (this.runFirst.includes(task)) {
+      return;
+    }
+    this.validateNoCircularDependency(task);
+    this.runFirst.push(task);
+    this.alsoRun.push(task);
+  }
+
+  /**
+   * Add a task that should to be run after this task
+   */
+  public addTaskImplication(task: Task) {
+    task.validateNoCircularDependency(this);
+    task.runFirst.push(this);
+    // This bit is different from a purely reverse dependency;
+    // Implication is an ordering dependency from B to A, but
+    // a selection dependency from A to B.
+    this.alsoRun.push(task);
+  }
+
+  /**
    * Renders a task spec into the manifest.
    *
    * @internal
@@ -295,6 +350,8 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this.cwd,
+      runFirst: omitEmptyArray(this.runFirst.map((t) => t.name)),
+      alsoRun: omitEmptyArray(this.alsoRun.map((t) => t.name)),
     };
   }
 
@@ -318,4 +375,25 @@ export class Task {
       return value;
     }
   }
+
+  private validateNoCircularDependency(target: Task) {
+    const self = this;
+
+    recurse(target);
+
+    function recurse(src: Task) {
+      if (src.name == self.name) {
+        throw new Error(
+          `Cannot add dependency from task ${self.name} to ${target.name}: ${target.name} already depends on ${self.name}`
+        );
+      }
+      for (const d of src.runFirst) {
+        recurse(d);
+      }
+    }
+  }
+}
+
+function omitEmptyArray<A>(xs: A[]): A[] | undefined {
+  return xs.length > 0 ? xs : undefined;
 }

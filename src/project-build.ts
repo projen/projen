@@ -53,6 +53,7 @@ export class ProjectBuild extends Component {
 
     this.compileTask = project.tasks.addTask("compile", {
       description: "Only compile",
+      dependsOnTasks: [this.preCompileTask],
     });
 
     this.postCompileTask = project.tasks.addTask("post-compile", {

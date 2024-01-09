@@ -419,8 +419,14 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "tsc --build",

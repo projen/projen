@@ -1,4 +1,5 @@
 import { Project, TaskRuntime } from "../../src";
+import * as logging from "../../src/logging";
 import { TasksManifest, TaskStep } from "../../src/task-model";
 import { TestProject, synthSnapshot } from "../util";
 
@@ -448,6 +449,102 @@ test("steps can receive args", () => {
       },
     },
   });
+});
+
+test("dependencies are respected", () => {
+  const p = new TestProject();
+  const logSpy = jest.spyOn(logging, "info");
+
+  // WHEN
+  const hello1 = p.addTask("hello1", {
+    steps: [{ say: "hello1" }],
+  });
+  p.addTask("hello2", {
+    steps: [{ say: "hello2" }],
+    dependsOnTasks: [hello1],
+  });
+
+  // THEN
+  const runtime = new TaskRuntime(".", synthTasksManifest(p));
+  runtime.runTask("hello2");
+  expect(logSpy).nthCalledWith(1, expect.stringContaining("hello1"));
+  expect(logSpy).nthCalledWith(2, expect.stringContaining("hello2"));
+
+  logSpy.mockRestore();
+});
+
+describe("with task implications", () => {
+  let logSpy: jest.SpyInstance<void, any[]>;
+  let runtime: TaskRuntime;
+  beforeEach(() => {
+    const p = new TestProject();
+    logSpy = jest.spyOn(logging, "info");
+
+    // WHEN
+    const hello2 = p.addTask("hello2", {
+      steps: [{ say: "hello2" }],
+    });
+    p.addTask("hello1", {
+      steps: [{ say: "hello1" }],
+      impliesTasks: [hello2],
+    });
+
+    runtime = new TaskRuntime(".", synthTasksManifest(p));
+  });
+  afterEach(() => {
+    logSpy.mockRestore();
+  });
+
+  test("implications are respected", () => {
+    runtime.runTask("hello1");
+    expect(logSpy).nthCalledWith(1, expect.stringContaining("hello1"));
+    expect(logSpy).nthCalledWith(2, expect.stringContaining("hello2"));
+  });
+
+  test("source task is not run when target task is requested", () => {
+    runtime.runTask("hello2");
+    expect(logSpy).not.toBeCalledWith(expect.stringContaining("hello1"));
+  });
+});
+
+test("tasks are not executed twice", () => {
+  const p = new TestProject();
+  const logSpy = jest.spyOn(logging, "info");
+
+  // WHEN
+  const hello1 = p.addTask("hello1", {
+    steps: [{ say: "hello1" }],
+  });
+  const hello2 = p.addTask("hello2", {
+    steps: [{ say: "hello2" }],
+    dependsOnTasks: [hello1],
+  });
+  const compound = p.addTask("compound");
+  compound.spawn(hello1);
+  compound.spawn(hello2);
+
+  // THEN
+  const runtime = new TaskRuntime(".", synthTasksManifest(p));
+  runtime.runTask("compound");
+  expect(logSpy).nthCalledWith(1, expect.stringContaining("hello1"));
+  expect(logSpy).nthCalledWith(2, expect.stringContaining("hello2"));
+
+  logSpy.mockRestore();
+});
+
+test("cannot add circular dependency between tasks", () => {
+  const p = new TestProject();
+  const hello1 = p.addTask("hello1", {
+    steps: [{ say: "hello1" }],
+  });
+  const hello2 = p.addTask("hello2", {
+    steps: [{ say: "hello2" }],
+    dependsOnTasks: [hello1],
+  });
+
+  expect(() => hello1.addTaskDependency(hello2)).toThrow(
+    /Cannot add dependency/
+  );
 });
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {

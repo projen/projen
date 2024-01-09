@@ -62,6 +62,20 @@ export interface TaskSpec extends TaskCommonOptions {
    * Task steps.
    */
   readonly steps?: TaskStep[];
+
+  /**
+   * Tasks that, when selected, should be run before this task
+   *
+   * @default - No ordering constraints
+   */
+  readonly runFirst?: string[];
+
+  /**
+   * The tasks that should be selected when this task is selected
+   *
+   * @default - No additional selections
+   */
+  readonly alsoRun?: string[];
 }
 
 /**

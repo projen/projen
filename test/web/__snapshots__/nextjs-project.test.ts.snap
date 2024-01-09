@@ -487,8 +487,14 @@ permissions-backup.acl
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
         "steps": [
           {
             "exec": "next build",

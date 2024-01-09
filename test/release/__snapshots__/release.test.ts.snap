@@ -203,8 +203,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -524,8 +530,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -849,8 +861,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -1167,8 +1185,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -1603,8 +1627,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -2097,8 +2127,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -2450,8 +2486,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -2934,8 +2976,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -3205,8 +3253,14 @@ exports[`Single Project majorVersion can be 0 2`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -3348,8 +3402,14 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -3622,8 +3682,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -3838,8 +3904,14 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -4230,8 +4302,14 @@ exports[`Single Project publisher (defaults) 2`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
@@ -4660,8 +4738,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -5120,8 +5204,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -5481,8 +5571,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -5757,8 +5853,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",

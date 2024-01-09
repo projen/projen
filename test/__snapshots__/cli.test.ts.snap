@@ -47,8 +47,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",
@@ -135,8 +141,14 @@ node_modules/
         ],
       },
       "compile": {
+        "alsoRun": [
+          "pre-compile",
+        ],
         "description": "Only compile",
         "name": "compile",
+        "runFirst": [
+          "pre-compile",
+        ],
       },
       "default": {
         "description": "Synthesize project files",

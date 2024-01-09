@@ -116,6 +116,12 @@
         {
           "exec": "jsii --silence-warnings=reserved-word"
         }
+      ],
+      "runFirst": [
+        "pre-compile"
+      ],
+      "alsoRun": [
+        "pre-compile"
       ]
     },
     "contributors:update": {

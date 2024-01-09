@@ -29,8 +29,14 @@ exports[`default tasks 1`] = `
       ],
     },
     "compile": {
+      "alsoRun": [
+        "pre-compile",
+      ],
       "description": "Only compile",
       "name": "compile",
+      "runFirst": [
+        "pre-compile",
+      ],
     },
     "default": {
       "description": "Synthesize project files",
