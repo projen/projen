@@ -110,15 +110,12 @@ export class WorkflowSteps {
    * @param value The output value. This may also be a valid bash command.
    * @returns The CLI Command to set provided output key and value
    *
-   * @example
-   * ```typescript
-   * WorkflowSteps.buildSetOutputCommand("testKey", "$(echo 'testValue')");
-   * ```
+   * @example WorkflowSteps.buildSetOutputCommand("testKey", "$(echo 'testValue')");
    *
    * @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
    */
   public static buildSetOutputCommand(key: string, value: string): string {
-    return `OUTPUT_VALUE=${value} echo "Setting Output Key '${key}' to '$OUTPUT_VALUE'" && echo "${key}=$OUTPUT_VALUE" >> $GITHUB_OUTPUT`;
+    return `OUTPUT_VALUE=${value} && echo "Setting Output Key '${key}' to '$OUTPUT_VALUE'" && echo "${key}=$OUTPUT_VALUE" >> $GITHUB_OUTPUT`;
   }
 
   /**

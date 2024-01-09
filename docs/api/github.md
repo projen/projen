@@ -6658,6 +6658,149 @@ You can use `addLine()` to add additional lines.
 
 ---
 
+### ReadFileOptions <a name="ReadFileOptions" id="projen.github.ReadFileOptions"></a>
+
+Options for `read-file`.
+
+#### Initializer <a name="Initializer" id="projen.github.ReadFileOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const readFileOptions: github.ReadFileOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.ReadFileOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
+| <code><a href="#projen.github.ReadFileOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
+| <code><a href="#projen.github.ReadFileOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.ReadFileOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.ReadFileOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.ReadFileOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.ReadFileOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.ReadFileOptions.property.path">path</a></code> | <code>string</code> | Path to the file to read. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.ReadFileOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.ReadFileOptions.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+A unique identifier for the step.
+
+You can use the id to reference the
+step in contexts.
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.ReadFileOptions.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.ReadFileOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.ReadFileOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.ReadFileOptions.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.ReadFileOptions.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.github.ReadFileOptions.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+Path to the file to read.
+
+---
+
+*Example*
+
+```typescript
+`./path/to/file.txt`.
+```
+
+
 ### SemanticTitleOptions <a name="SemanticTitleOptions" id="projen.github.SemanticTitleOptions"></a>
 
 Options for linting that PR titles follow Conventional Commits.
@@ -7039,6 +7182,144 @@ public readonly runsOnGroup: GroupRunnerOptions;
 - *Type:* projen.GroupRunnerOptions
 
 Github Runner Group selection options.
+
+---
+
+### TagExistsOptions <a name="TagExistsOptions" id="projen.github.TagExistsOptions"></a>
+
+Options for `tag-exists`.
+
+#### Initializer <a name="Initializer" id="projen.github.TagExistsOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const tagExistsOptions: github.TagExistsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.TagExistsOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
+| <code><a href="#projen.github.TagExistsOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
+| <code><a href="#projen.github.TagExistsOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.TagExistsOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.TagExistsOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.TagExistsOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.TagExistsOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.TagExistsOptions.property.tag">tag</a></code> | <code>string</code> | The tag to check. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TagExistsOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.TagExistsOptions.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+A unique identifier for the step.
+
+You can use the id to reference the
+step in contexts.
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.TagExistsOptions.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.TagExistsOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.TagExistsOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.TagExistsOptions.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.TagExistsOptions.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `tag`<sup>Required</sup> <a name="tag" id="projen.github.TagExistsOptions.property.tag"></a>
+
+```typescript
+public readonly tag: string;
+```
+
+- *Type:* string
+
+The tag to check.
+
+You may use valid bash code instead of a literal string in this field.
 
 ---
 
@@ -8207,9 +8488,48 @@ new github.WorkflowSteps()
 
 | **Name** | **Description** |
 | --- | --- |
+| <code><a href="#projen.github.WorkflowSteps.buildSetOutputCommand">buildSetOutputCommand</a></code> | From a JobStep "run" command, builds a command that sets an output value. |
 | <code><a href="#projen.github.WorkflowSteps.checkout">checkout</a></code> | Checks out a repository. |
 | <code><a href="#projen.github.WorkflowSteps.setupGitIdentity">setupGitIdentity</a></code> | Configures the git identity (user name and email). |
-| <code><a href="#projen.github.WorkflowSteps.uploadArtifact">uploadArtifact</a></code> | *No description.* |
+| <code><a href="#projen.github.WorkflowSteps.tagExists">tagExists</a></code> | Checks if a tag exists. |
+| <code><a href="#projen.github.WorkflowSteps.uploadArtifact">uploadArtifact</a></code> | Uploads an artifact. |
+
+---
+
+##### `buildSetOutputCommand` <a name="buildSetOutputCommand" id="projen.github.WorkflowSteps.buildSetOutputCommand"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowSteps.buildSetOutputCommand(key: string, value: string)
+```
+
+From a JobStep "run" command, builds a command that sets an output value.
+
+> [https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter)
+
+*Example*
+
+```typescript
+WorkflowSteps.buildSetOutputCommand("testKey", "$(echo 'testValue')");
+```
+
+
+###### `key`<sup>Required</sup> <a name="key" id="projen.github.WorkflowSteps.buildSetOutputCommand.parameter.key"></a>
+
+- *Type:* string
+
+The output key.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.github.WorkflowSteps.buildSetOutputCommand.parameter.value"></a>
+
+- *Type:* string
+
+The output value.
+
+This may also be a valid bash command.
 
 ---
 
@@ -8227,7 +8547,7 @@ Checks out a repository.
 
 - *Type:* <a href="#projen.github.CheckoutOptions">CheckoutOptions</a>
 
-Options.
+Options to configure the `checkout` JobStep.
 
 ---
 
@@ -8249,6 +8569,29 @@ Options to configure the git identity JobStep.
 
 ---
 
+##### `tagExists` <a name="tagExists" id="projen.github.WorkflowSteps.tagExists"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowSteps.tagExists(options: TagExistsOptions)
+```
+
+Checks if a tag exists.
+
+Requires a checkout step to have been run before this step with "fetch-depth" set to "0".
+
+Outputs:
+- `exists`: A string value of 'true' or 'false' indicating if the tag exists.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.github.WorkflowSteps.tagExists.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.TagExistsOptions">TagExistsOptions</a>
+
+Options to configure the `tag-exists` JobStep.
+
+---
+
 ##### `uploadArtifact` <a name="uploadArtifact" id="projen.github.WorkflowSteps.uploadArtifact"></a>
 
 ```typescript
@@ -8257,9 +8600,13 @@ import { github } from 'projen'
 github.WorkflowSteps.uploadArtifact(options: UploadArtifactOptions)
 ```
 
+Uploads an artifact.
+
 ###### `options`<sup>Required</sup> <a name="options" id="projen.github.WorkflowSteps.uploadArtifact.parameter.options"></a>
 
 - *Type:* <a href="#projen.github.UploadArtifactOptions">UploadArtifactOptions</a>
+
+Options to configure the `upload-artifact` JobStep.
 
 ---
 
