@@ -24,6 +24,7 @@ dist
 tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
+/docusaurus/
 /projen.bash
 /.markdownlint.json
 /.devcontainer.json
