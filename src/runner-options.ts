@@ -6,7 +6,7 @@ export interface GroupRunnerOptions {
 export function filteredRunsOnOptions(
   runsOn?: string[],
   runsOnGroup?: GroupRunnerOptions
-): { runsOnGroup: GroupRunnerOptions } | { runsOn: string[] } | string[] {
+): { runsOnGroup: GroupRunnerOptions } | { runsOn: string[] } {
   verifyJobConstraints(runsOn, runsOnGroup);
 
   return runsOnGroup

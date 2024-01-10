@@ -48,3 +48,17 @@ test("ts-node configured to use SWC", () => {
     steps: [{ exec: "ts-node --swc --project tsconfig.dev.json .projenrc.ts" }],
   });
 });
+
+test("adds .projenrc.ts to .gitignore DO NOT IGNORE and packageIgnore IGNORE", () => {
+  // GIVEN / WHEN
+  const prj = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    projenrcTs: true,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot[".gitignore"]).toContain("!/.projenrc.ts"); // Don't ignore here
+  expect(snapshot[".npmignore"]).toContain("/.projenrc.ts"); // Ignore here
+});

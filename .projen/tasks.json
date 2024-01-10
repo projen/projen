@@ -151,7 +151,7 @@
       "description": "Generate API.md from .jsii manifest",
       "steps": [
         {
-          "exec": "jsii-docgen -o docs/api/API.md"
+          "exec": "jsii-docgen .jsii -o docs/api/projen --split-by-submodule"
         }
       ]
     },

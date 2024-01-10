@@ -469,7 +469,16 @@ export class JsiiProject extends TypeScriptProject {
     const packageTask = this.tasks.addTask(`package:${language}`, {
       description: `Create ${language} language bindings`,
     });
-    packageTask.exec(`jsii-pacmak -v --target ${language}`);
+    const commandParts = ["jsii-pacmak", "-v"];
+
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      commandParts.push("--pack-command 'pnpm pack'");
+    }
+
+    commandParts.push(`--target ${language}`);
+
+    packageTask.exec(commandParts.join(" "));
+
     this.packageAllTask.spawn(packageTask);
     return packageTask;
   }

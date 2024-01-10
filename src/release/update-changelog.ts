@@ -58,9 +58,8 @@ export async function updateChangelog(
   }
 
   const inputChangelogContent = await fs.readFile(inputChangelog, "utf-8");
-  const changelogVersionSearchPattern = `${version}`;
 
-  if (!inputChangelogContent.includes(changelogVersionSearchPattern)) {
+  if (!inputChangelogContent.includes(version)) {
     throw new Error(
       `Supplied version ${version} was not found in input changelog. You may want to check it's content.`
     );
@@ -71,6 +70,7 @@ export async function updateChangelog(
     flag: "a+",
   });
 
+  const changelogVersionSearchPattern = `[${version}]`;
   if (outputChangelogContent.indexOf(changelogVersionSearchPattern) > -1) {
     logging.info(
       `Changelog already contains an entry for ${version}. Skipping changelog update.`
