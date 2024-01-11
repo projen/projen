@@ -14,7 +14,7 @@ Projen allows you to define and maintain complex project configuration through c
 project configuration files from a well-typed definition. These definitions can be written in any 
 [jsii](https://github.com/aws/jsii)-compatible language. For example, you can define a projen project in TypeScript 
 and synthesize a `package.json` file, a `tsconfig.json` file, a `.gitignore` file, a GitHub workflow file and more. 
-Projen can be used with TypeScript, Python, Java, .NET and Golang.
+Projen can be used with TypeScript, Python, Java and Golang.
 
 Whether you're a single developer or working on large scale teams, projen is designed to let you seamlessly 
 manage project configurations by independent people, teams, and organizations. You do this all through code. As your 
