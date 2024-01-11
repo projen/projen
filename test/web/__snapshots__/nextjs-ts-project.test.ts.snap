@@ -319,7 +319,7 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^12",
+        "version": "^16",
       },
       {
         "name": "@types/react",
@@ -781,7 +781,7 @@ tsconfig.tsbuildinfo
       "tailwindcss": "*",
     },
     "devDependencies": {
-      "@types/node": "^12",
+      "@types/node": "^16",
       "@types/react": "*",
       "@types/react-dom": "*",
       "constructs": "^10.0.0",
@@ -789,7 +789,7 @@ tsconfig.tsbuildinfo
       "typescript": "*",
     },
     "engines": {
-      "node": ">= 12.22.0",
+      "node": ">= 16.14.0",
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
@@ -1065,8 +1065,8 @@ export default function Home() {
         "dom.iterable",
         "esnext",
       ],
-      "module": "CommonJS",
-      "moduleResolution": "node",
+      "module": "esnext",
+      "moduleResolution": "bundler",
       "noEmit": true,
       "noEmitOnError": false,
       "noFallthroughCasesInSwitch": true,
@@ -1075,9 +1075,19 @@ export default function Home() {
       "noImplicitThis": true,
       "noUnusedLocals": true,
       "noUnusedParameters": true,
+      "paths": {
+        "@/*": [
+          "./*",
+        ],
+      },
+      "plugins": [
+        {
+          "name": "next",
+        },
+      ],
       "resolveJsonModule": true,
       "skipLibCheck": true,
-      "strict": false,
+      "strict": true,
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
@@ -1091,6 +1101,8 @@ export default function Home() {
       "test/**/*.ts",
       "**/*.ts",
       "**/*.tsx",
+      "next-env.d.ts",
+      ".next/types/**/*.ts",
       ".projenrc.js",
     ],
   },
@@ -1112,8 +1124,8 @@ export default function Home() {
         "dom.iterable",
         "esnext",
       ],
-      "module": "CommonJS",
-      "moduleResolution": "node",
+      "module": "esnext",
+      "moduleResolution": "bundler",
       "noEmit": true,
       "noEmitOnError": false,
       "noFallthroughCasesInSwitch": true,
@@ -1123,10 +1135,20 @@ export default function Home() {
       "noUnusedLocals": true,
       "noUnusedParameters": true,
       "outDir": "lib",
+      "paths": {
+        "@/*": [
+          "./*",
+        ],
+      },
+      "plugins": [
+        {
+          "name": "next",
+        },
+      ],
       "resolveJsonModule": true,
       "rootDir": "pages",
       "skipLibCheck": true,
-      "strict": false,
+      "strict": true,
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
@@ -1137,6 +1159,8 @@ export default function Home() {
       "pages/**/*.ts",
       "**/*.ts",
       "**/*.tsx",
+      "next-env.d.ts",
+      ".next/types/**/*.ts",
     ],
   },
 }

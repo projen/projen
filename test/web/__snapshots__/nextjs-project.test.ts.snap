@@ -894,7 +894,7 @@ permissions-backup.acl
       "standard-version": "^9",
     },
     "engines": {
-      "node": ">= 12.22.0",
+      "node": ">= 16.14.0",
     },
     "license": "Apache-2.0",
     "main": "lib/index.js",
