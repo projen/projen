@@ -58,14 +58,16 @@ export class WorkflowSteps {
    * Outputs:
    * - `exists`: A string value of 'true' or 'false' indicating if the tag exists.
    *
+   * @param tag The tag to check. You may use valid bash code instead of a literal string in this field.
    * @param options Options to configure the `tag-exists` JobStep
    * @returns Job step that checks if the provided tag exists
-   *
    */
-  public static tagExists(options: TagExistsOptions): JobStep {
-    const checkTagExistsCommand = `git ls-remote -q --exit-code --tags origin ${options.tag}`;
-    const setOutputTrueCommand = this.buildSetOutputCommand("exists", "true");
-    const setOutputFalseCommand = this.buildSetOutputCommand("exists", "false");
+  public static tagExists(tag: string, options: JobStepConfiguration): JobStep {
+    const checkTag = (remoteTag: string) =>
+      `git ls-remote -q --exit-code --tags origin ${remoteTag}`;
+    const varIsSet = (variable: string) => `[ ! -z "$${variable}" ]`;
+    const setOutput = (value: boolean) =>
+      `(echo "exists=${value ? "true" : "false"}" >> $GITHUB_OUTPUT)`;
 
     return {
       ...this.buildJobStepConfig({
@@ -73,7 +75,13 @@ export class WorkflowSteps {
         name: options.name ?? "Check if tag exists",
         id: options.id ?? "check-tag",
       }),
-      run: `(${checkTagExistsCommand} && (${setOutputTrueCommand})) || (${setOutputFalseCommand})`,
+      run: [
+        `TAG=${tag}`,
+        `(${varIsSet("TAG")} && ${checkTag("$TAG")} && ${setOutput(
+          true
+        )}) || ${setOutput(false)}'`,
+        "cat $GITHUB_OUTPUT",
+      ].join("\n"),
     };
   }
 
@@ -101,21 +109,6 @@ export class WorkflowSteps {
       uses: "actions/upload-artifact@v3",
       with: uploadArtifactWith,
     };
-  }
-
-  /**
-   * From a JobStep "run" command, builds a command that sets an output value.
-   *
-   * @param key The output key
-   * @param value The output value. This may also be a valid bash command.
-   * @returns The CLI Command to set provided output key and value
-   *
-   * @example WorkflowSteps.buildSetOutputCommand("testKey", "$(echo 'testValue')");
-   *
-   * @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
-   */
-  public static buildSetOutputCommand(key: string, value: string): string {
-    return `OUTPUT_VALUE=${value} && echo "Setting Output Key '${key}' to '$OUTPUT_VALUE'" && echo "${key}=$OUTPUT_VALUE" >> $GITHUB_OUTPUT`;
   }
 
   /**
@@ -181,34 +174,11 @@ export interface CheckoutWith {
   readonly token?: string;
 }
 
-/**
- * Options for `read-file`.
- */
-export interface ReadFileOptions extends JobStepConfiguration {
-  /**
-   * Path to the file to read.
-   *
-   * @example `./path/to/file.txt`.
-   */
-  readonly path: string;
-}
-
 export interface SetupGitIdentityOptions extends JobStepConfiguration {
   /**
    * The identity to use.
    */
   readonly gitIdentity: GitIdentity;
-}
-
-/**
- * Options for `tag-exists`.
- */
-export interface TagExistsOptions extends JobStepConfiguration {
-  /**
-   * The tag to check.
-   * You may use valid bash code instead of a literal string in this field.
-   */
-  readonly tag: string;
 }
 
 export interface UploadArtifactWith {

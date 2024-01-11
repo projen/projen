@@ -71,12 +71,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -396,12 +401,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -721,12 +731,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1046,12 +1061,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1375,12 +1395,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:10.x
         run: projen release:10.x
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1446,12 +1471,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:2.x
         run: projen release:2.x
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1517,12 +1547,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1856,12 +1891,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:foo
         run: projen release:foo
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1989,12 +2029,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -2378,12 +2423,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -2618,12 +2668,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -2787,12 +2842,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3167,12 +3227,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3568,12 +3633,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3806,12 +3876,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4068,12 +4143,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4549,12 +4629,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:firefox
         run: projen release:firefox
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4620,12 +4705,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:safari
         run: projen release:safari
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4948,12 +5038,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:3.x
         run: projen release:3.x
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5019,12 +5114,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:next
         run: projen release:next
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5090,12 +5190,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5459,12 +5564,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:10.x
         run: projen release:10.x
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5739,12 +5849,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release:10.x
         run: projen release:10.x
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5982,12 +6097,17 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: release
         run: projen release
-      - name: Check if releasetag already exists
+      - name: Check if version has already been tagged
         id: check_tag_exists
-        run: (git ls-remote -q --exit-code --tags origin $(cat ./dist/releasetag.txt) && (OUTPUT_VALUE=true && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)) || (OUTPUT_VALUE=false && echo "Setting Output Key 'exists' to '$OUTPUT_VALUE'" && echo "exists=$OUTPUT_VALUE" >> $GITHUB_OUTPUT)
+        run: |-
+          TAG=$(cat dist/dist/releasetag.txt)
+          ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
+          cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
-        run: OUTPUT_VALUE=$(git ls-remote origin -h \${{ github.ref }} | cut -f1) && echo "Setting Output Key 'latest_commit' to '$OUTPUT_VALUE'" && echo "latest_commit=$OUTPUT_VALUE" >> $GITHUB_OUTPUT
+        run: |-
+          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl

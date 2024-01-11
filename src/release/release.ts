@@ -645,13 +645,23 @@ export class Release extends Component {
 
     const postBuildSteps = [...this.postBuildSteps];
 
+    // In CI, the publish tasks copies to whole repo into the artifactsDirectory,
+    // hence the artifactsDirectory needs to be doubled up here
+    // This results in a path like ./dist/dist/releasetag.txt
+    const releaseTagFile = path.posix.normalize(
+      path.posix.join(
+        this.artifactsDirectory,
+        this.artifactsDirectory,
+        this.version.releaseTagFileName
+      )
+    );
+
     // Read the releasetag, then check if it already exists.
     // If it does, we will cancel this release
     postBuildSteps.push(
-      WorkflowSteps.tagExists({
-        name: "Check if releasetag already exists",
+      WorkflowSteps.tagExists(`$(cat ${releaseTagFile})`, {
+        name: "Check if version has already been tagged",
         id: TAG_EXISTS_STEPID,
-        tag: `\$(cat ./${this.artifactsDirectory}/${this.version.releaseTagFileName})`,
       })
     );
 
@@ -660,10 +670,10 @@ export class Release extends Component {
     postBuildSteps.push({
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
-      run: WorkflowSteps.buildSetOutputCommand(
-        LATEST_COMMIT_OUTPUT,
-        "$(git ls-remote origin -h ${{ github.ref }} | cut -f1)"
-      ),
+      run: [
+        `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
+        "cat $GITHUB_OUTPUT",
+      ].join("\n"),
     });
 
     const projectPathRelativeToRoot = path.relative(
