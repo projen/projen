@@ -645,9 +645,9 @@ export class Release extends Component {
 
     const postBuildSteps = [...this.postBuildSteps];
 
-    // In CI, the publish tasks copies to whole repo into the artifactsDirectory,
-    // hence the artifactsDirectory needs to be doubled up here
+    // In CI, the package tasks copies to whole repo into the artifactsDirectory.
     // This results in a path like ./dist/dist/releasetag.txt
+    // Thus artifactsDirectory needs to be doubled up here
     const releaseTagFile = path.posix.normalize(
       path.posix.join(
         this.artifactsDirectory,
