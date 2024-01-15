@@ -35,25 +35,36 @@ Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creato
 
 Projen ships with a number of different project types. Currently, there are:
 
+### AWS CDK
 * awscdk-app-java - AWS CDK app in Java.
 * awscdk-app-py - AWS CDK app in Python.
 * awscdk-app-ts - AWS CDK app in TypeScript.
 * awscdk-construct - AWS CDK construct library project.
+
+### CDK8s
 * cdk8s-app-py - CDK8s app in Python.
 * cdk8s-app-ts - CDK8s app in TypeScript.
 * cdk8s-construct - CDK8s construct library project.
 * cdktf-construct - CDKTF construct library project.
-* java - Java project.
-* jsii - Multi-language jsii library project.
+
+### React
 * nextjs - Next.js project without TypeScript.
 * nextjs-ts - Next.js project with TypeScript.
-* node - Node.js project.
-* project - Base project.
-* python - Python project.
 * react - React project without TypeScript.
 * react-ts - React project with TypeScript.
+
+### Serverside Frameworks
+* java - Java project.
+* node - Node.js project.
+* python - Python project.
+
+### TypeScript
 * typescript - TypeScript project.
 * typescript-app - TypeScript app.
+
+### Other
+* jsii - Multi-language jsii library project.
+* project - Base project.
 
 Projen's goal is to help your teams manage projects efficiently. In addition to the starter projects listed above,
 it's recommended that you extend these projects to create your own. This allows you to define your own project types
