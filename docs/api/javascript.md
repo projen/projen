@@ -1185,7 +1185,6 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
 | <code><a href="#projen.javascript.NodePackage.addPackageResolutions">addPackageResolutions</a></code> | Defines resolutions for dependencies to change the normally resolved version of a dependency to something else. |
 | <code><a href="#projen.javascript.NodePackage.addPeerDeps">addPeerDeps</a></code> | Defines peer dependencies. |
 | <code><a href="#projen.javascript.NodePackage.addVersion">addVersion</a></code> | Sets the package version. |
-| <code><a href="#projen.javascript.NodePackage.hasDependencyVersion">hasDependencyVersion</a></code> | Whether the given dependency (major) version is installed. |
 | <code><a href="#projen.javascript.NodePackage.hasScript">hasScript</a></code> | Indicates if a script by the given name is defined. |
 | <code><a href="#projen.javascript.NodePackage.removeScript">removeScript</a></code> | Removes an npm script (always successful). |
 | <code><a href="#projen.javascript.NodePackage.setScript">setScript</a></code> | Add a npm package.json script. |
@@ -1431,54 +1430,6 @@ Sets the package version.
 - *Type:* string
 
 Package version.
-
----
-
-##### `hasDependencyVersion` <a name="hasDependencyVersion" id="projen.javascript.NodePackage.hasDependencyVersion"></a>
-
-```typescript
-public hasDependencyVersion(dependencyName: string, checkRange: string): boolean
-```
-
-Whether the given dependency (major) version is installed.
-
-This can be used to test for the presence of certain versions of devDependencies,
-and do something dependency-specific in certain Components. For example, test for
-a version of Jest and generate different configs based on the Jest version.
-
-NOTE: The implementation of this function currently is currently
-approximate: to do it correctly, we would need a separate implementation
-for every package manager, to query its installed version (either that, or we
-would code to query `package-lock.json`, `yarn.lock`, etc...).
-
-Instead, we will look at `package.json`, and assume that the versions picked by
-the package manager match ~that. This will work well enough for major version checks,
-but may fail for point versions.
-
-What we SHOULD do is: `actualVersion ∈ checkRange`, but because we can't do
-that we restrict the API of this function to querying for major versions only.
-
-What we do instead is `requestedRange ∩ checkRange != ∅`. This will always give
-a correct result if `requestedRange ⊆ checkRange`, but may give false positives
-when `checkRange ⊆ requestedRange`.
-false positive in case
-
-May return `undefined` if the question cannot be answered (for example, if the dependency
-is requested via local file dependencies).
-
-###### `dependencyName`<sup>Required</sup> <a name="dependencyName" id="projen.javascript.NodePackage.hasDependencyVersion.parameter.dependencyName"></a>
-
-- *Type:* string
-
-The name of the dependency.
-
----
-
-###### `checkRange`<sup>Required</sup> <a name="checkRange" id="projen.javascript.NodePackage.hasDependencyVersion.parameter.checkRange"></a>
-
-- *Type:* string
-
-A particular version, or range of versions.
 
 ---
 

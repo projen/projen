@@ -93,7 +93,6 @@
     "glob": "^8",
     "ini": "^2.0.0",
     "semver": "^7.5.4",
-    "semver-intersect": "^1.5.0",
     "shx": "^0.3.4",
     "xmlbuilder2": "^3.1.1",
     "yaml": "^2.2.2",
@@ -109,7 +108,6 @@
     "glob",
     "ini",
     "semver",
-    "semver-intersect",
     "shx",
     "xmlbuilder2",
     "yaml",
@@ -162,13 +160,11 @@
         }
       ]
     ],
-    "transform": {
-      "^.+\\.[t]sx?$": [
-        "ts-jest",
-        {
-          "tsconfig": "tsconfig.dev.json"
-        }
-      ]
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "tsconfig.dev.json"
+      }
     }
   },
   "types": "lib/index.d.ts",
