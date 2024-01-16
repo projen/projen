@@ -63,25 +63,25 @@ full list):
 **Built-in:** (run `npx projen new <type>`)
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
-* [awscdk-app-java](https://projen.io/api/API.html#awscdkjavaapp-) - AWS CDK app in Java.
-* [awscdk-app-py](https://projen.io/api/API.html#awscdkpythonapp-) - AWS CDK app in Python.
-* [awscdk-app-ts](https://projen.io/api/API.html#awscdktypescriptapp-) - AWS CDK app in TypeScript.
-* [awscdk-construct](https://projen.io/api/API.html#awscdkconstructlibrary-) - AWS CDK construct library project.
-* [cdk8s-app-py](https://projen.io/api/API.html#cdk8spythonapp-) - CDK8s app in Python.
-* [cdk8s-app-ts](https://projen.io/api/API.html#cdk8stypescriptapp-) - CDK8s app in TypeScript.
-* [cdk8s-construct](https://projen.io/api/API.html#constructlibrarycdk8s-) - CDK8s construct library project.
-* [cdktf-construct](https://projen.io/api/API.html#constructlibrarycdktf-) - CDKTF construct library project.
-* [java](https://projen.io/api/API.html#javaproject-) - Java project.
-* [jsii](https://projen.io/api/API.html#jsiiproject-) - Multi-language jsii library project.
-* [nextjs](https://projen.io/api/API.html#nextjsproject-) - Next.js project without TypeScript.
-* [nextjs-ts](https://projen.io/api/API.html#nextjstypescriptproject-) - Next.js project with TypeScript.
-* [node](https://projen.io/api/API.html#nodeproject-) - Node.js project.
-* [project](https://projen.io/api/API.html#project-) - Base project.
-* [python](https://projen.io/api/API.html#pythonproject-) - Python project.
-* [react](https://projen.io/api/API.html#reactproject-) - React project without TypeScript.
-* [react-ts](https://projen.io/api/API.html#reacttypescriptproject-) - React project with TypeScript.
-* [typescript](https://projen.io/api/API.html#typescriptproject-) - TypeScript project.
-* [typescript-app](https://projen.io/api/API.html#typescriptappproject-) - TypeScript app.
+* [awscdk-app-java](https://projen.io/docs/api/awscdk#awscdkjavaapp-) - AWS CDK app in Java.
+* [awscdk-app-py](https://projen.io/docs/api/awscdk#awscdkpythonapp-) - AWS CDK app in Python.
+* [awscdk-app-ts](https://projen.io/docs/api/awscdk#awscdktypescriptapp-) - AWS CDK app in TypeScript.
+* [awscdk-construct](https://projen.io/docs/api/awscdk#awscdkconstructlibrary-) - AWS CDK construct library project.
+* [cdk8s-app-py](https://projen.io/docs/api/cdk8s#cdk8spythonapp-) - CDK8s app in Python.
+* [cdk8s-app-ts](https://projen.io/docs/api/cdk8s#cdk8stypescriptapp-) - CDK8s app in TypeScript.
+* [cdk8s-construct](https://projen.io/docs/api/cdk8s#constructlibrarycdk8s-) - CDK8s construct library project.
+* [cdktf-construct](https://projen.io/docs/api/cdktf#constructlibrarycdktf-) - CDKTF construct library project.
+* [java](https://projen.io/docs/api/java#javaproject-) - Java project.
+* [jsii](https://projen.io/docs/api/cdk#jsiiproject-) - Multi-language jsii library project.
+* [nextjs](https://projen.io/docs/api/web#nextjsproject-) - Next.js project using JavaScript.
+* [nextjs-ts](https://projen.io/docs/api/web#nextjstypescriptproject-) - Next.js project using TypeScript.
+* [node](https://projen.io/docs/api/javascript#nodeproject-) - Node.js base project using JavaScript.
+* [project](https://projen.io/docs/api/projen#project-) - Base project.
+* [python](https://projen.io/docs/api/python#pythonproject-) - Python project.
+* [react](https://projen.io/docs/api/web#reactproject-) - React project using JavaScript.
+* [react-ts](https://projen.io/docs/api/web#reacttypescriptproject-) - React project using TypeScript.
+* [typescript](https://projen.io/docs/api/typescript#typescriptproject-) - TypeScript project.
+* [typescript-app](https://projen.io/docs/api/typescript#typescriptappproject-) - TypeScript app.
 <!-- </macro> -->
 
 **External:** (run `npx projen new --from <type>`)

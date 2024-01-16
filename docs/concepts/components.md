@@ -37,6 +37,7 @@ When the library is updated, developers will get access to the new version's bug
 A *project* represents a software application.
 Projects compose any number of *components* to form the project configuration.
 Components represent a self-contained project feature.
+In other words: Components are the building blocks that are composed together into projects.
 
 When a component is created, it is associated with a project by passing a construct as the scope of the component.
 
@@ -50,8 +51,6 @@ const project = new Project(...);
 const foo = new MyComponent(project);
 const bar = new YourComponent(foo, { /* options */ });
 ```
-
-
 
 The construct tree for this example looks like this.
 Both components are part of the same project.
