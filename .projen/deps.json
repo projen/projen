@@ -164,6 +164,10 @@
       "type": "bundled"
     },
     {
+      "name": "semver-intersect",
+      "type": "bundled"
+    },
+    {
       "name": "shx",
       "type": "bundled"
     },

@@ -422,13 +422,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-json-patch,glob,ini,semver,shx,xmlbuilder2,yaml,yargs"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-json-patch,glob,ini,semver,semver-intersect,shx,xmlbuilder2,yaml,yargs"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @iarna/toml case chalk conventional-changelog-config-spec fast-json-patch glob ini semver shx xmlbuilder2 yaml yargs"
+          "exec": "yarn upgrade @iarna/toml case chalk conventional-changelog-config-spec fast-json-patch glob ini semver semver-intersect shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "/bin/bash ./projen.bash"

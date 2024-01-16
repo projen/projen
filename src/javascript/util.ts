@@ -217,3 +217,48 @@ export function tryResolveDependencyVersion(
   }
   return manifest?.version;
 }
+
+/**
+ * Whether the given requestedRange *probably* leads to the installation of a version that matches checkRange
+ *
+ * We assume that NPM always installs the most recent version of a package that
+ * is allowed by the requestedRange.
+ */
+export function installedVersionProbablyMatches(
+  requestedRange: string,
+  checkRange: string
+): boolean {
+  const options = {
+    includePrerelease: true,
+    loose: true,
+  };
+
+  // No questions asked: always true
+  if (semver.subset(requestedRange, checkRange, options)) {
+    return true;
+  }
+
+  // Also no questions asked: always false
+  if (!semver.intersects(requestedRange, checkRange, options)) {
+    return false;
+  }
+
+  // Now we're in tricky territory. We intersect, but aren't a full subset.
+  // We are in one of the following 2 situations, which we will tie-break by
+  // assuming NPM will install the most recent matching version in 'requested'.
+  //
+  // requested  | check    | result
+  // -----------|----------|-----------
+  //   >= 2     |  >= 3    | probably true (chance of FP)
+  //   <= 2     |  <= 1    | probably false (change of FN)
+  //
+  // `semver` doesn't make it easy to distinguish these cases (we can't request
+  // the `maxVersion` that satisfies a range). Instead what we do is
+  // get the `minVersion` of each range, and if they compare equal we assume
+  // we're in the bottom case with `<=` checks, and return `false`.
+
+  return !semver.eq(
+    semver.minVersion(requestedRange, options) ?? "1.2.3",
+    semver.minVersion(checkRange, options) ?? "1.2.3"
+  );
+}

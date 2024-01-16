@@ -6,6 +6,7 @@ import {
   Eslint,
   EslintOptions,
   Jest,
+  NodePackage,
   NodeProject,
   NodeProjectOptions,
   Projenrc as NodeProjectProjenrc,
@@ -678,9 +679,24 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
-    const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
-    // add relevant deps
-    if (!jestMajorVersion || jestMajorVersion >= 29) {
+    // Test for the jest version that was requested; first check the version
+    // that is requested via projen properties -- if none, fall back to
+    // inspecting the actual version that happens to be installed unbeknownst to
+    // this component.
+    let hasJest29: boolean | undefined;
+    if (jest.jestVersion) {
+      // Perhaps this could be unnecessary given the next part, but the tests
+      // depend on this and the reading of 'package.json' is very awkward to test.
+      const major = semver.coerce(jest.jestVersion)?.major;
+      hasJest29 = major ? major >= 29 : undefined;
+    }
+    if (hasJest29 === undefined) {
+      const np = NodePackage.of(this);
+      hasJest29 = np?.hasDependencyVersion("jest", ">= 29");
+    }
+
+    // add relevant deps (we treat "unknown" as having a modern jest)
+    if (hasJest29 !== false) {
       return this.addJestNoCompileModern(jest, tsJestOptions);
     }
     this.addJestNoCompileLegacy(jest, tsJestOptions);
