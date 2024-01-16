@@ -230,7 +230,15 @@ export function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
   // projen.web.ReactProject -> web.ReactProject
   const typename = fqn.substring(fqn.indexOf(".") + 1);
 
-  const docsurl = `https://projen.io/api/API.html#${typename
+  // projen.web.ReactProject -> web
+  // projen.Project -> projen
+  const readmeFileName = typename.includes(".")
+    ? typename.split(".", 1)[0]
+    : typeinfo.assembly;
+
+  // * [java](https://projen.io/docs/api/java#javaproject-) - Java project.
+
+  const docsurl = `https://projen.io/docs/api/${readmeFileName}#${typename
     .substring(typename.indexOf(".") + 1)
     .toLowerCase()}-`;
   let pjid =
