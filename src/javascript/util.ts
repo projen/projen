@@ -275,6 +275,7 @@ export function hasDependencyVersion(
         return undefined;
       }
       requestedRange = requestedVersion;
+      break;
     }
   }
 
