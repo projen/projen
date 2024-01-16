@@ -1,3 +1,4 @@
+import * as path from "node:path";
 import { Range, major } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
@@ -185,6 +186,16 @@ export class JsiiProject extends TypeScriptProject {
   public readonly eslint?: Eslint;
 
   private readonly packageAllTask: Task;
+
+  // This project copies to whole repo into the artifactsDirectory.
+  // Which causes the release tag file to be in a path like ./dist/dist/releasetag.txt
+  // Use a TS hack to allow the release component to get the correct path from the project
+  // @ts-ignore
+  private get releaseTagFilePath(): string {
+    return path.posix.normalize(
+      path.posix.join(this.artifactsDirectory, this.artifactsDirectory)
+    );
+  }
 
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);

@@ -317,6 +317,11 @@ export class Release extends Component {
    */
   public readonly publisher: Publisher;
 
+  /**
+   * Location of build artifacts.
+   */
+  public readonly artifactsDirectory: string;
+
   private readonly buildTask: Task;
   private readonly version: Version;
   private readonly postBuildSteps: JobStep[];
@@ -331,13 +336,8 @@ export class Release extends Component {
   private readonly workflowRunsOn?: string[];
   private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
-
+  private readonly releaseTagFilePath: string;
   private readonly _branchHooks: BranchHook[];
-
-  /**
-   * Location of build artifacts.
-   */
-  public readonly artifactsDirectory: string;
 
   /**
    * @param scope should be part of the project the Release belongs to.
@@ -397,6 +397,16 @@ export class Release extends Component {
       tagPrefix: options.releaseTagPrefix,
       releasableCommits: options.releasableCommits,
     });
+
+    this.releaseTagFilePath = path.posix.normalize(
+      path.posix.join(
+        // temporary hack to allow JsiiProject setting a different path to the release tag file
+        // see JsiiProject.releaseTagFilePath for more details
+        //@ts-ignore
+        this.project.releaseTagFilePath ?? this.artifactsDirectory,
+        this.version.releaseTagFileName
+      )
+    );
 
     this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
@@ -645,21 +655,10 @@ export class Release extends Component {
 
     const postBuildSteps = [...this.postBuildSteps];
 
-    // In CI, the package tasks copies to whole repo into the artifactsDirectory.
-    // This results in a path like ./dist/dist/releasetag.txt
-    // Thus artifactsDirectory needs to be doubled up here
-    const releaseTagFile = path.posix.normalize(
-      path.posix.join(
-        this.artifactsDirectory,
-        this.artifactsDirectory,
-        this.version.releaseTagFileName
-      )
-    );
-
     // Read the releasetag, then check if it already exists.
     // If it does, we will cancel this release
     postBuildSteps.push(
-      WorkflowSteps.tagExists(`$(cat ${releaseTagFile})`, {
+      WorkflowSteps.tagExists(`$(cat ${this.releaseTagFilePath})`, {
         name: "Check if version has already been tagged",
         id: TAG_EXISTS_STEPID,
       })

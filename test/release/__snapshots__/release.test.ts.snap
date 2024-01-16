@@ -74,7 +74,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -404,7 +404,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -734,7 +734,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -1064,7 +1064,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -1398,7 +1398,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -1474,7 +1474,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -1550,7 +1550,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -1894,7 +1894,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -2032,7 +2032,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -2426,7 +2426,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -2671,7 +2671,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -2845,7 +2845,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -3230,7 +3230,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -3636,7 +3636,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -3879,7 +3879,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -4146,7 +4146,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -4632,7 +4632,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -4708,7 +4708,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -5041,7 +5041,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -5117,7 +5117,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -5193,7 +5193,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -5567,7 +5567,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -5852,7 +5852,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
@@ -6100,7 +6100,7 @@ jobs:
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
-          TAG=$(cat dist/dist/releasetag.txt)
+          TAG=$(cat dist/releasetag.txt)
           ([ ! -z "$TAG" ] && git ls-remote -q --exit-code --tags origin $TAG && (echo "exists=true" >> $GITHUB_OUTPUT)) || (echo "exists=false" >> $GITHUB_OUTPUT)'
           cat $GITHUB_OUTPUT
       - name: Check for new commits
