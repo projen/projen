@@ -1,9 +1,9 @@
 import { existsSync, readFileSync } from "fs";
 import { basename, dirname, extname, join, sep, resolve } from "path";
 import * as semver from "semver";
+import { NodePackage } from "./node-package";
 import { Project } from "../project";
 import { findUp } from "../util";
-import { NodePackage } from "./node-package";
 
 /**
  * Basic interface for `package.json`.
@@ -261,9 +261,12 @@ export function hasDependencyVersion(
   if (!file) {
     throw new Error(`Project does not have a NodePackage component`);
   }
-  const pj = existsSync(file.absolutePath)
-    ? JSON.parse(readFileSync(file.absolutePath, "utf-8"))
-    : {};
+
+  if (!existsSync(file.absolutePath)) {
+    return undefined;
+  }
+
+  const pj = JSON.parse(readFileSync(file.absolutePath, "utf-8"));
 
   // Technicaly, we should be intersecting all ranges to come up with the most narrow dependency
   // range, but `semver` doesn't allow doing that and we don't want to add a dependency on `semver-intersect`.
