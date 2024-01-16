@@ -58,7 +58,6 @@ const project = new cdk.JsiiProject({
     "shx",
     "fast-json-patch",
     "comment-json@4.2.2",
-    "semver-intersect",
   ],
 
   devDeps: [

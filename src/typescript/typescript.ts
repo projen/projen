@@ -6,7 +6,6 @@ import {
   Eslint,
   EslintOptions,
   Jest,
-  NodePackage,
   NodeProject,
   NodeProjectOptions,
   Projenrc as NodeProjectProjenrc,
@@ -15,6 +14,7 @@ import {
   TypescriptConfig,
   TypescriptConfigOptions,
 } from "../javascript";
+import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
 import { TextFile } from "../textfile";
@@ -696,8 +696,7 @@ export class TypeScriptProject extends NodeProject {
       hasTsJest29 = major ? major >= 29 : undefined;
     }
     if (hasTsJest29 === undefined) {
-      const np = NodePackage.of(this);
-      hasTsJest29 = np?.hasDependencyVersion("ts-jest", ">= 29");
+      hasTsJest29 = hasDependencyVersion(this, "ts-jest", ">= 29");
     }
 
     // add relevant deps (we treat "unknown" as having a modern ts-jest)

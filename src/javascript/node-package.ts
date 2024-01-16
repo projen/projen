@@ -9,7 +9,6 @@ import { join, resolve } from "path";
 import * as semver from "semver";
 import {
   extractCodeArtifactDetails,
-  installedVersionProbablyMatches,
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
@@ -23,10 +22,6 @@ import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { isTruthy, sorted, writeFile } from "../util";
-
-// This package does not have a @types module
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { intersect } = require("semver-intersect");
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -894,68 +889,6 @@ export class NodePackage extends Component {
    */
   public get projenCommand() {
     return this.project.projenCommand;
-  }
-
-  /**
-   * Whether the given dependency (major) version is installed
-   *
-   * This can be used to test for the presence of certain versions of devDependencies,
-   * and do something dependency-specific in certain Components. For example, test for
-   * a version of Jest and generate different configs based on the Jest version.
-   *
-   * NOTE: The implementation of this function currently is currently
-   * approximate: to do it correctly, we would need a separate implementation
-   * for every package manager, to query its installed version (either that, or we
-   * would code to query `package-lock.json`, `yarn.lock`, etc...).
-   *
-   * Instead, we will look at `package.json`, and assume that the versions picked by
-   * the package manager match ~that. This will work well enough for major version checks,
-   * but may fail for point versions.
-   *
-   * What we SHOULD do is: `actualVersion ∈ checkRange`, but because we can't do
-   * that we restrict the API of this function to querying for major versions only.
-   *
-   * What we do instead is `requestedRange ∩ checkRange != ∅`. This will always give
-   * a correct result if `requestedRange ⊆ checkRange`, but may give false positives
-   * when `checkRange ⊆ requestedRange`.
-   * false positive in case
-   *
-   * May return `undefined` if the question cannot be answered (for example, if the dependency
-   * is requested via local file dependencies).
-   *
-   * @param dependencyName The name of the dependency
-   * @param checkRange A particular version, or range of versions.
-   */
-  public hasDependencyVersion(
-    dependencyName: string,
-    checkRange: string
-  ): boolean | undefined {
-    const pj = this.readPackageJson() ?? {};
-
-    // Get the effective dependency range by intersecting all requested ranges
-    let requestedRange = "*";
-    for (const key in ["dependencies", "devDependencies", "peerDependencies"]) {
-      const deps = pj[key] ?? {};
-      let requestedVersion = deps[dependencyName];
-      if (requestedVersion) {
-        // If this is not a valid range, it could be 'file:dep.tgz', or a GitHub URL. No way to know what
-        // version we're getting, bail out.
-        if (!semver.validRange(requestedVersion)) {
-          return undefined;
-        }
-        try {
-          requestedRange = requestedRange
-            ? intersect(requestedRange, requestedVersion)
-            : requestedVersion;
-        } catch {
-          // intersect will throw if the versions are not unifiable. We will set a range that can never
-          // satisfy anything.
-          requestedRange = ">0.0.0 <0.0.0";
-        }
-      }
-    }
-
-    return installedVersionProbablyMatches(requestedRange, checkRange);
   }
 
   /**
