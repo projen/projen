@@ -344,7 +344,7 @@ export enum AutoRelease {
 }
 
 /**
- * Node.js project
+ * Node.js project.
  *
  * @pjid node
  */

@@ -69,7 +69,7 @@ export interface ReactProjectOptions
 }
 
 /**
- * React project without TypeScript.
+ * React project using JavaScript.
  *
  * @pjid react
  */
@@ -104,7 +104,7 @@ export class ReactProject extends NodeProject {
 }
 
 /**
- * React project with TypeScript.
+ * React project using TypeScript.
  *
  * @pjid react-ts
  */

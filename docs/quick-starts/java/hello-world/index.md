@@ -210,10 +210,6 @@ through `packagingOptions`.
 
 ## Publishing
 
-TBD.
-
-> Publishing to Maven is still not supported output of the box. Since the
-> package output of `JavaProject` is compatible with
-> [jsii-release](https://www.npmjs.com/package/jsii-release), and we already
-> release to Maven from jsii projects, it should be possible to reuse quite a
-> lot.
+Publishing to Maven is currently not supported out of the box.
+Since the package output of `JavaProject` is compatible with [publib](https://github.com/cdklabs/publib),
+and we already release to Maven from jsii projects, it should be possible to reuse many of these features.

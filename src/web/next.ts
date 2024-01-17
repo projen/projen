@@ -53,7 +53,7 @@ export interface NextJsProjectOptions
 const MINIMUM_NEXT_JS_NODE_VERSION = "16.14.0"; // https://nextjs.org/docs/pages/building-your-application/upgrading/version-13
 
 /**
- * Next.js project without TypeScript.
+ * Next.js project using JavaScript.
  *
  * @pjid nextjs
  */
@@ -102,7 +102,7 @@ export class NextJsProject extends NodeProject {
 }
 
 /**
- * Next.js project with TypeScript.
+ * Next.js project using TypeScript.
  *
  * @pjid nextjs-ts
  */
