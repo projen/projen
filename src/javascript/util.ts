@@ -259,7 +259,7 @@ export function hasDependencyVersion(
 ): boolean | undefined {
   const file = NodePackage.of(project)?.file;
   if (!file) {
-    throw new Error(`Project does not have a NodePackage component`);
+    return undefined;
   }
 
   if (!existsSync(file.absolutePath)) {
@@ -274,7 +274,7 @@ export function hasDependencyVersion(
   // Let's take the first dependency declaration we find, and assume that people
   // set up their `package.json` correctly.
   let requestedRange: string | undefined;
-  for (const key in ["dependencies", "devDependencies", "peerDependencies"]) {
+  for (const key of ["dependencies", "devDependencies", "peerDependencies"]) {
     const deps = pj[key] ?? {};
     let requestedVersion = deps[dependencyName];
     if (requestedVersion) {
