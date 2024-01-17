@@ -1511,6 +1511,7 @@ Dependency to resolve for.
 | --- | --- |
 | <code><a href="#projen.javascript.NodePackage.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.javascript.NodePackage.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.NodePackage.of">of</a></code> | Returns the `NodePackage` instance associated with a project or `undefined` if there is no NodePackage. |
 
 ---
 
@@ -1559,6 +1560,24 @@ Test whether the given construct is a component.
 ###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodePackage.isComponent.parameter.x"></a>
 
 - *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.NodePackage.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodePackage.of(project: Project)
+```
+
+Returns the `NodePackage` instance associated with a project or `undefined` if there is no NodePackage.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodePackage.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+The project.
 
 ---
 
