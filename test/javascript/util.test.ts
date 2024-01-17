@@ -136,6 +136,8 @@ test.each([
   ["^30.5.9", ">=29", true],
   [">=2", ">=3", true],
   ["<=2", "<=1", false],
+  ["^29", ">=29", true],
+  ["^30", ">=29", true],
 ])(
   "installedVersionProbablyMatches(%p, %p) should return %p",
   (requested, check, expected) => {
