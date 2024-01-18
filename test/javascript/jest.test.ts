@@ -274,6 +274,24 @@ test("addModuleNameMappers() can be used to add module name mappers", () => {
   });
 });
 
+test("addModulePaths() can be used to add module paths", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addModulePaths("<rootDir>/src");
+
+  // THEN
+  expect(synthSnapshot(project)["package.json"].jest.modulePaths).toStrictEqual(
+    ["<rootDir>/src"]
+  );
+});
+
 test("addRoots() can be used to add roots", () => {
   // GIVEN
   const project = new NodeProject({

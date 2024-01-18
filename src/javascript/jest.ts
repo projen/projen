@@ -871,12 +871,24 @@ export class Jest extends Component {
   }
 
   /**
+   * Adds one or more modulePaths to Jest's configuration.
+   *
+   * @param modulePaths - An array of absolute paths to additional locations to search when resolving modules   *
+   */
+  public addModulePaths(...modulePaths: string[]): void {
+    const existingModulePaths = this.config.modulePaths ?? [];
+    this.config.modulePaths = [
+      ...new Set([...existingModulePaths, ...modulePaths]),
+    ];
+  }
+
+  /**
    * Adds one or more roots to Jest's configuration.
    * @param roots - A list of paths to directories that Jest should use to search for files in.
    */
   public addRoots(...roots: string[]): void {
     const existingRoots = this.config.roots ?? [];
-    this.config.roots = [...existingRoots, ...roots];
+    this.config.roots = [...new Set([...existingRoots, ...roots])];
   }
 
   private configureTestCommand(updateSnapshot: UpdateSnapshot) {
