@@ -79,7 +79,7 @@ export class WorkflowSteps {
         `TAG=${tag}`,
         `(${varIsSet("TAG")} && ${checkTag("$TAG")} && ${setOutput(
           true
-        )}) || ${setOutput(false)}'`,
+        )}) || ${setOutput(false)}`,
         "cat $GITHUB_OUTPUT",
       ].join("\n"),
     };
