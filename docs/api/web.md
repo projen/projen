@@ -167,7 +167,7 @@ public readonly project: Project;
 
 ### NextJsProject <a name="NextJsProject" id="projen.web.NextJsProject"></a>
 
-Next.js project without TypeScript.
+Next.js project using JavaScript.
 
 #### Initializers <a name="Initializers" id="projen.web.NextJsProject.Initializer"></a>
 
@@ -1580,7 +1580,7 @@ this task should synthesize the project files.
 
 ### NextJsTypeScriptProject <a name="NextJsTypeScriptProject" id="projen.web.NextJsTypeScriptProject"></a>
 
-Next.js project with TypeScript.
+Next.js project using TypeScript.
 
 #### Initializers <a name="Initializers" id="projen.web.NextJsTypeScriptProject.Initializer"></a>
 
@@ -3274,7 +3274,7 @@ public readonly project: Project;
 
 ### ReactProject <a name="ReactProject" id="projen.web.ReactProject"></a>
 
-React project without TypeScript.
+React project using JavaScript.
 
 #### Initializers <a name="Initializers" id="projen.web.ReactProject.Initializer"></a>
 
@@ -4930,7 +4930,7 @@ Indicates if the file should be read-only or read-write.
 
 ### ReactTypeScriptProject <a name="ReactTypeScriptProject" id="projen.web.ReactTypeScriptProject"></a>
 
-React project with TypeScript.
+React project using TypeScript.
 
 #### Initializers <a name="Initializers" id="projen.web.ReactTypeScriptProject.Initializer"></a>
 

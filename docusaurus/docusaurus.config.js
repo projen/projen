@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 function getBaseUrl() {
   // todo: this code will be removed at a later time
@@ -52,7 +52,7 @@ const config = {
           editUrl:
             'https://github.com/projen/projen/tree/main/docusaurus/',
           path: '../docs',
-          async sidebarItemsGenerator({defaultSidebarItemsGenerator, ...args}) {
+          async sidebarItemsGenerator({ defaultSidebarItemsGenerator, ...args }) {
             const sidebarItems = await defaultSidebarItemsGenerator(args);
             // @ts-ignore
             return sidebarItems.filter(x => x.label !== 'api');
@@ -66,7 +66,7 @@ const config = {
   ],
 
   themeConfig:
-  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: 'img/projen.svg',
       navbar: {
@@ -130,7 +130,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital.</a>`,
+        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Website built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital.</a>`,
       },
       prism: {
         darkTheme: prismThemes.dracula,

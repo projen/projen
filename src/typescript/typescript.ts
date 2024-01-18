@@ -14,6 +14,7 @@ import {
   TypescriptConfig,
   TypescriptConfigOptions,
 } from "../javascript";
+import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
 import { TextFile } from "../textfile";
@@ -678,9 +679,28 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
-    const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
-    // add relevant deps
-    if (!jestMajorVersion || jestMajorVersion >= 29) {
+    // Test for the ts-jest version that was requested;
+    //
+    // - First, check the `jest` version that is requested via projen properties. This
+    //   should be the same as the `ts-jest` version anyway.
+    // - If none found, fall back to inspecting the actual `ts-jest` version
+    //   that happens to be installed.
+    let hasTsJest29: boolean | undefined;
+    if (jest.jestVersion) {
+      // We could maybe replace this will full "actual version" checking, but
+      // the tests depend on this and the reading of 'package.json' is very
+      // awkward to test.
+      // Note that we use the requested version of `jest` as a proxy for the
+      // version of `ts-jest`, which is what we're actually interested in.
+      const major = semver.coerce(jest.jestVersion)?.major;
+      hasTsJest29 = major ? major >= 29 : undefined;
+    }
+    if (hasTsJest29 === undefined) {
+      hasTsJest29 = hasDependencyVersion(this, "ts-jest", ">= 29");
+    }
+
+    // add relevant deps (we treat "unknown" as having a modern ts-jest)
+    if (hasTsJest29 !== false) {
       return this.addJestNoCompileModern(jest, tsJestOptions);
     }
     this.addJestNoCompileLegacy(jest, tsJestOptions);

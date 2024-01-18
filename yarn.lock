@@ -955,9 +955,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.11.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.3.tgz#ac29fba7aeadc74046b02e50758156f4850f1296"
-  integrity sha512-nrlmbvGPNGaj84IJZXMPhQuCMEVTT/hXZMJJG/aIqVL9fKxqk814sGGtJA4GI6hpJSLQjpi6cn0Qx9eOf9SDVg==
+  version "20.11.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.5.tgz#be10c622ca7fcaa3cf226cf80166abc31389d86e"
+  integrity sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1466,9 +1466,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001565:
-  version "1.0.30001576"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001576.tgz#893be772cf8ee6056d6c1e2d07df365b9ec0a5c4"
-  integrity sha512-ff5BdakGe2P3SQsMsiqmt1Lc8221NR1VzHj5jXN5vBny9A6fpze94HiVV/n7XRosOlsShJcvMv5mdnpjOGCEgg==
+  version "1.0.30001578"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001578.tgz#11741580434ce60aae4b4a9abee9f9f8d7bf5be5"
+  integrity sha512-J/jkFgsQ3NEl4w2lCoM9ZPxrD+FoBNJ7uJUpGVjIg/j0OwJosWM36EPDv+Yyi0V4twBk9pPmlFS+PLykgEvUmg==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2017,9 +2017,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.601:
-  version "1.4.631"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.631.tgz#db2de2e1ce90fc1785b5c3f49fde594413270e05"
-  integrity sha512-g73CJB/rMPjdxpiNJYmV1homV7mLVUNe/R0z/HhqMfpjkt58FpYmkTjbtuv3zymdbTTJ+VOEqe1c+lkTjSOhmQ==
+  version "1.4.637"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.637.tgz#ed8775cf5e0c380c3e8452e9818a0e4b7a671ac4"
+  integrity sha512-G7j3UCOukFtxVO1vWrPQUoDk3kL70mtvjc/DC/k2o7lE0wAdq+Vwp1ipagOow+BH0uVztFysLWbkM/RTIrbK3w==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -3542,10 +3542,10 @@ jsii-diff@^1.94.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.3.7:
-  version "10.3.7"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.7.tgz#899d12de328df3485136aacea207e5908e8f59d1"
-  integrity sha512-Xzsw489tfUhf8fWAilVFdJ/IXi/7zEX4g/hfl8Q2GE5TtpnW71SJHSHbkPqhPE1mjjuxtzTDOiaIx9uJ8+Ws3g==
+jsii-docgen@^10.3.9:
+  version "10.3.9"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.9.tgz#f6d5ba608261484ecee63ac7225dae116a5c1cba"
+  integrity sha512-S4kg7RfUSZcuo5YfhmmJGzzSceHjBVBxxG5i+EJ9D3O/nlPg1wtu5x6WFaNhlwYBV5s9m9Yc5w4U2UZqe3MXzA==
   dependencies:
     "@jsii/spec" "^1.94.0"
     case "^1.6.3"

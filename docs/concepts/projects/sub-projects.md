@@ -15,7 +15,7 @@ Then, create a second project and pass the first project in as the `parent` of t
 This makes the second project a subproject of the first.
 Finally, call the `.synth()` on both projects.
 
-## Example 
+## Example
 
 ```js
 // .projenrc.js
@@ -41,4 +41,3 @@ pipelineProject.synth();
 By default, GitHub workflows will not be created for subprojects since config
 files in `.github/` only work if they are in the root directory.
 :::
-
