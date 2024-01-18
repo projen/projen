@@ -274,6 +274,25 @@ test("addModuleNameMappers() can be used to add module name mappers", () => {
   });
 });
 
+test("addRoots() can be used to add roots", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addRoots("foo", "bar");
+
+  // THEN
+  expect(synthSnapshot(project)["package.json"].jest.roots).toStrictEqual([
+    "foo",
+    "bar",
+  ]);
+});
+
 test("can set extra CLI options", () => {
   // GIVEN
   const project = new NodeProject({
