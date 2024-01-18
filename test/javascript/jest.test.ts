@@ -252,6 +252,28 @@ test("addSetupFileAfterEnv() can be used to add setup files", () => {
   ).toStrictEqual(["./mySetupFileAfterEnv.ts"]);
 });
 
+test("addModuleNameMappers() can be used to add module name mappers", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addModuleNameMappers({
+    "^@/(.*)$": "<rootDir>/src/$1",
+  });
+
+  // THEN
+  expect(
+    synthSnapshot(project)["package.json"].jest.moduleNameMapper
+  ).toStrictEqual({
+    "^@/(.*)$": "<rootDir>/src/$1",
+  });
+});
+
 test("can set extra CLI options", () => {
   // GIVEN
   const project = new NodeProject({

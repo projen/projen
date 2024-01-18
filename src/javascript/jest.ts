@@ -854,6 +854,22 @@ export class Jest extends Component {
     this._snapshotResolver = file;
   }
 
+  /**
+   * Adds one or more moduleNameMapper entries to Jest's configuration.
+   * Will overwrite if the same key is used as a pre-existing one.
+   *
+   * @param moduleNameMapperAdditions - A map from regular expressions to module names or to arrays of module names that allow to stub out resources, like images or styles with a single module.
+   */
+  public addModuleNameMappers(moduleNameMapperAdditions: {
+    [key: string]: string | string[];
+  }): void {
+    const existingModuleNameMapper = this.config.moduleNameMapper ?? {};
+    this.config.moduleNameMapper = {
+      ...existingModuleNameMapper,
+      ...moduleNameMapperAdditions,
+    };
+  }
+
   private configureTestCommand(updateSnapshot: UpdateSnapshot) {
     const jestOpts = ["--passWithNoTests", ...this.extraCliOptions];
     const jestConfigOpts =
