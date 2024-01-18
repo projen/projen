@@ -884,6 +884,7 @@ export class Jest extends Component {
 
   /**
    * Adds one or more roots to Jest's configuration.
+   *
    * @param roots - A list of paths to directories that Jest should use to search for files in.
    */
   public addRoots(...roots: string[]): void {
