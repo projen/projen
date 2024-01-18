@@ -655,7 +655,7 @@ export class JestReporter {
  */
 export class Jest extends Component {
   /**
-   * Returns the singletone Jest component of a project or undefined if there is none.
+   * Returns the singleton Jest component of a project or undefined if there is none.
    */
   public static of(project: Project): Jest | undefined {
     const isJest = (c: Component): c is Jest => c instanceof Jest;
