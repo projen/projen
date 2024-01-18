@@ -8209,7 +8209,8 @@ new github.WorkflowSteps()
 | --- | --- |
 | <code><a href="#projen.github.WorkflowSteps.checkout">checkout</a></code> | Checks out a repository. |
 | <code><a href="#projen.github.WorkflowSteps.setupGitIdentity">setupGitIdentity</a></code> | Configures the git identity (user name and email). |
-| <code><a href="#projen.github.WorkflowSteps.uploadArtifact">uploadArtifact</a></code> | *No description.* |
+| <code><a href="#projen.github.WorkflowSteps.tagExists">tagExists</a></code> | Checks if a tag exists. |
+| <code><a href="#projen.github.WorkflowSteps.uploadArtifact">uploadArtifact</a></code> | Uploads an artifact. |
 
 ---
 
@@ -8227,7 +8228,7 @@ Checks out a repository.
 
 - *Type:* <a href="#projen.github.CheckoutOptions">CheckoutOptions</a>
 
-Options.
+Options to configure the `checkout` JobStep.
 
 ---
 
@@ -8249,6 +8250,39 @@ Options to configure the git identity JobStep.
 
 ---
 
+##### `tagExists` <a name="tagExists" id="projen.github.WorkflowSteps.tagExists"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowSteps.tagExists(tag: string, options: JobStepConfiguration)
+```
+
+Checks if a tag exists.
+
+Requires a checkout step to have been run before this step with "fetch-depth" set to "0".
+
+Outputs:
+- `exists`: A string value of 'true' or 'false' indicating if the tag exists.
+
+###### `tag`<sup>Required</sup> <a name="tag" id="projen.github.WorkflowSteps.tagExists.parameter.tag"></a>
+
+- *Type:* string
+
+The tag to check.
+
+You may use valid bash code instead of a literal string in this field.
+
+---
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.github.WorkflowSteps.tagExists.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStepConfiguration">JobStepConfiguration</a>
+
+Options to configure the `tag-exists` JobStep.
+
+---
+
 ##### `uploadArtifact` <a name="uploadArtifact" id="projen.github.WorkflowSteps.uploadArtifact"></a>
 
 ```typescript
@@ -8257,9 +8291,13 @@ import { github } from 'projen'
 github.WorkflowSteps.uploadArtifact(options: UploadArtifactOptions)
 ```
 
+Uploads an artifact.
+
 ###### `options`<sup>Required</sup> <a name="options" id="projen.github.WorkflowSteps.uploadArtifact.parameter.options"></a>
 
 - *Type:* <a href="#projen.github.UploadArtifactOptions">UploadArtifactOptions</a>
+
+Options to configure the `upload-artifact` JobStep.
 
 ---
 

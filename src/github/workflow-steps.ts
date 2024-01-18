@@ -9,8 +9,8 @@ export class WorkflowSteps {
   /**
    * Checks out a repository.
    *
-   * @param options Options
-   * @returns Job steps
+   * @param options Options to configure the `checkout` JobStep
+   * @returns A JobStep that checks out a repository
    */
   public static checkout(options: CheckoutOptions = {}): JobStep {
     const checkoutWith = removeNullOrUndefinedProperties({
@@ -33,8 +33,9 @@ export class WorkflowSteps {
 
   /**
    * Configures the git identity (user name and email).
+   *
    * @param options Options to configure the git identity JobStep
-   * @returns Job steps
+   * @returns Job step that configures the provided git identity
    */
   public static setupGitIdentity(options: SetupGitIdentityOptions): JobStep {
     return {
@@ -49,6 +50,47 @@ export class WorkflowSteps {
     };
   }
 
+  /**
+   * Checks if a tag exists.
+   *
+   * Requires a checkout step to have been run before this step with "fetch-depth" set to "0".
+   *
+   * Outputs:
+   * - `exists`: A string value of 'true' or 'false' indicating if the tag exists.
+   *
+   * @param tag The tag to check. You may use valid bash code instead of a literal string in this field.
+   * @param options Options to configure the `tag-exists` JobStep
+   * @returns Job step that checks if the provided tag exists
+   */
+  public static tagExists(tag: string, options: JobStepConfiguration): JobStep {
+    const checkTag = (remoteTag: string) =>
+      `git ls-remote -q --exit-code --tags origin ${remoteTag}`;
+    const varIsSet = (variable: string) => `[ ! -z "$${variable}" ]`;
+    const setOutput = (value: boolean) =>
+      `(echo "exists=${value ? "true" : "false"}" >> $GITHUB_OUTPUT)`;
+
+    return {
+      ...this.buildJobStepConfig({
+        ...options,
+        name: options.name ?? "Check if tag exists",
+        id: options.id ?? "check-tag",
+      }),
+      run: [
+        `TAG=${tag}`,
+        `(${varIsSet("TAG")} && ${checkTag("$TAG")} && ${setOutput(
+          true
+        )}) || ${setOutput(false)}'`,
+        "cat $GITHUB_OUTPUT",
+      ].join("\n"),
+    };
+  }
+
+  /**
+   * Uploads an artifact.
+   *
+   * @param options Options to configure the `upload-artifact` JobStep
+   * @returns A JobStep that uploads an artifact
+   */
   public static uploadArtifact(options: UploadArtifactOptions): JobStep {
     const uploadArtifactWith: UploadArtifactWith =
       removeNullOrUndefinedProperties({
@@ -69,6 +111,9 @@ export class WorkflowSteps {
     };
   }
 
+  /**
+   * Simple adapter to ensure we only include the necessary fields for a JobStepConfiguration.
+   */
   private static buildJobStepConfig(
     options: JobStepConfiguration
   ): JobStepConfiguration {

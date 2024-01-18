@@ -31,7 +31,15 @@ import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
+const TAG_EXISTS_STEPID = "check_tag_exists";
+
 const LATEST_COMMIT_OUTPUT = "latest_commit";
+const TAG_EXISTS_OUTPUT = "tag_exists";
+
+/**
+ * Conditional (Github Workflow Job `if`) to check if a release job should be run.
+ */
+const DEPENDENT_JOB_CONDITIONAL = `needs.${BUILD_JOBID}.outputs.${TAG_EXISTS_OUTPUT} != 'true' && needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`;
 
 type BranchHook = (branch: string) => void;
 
@@ -294,6 +302,7 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
 export class Release extends Component {
   public static readonly ANTI_TAMPER_CMD =
     "git diff --ignore-space-at-eol --exit-code";
+
   /**
    * Returns the `Release` component of a project or `undefined` if the project
    * does not have a Release component.
@@ -307,6 +316,11 @@ export class Release extends Component {
    * Package publisher.
    */
   public readonly publisher: Publisher;
+
+  /**
+   * Location of build artifacts.
+   */
+  public readonly artifactsDirectory: string;
 
   private readonly buildTask: Task;
   private readonly version: Version;
@@ -322,13 +336,8 @@ export class Release extends Component {
   private readonly workflowRunsOn?: string[];
   private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
-
+  private readonly releaseTagFilePath: string;
   private readonly _branchHooks: BranchHook[];
-
-  /**
-   * Location of build artifacts.
-   */
-  public readonly artifactsDirectory: string;
 
   /**
    * @param scope should be part of the project the Release belongs to.
@@ -389,9 +398,19 @@ export class Release extends Component {
       releasableCommits: options.releasableCommits,
     });
 
+    this.releaseTagFilePath = path.posix.normalize(
+      path.posix.join(
+        // temporary hack to allow JsiiProject setting a different path to the release tag file
+        // see JsiiProject.releaseTagFilePath for more details
+        //@ts-ignore
+        this.project.releaseTagFilePath ?? this.artifactsDirectory,
+        this.version.releaseTagFileName
+      )
+    );
+
     this.publisher = new Publisher(this.project, {
       artifactName: this.artifactsDirectory,
-      condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
+      condition: DEPENDENT_JOB_CONDITIONAL,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
@@ -636,12 +655,24 @@ export class Release extends Component {
 
     const postBuildSteps = [...this.postBuildSteps];
 
+    // Read the releasetag, then check if it already exists.
+    // If it does, we will cancel this release
+    postBuildSteps.push(
+      WorkflowSteps.tagExists(`$(cat ${this.releaseTagFilePath})`, {
+        name: "Check if version has already been tagged",
+        id: TAG_EXISTS_STEPID,
+      })
+    );
+
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
     postBuildSteps.push({
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
-      run: `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
+      run: [
+        `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
+        "cat $GITHUB_OUTPUT",
+      ].join("\n"),
     });
 
     const projectPathRelativeToRoot = path.relative(
@@ -683,9 +714,13 @@ export class Release extends Component {
       // Create job based on child (only?) project GitHub
       const taskjob = new TaskWorkflowJob(this, releaseTask, {
         outputs: {
-          latest_commit: {
+          [LATEST_COMMIT_OUTPUT]: {
             stepId: GIT_REMOTE_STEPID,
             outputName: LATEST_COMMIT_OUTPUT,
+          },
+          [TAG_EXISTS_OUTPUT]: {
+            stepId: TAG_EXISTS_STEPID,
+            outputName: "exists",
           },
         },
         container: this.containerImage
@@ -736,7 +771,7 @@ function workflowNameForProject(base: string, project: Project): string {
 }
 
 function fileSafeName(name: string): string {
-  return name.replace("@", "").replace(/\//, "-");
+  return name.replace("@", "").replace(/\//g, "-");
 }
 
 /**
