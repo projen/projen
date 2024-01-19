@@ -655,7 +655,7 @@ export class JestReporter {
  */
 export class Jest extends Component {
   /**
-   * Returns the singletone Jest component of a project or undefined if there is none.
+   * Returns the singleton Jest component of a project or undefined if there is none.
    */
   public static of(project: Project): Jest | undefined {
     const isJest = (c: Component): c is Jest => c instanceof Jest;
@@ -852,6 +852,44 @@ export class Jest extends Component {
 
   public addSnapshotResolver(file: string) {
     this._snapshotResolver = file;
+  }
+
+  /**
+   * Adds one or more moduleNameMapper entries to Jest's configuration.
+   * Will overwrite if the same key is used as a pre-existing one.
+   *
+   * @param moduleNameMapperAdditions - A map from regular expressions to module names or to arrays of module names that allow to stub out resources, like images or styles with a single module.
+   */
+  public addModuleNameMappers(moduleNameMapperAdditions: {
+    [key: string]: string | string[];
+  }): void {
+    const existingModuleNameMapper = this.config.moduleNameMapper ?? {};
+    this.config.moduleNameMapper = {
+      ...existingModuleNameMapper,
+      ...moduleNameMapperAdditions,
+    };
+  }
+
+  /**
+   * Adds one or more modulePaths to Jest's configuration.
+   *
+   * @param modulePaths - An array of absolute paths to additional locations to search when resolving modules   *
+   */
+  public addModulePaths(...modulePaths: string[]): void {
+    const existingModulePaths = this.config.modulePaths ?? [];
+    this.config.modulePaths = [
+      ...new Set([...existingModulePaths, ...modulePaths]),
+    ];
+  }
+
+  /**
+   * Adds one or more roots to Jest's configuration.
+   *
+   * @param roots - A list of paths to directories that Jest should use to search for files in.
+   */
+  public addRoots(...roots: string[]): void {
+    const existingRoots = this.config.roots ?? [];
+    this.config.roots = [...new Set([...existingRoots, ...roots])];
   }
 
   private configureTestCommand(updateSnapshot: UpdateSnapshot) {
