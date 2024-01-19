@@ -523,6 +523,29 @@ describe("tsconfigDev", () => {
     );
   });
 
+  describe("ts-jest", () => {
+    test("detects tsconfig.compilerOptions.paths and maps to Jest", () => {
+      const prj = new TypeScriptProject({
+        name: "test",
+        projenrcTs: true,
+        defaultReleaseBranch: "main",
+        tsconfig: {
+          compilerOptions: {
+            baseUrl: "src",
+            paths: {
+              "@foo/*": ["foo/*"],
+            },
+          },
+        },
+      });
+
+      expect(prj.jest?.config.modulePaths).toContainEqual("src");
+      expect(prj.jest?.config.moduleNameMapper).toStrictEqual({
+        "^@foo/(.*)$": "foo/$1",
+      });
+    });
+  });
+
   test("throw error when both disableTsconfig and disableTsconfigDev is passed", () => {
     expect(
       () =>

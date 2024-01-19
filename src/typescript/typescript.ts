@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as semver from "semver";
+import { pathsToModuleNameMapper } from "ts-jest";
 import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import {
@@ -401,6 +402,35 @@ export class TypeScriptProject extends NodeProject {
   public readonly watchTask: Task;
 
   constructor(options: TypeScriptProjectOptions) {
+    const jestConfig = {
+      ...options.jestOptions?.jestConfig,
+      testMatch: options.jestOptions?.jestConfig?.testMatch ?? [],
+    };
+
+    // ts-jest tsconfig paths to module mapping
+    if (options?.tsconfig?.compilerOptions?.paths) {
+      if (
+        Array.isArray(jestConfig.roots) &&
+        !jestConfig.roots.includes("<rootDir>")
+      ) {
+        jestConfig.roots.push("<rootDir>");
+      }
+
+      if (options.tsconfig.compilerOptions.baseUrl) {
+        jestConfig.modulePaths = [
+          ...(jestConfig?.modulePaths ?? []),
+          options.tsconfig.compilerOptions.baseUrl,
+        ];
+      }
+
+      jestConfig.moduleNameMapper = {
+        ...(jestConfig?.moduleNameMapper ?? {}),
+        ...pathsToModuleNameMapper(options.tsconfig.compilerOptions.paths, {
+          useESM: options?.tsJestOptions?.transformOptions?.useESM,
+        }),
+      };
+    }
+
     super({
       ...options,
 
@@ -409,10 +439,7 @@ export class TypeScriptProject extends NodeProject {
 
       jestOptions: {
         ...options.jestOptions,
-        jestConfig: {
-          ...options.jestOptions?.jestConfig,
-          testMatch: options.jestOptions?.jestConfig?.testMatch ?? [],
-        },
+        jestConfig,
       },
     });
 
