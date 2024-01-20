@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as semver from "semver";
-import { pathsToModuleNameMapper } from "ts-jest";
+import { pathsToModuleNameMapper } from "./ts-jest-utils";
 import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import {
