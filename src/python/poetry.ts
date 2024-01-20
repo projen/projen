@@ -20,14 +20,17 @@ export class Poetry
 {
   public readonly installTask: Task;
   public readonly publishTask: Task;
+  private readonly pythonExec: string;
+
 
   /**
    * A task that uploads the package to the Test PyPI repository.
    */
   public readonly publishTestTask: Task;
 
-  constructor(project: Project, options: PythonPackagingOptions) {
+  constructor(project: Project, options: PythonPackagingOptions, pythonExec: string = "python") {
     super(project);
+    this.pythonExec = pythonExec;
 
     this.installTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
@@ -164,7 +167,7 @@ export class Poetry
     });
     if (!envPath) {
       this.project.logger.info("Setting up a virtual environment...");
-      exec("poetry env use python", { cwd: this.project.outdir });
+      exec(`poetry env use ${this.pythonExec}`, { cwd: this.project.outdir });
       envPath = execOrUndefined("poetry env info -p", {
         cwd: this.project.outdir,
       });

@@ -326,7 +326,7 @@ export class PythonProject extends GitHubProject {
           readme: options.readme?.filename ?? "README.md",
           ...options.poetryOptions,
         },
-      });
+      }, options.pythonExec);  
       this.depsManager = poetryProject;
       this.envManager = poetryProject;
       this.packagingManager = poetryProject;
