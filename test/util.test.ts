@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import { posix, win32 } from "path";
 import { TestProject } from "./util";
+import { PROJEN_VERSION } from "../src/common";
 import { JsonFile } from "../src/json";
 import {
   decamelizeKeysRecursively,
@@ -352,4 +353,8 @@ describe("assertExecutablePermissions", () => {
 
     expect(assertExecutablePermissions(filePath, false)).toBe(false);
   });
+});
+
+test("projen version", () => {
+  expect(PROJEN_VERSION).toBe("99.99.99");
 });

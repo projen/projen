@@ -129,6 +129,9 @@
   "version": "0.0.0",
   "jest": {
     "maxWorkers": "50%",
+    "setupFiles": [
+      "./test/jest.setup.js"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.ts?(x)",
       "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)"
