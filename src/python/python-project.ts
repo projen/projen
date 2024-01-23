@@ -324,7 +324,6 @@ export class PythonProject extends GitHubProject {
         classifiers: options.classifiers,
         poetryOptions: {
           readme: options.readme?.filename ?? "README.md",
-          pythonExec: options.pythonExec ?? "python",
           ...options.poetryOptions,
         },
       });

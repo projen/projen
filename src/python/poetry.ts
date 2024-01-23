@@ -22,7 +22,6 @@ export class Poetry
   public readonly publishTask: Task;
   private readonly pythonExec: string;
 
-
   /**
    * A task that uploads the package to the Test PyPI repository.
    */
@@ -30,6 +29,7 @@ export class Poetry
 
   constructor(project: Project, options: PythonPackagingOptions) {
     super(project);
+    this.pythonExec = options.poetryOptions?.pythonExec ?? "python";
 
     this.installTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
