@@ -3257,6 +3257,7 @@ const poetryPyprojectOptions: python.PoetryPyprojectOptions = { ... }
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.name">name</a></code> | <code>string</code> | Name of the package (required). |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.packages">packages</a></code> | <code>any[]</code> | A list of packages and modules to include in the final distribution. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.plugins">plugins</a></code> | <code>any</code> | Plugins. |
+| <code><a href="#projen.python.PoetryPyprojectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: any}</code> | The scripts or executables that will be installed when installing the package. |
@@ -3452,6 +3453,19 @@ Must be specified as a table.
 
 ---
 
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PoetryPyprojectOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
+
+---
+
 ##### `readme`<sup>Optional</sup> <a name="readme" id="projen.python.PoetryPyprojectOptions.property.readme"></a>
 
 ```typescript
@@ -3598,6 +3612,7 @@ const poetryPyprojectOptionsWithoutDeps: python.PoetryPyprojectOptionsWithoutDep
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.name">name</a></code> | <code>string</code> | Name of the package (required). |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.packages">packages</a></code> | <code>any[]</code> | A list of packages and modules to include in the final distribution. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.plugins">plugins</a></code> | <code>any</code> | Plugins. |
+| <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.scripts">scripts</a></code> | <code>{[ key: string ]: any}</code> | The scripts or executables that will be installed when installing the package. |
@@ -3788,6 +3803,19 @@ Plugins.
 Must be specified as a table.
 
 > [https://toml.io/en/v1.0.0#table](https://toml.io/en/v1.0.0#table)
+
+---
+
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PoetryPyprojectOptionsWithoutDeps.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
 
 ---
 
