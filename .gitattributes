@@ -25,7 +25,7 @@
 /.projen/tasks.json linguist-generated
 /.projen/tree.json linguist-generated
 /.vscode/launch.json linguist-generated
-/docs/api/API.md linguist-generated
+/API.md linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
 /projen.bash linguist-generated

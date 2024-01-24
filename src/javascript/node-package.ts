@@ -400,6 +400,17 @@ export interface ScopedPackagesOptions {
  */
 export class NodePackage extends Component {
   /**
+   * Returns the `NodePackage` instance associated with a project or `undefined` if
+   * there is no NodePackage.
+   * @param project The project
+   * @returns A NodePackage, or undefined
+   */
+  public static of(project: Project): NodePackage | undefined {
+    const isIt = (o: Component): o is NodePackage => o instanceof NodePackage;
+    return project.components.find(isIt);
+  }
+
+  /**
    * The name of the npm package.
    */
   public readonly packageName: string;

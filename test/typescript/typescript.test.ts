@@ -1,5 +1,5 @@
 import { Logger, TaskRuntime } from "../../src";
-import { PROJEN_RC } from "../../src/common";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
 import { Transform } from "../../src/javascript";
 import {
   mergeTsconfigOptions,
@@ -123,7 +123,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
   expect(out["tsconfig.dev.json"]).toEqual(
     expect.objectContaining({
       include: expect.arrayContaining([
-        PROJEN_RC,
+        DEFAULT_PROJEN_RC_JS_FILENAME,
         `${prj.srcdir}/**/*.ts`,
         `${prj.testdir}/**/*.ts`,
         "typescript.test.ts",
@@ -137,7 +137,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
   expect(out["tsconfig.dev.json"]).toEqual(
     expect.objectContaining({
       include: expect.arrayContaining([
-        PROJEN_RC,
+        DEFAULT_PROJEN_RC_JS_FILENAME,
         `${prj.srcdir}/**/*.ts`,
         `${prj.testdir}/**/*.ts`,
         "typescript.test.ts",
@@ -187,6 +187,8 @@ test("projenrc.ts", () => {
   });
 
   const snapshot = synthSnapshot(prj);
+  expect(snapshot["tsconfig.dev.json"].include).toContain(".projenrc.ts");
+  expect(snapshot["tsconfig.dev.json"].include).not.toContain(".projenrc.js");
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
@@ -220,7 +222,8 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
     name: "eslint",
     steps: [
       {
-        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools projenrc .projenrc.ts",
+        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
+        receiveArgs: true,
       },
     ],
   });
@@ -327,7 +330,7 @@ describe("jestConfig", () => {
           jestConfig: {},
         },
         tsJestOptions: {
-          tranformPattern: TS_WITH_JS_PATTERN,
+          transformPattern: TS_WITH_JS_PATTERN,
         },
       });
       const snapshot = synthSnapshot(prj);
@@ -441,6 +444,44 @@ describe("jestConfig", () => {
     );
 
     loggerWarnSpy.mockRestore();
+  });
+});
+
+describe("tsconfig", () => {
+  test("uses tsconfig.json by default", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfig?.fileName).toBe("tsconfig.json");
+    expect(snapshot["tsconfig.json"]).not.toBeUndefined();
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w");
+  });
+
+  test("Should allow renaming of tsconfig.json", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      tsconfig: {
+        fileName: "foo.json",
+        compilerOptions: {},
+      },
+      tsconfigDev: {
+        fileName: "dev.json", // You must also give tsconfigDev a name, or it uses foo.json
+        compilerOptions: {},
+      },
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfig?.fileName).toBe("foo.json");
+    expect(snapshot["foo.json"]).not.toBeUndefined();
+    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build foo.json");
+    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w foo.json");
   });
 });
 

@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as semver from "semver";
-import { PROJEN_DIR, PROJEN_RC } from "../common";
+import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import {
   Eslint,
@@ -8,11 +8,13 @@ import {
   Jest,
   NodeProject,
   NodeProjectOptions,
+  Projenrc as NodeProjectProjenrc,
   Transform,
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
 } from "../javascript";
+import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
 import { TextFile } from "../textfile";
@@ -214,7 +216,7 @@ export interface TsJestTransformOptions {
    *
    * @default auto
    */
-  readonly useEsm?: boolean;
+  readonly useESM?: boolean;
 }
 
 export interface TsJestOptions {
@@ -225,7 +227,7 @@ export interface TsJestOptions {
    *
    * @default "^.+\\.[t]sx?$"
    */
-  readonly tranformPattern?: string;
+  readonly transformPattern?: string;
   /**
    * Override the default ts-jest transformer configuration.
    */
@@ -420,11 +422,16 @@ export class TypeScriptProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? "docs/";
 
-    this.compileTask.exec("tsc --build");
+    const tsconfigFilename = options.tsconfig?.fileName;
+    this.compileTask.exec(
+      ["tsc", "--build", tsconfigFilename].filter(Boolean).join(" ")
+    );
 
     this.watchTask = this.addTask("watch", {
       description: "Watch & compile in the background",
-      exec: "tsc --build -w",
+      exec: ["tsc", "--build", "-w", tsconfigFilename]
+        .filter(Boolean)
+        .join(" "),
     });
 
     this.testdir = options.testdir ?? "test";
@@ -504,11 +511,8 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions(
           {
             fileName: tsconfigDevFile,
-            include: [
-              PROJEN_RC,
-              `${this.srcdir}/**/*.ts`,
-              `${this.testdir}/**/*.ts`,
-            ],
+            include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
+
             exclude: ["node_modules"],
             compilerOptions: compilerOptionDefaults,
           },
@@ -567,8 +571,17 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (!this.parent && options.projenrcTs) {
-      new ProjenrcTs(this, options.projenrcTsOptions);
+    // when this is a root project
+    if (!this.parent) {
+      if (options.projenrcTs) {
+        new ProjenrcTs(this, options.projenrcTsOptions);
+      } else {
+        // projenrc.js created in NodeProject needs to be added in tsconfigDev
+        const projenrcJs = NodeProjectProjenrc.of(this);
+        if (projenrcJs) {
+          this.tsconfigDev.addInclude(projenrcJs.filePath);
+        }
+      }
     }
 
     const tsver = options.typescriptVersion
@@ -666,9 +679,28 @@ export class TypeScriptProject extends NodeProject {
       `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
-    const jestMajorVersion = semver.coerce(jest.jestVersion)?.major;
-    // add relevant deps
-    if (!jestMajorVersion || jestMajorVersion >= 29) {
+    // Test for the ts-jest version that was requested;
+    //
+    // - First, check the `jest` version that is requested via projen properties. This
+    //   should be the same as the `ts-jest` version anyway.
+    // - If none found, fall back to inspecting the actual `ts-jest` version
+    //   that happens to be installed.
+    let hasTsJest29: boolean | undefined;
+    if (jest.jestVersion) {
+      // We could maybe replace this will full "actual version" checking, but
+      // the tests depend on this and the reading of 'package.json' is very
+      // awkward to test.
+      // Note that we use the requested version of `jest` as a proxy for the
+      // version of `ts-jest`, which is what we're actually interested in.
+      const major = semver.coerce(jest.jestVersion)?.major;
+      hasTsJest29 = major ? major >= 29 : undefined;
+    }
+    if (hasTsJest29 === undefined) {
+      hasTsJest29 = hasDependencyVersion(this, "ts-jest", ">= 29");
+    }
+
+    // add relevant deps (we treat "unknown" as having a modern ts-jest)
+    if (hasTsJest29 !== false) {
       return this.addJestNoCompileModern(jest, tsJestOptions);
     }
     this.addJestNoCompileLegacy(jest, tsJestOptions);
@@ -680,7 +712,7 @@ export class TypeScriptProject extends NodeProject {
   ) {
     jest.config.transform = deepMerge([
       {
-        [tsJestOptions?.tranformPattern ??
+        [tsJestOptions?.transformPattern ??
         TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN]: new Transform(
           "ts-jest",
           {

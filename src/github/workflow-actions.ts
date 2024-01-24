@@ -40,12 +40,11 @@ export class WorkflowActions {
           `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,
         ].join("\n"),
       },
-      {
+      WorkflowSteps.uploadArtifact({
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        uses: "actions/upload-artifact@v3",
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
-      },
+      }),
     ];
 
     if (options.mutationError) {

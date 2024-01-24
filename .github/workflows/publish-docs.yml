@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Publish Docs
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build docs
+        working-directory: docusaurus
+        run: |
+          yarn install --check-files --frozen-lockfile
+          yarn build
+      - name: Build website artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: "docusaurus/build"
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3

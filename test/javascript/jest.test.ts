@@ -1,4 +1,3 @@
-import { PROJEN_RC } from "../../src/common";
 import { Jest, NodeProject, UpdateSnapshot } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { TypeScriptProject } from "../../src/typescript";
@@ -123,9 +122,9 @@ test("Typescript Project Jest Defaults Configured", () => {
     compilerOptionDefaults
   );
   expect(jestTypescriptConfig.include).toEqual([
-    PROJEN_RC,
     "src/**/*.ts",
     "test/**/*.ts",
+    ".projenrc.js",
   ]);
   expect(jestTypescriptConfig.exclude).toEqual(["node_modules"]);
 });
@@ -251,6 +250,65 @@ test("addSetupFileAfterEnv() can be used to add setup files", () => {
   expect(
     synthSnapshot(project)["package.json"].jest.setupFilesAfterEnv
   ).toStrictEqual(["./mySetupFileAfterEnv.ts"]);
+});
+
+test("addModuleNameMappers() can be used to add module name mappers", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addModuleNameMappers({
+    "^@/(.*)$": "<rootDir>/src/$1",
+  });
+
+  // THEN
+  expect(
+    synthSnapshot(project)["package.json"].jest.moduleNameMapper
+  ).toStrictEqual({
+    "^@/(.*)$": "<rootDir>/src/$1",
+  });
+});
+
+test("addModulePaths() can be used to add module paths", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addModulePaths("<rootDir>/src");
+
+  // THEN
+  expect(synthSnapshot(project)["package.json"].jest.modulePaths).toStrictEqual(
+    ["<rootDir>/src"]
+  );
+});
+
+test("addRoots() can be used to add roots", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addRoots("foo", "bar");
+
+  // THEN
+  expect(synthSnapshot(project)["package.json"].jest.roots).toStrictEqual([
+    "foo",
+    "bar",
+  ]);
 });
 
 test("can set extra CLI options", () => {

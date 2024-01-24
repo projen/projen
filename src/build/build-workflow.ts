@@ -414,14 +414,12 @@ export class BuildWorkflow extends Component {
               continueOnError: true,
               run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
             },
-            {
-              name: "Upload artifact",
-              uses: "actions/upload-artifact@v3",
+            WorkflowSteps.uploadArtifact({
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.artifactsDirectory,
               },
-            },
+            }),
           ]),
     ];
   }

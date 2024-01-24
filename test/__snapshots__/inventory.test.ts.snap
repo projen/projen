@@ -4,7 +4,7 @@ exports[`inventory 1`] = `
 [
   {
     "docs": "AWS CDK app in Java.",
-    "docsurl": "https://projen.io/api/API.html#awscdkjavaapp-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdkjavaapp-",
     "fqn": "projen.awscdk.AwsCdkJavaApp",
     "moduleName": "projen",
     "options": [
@@ -1142,7 +1142,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK app in Python.",
-    "docsurl": "https://projen.io/api/API.html#awscdkpythonapp-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdkpythonapp-",
     "fqn": "projen.awscdk.AwsCdkPythonApp",
     "moduleName": "projen",
     "options": [
@@ -2493,7 +2493,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK app in TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#awscdktypescriptapp-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdktypescriptapp-",
     "fqn": "projen.awscdk.AwsCdkTypeScriptApp",
     "moduleName": "projen",
     "options": [
@@ -4883,7 +4883,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -5485,7 +5485,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK construct library project.",
-    "docsurl": "https://projen.io/api/API.html#awscdkconstructlibrary-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdkconstructlibrary-",
     "fqn": "projen.awscdk.AwsCdkConstructLibrary",
     "moduleName": "projen",
     "options": [
@@ -8057,7 +8057,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -8629,7 +8629,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s app in Python.",
-    "docsurl": "https://projen.io/api/API.html#cdk8spythonapp-",
+    "docsurl": "https://projen.io/docs/api/cdk8s#cdk8spythonapp-",
     "fqn": "projen.cdk8s.Cdk8sPythonApp",
     "moduleName": "projen",
     "options": [
@@ -9888,7 +9888,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s app in TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#cdk8stypescriptapp-",
+    "docsurl": "https://projen.io/docs/api/cdk8s#cdk8stypescriptapp-",
     "fqn": "projen.cdk8s.Cdk8sTypeScriptApp",
     "moduleName": "projen",
     "options": [
@@ -12179,7 +12179,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -12718,7 +12718,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s construct library project.",
-    "docsurl": "https://projen.io/api/API.html#constructlibrarycdk8s-",
+    "docsurl": "https://projen.io/docs/api/cdk8s#constructlibrarycdk8s-",
     "fqn": "projen.cdk8s.ConstructLibraryCdk8s",
     "moduleName": "projen",
     "options": [
@@ -15140,7 +15140,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -15712,7 +15712,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDKTF construct library project.",
-    "docsurl": "https://projen.io/api/API.html#constructlibrarycdktf-",
+    "docsurl": "https://projen.io/docs/api/cdktf#constructlibrarycdktf-",
     "fqn": "projen.cdktf.ConstructLibraryCdktf",
     "moduleName": "projen",
     "options": [
@@ -18066,7 +18066,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -18638,7 +18638,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Java project.",
-    "docsurl": "https://projen.io/api/API.html#javaproject-",
+    "docsurl": "https://projen.io/docs/api/java#javaproject-",
     "fqn": "projen.java.JavaProject",
     "moduleName": "projen",
     "options": [
@@ -19475,7 +19475,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Multi-language jsii library project.",
-    "docsurl": "https://projen.io/api/API.html#jsiiproject-",
+    "docsurl": "https://projen.io/docs/api/cdk#jsiiproject-",
     "fqn": "projen.cdk.JsiiProject",
     "moduleName": "projen",
     "options": [
@@ -21776,7 +21776,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -22347,8 +22347,8 @@ exports[`inventory 1`] = `
     "typename": "cdk.JsiiProject",
   },
   {
-    "docs": "Next.js project without TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#nextjsproject-",
+    "docs": "Next.js project using JavaScript.",
+    "docsurl": "https://projen.io/docs/api/web#nextjsproject-",
     "fqn": "projen.web.NextJsProject",
     "moduleName": "projen",
     "options": [
@@ -24239,7 +24239,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -24687,8 +24687,8 @@ exports[`inventory 1`] = `
     "typename": "web.NextJsProject",
   },
   {
-    "docs": "Next.js project with TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#nextjstypescriptproject-",
+    "docs": "Next.js project using TypeScript.",
+    "docsurl": "https://projen.io/docs/api/web#nextjstypescriptproject-",
     "fqn": "projen.web.NextJsTypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -26753,7 +26753,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -27309,7 +27309,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Node.js project.",
-    "docsurl": "https://projen.io/api/API.html#nodeproject-",
+    "docsurl": "https://projen.io/docs/api/javascript#nodeproject-",
     "fqn": "projen.javascript.NodeProject",
     "moduleName": "projen",
     "options": [
@@ -29183,7 +29183,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -29581,7 +29581,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Base project.",
-    "docsurl": "https://projen.io/api/API.html#project-",
+    "docsurl": "https://projen.io/docs/api/projen#project-",
     "fqn": "projen.Project",
     "moduleName": "projen",
     "options": [
@@ -29804,7 +29804,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Python project.",
-    "docsurl": "https://projen.io/api/API.html#pythonproject-",
+    "docsurl": "https://projen.io/docs/api/python#pythonproject-",
     "fqn": "projen.python.PythonProject",
     "moduleName": "projen",
     "options": [
@@ -30836,8 +30836,8 @@ exports[`inventory 1`] = `
     "typename": "python.PythonProject",
   },
   {
-    "docs": "React project without TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#reactproject-",
+    "docs": "React project using JavaScript.",
+    "docsurl": "https://projen.io/docs/api/web#reactproject-",
     "fqn": "projen.web.ReactProject",
     "moduleName": "projen",
     "options": [
@@ -32711,7 +32711,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -33164,8 +33164,8 @@ exports[`inventory 1`] = `
     "typename": "web.ReactProject",
   },
   {
-    "docs": "React project with TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#reacttypescriptproject-",
+    "docs": "React project using TypeScript.",
+    "docsurl": "https://projen.io/docs/api/web#reacttypescriptproject-",
     "fqn": "projen.web.ReactTypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -35213,7 +35213,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -35774,7 +35774,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "TypeScript project.",
-    "docsurl": "https://projen.io/api/API.html#typescriptproject-",
+    "docsurl": "https://projen.io/docs/api/typescript#typescriptproject-",
     "fqn": "projen.typescript.TypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -37822,7 +37822,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -38361,7 +38361,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "TypeScript app.",
-    "docsurl": "https://projen.io/api/API.html#typescriptappproject-",
+    "docsurl": "https://projen.io/docs/api/typescript#typescriptappproject-",
     "fqn": "projen.typescript.TypeScriptAppProject",
     "moduleName": "projen",
     "options": [
@@ -40409,7 +40409,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {

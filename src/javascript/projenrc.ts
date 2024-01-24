@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 
@@ -22,7 +23,7 @@ export class Projenrc extends ProjenrcFile {
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
-    this.filePath = options.filename ?? ".projenrc.js";
+    this.filePath = options.filename ?? DEFAULT_PROJEN_RC_JS_FILENAME;
 
     // this is the task projen executes when running `projen`
     project.defaultTask?.exec(`node ${this.filePath}`);
@@ -30,7 +31,9 @@ export class Projenrc extends ProjenrcFile {
     this.generateProjenrc();
   }
 
-  public preSynthesize(): void {
+  public override preSynthesize(): void {
+    super.preSynthesize();
+
     const eslint = Eslint.of(this.project);
     eslint?.addLintPattern(this.filePath);
     eslint?.addIgnorePattern(`!${this.filePath}`);
