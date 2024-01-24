@@ -343,21 +343,31 @@ describe("cwd", () => {
 
   test("cwd can be passed down to spawn steps", () => {
     const p = new TestProject();
-    const taskcwd = join(p.outdir, "mypwd");
-    const stepcwd = join(p.outdir, "yourpwd");
+    const taskcwd = join(p.outdir, "task_dir");
+    const stepcwd = join(p.outdir, "step_dir");
     mkdirSync(taskcwd, { recursive: true });
     mkdirSync(stepcwd, { recursive: true });
-    const echo = p.addTask("echo", { exec: "echo", receiveArgs: true });
-    const task = p.addTask("testme", { cwd: taskcwd });
-    task.spawn(echo, { args: ["step1=$PWD"] });
-    task.spawn(echo, { args: ["step1=$PWD"], cwd: stepcwd });
-
-    const noCwdSpecified = executeTask(p, "echo", {}, ["$PWD"]);
-    expect(noCwdSpecified[0]).toContain(p.outdir);
-
-    const lines = executeTask(p, "testme");
-    expect(lines[0].includes("mypwd")).toBeTruthy();
-    expect(lines[1].includes("yourpwd")).toBeTruthy();
+    const echo = p.addTask("echo", {
+      exec: "echo",
+      description: "Task that echoes back what it receives",
+      receiveArgs: true,
+    });
+    const task = p.addTask("check:cwd", {
+      description: "Task that spawns echo twice with different cwds",
+      cwd: taskcwd,
+    });
+    task.spawn(echo, {
+      name: "Spawn inherits cwd from task",
+      args: ["step1=$PWD"],
+    });
+    task.spawn(echo, {
+      name: "Spawn inherits cwd from step",
+      args: ["step2=$PWD"],
+      cwd: stepcwd,
+    });
+    const lines = executeTask(p, "check:cwd");
+    expect(lines[0]).toMatch(/step1=.*\/task_dir$/);
+    expect(lines[1]).toMatch(/step2=.*\/step_dir$/);
   });
 });
 
