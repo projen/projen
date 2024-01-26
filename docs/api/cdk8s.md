@@ -5532,6 +5532,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
@@ -5545,7 +5546,6 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenrcTsOptions">projenrcTsOptions</a></code> | <code>projen.typescript.ProjenrcTsOptions</code> | Options related to projenrc in TypeScript. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pytest">pytest</a></code> | <code>boolean</code> | Include pytest tests. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pytestOptions">pytestOptions</a></code> | <code>projen.python.PytestOptions</code> | pytest options. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
@@ -6105,6 +6105,19 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.cdk8s.Cdk8sPythonOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
+
+---
+
 ##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.cdk8s.Cdk8sPythonOptions.property.moduleName"></a>
 
 ```typescript
@@ -6293,19 +6306,6 @@ public readonly pytestOptions: PytestOptions;
 - *Default:* defaults
 
 pytest options.
-
----
-
-##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.cdk8s.Cdk8sPythonOptions.property.pythonExec"></a>
-
-```typescript
-public readonly pythonExec: string;
-```
-
-- *Type:* string
-- *Default:* "python"
-
-Path to the python executable to use.
 
 ---
 

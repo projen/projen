@@ -236,13 +236,13 @@ Manage project dependencies, virtual environments, and packaging through the poe
 ```typescript
 import { python } from 'projen'
 
-new python.Poetry(project: Project, options: PythonPackagingOptions)
+new python.Poetry(project: Project, options: PoetryOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.Poetry.Initializer.parameter.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.Poetry.Initializer.parameter.options">options</a></code> | <code><a href="#projen.python.PythonPackagingOptions">PythonPackagingOptions</a></code> | *No description.* |
+| <code><a href="#projen.python.Poetry.Initializer.parameter.options">options</a></code> | <code><a href="#projen.python.PoetryOptions">PoetryOptions</a></code> | *No description.* |
 
 ---
 
@@ -254,7 +254,7 @@ new python.Poetry(project: Project, options: PythonPackagingOptions)
 
 ##### `options`<sup>Required</sup> <a name="options" id="projen.python.Poetry.Initializer.parameter.options"></a>
 
-- *Type:* <a href="#projen.python.PythonPackagingOptions">PythonPackagingOptions</a>
+- *Type:* <a href="#projen.python.PoetryOptions">PoetryOptions</a>
 
 ---
 
@@ -2852,13 +2852,13 @@ Manages packaging through setuptools with a setup.py script.
 ```typescript
 import { python } from 'projen'
 
-new python.Setuptools(project: Project, options: PythonPackagingOptions)
+new python.Setuptools(project: Project, options: SetuptoolsOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.Setuptools.Initializer.parameter.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.Setuptools.Initializer.parameter.options">options</a></code> | <code><a href="#projen.python.PythonPackagingOptions">PythonPackagingOptions</a></code> | *No description.* |
+| <code><a href="#projen.python.Setuptools.Initializer.parameter.options">options</a></code> | <code><a href="#projen.python.SetuptoolsOptions">SetuptoolsOptions</a></code> | *No description.* |
 
 ---
 
@@ -2870,7 +2870,7 @@ new python.Setuptools(project: Project, options: PythonPackagingOptions)
 
 ##### `options`<sup>Required</sup> <a name="options" id="projen.python.Setuptools.Initializer.parameter.options"></a>
 
-- *Type:* <a href="#projen.python.PythonPackagingOptions">PythonPackagingOptions</a>
+- *Type:* <a href="#projen.python.SetuptoolsOptions">SetuptoolsOptions</a>
 
 ---
 
@@ -3225,6 +3225,172 @@ const pipOptions: python.PipOptions = { ... }
 ```
 
 
+### PoetryOptions <a name="PoetryOptions" id="projen.python.PoetryOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.PoetryOptions.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const poetryOptions: python.PoetryOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PoetryOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
+| <code><a href="#projen.python.PoetryOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
+| <code><a href="#projen.python.PoetryOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
+| <code><a href="#projen.python.PoetryOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | A list of PyPI trove classifiers that describe the project. |
+| <code><a href="#projen.python.PoetryOptions.property.description">description</a></code> | <code>string</code> | A short description of the package. |
+| <code><a href="#projen.python.PoetryOptions.property.homepage">homepage</a></code> | <code>string</code> | A URL to the website of the project. |
+| <code><a href="#projen.python.PoetryOptions.property.license">license</a></code> | <code>string</code> | License of this package as an SPDX identifier. |
+| <code><a href="#projen.python.PoetryOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
+| <code><a href="#projen.python.PoetryOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
+| <code><a href="#projen.python.PoetryOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.PoetryOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
+
+---
+
+##### `authorEmail`<sup>Required</sup> <a name="authorEmail" id="projen.python.PoetryOptions.property.authorEmail"></a>
+
+```typescript
+public readonly authorEmail: string;
+```
+
+- *Type:* string
+- *Default:* $GIT_USER_EMAIL
+
+Author's e-mail.
+
+---
+
+##### `authorName`<sup>Required</sup> <a name="authorName" id="projen.python.PoetryOptions.property.authorName"></a>
+
+```typescript
+public readonly authorName: string;
+```
+
+- *Type:* string
+- *Default:* $GIT_USER_NAME
+
+Author's name.
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.python.PoetryOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* "0.1.0"
+
+Version of the package.
+
+---
+
+##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.PoetryOptions.property.classifiers"></a>
+
+```typescript
+public readonly classifiers: string[];
+```
+
+- *Type:* string[]
+
+A list of PyPI trove classifiers that describe the project.
+
+> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.python.PoetryOptions.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A short description of the package.
+
+---
+
+##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.python.PoetryOptions.property.homepage"></a>
+
+```typescript
+public readonly homepage: string;
+```
+
+- *Type:* string
+
+A URL to the website of the project.
+
+---
+
+##### `license`<sup>Optional</sup> <a name="license" id="projen.python.PoetryOptions.property.license"></a>
+
+```typescript
+public readonly license: string;
+```
+
+- *Type:* string
+
+License of this package as an SPDX identifier.
+
+---
+
+##### `packageName`<sup>Optional</sup> <a name="packageName" id="projen.python.PoetryOptions.property.packageName"></a>
+
+```typescript
+public readonly packageName: string;
+```
+
+- *Type:* string
+
+Package name.
+
+---
+
+##### `poetryOptions`<sup>Optional</sup> <a name="poetryOptions" id="projen.python.PoetryOptions.property.poetryOptions"></a>
+
+```typescript
+public readonly poetryOptions: PoetryPyprojectOptionsWithoutDeps;
+```
+
+- *Type:* <a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a>
+
+Additional options to set for poetry if using poetry.
+
+---
+
+##### `setupConfig`<sup>Optional</sup> <a name="setupConfig" id="projen.python.PoetryOptions.property.setupConfig"></a>
+
+```typescript
+public readonly setupConfig: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+Additional fields to pass in the setup() function if using setuptools.
+
+---
+
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PoetryOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
+
+---
+
 ### PoetryPyprojectOptions <a name="PoetryPyprojectOptions" id="projen.python.PoetryPyprojectOptions"></a>
 
 Poetry-specific options.
@@ -3257,7 +3423,6 @@ const poetryPyprojectOptions: python.PoetryPyprojectOptions = { ... }
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.name">name</a></code> | <code>string</code> | Name of the package (required). |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.packages">packages</a></code> | <code>any[]</code> | A list of packages and modules to include in the final distribution. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.plugins">plugins</a></code> | <code>any</code> | Plugins. |
-| <code><a href="#projen.python.PoetryPyprojectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: any}</code> | The scripts or executables that will be installed when installing the package. |
@@ -3453,19 +3618,6 @@ Must be specified as a table.
 
 ---
 
-##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PoetryPyprojectOptions.property.pythonExec"></a>
-
-```typescript
-public readonly pythonExec: string;
-```
-
-- *Type:* string
-- *Default:* "python"
-
-Path to the python executable to use.
-
----
-
 ##### `readme`<sup>Optional</sup> <a name="readme" id="projen.python.PoetryPyprojectOptions.property.readme"></a>
 
 ```typescript
@@ -3612,7 +3764,6 @@ const poetryPyprojectOptionsWithoutDeps: python.PoetryPyprojectOptionsWithoutDep
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.name">name</a></code> | <code>string</code> | Name of the package (required). |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.packages">packages</a></code> | <code>any[]</code> | A list of packages and modules to include in the final distribution. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.plugins">plugins</a></code> | <code>any</code> | Plugins. |
-| <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.scripts">scripts</a></code> | <code>{[ key: string ]: any}</code> | The scripts or executables that will be installed when installing the package. |
@@ -3803,19 +3954,6 @@ Plugins.
 Must be specified as a table.
 
 > [https://toml.io/en/v1.0.0#table](https://toml.io/en/v1.0.0#table)
-
----
-
-##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PoetryPyprojectOptionsWithoutDeps.property.pythonExec"></a>
-
-```typescript
-public readonly pythonExec: string;
-```
-
-- *Type:* string
-- *Default:* "python"
-
-Path to the python executable to use.
 
 ---
 
@@ -4057,6 +4195,37 @@ Test directory.
 
 ---
 
+### PythonExecutableOptions <a name="PythonExecutableOptions" id="projen.python.PythonExecutableOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.PythonExecutableOptions.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pythonExecutableOptions: python.PythonExecutableOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PythonExecutableOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
+
+---
+
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PythonExecutableOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
+
+---
+
 ### PythonPackagingOptions <a name="PythonPackagingOptions" id="projen.python.PythonPackagingOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.python.PythonPackagingOptions.Initializer"></a>
@@ -4264,6 +4433,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PythonProjectOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.PythonProjectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PythonProjectOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.python.PythonProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
 | <code><a href="#projen.python.PythonProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
@@ -4277,7 +4447,6 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.projenrcTsOptions">projenrcTsOptions</a></code> | <code>projen.typescript.ProjenrcTsOptions</code> | Options related to projenrc in TypeScript. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pytest">pytest</a></code> | <code>boolean</code> | Include pytest tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pytestOptions">pytestOptions</a></code> | <code><a href="#projen.python.PytestOptions">PytestOptions</a></code> | pytest options. |
-| <code><a href="#projen.python.PythonProjectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PythonProjectOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
@@ -4824,6 +4993,19 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PythonProjectOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
+
+---
+
 ##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.python.PythonProjectOptions.property.moduleName"></a>
 
 ```typescript
@@ -5012,19 +5194,6 @@ public readonly pytestOptions: PytestOptions;
 - *Default:* defaults
 
 pytest options.
-
----
-
-##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PythonProjectOptions.property.pythonExec"></a>
-
-```typescript
-public readonly pythonExec: string;
-```
-
-- *Type:* string
-- *Default:* "python"
-
-Path to the python executable to use.
 
 ---
 
@@ -5292,6 +5461,172 @@ public readonly version: string;
 - *Type:* string
 
 Manually specify package version.
+
+---
+
+### SetuptoolsOptions <a name="SetuptoolsOptions" id="projen.python.SetuptoolsOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.SetuptoolsOptions.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const setuptoolsOptions: python.SetuptoolsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.SetuptoolsOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | A list of PyPI trove classifiers that describe the project. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.description">description</a></code> | <code>string</code> | A short description of the package. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.homepage">homepage</a></code> | <code>string</code> | A URL to the website of the project. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.license">license</a></code> | <code>string</code> | License of this package as an SPDX identifier. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
+
+---
+
+##### `authorEmail`<sup>Required</sup> <a name="authorEmail" id="projen.python.SetuptoolsOptions.property.authorEmail"></a>
+
+```typescript
+public readonly authorEmail: string;
+```
+
+- *Type:* string
+- *Default:* $GIT_USER_EMAIL
+
+Author's e-mail.
+
+---
+
+##### `authorName`<sup>Required</sup> <a name="authorName" id="projen.python.SetuptoolsOptions.property.authorName"></a>
+
+```typescript
+public readonly authorName: string;
+```
+
+- *Type:* string
+- *Default:* $GIT_USER_NAME
+
+Author's name.
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.python.SetuptoolsOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* "0.1.0"
+
+Version of the package.
+
+---
+
+##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.SetuptoolsOptions.property.classifiers"></a>
+
+```typescript
+public readonly classifiers: string[];
+```
+
+- *Type:* string[]
+
+A list of PyPI trove classifiers that describe the project.
+
+> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.python.SetuptoolsOptions.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A short description of the package.
+
+---
+
+##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.python.SetuptoolsOptions.property.homepage"></a>
+
+```typescript
+public readonly homepage: string;
+```
+
+- *Type:* string
+
+A URL to the website of the project.
+
+---
+
+##### `license`<sup>Optional</sup> <a name="license" id="projen.python.SetuptoolsOptions.property.license"></a>
+
+```typescript
+public readonly license: string;
+```
+
+- *Type:* string
+
+License of this package as an SPDX identifier.
+
+---
+
+##### `packageName`<sup>Optional</sup> <a name="packageName" id="projen.python.SetuptoolsOptions.property.packageName"></a>
+
+```typescript
+public readonly packageName: string;
+```
+
+- *Type:* string
+
+Package name.
+
+---
+
+##### `poetryOptions`<sup>Optional</sup> <a name="poetryOptions" id="projen.python.SetuptoolsOptions.property.poetryOptions"></a>
+
+```typescript
+public readonly poetryOptions: PoetryPyprojectOptionsWithoutDeps;
+```
+
+- *Type:* <a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a>
+
+Additional options to set for poetry if using poetry.
+
+---
+
+##### `setupConfig`<sup>Optional</sup> <a name="setupConfig" id="projen.python.SetuptoolsOptions.property.setupConfig"></a>
+
+```typescript
+public readonly setupConfig: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+Additional fields to pass in the setup() function if using setuptools.
+
+---
+
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.SetuptoolsOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
 
 ---
 

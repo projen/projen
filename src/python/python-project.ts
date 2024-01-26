@@ -24,12 +24,21 @@ import { anySelected, multipleSelected } from "../util";
 /** Allowed characters in python project names */
 const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
 
+export interface PythonExecutableOptions {
+  /**
+   * Path to the python executable to use.
+   * @default "python"
+   */
+  readonly pythonExec?: string;
+}
+
 /**
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions
   extends GitHubProjectOptions,
-    PythonPackagingOptions {
+    PythonPackagingOptions,
+    PythonExecutableOptions {
   // -- required options --
 
   /**
@@ -112,12 +121,6 @@ export interface PythonProjectOptions
   readonly poetry?: boolean;
 
   // -- optional components --
-
-  /**
-   * Path to the python executable to use.
-   * @default "python"
-   */
-  readonly pythonExec?: string;
 
   /**
    * Include pytest tests.

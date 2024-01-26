@@ -1,9 +1,14 @@
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { PythonExecutableOptions } from "./python-project";
 import { SetupPy } from "./setuppy";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
+
+export interface SetuptoolsOptions
+  extends PythonPackagingOptions,
+    PythonExecutableOptions {}
 
 /**
  * Manages packaging through setuptools with a setup.py script.
@@ -18,7 +23,7 @@ export class Setuptools extends Component implements IPythonPackaging {
 
   private readonly pythonExec: string;
 
-  constructor(project: Project, options: PythonPackagingOptions) {
+  constructor(project: Project, options: SetuptoolsOptions) {
     super(project);
     this.pythonExec = options.pythonExec ?? "python";
 

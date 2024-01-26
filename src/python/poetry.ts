@@ -2,6 +2,7 @@ import * as TOML from "@iarna/toml";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { PythonExecutableOptions } from "./python-project";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -9,6 +10,10 @@ import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
 import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+
+export interface PoetryOptions
+  extends PythonPackagingOptions,
+    PythonExecutableOptions {}
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -27,7 +32,7 @@ export class Poetry
    */
   public readonly publishTestTask: Task;
 
-  constructor(project: Project, options: PythonPackagingOptions) {
+  constructor(project: Project, options: PoetryOptions) {
     super(project);
     this.pythonExec = options.pythonExec ?? "python";
 

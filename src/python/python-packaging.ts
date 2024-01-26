@@ -65,12 +65,6 @@ export interface PythonPackagingOptions {
   readonly setupConfig?: { [key: string]: any };
 
   /**
-   * Path to the python executable to use.
-   * @default "python"
-   */
-  readonly pythonExec?: string;
-
-  /**
    * Additional options to set for poetry if using poetry
    */
   readonly poetryOptions?: PoetryPyprojectOptionsWithoutDeps;
