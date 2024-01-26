@@ -29,7 +29,7 @@ export class Poetry
 
   constructor(project: Project, options: PythonPackagingOptions) {
     super(project);
-    this.pythonExec = options.poetryOptions?.pythonExec ?? "python";
+    this.pythonExec = options.pythonExec ?? "python";
 
     this.installTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
@@ -300,12 +300,6 @@ export interface PoetryPyprojectOptionsWithoutDeps {
    * E.g. "Bug Tracker"
    */
   readonly urls?: { [key: string]: string };
-
-  /**
-   * Path to the python executable to use.
-   * @default "python"
-   */
-  readonly pythonExec?: string;
 }
 
 /**

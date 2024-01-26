@@ -300,18 +300,9 @@ export class PythonProject extends GitHubProject {
         homepage: options.homepage,
         classifiers: options.classifiers,
         setupConfig: options.setupConfig,
+        pythonExec: options.pythonExec,
       });
     }
-
-    // if (options.conda ?? false) {
-    //   this.depsManager = new Conda(this, options);
-    //   this.envManager = this.depsManager;
-    // }
-
-    // if (options.pipenv ?? false) {
-    //   this.depsManager = new Pipenv(this, options);
-    //   this.envManager = this.depsManager;
-    // }
 
     if (poetry) {
       const poetryProject = new Poetry(this, {
@@ -322,6 +313,7 @@ export class PythonProject extends GitHubProject {
         license: options.license,
         homepage: options.homepage,
         classifiers: options.classifiers,
+        pythonExec: options.pythonExec,
         poetryOptions: {
           readme: options.readme?.filename ?? "README.md",
           ...options.poetryOptions,
