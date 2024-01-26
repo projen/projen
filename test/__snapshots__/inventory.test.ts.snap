@@ -2184,7 +2184,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -9659,7 +9659,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -30608,7 +30608,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],

@@ -1,4 +1,5 @@
 import { python } from "../../src";
+import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
 
 test("poetry enabled", () => {
@@ -179,6 +180,29 @@ test("poetry enabled with metadata in dependencies", () => {
   );
   expect(snapshot["pyproject.toml"]).toContain('path = "../mypackage/foo"');
   expect(snapshot["pyproject.toml"]).toMatchSnapshot();
+});
+
+test("poetry environment is setup with pythonExec", () => {
+  // GIVEN
+  const debug = jest.spyOn(logging, "debug");
+  const p = new TestPythonProject({
+    poetry: true,
+    pythonExec: "python-exec-test-path",
+  });
+
+  // WHEN
+  synthSnapshot(p);
+  try {
+    p.envManager.setupEnvironment();
+  } catch {
+    // we expect this to fail because of the nonsensical python executable
+  }
+
+  // THEN
+  expect(debug).toBeCalledWith("poetry env use python-exec-test-path");
+
+  // AFTER
+  debug.mockRestore();
 });
 
 class TestPythonProject extends python.PythonProject {

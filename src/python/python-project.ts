@@ -24,12 +24,21 @@ import { anySelected, multipleSelected } from "../util";
 /** Allowed characters in python project names */
 const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
 
+export interface PythonExecutableOptions {
+  /**
+   * Path to the python executable to use.
+   * @default "python"
+   */
+  readonly pythonExec?: string;
+}
+
 /**
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions
   extends GitHubProjectOptions,
-    PythonPackagingOptions {
+    PythonPackagingOptions,
+    PythonExecutableOptions {
   // -- required options --
 
   /**
@@ -112,12 +121,6 @@ export interface PythonProjectOptions
   readonly poetry?: boolean;
 
   // -- optional components --
-
-  /**
-   * Path to the python executable to use.
-   * @default "python"
-   */
-  readonly pythonExec?: string;
 
   /**
    * Include pytest tests.
@@ -300,18 +303,9 @@ export class PythonProject extends GitHubProject {
         homepage: options.homepage,
         classifiers: options.classifiers,
         setupConfig: options.setupConfig,
+        pythonExec: options.pythonExec,
       });
     }
-
-    // if (options.conda ?? false) {
-    //   this.depsManager = new Conda(this, options);
-    //   this.envManager = this.depsManager;
-    // }
-
-    // if (options.pipenv ?? false) {
-    //   this.depsManager = new Pipenv(this, options);
-    //   this.envManager = this.depsManager;
-    // }
 
     if (poetry) {
       const poetryProject = new Poetry(this, {
@@ -322,6 +316,7 @@ export class PythonProject extends GitHubProject {
         license: options.license,
         homepage: options.homepage,
         classifiers: options.classifiers,
+        pythonExec: options.pythonExec,
         poetryOptions: {
           readme: options.readme?.filename ?? "README.md",
           ...options.poetryOptions,
