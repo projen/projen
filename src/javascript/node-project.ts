@@ -587,7 +587,7 @@ export class NodeProject extends GitHubProject {
       idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
     };
 
-    if (buildEnabled && this.github) {
+    if (buildEnabled) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
         artifactsDirectory: this.artifactsDirectory,
