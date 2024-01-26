@@ -1855,7 +1855,9 @@ The name of the npm package.
 
 ---
 
-##### `projenCommand`<sup>Required</sup> <a name="projenCommand" id="projen.javascript.NodePackage.property.projenCommand"></a>
+##### ~~`projenCommand`~~<sup>Required</sup> <a name="projenCommand" id="projen.javascript.NodePackage.property.projenCommand"></a>
+
+- *Deprecated:* use `project.projenCommand` instead.
 
 ```typescript
 public readonly projenCommand: string;
