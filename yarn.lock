@@ -955,9 +955,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.11.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.8.tgz#bdb6de1048613c3c6ab6c341c37e8fd1a7860308"
-  integrity sha512-i7omyekpPTNdv4Jb/Rgqg0RU8YqLcNsI12quKSDkRXNfx7Wxdm6HhK1awT3xTgEkgxPn3bvnSpiEAc7a7Lpyow==
+  version "20.11.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.10.tgz#6c3de8974d65c362f82ee29db6b5adf4205462f9"
+  integrity sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1466,9 +1466,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001580:
-  version "1.0.30001580"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001580.tgz#e3c76bc6fe020d9007647044278954ff8cd17d1e"
-  integrity sha512-mtj5ur2FFPZcCEpXFy8ADXbDACuNFXg6mxVDqp7tqooX6l3zwm+d8EPoeOSIFRDvHs8qu7/SLFOGniULkcH2iA==
+  version "1.0.30001581"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001581.tgz#0dfd4db9e94edbdca67d57348ebc070dece279f4"
+  integrity sha512-whlTkwhqV2tUmP3oYhtNfaWGYHDdS3JYFQBKXxcUR9qqPWsRhFHhoISO2Xnl/g0xyKzht9mI1LZpiNWfMzHixQ==
 
 case@^1.6.3:
   version "1.6.3"
@@ -3542,10 +3542,10 @@ jsii-diff@^1.94.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.3.12:
-  version "10.3.12"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.12.tgz#17af92f518e53d5e86f14412f398cf04cd6c001a"
-  integrity sha512-vQ0bvbyrsCzpdJa4O4Wd5Zd+yOSiuvvKdlv0ZV01bUnUb3zStW5f6Lk32lU/kdNILhwN/EdjzLj2YK0aSaNFJw==
+jsii-docgen@^10.3.13:
+  version "10.3.13"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.13.tgz#374304b762bdc2399bf831a0afe831e1eb3ece3c"
+  integrity sha512-bk/LpYgu0ft8VUKKAFRqSfLXCDeQeB8wSY9N+jsN0lvRWiWaJwhR6n5nMfjTvt3YzI9A3qgW0fU197K265ti5A==
   dependencies:
     "@jsii/spec" "^1.94.0"
     case "^1.6.3"
