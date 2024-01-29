@@ -2,6 +2,7 @@ import { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { JobStep } from "./workflows-model";
+import { ensureRelativePathStartsWithDot } from "../util/path";
 
 function context(value: string) {
   return `\${{ ${value} }}`;
@@ -39,11 +40,22 @@ export class WorkflowActions {
           "git add .",
           `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,
         ].join("\n"),
+        workingDirectory: options.workingDirectory
+          ? ensureRelativePathStartsWithDot(options.workingDirectory)
+          : undefined,
       },
       WorkflowSteps.uploadArtifact({
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
+        with: {
+          name: GIT_PATCH_FILE,
+          path: `${
+            options.workingDirectory &&
+            !options.workingDirectory.match("^.(/)*$")
+              ? `${options.workingDirectory}/`
+              : ""
+          }${GIT_PATCH_FILE}`,
+        },
       }),
     ];
 
@@ -196,6 +208,11 @@ export interface UploadGitPatchOptions {
    * @default - do not fail upon mutation
    */
   readonly mutationError?: string;
+
+  /**
+   * Working directory for git diff step
+   */
+  readonly workingDirectory?: string;
 }
 
 export interface CreatePullRequestOptions {
