@@ -426,6 +426,7 @@ export class BuildWorkflow extends Component {
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         mutationError:
           "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.",
+        workingDirectory: "./",
       }),
 
       // upload the build artifact only if we have post-build jobs (otherwise, there's no point)
