@@ -95,7 +95,7 @@ export interface NodeProjectOptions
 
   /**
    * Name of PR build workflow.
-   * @default "build" or "build_{packageName}" for sub-projects
+   * @default "build"
    */
   readonly buildWorkflowName?: string;
 

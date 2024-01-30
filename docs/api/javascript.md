@@ -9024,7 +9024,7 @@ public readonly buildWorkflowName: string;
 ```
 
 - *Type:* string
-- *Default:* "build" or "build_{packageName}" for sub-projects
+- *Default:* "build"
 
 Name of PR build workflow.
 
