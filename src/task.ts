@@ -242,16 +242,61 @@ export class Task {
   public get envVars(): Readonly<{ [name: string]: string }> {
     return this._env;
   }
+
   /**
    * Returns an immutable copy of all the step specifications of the task.
    */
-  public get steps() {
+  public get steps(): TaskStep[] {
     // If the list of steps is a Lazy value, we can't know what the steps
     // are until synthesis occurs, so just return an empty array.
     if (!Array.isArray(this._steps)) {
       return [];
     }
     return [...this._steps];
+  }
+
+  /**
+   *
+   * @param index The index of the step to get
+   * @returns The task step at the given index
+   */
+  public getStep(index: number): TaskStep {
+    return this._steps[index];
+  }
+
+  /**
+   *
+   * @param index The index of the step to edit
+   * @param step The new step to replace the old one entirely, it is not merged with the old step
+   */
+  public updateStep(index: number, step: TaskStep): void {
+    this.assertUnlocked();
+
+    const existingStep = this._steps[index];
+    if (!existingStep) {
+      throw new Error(
+        `Cannot edit step at index ${index} for task ${this.name} because it does not exist`
+      );
+    }
+
+    this._steps[index] = step;
+  }
+
+  /**
+   *
+   * @param index The index of the step to remove
+   */
+  public removeStep(index: number): void {
+    this.assertUnlocked();
+
+    const existingStep = this._steps[index];
+    if (!existingStep) {
+      throw new Error(
+        `Cannot remove step at index ${index} for task ${this.name} because it does not exist`
+      );
+    }
+
+    this._steps.splice(index, 1);
   }
 
   /**
