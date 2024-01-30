@@ -94,6 +94,12 @@ export interface NodeProjectOptions
   readonly buildWorkflow?: boolean;
 
   /**
+   * Name of PR build workflow.
+   * @default "build" or "build_{packageName}" for sub-projects
+   */
+  readonly buildWorkflowName?: string;
+
+  /**
    * Automatically update files modified during builds to pull-request branches. This means
    * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
    * before a PR is merged.
@@ -589,12 +595,16 @@ export class NodeProject extends GitHubProject {
 
     if (buildEnabled) {
       this.buildWorkflow = new BuildWorkflow(this, {
+        name: options.buildWorkflowName,
         buildTask: this.buildTask,
         artifactsDirectory: this.artifactsDirectory,
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,
         mutableBuild: options.mutableBuild,
         preBuildSteps: this.renderWorkflowSetup({
+          installStepConfiguration: {
+            workingDirectory: this.determineInstallWorkingDirectory(),
+          },
           mutable: options.mutableBuild ?? true,
         }),
         postBuildSteps: options.postBuildSteps,
