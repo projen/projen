@@ -14775,14 +14775,17 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
+| <code><a href="#projen.Task.getStep">getStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.lock">lock</a></code> | Forbid additional changes to this task. |
 | <code><a href="#projen.Task.prepend">prepend</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependSay">prependSay</a></code> | Says something at the beginning of the task. |
 | <code><a href="#projen.Task.prependSpawn">prependSpawn</a></code> | Adds a spawn instruction at the beginning of the task. |
+| <code><a href="#projen.Task.removeStep">removeStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.reset">reset</a></code> | Reset the task so it no longer has any commands. |
 | <code><a href="#projen.Task.say">say</a></code> | Say something. |
 | <code><a href="#projen.Task.spawn">spawn</a></code> | Spawns a sub-task. |
+| <code><a href="#projen.Task.updateStep">updateStep</a></code> | *No description.* |
 
 ---
 
@@ -14876,6 +14879,20 @@ Shell command.
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
 
 Options.
+
+---
+
+##### `getStep` <a name="getStep" id="projen.Task.getStep"></a>
+
+```typescript
+public getStep(index: number): TaskStep
+```
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.getStep.parameter.index"></a>
+
+- *Type:* number
+
+The index of the step to get.
 
 ---
 
@@ -14975,6 +14992,20 @@ The subtask to execute.
 
 ---
 
+##### `removeStep` <a name="removeStep" id="projen.Task.removeStep"></a>
+
+```typescript
+public removeStep(index: number): void
+```
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.removeStep.parameter.index"></a>
+
+- *Type:* number
+
+The index of the step to remove.
+
+---
+
 ##### `reset` <a name="reset" id="projen.Task.reset"></a>
 
 ```typescript
@@ -15040,6 +15071,28 @@ The subtask to execute.
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.spawn.parameter.options"></a>
 
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
+
+---
+
+##### `updateStep` <a name="updateStep" id="projen.Task.updateStep"></a>
+
+```typescript
+public updateStep(index: number, step: TaskStep): void
+```
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.updateStep.parameter.index"></a>
+
+- *Type:* number
+
+The index of the step to edit.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.Task.updateStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.TaskStep">TaskStep</a>
+
+The new step to replace the old one entirely, it is not merged with the old step.
 
 ---
 
