@@ -670,7 +670,10 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.Jest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.javascript.Jest.addIgnorePattern">addIgnorePattern</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Jest.addModuleNameMappers">addModuleNameMappers</a></code> | Adds one or more moduleNameMapper entries to Jest's configuration. |
+| <code><a href="#projen.javascript.Jest.addModulePaths">addModulePaths</a></code> | Adds one or more modulePaths to Jest's configuration. |
 | <code><a href="#projen.javascript.Jest.addReporter">addReporter</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Jest.addRoots">addRoots</a></code> | Adds one or more roots to Jest's configuration. |
 | <code><a href="#projen.javascript.Jest.addSetupFile">addSetupFile</a></code> | Adds a a setup file to Jest's setupFiles configuration. |
 | <code><a href="#projen.javascript.Jest.addSetupFileAfterEnv">addSetupFileAfterEnv</a></code> | Adds a a setup file to Jest's setupFilesAfterEnv configuration. |
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
@@ -725,6 +728,40 @@ public addIgnorePattern(pattern: string): void
 
 ---
 
+##### `addModuleNameMappers` <a name="addModuleNameMappers" id="projen.javascript.Jest.addModuleNameMappers"></a>
+
+```typescript
+public addModuleNameMappers(moduleNameMapperAdditions: {[ key: string ]: string | string[]}): void
+```
+
+Adds one or more moduleNameMapper entries to Jest's configuration.
+
+Will overwrite if the same key is used as a pre-existing one.
+
+###### `moduleNameMapperAdditions`<sup>Required</sup> <a name="moduleNameMapperAdditions" id="projen.javascript.Jest.addModuleNameMappers.parameter.moduleNameMapperAdditions"></a>
+
+- *Type:* {[ key: string ]: string | string[]}
+
+A map from regular expressions to module names or to arrays of module names that allow to stub out resources, like images or styles with a single module.
+
+---
+
+##### `addModulePaths` <a name="addModulePaths" id="projen.javascript.Jest.addModulePaths"></a>
+
+```typescript
+public addModulePaths(modulePaths: string): void
+```
+
+Adds one or more modulePaths to Jest's configuration.
+
+###### `modulePaths`<sup>Required</sup> <a name="modulePaths" id="projen.javascript.Jest.addModulePaths.parameter.modulePaths"></a>
+
+- *Type:* string
+
+An array of absolute paths to additional locations to search when resolving modules   *.
+
+---
+
 ##### `addReporter` <a name="addReporter" id="projen.javascript.Jest.addReporter"></a>
 
 ```typescript
@@ -734,6 +771,22 @@ public addReporter(reporter: JestReporter): void
 ###### `reporter`<sup>Required</sup> <a name="reporter" id="projen.javascript.Jest.addReporter.parameter.reporter"></a>
 
 - *Type:* <a href="#projen.javascript.JestReporter">JestReporter</a>
+
+---
+
+##### `addRoots` <a name="addRoots" id="projen.javascript.Jest.addRoots"></a>
+
+```typescript
+public addRoots(roots: string): void
+```
+
+Adds one or more roots to Jest's configuration.
+
+###### `roots`<sup>Required</sup> <a name="roots" id="projen.javascript.Jest.addRoots.parameter.roots"></a>
+
+- *Type:* string
+
+A list of paths to directories that Jest should use to search for files in.
 
 ---
 
@@ -819,7 +872,7 @@ The pattern (regular expression).
 | --- | --- |
 | <code><a href="#projen.javascript.Jest.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.javascript.Jest.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.javascript.Jest.of">of</a></code> | Returns the singletone Jest component of a project or undefined if there is none. |
+| <code><a href="#projen.javascript.Jest.of">of</a></code> | Returns the singleton Jest component of a project or undefined if there is none. |
 
 ---
 
@@ -879,7 +932,7 @@ import { javascript } from 'projen'
 javascript.Jest.of(project: Project)
 ```
 
-Returns the singletone Jest component of a project or undefined if there is none.
+Returns the singleton Jest component of a project or undefined if there is none.
 
 ###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Jest.of.parameter.project"></a>
 
@@ -1802,7 +1855,9 @@ The name of the npm package.
 
 ---
 
-##### `projenCommand`<sup>Required</sup> <a name="projenCommand" id="projen.javascript.NodePackage.property.projenCommand"></a>
+##### ~~`projenCommand`~~<sup>Required</sup> <a name="projenCommand" id="projen.javascript.NodePackage.property.projenCommand"></a>
+
+- *Deprecated:* use `project.projenCommand` instead.
 
 ```typescript
 public readonly projenCommand: string;

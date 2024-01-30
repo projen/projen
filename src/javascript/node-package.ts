@@ -886,6 +886,7 @@ export class NodePackage extends Component {
 
   /**
    * The command which executes "projen".
+   * @deprecated use `project.projenCommand` instead.
    */
   public get projenCommand() {
     return this.project.projenCommand;

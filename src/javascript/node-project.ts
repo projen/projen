@@ -474,7 +474,11 @@ export class NodeProject extends GitHubProject {
   public readonly prettier?: Prettier;
 
   constructor(options: NodeProjectOptions) {
-    super(options);
+    super({
+      ...options,
+      // Node projects have the specific projen version locked via lockfile, so we can skip the @<VERSION> part of the top-level project
+      projenCommand: options.projenCommand ?? "npx projen",
+    });
 
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];

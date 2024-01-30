@@ -212,7 +212,9 @@ export class Project extends Construct {
   /**
    * The command to use in order to run the projen CLI.
    */
-  public readonly projenCommand: string;
+  public get projenCommand(): string {
+    return this._projenCommand ?? "npx projen";
+  }
 
   /**
    * This is the "default" task, the one that executes "projen". Undefined if
@@ -241,6 +243,8 @@ export class Project extends Construct {
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
+  /** projenCommand without default value */
+  private readonly _projenCommand?: string;
 
   constructor(options: ProjectOptions) {
     const outdir = determineOutdir(options.parent, options.outdir);
@@ -265,10 +269,9 @@ export class Project extends Construct {
 
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
+    this._projenCommand = options.projenCommand;
     if (this.ejected) {
-      this.projenCommand = "scripts/run-task";
-    } else {
-      this.projenCommand = options.projenCommand ?? "npx projen";
+      this._projenCommand = "scripts/run-task";
     }
 
     this.outdir = outdir;
@@ -542,7 +545,8 @@ export class Project extends Construct {
    * @param task The task for which the command is required
    */
   public runTaskCommand(task: Task) {
-    return `npx projen@${PROJEN_VERSION} ${task.name}`;
+    const pj = this._projenCommand ?? `npx projen@${PROJEN_VERSION}`;
+    return `${pj} ${task.name}`;
   }
 
   /**
