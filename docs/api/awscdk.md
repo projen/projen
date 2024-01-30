@@ -10243,6 +10243,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -11652,6 +11653,19 @@ public readonly buildWorkflow: boolean;
 - *Default:* true if not a subproject
 
 Define a GitHub workflow for building PRs.
+
+---
+
+##### `buildWorkflowName`<sup>Optional</sup> <a name="buildWorkflowName" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowName"></a>
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
 
 ---
 
@@ -15429,6 +15443,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -16832,6 +16847,19 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowName`<sup>Optional</sup> <a name="buildWorkflowName" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowName"></a>
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
+
+---
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -18196,6 +18224,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -19771,6 +19800,21 @@ public readonly buildWorkflow: boolean;
 - *Default:* true if not a subproject
 
 Define a GitHub workflow for building PRs.
+
+---
+
+##### ~~`buildWorkflowName`~~<sup>Optional</sup> <a name="buildWorkflowName" id="projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowName"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
 
 ---
 

@@ -6634,6 +6634,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -8027,6 +8028,19 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowName`<sup>Optional</sup> <a name="buildWorkflowName" id="projen.web.NextJsProjectOptions.property.buildWorkflowName"></a>
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
+
+---
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.NextJsProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -8614,6 +8628,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -10023,6 +10038,19 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowName`<sup>Optional</sup> <a name="buildWorkflowName" id="projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowName"></a>
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
+
+---
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -10949,6 +10977,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.web.ReactProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -12315,6 +12344,19 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowName`<sup>Optional</sup> <a name="buildWorkflowName" id="projen.web.ReactProjectOptions.property.buildWorkflowName"></a>
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
+
+---
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.ReactProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -13097,6 +13139,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowName">buildWorkflowName</a></code> | <code>string</code> | Name of PR build workflow. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -14476,6 +14519,19 @@ public readonly buildWorkflow: boolean;
 - *Default:* true if not a subproject
 
 Define a GitHub workflow for building PRs.
+
+---
+
+##### `buildWorkflowName`<sup>Optional</sup> <a name="buildWorkflowName" id="projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowName"></a>
+
+```typescript
+public readonly buildWorkflowName: string;
+```
+
+- *Type:* string
+- *Default:* "build" or "build_{packageName}" for sub-projects
+
+Name of PR build workflow.
 
 ---
 

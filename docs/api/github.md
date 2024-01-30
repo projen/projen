@@ -7792,6 +7792,7 @@ const uploadGitPatchOptions: github.UploadGitPatchOptions = { ... }
 | <code><a href="#projen.github.UploadGitPatchOptions.property.mutationError">mutationError</a></code> | <code>string</code> | Fail if a mutation was found and print this error message. |
 | <code><a href="#projen.github.UploadGitPatchOptions.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
 | <code><a href="#projen.github.UploadGitPatchOptions.property.stepName">stepName</a></code> | <code>string</code> | The name of the step. |
+| <code><a href="#projen.github.UploadGitPatchOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Working directory for git diff step. |
 
 ---
 
@@ -7857,6 +7858,18 @@ public readonly stepName: string;
 - *Default:* "Find mutations"
 
 The name of the step.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.UploadGitPatchOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Working directory for git diff step.
 
 ---
 
