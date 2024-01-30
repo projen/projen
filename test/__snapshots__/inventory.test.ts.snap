@@ -2789,6 +2789,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
         "docs": "Build workflow triggers.",
         "featured": false,
@@ -5779,6 +5796,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
@@ -10167,6 +10201,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
         "docs": "Build workflow triggers.",
         "featured": false,
@@ -13012,6 +13063,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
@@ -16006,6 +16074,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
@@ -19771,6 +19856,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
         "docs": "Build workflow triggers.",
         "featured": false,
@@ -22627,6 +22729,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
         "docs": "Build workflow triggers.",
         "featured": false,
@@ -24965,6 +25084,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
@@ -27569,6 +27705,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
@@ -31099,6 +31252,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
         "docs": "Build workflow triggers.",
         "featured": false,
@@ -33425,6 +33595,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
@@ -36036,6 +36223,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
         "docs": "Build workflow triggers.",
         "featured": false,
@@ -38621,6 +38825,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      {
+        "default": ""build"",
+        "docs": "Name of PR build workflow.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowName",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowName",
+        ],
+        "simpleType": "string",
+        "switch": "build-workflow-name",
       },
       {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
