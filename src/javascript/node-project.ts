@@ -15,6 +15,7 @@ import { PROJEN_DIR } from "../common";
 import {
   AutoMerge,
   DependabotOptions,
+  GitHub,
   GitHubProject,
   GitHubProjectOptions,
   GitIdentity,
@@ -593,7 +594,7 @@ export class NodeProject extends GitHubProject {
       idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
     };
 
-    if (buildEnabled) {
+    if (buildEnabled && (this.github || GitHub.of(this.root))) {
       this.buildWorkflow = new BuildWorkflow(this, {
         name: options.buildWorkflowName,
         buildTask: this.buildTask,
