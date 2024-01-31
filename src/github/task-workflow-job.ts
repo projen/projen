@@ -1,6 +1,7 @@
 import { IConstruct } from "constructs";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitIdentity } from "./task-workflow";
+import { WorkflowJobBuilder } from "./workflow-job-builder";
 import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import {
   ContainerOptions,
@@ -9,11 +10,8 @@ import {
   JobPermissions,
   JobStep,
   JobStepOutput,
-  JobStrategy,
-  Tools,
 } from "./workflows-model";
-import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import { GroupRunnerOptions } from "../runner-options";
 import { Task } from "../task";
 
 /**
@@ -123,33 +121,13 @@ export interface TaskWorkflowJobOptions {
  *
  * @implements {Job}
  */
-export class TaskWorkflowJob extends Component {
-  public readonly runsOn?: string[] | undefined;
-  public readonly runsOnGroup?: GroupRunnerOptions | undefined;
-  public readonly steps: JobStep[];
-  public readonly environment?: unknown;
-  public readonly outputs?: Record<string, JobStepOutput> | undefined;
-  public readonly env?: Record<string, string> | undefined;
-  public readonly defaults?: JobDefaults | undefined;
-  public readonly timeoutMinutes?: number | undefined;
-  public readonly continueOnError?: boolean | undefined;
-  public readonly container?: ContainerOptions | undefined;
-  public readonly services?: Record<string, ContainerOptions> | undefined;
-  public readonly tools?: Tools | undefined;
-  public readonly name?: string | undefined;
-  public readonly needs?: string[] | undefined;
-  public readonly permissions: JobPermissions;
-  public readonly concurrency?: unknown;
-  public readonly if?: string | undefined;
-  public readonly strategy?: JobStrategy | undefined;
-
+export class TaskWorkflowJob extends WorkflowJobBuilder {
   /**
    * @param scope should be part of the project the Task belongs to.
    * @param task the main task that is run as part of this job.
    * @param options options to configure the TaskWorkflowJob.
    */
   constructor(scope: IConstruct, task: Task, options: TaskWorkflowJobOptions) {
-    super(scope, `${new.target.name}#${task.name}`);
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
     const checkoutWith: { lfs?: boolean } = {};
@@ -177,31 +155,33 @@ export class TaskWorkflowJob extends Component {
       );
     }
 
-    const runsOnInputs = filteredRunsOnOptions(
-      options.runsOn,
-      options.runsOnGroup
+    super(
+      scope,
+      {
+        runsOn: options.runsOn,
+        runsOnGroup: options.runsOnGroup,
+        container: options.container,
+        env: options.env,
+        permissions: options.permissions,
+        defaults: options?.jobDefaults,
+        if: options.condition,
+        outputs: options.outputs,
+        steps: [
+          ...preCheckoutSteps,
+
+          // check out sources.
+          WorkflowSteps.checkout({ with: checkoutWith }),
+
+          // sets git identity so we can push later
+          WorkflowSteps.setupGitIdentity({ gitIdentity }),
+
+          ...preBuildSteps,
+        ],
+      },
+      `${new.target.name}#${task.name}`
     );
-    this.runsOn = (runsOnInputs as { runsOn: string[] })?.runsOn;
-    this.runsOnGroup = (
-      runsOnInputs as { runsOnGroup: GroupRunnerOptions }
-    )?.runsOnGroup;
-    this.container = options.container;
-    this.env = options.env;
-    this.permissions = options.permissions;
-    this.defaults = options?.jobDefaults;
-    this.if = options.condition;
-    this.outputs = options.outputs;
-    this.steps = [
-      ...preCheckoutSteps,
 
-      // check out sources.
-      WorkflowSteps.checkout({ with: checkoutWith }),
-
-      // sets git identity so we can push later
-      WorkflowSteps.setupGitIdentity({ gitIdentity }),
-
-      ...preBuildSteps,
-
+    this.addSteps([
       // run the main build task
       {
         name: task.name,
@@ -209,7 +189,7 @@ export class TaskWorkflowJob extends Component {
       },
 
       ...postBuildSteps,
-    ];
+    ]);
   }
 
   /**
