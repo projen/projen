@@ -13,7 +13,7 @@ import {
 import { Component } from "../component";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
-export class WorkflowJobBuilder extends Component implements Job {
+export class WorkflowJobBuilder extends Component {
   private _runsOn?: string[] | undefined;
   private _runsOnGroup?: GroupRunnerOptions | undefined;
   private _steps: JobStep[] = new Array<JobStep>();
@@ -69,19 +69,15 @@ export class WorkflowJobBuilder extends Component implements Job {
   public get runsOn(): string[] | undefined {
     return this._runsOn;
   }
-  public setRunsOn(value: string[] | undefined): WorkflowJobBuilder {
+  public set runsOn(value: string[] | undefined) {
     this._runsOn = value;
-    return this;
   }
 
   public get runsOnGroup(): GroupRunnerOptions | undefined {
     return this._runsOnGroup;
   }
-  public setRunsOnGroup(
-    value: GroupRunnerOptions | undefined
-  ): WorkflowJobBuilder {
+  public set runsOnGroup(value: GroupRunnerOptions | undefined) {
     this._runsOnGroup = value;
-    return this;
   }
 
   public get steps(): JobStep[] {
@@ -196,58 +192,50 @@ export class WorkflowJobBuilder extends Component implements Job {
   public get defaults(): JobDefaults | undefined {
     return this._defaults;
   }
-  public setDefaults(value: JobDefaults | undefined) {
+  public set defaults(value: JobDefaults | undefined) {
     this._defaults = value;
   }
 
   public get timeoutMinutes(): number | undefined {
     return this._timeoutMinutes;
   }
-  public setTimeoutMinutes(value: number | undefined): WorkflowJobBuilder {
+  public set timeoutMinutes(value: number | undefined) {
     this._timeoutMinutes = value;
-    return this;
   }
 
   public get continueOnError(): boolean | undefined {
     return this._continueOnError;
   }
-  public setContinueOnError(value: boolean | undefined): WorkflowJobBuilder {
+  public set continueOnError(value: boolean | undefined) {
     this._continueOnError = value;
-    return this;
   }
 
   public get container(): ContainerOptions | undefined {
     return this._container;
   }
-  public setContainer(value: ContainerOptions | undefined): WorkflowJobBuilder {
+  public set container(value: ContainerOptions | undefined) {
     this._container = value;
-    return this;
   }
 
   public get services(): Record<string, ContainerOptions> | undefined {
     return this._services;
   }
-  public setServices(
-    value: Record<string, ContainerOptions> | undefined
-  ): WorkflowJobBuilder {
+  public set services(value: Record<string, ContainerOptions> | undefined) {
     this._services = value;
-    return this;
   }
 
   public get tools(): Tools | undefined {
     return this._tools;
   }
-  public setTools(value: Tools | undefined): WorkflowJobBuilder {
+  public set tools(value: Tools | undefined) {
     this._tools = value;
-    return this;
   }
 
   public get name(): string | undefined {
     return this._name;
   }
-  public setName(value: string | undefined): WorkflowJobBuilder {
+  public set name(value: string | undefined) {
     this._name = value;
-    return this;
   }
 
   public get needs(): string[] | undefined {
@@ -316,17 +304,15 @@ export class WorkflowJobBuilder extends Component implements Job {
   public get if(): string | undefined {
     return this._if;
   }
-  public setIf(value: string | undefined): WorkflowJobBuilder {
+  public set if(value: string | undefined) {
     this._if = value;
-    return this;
   }
 
   public get strategy(): JobStrategy | undefined {
     return this._strategy;
   }
-  public setStrategy(value: JobStrategy | undefined): WorkflowJobBuilder {
+  public set strategy(value: JobStrategy | undefined) {
     this._strategy = value;
-    return this;
   }
 
   /**
