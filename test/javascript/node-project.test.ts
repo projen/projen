@@ -1783,6 +1783,39 @@ describe("Subproject", () => {
       )
     ).toBeDefined();
   });
+
+  test("should create a build workflow in the parent project", () => {
+    // GIVEN / WHEN
+    const root = new TestNodeProject();
+    new TestNodeProject({
+      parent: root,
+      outdir: "child",
+      buildWorkflow: true,
+      minNodeVersion: "18.0.0",
+      workflowNodeVersion: "18.14.0",
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(root);
+
+    expect(snapshot).toHaveProperty([
+      ".github/workflows/build_test-node-project.yml",
+    ]);
+
+    const subProjecBuildWorkflow = yaml.parse(
+      snapshot[".github/workflows/build_test-node-project.yml"]
+    );
+    expect(
+      subProjecBuildWorkflow.jobs.build.defaults.run["working-directory"]
+    ).toEqual("./child");
+    expect(
+      subProjecBuildWorkflow.jobs.build.steps.find(
+        (step: any) => step.name === "Install dependencies"
+      )["working-directory"]
+    ).toEqual(
+      expect.stringContaining(".") // NodeProject is responsible for setting the install working directory to root
+    );
+  });
 });
 
 describe("npmignore", () => {
