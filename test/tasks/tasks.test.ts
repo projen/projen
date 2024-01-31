@@ -535,6 +535,26 @@ test("steps can receive args", () => {
   });
 });
 
+test("allows setting the cwd for the task", () => {
+  const p = new TestProject();
+  const t = p.addTask("t", {
+    cwd: "foo",
+  });
+
+  // WHEN
+  t.cwd = "bar";
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      t: {
+        name: "t",
+        cwd: "bar",
+      },
+    },
+  });
+});
+
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest["//"];

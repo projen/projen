@@ -48,7 +48,8 @@ export class Task {
   private readonly _conditions: string[];
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
-  private readonly cwd?: string;
+  private _cwd?: string | undefined;
+
   private readonly requiredEnv?: string[];
   private _locked: boolean;
   private _description?: string;
@@ -57,7 +58,7 @@ export class Task {
     this.name = name;
     this._description = props.description;
     this._conditions = props.condition ? [props.condition] : [];
-    this.cwd = props.cwd;
+    this._cwd = props.cwd;
     this._locked = false;
     this._env = props.env ?? {};
 
@@ -78,6 +79,20 @@ export class Task {
    */
   public lock() {
     this._locked = true;
+  }
+
+  /**
+   * Returns the working directory for this task.
+   */
+  public get cwd(): string | undefined {
+    return this._cwd;
+  }
+
+  /**
+   * Sets the working directory for this task.
+   */
+  public set cwd(cwd: string | undefined) {
+    this._cwd = cwd;
   }
 
   /**
@@ -339,7 +354,7 @@ export class Task {
       requiredEnv: this.requiredEnv,
       steps: steps,
       condition: this.condition,
-      cwd: this.cwd,
+      cwd: this._cwd,
     };
   }
 
