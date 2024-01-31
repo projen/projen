@@ -15105,6 +15105,7 @@ The new step to replace the old one entirely, it is not merged with the old step
 | <code><a href="#projen.Task.property.name">name</a></code> | <code>string</code> | Task name. |
 | <code><a href="#projen.Task.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | Returns an immutable copy of all the step specifications of the task. |
 | <code><a href="#projen.Task.property.condition">condition</a></code> | <code>string</code> | A command to execute which determines if the task should be skipped. |
+| <code><a href="#projen.Task.property.cwd">cwd</a></code> | <code>string</code> | Returns the working directory for this task. |
 | <code><a href="#projen.Task.property.description">description</a></code> | <code>string</code> | Returns the description of this task. |
 
 ---
@@ -15157,6 +15158,20 @@ A command to execute which determines if the task should be skipped.
 
 If it
 returns a zero exit code, the task will not be executed.
+
+---
+
+##### `cwd`<sup>Optional</sup> <a name="cwd" id="projen.Task.property.cwd"></a>
+
+```typescript
+public readonly cwd: string;
+```
+
+- *Type:* string
+
+Returns the working directory for this task.
+
+Sets the working directory for this task.
 
 ---
 
