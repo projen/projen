@@ -10259,6 +10259,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declaration">declaration</a></code> | <code>boolean</code> | To be specified along with the above. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declarationDir">declarationDir</a></code> | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declarationMap">declarationMap</a></code> | <code>boolean</code> | Generates a source map for .d.ts files which map back to the original .ts source file. This will allow editors such as VS Code to go to the original .ts file when using features like Go to Definition. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.downlevelIteration">downlevelIteration</a></code> | <code>boolean</code> | Downleveling is TypeScript’s term for transpiling to an older version of JavaScript. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.emitDeclarationOnly">emitDeclarationOnly</a></code> | <code>boolean</code> | Only emit .d.ts files; do not emit .js files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.emitDecoratorMetadata">emitDecoratorMetadata</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.esModuleInterop">esModuleInterop</a></code> | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility. |
@@ -10266,6 +10267,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.experimentalDecorators">experimentalDecorators</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.forceConsistentCasingInFileNames">forceConsistentCasingInFileNames</a></code> | <code>boolean</code> | Disallow inconsistently-cased references to the same file. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.importsNotUsedAsValues">importsNotUsedAsValues</a></code> | <code><a href="#projen.javascript.TypeScriptImportsNotUsedAsValues">TypeScriptImportsNotUsedAsValues</a></code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.incremental">incremental</a></code> | <code>boolean</code> | Tells TypeScript to save information about the project graph from the last compilation to files stored on disk. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.inlineSourceMap">inlineSourceMap</a></code> | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.inlineSources">inlineSources</a></code> | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.isolatedModules">isolatedModules</a></code> | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or. |
@@ -10299,6 +10301,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.strictPropertyInitialization">strictPropertyInitialization</a></code> | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.stripInternal">stripInternal</a></code> | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.target">target</a></code> | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.tsBuildInfoFile">tsBuildInfoFile</a></code> | <code>string</code> | This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.types">types</a></code> | <code>string[]</code> | If types is specified, only packages listed will be included in the global scope. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.useUnknownInCatchVariables">useUnknownInCatchVariables</a></code> | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.verbatimModuleSyntax">verbatimModuleSyntax</a></code> | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers. |
@@ -10440,6 +10443,23 @@ Generates a source map for .d.ts files which map back to the original .ts source
 
 ---
 
+##### `downlevelIteration`<sup>Optional</sup> <a name="downlevelIteration" id="projen.javascript.TypeScriptCompilerOptions.property.downlevelIteration"></a>
+
+```typescript
+public readonly downlevelIteration: boolean;
+```
+
+- *Type:* boolean
+
+Downleveling is TypeScript’s term for transpiling to an older version of JavaScript.
+
+This flag is to enable support for a more accurate implementation of how modern JavaScript iterates through new concepts in older JavaScript runtimes.
+
+ECMAScript 6 added several new iteration primitives: the for / of loop (for (el of arr)), Array spread ([a, ...b]), argument spread (fn(...args)), and Symbol.iterator.
+downlevelIteration allows for these iteration primitives to be used more accurately in ES5 environments if a Symbol.iterator implementation is present.
+
+---
+
 ##### `emitDeclarationOnly`<sup>Optional</sup> <a name="emitDeclarationOnly" id="projen.javascript.TypeScriptCompilerOptions.property.emitDeclarationOnly"></a>
 
 ```typescript
@@ -10536,6 +10556,28 @@ public readonly importsNotUsedAsValues: TypeScriptImportsNotUsedAsValues;
 This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
 
 > [https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues](https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues)
+
+---
+
+##### `incremental`<sup>Optional</sup> <a name="incremental" id="projen.javascript.TypeScriptCompilerOptions.property.incremental"></a>
+
+```typescript
+public readonly incremental: boolean;
+```
+
+- *Type:* boolean
+
+Tells TypeScript to save information about the project graph from the last compilation to files stored on disk.
+
+This creates a series of .tsbuildinfo files in the same folder as your compilation output.
+They are not used by your JavaScript at runtime and can be safely deleted.
+You can read more about the flag in the 3.4 release notes.
+
+> [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#faster-subsequent-builds-with-the---incremental-flag
+
+To control which folders you want to the files to be built to, use the config option tsBuildInfoFile.](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#faster-subsequent-builds-with-the---incremental-flag
+
+To control which folders you want to the files to be built to, use the config option tsBuildInfoFile.)
 
 ---
 
@@ -10992,6 +11034,20 @@ Modern browsers support all ES6 features, so ES6 is a good choice.
 You might choose to set
 a lower target if your code is deployed to older environments, or a higher target if your
 code is guaranteed to run in newer environments.
+
+---
+
+##### `tsBuildInfoFile`<sup>Optional</sup> <a name="tsBuildInfoFile" id="projen.javascript.TypeScriptCompilerOptions.property.tsBuildInfoFile"></a>
+
+```typescript
+public readonly tsBuildInfoFile: string;
+```
+
+- *Type:* string
+
+This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases.
+
+You can read more about composite projects in the handbook.
 
 ---
 
