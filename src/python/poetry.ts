@@ -23,9 +23,22 @@ export class Poetry
   extends Component
   implements IPythonDeps, IPythonEnv, IPythonPackaging
 {
+  /**
+   * A task that installs dependencies (honouring the lockfile)
+   */
   public readonly installTask: Task;
+  /**
+   * A task that updates the lockfile and installs dependencies
+   */
+  public readonly installMutableTask: Task;
+  /**
+   * A task that for upgrades dependencies
+   */
+  public readonly upgradeTask: Task;
   public readonly publishTask: Task;
   private readonly pythonExec: string;
+
+  private readonly pyProject: PoetryPyproject;
 
   /**
    * A task that uploads the package to the Test PyPI repository.
@@ -36,8 +49,18 @@ export class Poetry
     super(project);
     this.pythonExec = options.pythonExec ?? "python";
 
+    this.installMutableTask = project.addTask("install-mutable", {
+      description: "Install dependencies and update lockfile",
+      exec: "poetry lock",
+    });
     this.installTask = project.addTask("install", {
-      description: "Install and upgrade dependencies",
+      description: "Install dependencies with frozen lockfile",
+      exec: "poetry lock --no-update",
+    });
+    [this.installMutableTask, this.installTask].forEach(t => t.exec("poetry install"));
+
+    this.upgradeTask = project.addTask("upgrade", {
+      description: "Upgrade dependencies",
       exec: "poetry update",
     });
 
@@ -59,7 +82,7 @@ export class Poetry
       exec: "poetry publish",
     });
 
-    new PoetryPyproject(project, {
+    this.pyProject = new PoetryPyproject(project, {
       name: project.name,
       version: options.version,
       description: options.description ?? "",
@@ -187,7 +210,12 @@ export class Poetry
   public installDependencies() {
     this.project.logger.info("Installing dependencies...");
     const runtime = new TaskRuntime(this.project.outdir);
-    runtime.runTask(this.installTask.name);
+    // If the pyproject.toml file has changed, update the lockfile prior to installation
+    if (this.pyProject.file.changed) {
+      runtime.runTask(this.installMutableTask.name);
+    } else {
+      runtime.runTask(this.installTask.name);
+    }
   }
 }
 

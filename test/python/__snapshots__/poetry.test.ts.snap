@@ -261,11 +261,26 @@ cython_debug/
         ],
       },
       "install": {
-        "description": "Install and upgrade dependencies",
+        "description": "Install dependencies with frozen lockfile",
         "name": "install",
         "steps": [
           {
-            "exec": "poetry update",
+            "exec": "poetry lock --no-update",
+          },
+          {
+            "exec": "poetry install",
+          },
+        ],
+      },
+      "install-mutable": {
+        "description": "Install dependencies and update lockfile",
+        "name": "install-mutable",
+        "steps": [
+          {
+            "exec": "poetry lock",
+          },
+          {
+            "exec": "poetry install",
           },
         ],
       },
@@ -310,6 +325,15 @@ cython_debug/
         "steps": [
           {
             "exec": "pytest",
+          },
+        ],
+      },
+      "upgrade": {
+        "description": "Upgrade dependencies",
+        "name": "upgrade",
+        "steps": [
+          {
+            "exec": "poetry update",
           },
         ],
       },
