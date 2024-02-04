@@ -154,6 +154,14 @@ export class Task {
    */
   public exec(command: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot add exec to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.push({ exec: command, ...options });
   }
 
@@ -170,6 +178,14 @@ export class Task {
    */
   public builtin(name: string) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot add builtin to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.push({ builtin: name });
   }
 
@@ -180,6 +196,14 @@ export class Task {
    */
   public say(message: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot add say to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.push({ say: message, ...options });
   }
 
@@ -200,6 +224,14 @@ export class Task {
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot add spawn to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.push({ spawn: subtask.name, ...options });
   }
 
@@ -209,6 +241,14 @@ export class Task {
    */
   public prependExec(shell: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot prependExec to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.unshift({
       exec: shell,
       ...options,
@@ -221,6 +261,14 @@ export class Task {
    */
   public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot prependSpawn to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.unshift({
       spawn: subtask.name,
       ...options,
@@ -233,6 +281,14 @@ export class Task {
    */
   public prependSay(message: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot prependSay to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     this._steps.unshift({
       say: message,
       ...options,
@@ -278,10 +334,17 @@ export class Task {
   public updateStep(index: number, step: TaskStep): void {
     this.assertUnlocked();
 
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot update step from task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
+
     const existingStep = this._steps[index];
     if (!existingStep) {
       throw new Error(
-        `Cannot edit step at index ${index} for task ${this.name} because it does not exist`
+        `Cannot update step at index ${index} for task ${this.name} because it does not exist`
       );
     }
 
@@ -294,6 +357,13 @@ export class Task {
    */
   public removeStep(index: number): void {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      warn(
+        `Cannot remove step from task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      );
+      return;
+    }
 
     const existingStep = this._steps[index];
     if (!existingStep) {
