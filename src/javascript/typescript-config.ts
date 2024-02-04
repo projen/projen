@@ -187,6 +187,15 @@ export interface TypeScriptCompilerOptions {
   readonly declarationMap?: boolean;
 
   /**
+   * Downleveling is TypeScript’s term for transpiling to an older version of JavaScript.
+   * This flag is to enable support for a more accurate implementation of how modern JavaScript iterates through new concepts in older JavaScript runtimes.
+   *
+   * ECMAScript 6 added several new iteration primitives: the for / of loop (for (el of arr)), Array spread ([a, ...b]), argument spread (fn(...args)), and Symbol.iterator.
+   * downlevelIteration allows for these iteration primitives to be used more accurately in ES5 environments if a Symbol.iterator implementation is present.
+   */
+  readonly downlevelIteration?: boolean;
+
+  /**
    * List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.
    *
    * @see https://www.typescriptlang.org/tsconfig#customConditions
@@ -538,6 +547,24 @@ export interface TypeScriptCompilerOptions {
    * @see {@link https://www.typescriptlang.org/tsconfig#types}
    */
   readonly types?: string[];
+
+  /**
+   * Tells TypeScript to save information about the project graph from the last compilation to files stored on disk.
+   * This creates a series of .tsbuildinfo files in the same folder as your compilation output.
+   * They are not used by your JavaScript at runtime and can be safely deleted.
+   * You can read more about the flag in the 3.4 release notes.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#faster-subsequent-builds-with-the---incremental-flag
+   *
+   * To control which folders you want to the files to be built to, use the config option tsBuildInfoFile.
+   */
+  readonly incremental?: boolean;
+
+  /**
+   * This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases.
+   * You can read more about composite projects in the handbook.
+   */
+  readonly tsBuildInfoFile?: string;
 }
 
 /**
