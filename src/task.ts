@@ -272,15 +272,6 @@ export class Task {
 
   /**
    *
-   * @param index The index of the step to get
-   * @returns The task step at the given index
-   */
-  public getStep(index: number): TaskStep {
-    return this._steps[index];
-  }
-
-  /**
-   *
    * @param index The index of the step to edit
    * @param step The new step to replace the old one entirely, it is not merged with the old step
    */
