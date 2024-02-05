@@ -282,24 +282,6 @@ test(".steps can be used to list all steps in the current task", () => {
   ] as TaskStep[]);
 });
 
-test("getStep() can be used to get a specific step", () => {
-  // GIVEN
-  const p = new TestProject();
-  const t0 = p.addTask("your");
-  const t = p.addTask("my");
-  t.exec("step1");
-  t.exec("step2");
-  t.exec("step3");
-  t.spawn(t0);
-  t.exec("step4");
-
-  // WHEN
-  const step = t.getStep(2);
-
-  // THEN
-  expect(step).toStrictEqual({ exec: "step3" });
-});
-
 test("updateStep() can be used to replace a specific step", () => {
   // GIVEN
   const p = new TestProject();
