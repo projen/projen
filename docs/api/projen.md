@@ -14775,7 +14775,6 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
-| <code><a href="#projen.Task.getStep">getStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.lock">lock</a></code> | Forbid additional changes to this task. |
 | <code><a href="#projen.Task.prepend">prepend</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
@@ -14879,20 +14878,6 @@ Shell command.
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
 
 Options.
-
----
-
-##### `getStep` <a name="getStep" id="projen.Task.getStep"></a>
-
-```typescript
-public getStep(index: number): TaskStep
-```
-
-###### `index`<sup>Required</sup> <a name="index" id="projen.Task.getStep.parameter.index"></a>
-
-- *Type:* number
-
-The index of the step to get.
 
 ---
 

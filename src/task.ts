@@ -156,9 +156,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot add exec to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("add exec to");
       return;
     }
 
@@ -180,9 +178,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot add builtin to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("add builtin to");
       return;
     }
 
@@ -198,9 +194,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot add say to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("add say to");
       return;
     }
 
@@ -226,9 +220,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot add spawn to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("add spawn to");
       return;
     }
 
@@ -243,9 +235,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot prependExec to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("prependExec to");
       return;
     }
 
@@ -263,9 +253,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot prependSpawn to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("prependSpawn to");
       return;
     }
 
@@ -283,9 +271,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot prependSay to task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("prependSay to");
       return;
     }
 
@@ -335,9 +321,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot update step from task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("update step for");
       return;
     }
 
@@ -359,9 +343,7 @@ export class Task {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      warn(
-        `Cannot remove step from task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
-      );
+      this.warnForLazyValue("remove step from");
       return;
     }
 
@@ -423,6 +405,12 @@ export class Task {
     if (this._locked) {
       throw new Error(`Task "${this.name}" is locked for changes`);
     }
+  }
+
+  private warnForLazyValue(actionBeingUndertaken: string): void {
+    warn(
+      `Cannot ${actionBeingUndertaken} task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+    );
   }
 
   /**
