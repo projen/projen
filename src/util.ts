@@ -519,8 +519,8 @@ export function findUp(
  * It uses `path.posix.sep` that is supported both in Windows and Unix platforms.
  *
  *
- * @param p
- * @returns
+ * @param p the path to be normalized
+ * @returns the normalized path
  */
 export function normalizePersistedPath(p: string) {
   return p.replace(/\\/g, path.posix.sep);

@@ -393,6 +393,17 @@ describe("normalizePersistedPath", () => {
     expect(output).toEqual("file");
   });
 
+  test("handles gitignore pattern", () => {
+    // GIVEN
+    const input = "!/path\\to/file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("!/path/to/file");
+  });
+
   test("keeps directory separators as forward slash on Linux", () => {
     // GIVEN
     const input = "/path/to/file";
