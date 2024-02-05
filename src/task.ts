@@ -138,6 +138,11 @@ export class Task {
   public reset(command?: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
 
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("reset");
+      return;
+    }
+
     while (this._steps.length) {
       this._steps.shift();
     }
