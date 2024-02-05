@@ -510,3 +510,18 @@ export function findUp(
   }
   return findUp(lookFor, path.dirname(cwd));
 }
+
+/**
+ * Normalizes a path that is going to be persisted to have a cross platform representation.
+ *
+ * Normalized paths can be persisted and doesn't need to be modified when the platform changes.
+ * `normalizePersistedPath` takes care of platform-specific properties like directory separator.
+ * It uses `path.posix.sep` that is supported both in Windows and Unix platforms.
+ *
+ *
+ * @param p
+ * @returns
+ */
+export function normalizePersistedPath(p: string) {
+  return p.replace(/\\/g, path.posix.sep);
+}
