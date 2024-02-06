@@ -19,6 +19,9 @@ exports[`npm overrides 1`] = `
     "other-dep": "*",
     "some-dep": "1.0.0",
   },
+  "publishConfig": {
+    "provenance": true,
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -45,6 +48,9 @@ exports[`pnpm overrides 1`] = `
       "some-dep": "1.0.0",
     },
   },
+  "publishConfig": {
+    "provenance": true,
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -66,6 +72,9 @@ exports[`pnpm overrides in root project only, not subprojects 1`] = `
   "main": "lib/index.js",
   "name": "my-project",
   "pnpm": {},
+  "publishConfig": {
+    "provenance": true,
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -86,6 +95,9 @@ exports[`pnpm overrides in root project only, not subprojects 2`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "sub-project",
+  "publishConfig": {
+    "provenance": true,
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",

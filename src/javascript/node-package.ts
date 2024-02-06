@@ -28,6 +28,7 @@ const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
+const DEFAULT_NPM_PROVENANCE = false;
 
 export interface NodePackageOptions {
   /**
@@ -288,6 +289,14 @@ export interface NodePackageOptions {
   readonly npmAccess?: NpmAccess;
 
   /**
+   * Wether provenance statements should be generated when package is published.
+   *
+   * @default - for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is
+   * `true`, for non-public packages, the default is `false`.
+   */
+  readonly npmProvenance?: boolean;
+
+  /**
    * GitHub secret which contains the NPM token to use when publishing packages.
    *
    * @default "NPM_TOKEN"
@@ -495,6 +504,11 @@ export class NodePackage extends Component {
   public readonly npmAccess: NpmAccess;
 
   /**
+   * npm provenance generation.
+   */
+  public readonly npmProvenance: boolean;
+
+  /**
    * The name of the lock file.
    */
   public readonly lockFile: string;
@@ -546,6 +560,7 @@ export class NodePackage extends Component {
       npmTokenSecret,
       codeArtifactOptions,
       scopedPackagesOptions,
+      npmProvenance,
     } = this.parseNpmOptions(options);
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
@@ -553,6 +568,7 @@ export class NodePackage extends Component {
     this.npmTokenSecret = npmTokenSecret;
     this.codeArtifactOptions = codeArtifactOptions;
     this.scopedPackagesOptions = scopedPackagesOptions;
+    this.npmProvenance = npmProvenance;
 
     this.processDeps(options);
 
@@ -942,6 +958,25 @@ export class NodePackage extends Component {
       );
     }
 
+    const npmProvenance =
+      options.npmProvenance ??
+      defaultNpmProvenance(npmAccess, this.packageManager);
+    if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
+      throw new Error(
+        `"npmProvenance" can only be enabled for public packages`
+      );
+    }
+
+    const usesYarn = [
+      NodePackageManager.YARN_BERRY,
+      NodePackageManager.YARN_CLASSIC,
+    ].includes(this.packageManager);
+    if (npmProvenance && usesYarn) {
+      throw new Error(
+        `"npmProvenance" can only be enabled when using npm or pnpm package managers`
+      );
+    }
+
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
     const hasScopedPackage =
       options.scopedPackagesOptions &&
@@ -1011,6 +1046,7 @@ export class NodePackage extends Component {
       scopedPackagesOptions: this.parseScopedPackagesOptions(
         options.scopedPackagesOptions
       ),
+      npmProvenance,
     };
   }
 
@@ -1413,6 +1449,10 @@ export class NodePackage extends Component {
           this.npmAccess !== defaultNpmAccess(this.packageName)
             ? this.npmAccess
             : undefined,
+        provenance:
+          this.npmProvenance !== DEFAULT_NPM_PROVENANCE
+            ? this.npmProvenance
+            : undefined,
       },
       { omitEmpty: true }
     );
@@ -1719,4 +1759,31 @@ function determineLockfile(packageManager: NodePackageManager) {
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);
+}
+
+/**
+ * Determines the default npm provenance value based on the npm access level.
+ *
+ * The default is intentionally `true` for public packages, different than the `false` from npm,
+ * to increase supply-chain security for the package
+ *
+ * @see https://docs.npmjs.com/cli/v10/using-npm/config#provenance
+ *
+ * @param npmAccess The npm access level.
+ * @returns `true` for public npm access, false otherwise.
+ */
+function defaultNpmProvenance(
+  npmAccess: NpmAccess,
+  packageManager: NodePackageManager
+): boolean {
+  // Note: At this time, yarn is not a supported tool for publishing packages with provenance.
+  // https://docs.npmjs.com/generating-provenance-statements
+  const usesYarn = [
+    NodePackageManager.YARN_BERRY,
+    NodePackageManager.YARN_CLASSIC,
+  ].includes(packageManager);
+
+  const isPublic = npmAccess === NpmAccess.PUBLIC;
+
+  return isPublic && !usesYarn;
 }
