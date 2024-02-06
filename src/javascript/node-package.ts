@@ -1778,17 +1778,17 @@ function defaultNpmProvenance(
 }
 
 /**
- * Only npm and pnpm package managers are supported at this time
+ * Checks if a package manager supports provenance
  *
  * @param packageManager The package manager to check
  * @returns `true` if the package manager supports provenance, `false` otherwise
  * @see https://docs.npmjs.com/generating-provenance-statements
  */
 function supportsProvenance(packageManager: NodePackageManager) {
-  const suppotedPackageManagers = [
+  const supportedPackageManagers = [
     NodePackageManager.NPM,
     NodePackageManager.PNPM,
   ];
 
-  return suppotedPackageManagers.includes(packageManager);
+  return supportedPackageManagers.includes(packageManager);
 }
