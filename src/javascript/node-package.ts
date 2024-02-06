@@ -967,11 +967,7 @@ export class NodePackage extends Component {
       );
     }
 
-    const usesYarn = [
-      NodePackageManager.YARN_BERRY,
-      NodePackageManager.YARN_CLASSIC,
-    ].includes(this.packageManager);
-    if (npmProvenance && usesYarn) {
+    if (npmProvenance && !supportsProvenance(this.packageManager)) {
       throw new Error(
         `"npmProvenance" can only be enabled when using npm or pnpm package managers`
       );
@@ -1776,14 +1772,23 @@ function defaultNpmProvenance(
   npmAccess: NpmAccess,
   packageManager: NodePackageManager
 ): boolean {
-  // Note: At this time, yarn is not a supported tool for publishing packages with provenance.
-  // https://docs.npmjs.com/generating-provenance-statements
-  const usesYarn = [
-    NodePackageManager.YARN_BERRY,
-    NodePackageManager.YARN_CLASSIC,
-  ].includes(packageManager);
-
   const isPublic = npmAccess === NpmAccess.PUBLIC;
 
-  return isPublic && !usesYarn;
+  return isPublic && supportsProvenance(packageManager);
+}
+
+/**
+ * Only npm and pnpm package managers are supported at this time
+ *
+ * @param packageManager The package manager to check
+ * @returns `true` if the package manager supports provenance, `false` otherwise
+ * @see https://docs.npmjs.com/generating-provenance-statements
+ */
+function supportsProvenance(packageManager: NodePackageManager) {
+  const suppotedPackageManagers = [
+    NodePackageManager.NPM,
+    NodePackageManager.PNPM,
+  ];
+
+  return suppotedPackageManagers.includes(packageManager);
 }
