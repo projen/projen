@@ -504,7 +504,7 @@ export class NodePackage extends Component {
   public readonly npmAccess: NpmAccess;
 
   /**
-   * npm provenance generation.
+   * Wether provenance statements should be generated when package is published.
    */
   public readonly npmProvenance: boolean;
 
