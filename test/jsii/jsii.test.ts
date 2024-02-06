@@ -1,4 +1,5 @@
 import { JsiiProject } from "../../src/cdk";
+import { NodePackageManager } from "../../src/javascript";
 import { execProjenCLI, synthSnapshot } from "../util";
 
 describe("JsiiProject with default settings", () => {
@@ -50,6 +51,7 @@ describe("JsiiProject with jsiiVersion: '^1.78.1'", () => {
       author: "Test",
       authorAddress: "test@projen",
       jsiiVersion: "^1.78.1",
+      docgen: false,
     });
 
     const output = synthSnapshot(project);
@@ -67,18 +69,30 @@ describe("JsiiProject with jsiiVersion: '^1.78.1'", () => {
     });
   });
 
-  it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
+  describe.each([
+    ["16", undefined], // this is the default
+    ["18", "18.0.0"],
+    ["20", "20.0.0"],
+  ])("with node version %s", (_, minNodeVersion) => {
+    it("compiles", () => {
+      const project = new JsiiProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        repositoryUrl: "github.com/projen/projen.dummy",
+        author: "Test",
+        authorAddress: "test@projen",
+        minNodeVersion,
+        packageManager: NodePackageManager.NPM,
+        docgen: false,
+      });
+
+      project.synth();
+
+      execProjenCLI(project.outdir, ["compile"], {
+        ...process.env,
+        CI: "0", // never treat this a CI build because we don't have a lockfile at this point
+      });
     });
-
-    project.synth();
-
-    execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
