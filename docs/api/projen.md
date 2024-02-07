@@ -14780,9 +14780,11 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependSay">prependSay</a></code> | Says something at the beginning of the task. |
 | <code><a href="#projen.Task.prependSpawn">prependSpawn</a></code> | Adds a spawn instruction at the beginning of the task. |
+| <code><a href="#projen.Task.removeStep">removeStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.reset">reset</a></code> | Reset the task so it no longer has any commands. |
 | <code><a href="#projen.Task.say">say</a></code> | Say something. |
 | <code><a href="#projen.Task.spawn">spawn</a></code> | Spawns a sub-task. |
+| <code><a href="#projen.Task.updateStep">updateStep</a></code> | *No description.* |
 
 ---
 
@@ -14975,6 +14977,20 @@ The subtask to execute.
 
 ---
 
+##### `removeStep` <a name="removeStep" id="projen.Task.removeStep"></a>
+
+```typescript
+public removeStep(index: number): void
+```
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.removeStep.parameter.index"></a>
+
+- *Type:* number
+
+The index of the step to remove.
+
+---
+
 ##### `reset` <a name="reset" id="projen.Task.reset"></a>
 
 ```typescript
@@ -15043,6 +15059,28 @@ The subtask to execute.
 
 ---
 
+##### `updateStep` <a name="updateStep" id="projen.Task.updateStep"></a>
+
+```typescript
+public updateStep(index: number, step: TaskStep): void
+```
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.updateStep.parameter.index"></a>
+
+- *Type:* number
+
+The index of the step to edit.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.Task.updateStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.TaskStep">TaskStep</a>
+
+The new step to replace the old one entirely, it is not merged with the old step.
+
+---
+
 
 #### Properties <a name="Properties" id="Properties"></a>
 
@@ -15052,6 +15090,7 @@ The subtask to execute.
 | <code><a href="#projen.Task.property.name">name</a></code> | <code>string</code> | Task name. |
 | <code><a href="#projen.Task.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | Returns an immutable copy of all the step specifications of the task. |
 | <code><a href="#projen.Task.property.condition">condition</a></code> | <code>string</code> | A command to execute which determines if the task should be skipped. |
+| <code><a href="#projen.Task.property.cwd">cwd</a></code> | <code>string</code> | Returns the working directory for this task. |
 | <code><a href="#projen.Task.property.description">description</a></code> | <code>string</code> | Returns the description of this task. |
 
 ---
@@ -15104,6 +15143,20 @@ A command to execute which determines if the task should be skipped.
 
 If it
 returns a zero exit code, the task will not be executed.
+
+---
+
+##### `cwd`<sup>Optional</sup> <a name="cwd" id="projen.Task.property.cwd"></a>
+
+```typescript
+public readonly cwd: string;
+```
+
+- *Type:* string
+
+Returns the working directory for this task.
+
+Sets the working directory for this task.
 
 ---
 
