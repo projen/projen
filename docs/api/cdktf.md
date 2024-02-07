@@ -3973,7 +3973,7 @@ public readonly constructsVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "^10.0.12"
+- *Default:* "^10.3.0"
 
 Construct version to use.
 

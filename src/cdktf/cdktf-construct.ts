@@ -11,7 +11,7 @@ export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
 
   /**
    * Construct version to use
-   * @default "^10.0.12"
+   * @default "^10.3.0"
    */
   readonly constructsVersion?: string;
 }
@@ -39,7 +39,7 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
         return "^3.0.0";
       }
 
-      return "^10.0.12";
+      return "^10.3.0";
     }
 
     const ver = options.cdktfVersion;

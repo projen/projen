@@ -16259,7 +16259,7 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
       },
       {
-        "default": ""^10.0.12"",
+        "default": ""^10.3.0"",
         "docs": "Construct version to use.",
         "featured": false,
         "fullType": {
