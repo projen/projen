@@ -428,8 +428,8 @@ export class JsiiProject extends TypeScriptProject {
       this.npmignore.readonly = false;
     }
 
-    // When using jsii@1,x, we need to add some resolutions to avoid including
-    // TypeScript-3.9-incompatble dependencies that break the compiler.
+    // When using jsii@1.x, we need to add some resolutions to avoid including
+    // TypeScript-3.9-incompatible dependencies that break the compiler.
     if (usesLegacyJsii) {
       // https://github.com/projen/projen/issues/2165
       this.package.addPackageResolutions("@types/prettier@2.6.0");
@@ -437,10 +437,34 @@ export class JsiiProject extends TypeScriptProject {
       // https://github.com/projen/projen/issues/2264
       this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
 
-      if ((options.jsiiVersion ?? "1.x").startsWith("1.")) {
+      const jsiiVersion = options.jsiiVersion ?? "1.x";
+      if (jsiiVersion.startsWith("1.")) {
+        const majorNodeVersion = major(this.package.minNodeVersion ?? "16.0.0");
+
+        // see https://github.com/projen/projen/issues/3324
+        const nodeTypesVersionRange = (majorVersion: number): string => {
+          switch (majorVersion) {
+            case 16:
+              return `^16 <= 16.18.78`;
+            case 18:
+              return `^18 <= 18.11.19`;
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+              this.logger.warn(
+                `jsii@${jsiiVersion} and @types/node@^${majorVersion} are incompatible. Falling back to @types/node@^18.`,
+                "Please upgrade to a modern version of jsii."
+              );
+              return `^18 <= 18.11.19`;
+            default:
+              return `^${majorVersion}`;
+          }
+        };
+
         this.addDevDeps(
           // https://github.com/projen/projen/pull/3076
-          `@types/node@^${major(this.package.minNodeVersion ?? "16.0.0")}`
+          `@types/node@${nodeTypesVersionRange(majorNodeVersion)}`
         );
       }
     }
