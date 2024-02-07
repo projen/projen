@@ -282,6 +282,73 @@ test(".steps can be used to list all steps in the current task", () => {
   ] as TaskStep[]);
 });
 
+test("updateStep() can be used to replace a specific step", () => {
+  // GIVEN
+  const p = new TestProject();
+  const t0 = p.addTask("your");
+  const t = p.addTask("my");
+  t.exec("step1");
+  t.exec("step2");
+  t.exec("step3");
+  t.spawn(t0);
+  t.exec("step4");
+
+  // WHEN
+  t.updateStep(2, { exec: "edited" });
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      your: {
+        name: "your",
+      },
+      my: {
+        name: "my",
+        steps: [
+          { exec: "step1" },
+          { exec: "step2" },
+          { exec: "edited" },
+          { spawn: "your" },
+          { exec: "step4" },
+        ],
+      },
+    },
+  });
+});
+
+test("removeStep() can be used to remove a specific step", () => {
+  // GIVEN
+  const p = new TestProject();
+  const t0 = p.addTask("your");
+  const t = p.addTask("my");
+  t.exec("step1");
+  t.exec("step2");
+  t.exec("step3");
+  t.spawn(t0);
+  t.exec("step4");
+
+  // WHEN
+  t.removeStep(2);
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      your: {
+        name: "your",
+      },
+      my: {
+        name: "my",
+        steps: [
+          { exec: "step1" },
+          { exec: "step2" },
+          { spawn: "your" },
+          { exec: "step4" },
+        ],
+      },
+    },
+  });
+});
+
 test('"condition" can be used to define a command that will determine if a task should be skipped', () => {
   // GIVEN
   const p = new TestProject();
@@ -445,6 +512,26 @@ test("steps can receive args", () => {
       world: {
         name: "world",
         steps: [{ exec: "echo $@ world", receiveArgs: true }],
+      },
+    },
+  });
+});
+
+test("allows setting the cwd for the task", () => {
+  const p = new TestProject();
+  const t = p.addTask("t", {
+    cwd: "foo",
+  });
+
+  // WHEN
+  t.cwd = "bar";
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      t: {
+        name: "t",
+        cwd: "bar",
       },
     },
   });
