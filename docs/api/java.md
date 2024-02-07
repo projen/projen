@@ -2300,6 +2300,7 @@ const javaProjectCommonOptions: java.JavaProjectCommonOptions = { ... }
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
+| <code><a href="#projen.java.JavaProjectCommonOptions.property.parentPom">parentPom</a></code> | <code><a href="#projen.java.ParentPom">ParentPom</a></code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.compileOptions">compileOptions</a></code> | <code><a href="#projen.java.MavenCompileOptions">MavenCompileOptions</a></code> | Compile options. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -2827,6 +2828,19 @@ Project packaging format.
 
 ---
 
+##### `parentPom`<sup>Optional</sup> <a name="parentPom" id="projen.java.JavaProjectCommonOptions.property.parentPom"></a>
+
+```typescript
+public readonly parentPom: ParentPom;
+```
+
+- *Type:* <a href="#projen.java.ParentPom">ParentPom</a>
+- *Default:* undefined
+
+A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
+
+---
+
 ##### `url`<sup>Optional</sup> <a name="url" id="projen.java.JavaProjectCommonOptions.property.url"></a>
 
 ```typescript
@@ -3021,6 +3035,7 @@ const javaProjectOptions: java.JavaProjectOptions = { ... }
 | <code><a href="#projen.java.JavaProjectOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
 | <code><a href="#projen.java.JavaProjectOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.java.JavaProjectOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
+| <code><a href="#projen.java.JavaProjectOptions.property.parentPom">parentPom</a></code> | <code><a href="#projen.java.ParentPom">ParentPom</a></code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
 | <code><a href="#projen.java.JavaProjectOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 | <code><a href="#projen.java.JavaProjectOptions.property.compileOptions">compileOptions</a></code> | <code><a href="#projen.java.MavenCompileOptions">MavenCompileOptions</a></code> | Compile options. |
 | <code><a href="#projen.java.JavaProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -3550,6 +3565,19 @@ Project packaging format.
 
 ---
 
+##### `parentPom`<sup>Optional</sup> <a name="parentPom" id="projen.java.JavaProjectOptions.property.parentPom"></a>
+
+```typescript
+public readonly parentPom: ParentPom;
+```
+
+- *Type:* <a href="#projen.java.ParentPom">ParentPom</a>
+- *Default:* undefined
+
+A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
+
+---
+
 ##### `url`<sup>Optional</sup> <a name="url" id="projen.java.JavaProjectOptions.property.url"></a>
 
 ```typescript
@@ -4005,6 +4033,75 @@ Project root java package.
 
 ---
 
+### ParentPom <a name="ParentPom" id="projen.java.ParentPom"></a>
+
+#### Initializer <a name="Initializer" id="projen.java.ParentPom.Initializer"></a>
+
+```typescript
+import { java } from 'projen'
+
+const parentPom: java.ParentPom = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.java.ParentPom.property.artifactId">artifactId</a></code> | <code>string</code> | Parent Pom Artifact ID. |
+| <code><a href="#projen.java.ParentPom.property.groupId">groupId</a></code> | <code>string</code> | Parent Pom Group ID. |
+| <code><a href="#projen.java.ParentPom.property.relativePath">relativePath</a></code> | <code>string</code> | Parent Pom Relative path from the current pom. |
+| <code><a href="#projen.java.ParentPom.property.version">version</a></code> | <code>string</code> | Parent Pom Version. |
+
+---
+
+##### `artifactId`<sup>Optional</sup> <a name="artifactId" id="projen.java.ParentPom.property.artifactId"></a>
+
+```typescript
+public readonly artifactId: string;
+```
+
+- *Type:* string
+
+Parent Pom Artifact ID.
+
+---
+
+##### `groupId`<sup>Optional</sup> <a name="groupId" id="projen.java.ParentPom.property.groupId"></a>
+
+```typescript
+public readonly groupId: string;
+```
+
+- *Type:* string
+
+Parent Pom Group ID.
+
+---
+
+##### `relativePath`<sup>Optional</sup> <a name="relativePath" id="projen.java.ParentPom.property.relativePath"></a>
+
+```typescript
+public readonly relativePath: string;
+```
+
+- *Type:* string
+
+Parent Pom Relative path from the current pom.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.java.ParentPom.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+Parent Pom Version.
+
+---
+
 ### PluginExecution <a name="PluginExecution" id="projen.java.PluginExecution"></a>
 
 Plugin execution definition.
@@ -4147,6 +4244,7 @@ const pomOptions: java.PomOptions = { ... }
 | <code><a href="#projen.java.PomOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
 | <code><a href="#projen.java.PomOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.java.PomOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
+| <code><a href="#projen.java.PomOptions.property.parentPom">parentPom</a></code> | <code><a href="#projen.java.ParentPom">ParentPom</a></code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
 | <code><a href="#projen.java.PomOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 
 ---
@@ -4248,6 +4346,19 @@ public readonly packaging: string;
 - *Default:* "jar"
 
 Project packaging format.
+
+---
+
+##### `parentPom`<sup>Optional</sup> <a name="parentPom" id="projen.java.PomOptions.property.parentPom"></a>
+
+```typescript
+public readonly parentPom: ParentPom;
+```
+
+- *Type:* <a href="#projen.java.ParentPom">ParentPom</a>
+- *Default:* undefined
+
+A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
 
 ---
 
