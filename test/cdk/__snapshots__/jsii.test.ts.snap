@@ -712,7 +712,7 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^16",
+        "version": "^16 <= 16.18.78",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -1334,7 +1334,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "^27",
-      "@types/node": "^16",
+      "@types/node": "^16 <= 16.18.78",
       "@typescript-eslint/eslint-plugin": "^6",
       "@typescript-eslint/parser": "^6",
       "constructs": "^10.0.0",
