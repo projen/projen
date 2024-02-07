@@ -74,6 +74,14 @@ describe("JsiiProject with jsiiVersion: '^1.78.1'", () => {
     ["18", "18.0.0"],
     ["20", "20.0.0"],
   ])("with node version %s", (_, minNodeVersion) => {
+    const originalCI = process.env.CI;
+    beforeAll(() => {
+      process.env.CI = "false";
+    });
+    afterAll(() => {
+      process.env.CI = originalCI;
+    });
+
     it("compiles", () => {
       const project = new JsiiProject({
         defaultReleaseBranch: "main",
@@ -88,10 +96,7 @@ describe("JsiiProject with jsiiVersion: '^1.78.1'", () => {
 
       project.synth();
 
-      execProjenCLI(project.outdir, ["compile"], {
-        ...process.env,
-        CI: "0", // never treat this a CI build because we don't have a lockfile at this point
-      });
+      execProjenCLI(project.outdir, ["compile"]);
     });
   });
 });
