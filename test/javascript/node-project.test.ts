@@ -321,9 +321,9 @@ describe("npm publishing options", () => {
     expect(npm.npmTokenSecret).toStrictEqual("NPM_TOKEN");
 
     // since is a public package, provenance will be enabled by default
-    expect(synthSnapshot(project)["package.json"].publishConfig).toStrictEqual({
-      provenance: true,
-    });
+    expect(
+      synthSnapshot(project)["package.json"].publishConfig
+    ).toBeUndefined();
   });
 
   test("scoped packages default to RESTRICTED access", () => {
@@ -375,7 +375,6 @@ describe("npm publishing options", () => {
     expect(npm.npmTokenSecret).toStrictEqual("GITHUB_TOKEN");
     expect(packageJson(project).publishConfig).toStrictEqual({
       access: "public",
-      provenance: true,
       registry: "https://foo.bar/",
     });
   });
@@ -393,7 +392,6 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistry).toStrictEqual("foo.bar/path/");
     expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/path/");
     expect(packageJson(project).publishConfig).toStrictEqual({
-      provenance: true,
       registry: "https://foo.bar/path/",
     });
   });
@@ -416,7 +414,6 @@ describe("npm publishing options", () => {
       "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
     );
     expect(packageJson(project).publishConfig).toStrictEqual({
-      provenance: true,
       registry:
         "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     });
@@ -446,7 +443,6 @@ describe("npm publishing options", () => {
       "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
     );
     expect(packageJson(project).publishConfig).toStrictEqual({
-      provenance: true,
       registry:
         "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     });

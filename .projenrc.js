@@ -129,6 +129,7 @@ const project = new cdk.JsiiProject({
   publishToGo: {
     moduleName: "github.com/projen/projen-go",
   },
+  npmProvenance: true,
 
   releaseFailureIssue: true,
 

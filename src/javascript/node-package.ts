@@ -961,8 +961,7 @@ export class NodePackage extends Component {
       );
     }
 
-    const npmProvenance =
-      options.npmProvenance ?? defaultNpmProvenance(npmAccess);
+    const npmProvenance = options.npmProvenance ?? false;
     if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
       throw new Error(
         `"npmProvenance" can only be enabled for public packages`
@@ -1751,21 +1750,4 @@ function determineLockfile(packageManager: NodePackageManager) {
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);
-}
-
-/**
- * Determines the default npm provenance value based on the npm access level.
- *
- * The default is intentionally `true` for public packages, different than the `false` from npm,
- * to increase supply-chain security for the package
- *
- * @see https://docs.npmjs.com/cli/v10/using-npm/config#provenance
- *
- * @param npmAccess The npm access level.
- * @returns `true` for public npm access, false otherwise.
- */
-function defaultNpmProvenance(npmAccess: NpmAccess): boolean {
-  const isPublic = npmAccess === NpmAccess.PUBLIC;
-
-  return isPublic;
 }

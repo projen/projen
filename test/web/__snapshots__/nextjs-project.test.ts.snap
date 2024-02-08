@@ -906,9 +906,6 @@ permissions-backup.acl
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test-nextjs-project",
-    "publishConfig": {
-      "provenance": true,
-    },
     "scripts": {
       "build": "npx projen build",
       "bump": "npx projen bump",

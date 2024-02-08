@@ -273,9 +273,6 @@ exports[`node project can be ejected 1`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "test-node-project",
-  "publishConfig": {
-    "provenance": true,
-  },
   "scripts": {
     "build": "scripts/run-task build",
     "bump": "scripts/run-task bump",
