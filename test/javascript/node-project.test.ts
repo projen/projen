@@ -320,7 +320,7 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
     expect(npm.npmTokenSecret).toStrictEqual("NPM_TOKEN");
 
-    // since is a public package, provenance will be enabled by default
+    // since these are all defaults, publishConfig is not defined.
     expect(
       synthSnapshot(project)["package.json"].publishConfig
     ).toBeUndefined();
