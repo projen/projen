@@ -906,34 +906,17 @@ describe("npm provenance", () => {
       () =>
         new NodePackage(project, {
           packageName: "@test-scope/test-package",
-          packageManager: NodePackageManager.NPM,
           npmAccess: NpmAccess.RESTRICTED,
           npmProvenance: true,
         })
     ).toThrowError(`"npmProvenance" can only be enabled for public packages`);
   });
 
-  test("should throw an error if npmProvenance is enabled when using yarn package manager", () => {
-    const project = new TestProject();
-
-    expect(
-      () =>
-        new NodePackage(project, {
-          packageManager: NodePackageManager.YARN_BERRY,
-          npmAccess: NpmAccess.PUBLIC,
-          npmProvenance: true,
-        })
-    ).toThrowError(
-      `"npmProvenance" can only be enabled when using npm or pnpm package managers`
-    );
-  });
-
-  test("should be enabled when a access level is public", () => {
+  test("should be enabled when the access level is public", () => {
     const project = new TestProject();
 
     new NodePackage(project, {
       npmAccess: NpmAccess.PUBLIC,
-      packageManager: NodePackageManager.NPM,
     });
 
     const snps = synthSnapshot(project);

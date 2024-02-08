@@ -291,6 +291,9 @@ export interface NodePackageOptions {
   /**
    * Wether provenance statements should be generated when package is published.
    *
+   * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+   *
+   * @see https://docs.npmjs.com/generating-provenance-statements
    * @default - for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is
    * `true`, for non-public packages, the default is `false`.
    */
@@ -959,17 +962,10 @@ export class NodePackage extends Component {
     }
 
     const npmProvenance =
-      options.npmProvenance ??
-      defaultNpmProvenance(npmAccess, this.packageManager);
+      options.npmProvenance ?? defaultNpmProvenance(npmAccess);
     if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
       throw new Error(
         `"npmProvenance" can only be enabled for public packages`
-      );
-    }
-
-    if (npmProvenance && !supportsProvenance(this.packageManager)) {
-      throw new Error(
-        `"npmProvenance" can only be enabled when using npm or pnpm package managers`
       );
     }
 
@@ -1768,27 +1764,8 @@ function determineLockfile(packageManager: NodePackageManager) {
  * @param npmAccess The npm access level.
  * @returns `true` for public npm access, false otherwise.
  */
-function defaultNpmProvenance(
-  npmAccess: NpmAccess,
-  packageManager: NodePackageManager
-): boolean {
+function defaultNpmProvenance(npmAccess: NpmAccess): boolean {
   const isPublic = npmAccess === NpmAccess.PUBLIC;
 
-  return isPublic && supportsProvenance(packageManager);
-}
-
-/**
- * Checks if a package manager supports provenance
- *
- * @param packageManager The package manager to check
- * @returns `true` if the package manager supports provenance, `false` otherwise
- * @see https://docs.npmjs.com/generating-provenance-statements
- */
-function supportsProvenance(packageManager: NodePackageManager) {
-  const supportedPackageManagers = [
-    NodePackageManager.NPM,
-    NodePackageManager.PNPM,
-  ];
-
-  return supportedPackageManagers.includes(packageManager);
+  return isPublic;
 }
