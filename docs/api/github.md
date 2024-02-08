@@ -7692,6 +7692,7 @@ const uploadArtifactWith: github.UploadArtifactWith = { ... }
 | <code><a href="#projen.github.UploadArtifactWith.property.compressionLevel">compressionLevel</a></code> | <code>number</code> | The level of compression for Zlib to be applied to the artifact archive. |
 | <code><a href="#projen.github.UploadArtifactWith.property.ifNoFilesFound">ifNoFilesFound</a></code> | <code>string</code> | The desired behavior if no files are found using the provided path. |
 | <code><a href="#projen.github.UploadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to upload. |
+| <code><a href="#projen.github.UploadArtifactWith.property.overwrite">overwrite</a></code> | <code>boolean</code> | Whether action should overwrite an existing artifact with the same name (should one exist). |
 | <code><a href="#projen.github.UploadArtifactWith.property.retentionDays">retentionDays</a></code> | <code>number</code> | Duration after which artifact will expire in days. 0 means using default repository retention. |
 
 ---
@@ -7752,6 +7753,21 @@ public readonly name: string;
 - *Default:* "artifact"
 
 Name of the artifact to upload.
+
+---
+
+##### `overwrite`<sup>Optional</sup> <a name="overwrite" id="projen.github.UploadArtifactWith.property.overwrite"></a>
+
+```typescript
+public readonly overwrite: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true (to maintain backwards compatibility)
+
+Whether action should overwrite an existing artifact with the same name (should one exist).
+
+Introduced in v4 and represents a breaking change from the behavior of the v3 action.
 
 ---
 

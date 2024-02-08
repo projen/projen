@@ -288,10 +288,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
@@ -302,10 +303,11 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
@@ -320,7 +322,7 @@ jobs:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -347,7 +349,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -441,10 +443,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -457,7 +460,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -486,7 +489,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -539,10 +542,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -556,7 +560,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -1596,7 +1600,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1661,7 +1665,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1721,7 +1725,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1785,7 +1789,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1847,7 +1851,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1907,7 +1911,7 @@ exports[`language bindings snapshot dotnet 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1959,7 +1963,7 @@ exports[`language bindings snapshot go 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2012,7 +2016,7 @@ exports[`language bindings snapshot java 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2058,7 +2062,7 @@ exports[`language bindings snapshot js 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2110,7 +2114,7 @@ exports[`language bindings snapshot python 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2190,10 +2194,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2206,7 +2211,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2235,7 +2240,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2271,7 +2276,7 @@ jobs:
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2347,10 +2352,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2363,7 +2369,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2392,7 +2398,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2428,7 +2434,7 @@ jobs:
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2501,10 +2507,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2517,7 +2524,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2546,7 +2553,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2582,7 +2589,7 @@ jobs:
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2653,10 +2660,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2669,7 +2677,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2698,7 +2706,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2734,7 +2742,7 @@ jobs:
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist

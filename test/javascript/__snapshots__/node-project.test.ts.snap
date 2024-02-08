@@ -19,7 +19,7 @@ exports[`deps upgrade commit can be signed 1`] = `
     },
     {
       "name": "Download patch",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": ".repo.patch",
         "path": "\${{ runner.temp }}",
@@ -94,9 +94,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v3",
+    "uses": "actions/upload-artifact@v4",
     "with": {
       "name": ".repo.patch",
+      "overwrite": true,
       "path": ".repo.patch",
     },
   },
@@ -170,9 +171,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v3",
+    "uses": "actions/upload-artifact@v4",
     "with": {
       "name": ".repo.patch",
+      "overwrite": true,
       "path": ".repo.patch",
     },
   },
@@ -199,7 +201,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
   },
   {
     "name": "Download patch",
-    "uses": "actions/download-artifact@v3",
+    "uses": "actions/download-artifact@v4",
     "with": {
       "name": ".repo.patch",
       "path": "\${{ runner.temp }}",
