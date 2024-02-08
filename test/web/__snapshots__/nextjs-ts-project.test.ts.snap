@@ -794,6 +794,9 @@ tsconfig.tsbuildinfo
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
+    "publishConfig": {
+      "provenance": true,
+    },
     "scripts": {
       "build": "npx projen build",
       "compile": "npx projen compile",

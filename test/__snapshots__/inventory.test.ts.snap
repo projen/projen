@@ -4122,6 +4122,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -7200,6 +7218,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,
@@ -11418,6 +11454,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -14283,6 +14337,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,
@@ -17209,6 +17281,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,
@@ -20939,6 +21029,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -23532,6 +23640,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -26010,6 +26136,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -28474,6 +28618,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,
@@ -32004,6 +32166,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -34468,6 +34648,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,
@@ -37079,6 +37277,24 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -39664,6 +39880,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
+\`true\`, for non-public packages, the default is \`false\`.",
+        "docs": "Wether provenance statements should be generated when package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,

@@ -1407,6 +1407,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "project",
+    "publishConfig": {
+      "provenance": true,
+    },
     "repository": {
       "type": "git",
       "url": "https://github.com/foo/bar.git",

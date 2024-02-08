@@ -1242,6 +1242,9 @@ tsconfig.tsbuildinfo
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "provenance": true,
+    },
     "scripts": {
       "build": "npx projen build",
       "bump": "npx projen bump",

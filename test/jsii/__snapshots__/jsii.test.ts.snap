@@ -1407,6 +1407,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "provenance": true,
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
@@ -2885,6 +2888,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "provenance": true,
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
@@ -4351,6 +4357,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "provenance": true,
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
@@ -5830,6 +5839,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "provenance": true,
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
