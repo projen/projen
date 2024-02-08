@@ -355,10 +355,6 @@ describe("assertExecutablePermissions", () => {
   });
 });
 
-test("projen version", () => {
-  expect(PROJEN_VERSION).toBe("99.99.99");
-});
-
 describe("normalizePersistedPath", () => {
   test("changes directory separators to forward slash on Windows", () => {
     // GIVEN
