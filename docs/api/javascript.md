@@ -1650,6 +1650,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.lockFile">lockFile</a></code> | <code>string</code> | The name of the lock file. |
 | <code><a href="#projen.javascript.NodePackage.property.manifest">manifest</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.javascript.NodePackage.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | npm package access level. |
+| <code><a href="#projen.javascript.NodePackage.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when package is published. |
 | <code><a href="#projen.javascript.NodePackage.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The npm registry host (e.g. `registry.npmjs.org`). |
 | <code><a href="#projen.javascript.NodePackage.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | npm registry (e.g. `https://registry.npmjs.org`). Use `npmRegistryHost` to get just the host name. |
 | <code><a href="#projen.javascript.NodePackage.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The package manager to use. |
@@ -1804,6 +1805,18 @@ public readonly npmAccess: NpmAccess;
 - *Type:* <a href="#projen.javascript.NpmAccess">NpmAccess</a>
 
 npm package access level.
+
+---
+
+##### `npmProvenance`<sup>Required</sup> <a name="npmProvenance" id="projen.javascript.NodePackage.property.npmProvenance"></a>
+
+```typescript
+public readonly npmProvenance: boolean;
+```
+
+- *Type:* boolean
+
+Wether provenance statements should be generated when package is published.
 
 ---
 
@@ -6991,6 +7004,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
 | <code><a href="#projen.javascript.NodePackageOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | Access level of the npm package. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when package is published. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
@@ -7343,6 +7357,23 @@ Access level of the npm package.
 
 ---
 
+##### `npmProvenance`<sup>Optional</sup> <a name="npmProvenance" id="projen.javascript.NodePackageOptions.property.npmProvenance"></a>
+
+```typescript
+public readonly npmProvenance: boolean;
+```
+
+- *Type:* boolean
+- *Default:* for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is `true`, for non-public packages, the default is `false`.
+
+Wether provenance statements should be generated when package is published.
+
+It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+
+> [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
+
+---
+
 ##### ~~`npmRegistry`~~<sup>Optional</sup> <a name="npmRegistry" id="projen.javascript.NodePackageOptions.property.npmRegistry"></a>
 
 - *Deprecated:* use `npmRegistryUrl` instead
@@ -7613,6 +7644,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | Access level of the npm package. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when package is published. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
@@ -8436,6 +8468,23 @@ public readonly npmAccess: NpmAccess;
 - *Default:* for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 
 Access level of the npm package.
+
+---
+
+##### `npmProvenance`<sup>Optional</sup> <a name="npmProvenance" id="projen.javascript.NodeProjectOptions.property.npmProvenance"></a>
+
+```typescript
+public readonly npmProvenance: boolean;
+```
+
+- *Type:* boolean
+- *Default:* for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is `true`, for non-public packages, the default is `false`.
+
+Wether provenance statements should be generated when package is published.
+
+It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+
+> [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
 ---
 
