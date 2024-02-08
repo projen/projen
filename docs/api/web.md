@@ -7458,7 +7458,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is `true`, for non-public packages, the default is `false`.
+- *Default:* false
 
 Wether provenance statements should be generated when package is published.
 
@@ -9472,7 +9472,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is `true`, for non-public packages, the default is `false`.
+- *Default:* false
 
 Wether provenance statements should be generated when package is published.
 
@@ -11782,7 +11782,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is `true`, for non-public packages, the default is `false`.
+- *Default:* false
 
 Wether provenance statements should be generated when package is published.
 
@@ -13964,7 +13964,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is `true`, for non-public packages, the default is `false`.
+- *Default:* false
 
 Wether provenance statements should be generated when package is published.
 

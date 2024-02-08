@@ -4122,8 +4122,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -7220,8 +7219,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -11454,8 +11452,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -14339,8 +14336,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -17283,8 +17279,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -21029,8 +21024,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -23640,8 +23634,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -26136,8 +26129,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -28620,8 +28612,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -32166,8 +32157,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -34650,8 +34640,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -37277,8 +37266,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
@@ -39882,8 +39870,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- for public packages (e.g. \`NpmAccess.PUBLIC=true\`), the default is
-\`true\`, for non-public packages, the default is \`false\`.",
+        "default": "- false",
         "docs": "Wether provenance statements should be generated when package is published.",
         "featured": false,
         "fullType": {
