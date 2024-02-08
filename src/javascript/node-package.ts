@@ -294,8 +294,7 @@ export interface NodePackageOptions {
    * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
    *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - for public packages (e.g. `NpmAccess.PUBLIC=true`), the default is
-   * `true`, for non-public packages, the default is `false`.
+   * @default - false
    */
   readonly npmProvenance?: boolean;
 
@@ -961,7 +960,7 @@ export class NodePackage extends Component {
       );
     }
 
-    const npmProvenance = options.npmProvenance ?? false;
+    const npmProvenance = options.npmProvenance ?? DEFAULT_NPM_PROVENANCE;
     if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
       throw new Error(
         `"npmProvenance" can only be enabled for public packages`
