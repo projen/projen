@@ -1956,7 +1956,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
       - name: Download build artifacts
@@ -2095,7 +2095,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
       - name: Download build artifacts
@@ -4325,7 +4325,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
       - name: Download build artifacts
