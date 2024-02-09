@@ -57,7 +57,9 @@ export class Poetry
       description: "Install dependencies with frozen lockfile",
       exec: "poetry lock --no-update",
     });
-    [this.installMutableTask, this.installTask].forEach(t => t.exec("poetry install"));
+    [this.installMutableTask, this.installTask].forEach((t) =>
+      t.exec("poetry install")
+    );
 
     this.upgradeTask = project.addTask("upgrade", {
       description: "Upgrade dependencies",
