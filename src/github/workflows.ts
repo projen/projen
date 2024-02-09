@@ -373,7 +373,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v3",
+      uses: "actions/setup-node@v4",
       with: { "node-version": tools.node.version },
     });
   }
