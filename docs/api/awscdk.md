@@ -13157,6 +13157,7 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.parentPom">parentPom</a></code> | <code>projen.java.ParentPom</code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.compileOptions">compileOptions</a></code> | <code>projen.java.MavenCompileOptions</code> | Compile options. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -13699,6 +13700,19 @@ public readonly packaging: string;
 - *Default:* "jar"
 
 Project packaging format.
+
+---
+
+##### `parentPom`<sup>Optional</sup> <a name="parentPom" id="projen.awscdk.AwsCdkJavaAppOptions.property.parentPom"></a>
+
+```typescript
+public readonly parentPom: ParentPom;
+```
+
+- *Type:* projen.java.ParentPom
+- *Default:* undefined
+
+A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
 
 ---
 

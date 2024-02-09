@@ -731,6 +731,24 @@ exports[`inventory 1`] = `
         "switch": "parent",
       },
       {
+        "docs": "A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.",
+        "featured": true,
+        "fqn": "projen.java.ParentPom",
+        "fullType": {
+          "fqn": "projen.java.ParentPom",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "parentPom",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "parentPom",
+        ],
+        "simpleType": "ParentPom",
+        "switch": "parent-pom",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -16259,7 +16277,7 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
       },
       {
-        "default": ""^10.0.12"",
+        "default": ""^10.3.0"",
         "docs": "Construct version to use.",
         "featured": false,
         "fullType": {
@@ -19125,6 +19143,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "Project",
         "switch": "parent",
+      },
+      {
+        "docs": "A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.",
+        "featured": true,
+        "fqn": "projen.java.ParentPom",
+        "fullType": {
+          "fqn": "projen.java.ParentPom",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "parentPom",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "parentPom",
+        ],
+        "simpleType": "ParentPom",
+        "switch": "parent-pom",
       },
       {
         "default": "ProjectType.UNKNOWN",
