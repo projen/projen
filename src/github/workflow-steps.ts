@@ -230,8 +230,9 @@ export interface UploadArtifactWith {
    * Whether action should overwrite an existing artifact with the same name (should one exist)
    *
    * Introduced in v4 and represents a breaking change from the behavior of the v3 action.
+   * To maintain backwards compatibility with existing, this should be set the `true` (the default).
    *
-   * @default true (to maintain backwards compatibility)
+   * @default true
    */
   readonly overwrite?: boolean;
 }
