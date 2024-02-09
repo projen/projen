@@ -18,7 +18,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -46,7 +46,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -109,7 +109,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -137,7 +137,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -200,7 +200,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch1
       - name: Install dependencies
@@ -228,7 +228,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch1
       - name: Download patch
@@ -291,7 +291,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch2
       - name: Install dependencies
@@ -319,7 +319,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch2
       - name: Download patch
@@ -382,7 +382,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch1
       - name: Install dependencies
@@ -410,7 +410,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch1
       - name: Download patch
@@ -473,7 +473,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch2
       - name: Install dependencies
@@ -501,7 +501,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch2
       - name: Download patch
@@ -564,7 +564,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -592,7 +592,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -655,7 +655,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch1
       - name: Install dependencies
@@ -683,7 +683,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch1
       - name: Download patch
@@ -746,7 +746,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch2
       - name: Install dependencies
@@ -774,7 +774,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: branch2
       - name: Download patch
@@ -837,7 +837,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -865,7 +865,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -928,7 +928,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -956,7 +956,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -1017,7 +1017,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -1045,7 +1045,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -1108,7 +1108,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -1142,7 +1142,7 @@ jobs:
           app_id: \${{ secrets.PROJEN_APP_ID }}
           private_key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
@@ -1205,7 +1205,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -1240,7 +1240,7 @@ jobs:
           private_key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
           permissions: '{"pull_requests":"write","contents":"write"}'
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
