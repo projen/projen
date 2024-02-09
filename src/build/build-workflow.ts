@@ -231,7 +231,7 @@ export class BuildWorkflow extends Component {
       steps.push(
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v3",
+          uses: "actions/download-artifact@v4",
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: this.artifactsDirectory,

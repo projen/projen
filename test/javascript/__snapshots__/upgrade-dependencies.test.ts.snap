@@ -32,10 +32,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -49,7 +50,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -122,10 +123,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -139,7 +141,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -212,10 +214,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -229,7 +232,7 @@ jobs:
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -302,10 +305,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -319,7 +323,7 @@ jobs:
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -392,10 +396,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -409,7 +414,7 @@ jobs:
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -482,10 +487,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -499,7 +505,7 @@ jobs:
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -572,10 +578,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -589,7 +596,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -662,10 +669,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -679,7 +687,7 @@ jobs:
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -752,10 +760,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -769,7 +778,7 @@ jobs:
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -842,10 +851,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -859,7 +869,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -932,10 +942,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -949,7 +960,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -1020,10 +1031,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -1037,7 +1049,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -1110,10 +1122,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -1133,7 +1146,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -1206,10 +1219,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -1230,7 +1244,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
