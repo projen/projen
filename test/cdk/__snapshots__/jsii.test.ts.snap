@@ -345,7 +345,7 @@ jobs:
     permissions: {}
     if: "! needs.build.outputs.self_mutation_happened"
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -456,7 +456,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -485,7 +485,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -1587,7 +1587,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1658,7 +1658,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1718,7 +1718,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1776,7 +1776,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1838,7 +1838,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1898,7 +1898,7 @@ exports[`language bindings snapshot dotnet 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1950,7 +1950,7 @@ exports[`language bindings snapshot go 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -2009,7 +2009,7 @@ exports[`language bindings snapshot java 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -2055,7 +2055,7 @@ exports[`language bindings snapshot js 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -2101,7 +2101,7 @@ exports[`language bindings snapshot python 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -2207,7 +2207,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2236,7 +2236,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2269,7 +2269,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-go@v3
@@ -2365,7 +2365,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2394,7 +2394,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2427,7 +2427,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-go@v3
@@ -2520,7 +2520,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2549,7 +2549,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2582,7 +2582,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-dotnet@v3
@@ -2673,7 +2673,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2702,7 +2702,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
@@ -2735,7 +2735,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-dotnet@v3
