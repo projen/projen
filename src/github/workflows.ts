@@ -380,7 +380,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v4",
+      uses: "actions/setup-python@v5",
       with: { "python-version": tools.python.version },
     });
   }
