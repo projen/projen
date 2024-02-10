@@ -26,11 +26,11 @@ export class Poetry
   /**
    * A task that installs dependencies (honouring the lockfile)
    */
-  public readonly installTask: Task;
+  public readonly installCiTask: Task;
   /**
    * A task that updates the lockfile and installs dependencies
    */
-  public readonly installMutableTask: Task;
+  public readonly installTask: Task;
   /**
    * A task that for upgrades dependencies
    */
@@ -49,15 +49,15 @@ export class Poetry
     super(project);
     this.pythonExec = options.pythonExec ?? "python";
 
-    this.installMutableTask = project.addTask("install-mutable", {
+    this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
       exec: "poetry lock",
     });
-    this.installTask = project.addTask("install", {
+    this.installCiTask = project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
       exec: "poetry lock --no-update",
     });
-    [this.installMutableTask, this.installTask].forEach((t) =>
+    [this.installTask, this.installCiTask].forEach((t) =>
       t.exec("poetry install")
     );
 
@@ -214,9 +214,9 @@ export class Poetry
     const runtime = new TaskRuntime(this.project.outdir);
     // If the pyproject.toml file has changed, update the lockfile prior to installation
     if (this.pyProject.file.changed) {
-      runtime.runTask(this.installMutableTask.name);
-    } else {
       runtime.runTask(this.installTask.name);
+    } else {
+      runtime.runTask(this.installCiTask.name);
     }
   }
 }
