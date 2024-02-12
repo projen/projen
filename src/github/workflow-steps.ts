@@ -26,7 +26,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Checkout",
       }),
-      uses: "actions/checkout@v3",
+      uses: "actions/checkout@v4",
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
     };
   }
@@ -96,6 +96,7 @@ export class WorkflowSteps {
       removeNullOrUndefinedProperties({
         name: options?.with?.name,
         path: options?.with?.path,
+        overwrite: options?.with?.overwrite ?? true,
         "if-no-files-found": options?.with?.ifNoFilesFound,
         "retention-days": options?.with?.retentionDays,
         "compression-level": options?.with?.compressionLevel,
@@ -106,7 +107,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Upload artifact",
       }),
-      uses: "actions/upload-artifact@v3",
+      uses: "actions/upload-artifact@v4",
       with: uploadArtifactWith,
     };
   }
@@ -224,6 +225,16 @@ export interface UploadArtifactWith {
    * @default 6
    */
   readonly compressionLevel?: number;
+
+  /**
+   * Whether action should overwrite an existing artifact with the same name (should one exist)
+   *
+   * Introduced in v4 and represents a breaking change from the behavior of the v3 action.
+   * To maintain backwards compatibility with existing, this should be set the `true` (the default).
+   *
+   * @default true
+   */
+  readonly overwrite?: boolean;
 }
 
 export interface UploadArtifactOptions extends JobStepConfiguration {
