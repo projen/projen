@@ -386,8 +386,9 @@ export class UpgradeDependencies extends Component {
       this.options.workflowOptions?.schedule ??
       UpgradeDependenciesSchedule.DAILY;
 
-    const workflowName = `${task.name}${branch ? `-${branch.replace(/\//g, "-")}` : ""
-      }`;
+    const workflowName = `${task.name}${
+      branch ? `-${branch.replace(/\//g, "-")}` : ""
+    }`;
     const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
@@ -620,5 +621,5 @@ export class UpgradeDependenciesSchedule {
     return new UpgradeDependenciesSchedule(cron);
   }
 
-  private constructor(public readonly cron: string[]) { }
+  private constructor(public readonly cron: string[]) {}
 }
