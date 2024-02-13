@@ -5,7 +5,7 @@ export interface IPythonDeps {
   /**
    * A task that installs and updates dependencies.
    */
-  readonly installTask: Task;
+  readonly installCiTask: Task;
 
   /**
    * Adds a runtime dependency.
