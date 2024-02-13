@@ -28,7 +28,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.0.2
+      - uses: amannn/action-semantic-pull-request@67cbd7a15a6eeea0c3a0dffff4768fa5653de05c
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -37,7 +37,6 @@ jobs:
             fix
             chore
           requireScope: false
-          githubBaseUrl: \${{ github.api_url }}
   contributorStatement:
     name: Require Contributor Statement
     runs-on: ubuntu-latest
@@ -90,7 +89,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.0.2
+      - uses: amannn/action-semantic-pull-request@67cbd7a15a6eeea0c3a0dffff4768fa5653de05c
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -99,7 +98,6 @@ jobs:
             fix
             chore
           requireScope: false
-          githubBaseUrl: \${{ github.api_url }}
   contributorStatement:
     name: Require Contributor Statement
     runs-on: ubuntu-latest
@@ -143,7 +141,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.0.2
+      - uses: amannn/action-semantic-pull-request@67cbd7a15a6eeea0c3a0dffff4768fa5653de05c
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -152,7 +150,6 @@ jobs:
             fix
             chore
           requireScope: false
-          githubBaseUrl: \${{ github.api_url }}
 "
 `;
 
@@ -176,7 +173,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.0.2
+      - uses: amannn/action-semantic-pull-request@67cbd7a15a6eeea0c3a0dffff4768fa5653de05c
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -184,7 +181,6 @@ jobs:
             feat
             fix
           requireScope: false
-          githubBaseUrl: \${{ github.api_url }}
 "
 `;
 
@@ -208,7 +204,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.0.2
+      - uses: amannn/action-semantic-pull-request@67cbd7a15a6eeea0c3a0dffff4768fa5653de05c
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -217,6 +213,5 @@ jobs:
             fix
             chore
           requireScope: true
-          githubBaseUrl: \${{ github.api_url }}
 "
 `;
