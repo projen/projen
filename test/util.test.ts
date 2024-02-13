@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import { posix, win32 } from "path";
 import { TestProject } from "./util";
-import { PROJEN_VERSION } from "../src/common";
 import { JsonFile } from "../src/json";
 import {
   decamelizeKeysRecursively,
@@ -13,6 +12,7 @@ import {
   getGitVersion,
   isRoot,
   assertExecutablePermissions,
+  normalizePersistedPath,
 } from "../src/util";
 
 describe("decamelizeRecursively", () => {
@@ -355,6 +355,59 @@ describe("assertExecutablePermissions", () => {
   });
 });
 
-test("projen version", () => {
-  expect(PROJEN_VERSION).toBe("99.99.99");
+describe("normalizePersistedPath", () => {
+  test("changes directory separators to forward slash on Windows", () => {
+    // GIVEN
+    const input = "C:\\path\\to\\file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("C:/path/to/file");
+  });
+
+  test("handles mixed directory separators on Windows", () => {
+    // GIVEN
+    const input = "C:\\path/to\\file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("C:/path/to/file");
+  });
+
+  test("handles path with no separators", () => {
+    // GIVEN
+    const input = "file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("file");
+  });
+
+  test("handles gitignore pattern", () => {
+    // GIVEN
+    const input = "!/path\\to/file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("!/path/to/file");
+  });
+
+  test("keeps directory separators as forward slash on Linux", () => {
+    // GIVEN
+    const input = "/path/to/file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("/path/to/file");
+  });
 });

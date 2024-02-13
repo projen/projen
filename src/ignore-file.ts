@@ -1,5 +1,6 @@
 import { FileBase, IResolver } from "./file";
 import { Project } from "./project";
+import { normalizePersistedPath } from "./util";
 
 export interface IgnoreFileOptions {
   /**
@@ -57,7 +58,10 @@ export class IgnoreFile extends FileBase {
       if (!isComment && !isEmptyLine) {
         this.normalizePatterns(pattern);
       }
-      this._patterns.push(pattern);
+
+      const normalizedPattern = normalizePersistedPath(pattern);
+
+      this._patterns.push(normalizedPattern);
     }
   }
 

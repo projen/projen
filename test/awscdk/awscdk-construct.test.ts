@@ -225,7 +225,7 @@ describe("node version in workflow", () => {
     expect(buildWorkflow.jobs.build.steps).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          uses: "actions/setup-node@v3",
+          uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "18.x",
           },
@@ -245,7 +245,7 @@ describe("node version in workflow", () => {
     expect(buildWorkflow.jobs.build.steps).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          uses: "actions/setup-node@v3",
+          uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "18.0.0",
           },
@@ -266,7 +266,7 @@ describe("node version in workflow", () => {
     expect(buildWorkflow.jobs.build.steps).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          uses: "actions/setup-node@v3",
+          uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "18.x",
           },

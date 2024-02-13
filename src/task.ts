@@ -48,7 +48,8 @@ export class Task {
   private readonly _conditions: string[];
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
-  private readonly cwd?: string;
+  private _cwd?: string | undefined;
+
   private readonly requiredEnv?: string[];
   private _locked: boolean;
   private _description?: string;
@@ -57,7 +58,7 @@ export class Task {
     this.name = name;
     this._description = props.description;
     this._conditions = props.condition ? [props.condition] : [];
-    this.cwd = props.cwd;
+    this._cwd = props.cwd;
     this._locked = false;
     this._env = props.env ?? {};
 
@@ -78,6 +79,20 @@ export class Task {
    */
   public lock() {
     this._locked = true;
+  }
+
+  /**
+   * Returns the working directory for this task.
+   */
+  public get cwd(): string | undefined {
+    return this._cwd;
+  }
+
+  /**
+   * Sets the working directory for this task.
+   */
+  public set cwd(cwd: string | undefined) {
+    this._cwd = cwd;
   }
 
   /**
@@ -123,6 +138,11 @@ export class Task {
   public reset(command?: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
 
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("reset");
+      return;
+    }
+
     while (this._steps.length) {
       this._steps.shift();
     }
@@ -139,6 +159,12 @@ export class Task {
    */
   public exec(command: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("add exec to");
+      return;
+    }
+
     this._steps.push({ exec: command, ...options });
   }
 
@@ -155,6 +181,12 @@ export class Task {
    */
   public builtin(name: string) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("add builtin to");
+      return;
+    }
+
     this._steps.push({ builtin: name });
   }
 
@@ -165,6 +197,12 @@ export class Task {
    */
   public say(message: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("add say to");
+      return;
+    }
+
     this._steps.push({ say: message, ...options });
   }
 
@@ -185,6 +223,12 @@ export class Task {
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("add spawn to");
+      return;
+    }
+
     this._steps.push({ spawn: subtask.name, ...options });
   }
 
@@ -194,6 +238,12 @@ export class Task {
    */
   public prependExec(shell: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("prependExec to");
+      return;
+    }
+
     this._steps.unshift({
       exec: shell,
       ...options,
@@ -206,6 +256,12 @@ export class Task {
    */
   public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("prependSpawn to");
+      return;
+    }
+
     this._steps.unshift({
       spawn: subtask.name,
       ...options,
@@ -218,6 +274,12 @@ export class Task {
    */
   public prependSay(message: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("prependSay to");
+      return;
+    }
+
     this._steps.unshift({
       say: message,
       ...options,
@@ -242,16 +304,62 @@ export class Task {
   public get envVars(): Readonly<{ [name: string]: string }> {
     return this._env;
   }
+
   /**
    * Returns an immutable copy of all the step specifications of the task.
    */
-  public get steps() {
+  public get steps(): TaskStep[] {
     // If the list of steps is a Lazy value, we can't know what the steps
     // are until synthesis occurs, so just return an empty array.
     if (!Array.isArray(this._steps)) {
       return [];
     }
     return [...this._steps];
+  }
+
+  /**
+   *
+   * @param index The index of the step to edit
+   * @param step The new step to replace the old one entirely, it is not merged with the old step
+   */
+  public updateStep(index: number, step: TaskStep): void {
+    this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("update step for");
+      return;
+    }
+
+    const existingStep = this._steps[index];
+    if (!existingStep) {
+      throw new Error(
+        `Cannot update step at index ${index} for task ${this.name} because it does not exist`
+      );
+    }
+
+    this._steps[index] = step;
+  }
+
+  /**
+   *
+   * @param index The index of the step to remove
+   */
+  public removeStep(index: number): void {
+    this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("remove step from");
+      return;
+    }
+
+    const existingStep = this._steps[index];
+    if (!existingStep) {
+      throw new Error(
+        `Cannot remove step at index ${index} for task ${this.name} because it does not exist`
+      );
+    }
+
+    this._steps.splice(index, 1);
   }
 
   /**
@@ -294,7 +402,7 @@ export class Task {
       requiredEnv: this.requiredEnv,
       steps: steps,
       condition: this.condition,
-      cwd: this.cwd,
+      cwd: this._cwd,
     };
   }
 
@@ -302,6 +410,12 @@ export class Task {
     if (this._locked) {
       throw new Error(`Task "${this.name}" is locked for changes`);
     }
+  }
+
+  private warnForLazyValue(actionBeingUndertaken: string): void {
+    warn(
+      `Cannot ${actionBeingUndertaken} task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+    );
   }
 
   /**
