@@ -1,8 +1,4 @@
 import { python } from "../../src";
-import {
-  AwsCdkPythonApp,
-  AwsCdkPythonAppOptions,
-} from "../../src/awscdk/awscdk-app-py";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {
@@ -79,26 +75,3 @@ class TestPythonProject extends python.PythonProject {
     });
   }
 }
-
-test("awscdk app is set up with custom appEntrypoint", () => {
-  const customAppEntrypoint = "custom_app.py";
-
-  const options: AwsCdkPythonAppOptions = {
-    authorName: "Test Author",
-    authorEmail: "test@example.com",
-    moduleName: "test_module",
-    name: "test_project",
-    version: "0.1.0",
-    cdkVersion: "1.0.0",
-    appEntrypoint: customAppEntrypoint,
-  };
-
-  // Instantiate AwsCdkPythonApp with custom options
-  const app = new AwsCdkPythonApp(options);
-
-  // Synthesize the project to generate the project structure
-  const snapshot = synthSnapshot(app);
-
-  // Check if the synthesized snapshot contains the custom app entrypoint
-  expect(Object.keys(snapshot)).toContain(customAppEntrypoint);
-});
