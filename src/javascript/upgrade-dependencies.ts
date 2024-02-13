@@ -237,7 +237,7 @@ export class UpgradeDependencies extends Component {
         case NodePackageManager.YARN_CLASSIC:
           return "npx";
         case NodePackageManager.PNPM:
-          return "pnpx";
+          return "pnpm dlx";
         case NodePackageManager.YARN2:
         case NodePackageManager.YARN_BERRY:
           return "yarn dlx";
