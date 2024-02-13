@@ -237,7 +237,7 @@ export class UpgradeDependencies extends Component {
         case NodePackageManager.YARN_CLASSIC:
           return "npx";
         case NodePackageManager.PNPM:
-          return "pnpx";
+          return "pnpm dlx";
         case NodePackageManager.YARN2:
         case NodePackageManager.YARN_BERRY:
           return "yarn dlx";
@@ -386,9 +386,8 @@ export class UpgradeDependencies extends Component {
       this.options.workflowOptions?.schedule ??
       UpgradeDependenciesSchedule.DAILY;
 
-    const workflowName = `${task.name}${
-      branch ? `-${branch.replace(/\//g, "-")}` : ""
-    }`;
+    const workflowName = `${task.name}${branch ? `-${branch.replace(/\//g, "-")}` : ""
+      }`;
     const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
@@ -621,5 +620,5 @@ export class UpgradeDependenciesSchedule {
     return new UpgradeDependenciesSchedule(cron);
   }
 
-  private constructor(public readonly cron: string[]) {}
+  private constructor(public readonly cron: string[]) { }
 }
