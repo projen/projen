@@ -28,7 +28,11 @@ const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
-const DEFAULT_NPM_PROVENANCE = false;
+
+/**
+ * @see https://docs.npmjs.com/cli/v10/commands/npm-publish#provenance
+ */
+export const DEFAULT_NPM_PROVENANCE = false;
 
 export interface NodePackageOptions {
   /**
@@ -291,7 +295,7 @@ export interface NodePackageOptions {
   /**
    * Wether provenance statements should be generated when package is published.
    *
-   * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+   * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
    *
    * @see https://docs.npmjs.com/generating-provenance-statements
    * @default - false
@@ -1438,10 +1442,6 @@ export class NodePackage extends Component {
         access:
           this.npmAccess !== defaultNpmAccess(this.packageName)
             ? this.npmAccess
-            : undefined,
-        provenance:
-          this.npmProvenance !== DEFAULT_NPM_PROVENANCE
-            ? this.npmProvenance
             : undefined,
       },
       { omitEmpty: true }

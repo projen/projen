@@ -12,7 +12,10 @@ import {
   JobStep,
   Tools,
 } from "../github/workflows-model";
-import { defaultNpmToken } from "../javascript/node-package";
+import {
+  DEFAULT_NPM_PROVENANCE,
+  defaultNpmToken,
+} from "../javascript/node-package";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
@@ -353,6 +356,9 @@ export class Publisher extends Component {
         );
       }
 
+      const needsIdTokenWrite =
+        isAwsCodeArtifactWithOidc || options.npmProvenance;
+
       return {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
@@ -363,9 +369,13 @@ export class Publisher extends Component {
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
+          NPM_CONFIG_PROVENANCE:
+            options.npmProvenance !== DEFAULT_NPM_PROVENANCE
+              ? options.npmProvenance
+              : undefined,
         },
         permissions: {
-          idToken: isAwsCodeArtifactWithOidc ? JobPermission.WRITE : undefined,
+          idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
@@ -866,6 +876,16 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Wether provenance statements should be generated when package is published.
+   *
+   * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
+   *
+   * @see https://docs.npmjs.com/generating-provenance-statements
+   * @default - undefined
+   */
+  readonly npmProvenance?: boolean;
 
   /**
    * Options for publishing npm package to AWS CodeArtifact.

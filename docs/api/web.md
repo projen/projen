@@ -7462,7 +7462,7 @@ public readonly npmProvenance: boolean;
 
 Wether provenance statements should be generated when package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
@@ -9476,7 +9476,7 @@ public readonly npmProvenance: boolean;
 
 Wether provenance statements should be generated when package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
@@ -11786,7 +11786,7 @@ public readonly npmProvenance: boolean;
 
 Wether provenance statements should be generated when package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
@@ -13968,7 +13968,7 @@ public readonly npmProvenance: boolean;
 
 Wether provenance statements should be generated when package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time. When using a non-supported package manager, it won't show errors but the provenance statements won't be generated.
+It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
