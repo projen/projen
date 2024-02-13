@@ -1037,7 +1037,7 @@ export class NodeProject extends GitHubProject {
           : "npm";
       install.push({
         name: "Setup Node.js",
-        uses: "actions/setup-node@v3",
+        uses: "actions/setup-node@v4",
         with: {
           ...(this.nodeVersion && {
             "node-version": this.nodeVersion,

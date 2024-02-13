@@ -78,7 +78,7 @@ export class WorkflowActions {
       WorkflowSteps.checkout({ with: restOfOptions }),
       {
         name: "Download patch",
-        uses: "actions/download-artifact@v3",
+        uses: "actions/download-artifact@v4",
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {

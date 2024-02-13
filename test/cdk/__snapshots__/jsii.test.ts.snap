@@ -273,7 +273,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -288,10 +288,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
@@ -302,10 +303,11 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
@@ -314,13 +316,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -343,11 +345,11 @@ jobs:
     permissions: {}
     if: "! needs.build.outputs.self_mutation_happened"
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -412,7 +414,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -440,10 +442,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -452,11 +455,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -481,11 +484,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -524,7 +527,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Install dependencies
@@ -538,10 +541,11 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
           path: .repo.patch
+          overwrite: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -551,11 +555,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -1093,13 +1097,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,projen,standard-version,ts-jest,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,projen,typescript",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak projen standard-version ts-jest typescript",
+            "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii projen standard-version ts-jest typescript",
           },
           {
             "exec": "npx projen",
@@ -1582,7 +1586,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1595,7 +1599,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1653,14 +1657,14 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1713,14 +1717,14 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1771,7 +1775,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1784,7 +1788,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1833,20 +1837,20 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
     },
     {
-      "uses": "actions/setup-python@v4",
+      "uses": "actions/setup-python@v5",
       "with": {
         "python-version": "3.x",
       },
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1893,7 +1897,7 @@ exports[`language bindings snapshot dotnet 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1906,7 +1910,7 @@ exports[`language bindings snapshot dotnet 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -1945,7 +1949,7 @@ exports[`language bindings snapshot go 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -1958,7 +1962,7 @@ exports[`language bindings snapshot go 1`] = `
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2004,14 +2008,14 @@ exports[`language bindings snapshot java 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2050,14 +2054,14 @@ exports[`language bindings snapshot js 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2096,20 +2100,20 @@ exports[`language bindings snapshot python 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
     },
     {
-      "uses": "actions/setup-python@v4",
+      "uses": "actions/setup-python@v5",
       "with": {
         "python-version": "3.x",
       },
     },
     {
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": "build-artifact",
         "path": "dist",
@@ -2161,7 +2165,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2189,10 +2193,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2201,11 +2206,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2230,11 +2235,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2263,14 +2268,14 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-go@v3
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2318,7 +2323,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2346,10 +2351,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2358,11 +2364,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2387,11 +2393,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2420,14 +2426,14 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-go@v3
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2472,7 +2478,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2500,10 +2506,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2512,11 +2519,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2541,11 +2548,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2574,14 +2581,14 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2624,7 +2631,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2652,10 +2659,11 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
+          overwrite: true
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2664,11 +2672,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2693,11 +2701,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
@@ -2726,14 +2734,14 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact
           path: dist
