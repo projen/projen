@@ -122,12 +122,12 @@ export class WorkflowSteps {
     const downloadArtifactWith: DownloadArtifactWith =
       removeNullOrUndefinedProperties({
         name: options?.with?.name,
-        path: options?.with?.path ?? "$GITHUB_WORKSPACE",
-        pattern: options?.with?.name ? undefined : options?.with?.pattern,
-        repository: options?.with?.repository ?? "${{ github.repository }}",
-        "merge-multiple": options?.with?.mergeMultiple ?? false,
+        path: options?.with?.path,
+        pattern: options?.with?.pattern,
+        repository: options?.with?.repository,
+        "merge-multiple": options?.with?.mergeMultiple,
         "github-token": options?.with?.token,
-        "run-id": options?.with?.runId ?? "${{ github.run_id }}",
+        "run-id": options?.with?.runId,
       });
 
     return {
