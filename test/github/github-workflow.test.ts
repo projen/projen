@@ -1,4 +1,5 @@
 import * as YAML from "yaml";
+import { WorkflowSteps } from "../../src/github";
 import { GithubWorkflow } from "../../src/github/workflows";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -256,6 +257,31 @@ describe("github-workflow", () => {
       expect(wf).not.toContain("actions/checkout@v3");
       expect(wf).toContain("actions/checkout@explicit-v2");
       expect(wf).toContain("actions/checkout@generic-override");
+    });
+  });
+
+  describe("Download Artifact", () => {
+    const downloadWorkflow = "DownloadArtifact";
+
+    test("sets defaults correctly", () => {
+      const project = new TestProject();
+
+      const workflow = new GithubWorkflow(project.github!, downloadWorkflow);
+
+      workflow.addJob("downloading-artifact", {
+        runsOn: ["ubuntu-latest"],
+        permissions: {},
+        steps: [
+          { uses: "actions/checkout@v3" },
+          WorkflowSteps.downloadArtifact(),
+        ],
+      });
+
+      const snapshot = synthSnapshot(project);
+
+      expect(
+        snapshot[`.github/workflows/${downloadWorkflow.toLowerCase()}.yml`]
+      ).toMatchSnapshot();
     });
   });
 });

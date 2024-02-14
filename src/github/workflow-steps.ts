@@ -113,6 +113,34 @@ export class WorkflowSteps {
   }
 
   /**
+   * Downloads an artifact.
+   *
+   * @param options Options to configure the `download-artifact` JobStep
+   * @returns A JobStep that downloads an artifact
+   */
+  public static downloadArtifact(options?: DownloadArtifactOptions): JobStep {
+    const downloadArtifactWith: DownloadArtifactWith =
+      removeNullOrUndefinedProperties({
+        name: options?.with?.name,
+        path: options?.with?.path ?? "$GITHUB_WORKSPACE",
+        pattern: options?.with?.name ? undefined : options?.with?.pattern,
+        repository: options?.with?.repository ?? "${{ github.repository }}",
+        "merge-multiple": options?.with?.mergeMultiple ?? false,
+        "github-token": options?.with?.token,
+        "run-id": options?.with?.runId ?? "${{ github.run_id }}",
+      });
+
+    return {
+      ...this.buildJobStepConfig({
+        ...options,
+        name: options?.name ?? "Download artifact",
+      }),
+      uses: "actions/download-artifact@v4",
+      with: downloadArtifactWith,
+    };
+  }
+
+  /**
    * Simple adapter to ensure we only include the necessary fields for a JobStepConfiguration.
    */
   private static buildJobStepConfig(
@@ -242,4 +270,65 @@ export interface UploadArtifactOptions extends JobStepConfiguration {
    * Options for `upload-artifact`.
    */
   readonly with: UploadArtifactWith;
+}
+
+export interface DownloadArtifactWith {
+  /**
+   * Name of the artifact to download
+   *
+   * @default - If unspecified, all artifacts for the run are downloaded
+   */
+  readonly name?: string;
+
+  /**
+   * A file, directory or wildcard pattern that describes what to download. Supports basic tilde expansion.
+   *
+   * @default - $GITHUB_WORKSPACE
+   */
+  readonly path?: string;
+
+  /**
+   * A glob pattern to the artifacts that should be downloaded
+   * This is ignored if name is specified
+   */
+  readonly pattern?: string;
+
+  /**
+   * When multiple artifacts are matched, this changes the behavior of the destination directories
+   * If true, the downloaded artifacts will be in the same directory specified by path
+   * If false, the downloaded artifacts will be extracted into individual named directories within the specified path
+   *
+   * @default false
+   */
+  readonly mergeMultiple?: boolean;
+
+  /**
+   * The GitHub token used to authenticate with the GitHub API to download artifacts from a different repository or from a different workflow run
+   *
+   * @default - If unspecified, the action will download artifacts from the current repo and the current workflow run
+   */
+  readonly token?: string;
+
+  /**
+   * The repository owner and the repository name joined together by "/"
+   * If github-token is specified, this is the repository that artifacts will be downloaded from
+   *
+   * @default - ${{ github.repository }}
+   */
+  readonly repository?: string;
+
+  /**
+   * The id of the workflow run where the desired download artifact was uploaded from
+   * If github-token is specified, this is the run that artifacts will be downloaded from
+   *
+   * @default - ${{ github.run_id }}
+   */
+  readonly runId?: string;
+}
+
+export interface DownloadArtifactOptions extends JobStepConfiguration {
+  /**
+   * Options for `download-artifact`.
+   */
+  readonly with: DownloadArtifactWith;
 }
