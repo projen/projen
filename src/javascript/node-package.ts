@@ -293,7 +293,7 @@ export interface NodePackageOptions {
   readonly npmAccess?: NpmAccess;
 
   /**
-   * Wether provenance statements should be generated when package is published.
+   * Wether provenance statements should be generated when the package is published.
    *
    * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
    *

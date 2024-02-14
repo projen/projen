@@ -4123,7 +4123,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -7220,7 +7220,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -11453,7 +11453,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -14337,7 +14337,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17280,7 +17280,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -21025,7 +21025,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -23635,7 +23635,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -26130,7 +26130,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -28613,7 +28613,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -32158,7 +32158,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -34641,7 +34641,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -37267,7 +37267,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39871,7 +39871,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- false",
-        "docs": "Wether provenance statements should be generated when package is published.",
+        "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
