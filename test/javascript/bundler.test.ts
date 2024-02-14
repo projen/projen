@@ -1,4 +1,10 @@
-import { Bundler, NodeProject } from "../../src/javascript";
+import { join } from "path";
+import {
+  BundleLogLevel,
+  Bundler,
+  NodeProject,
+  SourceMapMode,
+} from "../../src/javascript";
 import { renderBundleName } from "../../src/javascript/util";
 import { Testing } from "../../src/testing";
 
@@ -147,6 +153,32 @@ test("sourcemaps can be disabled", () => {
     steps: [
       {
         exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"',
+      },
+    ],
+  });
+});
+
+test("sourcemaps can be set to EXTERNAL", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "node",
+    target: "node12",
+    sourceMapMode: SourceMapMode.EXTERNAL,
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+
+  expect(tasks["bundle:hello"]).toStrictEqual({
+    description: "Create a JavaScript bundle from ./src/hello.ts",
+    name: "bundle:hello",
+    steps: [
+      {
+        exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --sourcemap=external',
       },
     ],
   });
@@ -328,4 +360,72 @@ test("format can be set to esm", () => {
   const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
   expect(bundleCommand).toContain("--format=esm");
   expect(watchCommand).toContain("--format=esm");
+});
+
+test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, footer, mainFields, inject", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "node",
+    target: "node18",
+    sourcemap: true,
+    format: "esm",
+    define: {
+      "process.env.NODE_ENV": "production",
+    },
+    minify: true,
+    sourcesContent: true,
+    logLevel: BundleLogLevel.INFO,
+    keepNames: true,
+    metafile: true,
+    banner: '/* "banner" */',
+    footer: "/* 'footer' */",
+    mainFields: ["module", "main"],
+    inject: ["./inject.js"],
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+
+  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+
+  expect(bundleCommand).toContain('--define:process.env.NODE_ENV="production"');
+  expect(watchCommand).toContain('--define:process.env.NODE_ENV="production"');
+
+  expect(bundleCommand).toContain("--minify");
+  expect(watchCommand).toContain("--minify");
+
+  expect(bundleCommand).toContain("--sourcemap");
+  expect(watchCommand).toContain("--sourcemap");
+
+  expect(bundleCommand).toContain("--sources-content=true");
+  expect(watchCommand).toContain("--sources-content=true");
+
+  expect(bundleCommand).toContain("--log-level=info");
+  expect(watchCommand).toContain("--log-level=info");
+
+  expect(bundleCommand).toContain("--keep-names");
+  expect(watchCommand).toContain("--keep-names");
+
+  expect(bundleCommand).toContain(
+    `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`
+  );
+  expect(watchCommand).toContain(
+    `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`
+  );
+  expect(bundleCommand).toContain('--banner:js="/* \\"banner\\" */"');
+  expect(watchCommand).toContain('--banner:js="/* \\"banner\\" */"');
+
+  expect(bundleCommand).toContain("--footer:js=\"/* 'footer' */\"");
+  expect(watchCommand).toContain("--footer:js=\"/* 'footer' */\"");
+
+  expect(bundleCommand).toContain("--main-fields=module,main");
+  expect(bundleCommand).toContain("--main-fields=module,main");
+
+  expect(watchCommand).toContain("--inject:./inject.js");
+  expect(watchCommand).toContain("--inject:./inject.js");
 });
