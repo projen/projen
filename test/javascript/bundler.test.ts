@@ -385,6 +385,9 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
     footer: "/* 'footer' */",
     mainFields: ["module", "main"],
     inject: ["./inject.js"],
+    esbuildArgs: {
+      "--log-limit": "0",
+    },
   });
 
   const snapshot = Testing.synth(p);
@@ -428,4 +431,7 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
 
   expect(watchCommand).toContain("--inject:./inject.js");
   expect(watchCommand).toContain("--inject:./inject.js");
+
+  expect(watchCommand).toContain('--log-limit="0"');
+  expect(watchCommand).toContain('--log-limit="0"');
 });

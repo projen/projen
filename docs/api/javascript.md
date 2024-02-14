@@ -4904,13 +4904,14 @@ Build arguments to pass into esbuild.
 For example, to add the [--log-limit](https://esbuild.github.io/api/#log-limit) flag:
 
 ```text
-new NodejsFunction(scope, id, {
-  ...
-  bundling: {
-    esbuildArgs: {
-      "--log-limit": "0",
-    }
-  }
+project.bundler.addBundle("./src/hello.ts", {
+  platform: "node",
+  target: "node18",
+  sourcemap: true,
+  format: "esm",
+  esbuildArgs: {
+    "--log-limit": "0",
+  },
 });
 ```
 
