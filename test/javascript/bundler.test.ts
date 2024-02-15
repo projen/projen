@@ -387,6 +387,9 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
     inject: ["./inject.js"],
     esbuildArgs: {
       "--log-limit": "0",
+      "--true": true,
+      "--true-string": "true",
+      "--empty-string": "",
     },
   });
 
@@ -396,42 +399,23 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
   const bundleCommand = tasks["bundle:hello"].steps[0].exec;
   const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
 
-  expect(bundleCommand).toContain('--define:process.env.NODE_ENV="production"');
-  expect(watchCommand).toContain('--define:process.env.NODE_ENV="production"');
-
-  expect(bundleCommand).toContain("--minify");
-  expect(watchCommand).toContain("--minify");
-
-  expect(bundleCommand).toContain("--sourcemap");
-  expect(watchCommand).toContain("--sourcemap");
-
-  expect(bundleCommand).toContain("--sources-content=true");
-  expect(watchCommand).toContain("--sources-content=true");
-
-  expect(bundleCommand).toContain("--log-level=info");
-  expect(watchCommand).toContain("--log-level=info");
-
-  expect(bundleCommand).toContain("--keep-names");
-  expect(watchCommand).toContain("--keep-names");
-
-  expect(bundleCommand).toContain(
-    `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`
-  );
-  expect(watchCommand).toContain(
-    `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`
-  );
-  expect(bundleCommand).toContain('--banner:js="/* \\"banner\\" */"');
-  expect(watchCommand).toContain('--banner:js="/* \\"banner\\" */"');
-
-  expect(bundleCommand).toContain("--footer:js=\"/* 'footer' */\"");
-  expect(watchCommand).toContain("--footer:js=\"/* 'footer' */\"");
-
-  expect(bundleCommand).toContain("--main-fields=module,main");
-  expect(bundleCommand).toContain("--main-fields=module,main");
-
-  expect(watchCommand).toContain("--inject:./inject.js");
-  expect(watchCommand).toContain("--inject:./inject.js");
-
-  expect(watchCommand).toContain('--log-limit="0"');
-  expect(watchCommand).toContain('--log-limit="0"');
+  for (const command of [bundleCommand, watchCommand]) {
+    expect(command).toMatch(/ --define:process.env.NODE_ENV="production"( |$)/);
+    expect(command).toMatch(/ --minify( |$)/);
+    expect(command).toMatch(/ --sourcemap( |$)/);
+    expect(command).toMatch(/ --sources-content=true( |$)/);
+    expect(command).toMatch(/ --log-level=info( |$)/);
+    expect(command).toMatch(/ --keep-names( |$)/);
+    expect(command).toMatch(
+      `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`
+    );
+    expect(command).toMatch('--banner:js="/* \\"banner\\" */"');
+    expect(command).toMatch("--footer:js=\"/* 'footer' */\"");
+    expect(command).toMatch(/ --main-fields=module,main( |$)/);
+    expect(command).toContain("--inject:./inject.js");
+    expect(command).toMatch(/ --log-limit="0"( |$)/);
+    expect(command).toMatch(/--true( |$)/);
+    expect(command).toMatch(/ --true-string="true"( |$)/);
+    expect(command).toMatch(/--empty-string( |$)/);
+  }
 });
