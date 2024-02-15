@@ -51,19 +51,17 @@ export class Poetry
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
-      exec: "poetry lock",
+      exec: "poetry update",
     });
+
     this.installCiTask = project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
-      exec: "poetry lock --no-update",
+      exec: "poetry install",
     });
-    [this.installTask, this.installCiTask].forEach((t) =>
-      t.exec("poetry install")
-    );
 
     this.upgradeTask = project.addTask("upgrade", {
       description: "Upgrade dependencies",
-      exec: "poetry update",
+      exec: "poetry lock",
     });
 
     this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
