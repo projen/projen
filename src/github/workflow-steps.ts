@@ -119,16 +119,17 @@ export class WorkflowSteps {
    * @returns A JobStep that downloads an artifact
    */
   public static downloadArtifact(options?: DownloadArtifactOptions): JobStep {
-    const downloadArtifactWith: DownloadArtifactWith =
-      removeNullOrUndefinedProperties({
-        name: options?.with?.name,
-        path: options?.with?.path,
-        pattern: options?.with?.pattern,
-        repository: options?.with?.repository,
-        "merge-multiple": options?.with?.mergeMultiple,
-        "github-token": options?.with?.token,
-        "run-id": options?.with?.runId,
-      });
+    const downloadArtifactWith: DownloadArtifactWith | undefined = options?.with
+      ? removeNullOrUndefinedProperties({
+          name: options?.with?.name,
+          path: options?.with?.path,
+          pattern: options?.with?.pattern,
+          repository: options?.with?.repository,
+          "merge-multiple": options?.with?.mergeMultiple,
+          "github-token": options?.with?.token,
+          "run-id": options?.with?.runId,
+        })
+      : undefined;
 
     return {
       ...this.buildJobStepConfig({
