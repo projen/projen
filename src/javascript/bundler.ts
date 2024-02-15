@@ -34,6 +34,18 @@ export interface BundlerOptions {
   readonly addToPreCompile?: boolean;
 
   /**
+   * Install the `bundle` command as a post-compile phase.
+   *
+   * Cannot be used with `addToPreCompile`.
+   *
+   * Note: If using `addBundle()` with the `bundleCompiledResults`, this option
+   * must be set to `true`.
+   *
+   * @default false
+   */
+  readonly addToPostCompile?: boolean;
+
+  /**
    * Map of file extensions (without dot) and loaders to use for this file type.
    * Loaders are appended to the esbuild command by `--loader:.extension=loader`
    */
@@ -67,7 +79,8 @@ export class Bundler extends Component {
   public readonly bundledir: string;
 
   private _task: Task | undefined;
-  private readonly addToPreCompile: boolean;
+  private addToPreCompile?: boolean;
+  private addToPostCompile?: boolean;
   private readonly loaders?: { [key: string]: string };
 
   /**
@@ -78,8 +91,11 @@ export class Bundler extends Component {
 
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? "assets";
-    this.addToPreCompile = options.addToPreCompile ?? true;
     this.loaders = options.loaders;
+
+    // we want to preserve if these were explicitly set, or left undefined
+    this.addToPreCompile = options.addToPreCompile;
+    this.addToPostCompile = options.addToPostCompile;
   }
 
   /**
@@ -95,9 +111,27 @@ export class Bundler extends Component {
         description: "Prepare assets",
       });
 
+      if (this.addToPreCompile === true && this.addToPostCompile === true) {
+        throw new Error(
+          "Cannot set both `addToPreCompile` and `addToPostCompile` to true. " +
+            "Note that `addToPostCompile` is required (and auto-set) when " +
+            "using `addBundle()` with `bundleCompiledResults` set to true."
+        );
+      }
+
+      let addToPreCompile = false;
+      if (
+        this.addToPreCompile === undefined &&
+        this.addToPostCompile === undefined
+      ) {
+        addToPreCompile = true;
+      }
+
       // install the bundle task into the pre-compile phase.
-      if (this.addToPreCompile) {
+      if (addToPreCompile) {
         this.project.preCompileTask.spawn(this._task);
+      } else if (this.addToPostCompile) {
+        this.project.postCompileTask.spawn(this._task);
       }
     }
 
@@ -108,11 +142,34 @@ export class Bundler extends Component {
    * Adds a task to the project which bundles a specific entrypoint and all of
    * its dependencies into a single javascript output file.
    *
+   * NOTE: If you are using `bundleCompiledResults` set to true, you must set the
+   * `entrypoint` to the path of the compiled output file, not the source file!
+   *
    * @param entrypoint The relative path of the artifact within the project
    * @param options Bundling options
    */
   public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
     const name = renderBundleName(entrypoint);
+
+    if (options.bundleCompiledResults) {
+      if (this.addToPreCompile) {
+        throw new Error(
+          "Cannot have Bundle option `addToPreCompile` set when using " +
+            "`addBundle()` with `bundleCompiledResults` set to true."
+        );
+      }
+      if (!this.addToPostCompile) {
+        if (this._task) {
+          throw new Error(
+            "Cannot auto-set `addToPostCompile` after a bundle has been " +
+              "configured. When using `addBundle()` with " +
+              "`bundleCompiledResults` set to true, explicitly set Bundler " +
+              "option `addToPostCompile`."
+          );
+        }
+        this.addToPostCompile = true;
+      }
+    }
 
     const outdir = path.posix.join(this.bundledir, name);
     const outfile = path.posix.join(outdir, options.outfile ?? "index.js");
@@ -125,17 +182,15 @@ export class Bundler extends Component {
       `--outfile="${outfile}"`,
     ];
 
-    const tsconfig = options.tsconfigPath ?? false;
-    if (tsconfig) {
-      args.push(`--tsconfig="${tsconfig}"`);
+    if (options.tsconfigPath) {
+      args.push(`--tsconfig="${options.tsconfigPath}"`);
     }
 
     for (const x of options.externals ?? []) {
       args.push(`--external:${x}`);
     }
 
-    const sourcemap = options.sourcemap ?? false;
-    if (sourcemap || options.sourceMapMode) {
+    if (options.sourcemap || options.sourceMapMode) {
       const sourceMapMode = options.sourceMapMode ?? SourceMapMode.DEFAULT;
       const sourceMapValue =
         sourceMapMode === SourceMapMode.DEFAULT
@@ -143,8 +198,8 @@ export class Bundler extends Component {
           : `=${options.sourceMapMode}`;
       args.push(`--sourcemap${sourceMapValue}`);
 
-      if (options.sourcesContent) {
-        args.push(`--sources-content=${options.sourcesContent ?? true}`);
+      if (options.sourcesContent === true) {
+        args.push(`--sources-content=${options.sourcesContent}`);
       }
     }
 
@@ -162,7 +217,7 @@ export class Bundler extends Component {
     }
 
     const defines = Object.entries(options.define ?? {});
-    for (const [key, value] of defines ?? []) {
+    for (const [key, value] of defines) {
       args.push(`--define:${key}=${JSON.stringify(value)}`);
     }
 
@@ -514,14 +569,14 @@ export interface AddBundleOptions extends BundlingOptions {
   readonly esbuildArgs?: { [key: string]: string | boolean };
 
   /**
-   * Run compilation using tsc before running file through bundling step.
+   * Run compilation tasks (using tsc, etc.) before running file through bundling step.
    * This usually is not required unless you are using new experimental features that
    * are only supported by typescript's `tsc` compiler.
    * One example of such feature is `emitDecoratorMetadata`.
    *
    * @default false
    */
-  readonly preCompilation?: boolean;
+  readonly bundleCompiledResults?: boolean;
 
   /**
    * How to determine the entry point for modules.

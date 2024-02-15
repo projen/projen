@@ -89,6 +89,9 @@ public addBundle(entrypoint: string, options: AddBundleOptions): Bundle
 
 Adds a task to the project which bundles a specific entrypoint and all of its dependencies into a single javascript output file.
 
+NOTE: If you are using `bundleCompiledResults` set to true, you must set the
+`entrypoint` to the path of the compiled output file, not the source file!
+
 ###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.javascript.Bundler.addBundle.parameter.entrypoint"></a>
 
 - *Type:* string
@@ -4723,6 +4726,7 @@ const addBundleOptions: javascript.AddBundleOptions = { ... }
 | <code><a href="#projen.javascript.AddBundleOptions.property.platform">platform</a></code> | <code>string</code> | esbuild platform. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.target">target</a></code> | <code>string</code> | esbuild target. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.banner">banner</a></code> | <code>string</code> | Use this to insert an arbitrary string at the beginning of generated JavaScript files. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.bundleCompiledResults">bundleCompiledResults</a></code> | <code>boolean</code> | Run compilation tasks (using tsc, etc.) before running file through bundling step. This usually is not required unless you are using new experimental features that are only supported by typescript's `tsc` compiler. One example of such feature is `emitDecoratorMetadata`. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.charset">charset</a></code> | <code><a href="#projen.javascript.Charset">Charset</a></code> | The charset to use for esbuild's output. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.define">define</a></code> | <code>{[ key: string ]: string}</code> | Replace global identifiers with constant expressions. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.esbuildArgs">esbuildArgs</a></code> | <code>{[ key: string ]: string \| boolean}</code> | Build arguments to pass into esbuild. |
@@ -4737,7 +4741,6 @@ const addBundleOptions: javascript.AddBundleOptions = { ... }
 | <code><a href="#projen.javascript.AddBundleOptions.property.metafile">metafile</a></code> | <code>boolean</code> | This option tells esbuild to write out a JSON file relative to output directory with metadata about the build. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.minify">minify</a></code> | <code>boolean</code> | Whether to minify files when bundling. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.outfile">outfile</a></code> | <code>string</code> | Bundler output path relative to the asset's output directory. |
-| <code><a href="#projen.javascript.AddBundleOptions.property.preCompilation">preCompilation</a></code> | <code>boolean</code> | Run compilation using tsc before running file through bundling step. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.sourceMapMode">sourceMapMode</a></code> | <code><a href="#projen.javascript.SourceMapMode">SourceMapMode</a></code> | Source map mode to be used when bundling. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.sourcesContent">sourcesContent</a></code> | <code>boolean</code> | Whether to include original source code in source maps when bundling. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | The path of the tsconfig.json file to use for bundling. |
@@ -4850,6 +4853,19 @@ Use this to insert an arbitrary string at the beginning of generated JavaScript 
 This is similar to footer which inserts at the end instead of the beginning.
 
 This is commonly used to insert comments:
+
+---
+
+##### `bundleCompiledResults`<sup>Optional</sup> <a name="bundleCompiledResults" id="projen.javascript.AddBundleOptions.property.bundleCompiledResults"></a>
+
+```typescript
+public readonly bundleCompiledResults: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run compilation tasks (using tsc, etc.) before running file through bundling step. This usually is not required unless you are using new experimental features that are only supported by typescript's `tsc` compiler. One example of such feature is `emitDecoratorMetadata`.
 
 ---
 
@@ -5116,23 +5132,6 @@ Bundler output path relative to the asset's output directory.
 
 ---
 
-##### `preCompilation`<sup>Optional</sup> <a name="preCompilation" id="projen.javascript.AddBundleOptions.property.preCompilation"></a>
-
-```typescript
-public readonly preCompilation: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Run compilation using tsc before running file through bundling step.
-
-This usually is not required unless you are using new experimental features that
-are only supported by typescript's `tsc` compiler.
-One example of such feature is `emitDecoratorMetadata`.
-
----
-
 ##### `sourceMapMode`<sup>Optional</sup> <a name="sourceMapMode" id="projen.javascript.AddBundleOptions.property.sourceMapMode"></a>
 
 ```typescript
@@ -5261,10 +5260,29 @@ const bundlerOptions: javascript.BundlerOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.BundlerOptions.property.addToPostCompile">addToPostCompile</a></code> | <code>boolean</code> | Install the `bundle` command as a post-compile phase. |
 | <code><a href="#projen.javascript.BundlerOptions.property.addToPreCompile">addToPreCompile</a></code> | <code>boolean</code> | Install the `bundle` command as a pre-compile phase. |
 | <code><a href="#projen.javascript.BundlerOptions.property.assetsDir">assetsDir</a></code> | <code>string</code> | Output directory for all bundles. |
 | <code><a href="#projen.javascript.BundlerOptions.property.esbuildVersion">esbuildVersion</a></code> | <code>string</code> | The semantic version requirement for `esbuild`. |
 | <code><a href="#projen.javascript.BundlerOptions.property.loaders">loaders</a></code> | <code>{[ key: string ]: string}</code> | Map of file extensions (without dot) and loaders to use for this file type. |
+
+---
+
+##### `addToPostCompile`<sup>Optional</sup> <a name="addToPostCompile" id="projen.javascript.BundlerOptions.property.addToPostCompile"></a>
+
+```typescript
+public readonly addToPostCompile: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Install the `bundle` command as a post-compile phase.
+
+Cannot be used with `addToPreCompile`.
+
+Note: If using `addBundle()` with the `bundleCompiledResults`, this option
+must be set to `true`.
 
 ---
 
