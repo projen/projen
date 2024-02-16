@@ -941,16 +941,16 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.11.17"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.17.tgz#cdd642d0e62ef3a861f88ddbc2b61e32578a9292"
-  integrity sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==
+  version "20.11.19"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.19.tgz#b466de054e9cb5b3831bee38938de64ac7f81195"
+  integrity sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==
   dependencies:
     undici-types "~5.26.4"
 
 "@types/node@^16":
-  version "16.18.80"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.80.tgz#9644e2d8acaf8163d46d23e05ce3822e9379dfc3"
-  integrity sha512-vFxJ1Iyl7A0+xB0uW1r1v504yItKZLdqg/VZELUZ4H02U0bXAgBisSQ8Erf0DMruNFz9ggoiEv6T8Ll9bTg8Jw==
+  version "16.18.82"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.82.tgz#58d734b4acaa5be339864bbec9cd8024dd0b43d5"
+  integrity sha512-pcDZtkx9z8XYV+ius2P3Ot2VVrcYOfXffBQUBuiszrlUzKSmoDYqo+mV+IoL8iIiIjjtOMvNSmH1hwJ+Q+f96Q==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.4"
@@ -2017,9 +2017,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.668:
-  version "1.4.669"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.669.tgz#37e9cc16cc2fbdd8e06a46fc1fd3a1249e091f64"
-  integrity sha512-E2SmpffFPrZhBSgf8ibqanRS2mpuk3FIRDzLDwt7WFpfgJMKDHJs0hmacyP0PS1cWsq0dVkwIIzlscNaterkPg==
+  version "1.4.671"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.671.tgz#fa3094d6d2512a6c4d609a9bc4997154543febfe"
+  integrity sha512-UUlE+/rWbydmp+FW8xlnnTA5WNA0ZZd2XL8CuMS72rh+k4y1f8+z6yk3UQhEwqHQWj6IBdL78DwWOdGMvYfQyA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -3562,10 +3562,10 @@ jsii-diff@^1.94.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.3.16:
-  version "10.3.16"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.16.tgz#60e2a21e8ea3cb7f635bff905d2d0b3413408681"
-  integrity sha512-7FbgDK0+1KKYmLsLwfBWAKDt6qBwZNUNeWbijfODAKOwraoHS5aMdlfByFXQk5TwI7i1WdZqUB1Rkl3lUHGC9g==
+jsii-docgen@^10.3.17:
+  version "10.3.17"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.17.tgz#75237cc3c7e04c5a923594f0894dda606987934d"
+  integrity sha512-EumD8CtEcs2O6m0nqXVxoVuiAqb/HSEBhEaLz9690iyItHyo8qfFo4e11qdv5i1lKdPSOgLcbgAl3EArp3cCKA==
   dependencies:
     "@jsii/spec" "^1.94.0"
     case "^1.6.3"
@@ -4862,9 +4862,9 @@ spdx-correct@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-exceptions@^2.1.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/spdx-exceptions/-/spdx-exceptions-2.4.0.tgz#c07a4ede25b16e4f78e6707bbd84b15a45c19c1b"
-  integrity sha512-hcjppoJ68fhxA/cjbN4T8N6uCUejN8yFw69ttpqtBeCbF3u13n7mb31NB9jKwGTTWWnt9IbRA/mf1FprYS8wfw==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/spdx-exceptions/-/spdx-exceptions-2.5.0.tgz#5d607d27fc806f66d7b64a766650fa890f04ed66"
+  integrity sha512-PiU42r+xO4UbUS1buo3LPJkjlO7430Xn5SVAhdpzzsPHsjbYVflnnFdATgabnLude+Cqu25p6N+g2lw/PFsa4w==
 
 spdx-expression-parse@^3.0.0:
   version "3.0.1"
@@ -5292,9 +5292,9 @@ typescript@5.1.x, typescript@~5.1.6:
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@next:
-  version "5.4.0-dev.20240214"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.0-dev.20240214.tgz#7412fc712e698c6c3bd36d2d336d75eb7ef2c614"
-  integrity sha512-JXOvFnlY/tw/adrzpfOUIrdf8PeIsfW7ljice9bP7dK/dBo/F0VcHr98QA5KtPG1ECsYi2Sl/d9AnucpUCgAaw==
+  version "5.4.0-dev.20240215"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.0-dev.20240215.tgz#68015a58c64dd0cb92f5f74fa5ee294ab8a11ae1"
+  integrity sha512-XC4/5bqzYJYPwH1EaVY3E7gtieevPWkKc1oBcHdiZytptFaqms77yIiiXmCpZsl+ydrcxCijAVzBXLWxujaksw==
 
 typescript@~3.9.10:
   version "3.9.10"
