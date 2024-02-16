@@ -30,20 +30,21 @@ export interface BundlerOptions {
    * Install the `bundle` command as a pre-compile phase.
    *
    * @default true
+   * @deprecated Use `runBundleTask` instead.
    */
   readonly addToPreCompile?: boolean;
 
   /**
-   * Install the `bundle` command as a post-compile phase.
-   *
-   * Cannot be used with `addToPreCompile`.
+   * Choose which phase (if any) to add the `bundle` command to.
    *
    * Note: If using `addBundle()` with the `bundleCompiledResults`, this option
-   * must be set to `true`.
+   * must be set to `RunBundleTask.POST_COMPILE` or `RunBundleTask.MANUAL`.
    *
-   * @default false
+   * @see AddBundleOptions.bundleCompiledResults
+   *
+   * @default RunBundleTask.PRE_COMPILE
    */
-  readonly addToPostCompile?: boolean;
+  readonly runBundleTask?: RunBundleTask;
 
   /**
    * Map of file extensions (without dot) and loaders to use for this file type.
@@ -79,8 +80,7 @@ export class Bundler extends Component {
   public readonly bundledir: string;
 
   private _task: Task | undefined;
-  private addToPreCompile?: boolean;
-  private addToPostCompile?: boolean;
+  private readonly runBundleTask?: RunBundleTask;
   private readonly loaders?: { [key: string]: string };
 
   /**
@@ -93,9 +93,11 @@ export class Bundler extends Component {
     this.bundledir = options.assetsDir ?? "assets";
     this.loaders = options.loaders;
 
-    // we want to preserve if these were explicitly set, or left undefined
-    this.addToPreCompile = options.addToPreCompile;
-    this.addToPostCompile = options.addToPostCompile;
+    this.runBundleTask =
+      options.runBundleTask ??
+      (options.addToPreCompile === false
+        ? RunBundleTask.MANUAL
+        : RunBundleTask.PRE_COMPILE);
   }
 
   /**
@@ -111,26 +113,10 @@ export class Bundler extends Component {
         description: "Prepare assets",
       });
 
-      if (this.addToPreCompile === true && this.addToPostCompile === true) {
-        throw new Error(
-          "Cannot set both `addToPreCompile` and `addToPostCompile` to true. " +
-            "Note that `addToPostCompile` is required (and auto-set) when " +
-            "using `addBundle()` with `bundleCompiledResults` set to true."
-        );
-      }
-
-      let addToPreCompile = false;
-      if (
-        this.addToPreCompile === undefined &&
-        this.addToPostCompile === undefined
-      ) {
-        addToPreCompile = true;
-      }
-
       // install the bundle task into the pre-compile phase.
-      if (addToPreCompile) {
+      if (this.runBundleTask === RunBundleTask.PRE_COMPILE) {
         this.project.preCompileTask.spawn(this._task);
-      } else if (this.addToPostCompile) {
+      } else if (this.runBundleTask === RunBundleTask.POST_COMPILE) {
         this.project.postCompileTask.spawn(this._task);
       }
     }
@@ -142,34 +128,11 @@ export class Bundler extends Component {
    * Adds a task to the project which bundles a specific entrypoint and all of
    * its dependencies into a single javascript output file.
    *
-   * NOTE: If you are using `bundleCompiledResults` set to true, you must set the
-   * `entrypoint` to the path of the compiled output file, not the source file!
-   *
    * @param entrypoint The relative path of the artifact within the project
    * @param options Bundling options
    */
   public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
     const name = renderBundleName(entrypoint);
-
-    if (options.bundleCompiledResults) {
-      if (this.addToPreCompile) {
-        throw new Error(
-          "Cannot have Bundle option `addToPreCompile` set when using " +
-            "`addBundle()` with `bundleCompiledResults` set to true."
-        );
-      }
-      if (!this.addToPostCompile) {
-        if (this._task) {
-          throw new Error(
-            "Cannot auto-set `addToPostCompile` after a bundle has been " +
-              "configured. When using `addBundle()` with " +
-              "`bundleCompiledResults` set to true, explicitly set Bundler " +
-              "option `addToPostCompile`."
-          );
-        }
-        this.addToPostCompile = true;
-      }
-    }
 
     const outdir = path.posix.join(this.bundledir, name);
     const outfile = path.posix.join(outdir, options.outfile ?? "index.js");
@@ -569,16 +532,6 @@ export interface AddBundleOptions extends BundlingOptions {
   readonly esbuildArgs?: { [key: string]: string | boolean };
 
   /**
-   * Run compilation tasks (using tsc, etc.) before running file through bundling step.
-   * This usually is not required unless you are using new experimental features that
-   * are only supported by typescript's `tsc` compiler.
-   * One example of such feature is `emitDecoratorMetadata`.
-   *
-   * @default false
-   */
-  readonly bundleCompiledResults?: boolean;
-
-  /**
    * How to determine the entry point for modules.
    * Try ['module', 'main'] to default to ES module versions.
    *
@@ -594,6 +547,58 @@ export interface AddBundleOptions extends BundlingOptions {
    * @default - no code is injected
    */
   readonly inject?: string[];
+}
+
+/**
+ * Options for BundlerOptions.runBundleTask
+ */
+export enum RunBundleTask {
+  /**
+   * Don't bundle automatically as part of the build.
+   */
+  MANUAL = "manual",
+  /**
+   * Bundle automatically before compilation.
+   */
+  PRE_COMPILE = "pre_compile",
+  /**
+   * Bundle automatically after compilation. This is useful if you want to
+   * bundle the compiled results.
+   *
+   * Thus will run compilation tasks (using tsc, etc.) before running file
+   * through bundling step.
+   *
+   * This is only required unless you are using new experimental features that
+   * are not supported by `esbuild` but are supported by typescript's `tsc`
+   * compiler. One example of such feature is `emitDecoratorMetadata`.
+   *
+   * ```typescript
+   * // In a TypeScript project with output configured
+   * // to go to the "lib" directory:
+   * const project = new TypeScriptProject({
+   *   name: "test",
+   *   defaultReleaseBranch: "main",
+   *   tsconfig: {
+   *     compilerOptions: {
+   *       outDir: "lib",
+   *     },
+   *   },
+   *   bundlerOptions: {
+   *     // ensure we compile with `tsc` before bundling
+   *     runBundleTask: RunBundleTask.POST_COMPILE,
+   *   },
+   * });
+   *
+   * // Tell the bundler to bundle the compiled results (from the "lib" directory)
+   * project.bundler.addBundle("./lib/index.js", {
+   *   platform: "node",
+   *   target: "node18",
+   *   sourcemap: false,
+   *   format: "esm",
+   * });
+   * ```
+   **/
+  POST_COMPILE = "post_compile",
 }
 
 /**

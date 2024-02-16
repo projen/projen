@@ -89,9 +89,6 @@ public addBundle(entrypoint: string, options: AddBundleOptions): Bundle
 
 Adds a task to the project which bundles a specific entrypoint and all of its dependencies into a single javascript output file.
 
-NOTE: If you are using `bundleCompiledResults` set to true, you must set the
-`entrypoint` to the path of the compiled output file, not the source file!
-
 ###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.javascript.Bundler.addBundle.parameter.entrypoint"></a>
 
 - *Type:* string
@@ -4726,7 +4723,6 @@ const addBundleOptions: javascript.AddBundleOptions = { ... }
 | <code><a href="#projen.javascript.AddBundleOptions.property.platform">platform</a></code> | <code>string</code> | esbuild platform. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.target">target</a></code> | <code>string</code> | esbuild target. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.banner">banner</a></code> | <code>string</code> | Use this to insert an arbitrary string at the beginning of generated JavaScript files. |
-| <code><a href="#projen.javascript.AddBundleOptions.property.bundleCompiledResults">bundleCompiledResults</a></code> | <code>boolean</code> | Run compilation tasks (using tsc, etc.) before running file through bundling step. This usually is not required unless you are using new experimental features that are only supported by typescript's `tsc` compiler. One example of such feature is `emitDecoratorMetadata`. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.charset">charset</a></code> | <code><a href="#projen.javascript.Charset">Charset</a></code> | The charset to use for esbuild's output. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.define">define</a></code> | <code>{[ key: string ]: string}</code> | Replace global identifiers with constant expressions. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.esbuildArgs">esbuildArgs</a></code> | <code>{[ key: string ]: string \| boolean}</code> | Build arguments to pass into esbuild. |
@@ -4853,19 +4849,6 @@ Use this to insert an arbitrary string at the beginning of generated JavaScript 
 This is similar to footer which inserts at the end instead of the beginning.
 
 This is commonly used to insert comments:
-
----
-
-##### `bundleCompiledResults`<sup>Optional</sup> <a name="bundleCompiledResults" id="projen.javascript.AddBundleOptions.property.bundleCompiledResults"></a>
-
-```typescript
-public readonly bundleCompiledResults: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Run compilation tasks (using tsc, etc.) before running file through bundling step. This usually is not required unless you are using new experimental features that are only supported by typescript's `tsc` compiler. One example of such feature is `emitDecoratorMetadata`.
 
 ---
 
@@ -5260,33 +5243,17 @@ const bundlerOptions: javascript.BundlerOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.BundlerOptions.property.addToPostCompile">addToPostCompile</a></code> | <code>boolean</code> | Install the `bundle` command as a post-compile phase. |
 | <code><a href="#projen.javascript.BundlerOptions.property.addToPreCompile">addToPreCompile</a></code> | <code>boolean</code> | Install the `bundle` command as a pre-compile phase. |
 | <code><a href="#projen.javascript.BundlerOptions.property.assetsDir">assetsDir</a></code> | <code>string</code> | Output directory for all bundles. |
 | <code><a href="#projen.javascript.BundlerOptions.property.esbuildVersion">esbuildVersion</a></code> | <code>string</code> | The semantic version requirement for `esbuild`. |
 | <code><a href="#projen.javascript.BundlerOptions.property.loaders">loaders</a></code> | <code>{[ key: string ]: string}</code> | Map of file extensions (without dot) and loaders to use for this file type. |
+| <code><a href="#projen.javascript.BundlerOptions.property.runBundleTask">runBundleTask</a></code> | <code><a href="#projen.javascript.RunBundleTask">RunBundleTask</a></code> | Choose which phase (if any) to add the `bundle` command to. |
 
 ---
 
-##### `addToPostCompile`<sup>Optional</sup> <a name="addToPostCompile" id="projen.javascript.BundlerOptions.property.addToPostCompile"></a>
+##### ~~`addToPreCompile`~~<sup>Optional</sup> <a name="addToPreCompile" id="projen.javascript.BundlerOptions.property.addToPreCompile"></a>
 
-```typescript
-public readonly addToPostCompile: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Install the `bundle` command as a post-compile phase.
-
-Cannot be used with `addToPreCompile`.
-
-Note: If using `addBundle()` with the `bundleCompiledResults`, this option
-must be set to `true`.
-
----
-
-##### `addToPreCompile`<sup>Optional</sup> <a name="addToPreCompile" id="projen.javascript.BundlerOptions.property.addToPreCompile"></a>
+- *Deprecated:* Use `runBundleTask` instead.
 
 ```typescript
 public readonly addToPreCompile: boolean;
@@ -5336,6 +5303,24 @@ public readonly loaders: {[ key: string ]: string};
 Map of file extensions (without dot) and loaders to use for this file type.
 
 Loaders are appended to the esbuild command by `--loader:.extension=loader`
+
+---
+
+##### `runBundleTask`<sup>Optional</sup> <a name="runBundleTask" id="projen.javascript.BundlerOptions.property.runBundleTask"></a>
+
+```typescript
+public readonly runBundleTask: RunBundleTask;
+```
+
+- *Type:* <a href="#projen.javascript.RunBundleTask">RunBundleTask</a>
+- *Default:* RunBundleTask.PRE_COMPILE
+
+Choose which phase (if any) to add the `bundle` command to.
+
+Note: If using `addBundle()` with the `bundleCompiledResults`, this option
+must be set to `RunBundleTask.POST_COMPILE` or `RunBundleTask.MANUAL`.
+
+> [AddBundleOptions.bundleCompiledResults *](AddBundleOptions.bundleCompiledResults *)
 
 ---
 
@@ -14240,6 +14225,74 @@ If at least one property in an object requires quotes, quote all properties.
 ##### `PRESERVE` <a name="PRESERVE" id="projen.javascript.QuoteProps.PRESERVE"></a>
 
 Respect the input use of quotes in object properties.
+
+---
+
+
+### RunBundleTask <a name="RunBundleTask" id="projen.javascript.RunBundleTask"></a>
+
+Options for BundlerOptions.runBundleTask.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.RunBundleTask.MANUAL">MANUAL</a></code> | Don't bundle automatically as part of the build. |
+| <code><a href="#projen.javascript.RunBundleTask.PRE_COMPILE">PRE_COMPILE</a></code> | Bundle automatically before compilation. |
+| <code><a href="#projen.javascript.RunBundleTask.POST_COMPILE">POST_COMPILE</a></code> | Bundle automatically after compilation. This is useful if you want to bundle the compiled results. |
+
+---
+
+##### `MANUAL` <a name="MANUAL" id="projen.javascript.RunBundleTask.MANUAL"></a>
+
+Don't bundle automatically as part of the build.
+
+---
+
+
+##### `PRE_COMPILE` <a name="PRE_COMPILE" id="projen.javascript.RunBundleTask.PRE_COMPILE"></a>
+
+Bundle automatically before compilation.
+
+---
+
+
+##### `POST_COMPILE` <a name="POST_COMPILE" id="projen.javascript.RunBundleTask.POST_COMPILE"></a>
+
+Bundle automatically after compilation. This is useful if you want to bundle the compiled results.
+
+Thus will run compilation tasks (using tsc, etc.) before running file
+through bundling step.
+
+This is only required unless you are using new experimental features that
+are not supported by `esbuild` but are supported by typescript's `tsc`
+compiler. One example of such feature is `emitDecoratorMetadata`.
+
+```typescript
+// In a TypeScript project with output configured
+// to go to the "lib" directory:
+const project = new TypeScriptProject({
+  name: "test",
+  defaultReleaseBranch: "main",
+  tsconfig: {
+    compilerOptions: {
+      outDir: "lib",
+    },
+  },
+  bundlerOptions: {
+    // ensure we compile with `tsc` before bundling
+    runBundleTask: RunBundleTask.POST_COMPILE,
+  },
+});
+
+// Tell the bundler to bundle the compiled results (from the "lib" directory)
+project.bundler.addBundle("./lib/index.js", {
+  platform: "node",
+  target: "node18",
+  sourcemap: false,
+  format: "esm",
+});
+```
 
 ---
 

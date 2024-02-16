@@ -2,7 +2,9 @@ import { join } from "path";
 import {
   BundleLogLevel,
   Bundler,
+  BundlerOptions,
   NodeProject,
+  RunBundleTask,
   SourceMapMode,
 } from "../../src/javascript";
 import { renderBundleName } from "../../src/javascript/util";
@@ -421,137 +423,51 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
   }
 });
 
-test("bundleCompiledResults works as expected (defaults)", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-  });
+test.each([
+  [
+    {
+      runBundleTask: RunBundleTask.PRE_COMPILE,
+    },
+    true,
+    false,
+  ],
 
-  p.bundler.addBundle("./lib/hello.js", {
-    platform: "node",
-    target: "node18",
-    sourcemap: false,
-    format: "esm",
-    bundleCompiledResults: true,
-  });
+  [
+    {
+      runBundleTask: RunBundleTask.POST_COMPILE,
+    },
+    false,
+    true,
+  ],
 
-  const snapshot = Testing.synth(p);
-  const tasks = snapshot[".projen/tasks.json"].tasks;
+  [
+    {
+      runBundleTask: RunBundleTask.MANUAL,
+    },
+    false,
+    false,
+  ],
 
-  const preCompilationSteps = tasks["pre-compile"].steps ?? [];
-  const postCompilationSteps = tasks["post-compile"].steps ?? [];
+  // DEFAULT: `addToPreCompile` was true by default
+  [{}, true, false],
 
-  expect(preCompilationSteps).not.toContainEqual({ spawn: "bundle" });
-  expect(postCompilationSteps).toContainEqual({ spawn: "bundle" });
-});
-
-test("addToPreCompile set to false works", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-    bundlerOptions: {
+  // `addToPreCompile` set to false - same as RunBundleTask.MANUAL
+  [
+    {
       addToPreCompile: false,
     },
-  });
-
-  p.bundler.addBundle("./lib/hello.js", {
-    platform: "node",
-    target: "node18",
-    sourcemap: false,
-    format: "esm",
-    bundleCompiledResults: true,
-  });
-
-  const snapshot = Testing.synth(p);
-  const tasks = snapshot[".projen/tasks.json"].tasks;
-
-  const preCompilationSteps = tasks["pre-compile"].steps;
-  console.dir(preCompilationSteps, { depth: null });
-  expect(preCompilationSteps).toBeUndefined();
-});
-
-test("addToPreCompile set to false works (2)", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-    bundlerOptions: {
-      addToPreCompile: false,
-    },
-  });
-
-  p.bundler.bundleTask;
-
-  const snapshot = Testing.synth(p);
-  const tasks = snapshot[".projen/tasks.json"].tasks;
-
-  const preCompilationSteps = tasks["pre-compile"].steps;
-  console.dir(preCompilationSteps, { depth: null });
-  expect(preCompilationSteps).toBeUndefined();
-});
-
-test("bundleCompiledResults fails if both addToPreCompile and bundleCompiledResults are set", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-    bundlerOptions: {
-      addToPreCompile: true,
-    },
-  });
-
-  expect(() => {
-    p.bundler.addBundle("./lib/hello.js", {
-      platform: "node",
-      target: "node18",
-      sourcemap: false,
-      format: "esm",
-      bundleCompiledResults: true,
+    false,
+    false,
+  ],
+])(
+  "runBundleTask works as expected with options %p",
+  (bundlerOptions: BundlerOptions, expectPre: boolean, expectPost: boolean) => {
+    const p = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      bundlerOptions,
     });
 
-    Testing.synth(p);
-  }).toThrow(/Cannot have Bundle option `addToPreCompile` set/);
-});
-
-test("bundleCompiledResults fails if bundleCompiledResults are set (later)", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-  });
-
-  // p.bundler.addBundle("./lib/hello1.js", {
-  //   platform: "node",
-  //   target: "node18",
-  //   sourcemap: false,
-  //   format: "esm",
-  // });
-
-  p.bundler.bundleTask;
-
-  expect(() => {
-    p.bundler.addBundle("./lib/hello2.js", {
-      platform: "node",
-      target: "node18",
-      sourcemap: false,
-      format: "esm",
-      bundleCompiledResults: true,
-    });
-
-    Testing.synth(p);
-  }).toThrow(
-    /Cannot auto-set `addToPostCompile` after a bundle has been configured./
-  );
-});
-
-test("bundleCompiledResults  fails if both addToPreCompile and addToPostCompile are set", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-    bundlerOptions: {
-      addToPreCompile: true,
-      addToPostCompile: true,
-    },
-  });
-
-  expect(() => {
     p.bundler.addBundle("./lib/hello.js", {
       platform: "node",
       target: "node18",
@@ -559,59 +475,56 @@ test("bundleCompiledResults  fails if both addToPreCompile and addToPostCompile 
       format: "esm",
     });
 
-    Testing.synth(p);
-  }).toThrow(
-    /Cannot set both `addToPreCompile` and `addToPostCompile` to true/
-  );
-});
+    const snapshot = Testing.synth(p);
+    const tasks = snapshot[".projen/tasks.json"].tasks;
 
-test("executable true works as expected", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-  });
+    const preCompilationSteps = tasks["pre-compile"].steps;
+    const postCompilationSteps = tasks["post-compile"].steps;
 
-  p.bundler.addBundle("./lib/hello.js", {
-    platform: "node",
-    target: "node18",
-    sourcemap: false,
-    format: "esm",
-    executable: true,
-    outfile: "hello.js",
-  });
+    if (expectPre) {
+      expect(preCompilationSteps).toContainEqual({ spawn: "bundle" });
+    } else {
+      expect(preCompilationSteps).toBeUndefined();
+    }
 
-  const snapshot = Testing.synth(p);
+    if (expectPost) {
+      expect(postCompilationSteps).toContainEqual({ spawn: "bundle" });
+    } else {
+      expect(postCompilationSteps).toBeUndefined();
+    }
+  }
+);
 
-  const tasks = snapshot[".projen/tasks.json"].tasks;
+test.each([true, false])(
+  "executable: %p works as expected",
+  (executable: boolean) => {
+    const p = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
 
-  const bundleTask = tasks["bundle:lib/hello"];
-  expect(bundleTask.steps).toContainEqual({
-    exec: expect.stringContaining("chmod +x"),
-  });
-});
+    p.bundler.addBundle("./lib/hello.js", {
+      platform: "node",
+      target: "node18",
+      sourcemap: false,
+      format: "esm",
+      executable,
+      outfile: "hello.js",
+    });
 
-test("executable false works as expected", () => {
-  const p = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-  });
+    const snapshot = Testing.synth(p);
 
-  p.bundler.addBundle("./lib/hello.js", {
-    platform: "node",
-    target: "node18",
-    sourcemap: false,
-    format: "esm",
-    executable: false,
-    outfile: "hello.js",
-  });
+    const tasks = snapshot[".projen/tasks.json"].tasks;
 
-  const snapshot = Testing.synth(p);
-
-  const tasks = snapshot[".projen/tasks.json"].tasks;
-
-  // console.dir(tasks, { depth: null });
-  const bundleTask = tasks["bundle:lib/hello"];
-  expect(bundleTask.steps).not.toContainEqual({
-    exec: expect.stringContaining("chmod +x"),
-  });
-});
+    const bundleTask = tasks["bundle:lib/hello"];
+    if (executable) {
+      expect(bundleTask.steps).toContainEqual({
+        exec: expect.stringContaining("chmod +x"),
+      });
+    } else {
+      expect(bundleTask.steps).not.toContainEqual({
+        exec: expect.stringContaining("chmod +x"),
+      });
+    }
+  }
+);
