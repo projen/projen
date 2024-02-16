@@ -79,8 +79,8 @@ export class Bundler extends Component {
   public readonly bundledir: string;
 
   private _task: Task | undefined;
-  private addToPreCompile?: boolean;
-  private addToPostCompile?: boolean;
+  private readonly addToPreCompile?: boolean;
+  private readonly addToPostCompile?: boolean;
   private readonly loaders?: { [key: string]: string };
 
   /**
