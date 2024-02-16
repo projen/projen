@@ -420,9 +420,8 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.Poetry.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.Poetry.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | A task that installs dependencies (honouring the lockfile). |
 | <code><a href="#projen.python.Poetry.property.installTask">installTask</a></code> | <code>projen.Task</code> | A task that updates the lockfile and installs dependencies. |
-| <code><a href="#projen.python.Poetry.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | A task that uploads the package to a package repository. |
+| <code><a href="#projen.python.Poetry.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | A task that for upgrades dependencies. |
 | <code><a href="#projen.python.Poetry.property.publishTestTask">publishTestTask</a></code> | <code>projen.Task</code> | A task that uploads the package to the Test PyPI repository. |
-| <code><a href="#projen.python.Poetry.property.upgradeTask">upgradeTask</a></code> | <code>projen.Task</code> | A task that for upgrades dependencies. |
 
 ---
 
@@ -480,7 +479,7 @@ public readonly publishTask: Task;
 
 - *Type:* projen.Task
 
-A task that uploads the package to a package repository.
+A task that for upgrades dependencies.
 
 ---
 
@@ -493,18 +492,6 @@ public readonly publishTestTask: Task;
 - *Type:* projen.Task
 
 A task that uploads the package to the Test PyPI repository.
-
----
-
-##### `upgradeTask`<sup>Required</sup> <a name="upgradeTask" id="projen.python.Poetry.property.upgradeTask"></a>
-
-```typescript
-public readonly upgradeTask: Task;
-```
-
-- *Type:* projen.Task
-
-A task that for upgrades dependencies.
 
 ---
 
