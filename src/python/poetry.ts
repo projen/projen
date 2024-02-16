@@ -34,7 +34,6 @@ export class Poetry
   /**
    * A task that for upgrades dependencies
    */
-  public readonly upgradeTask: Task;
   public readonly publishTask: Task;
   private readonly pythonExec: string;
 
@@ -56,12 +55,7 @@ export class Poetry
 
     this.installCiTask = project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
-      exec: "poetry install",
-    });
-
-    this.upgradeTask = project.addTask("upgrade", {
-      description: "Upgrade dependencies",
-      exec: "poetry lock",
+      exec: "poetry check --lock && poetry install",
     });
 
     this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
