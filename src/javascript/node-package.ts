@@ -511,6 +511,8 @@ export class NodePackage extends Component {
 
   /**
    * Wether provenance statements should be generated when package is published.
+   *
+   * @default false
    */
   public readonly npmProvenance: boolean;
 
