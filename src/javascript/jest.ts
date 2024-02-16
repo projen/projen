@@ -4,6 +4,7 @@ import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
+import { normalizePersistedPath } from "../util";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
@@ -851,7 +852,9 @@ export class Jest extends Component {
   }
 
   public addSnapshotResolver(file: string) {
-    this._snapshotResolver = file;
+    const normalized = normalizePersistedPath(file);
+
+    this._snapshotResolver = normalized;
   }
 
   /**
