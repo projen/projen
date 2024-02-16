@@ -288,7 +288,7 @@ export interface NodePackageOptions {
   readonly npmAccess?: NpmAccess;
 
   /**
-   * Wether provenance statements should be generated when the package is published.
+   * Should provenance statements be generated when the package is published.
    *
    * A supported package manager is required to publish a package with npm provenance statements and
    * you will need to use a supported CI/CD provider.
@@ -509,7 +509,7 @@ export class NodePackage extends Component {
   public readonly npmAccess: NpmAccess;
 
   /**
-   * Wether provenance statements should be generated when package is published.
+   * Should provenance statements be generated when package is published.
    */
   public readonly npmProvenance: boolean;
 

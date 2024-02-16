@@ -1845,7 +1845,7 @@ const jsiiReleaseNpm: release.JsiiReleaseNpm = { ... }
 | <code><a href="#projen.release.JsiiReleaseNpm.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing npm package to AWS CodeArtifact. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.distTag">distTag</a></code> | <code>string</code> | Tags can be used to provide an alias instead of version numbers. |
-| <code><a href="#projen.release.JsiiReleaseNpm.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when package is published. |
+| <code><a href="#projen.release.JsiiReleaseNpm.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when package is published. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
 
@@ -1957,7 +1957,7 @@ public readonly npmProvenance: boolean;
 - *Type:* boolean
 - *Default:* false
 
-Wether provenance statements should be generated when package is published.
+Should provenance statements be generated when package is published.
 
 Note that this component is using `publib` to publish packages,
 which is using npm internally and supports provenance statements independently of the package manager used.
@@ -2522,7 +2522,7 @@ const npmPublishOptions: release.NpmPublishOptions = { ... }
 | <code><a href="#projen.release.NpmPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.NpmPublishOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing npm package to AWS CodeArtifact. |
 | <code><a href="#projen.release.NpmPublishOptions.property.distTag">distTag</a></code> | <code>string</code> | Tags can be used to provide an alias instead of version numbers. |
-| <code><a href="#projen.release.NpmPublishOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when package is published. |
+| <code><a href="#projen.release.NpmPublishOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when package is published. |
 | <code><a href="#projen.release.NpmPublishOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.release.NpmPublishOptions.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
 
@@ -2624,7 +2624,7 @@ public readonly npmProvenance: boolean;
 - *Type:* boolean
 - *Default:* false
 
-Wether provenance statements should be generated when package is published.
+Should provenance statements be generated when package is published.
 
 Note that this component is using `publib` to publish packages,
 which is using npm internally and supports provenance statements independently of the package manager used.

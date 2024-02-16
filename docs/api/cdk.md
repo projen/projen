@@ -3736,7 +3736,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.npmAccess">npmAccess</a></code> | <code>projen.javascript.NpmAccess</code> | Access level of the npm package. |
-| <code><a href="#projen.cdk.ConstructLibraryOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when the package is published. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when the package is published. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
@@ -4607,7 +4607,7 @@ public readonly npmProvenance: boolean;
 - *Type:* boolean
 - *Default:* true for public packages, false otherwise
 
-Wether provenance statements should be generated when the package is published.
+Should provenance statements be generated when the package is published.
 
 A supported package manager is required to publish a package with npm provenance statements and
 you will need to use a supported CI/CD provider.
@@ -6913,7 +6913,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.npmAccess">npmAccess</a></code> | <code>projen.javascript.NpmAccess</code> | Access level of the npm package. |
-| <code><a href="#projen.cdk.JsiiProjectOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Wether provenance statements should be generated when the package is published. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when the package is published. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
@@ -7783,7 +7783,7 @@ public readonly npmProvenance: boolean;
 - *Type:* boolean
 - *Default:* true for public packages, false otherwise
 
-Wether provenance statements should be generated when the package is published.
+Should provenance statements be generated when the package is published.
 
 A supported package manager is required to publish a package with npm provenance statements and
 you will need to use a supported CI/CD provider.

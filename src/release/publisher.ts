@@ -353,8 +353,8 @@ export class Publisher extends Component {
         );
       }
 
-      const needsIdTokenWrite =
-        isAwsCodeArtifactWithOidc || options.npmProvenance;
+      const npmProvenance = options.npmProvenance ? true : undefined;
+      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
 
       return {
         name: "npm",
@@ -366,7 +366,7 @@ export class Publisher extends Component {
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
-          NPM_CONFIG_PROVENANCE: options.npmProvenance ? true : undefined,
+          NPM_CONFIG_PROVENANCE: npmProvenance,
         },
         permissions: {
           idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
@@ -872,7 +872,7 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly npmTokenSecret?: string;
 
   /**
-   * Wether provenance statements should be generated when package is published.
+   * Should provenance statements be generated when package is published.
    *
    * Note that this component is using `publib` to publish packages,
    * which is using npm internally and supports provenance statements independently of the package manager used.
