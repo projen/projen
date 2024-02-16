@@ -6353,7 +6353,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false
+- *Default:* true for public packages, false otherwise
 
 Wether provenance statements should be generated when the package is published.
 
@@ -8727,7 +8727,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false
+- *Default:* true for public packages, false otherwise
 
 Wether provenance statements should be generated when the package is published.
 

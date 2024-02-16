@@ -4122,7 +4122,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -7219,7 +7219,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -11452,7 +11452,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -14336,7 +14336,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -17279,7 +17279,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -21024,7 +21024,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -23634,7 +23634,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -26129,7 +26129,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -28612,7 +28612,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -32157,7 +32157,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -34640,7 +34640,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -37266,7 +37266,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
@@ -39870,7 +39870,7 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
-        "default": "- false",
+        "default": "- true for public packages, false otherwise",
         "docs": "Wether provenance statements should be generated when the package is published.",
         "featured": false,
         "fullType": {
