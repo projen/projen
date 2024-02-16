@@ -12,10 +12,7 @@ import {
   JobStep,
   Tools,
 } from "../github/workflows-model";
-import {
-  DEFAULT_NPM_PROVENANCE,
-  defaultNpmToken,
-} from "../javascript/node-package";
+import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
@@ -369,10 +366,7 @@ export class Publisher extends Component {
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
-          NPM_CONFIG_PROVENANCE:
-            options.npmProvenance !== DEFAULT_NPM_PROVENANCE
-              ? options.npmProvenance
-              : undefined,
+          NPM_CONFIG_PROVENANCE: options.npmProvenance ? true : undefined,
         },
         permissions: {
           idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
@@ -880,10 +874,11 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   /**
    * Wether provenance statements should be generated when package is published.
    *
-   * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
+   * Note that this component is using `publib` to publish packages,
+   * which is using npm internally and supports provenance statements independently of the package manager used.
    *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - undefined
+   * @default - false
    */
   readonly npmProvenance?: boolean;
 

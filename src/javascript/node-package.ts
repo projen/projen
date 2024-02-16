@@ -29,11 +29,6 @@ const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
 
-/**
- * @see https://docs.npmjs.com/cli/v10/commands/npm-publish#provenance
- */
-export const DEFAULT_NPM_PROVENANCE = false;
-
 export interface NodePackageOptions {
   /**
    * The "name" in package.json
@@ -295,10 +290,14 @@ export interface NodePackageOptions {
   /**
    * Wether provenance statements should be generated when the package is published.
    *
-   * It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
+   * A supported package manager is required to publish a package with npm provenance statements and
+   * you will need to use a supported CI/CD provider.
+   *
+   * Note that the projen `Release` and `Publisher` components are using `publib` to publish packages,
+   * which is using npm internally and supports provenance statements independently of the package manager used.
    *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - false
+   * @default - true for public packages, false otherwise
    */
   readonly npmProvenance?: boolean;
 
@@ -511,8 +510,6 @@ export class NodePackage extends Component {
 
   /**
    * Wether provenance statements should be generated when package is published.
-   *
-   * @default false
    */
   public readonly npmProvenance: boolean;
 
@@ -966,7 +963,8 @@ export class NodePackage extends Component {
       );
     }
 
-    const npmProvenance = options.npmProvenance ?? DEFAULT_NPM_PROVENANCE;
+    const npmProvenance =
+      options.npmProvenance ?? npmAccess === NpmAccess.PUBLIC;
     if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
       throw new Error(
         `"npmProvenance" can only be enabled for public packages`

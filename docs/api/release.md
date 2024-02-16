@@ -1955,11 +1955,12 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* undefined
+- *Default:* false
 
 Wether provenance statements should be generated when package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
+Note that this component is using `publib` to publish packages,
+which is using npm internally and supports provenance statements independently of the package manager used.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
@@ -2621,11 +2622,12 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* undefined
+- *Default:* false
 
 Wether provenance statements should be generated when package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
+Note that this component is using `publib` to publish packages,
+which is using npm internally and supports provenance statements independently of the package manager used.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 

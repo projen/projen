@@ -2451,7 +2451,11 @@ public readonly npmProvenance: boolean;
 
 Wether provenance statements should be generated when the package is published.
 
-It's currently supported only when publishing a package with npm or pnpm package managers. Yarn is not supported at this time.
+A supported package manager is required to publish a package with npm provenance statements and
+you will need to use a supported CI/CD provider.
+
+Note that the projen `Release` and `Publisher` components are using `publib` to publish packages,
+which is using npm internally and supports provenance statements independently of the package manager used.
 
 > [https://docs.npmjs.com/generating-provenance-statements](https://docs.npmjs.com/generating-provenance-statements)
 
