@@ -264,10 +264,7 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "poetry lock",
-          },
-          {
-            "exec": "poetry install",
+            "exec": "poetry update",
           },
         ],
       },
@@ -276,10 +273,7 @@ cython_debug/
         "name": "install:ci",
         "steps": [
           {
-            "exec": "poetry lock --no-update",
-          },
-          {
-            "exec": "poetry install",
+            "exec": "poetry check --lock && poetry install",
           },
         ],
       },
@@ -324,15 +318,6 @@ cython_debug/
         "steps": [
           {
             "exec": "pytest",
-          },
-        ],
-      },
-      "upgrade": {
-        "description": "Upgrade dependencies",
-        "name": "upgrade",
-        "steps": [
-          {
-            "exec": "poetry update",
           },
         ],
       },
