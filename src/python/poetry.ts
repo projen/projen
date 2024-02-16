@@ -24,26 +24,35 @@ export class Poetry
   implements IPythonDeps, IPythonEnv, IPythonPackaging
 {
   /**
-   * A task that installs dependencies (honouring the lockfile)
-   */
-  public readonly installCiTask: Task;
-  /**
-   * A task that updates the lockfile and installs dependencies
+   * Task for updating the lockfile and installing project dependencies.
    */
   public readonly installTask: Task;
+
   /**
-   * A task that for upgrades dependencies
+   * Task for installing dependencies according to the existing lockfile.
    */
-  public readonly upgradeTask: Task;
-  public readonly publishTask: Task;
-  private readonly pythonExec: string;
-
-  private readonly pyProject: PoetryPyproject;
+  public readonly installCiTask: Task;
 
   /**
-   * A task that uploads the package to the Test PyPI repository.
+   * Task for publishing the package to a package repository.
+   */
+  public readonly publishTask: Task;
+
+  /**
+   * Task for publishing the package to the Test PyPI repository for testing purposes.
    */
   public readonly publishTestTask: Task;
+
+  /**
+   * Path to the Python executable to use.
+   */
+  private readonly pythonExec: string;
+
+  /**
+   * Represents the configuration of the `pyproject.toml` file for a Poetry project.
+   * This includes package metadata, dependencies, and Poetry-specific settings.
+   */
+  private readonly pyProject: PoetryPyproject;
 
   constructor(project: Project, options: PoetryOptions) {
     super(project);
@@ -51,19 +60,12 @@ export class Poetry
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
-      exec: "poetry lock",
+      exec: "poetry update",
     });
+
     this.installCiTask = project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
-      exec: "poetry lock --no-update",
-    });
-    [this.installTask, this.installCiTask].forEach((t) =>
-      t.exec("poetry install")
-    );
-
-    this.upgradeTask = project.addTask("upgrade", {
-      description: "Upgrade dependencies",
-      exec: "poetry update",
+      exec: "poetry check --lock && poetry install",
     });
 
     this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");

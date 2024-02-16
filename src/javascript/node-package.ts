@@ -21,7 +21,7 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
-import { isTruthy, sorted, writeFile } from "../util";
+import { isTruthy, normalizePersistedPath, sorted, writeFile } from "../util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -1464,7 +1464,11 @@ export class NodePackage extends Component {
       for (const file of readdirSync(bindir)) {
         try {
           accessSync(join(bindir, file), constants.X_OK);
-          this.bin[file] = join(binrel, file).replace(/\\/g, "/");
+
+          const binPath = join(binrel, file);
+          const normalizedPath = normalizePersistedPath(binPath);
+
+          this.bin[file] = normalizedPath;
         } catch (e) {
           // not executable, skip
         }
