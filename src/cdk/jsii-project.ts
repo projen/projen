@@ -532,7 +532,7 @@ export class JsiiProject extends TypeScriptProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       prePublishSteps.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.4",
+        uses: "pnpm/action-setup@v3",
         with: { version: this.package.pnpmVersion },
       });
     }
