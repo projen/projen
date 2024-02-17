@@ -1955,7 +1955,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false
+- *Default:* undefined
 
 Should provenance statements be generated when package is published.
 
@@ -2622,7 +2622,7 @@ public readonly npmProvenance: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false
+- *Default:* undefined
 
 Should provenance statements be generated when package is published.
 

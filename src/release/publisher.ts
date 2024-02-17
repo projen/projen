@@ -878,7 +878,7 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * which is using npm internally and supports provenance statements independently of the package manager used.
    *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - false
+   * @default - undefined
    */
   readonly npmProvenance?: boolean;
 
