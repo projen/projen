@@ -806,6 +806,40 @@ describe("Single Project", () => {
     });
   });
 
+  test("if npmProvenance is enabled, environment variable is set and id-token write permission is granted", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    release.publisher.publishToNpm({
+      npmProvenance: true,
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+
+    expect(releaseWorkflow.jobs.release_npm.steps[3].env).toStrictEqual({
+      NPM_CONFIG_PROVENANCE: true,
+      NPM_DIST_TAG: "latest",
+      NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+    });
+
+    expect(releaseWorkflow.jobs.release_npm.permissions).toStrictEqual({
+      contents: "read",
+      "id-token": "write",
+    });
+  });
+
   test("if publishTasks is disabled, no publish tasks are created", () => {
     // GIVEN
     const project = new TestProject();

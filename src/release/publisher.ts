@@ -353,6 +353,9 @@ export class Publisher extends Component {
         );
       }
 
+      const npmProvenance = options.npmProvenance ? true : undefined;
+      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
+
       return {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
@@ -363,9 +366,10 @@ export class Publisher extends Component {
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
+          NPM_CONFIG_PROVENANCE: npmProvenance,
         },
         permissions: {
-          idToken: isAwsCodeArtifactWithOidc ? JobPermission.WRITE : undefined,
+          idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
@@ -866,6 +870,17 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Should provenance statements be generated when package is published.
+   *
+   * Note that this component is using `publib` to publish packages,
+   * which is using npm internally and supports provenance statements independently of the package manager used.
+   *
+   * @see https://docs.npmjs.com/generating-provenance-statements
+   * @default - undefined
+   */
+  readonly npmProvenance?: boolean;
 
   /**
    * Options for publishing npm package to AWS CodeArtifact.
