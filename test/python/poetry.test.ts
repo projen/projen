@@ -218,3 +218,23 @@ class TestPythonProject extends python.PythonProject {
     });
   }
 }
+
+test("poetry configuration includes dev dependencies group", () => {
+  const p = new TestPythonProject({
+    poetry: true,
+    homepage: "http://www.example.com",
+    description: "A short project description",
+    license: "Apache-2.0",
+    deps: ["aws-cdk-lib@^2.128.0"],
+    devDeps: ["black@^23.3.0", "isort@^5.12.0"],
+  });
+
+  const snapshot = synthSnapshot(p);
+
+  // Corrected check for group dev dependencies
+  expect(snapshot["pyproject.toml"]).toContain(
+    "[tool.poetry.group.dev.dependencies]"
+  );
+  expect(snapshot["pyproject.toml"]).toMatch(/black\s*=\s*"\^23\.3\.0"/);
+  expect(snapshot["pyproject.toml"]).toMatch(/isort\s*=\s*"\^5\.12\.0"/);
+});

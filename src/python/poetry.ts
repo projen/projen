@@ -371,23 +371,30 @@ export class PoetryPyproject extends Component {
   constructor(project: Project, options: PoetryPyprojectOptions) {
     super(project);
 
-    const decamelisedOptions = decamelizeKeysRecursively(options, {
-      separator: "-",
-    });
+    const { dependencies, devDependencies, ...otherOptions } = options;
+    const decamelizedOptions = decamelizeKeysRecursively(otherOptions);
 
-    this.file = new TomlFile(project, "pyproject.toml", {
-      omitEmpty: false,
-      obj: {
-        "build-system": {
-          requires: ["poetry_core>=1.0.0"],
-          "build-backend": "poetry.core.masonry.api",
-        },
-        tool: {
-          poetry: {
-            ...decamelisedOptions,
+    const tomlStructure: any = {
+      tool: {
+        poetry: {
+          ...decamelizedOptions,
+          dependencies: dependencies,
+          group: {
+            dev: {
+              dependencies: devDependencies,
+            },
           },
         },
       },
+      "build-system": {
+        requires: ["poetry-core"],
+        "build-backend": "poetry.core.masonry.api",
+      },
+    };
+
+    this.file = new TomlFile(project, "pyproject.toml", {
+      omitEmpty: false,
+      obj: tomlStructure,
     });
   }
 }
