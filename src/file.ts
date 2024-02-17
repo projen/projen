@@ -99,7 +99,8 @@ export abstract class FileBase extends Component {
   ) {
     const project = findClosestProject(scope);
     const root = project.root;
-    const projectPath = normalizePersistedPath(filePath);
+    const normalizedPath = path.normalize(filePath);
+    const projectPath = normalizePersistedPath(normalizedPath);
     const absolutePath = path.resolve(project.outdir, projectPath);
     const relativeProjectPath = path.relative(root.outdir, absolutePath);
     const rootProjectPath = normalizePersistedPath(relativeProjectPath);
