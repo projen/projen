@@ -523,5 +523,9 @@ export function findUp(
  * @returns the normalized path
  */
 export function normalizePersistedPath(p: string) {
-  return p.replace(/\\/g, path.posix.sep);
+  const normalized = path.normalize(p);
+
+  const posixSeparatorPath = normalized.replace(/\\/g, path.posix.sep);
+
+  return posixSeparatorPath;
 }
