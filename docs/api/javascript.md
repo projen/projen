@@ -4722,10 +4722,23 @@ const addBundleOptions: javascript.AddBundleOptions = { ... }
 | <code><a href="#projen.javascript.AddBundleOptions.property.watchTask">watchTask</a></code> | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.platform">platform</a></code> | <code>string</code> | esbuild platform. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.target">target</a></code> | <code>string</code> | esbuild target. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.banner">banner</a></code> | <code>string</code> | Use this to insert an arbitrary string at the beginning of generated JavaScript files. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.charset">charset</a></code> | <code><a href="#projen.javascript.Charset">Charset</a></code> | The charset to use for esbuild's output. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.define">define</a></code> | <code>{[ key: string ]: string}</code> | Replace global identifiers with constant expressions. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.esbuildArgs">esbuildArgs</a></code> | <code>{[ key: string ]: string \| boolean}</code> | Build arguments to pass into esbuild. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.executable">executable</a></code> | <code>boolean</code> | Mark the output file as executable. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.footer">footer</a></code> | <code>string</code> | Use this to insert an arbitrary string at the end of generated JavaScript files. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.format">format</a></code> | <code>string</code> | Output format for the generated JavaScript files. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.inject">inject</a></code> | <code>string[]</code> | This option allows you to automatically replace a global variable with an import from another file. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.keepNames">keepNames</a></code> | <code>boolean</code> | Whether to preserve the original `name` values even in minified code. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.loaders">loaders</a></code> | <code>{[ key: string ]: string}</code> | Map of file extensions (without dot) and loaders to use for this file type. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.logLevel">logLevel</a></code> | <code><a href="#projen.javascript.BundleLogLevel">BundleLogLevel</a></code> | Log level for esbuild. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.mainFields">mainFields</a></code> | <code>string[]</code> | How to determine the entry point for modules. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.metafile">metafile</a></code> | <code>boolean</code> | This option tells esbuild to write out a JSON file relative to output directory with metadata about the build. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.minify">minify</a></code> | <code>boolean</code> | Whether to minify files when bundling. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.outfile">outfile</a></code> | <code>string</code> | Bundler output path relative to the asset's output directory. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.sourceMapMode">sourceMapMode</a></code> | <code><a href="#projen.javascript.SourceMapMode">SourceMapMode</a></code> | Source map mode to be used when bundling. |
+| <code><a href="#projen.javascript.AddBundleOptions.property.sourcesContent">sourcesContent</a></code> | <code>boolean</code> | Whether to include original source code in source maps when bundling. |
 | <code><a href="#projen.javascript.AddBundleOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | The path of the tsconfig.json file to use for bundling. |
 
 ---
@@ -4822,6 +4835,87 @@ esbuild target.
 ```
 
 
+##### `banner`<sup>Optional</sup> <a name="banner" id="projen.javascript.AddBundleOptions.property.banner"></a>
+
+```typescript
+public readonly banner: string;
+```
+
+- *Type:* string
+- *Default:* no comments are passed
+
+Use this to insert an arbitrary string at the beginning of generated JavaScript files.
+
+This is similar to footer which inserts at the end instead of the beginning.
+
+This is commonly used to insert comments:
+
+---
+
+##### `charset`<sup>Optional</sup> <a name="charset" id="projen.javascript.AddBundleOptions.property.charset"></a>
+
+```typescript
+public readonly charset: Charset;
+```
+
+- *Type:* <a href="#projen.javascript.Charset">Charset</a>
+- *Default:* Charset.ASCII
+
+The charset to use for esbuild's output.
+
+By default esbuild's output is ASCII-only. Any non-ASCII characters are escaped
+using backslash escape sequences. Using escape sequences makes the generated output
+slightly bigger, and also makes it harder to read. If you would like for esbuild to print
+the original characters without using escape sequences, use `Charset.UTF8`.
+
+> [https://esbuild.github.io/api/#charset](https://esbuild.github.io/api/#charset)
+
+---
+
+##### `define`<sup>Optional</sup> <a name="define" id="projen.javascript.AddBundleOptions.property.define"></a>
+
+```typescript
+public readonly define: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* no replacements are made
+
+Replace global identifiers with constant expressions.
+
+For example, `{ 'process.env.DEBUG': 'true' }`.
+
+Another example, `{ 'process.env.API_KEY': JSON.stringify('xxx-xxxx-xxx') }`.
+
+---
+
+##### `esbuildArgs`<sup>Optional</sup> <a name="esbuildArgs" id="projen.javascript.AddBundleOptions.property.esbuildArgs"></a>
+
+```typescript
+public readonly esbuildArgs: {[ key: string ]: string | boolean};
+```
+
+- *Type:* {[ key: string ]: string | boolean}
+- *Default:* no additional esbuild arguments are passed
+
+Build arguments to pass into esbuild.
+
+For example, to add the [--log-limit](https://esbuild.github.io/api/#log-limit) flag:
+
+```text
+project.bundler.addBundle("./src/hello.ts", {
+  platform: "node",
+  target: "node18",
+  sourcemap: true,
+  format: "esm",
+  esbuildArgs: {
+    "--log-limit": "0",
+  },
+});
+```
+
+---
+
 ##### `executable`<sup>Optional</sup> <a name="executable" id="projen.javascript.AddBundleOptions.property.executable"></a>
 
 ```typescript
@@ -4832,6 +4926,23 @@ public readonly executable: boolean;
 - *Default:* false
 
 Mark the output file as executable.
+
+---
+
+##### `footer`<sup>Optional</sup> <a name="footer" id="projen.javascript.AddBundleOptions.property.footer"></a>
+
+```typescript
+public readonly footer: string;
+```
+
+- *Type:* string
+- *Default:* no comments are passed
+
+Use this to insert an arbitrary string at the end of generated JavaScript files.
+
+This is similar to banner which inserts at the beginning instead of the end.
+
+This is commonly used to insert comments
 
 ---
 
@@ -4859,6 +4970,45 @@ Note: If making a bundle to run under node with ESM, set `format` to `"esm"` ins
 
 ---
 
+##### `inject`<sup>Optional</sup> <a name="inject" id="projen.javascript.AddBundleOptions.property.inject"></a>
+
+```typescript
+public readonly inject: string[];
+```
+
+- *Type:* string[]
+- *Default:* no code is injected
+
+This option allows you to automatically replace a global variable with an import from another file.
+
+> [https://esbuild.github.io/api/#inject](https://esbuild.github.io/api/#inject)
+
+---
+
+##### `keepNames`<sup>Optional</sup> <a name="keepNames" id="projen.javascript.AddBundleOptions.property.keepNames"></a>
+
+```typescript
+public readonly keepNames: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to preserve the original `name` values even in minified code.
+
+In JavaScript the `name` property on functions and classes defaults to a
+nearby identifier in the source code.
+
+However, minification renames symbols to reduce code size and bundling
+sometimes need to rename symbols to avoid collisions. That changes value of
+the `name` property for many of these cases. This is usually fine because
+the `name` property is normally only used for debugging. However, some
+frameworks rely on the `name` property for registration and binding purposes.
+If this is the case, you can enable this option to preserve the original
+`name` values even in minified code.
+
+---
+
 ##### `loaders`<sup>Optional</sup> <a name="loaders" id="projen.javascript.AddBundleOptions.property.loaders"></a>
 
 ```typescript
@@ -4873,6 +5023,85 @@ Loaders are appended to the esbuild command by `--loader:.extension=loader`
 
 ---
 
+##### `logLevel`<sup>Optional</sup> <a name="logLevel" id="projen.javascript.AddBundleOptions.property.logLevel"></a>
+
+```typescript
+public readonly logLevel: BundleLogLevel;
+```
+
+- *Type:* <a href="#projen.javascript.BundleLogLevel">BundleLogLevel</a>
+- *Default:* LogLevel.WARNING
+
+Log level for esbuild.
+
+This is also propagated to the package manager and
+applies to its specific install command.
+
+---
+
+##### `mainFields`<sup>Optional</sup> <a name="mainFields" id="projen.javascript.AddBundleOptions.property.mainFields"></a>
+
+```typescript
+public readonly mainFields: string[];
+```
+
+- *Type:* string[]
+- *Default:* []
+
+How to determine the entry point for modules.
+
+Try ['module', 'main'] to default to ES module versions.
+
+---
+
+##### `metafile`<sup>Optional</sup> <a name="metafile" id="projen.javascript.AddBundleOptions.property.metafile"></a>
+
+```typescript
+public readonly metafile: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+This option tells esbuild to write out a JSON file relative to output directory with metadata about the build.
+
+The metadata in this JSON file follows this schema (specified using TypeScript syntax):
+
+```text
+{
+  outputs: {
+    [path: string]: {
+      bytes: number
+      inputs: {
+        [path: string]: { bytesInOutput: number }
+      }
+      imports: { path: string }[]
+      exports: string[]
+    }
+  }
+}
+```
+This data can then be analyzed by other tools. For example,
+bundle buddy can consume esbuild's metadata format and generates a treemap visualization
+of the modules in your bundle and how much space each one takes up.
+
+> [https://esbuild.github.io/api/#metafile](https://esbuild.github.io/api/#metafile)
+
+---
+
+##### `minify`<sup>Optional</sup> <a name="minify" id="projen.javascript.AddBundleOptions.property.minify"></a>
+
+```typescript
+public readonly minify: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to minify files when bundling.
+
+---
+
 ##### `outfile`<sup>Optional</sup> <a name="outfile" id="projen.javascript.AddBundleOptions.property.outfile"></a>
 
 ```typescript
@@ -4883,6 +5112,36 @@ public readonly outfile: string;
 - *Default:* "index.js"
 
 Bundler output path relative to the asset's output directory.
+
+---
+
+##### `sourceMapMode`<sup>Optional</sup> <a name="sourceMapMode" id="projen.javascript.AddBundleOptions.property.sourceMapMode"></a>
+
+```typescript
+public readonly sourceMapMode: SourceMapMode;
+```
+
+- *Type:* <a href="#projen.javascript.SourceMapMode">SourceMapMode</a>
+- *Default:* SourceMapMode.DEFAULT
+
+Source map mode to be used when bundling.
+
+> [https://esbuild.github.io/api/#sourcemap](https://esbuild.github.io/api/#sourcemap)
+
+---
+
+##### `sourcesContent`<sup>Optional</sup> <a name="sourcesContent" id="projen.javascript.AddBundleOptions.property.sourcesContent"></a>
+
+```typescript
+public readonly sourcesContent: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to include original source code in source maps when bundling.
+
+> [https://esbuild.github.io/api/#sources-content](https://esbuild.github.io/api/#sources-content)
 
 ---
 
@@ -4988,10 +5247,13 @@ const bundlerOptions: javascript.BundlerOptions = { ... }
 | <code><a href="#projen.javascript.BundlerOptions.property.assetsDir">assetsDir</a></code> | <code>string</code> | Output directory for all bundles. |
 | <code><a href="#projen.javascript.BundlerOptions.property.esbuildVersion">esbuildVersion</a></code> | <code>string</code> | The semantic version requirement for `esbuild`. |
 | <code><a href="#projen.javascript.BundlerOptions.property.loaders">loaders</a></code> | <code>{[ key: string ]: string}</code> | Map of file extensions (without dot) and loaders to use for this file type. |
+| <code><a href="#projen.javascript.BundlerOptions.property.runBundleTask">runBundleTask</a></code> | <code><a href="#projen.javascript.RunBundleTask">RunBundleTask</a></code> | Choose which phase (if any) to add the `bundle` command to. |
 
 ---
 
-##### `addToPreCompile`<sup>Optional</sup> <a name="addToPreCompile" id="projen.javascript.BundlerOptions.property.addToPreCompile"></a>
+##### ~~`addToPreCompile`~~<sup>Optional</sup> <a name="addToPreCompile" id="projen.javascript.BundlerOptions.property.addToPreCompile"></a>
+
+- *Deprecated:* Use `runBundleTask` instead.
 
 ```typescript
 public readonly addToPreCompile: boolean;
@@ -5041,6 +5303,24 @@ public readonly loaders: {[ key: string ]: string};
 Map of file extensions (without dot) and loaders to use for this file type.
 
 Loaders are appended to the esbuild command by `--loader:.extension=loader`
+
+---
+
+##### `runBundleTask`<sup>Optional</sup> <a name="runBundleTask" id="projen.javascript.BundlerOptions.property.runBundleTask"></a>
+
+```typescript
+public readonly runBundleTask: RunBundleTask;
+```
+
+- *Type:* <a href="#projen.javascript.RunBundleTask">RunBundleTask</a>
+- *Default:* RunBundleTask.PRE_COMPILE
+
+Choose which phase (if any) to add the `bundle` command to.
+
+Note: If using `addBundle()` with the `bundleCompiledResults`, this option
+must be set to `RunBundleTask.POST_COMPILE` or `RunBundleTask.MANUAL`.
+
+> [AddBundleOptions.bundleCompiledResults *](AddBundleOptions.bundleCompiledResults *)
 
 ---
 
@@ -13565,6 +13845,96 @@ Automatically bump & release a new version on a daily basis.
 ---
 
 
+### BundleLogLevel <a name="BundleLogLevel" id="projen.javascript.BundleLogLevel"></a>
+
+Log levels for esbuild and package managers' install commands.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.BundleLogLevel.VERBOSE">VERBOSE</a></code> | Show everything. |
+| <code><a href="#projen.javascript.BundleLogLevel.DEBUG">DEBUG</a></code> | Show everything from info and some additional messages for debugging. |
+| <code><a href="#projen.javascript.BundleLogLevel.INFO">INFO</a></code> | Show warnings, errors, and an output file summary. |
+| <code><a href="#projen.javascript.BundleLogLevel.WARNING">WARNING</a></code> | Show warnings and errors. |
+| <code><a href="#projen.javascript.BundleLogLevel.ERROR">ERROR</a></code> | Show errors only. |
+| <code><a href="#projen.javascript.BundleLogLevel.SILENT">SILENT</a></code> | Show nothing. |
+
+---
+
+##### `VERBOSE` <a name="VERBOSE" id="projen.javascript.BundleLogLevel.VERBOSE"></a>
+
+Show everything.
+
+---
+
+
+##### `DEBUG` <a name="DEBUG" id="projen.javascript.BundleLogLevel.DEBUG"></a>
+
+Show everything from info and some additional messages for debugging.
+
+---
+
+
+##### `INFO` <a name="INFO" id="projen.javascript.BundleLogLevel.INFO"></a>
+
+Show warnings, errors, and an output file summary.
+
+---
+
+
+##### `WARNING` <a name="WARNING" id="projen.javascript.BundleLogLevel.WARNING"></a>
+
+Show warnings and errors.
+
+---
+
+
+##### `ERROR` <a name="ERROR" id="projen.javascript.BundleLogLevel.ERROR"></a>
+
+Show errors only.
+
+---
+
+
+##### `SILENT` <a name="SILENT" id="projen.javascript.BundleLogLevel.SILENT"></a>
+
+Show nothing.
+
+---
+
+
+### Charset <a name="Charset" id="projen.javascript.Charset"></a>
+
+Charset for esbuild's output.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Charset.ASCII">ASCII</a></code> | ASCII. |
+| <code><a href="#projen.javascript.Charset.UTF8">UTF8</a></code> | UTF-8. |
+
+---
+
+##### `ASCII` <a name="ASCII" id="projen.javascript.Charset.ASCII"></a>
+
+ASCII.
+
+Any non-ASCII characters are escaped using backslash escape sequences
+
+---
+
+
+##### `UTF8` <a name="UTF8" id="projen.javascript.Charset.UTF8"></a>
+
+UTF-8.
+
+Keep original characters without using escape sequences
+
+---
+
+
 ### CodeArtifactAuthProvider <a name="CodeArtifactAuthProvider" id="projen.javascript.CodeArtifactAuthProvider"></a>
 
 Options for authorizing requests to a AWS CodeArtifact npm repository.
@@ -13855,6 +14225,119 @@ If at least one property in an object requires quotes, quote all properties.
 ##### `PRESERVE` <a name="PRESERVE" id="projen.javascript.QuoteProps.PRESERVE"></a>
 
 Respect the input use of quotes in object properties.
+
+---
+
+
+### RunBundleTask <a name="RunBundleTask" id="projen.javascript.RunBundleTask"></a>
+
+Options for BundlerOptions.runBundleTask.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.RunBundleTask.MANUAL">MANUAL</a></code> | Don't bundle automatically as part of the build. |
+| <code><a href="#projen.javascript.RunBundleTask.PRE_COMPILE">PRE_COMPILE</a></code> | Bundle automatically before compilation. |
+| <code><a href="#projen.javascript.RunBundleTask.POST_COMPILE">POST_COMPILE</a></code> | Bundle automatically after compilation. This is useful if you want to bundle the compiled results. |
+
+---
+
+##### `MANUAL` <a name="MANUAL" id="projen.javascript.RunBundleTask.MANUAL"></a>
+
+Don't bundle automatically as part of the build.
+
+---
+
+
+##### `PRE_COMPILE` <a name="PRE_COMPILE" id="projen.javascript.RunBundleTask.PRE_COMPILE"></a>
+
+Bundle automatically before compilation.
+
+---
+
+
+##### `POST_COMPILE` <a name="POST_COMPILE" id="projen.javascript.RunBundleTask.POST_COMPILE"></a>
+
+Bundle automatically after compilation. This is useful if you want to bundle the compiled results.
+
+Thus will run compilation tasks (using tsc, etc.) before running file
+through bundling step.
+
+This is only required unless you are using new experimental features that
+are not supported by `esbuild` but are supported by typescript's `tsc`
+compiler. One example of such feature is `emitDecoratorMetadata`.
+
+```typescript
+// In a TypeScript project with output configured
+// to go to the "lib" directory:
+const project = new TypeScriptProject({
+  name: "test",
+  defaultReleaseBranch: "main",
+  tsconfig: {
+    compilerOptions: {
+      outDir: "lib",
+    },
+  },
+  bundlerOptions: {
+    // ensure we compile with `tsc` before bundling
+    runBundleTask: RunBundleTask.POST_COMPILE,
+  },
+});
+
+// Tell the bundler to bundle the compiled results (from the "lib" directory)
+project.bundler.addBundle("./lib/index.js", {
+  platform: "node",
+  target: "node18",
+  sourcemap: false,
+  format: "esm",
+});
+```
+
+---
+
+
+### SourceMapMode <a name="SourceMapMode" id="projen.javascript.SourceMapMode"></a>
+
+SourceMap mode for esbuild.
+
+> [https://esbuild.github.io/api/#sourcemap](https://esbuild.github.io/api/#sourcemap)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.SourceMapMode.DEFAULT">DEFAULT</a></code> | Default sourceMap mode - will generate a .js.map file alongside any generated .js file and add a special //# sourceMappingURL= comment to the bottom of the .js file pointing to the .js.map file. |
+| <code><a href="#projen.javascript.SourceMapMode.EXTERNAL">EXTERNAL</a></code> | External sourceMap mode - If you want to omit the special //# sourceMappingURL= comment from the generated .js file but you still want to generate the .js.map files. |
+| <code><a href="#projen.javascript.SourceMapMode.INLINE">INLINE</a></code> | Inline sourceMap mode - If you want to insert the entire source map into the .js file instead of generating a separate .js.map file. |
+| <code><a href="#projen.javascript.SourceMapMode.BOTH">BOTH</a></code> | Both sourceMap mode - If you want to have the effect of both inline and external simultaneously. |
+
+---
+
+##### `DEFAULT` <a name="DEFAULT" id="projen.javascript.SourceMapMode.DEFAULT"></a>
+
+Default sourceMap mode - will generate a .js.map file alongside any generated .js file and add a special //# sourceMappingURL= comment to the bottom of the .js file pointing to the .js.map file.
+
+---
+
+
+##### `EXTERNAL` <a name="EXTERNAL" id="projen.javascript.SourceMapMode.EXTERNAL"></a>
+
+External sourceMap mode - If you want to omit the special //# sourceMappingURL= comment from the generated .js file but you still want to generate the .js.map files.
+
+---
+
+
+##### `INLINE` <a name="INLINE" id="projen.javascript.SourceMapMode.INLINE"></a>
+
+Inline sourceMap mode - If you want to insert the entire source map into the .js file instead of generating a separate .js.map file.
+
+---
+
+
+##### `BOTH` <a name="BOTH" id="projen.javascript.SourceMapMode.BOTH"></a>
+
+Both sourceMap mode - If you want to have the effect of both inline and external simultaneously.
 
 ---
 
