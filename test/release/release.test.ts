@@ -829,7 +829,7 @@ describe("Single Project", () => {
     const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
 
     expect(releaseWorkflow.jobs.release_npm.steps[3].env).toStrictEqual({
-      NPM_CONFIG_PROVENANCE: true,
+      NPM_CONFIG_PROVENANCE: "true",
       NPM_DIST_TAG: "latest",
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
     });

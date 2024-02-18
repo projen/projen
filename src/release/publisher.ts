@@ -353,7 +353,7 @@ export class Publisher extends Component {
         );
       }
 
-      const npmProvenance = options.npmProvenance ? true : undefined;
+      const npmProvenance = options.npmProvenance ? "true" : undefined;
       const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
 
       return {
