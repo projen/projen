@@ -66,6 +66,23 @@ test("generated files are ignored from git if commitGenerated is false", () => {
   expect(gitIgnoreContents).toMatchSnapshot();
 });
 
+test("specified gitIgnore patterns are ignored (via gitIgnoreOptions)", () => {
+  // GIVEN
+  const p = new TestProject({
+    gitIgnoreOptions: {
+      ignorePatterns: [".jsii", "foo/"],
+    },
+  });
+
+  // WHEN
+  const gitIgnoreContents = synthSnapshot(p)[".gitignore"];
+
+  // THEN
+  expect(gitIgnoreContents).toMatchSnapshot();
+  expect(gitIgnoreContents).toContain(".jsii");
+  expect(gitIgnoreContents).toContain("foo/");
+});
+
 test("tryFindFile() can be used to find a file either absolute or relative path", () => {
   // GIVEN
   const p = new TestProject();

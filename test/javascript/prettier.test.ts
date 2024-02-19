@@ -36,6 +36,22 @@ describe("prettier", () => {
     expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
   });
 
+  test("snapshot with ignore pattern (via prettierOptions)", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+      prettierOptions: {
+        settings: { printWidth: 140 },
+        ignoreFileOptions: { ignorePatterns: ["build"] },
+      },
+    });
+
+    // THEN
+    expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
+  });
+
   test("sample config is created", () => {
     // GIVEN
     const project = new NodeProject({
