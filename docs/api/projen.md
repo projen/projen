@@ -10853,6 +10853,7 @@ const ignoreFileOptions: IgnoreFileOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.IgnoreFileOptions.property.filterCommentLines">filterCommentLines</a></code> | <code>boolean</code> | Filter out comment lines? |
 | <code><a href="#projen.IgnoreFileOptions.property.filterEmptyLines">filterEmptyLines</a></code> | <code>boolean</code> | Filter out blank/empty lines? |
+| <code><a href="#projen.IgnoreFileOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | Patterns to add to the ignore file. |
 
 ---
 
@@ -10879,6 +10880,19 @@ public readonly filterEmptyLines: boolean;
 - *Default:* true
 
 Filter out blank/empty lines?
+
+---
+
+##### `ignorePatterns`<sup>Optional</sup> <a name="ignorePatterns" id="projen.IgnoreFileOptions.property.ignorePatterns"></a>
+
+```typescript
+public readonly ignorePatterns: string[];
+```
+
+- *Type:* string[]
+- *Default:* []
+
+Patterns to add to the ignore file.
 
 ---
 

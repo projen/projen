@@ -9,6 +9,7 @@ import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
+import { RunBundleTask } from "../javascript";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
@@ -113,7 +114,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
         // we invoke the "bundle" task as part of the build step in cdk.json so
         // we don't want it to be added to the pre-compile phase.
-        addToPreCompile: false,
+        runBundleTask: RunBundleTask.MANUAL,
       },
     });
 

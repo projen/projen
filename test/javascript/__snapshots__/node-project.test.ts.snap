@@ -37,7 +37,7 @@ git config user.email "github-actions@github.com"",
     {
       "id": "create-pr",
       "name": "Create Pull Request",
-      "uses": "peter-evans/create-pull-request@v4",
+      "uses": "peter-evans/create-pull-request@v6",
       "with": {
         "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
@@ -290,6 +290,21 @@ exports[`node project can be ejected 1`] = `
   },
   "version": "0.0.0",
 }
+`;
+
+exports[`npmignore should include npmIgnore patterns specified (via npmIgnoreOptions) 1`] = `
+"/SECURITY.md
+/.projen/
+/test-reports/
+junit.xml
+/coverage/
+permissions-backup.acl
+/dist/changelog.md
+/dist/version.txt
+/.mergify.yml
+/.projenrc.js
+/.gitattributes
+"
 `;
 
 exports[`npmignore should include sensible default ignore patterns 1`] = `

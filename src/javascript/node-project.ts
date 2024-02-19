@@ -673,6 +673,7 @@ export class NodeProject extends GitHubProject {
         this.release.publisher.publishToNpm({
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
+          npmProvenance: this.package.npmProvenance,
           codeArtifactOptions,
         });
       }
@@ -1015,7 +1016,7 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.4",
+        uses: "pnpm/action-setup@v3",
         with: { version: this.package.pnpmVersion },
       });
     }

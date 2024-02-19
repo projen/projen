@@ -8,6 +8,7 @@ import { ProjenrcFile } from "./projenrc";
 import {
   assertExecutablePermissions,
   isWritable,
+  normalizePersistedPath,
   tryReadFileSync,
   writeFile,
 } from "./util";
@@ -98,9 +99,11 @@ export abstract class FileBase extends Component {
   ) {
     const project = findClosestProject(scope);
     const root = project.root;
-    const projectPath = path.normalize(filePath);
+    const normalizedPath = path.normalize(filePath);
+    const projectPath = normalizePersistedPath(normalizedPath);
     const absolutePath = path.resolve(project.outdir, projectPath);
-    const rootProjectPath = path.relative(root.outdir, absolutePath);
+    const relativeProjectPath = path.relative(root.outdir, absolutePath);
+    const rootProjectPath = normalizePersistedPath(relativeProjectPath);
     const autoId = `${new.target.name}@${projectPath}`;
 
     // Before actually creating the file, ensure the file path is unique within the full project tree

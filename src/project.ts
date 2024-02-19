@@ -21,7 +21,7 @@ import { ProjenrcJson, ProjenrcJsonOptions } from "./projenrc-json";
 import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
-import { isTruthy } from "./util";
+import { isTruthy, normalizePersistedPath } from "./util";
 import {
   isProject,
   findClosestProject,
@@ -353,7 +353,7 @@ export class Project extends Construct {
           // replace `\` with `/` to ensure paths match across platforms
           files: this.files
             .filter((f) => f.readonly)
-            .map((f) => f.path.replace(/\\/g, "/")),
+            .map((f) => normalizePersistedPath(f.path)),
         }),
         // This file is used by projen to track the generated files, so must be committed.
         committed: true,
@@ -607,7 +607,7 @@ export class Project extends Construct {
     // delete orphaned files before we start synthesizing new ones
     cleanup(
       outdir,
-      this.files.map((f) => f.path.replace(/\\/g, "/")),
+      this.files.map((f) => normalizePersistedPath(f.path)),
       this.excludeFromCleanup
     );
 
