@@ -201,10 +201,13 @@ project.npmignore.exclude("/docusaurus/");
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
-new TextFile(project, "projen.js", {
+const bootstrapScript = new TextFile(project, "projen.js", {
+  executable: true,
   marker: true,
   lines: [
+    "#!/usr/bin/env node",
     `// ${PROJEN_MARKER}`,
+    "",
     'const { existsSync } = require("fs");',
     'const { execSync } = require("child_process");',
     "",
@@ -217,10 +220,11 @@ new TextFile(project, "projen.js", {
     "}",
     "",
     'const args = process.argv.slice(2).join(" ");',
-    "execCommand(`bin/projen ${args}`);",
+    "execCommand(`node bin/projen ${args}`);",
     "",
   ],
 });
+project.npmignore.exclude(`/${bootstrapScript.path}`);
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");

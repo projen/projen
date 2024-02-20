@@ -25,6 +25,7 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 /docusaurus/
+/projen.js
 /.markdownlint.json
 /.devcontainer.json
 /.all-contributorsrc
