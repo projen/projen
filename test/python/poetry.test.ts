@@ -230,8 +230,8 @@ test("poetry configuration includes dev dependencies group", () => {
   });
 
   const snapshot = synthSnapshot(p);
+  console.log(snapshot);
 
-  // Corrected check for group dev dependencies
   expect(snapshot["pyproject.toml"]).toContain(
     "[tool.poetry.group.dev.dependencies]"
   );

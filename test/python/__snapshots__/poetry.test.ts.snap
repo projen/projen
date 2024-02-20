@@ -13,16 +13,16 @@ homepage = "http://www.example.com"
 classifiers = [ "Development Status :: 4 - Beta" ]
 readme = "README.md"
 
-  [tool.poetry.dependencies]
-  regular-version-package = "1.2.3"
-  python = "^3.8"
+[tool.poetry.dependencies]
+regular-version-package = "1.2.3"
+python = "^3.8"
 
-    [tool.poetry.dependencies.package1]
-    version = "^3.3.3"
-    extras = [ "mypackage-extra" ]
+[tool.poetry.dependencies.package1]
+version = "^3.3.3"
+extras = [ "mypackage-extra" ]
 
-    [tool.poetry.dependencies.package2]
-    path = "../mypackage/foo"
+[tool.poetry.dependencies.package2]
+path = "../mypackage/foo"
 
 [tool.poetry.group.dev.dependencies]
 projen = "99.99.99"
@@ -346,32 +346,32 @@ keywords = [ "Keyword1" ]
 include = [ "CHANGELOG.md" ]
 exclude = [ "my_package/excluded.py" ]
 
-  [[tool.poetry.packages]]
-  include = "my_package"
-  format = "sdist"
+[[tool.poetry.packages]]
+include = "my_package"
+format = "sdist"
 
-  [[tool.poetry.source]]
-  name = "pypi_"
-  url = "https://pypi.org/simple/"
-  default = true
+[[tool.poetry.source]]
+name = "pypi_"
+url = "https://pypi.org/simple/"
+default = true
 
-  [tool.poetry.scripts]
-  test-python-cli = "test-python-project.cli:cli"
+[tool.poetry.scripts]
+test-python-cli = "test-python-project.cli:cli"
 
-  [tool.poetry.extras]
-  cli = [ "package1", "package2" ]
+[tool.poetry.extras]
+cli = [ "package1", "package2" ]
 
 [tool.poetry.plugins."blogtool.parsers"]
 ".rst" = "some_module:SomeClass"
 
-  [tool.poetry.urls]
-  "bug tracker" = "https://github.com/test-python-project/issues"
+[tool.poetry.urls]
+"bug tracker" = "https://github.com/test-python-project/issues"
 
-  [tool.poetry.dependencies]
-  package1 = "0.0.1"
-  package2 = "0.0.2"
-  package3 = "*"
-  python = "^3.8"
+[tool.poetry.dependencies]
+package1 = "0.0.1"
+package2 = "0.0.2"
+package3 = "*"
+python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 projen = "99.99.99"

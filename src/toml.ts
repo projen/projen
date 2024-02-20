@@ -22,10 +22,20 @@ export class TomlFile extends ObjectFile {
       return undefined;
     }
 
+    // Convert the JSON content to a TOML string
+    let tomlString = TOML.stringify(JSON.parse(json));
+
+    // Trim leading spaces for each line
+    const fixedTomlString = tomlString
+      .split("\n")
+      .map((line) => line.trim())
+      .join("\n");
+
+    // Include the marker
     return [
       ...(this.marker ? [`# ${this.marker}`] : []),
       "",
-      TOML.stringify(JSON.parse(json)),
+      fixedTomlString,
     ].join("\n");
   }
 }
