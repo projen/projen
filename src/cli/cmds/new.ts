@@ -14,7 +14,13 @@ import {
   isTruthy,
 } from "../../util";
 import { tryProcessMacro } from "../macros";
-import { CliError, installPackage, renderInstallCommand } from "../util";
+import {
+  CliError,
+  findJsiiFilePath,
+  installPackage,
+  moduleExists,
+  renderInstallCommand,
+} from "../util";
 
 class Command implements yargs.CommandModule {
   public readonly command = "new [PROJECT-TYPE-NAME] [OPTIONS]";
@@ -292,15 +298,28 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
+  const exists = moduleExists(baseDir, spec);
+  logging.empty();
+
+  if (!exists) {
+    throw new CliError(
+      `Could not  find '${spec}' in this registry, please ensure that the package exists, you have access it and try again.`
+    );
+  }
+
   const moduleName = installPackage(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
-  const moduleDir = path.dirname(
-    require.resolve(`${moduleName}/.jsii`, {
-      paths: [baseDir],
-    })
-  );
+  const jsiiFilePath = findJsiiFilePath(baseDir, moduleName);
+
+  if (!jsiiFilePath) {
+    throw new CliError(
+      `Cannot find '${moduleName}/.jsii', ensure this is a jsii module first!`
+    );
+  }
+
+  const moduleDir = path.dirname(jsiiFilePath);
 
   // Only leave projects from the main (requested) package
   const projects = inventory

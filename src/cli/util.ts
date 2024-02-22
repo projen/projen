@@ -55,6 +55,40 @@ export function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
 }
 
+export function moduleExists(cwd: string, module: string): boolean {
+  try {
+    logging.info(`Validating external module's (${module}) existence...`);
+    exec(`npm view ${module}`, { cwd, stdio: "ignore" });
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export function findJsiiFilePath(
+  baseDir: string,
+  moduleName: string
+): string | undefined {
+  try {
+    return path.dirname(
+      require.resolve(`${moduleName}/.jsii`, {
+        paths: [baseDir],
+      })
+    );
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      error.code === "MODULE_NOT_FOUND"
+    ) {
+      return undefined;
+    } else {
+      // unexpected error, throw it
+      throw error;
+    }
+  }
+}
+
 export class CliError extends Error {
   constructor(...lines: string[]) {
     super(lines.join("\n"));
