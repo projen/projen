@@ -86,7 +86,7 @@ const project = new cdk.JsiiProject({
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: "/bin/bash ./projen.bash",
+  projenCommand: "node ./projen.js",
 
   // cli tests need projen to be compiled
   compileBeforeTest: true,
@@ -201,23 +201,30 @@ project.npmignore.exclude("/docusaurus/");
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
-new TextFile(project, "projen.bash", {
-  lines: [
-    "#!/bin/bash",
-    `# ${PROJEN_MARKER}`,
-    "set -euo pipefail",
-    "if [ ! -f lib/cli/index.js ]; then",
-    '  echo "bootstrapping..."',
-    "  if [ ! -f node_modules/.bin/jsii ]; then",
-    "    yarn install --frozen-lockfile --check-files --non-interactive",
-    "  fi",
-    "  npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
-    "fi",
-    "exec bin/projen $@",
-  ],
+const bootstrapScript = new TextFile(project, "projen.js", {
   executable: true,
+  marker: true,
+  lines: [
+    "#!/usr/bin/env node",
+    `// ${PROJEN_MARKER}`,
+    "",
+    'const { existsSync } = require("fs");',
+    'const { execSync } = require("child_process");',
+    "",
+    `${execCommand.toString()}`,
+    "",
+    `${bootstrap.toString()}`,
+    "",
+    'if (!existsSync("lib/cli/index.js")) {',
+    "  bootstrap();",
+    "}",
+    "",
+    'const args = process.argv.slice(2).join(" ");',
+    "execCommand(`node bin/projen ${args}`);",
+    "",
+  ],
 });
-project.npmignore.exclude("/projen.bash");
+project.npmignore.exclude(`/${bootstrapScript.path}`);
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
@@ -329,6 +336,41 @@ function setupBundleTaskRunner() {
     }
   );
   project.postCompileTask.spawn(task);
+}
+
+/**
+ * Bootstrapping function for projen.
+ *
+ * It's only meant for bootstrapping script. It should only call NodeJS built-ins
+ */
+function bootstrap() {
+  console.info("bootstrapping...");
+
+  if (!existsSync("node_modules/.bin/jsii")) {
+    execCommand(
+      "yarn install --frozen-lockfile --check-files --non-interactive"
+    );
+  }
+
+  execCommand(
+    "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
+  );
+}
+
+/**
+ * Execute a command and log any errors.
+ *
+ * Helper to execute commands during bootstrapping. It should only call NodeJS built-ins
+ *
+ * @param {string} command
+ */
+function execCommand(command) {
+  try {
+    execSync(command, { stdio: "inherit" });
+  } catch (error) {
+    console.error(`Failed to execute command: ${command}`, error);
+    process.exit(1);
+  }
 }
 
 setupIntegTest();

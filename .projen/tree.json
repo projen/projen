@@ -413,11 +413,11 @@
           "path": ".github/workflows/upgrade-main.yml"
         }
       },
-      "TextFile@projen.bash": {
+      "TextFile@projen.js": {
         "metadata": {
           "type": "file",
           "construct": "TextFile",
-          "path": "projen.bash"
+          "path": "projen.js"
         }
       },
       "JsonFile@.markdownlint.json": {
