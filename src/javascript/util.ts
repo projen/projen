@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "fs";
-import { basename, dirname, extname, join, sep, resolve } from "path";
+import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
 import { NodePackage } from "./node-package";
 import { Project } from "../project";
@@ -30,7 +30,7 @@ export function renderBundleName(entrypoint: string) {
   const p = parts.join(sep);
   const dir = dirname(p);
   const base = basename(p, extname(p));
-  return join(dir, base);
+  return posix.join(dir, base);
 }
 
 /**

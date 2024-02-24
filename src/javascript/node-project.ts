@@ -1,4 +1,4 @@
-import { join, relative } from "path";
+import { relative, posix } from "path";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -49,7 +49,7 @@ import {
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
-import { deepMerge } from "../util";
+import { deepMerge, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 import { Version } from "../version";
 
@@ -486,7 +486,13 @@ export class NodeProject extends GitHubProject {
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.workflowPackageCache = options.workflowPackageCache ?? false;
     this.artifactsDirectory = options.artifactsDirectory ?? "dist";
-    this.artifactsJavascriptDirectory = join(this.artifactsDirectory, "js");
+    const normalizedArtifactsDirectory = normalizePersistedPath(
+      this.artifactsDirectory
+    );
+    this.artifactsJavascriptDirectory = posix.join(
+      normalizedArtifactsDirectory,
+      "js"
+    );
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
