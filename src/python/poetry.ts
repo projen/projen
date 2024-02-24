@@ -24,6 +24,11 @@ export class Poetry
   implements IPythonDeps, IPythonEnv, IPythonPackaging
 {
   /**
+   * Task for activating the virtual environment.
+   */
+  public readonly activateVenvTask: Task;
+
+  /**
    * Task for updating the lockfile and installing project dependencies.
    */
   public readonly installTask: Task;
@@ -58,21 +63,22 @@ export class Poetry
     super(project);
     this.pythonExec = options.pythonExec ?? "python";
 
+    this.activateVenvTask = this.project.addTask("activate:venv", {
+      description: "Activate virtual environment",
+      exec: "poetry shell",
+    });
+
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
       exec: "poetry update",
     });
+    this.installTask.spawn(this.activateVenvTask);
 
     this.installCiTask = project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
       exec: "poetry check --lock && poetry install",
     });
-
-    this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
-    this.project.tasks.addEnvironment(
-      "PATH",
-      "$(echo $(poetry env info -p)/bin:$PATH)"
-    );
+    this.installCiTask.spawn(this.activateVenvTask);
 
     project.packageTask.exec("poetry build");
 
