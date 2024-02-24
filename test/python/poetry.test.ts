@@ -1,3 +1,4 @@
+import * as TOML from "@iarna/toml";
 import { python } from "../../src";
 import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
@@ -218,3 +219,53 @@ class TestPythonProject extends python.PythonProject {
     });
   }
 }
+
+test("generates correct pyproject.toml content", () => {
+  const project = new TestPythonProject({
+    poetry: true,
+    homepage: "http://www.example.com",
+    description: "A short project description",
+    license: "Apache-2.0",
+    deps: ["aws-cdk-lib@^2.128.0"],
+    devDeps: ["black@^24.2.0", "flake8@^7.0.0"],
+  });
+
+  const snapshot = synthSnapshot(project);
+  const actualTomlContent = snapshot["pyproject.toml"];
+
+  const actualContentObject = TOML.parse(actualTomlContent);
+
+  const expectedContentObject = {
+    tool: {
+      poetry: {
+        name: "test-python-project",
+        version: "0.1.0",
+        description: "A short project description",
+        license: "Apache-2.0",
+        authors: ["First Last <email@example.com>"],
+        homepage: "http://www.example.com",
+        readme: "README.md",
+        dependencies: {
+          "aws-cdk-lib": "^2.128.0",
+          python: "^3.8",
+        },
+        group: {
+          dev: {
+            dependencies: {
+              black: "^24.2.0",
+              flake8: "^7.0.0",
+              projen: "99.99.99",
+              pytest: "7.4.3",
+            },
+          },
+        },
+      },
+    },
+    "build-system": {
+      requires: ["poetry-core"],
+      "build-backend": "poetry.core.masonry.api",
+    },
+  };
+
+  expect(actualContentObject).toEqual(expectedContentObject);
+});
