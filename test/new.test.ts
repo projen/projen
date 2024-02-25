@@ -70,6 +70,43 @@ test("projen new --from external", () => {
   });
 });
 
+test("projen new --from non-existent external", () => {
+  try {
+    withProjectDir((projectdir) => {
+      const nonExistentPackage = `@non-existent-scope/some-non-existent-package`;
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        nonExistentPackage,
+        "--no-post",
+      ]);
+    });
+  } catch (error: any) {
+    // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
+    expect(error.message).toContain(
+      `Could not  find '@non-existent-scope/some-non-existent-package' in this registry, please ensure that the package exists, you have access it and try again.`
+    );
+  }
+});
+
+test("projen new --from non-jsii module external", () => {
+  try {
+    withProjectDir((projectdir) => {
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "typescript", // valid package, but not a jsii module
+        "--no-post",
+      ]);
+    });
+  } catch (error: any) {
+    // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
+    expect(error.message).toContain(
+      `Cannot find 'typescript/.jsii', ensure this is a jsii module first!`
+    );
+  }
+});
+
 test("projen new --from external with enum values", () => {
   withProjectDir((projectdir) => {
     // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
@@ -145,6 +182,24 @@ test("projen new --from external tarball", () => {
     expect(actual["package.json"]).toMatchSnapshot();
     expect(actual[".projenrc.ts"]).toBeDefined();
     expect(actual[".projenrc.ts"]).toMatchSnapshot();
+  });
+});
+
+test("projen new --from non-existent external tarball", () => {
+  withProjectDir((projectdir) => {
+    try {
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "./none-existent-package-0.0.1.tgz",
+        "--no-post",
+      ]);
+    } catch (error: any) {
+      // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
+      expect(error.message).toContain(
+        `Could not  find './none-existent-package-0.0.1.tgz' in this registry, please ensure that the package exists, you have access it and try again.`
+      );
+    }
   });
 });
 
