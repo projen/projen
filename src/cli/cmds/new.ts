@@ -311,15 +311,13 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
-  const jsiiFilePath = findJsiiFilePath(baseDir, moduleName);
+  const moduleDir = findJsiiFilePath(baseDir, moduleName);
 
-  if (!jsiiFilePath) {
+  if (!moduleDir) {
     throw new CliError(
       `Cannot find '${moduleName}/.jsii', ensure this is a jsii module first!`
     );
   }
-
-  const moduleDir = path.dirname(jsiiFilePath);
 
   // Only leave projects from the main (requested) package
   const projects = inventory
