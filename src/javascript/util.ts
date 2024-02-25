@@ -289,7 +289,7 @@ export function hasDependencyVersion(
   }
 
   if (!requestedRange) {
-    return false;
+    return undefined;
   }
 
   return installedVersionProbablyMatches(requestedRange, checkRange);
