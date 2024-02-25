@@ -16,10 +16,10 @@ const hello = project.addTask("hello");
 hello.exec("echo hello, world!");
 ```
 
-Run `pj` and the task will be available in the CLI:
+Run `npx projen` and the task will be available in the CLI:
 
 ```shell
-$ projen hello
+$ npx projen hello
 🤖 hello | echo hello, world!
 hello, world!
 ```
