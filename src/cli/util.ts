@@ -58,9 +58,15 @@ export function renderInstallCommand(dir: string, module: string): string {
 export function moduleExists(cwd: string, module: string): boolean {
   try {
     logging.info(`Validating external module's (${module}) existence...`);
-    exec(`npm view ${module}`, { cwd, stdio: "ignore" });
-    return true;
+    const externalModule = !module.startsWith("./");
+    if (externalModule) {
+      exec(`npm view ${module}`, { cwd, stdio: "ignore" });
+      return true;
+    } else {
+      return fs.existsSync(module);
+    }
   } catch (error) {
+    // exec throws an error if external module does not exist
     return false;
   }
 }
