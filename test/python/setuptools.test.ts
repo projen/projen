@@ -5,8 +5,7 @@ test("setuptools enabled", () => {
   const p = new TestPythonProject({
     setuptools: true,
     homepage: "http://www.example.com",
-    description: "a short project description",
-    license: "Apache Software License",
+    description: "A short project description",
     classifiers: ["Development Status :: 4 - Beta"],
   });
 
@@ -14,8 +13,8 @@ test("setuptools enabled", () => {
   expect(snapshot["setup.py"]).toContain("First Last");
   expect(snapshot["setup.py"]).toContain("email@example.com");
   expect(snapshot["setup.py"]).toContain("http://www.example.com");
-  expect(snapshot["setup.py"]).toContain("a short project description");
-  expect(snapshot["setup.py"]).toContain("Apache Software License");
+  expect(snapshot["setup.py"]).toContain("A short project description");
+  expect(snapshot["setup.py"]).toContain("Apache-2.0");
   expect(snapshot["setup.py"]).toContain("Development Status :: 4 - Beta");
 });
 
