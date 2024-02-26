@@ -72,7 +72,7 @@ $ npx projen --watch
 
 Modifying projen configuration is usually a matter of editing the properties that are passed to the project type's 
 constructor, but sometimes you'll also make changes after the project type has been constructed. 
-For instance, if you want to add a new task([project command](/docs/concepts/tasks)) to your project, you call the `addTask` method:
+For instance, if you want to add a new [task](../concepts/tasks.md)) to your project, you call the `addTask` method:
 
 ```typescript
 import { typescript } from 'projen';
