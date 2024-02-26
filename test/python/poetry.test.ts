@@ -225,7 +225,6 @@ test("generates correct pyproject.toml content", () => {
     poetry: true,
     homepage: "http://www.example.com",
     description: "A short project description",
-    license: "Apache-2.0",
     deps: ["aws-cdk-lib@^2.128.0"],
     devDeps: ["black@^24.2.0", "flake8@^7.0.0"],
   });
