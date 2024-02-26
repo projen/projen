@@ -6,6 +6,7 @@ test("setuptools enabled", () => {
     setuptools: true,
     homepage: "http://www.example.com",
     description: "A short project description",
+    license: "MIT",
     classifiers: ["Development Status :: 4 - Beta"],
   });
 
@@ -14,7 +15,7 @@ test("setuptools enabled", () => {
   expect(snapshot["setup.py"]).toContain("email@example.com");
   expect(snapshot["setup.py"]).toContain("http://www.example.com");
   expect(snapshot["setup.py"]).toContain("A short project description");
-  expect(snapshot["setup.py"]).toContain("Apache-2.0");
+  expect(snapshot["setup.py"]).toContain("MIT");
   expect(snapshot["setup.py"]).toContain("Development Status :: 4 - Beta");
 });
 
@@ -31,3 +32,17 @@ class TestPythonProject extends python.PythonProject {
     });
   }
 }
+
+test("default license is Apache-2.0 when not provided", () => {
+  // Creating a setuptools project without specifying a license
+  const projectWithoutLicense = new TestPythonProject({
+    setuptools: true,
+  });
+
+  // Generating the setup.py content
+  const snapshotWithoutLicense = synthSnapshot(projectWithoutLicense);
+  const setupPyContent = snapshotWithoutLicense["setup.py"];
+
+  // Asserting that the actual license is Apache-2.0
+  expect(setupPyContent).toContain("Apache-2.0");
+});

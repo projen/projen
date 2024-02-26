@@ -271,7 +271,7 @@ test("generates correct pyproject.toml content", () => {
 });
 
 test("default license is Apache-2.0 when not provided", () => {
-  // Creating a project without specifying a license
+  // Creating a poetry project without specifying a license
   const projectWithoutLicense = new TestPythonProject({
     poetry: true,
   });
