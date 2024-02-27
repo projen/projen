@@ -159,7 +159,6 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
-      defaultReleaseBranch: 'main',
     });
 
     // WHEN
@@ -256,7 +255,16 @@ export class MyMicroserviceProject extends TypeScriptProject {
 ```
 
 Let's also add an optional `mention` property that will mention a specific user in the PR template.
-We start by making this property part of the incoming `options` object in the constructor, so modify the `MyMicroserviceProjectOptions` interface:
+
+We need to first update the `MyMicroserviceProjectOptions` interface in the `my-microservice-project.ts` file to:
+
+```typescript
+export interface MyMicroserviceProjectOptions extends TypeScriptProjectOptions {
+  readonly prMention?: string;
+}
+```
+
+Then, we write the logic code to handle `options.prMention` in the constructor, pushing new lines to the PR template if the property is set:
 
 ```typescript
 export class MyMicroserviceProject extends TypeScriptProject {
@@ -287,7 +295,6 @@ Now, we can add the `prMention` property to the options object when we create a 
 ```typescript
 const project = new MyMicroserviceProject({
   name: 'my-microservice',
-  defaultReleaseBranch: 'main',
   prMention: '@someuser',
 });
 ```
@@ -310,7 +317,6 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
-      defaultReleaseBranch: 'main',
     });
 
     // WHEN
@@ -342,7 +348,6 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
-      defaultReleaseBranch: 'main',
       prMention: 'someoone',
     });
 
@@ -376,7 +381,6 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
-      defaultReleaseBranch: 'main',
       prMention: '@someoone',
     });
 
