@@ -160,6 +160,10 @@
       "type": "bundled"
     },
     {
+      "name": "json2toml",
+      "type": "bundled"
+    },
+    {
       "name": "semver",
       "type": "bundled"
     },

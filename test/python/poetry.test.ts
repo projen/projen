@@ -172,9 +172,7 @@ test("poetry enabled with metadata in dependencies", () => {
     "[tool.poetry.dependencies.package1]"
   );
   expect(snapshot["pyproject.toml"]).toContain('version = "^3.3.3"');
-  expect(snapshot["pyproject.toml"]).toContain(
-    'extras = [ "mypackage-extra" ]'
-  );
+  expect(snapshot["pyproject.toml"]).toContain('extras = ["mypackage-extra"]');
   // Likewise package2 metadata should be rendered
   expect(snapshot["pyproject.toml"]).toContain(
     "[tool.poetry.dependencies.package2]"
