@@ -57,7 +57,7 @@ export function renderInstallCommand(dir: string, module: string): string {
 
 export function moduleExists(cwd: string, module: string): boolean {
   try {
-    logging.info(`Validating external module's (${module}) existence...`);
+    logging.debug(`Checking if external module '${module}' exists...`);
     const externalModule = !module.startsWith("./");
     if (externalModule) {
       exec(`npm view ${module}`, { cwd, stdio: "ignore" });
@@ -87,6 +87,7 @@ export function findJsiiFilePath(
       "code" in error &&
       error.code === "MODULE_NOT_FOUND"
     ) {
+      // the provided module is not a jsii module
       return undefined;
     } else {
       // unexpected error, throw it

@@ -303,7 +303,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 
   if (!exists) {
     throw new CliError(
-      `Could not  find '${spec}' in this registry, please ensure that the package exists, you have access it and try again.`
+      `Could not find '${spec}' in this registry. Please ensure that the package exists, you have access it and try again.`
     );
   }
 
@@ -315,7 +315,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 
   if (!moduleDir) {
     throw new CliError(
-      `Cannot find '${moduleName}/.jsii', ensure this is a jsii module first!`
+      `Module '${moduleName}' does not look like it is compatible with projen. Reason: Cannot find '${moduleName}/.jsii'. All projen modules must be jsii modules!`
     );
   }
 

@@ -84,7 +84,7 @@ test("projen new --from non-existent external", () => {
   } catch (error: any) {
     // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
     expect(error.message).toContain(
-      `Could not  find '@non-existent-scope/some-non-existent-package' in this registry, please ensure that the package exists, you have access it and try again.`
+      `Could not find '@non-existent-scope/some-non-existent-package' in this registry. Please ensure that the package exists, you have access it and try again.`
     );
   }
 });
@@ -102,7 +102,7 @@ test("projen new --from non-jsii module external", () => {
   } catch (error: any) {
     // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
     expect(error.message).toContain(
-      `Cannot find 'typescript/.jsii', ensure this is a jsii module first!`
+      `Module 'typescript' does not look like it is compatible with projen. Reason: Cannot find 'typescript/.jsii'. All projen modules must be jsii modules!`
     );
   }
 });
@@ -197,7 +197,7 @@ test("projen new --from non-existent external tarball", () => {
     } catch (error: any) {
       // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
       expect(error.message).toContain(
-        `Could not  find './none-existent-package-0.0.1.tgz' in this registry, please ensure that the package exists, you have access it and try again.`
+        `Could not find './none-existent-package-0.0.1.tgz' in this registry. Please ensure that the package exists, you have access it and try again.`
       );
     }
   });
