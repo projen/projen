@@ -159,6 +159,7 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
+      defaultReleaseBranch: 'main',
     });
 
     // WHEN
@@ -295,6 +296,7 @@ Now, we can add the `prMention` property to the options object when we create a 
 ```typescript
 const project = new MyMicroserviceProject({
   name: 'my-microservice',
+  defaultReleaseBranch: 'main',
   prMention: '@someuser',
 });
 ```
@@ -317,6 +319,7 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
+      defaultReleaseBranch: 'main',
     });
 
     // WHEN
@@ -348,6 +351,7 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
+      defaultReleaseBranch: 'main',
       prMention: 'someoone',
     });
 
@@ -381,6 +385,7 @@ describe('MyMicroserviceProject', () => {
     // GIVEN
     const project = new MyMicroserviceProject({
       name: 'my-microservice',
+      defaultReleaseBranch: 'main',
       prMention: '@someoone',
     });
 
