@@ -254,7 +254,7 @@ export class MyMicroserviceProject extends TypeScriptProject {
 }
 ```
 
-Let's also add an optional `mention` property that will mention a specific user in the PR template.
+Let's also add an optional `prMention` property that will mention a specific user in the PR template.
 
 We need to first update the `MyMicroserviceProjectOptions` interface in the `my-microservice-project.ts` file to:
 
