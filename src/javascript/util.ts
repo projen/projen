@@ -243,8 +243,17 @@ export function tryResolveDependencyVersion(
  * `requestedRange ⊆ checkRange`, but may give false positives when `checkRange
  * ⊆ requestedRange`.
  *
- * May return `undefined` if the question cannot be answered (for example, if
- * the dependency is requested via local file dependencies).
+ * May return `undefined` if the question cannot be answered. These include the
+ * following cases:
+ *
+ *   - The dependency is requested via local file dependencies (`file://...`)
+ *   - The dependency uses an other type of URL, such as a GitHub URL
+ *   - The dependency is not found in the `package.json`, such as when
+ *     bootstrapping from an external projen package, and the `package.json`
+ *     file only has that one external package as a dependency
+ *
+ * Otherwise it will return `true` if the installed version is probably in the
+ * requested range, and `false` if it is probably not.
  *
  * This API may eventually be added to the public projen API, but only after
  * we implement exact version checking.
@@ -288,8 +297,11 @@ export function hasDependencyVersion(
     }
   }
 
+  // If the dependency is not found in the `package.json`, we can't answer the question (yet).
+  // This means that the dependency hasn't been added yet, which means we know (upstream) what we're going to request,
+  // or we're going to ask for '*' and we'll get the latest version.
   if (!requestedRange) {
-    return false;
+    return undefined;
   }
 
   return installedVersionProbablyMatches(requestedRange, checkRange);
