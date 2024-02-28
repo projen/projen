@@ -10576,8 +10576,11 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.allowImportingTsExtensions">allowImportingTsExtensions</a></code> | <code>boolean</code> | Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`). Requires `noEmit` or `emitDeclarationOnly`. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.allowJs">allowJs</a></code> | <code>boolean</code> | Allow JavaScript files to be compiled. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.allowSyntheticDefaultImports">allowSyntheticDefaultImports</a></code> | <code>boolean</code> | Allow default imports from modules with no default export. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.allowUnreachableCode">allowUnreachableCode</a></code> | <code>boolean</code> | Allow Unreachable Code. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.allowUnusedLabels">allowUnusedLabels</a></code> | <code>boolean</code> | Allow Unused Labels. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.alwaysStrict">alwaysStrict</a></code> | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.baseUrl">baseUrl</a></code> | <code>string</code> | Lets you set a base directory to resolve non-absolute module names. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.checkJs">checkJs</a></code> | <code>boolean</code> | Check JS. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.customConditions">customConditions</a></code> | <code>string[]</code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declaration">declaration</a></code> | <code>boolean</code> | To be specified along with the above. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declarationDir">declarationDir</a></code> | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted. |
@@ -10686,6 +10689,60 @@ This does not affect code emit, just typechecking.
 
 ---
 
+##### `allowUnreachableCode`<sup>Optional</sup> <a name="allowUnreachableCode" id="projen.javascript.TypeScriptCompilerOptions.property.allowUnreachableCode"></a>
+
+```typescript
+public readonly allowUnreachableCode: boolean;
+```
+
+- *Type:* boolean
+
+Allow Unreachable Code.
+
+When:
+
+- `undefined` (default) provide suggestions as warnings to editors
+- `true` unreachable code is ignored
+- `false` raises compiler errors about unreachable code
+
+These warnings are only about code which is provably unreachable due to the use of JavaScript syntax.
+
+> [https://www.typescriptlang.org/tsconfig#allowUnreachableCode](https://www.typescriptlang.org/tsconfig#allowUnreachableCode)
+
+---
+
+##### `allowUnusedLabels`<sup>Optional</sup> <a name="allowUnusedLabels" id="projen.javascript.TypeScriptCompilerOptions.property.allowUnusedLabels"></a>
+
+```typescript
+public readonly allowUnusedLabels: boolean;
+```
+
+- *Type:* boolean
+
+Allow Unused Labels.
+
+When:
+
+- `undefined` (default) provide suggestions as warnings to editors
+- `true` unused labels are ignored
+- `false` raises compiler errors about unused labels
+
+Labels are very rare in JavaScript and typically indicate an attempt to write an object literal:
+
+```ts
+function verifyAge(age: number) {
+  // Forgot 'return' statement
+  if (age > 18) {
+    verified: true;
+//  ^^^^^^^^ Unused label.
+  }
+}
+```
+
+> [https://www.typescriptlang.org/tsconfig#allowUnusedLabels](https://www.typescriptlang.org/tsconfig#allowUnusedLabels)
+
+---
+
 ##### `alwaysStrict`<sup>Optional</sup> <a name="alwaysStrict" id="projen.javascript.TypeScriptCompilerOptions.property.alwaysStrict"></a>
 
 ```typescript
@@ -10710,6 +10767,23 @@ public readonly baseUrl: string;
 Lets you set a base directory to resolve non-absolute module names.
 
 You can define a root folder where you can do absolute file resolution.
+
+---
+
+##### `checkJs`<sup>Optional</sup> <a name="checkJs" id="projen.javascript.TypeScriptCompilerOptions.property.checkJs"></a>
+
+```typescript
+public readonly checkJs: boolean;
+```
+
+- *Type:* boolean
+
+Check JS.
+
+Works in tandem with [allowJs](https://www.typescriptlang.org/tsconfig#allowJs). When checkJs is enabled then
+errors are reported in JavaScript files. This is the equivalent of including //
+
+> [https://www.typescriptlang.org/tsconfig#checkJs](https://www.typescriptlang.org/tsconfig#checkJs)
 
 ---
 
