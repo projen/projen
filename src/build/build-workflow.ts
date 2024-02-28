@@ -203,16 +203,15 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
         ...options.permissions,
       },
-      defaults:
-        projectPathRelativeToRoot.length > 0 // is subproject,
-          ? {
-              run: {
-                workingDirectory: ensureRelativePathStartsWithDot(
-                  projectPathRelativeToRoot
-                ),
-              },
-            }
-          : undefined,
+      defaults: this.project.parent // is subproject,
+        ? {
+            run: {
+              workingDirectory: ensureRelativePathStartsWithDot(
+                projectPathRelativeToRoot
+              ),
+            },
+          }
+        : undefined,
       steps: (() => this.renderBuildSteps(projectPathRelativeToRoot)) as any,
       outputs: {
         [SELF_MUTATION_HAPPENED_OUTPUT]: {
@@ -430,8 +429,7 @@ export class BuildWorkflow extends Component {
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         mutationError:
           "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.",
-        workingDirectory:
-          projectPathRelativeToRoot.length > 0 ? "./" : undefined,
+        workingDirectory: this.project.parent ? "./" : undefined,
       }),
 
       // upload the build artifact only if we have post-build jobs (otherwise, there's no point)
@@ -446,10 +444,9 @@ export class BuildWorkflow extends Component {
             WorkflowSteps.uploadArtifact({
               with: {
                 name: BUILD_ARTIFACT_NAME,
-                path:
-                  projectPathRelativeToRoot.length > 0
-                    ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
-                    : this.artifactsDirectory,
+                path: this.project.parent
+                  ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+                  : this.artifactsDirectory,
               },
             }),
           ]),
