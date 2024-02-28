@@ -139,7 +139,7 @@ export interface NodeProjectOptions
    *
    * @default "main"
    */
-  readonly defaultReleaseBranch: string;
+  readonly defaultReleaseBranch?: string;
 
   /**
    * Workflow steps to use in order to bootstrap this repo.
@@ -568,12 +568,6 @@ export class NodeProject extends GitHubProject {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
       this.addDevDeps(`constructs@^10.0.0`);
-    }
-
-    if (!options.defaultReleaseBranch) {
-      throw new Error(
-        '"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"'
-      );
     }
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
