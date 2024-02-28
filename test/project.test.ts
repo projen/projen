@@ -30,7 +30,7 @@ test("all files added to the project can be enumerated", () => {
   exp("your/file/me.json");
 });
 
-test("generated files are commited if commitGenerated is undefined", () => {
+test("generated files are committed if commitGenerated is undefined", () => {
   // GIVEN
   const p = new TestProject();
   new TextFile(p, "my.txt");
@@ -42,7 +42,7 @@ test("generated files are commited if commitGenerated is undefined", () => {
   expect(gitIgnoreContents).toMatchSnapshot();
 });
 
-test("generated files are commited if commitGenerated is true", () => {
+test("generated files are committed if commitGenerated is true", () => {
   // GIVEN
   const p = new TestProject({ commitGenerated: true });
   new TextFile(p, "my.txt");
