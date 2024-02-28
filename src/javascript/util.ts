@@ -27,7 +27,7 @@ export function renderBundleName(entrypoint: string) {
     parts.shift(); // just remove 'src' if its the first element for ergonomics
   }
 
-  const p = parts.join(sep);
+  const p = parts.join(posix.sep);
   const dir = dirname(p);
   const base = basename(p, extname(p));
   return posix.join(dir, base);
