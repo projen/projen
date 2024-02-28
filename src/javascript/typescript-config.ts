@@ -565,6 +565,57 @@ export interface TypeScriptCompilerOptions {
    * You can read more about composite projects in the handbook.
    */
   readonly tsBuildInfoFile?: string;
+
+  /**
+   * Allow Unused Labels
+   *
+   * When:
+   *
+   * - `undefined` (default) provide suggestions as warnings to editors
+   * - `true` unused labels are ignored
+   * - `false` raises compiler errors about unused labels
+   *
+   * Labels are very rare in JavaScript and typically indicate an attempt to write an object literal:
+   *
+   * ```ts
+   * function verifyAge(age: number) {
+   *   // Forgot 'return' statement
+   *   if (age > 18) {
+   *     verified: true;
+   * //  ^^^^^^^^ Unused label.
+   *   }
+   * }
+   * ```
+   *
+   * @see https://www.typescriptlang.org/tsconfig#allowUnusedLabels
+   */
+  readonly allowUnusedLabels: false;
+
+  /**
+   * Allow Unreachable Code
+   *
+   * When:
+   *
+   * - `undefined` (default) provide suggestions as warnings to editors
+   * - `true` unreachable code is ignored
+   * - `false` raises compiler errors about unreachable code
+   *
+   * These warnings are only about code which is provably unreachable due to the use of JavaScript syntax.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#allowUnreachableCode
+   */
+  readonly allowUnreachableCode: false;
+
+  /**
+   * Check JS
+   *
+   * Works in tandem with [allowJs](https://www.typescriptlang.org/tsconfig#allowJs). When checkJs is enabled then
+   * errors are reported in JavaScript files. This is the equivalent of including // @ts-check at the top of all
+   * JavaScript files which are included in your project.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#checkJs
+   */
+  readonly checkJs: true;
 }
 
 /**
