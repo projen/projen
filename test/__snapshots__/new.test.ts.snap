@@ -101,12 +101,6 @@ exports[`projen new --from external 1`] = `
       "cobertura",
       "text",
     ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.dev.json",
-      },
-    },
-    "preset": "ts-jest",
     "reporters": [
       "default",
       [
@@ -124,6 +118,14 @@ exports[`projen new --from external 1`] = `
     "testPathIgnorePatterns": [
       "/node_modules/",
     ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
     "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
@@ -224,12 +226,6 @@ exports[`projen new --from external tarball 1`] = `
       "cobertura",
       "text",
     ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.dev.json",
-      },
-    },
-    "preset": "ts-jest",
     "reporters": [
       "default",
       [
@@ -247,6 +243,14 @@ exports[`projen new --from external tarball 1`] = `
     "testPathIgnorePatterns": [
       "/node_modules/",
     ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
     "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
