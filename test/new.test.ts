@@ -165,7 +165,7 @@ test("projen new --from external tarball", () => {
     execProjenCLI(projectdir, [
       "new",
       "--from",
-      "./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
+      "pepperize-projen-awscdk-app-ts-0.0.333.tgz",
       "--no-post",
     ]);
 

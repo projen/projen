@@ -58,12 +58,13 @@ export function renderInstallCommand(dir: string, module: string): string {
 export function moduleExists(cwd: string, module: string): boolean {
   try {
     logging.debug(`Checking if external module '${module}' exists...`);
-    const externalModule = !module.startsWith("./");
-    if (externalModule) {
+    // check if local path reference or tgz file
+    const localModule = /^(\.\/|\/)/.test(module) || /\.tgz$/.test(module);
+    if (localModule) {
+      return fs.existsSync(module);
+    } else {
       exec(`npm view ${module}`, { cwd, stdio: "ignore" });
       return true;
-    } else {
-      return fs.existsSync(module);
     }
   } catch (error) {
     // exec throws an error if external module does not exist

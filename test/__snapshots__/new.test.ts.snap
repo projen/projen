@@ -191,7 +191,6 @@ exports[`projen new --from external tarball 1`] = `
     "constructs": "^10.0.5",
   },
   "devDependencies": {
-    "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "@types/jest": "*",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
@@ -205,6 +204,7 @@ exports[`projen new --from external tarball 1`] = `
     "eslint-plugin-prettier": "*",
     "jest": "*",
     "jest-junit": "^15",
+    "pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "prettier": "*",
     "projen": "*",
     "standard-version": "^9",
@@ -291,7 +291,7 @@ exports[`projen new --from external tarball 2`] = `
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
-  devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
+  devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
   projenrcTs: true,
 
