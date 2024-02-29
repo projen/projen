@@ -70,7 +70,7 @@ export class Poetry
 
     this.project.tasks.addEnvironment(
       "VIRTUAL_ENV",
-      "$(poetry run poetry env info -p)"
+      `$(poetry env info -p || poetry env use ${this.pythonExec} | grep -oP 'Using virtualenv: \\K.*')`
     );
     this.project.tasks.addEnvironment(
       "PATH",
