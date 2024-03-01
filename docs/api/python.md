@@ -418,7 +418,6 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.python.Poetry.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.Poetry.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.Poetry.property.activateVenvTask">activateVenvTask</a></code> | <code>projen.Task</code> | Task for activating the virtual environment. |
 | <code><a href="#projen.python.Poetry.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | Task for installing dependencies according to the existing lockfile. |
 | <code><a href="#projen.python.Poetry.property.installTask">installTask</a></code> | <code>projen.Task</code> | Task for updating the lockfile and installing project dependencies. |
 | <code><a href="#projen.python.Poetry.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | Task for publishing the package to a package repository. |
@@ -445,18 +444,6 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
-
----
-
-##### `activateVenvTask`<sup>Required</sup> <a name="activateVenvTask" id="projen.python.Poetry.property.activateVenvTask"></a>
-
-```typescript
-public readonly activateVenvTask: Task;
-```
-
-- *Type:* projen.Task
-
-Task for activating the virtual environment.
 
 ---
 
