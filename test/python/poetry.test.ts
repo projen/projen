@@ -164,23 +164,23 @@ test("poetry enabled with metadata in dependencies", () => {
 
   const snapshot = synthSnapshot(p);
   const actualTomlContent = snapshot["pyproject.toml"];
-  const actualContentObject = TOML.parse(actualTomlContent) as any;
+  const actualObjectContent = TOML.parse(actualTomlContent) as any;
 
   // Check that simple dependencies are structured correctly
-  expect(actualContentObject.tool.poetry.dependencies).toMatchObject({
+  expect(actualObjectContent.tool.poetry.dependencies).toMatchObject({
     "regular-version-package": "1.2.3",
     python: expect.any(String),
   });
 
   // Check that complex dependencies with metadata are structured correctly
   // This ensures that metadata such as version constraints and extras are properly formatted
-  expect(actualContentObject.tool.poetry.dependencies.package1).toMatchObject({
+  expect(actualObjectContent.tool.poetry.dependencies.package1).toMatchObject({
     version: "^3.3.3",
     extras: ["mypackage-extra"],
   });
 
   // This ensures that dependencies with a path reference are properly formatted
-  expect(actualContentObject.tool.poetry.dependencies.package2).toMatchObject({
+  expect(actualObjectContent.tool.poetry.dependencies.package2).toMatchObject({
     path: "../mypackage/foo",
   });
 });
@@ -234,9 +234,9 @@ test("generates correct pyproject.toml content", () => {
 
   const snapshot = synthSnapshot(project);
   const actualTomlContent = snapshot["pyproject.toml"];
-  const actualContentObject = TOML.parse(actualTomlContent);
+  const actualObjectContent = TOML.parse(actualTomlContent);
 
-  const expectedContentObject = {
+  const expectedObjectContent = {
     tool: {
       poetry: {
         name: "test-python-project",
@@ -268,5 +268,5 @@ test("generates correct pyproject.toml content", () => {
     },
   };
 
-  expect(actualContentObject).toEqual(expectedContentObject);
+  expect(actualObjectContent).toEqual(expectedObjectContent);
 });
