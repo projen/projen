@@ -129,7 +129,7 @@ export class Poetry
       // Python version must be defined for poetry projects. Default to ^3.8.
       dependencies.python = "^3.8";
     }
-    return this.permitDependenciesWithMetadata(dependencies);
+    return this.permitTomlInlineTableDeps(dependencies);
   }
 
   private synthDevDependencies() {
@@ -139,15 +139,19 @@ export class Poetry
         dependencies[pkg.name] = pkg.version ?? "*";
       }
     }
-    return this.permitDependenciesWithMetadata(dependencies);
+    return this.permitTomlInlineTableDeps(dependencies);
   }
 
   /**
-   * Allow for poetry dependencies to specify metadata, eg `mypackage@{ version="1.2.3", extras = ["my-package-extra"] }`
-   * @param dependencies poetry dependencies object
+   * Converts Poetry dependency declarations' values from TOML inline table strings to TOML inline tables.
+   * Allows specifying versions and extras in a format like `mypackage@{ version="1.2.3", extras=["mypackage-extra"] }`.
+   * @see https://toml.io/en/v1.0.0#inline-table
+   *
+   * @param dependencies A map of dependency names to SemVer strings or TOML inline table strings.
    * @private
+   *
    */
-  private permitDependenciesWithMetadata(dependencies: { [key: string]: any }) {
+  private permitTomlInlineTableDeps(dependencies: { [key: string]: any }) {
     const formattedDependencies: { [key: string]: any } = {};
 
     for (const [key, value] of Object.entries(dependencies)) {
@@ -156,8 +160,8 @@ export class Poetry
         value.startsWith("{") &&
         value.endsWith("}")
       ) {
-        // Parse the string as a TOML-like object representation
-        const metadataString = value.slice(1, -1); // Remove the surrounding braces
+        // Parse the string as a TOML inline table
+        const metadataString = value.slice(1, -1); // Remove surrounding braces
         const metadataParts = metadataString
           .split(",")
           .map((part) => part.trim());
@@ -179,6 +183,7 @@ export class Poetry
 
         formattedDependencies[key] = metadataObject;
       } else {
+        // Skip conversion if the string doesn't contain a TOML inline table
         formattedDependencies[key] = value;
       }
     }
