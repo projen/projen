@@ -398,13 +398,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/semver,@types/yargs,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,license-checker,prettier,ts-jest,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@iarna/toml,@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/semver,@types/yargs,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,license-checker,prettier,ts-jest,typescript"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii license-checker prettier standard-version ts-jest typescript"
+          "exec": "yarn upgrade @iarna/toml @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii license-checker prettier standard-version ts-jest typescript"
         },
         {
           "exec": "node ./projen.js"
@@ -422,13 +422,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep= --filter=@iarna/toml,case,chalk,comment-json,conventional-changelog-config-spec,fast-json-patch,ini,json2toml,semver,shx,xmlbuilder2,yargs"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep= --filter=case,chalk,comment-json,conventional-changelog-config-spec,fast-json-patch,ini,json2toml,semver,shx,xmlbuilder2,yargs"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-json-patch glob ini json2toml semver shx xmlbuilder2 yaml yargs"
+          "exec": "yarn upgrade case chalk comment-json conventional-changelog-config-spec fast-json-patch glob ini json2toml semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "node ./projen.js"

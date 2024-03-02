@@ -1,4 +1,3 @@
-import * as TOML from "@iarna/toml";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
@@ -145,21 +144,42 @@ export class Poetry
    * @private
    */
   private permitDependenciesWithMetadata(dependencies: { [key: string]: any }) {
-    const parseVersionMetadata = (version: any) => {
-      try {
-        // Try parsing the version as toml to permit metadata
-        return TOML.parse(`version = ${version}`).version;
-      } catch (e) {
-        // Invalid toml means it's not metadata, so should just be treated as the string
-        return version;
+    const formattedDependencies: { [key: string]: any } = {};
+
+    for (const [key, value] of Object.entries(dependencies)) {
+      if (
+        typeof value === "string" &&
+        value.startsWith("{") &&
+        value.endsWith("}")
+      ) {
+        // Parse the string as a TOML-like object representation
+        const metadataString = value.slice(1, -1); // Remove the surrounding braces
+        const metadataParts = metadataString
+          .split(",")
+          .map((part) => part.trim());
+        const metadataObject: any = {};
+
+        for (const part of metadataParts) {
+          const [partKey, partValue] = part.split("=").map((p) => p.trim());
+          if (partValue.startsWith("[") && partValue.endsWith("]")) {
+            // Handle array values
+            metadataObject[partKey] = partValue
+              .slice(1, -1)
+              .split(",")
+              .map((item) => item.trim().replace(/^"|"$/g, ""));
+          } else {
+            // Handle string values
+            metadataObject[partKey] = partValue.replace(/^"|"$/g, "");
+          }
+        }
+
+        formattedDependencies[key] = metadataObject;
+      } else {
+        formattedDependencies[key] = value;
       }
-    };
-    return Object.fromEntries(
-      Object.entries(dependencies).map(([key, value]) => [
-        key,
-        parseVersionMetadata(value),
-      ])
-    );
+    }
+
+    return formattedDependencies;
   }
 
   /**

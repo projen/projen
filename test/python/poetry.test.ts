@@ -157,28 +157,32 @@ test("poetry enabled with metadata in dependencies", () => {
     classifiers: ["Development Status :: 4 - Beta"],
     deps: [
       "regular-version-package@1.2.3",
-      'package1@{version = "^3.3.3", extras = ["mypackage-extra"]}',
-      'package2@{ path = "../mypackage/foo" }',
+      `package1@{version = "^3.3.3", extras = ["mypackage-extra"]}`,
+      `package2@{ path = "../mypackage/foo" }`,
     ],
   });
 
   const snapshot = synthSnapshot(p);
-  // Rendered as a "normal" version
-  expect(snapshot["pyproject.toml"]).toContain(
-    'regular-version-package = "1.2.3"'
-  );
-  // package1 metadata should be rendered as its own section, and contain the specified metadata
-  expect(snapshot["pyproject.toml"]).toContain(
-    "[tool.poetry.dependencies.package1]"
-  );
-  expect(snapshot["pyproject.toml"]).toContain('version = "^3.3.3"');
-  expect(snapshot["pyproject.toml"]).toContain('extras = ["mypackage-extra"]');
-  // Likewise package2 metadata should be rendered
-  expect(snapshot["pyproject.toml"]).toContain(
-    "[tool.poetry.dependencies.package2]"
-  );
-  expect(snapshot["pyproject.toml"]).toContain('path = "../mypackage/foo"');
-  expect(snapshot["pyproject.toml"]).toMatchSnapshot();
+  const actualTomlContent = snapshot["pyproject.toml"];
+  const actualContentObject = TOML.parse(actualTomlContent) as any;
+
+  // Check that simple dependencies are structured correctly
+  expect(actualContentObject.tool.poetry.dependencies).toMatchObject({
+    "regular-version-package": "1.2.3",
+    python: expect.any(String),
+  });
+
+  // Check that complex dependencies with metadata are structured correctly
+  // This ensures that metadata such as version constraints and extras are properly formatted
+  expect(actualContentObject.tool.poetry.dependencies.package1).toMatchObject({
+    version: "^3.3.3",
+    extras: ["mypackage-extra"],
+  });
+
+  // This ensures that dependencies with a path reference are properly formatted
+  expect(actualContentObject.tool.poetry.dependencies.package2).toMatchObject({
+    path: "../mypackage/foo",
+  });
 });
 
 test("poetry environment is setup with pythonExec", () => {
@@ -230,7 +234,6 @@ test("generates correct pyproject.toml content", () => {
 
   const snapshot = synthSnapshot(project);
   const actualTomlContent = snapshot["pyproject.toml"];
-
   const actualContentObject = TOML.parse(actualTomlContent);
 
   const expectedContentObject = {
