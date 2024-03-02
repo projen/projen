@@ -157,7 +157,7 @@ test("poetry enabled with metadata in dependencies", () => {
     classifiers: ["Development Status :: 4 - Beta"],
     deps: [
       "regular-version-package@1.2.3",
-      `package1@{version = "^3.3.3", extras = ["mypackage-extra"]}`,
+      `package1@{ version = "^3.3.3", extras = ["mypackage-extra"] }`,
       `package2@{ path = "../mypackage/foo" }`,
     ],
   });

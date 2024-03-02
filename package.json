@@ -70,7 +70,7 @@
     "jest-junit": "^15",
     "jsii": "5.1.x",
     "jsii-diff": "^1.94.0",
-    "jsii-docgen": "^10.3.17",
+    "jsii-docgen": "^10.3.19",
     "jsii-pacmak": "^1.94.0",
     "jsii-rosetta": "5.1.x",
     "license-checker": "^25.0.1",
