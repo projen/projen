@@ -2,7 +2,7 @@
 // and compare against a golden snapshot.
 import { execSync } from "child_process";
 import { mkdirSync, existsSync, writeFileSync, readFileSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -144,7 +144,11 @@ test("projen new --from from external tarball (absolute path)", () => {
     execProjenCLI(projectdir, [
       "new",
       "--from",
-      `${process.cwd()}/pepperize-projen-awscdk-app-ts-0.0.333.tgz`,
+      `${resolve(
+        __dirname,
+        "..",
+        "pepperize-projen-awscdk-app-ts-0.0.333.tgz"
+      )}`,
       "--no-post",
     ]);
 
