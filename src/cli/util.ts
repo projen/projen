@@ -17,7 +17,8 @@ export function installPackage(baseDir: string, spec: string): string {
     exec("npm init --yes", { cwd: baseDir });
   }
 
-  logging.info(`installing external module ${spec}...`);
+  const moduleSource = isLocalModule(spec) ? "local" : "external";
+  logging.info(`installing ${moduleSource} module ${spec}...`);
   exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // Get the true installed package name
@@ -55,11 +56,15 @@ export function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
 }
 
+export function isLocalModule(module: string): boolean {
+  return /^(\.\/|\/)/.test(module) || /\.tgz$/.test(module);
+}
+
 export function moduleExists(cwd: string, module: string): boolean {
   try {
     logging.debug(`Checking if external module '${module}' exists...`);
     // check if local path reference or tgz file
-    const localModule = /^(\.\/|\/)/.test(module) || /\.tgz$/.test(module);
+    const localModule = isLocalModule(module);
     if (localModule) {
       return fs.existsSync(module);
     } else {

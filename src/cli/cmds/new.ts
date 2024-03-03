@@ -18,6 +18,7 @@ import {
   CliError,
   findJsiiFilePath,
   installPackage,
+  isLocalModule,
   moduleExists,
   renderInstallCommand,
 } from "../util";
@@ -302,8 +303,9 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   logging.empty();
 
   if (!exists) {
+    const moduleSource = isLocalModule(spec) ? "path" : "registry";
     throw new CliError(
-      `Could not find '${spec}' in this registry. Please ensure that the package exists, you have access it and try again.`
+      `Could not find '${spec}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
     );
   }
 
