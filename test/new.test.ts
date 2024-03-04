@@ -145,8 +145,7 @@ test("projen new --from from external tarball (absolute path)", () => {
       "new",
       "--from",
       `${resolve(
-        __dirname,
-        "..",
+        projectdir,
         "pepperize-projen-awscdk-app-ts-0.0.333.tgz"
       )}`,
       "--no-post",
