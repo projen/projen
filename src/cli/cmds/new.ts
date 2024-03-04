@@ -14,7 +14,14 @@ import {
   isTruthy,
 } from "../../util";
 import { tryProcessMacro } from "../macros";
-import { CliError, installPackage, renderInstallCommand } from "../util";
+import {
+  CliError,
+  findJsiiFilePath,
+  installPackage,
+  isLocalModule,
+  moduleExists,
+  renderInstallCommand,
+} from "../util";
 
 class Command implements yargs.CommandModule {
   public readonly command = "new [PROJECT-TYPE-NAME] [OPTIONS]";
@@ -292,15 +299,27 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
+  const exists = moduleExists(baseDir, spec);
+  logging.empty();
+
+  if (!exists) {
+    const moduleSource = isLocalModule(spec) ? "path" : "registry";
+    throw new CliError(
+      `Could not find '${spec}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
+    );
+  }
+
   const moduleName = installPackage(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
-  const moduleDir = path.dirname(
-    require.resolve(`${moduleName}/.jsii`, {
-      paths: [baseDir],
-    })
-  );
+  const moduleDir = findJsiiFilePath(baseDir, moduleName);
+
+  if (!moduleDir) {
+    throw new CliError(
+      `Module '${moduleName}' does not look like it is compatible with projen. Reason: Cannot find '${moduleName}/.jsii'. All projen modules must be jsii modules!`
+    );
+  }
 
   // Only leave projects from the main (requested) package
   const projects = inventory

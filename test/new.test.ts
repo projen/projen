@@ -2,7 +2,7 @@
 // and compare against a golden snapshot.
 import { execSync } from "child_process";
 import { mkdirSync, existsSync, writeFileSync, readFileSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -70,6 +70,154 @@ test("projen new --from external", () => {
   });
 });
 
+test("projen new --from non-existent external", () => {
+  try {
+    withProjectDir((projectdir) => {
+      const nonExistentPackage = `@non-existent-scope/some-non-existent-package`;
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        nonExistentPackage,
+        "--no-post",
+      ]);
+    });
+  } catch (error: any) {
+    expect(error.message).toContain(
+      `Could not find '@non-existent-scope/some-non-existent-package' in this registry. Please ensure that the package exists, you have access it and try again.`
+    );
+  }
+});
+
+test("projen new --from external tarball", () => {
+  withProjectDir((projectdir) => {
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
+    shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
+
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "pepperize-projen-awscdk-app-ts-0.0.333.tgz",
+      "--no-post",
+    ]);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
+
+    // compare generated to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+    });
+
+    expect(actual["package.json"]).toBeDefined();
+    expect(actual["package.json"]).toMatchSnapshot();
+    expect(actual[".projenrc.ts"]).toBeDefined();
+    expect(actual[".projenrc.ts"]).toMatchSnapshot();
+  });
+});
+
+test("projen new --from non-existent external tarball", () => {
+  withProjectDir((projectdir) => {
+    try {
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "none-existent-package-0.0.1.tgz",
+        "--no-post",
+      ]);
+    } catch (error: any) {
+      // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
+      expect(error.message).toContain(
+        `Could not find 'none-existent-package-0.0.1.tgz' in this path. Please ensure that the package exists, you have access it and try again.`
+      );
+    }
+  });
+});
+
+test("projen new --from from external tarball (absolute path)", () => {
+  withProjectDir((projectdir) => {
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
+    shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
+    const tarball = resolve(
+      projectdir,
+      "pepperize-projen-awscdk-app-ts-0.0.333.tgz"
+    );
+
+    execProjenCLI(projectdir, ["new", "--from", tarball, "--no-post"]);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
+
+    // compare generated to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+    });
+
+    // Cannot use snapshots because absolute path is system dependent
+    // We use an approximation. This is good enough because we have plenty of other tests covering this
+    expect(actual["package.json"]).toBeDefined();
+    expect(actual["package.json"]).toHaveProperty("devDependencies");
+    expect(actual["package.json"].devDependencies).toMatchObject({
+      [tarball]: "*",
+    });
+    expect(actual[".projenrc.ts"]).toBeDefined();
+    expect(actual[".projenrc.ts"]).toContain(
+      `import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts`
+    );
+    expect(actual[".projenrc.ts"]).toContain(tarball);
+  });
+});
+
+test("projen new --from from external tarball (relative path)", () => {
+  withProjectDir((projectdir) => {
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
+    shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
+
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
+      "--no-post",
+    ]);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
+
+    // compare generated to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+    });
+
+    expect(actual["package.json"]).toBeDefined();
+    expect(actual["package.json"]).toMatchSnapshot();
+    expect(actual[".projenrc.ts"]).toBeDefined();
+    expect(actual[".projenrc.ts"]).toMatchSnapshot();
+  });
+});
+
+test("projen new --from non-jsii module external", () => {
+  try {
+    withProjectDir((projectdir) => {
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "typescript", // valid package, but not a jsii module
+        "--no-post",
+      ]);
+    });
+  } catch (error: any) {
+    // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
+    expect(error.message).toContain(
+      `Module 'typescript' does not look like it is compatible with projen. Reason: Cannot find 'typescript/.jsii'. All projen modules must be jsii modules!`
+    );
+  }
+});
+
 test("projen new --from external with enum values", () => {
   withProjectDir((projectdir) => {
     // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
@@ -116,35 +264,6 @@ test("projen new --from external can use array option", () => {
     });
 
     expect(actual[".projenrc.ts"]).toContain('deps: ["glob@8","lodash@4"]');
-  });
-});
-
-test("projen new --from external tarball", () => {
-  withProjectDir((projectdir) => {
-    const shell = (command: string) => execSync(command, { cwd: projectdir });
-    // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
-    shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
-
-    execProjenCLI(projectdir, [
-      "new",
-      "--from",
-      "./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
-      "--no-post",
-    ]);
-
-    // patch the projen version in package.json to match the current version
-    // otherwise, every bump would need to update these snapshots.
-    sanitizeOutput(projectdir);
-
-    // compare generated to the snapshot
-    const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
-    });
-
-    expect(actual["package.json"]).toBeDefined();
-    expect(actual["package.json"]).toMatchSnapshot();
-    expect(actual[".projenrc.ts"]).toBeDefined();
-    expect(actual[".projenrc.ts"]).toMatchSnapshot();
   });
 });
 
