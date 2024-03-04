@@ -183,6 +183,8 @@ test("poetry enabled with metadata in dependencies", () => {
   expect(actualObjectContent.tool.poetry.dependencies.package2).toMatchObject({
     path: "../mypackage/foo",
   });
+
+  expect(snapshot["pyproject.toml"]).toMatchSnapshot();
 });
 
 test("poetry environment is setup with pythonExec", () => {
