@@ -49,6 +49,7 @@
     "organization": true
   },
   "devDependencies": {
+    "@iarna/toml": "^2.2.5",
     "@types/conventional-changelog-config-spec": "^2.1.5",
     "@types/glob": "^7.2.0",
     "@types/ini": "^1.3.34",
@@ -83,7 +84,6 @@
     "constructs": "^10.0.0"
   },
   "dependencies": {
-    "@iarna/toml": "^2.2.5",
     "case": "^1.6.3",
     "chalk": "^4.1.2",
     "comment-json": "4.2.2",
@@ -92,6 +92,7 @@
     "fast-json-patch": "^3.1.1",
     "glob": "^8",
     "ini": "^2.0.0",
+    "json2toml": "^6.1.0",
     "semver": "^7.6.0",
     "shx": "^0.3.4",
     "xmlbuilder2": "^3.1.1",
@@ -99,7 +100,6 @@
     "yargs": "^17.7.2"
   },
   "bundledDependencies": [
-    "@iarna/toml",
     "case",
     "chalk",
     "comment-json",
@@ -107,6 +107,7 @@
     "fast-json-patch",
     "glob",
     "ini",
+    "json2toml",
     "semver",
     "shx",
     "xmlbuilder2",

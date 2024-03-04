@@ -1,4 +1,3 @@
-import * as TOML from "@iarna/toml";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
@@ -130,7 +129,7 @@ export class Poetry
       // Python version must be defined for poetry projects. Default to ^3.8.
       dependencies.python = "^3.8";
     }
-    return this.permitDependenciesWithMetadata(dependencies);
+    return this.permitTomlInlineTableDeps(dependencies);
   }
 
   private synthDevDependencies() {
@@ -140,30 +139,56 @@ export class Poetry
         dependencies[pkg.name] = pkg.version ?? "*";
       }
     }
-    return this.permitDependenciesWithMetadata(dependencies);
+    return this.permitTomlInlineTableDeps(dependencies);
   }
 
   /**
-   * Allow for poetry dependencies to specify metadata, eg `mypackage@{ version="1.2.3", extras = ["my-package-extra"] }`
-   * @param dependencies poetry dependencies object
+   * Converts Poetry dependency declarations' values from TOML inline table strings to TOML inline tables.
+   * Allows specifying versions and extras in a format like `mypackage@{ version="1.2.3", extras=["mypackage-extra"] }`.
+   * @see https://toml.io/en/v1.0.0#inline-table
+   *
+   * @param dependencies A map of dependency names to SemVer strings or TOML inline table strings.
    * @private
+   *
    */
-  private permitDependenciesWithMetadata(dependencies: { [key: string]: any }) {
-    const parseVersionMetadata = (version: any) => {
-      try {
-        // Try parsing the version as toml to permit metadata
-        return TOML.parse(`version = ${version}`).version;
-      } catch (e) {
-        // Invalid toml means it's not metadata, so should just be treated as the string
-        return version;
+  private permitTomlInlineTableDeps(dependencies: { [key: string]: any }) {
+    const formattedDependencies: { [key: string]: any } = {};
+
+    for (const [key, value] of Object.entries(dependencies)) {
+      if (
+        typeof value === "string" &&
+        value.startsWith("{") &&
+        value.endsWith("}")
+      ) {
+        // Parse the string as a TOML inline table
+        const metadataString = value.slice(1, -1); // Remove surrounding braces
+        const metadataParts = metadataString
+          .split(",")
+          .map((part) => part.trim());
+        const metadataObject: any = {};
+
+        for (const part of metadataParts) {
+          const [partKey, partValue] = part.split("=").map((p) => p.trim());
+          if (partValue.startsWith("[") && partValue.endsWith("]")) {
+            // Handle array values
+            metadataObject[partKey] = partValue
+              .slice(1, -1)
+              .split(",")
+              .map((item) => item.trim().replace(/^"|"$/g, ""));
+          } else {
+            // Handle string values
+            metadataObject[partKey] = partValue.replace(/^"|"$/g, "");
+          }
+        }
+
+        formattedDependencies[key] = metadataObject;
+      } else {
+        // Skip conversion if the string doesn't contain a TOML inline table
+        formattedDependencies[key] = value;
       }
-    };
-    return Object.fromEntries(
-      Object.entries(dependencies).map(([key, value]) => [
-        key,
-        parseVersionMetadata(value),
-      ])
-    );
+    }
+
+    return formattedDependencies;
   }
 
   /**
