@@ -140,14 +140,12 @@ test("projen new --from from external tarball (absolute path)", () => {
     const shell = (command: string) => execSync(command, { cwd: projectdir });
     // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
     shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
-    const tarball = resolve(projectdir, "pepperize-projen-awscdk-app-ts-0.0.333.tgz");
+    const tarball = resolve(
+      projectdir,
+      "pepperize-projen-awscdk-app-ts-0.0.333.tgz"
+    );
 
-    execProjenCLI(projectdir, [
-      "new",
-      "--from",
-      tarball,
-      "--no-post",
-    ]);
+    execProjenCLI(projectdir, ["new", "--from", tarball, "--no-post"]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -161,11 +159,15 @@ test("projen new --from from external tarball (absolute path)", () => {
     // Cannot use snapshots because absolute path is system dependent
     // We use an approximation. This is good enough because we have plenty of other tests covering this
     expect(actual["package.json"]).toBeDefined();
-    expect(actual["package.json"]).toHaveProperty("devDependencies")
-    expect(actual["package.json"]["devDependencies"]).toMatchObject({ [tarball]: '*'})
+    expect(actual["package.json"]).toHaveProperty("devDependencies");
+    expect(actual["package.json"].devDependencies).toMatchObject({
+      [tarball]: "*",
+    });
     expect(actual[".projenrc.ts"]).toBeDefined();
-    expect(actual[".projenrc.ts"]).toContain(`import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts`)
-    expect(actual[".projenrc.ts"]).toContain(tarball)
+    expect(actual[".projenrc.ts"]).toContain(
+      `import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts`
+    );
+    expect(actual[".projenrc.ts"]).toContain(tarball);
   });
 });
 
