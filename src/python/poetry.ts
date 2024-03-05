@@ -103,7 +103,6 @@ export class Poetry
     });
 
     new TomlFile(project, "poetry.toml", {
-      committed: false,
       obj: {
         repositories: {
           testpypi: {
