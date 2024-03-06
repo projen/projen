@@ -13,21 +13,27 @@ function execCommand(command) {
   }
 }
 
+const isBuild = existsSync("lib/cli/index.js");
+const hasJsii = existsSync("node_modules/.bin/jsii");
+const hasTsNode = existsSync("node_modules/.bin/ts-node");
+const needsBootstrapping = !isBuild || !hasTsNode;
+
+const installCommand = "yarn install --frozen-lockfile --check-files --non-interactive";
+const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
+
 function bootstrap() {
   console.info("bootstrapping...");
 
-  if (!existsSync("node_modules/.bin/jsii")) {
-    execCommand(
-      "yarn install --frozen-lockfile --check-files --non-interactive"
-    );
+  if (!hasTsNode || !hasJsii) {
+    execCommand(installCommand);
   }
 
-  execCommand(
-    "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
-  );
+  if (!isBuild) {
+    execCommand(buildCommand);
+  }
 }
 
-if (!existsSync("lib/cli/index.js")) {
+if (needsBootstrapping) {
   bootstrap();
 }
 

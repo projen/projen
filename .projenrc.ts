@@ -1,4 +1,4 @@
-const {
+import {
   cdk,
   github,
   javascript,
@@ -7,16 +7,18 @@ const {
   TextFile,
   ReleasableCommits,
   DependencyType,
-} = require("./lib");
-const { PROJEN_MARKER } = require("./lib/common");
+} from "./src";
+import { PROJEN_MARKER } from "./src/common";
+
+const bootstrapScriptFile = "projen.js";
 
 const project = new cdk.JsiiProject({
   name: "projen",
   description: "CDK for software projects",
-  repository: "https://github.com/projen/projen.git",
+  repositoryUrl: "https://github.com/projen/projen.git",
 
-  authorName: "Amazon Web Services",
-  authorUrl: "https://aws.amazon.com",
+  author: "Amazon Web Services",
+  authorAddress: "https://aws.amazon.com",
   authorOrganization: true,
 
   stability: "experimental",
@@ -87,10 +89,8 @@ const project = new cdk.JsiiProject({
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: "node ./projen.js",
-
-  // cli tests need projen to be compiled
-  compileBeforeTest: true,
+  projenCommand: `node ./${bootstrapScriptFile}`,
+  projenrcTs: true,
 
   // Disable interop since it's disabled available in jsii
   tsconfigDev: {
@@ -141,24 +141,31 @@ const project = new cdk.JsiiProject({
   },
 });
 
-// Run license checker as a separate CI job
-new github.TaskWorkflow(project.github, {
-  name: "check-licenses",
-  jobId: "check-licenses",
-  triggers: {
-    pullRequest: {},
-    workflowDispatch: {},
-    push: { branches: ["main"] },
-  },
-  permissions: {},
-  preBuildSteps: [
-    {
-      name: "Install dependencies",
-      run: project.runTaskCommand(project.tasks.tryFind("install:ci")),
-    },
-  ],
-  task: project.tasks.tryFind("check-licenses"),
-});
+if (project.github) {
+  const installCiTask = project.tasks.tryFind("install:ci");
+  const checkLicensesTask = project.tasks.tryFind("check-licenses");
+
+  if (installCiTask && checkLicensesTask) {
+    // Run license checker as a separate CI job
+    new github.TaskWorkflow(project.github, {
+      name: "check-licenses",
+      jobId: "check-licenses",
+      triggers: {
+        pullRequest: {},
+        workflowDispatch: {},
+        push: { branches: ["main"] },
+      },
+      permissions: {},
+      preBuildSteps: [
+        {
+          name: "Install dependencies",
+          run: project.runTaskCommand(installCiTask),
+        },
+      ],
+      task: checkLicensesTask,
+    });
+  }
+}
 
 // Upgrade Dependencies in two parts:
 // a) Upgrade bundled dependencies as a releasable fix
@@ -181,8 +188,8 @@ new javascript.UpgradeDependencies(project, {
   exclude: [
     // exclude the bundled deps
     ...project.deps.all
-      .filter((d) => d.type === DependencyType.BUNDLED)
-      .map((d) => d.name),
+      .filter((d: any) => d.type === DependencyType.BUNDLED)
+      .map((d: any) => d.name),
     // constructs version constraint should not be changed
     "constructs",
     // markmac depends on projen, we are excluding it here to avoid a circular update loop
@@ -193,42 +200,70 @@ new javascript.UpgradeDependencies(project, {
   },
 });
 
-project.tasks
-  .tryFind("docgen")
-  .reset("jsii-docgen .jsii -o docs/api/projen --split-by-submodule");
+const docgenTask = project.tasks.tryFind("docgen");
+
+if (docgenTask) {
+  docgenTask.reset("jsii-docgen .jsii -o docs/api/projen --split-by-submodule");
+}
 
 // ignoring the entire docusaurus folder because it's not needed in the published package
-project.npmignore.exclude("/docusaurus/");
+if (project.npmignore) {
+  project.npmignore.exclude("/docusaurus/");
+}
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
-const bootstrapScript = new TextFile(project, "projen.js", {
+const bootstrapScript = new TextFile(project, bootstrapScriptFile, {
   executable: true,
   marker: true,
-  lines: [
-    "#!/usr/bin/env node",
-    `// ${PROJEN_MARKER}`,
-    "",
-    'const { existsSync } = require("fs");',
-    'const { execSync } = require("child_process");',
-    "",
-    `${execCommand.toString()}`,
-    "",
-    `${bootstrap.toString()}`,
-    "",
-    'if (!existsSync("lib/cli/index.js")) {',
-    "  bootstrap();",
-    "}",
-    "",
-    'const args = process.argv.slice(2).join(" ");',
-    "execCommand(`node bin/projen ${args}`);",
-    "",
-  ],
+  lines: `#!/usr/bin/env node
+// ${PROJEN_MARKER}
+
+const { existsSync } = require("fs");
+const { execSync } = require("child_process");
+
+function execCommand(command) {
+  try {
+    execSync(command, { stdio: "inherit" });
+  } catch (error) {
+    console.error(\`Failed to execute command: \${command}\`, error);
+    process.exit(1);
+  }
+}
+
+const isBuild = existsSync("lib/cli/index.js");
+const hasJsii = existsSync("node_modules/.bin/jsii");
+const hasTsNode = existsSync("node_modules/.bin/ts-node");
+const needsBootstrapping = !isBuild || !hasTsNode;
+
+const installCommand = "yarn install --frozen-lockfile --check-files --non-interactive";
+const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
+
+function bootstrap() {
+  console.info("bootstrapping...");
+
+  if (!hasTsNode || !hasJsii) {
+    execCommand(installCommand);
+  }
+
+  if (!isBuild) {
+    execCommand(buildCommand);
+  }
+}
+
+if (needsBootstrapping) {
+  bootstrap();
+}
+
+const args = process.argv.slice(2).join(" ");
+execCommand(\`node bin/projen \${args}\`);
+`.split("\n"),
 });
-project.npmignore.exclude(`/${bootstrapScript.path}`);
+if (project.npmignore) {
+  project.npmignore.exclude(`/${bootstrapScript.path}`);
+}
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
-project.gitignore.include("templates/**");
 project.gitignore.include("test/inventory/**");
 project.gitignore.exclude("/.idea");
 project.gitignore.exclude("**/.tool-versions");
@@ -249,57 +284,75 @@ new JsonFile(project, ".markdownlint.json", {
     },
   },
 });
-project.npmignore.exclude("/.markdownlint.json");
+if (project.npmignore) {
+  project.npmignore.exclude("/.markdownlint.json");
+}
 
-project.vscode.launchConfiguration.addConfiguration({
-  type: "pwa-node",
-  request: "launch",
-  name: "projen CLI",
-  skipFiles: ["<node_internals>/**"],
-  program: "${workspaceFolder}/lib/cli/index.js",
-  outFiles: ["${workspaceFolder}/lib/**/*.js"],
-});
+if (project.vscode) {
+  project.vscode.launchConfiguration.addConfiguration({
+    type: "pwa-node",
+    request: "launch",
+    name: "projen CLI",
+    skipFiles: ["<node_internals>/**"],
+    program: "${workspaceFolder}/lib/cli/index.js",
+    outFiles: ["${workspaceFolder}/lib/**/*.js"],
+  });
+}
 
-project.github.mergify.addRule({
-  name: "Label core contributions",
-  actions: {
-    label: {
-      add: ["contribution/core"],
+if (project.github && project.github.mergify) {
+  project.github.mergify.addRule({
+    name: "Label core contributions",
+    actions: {
+      label: {
+        add: ["contribution/core"],
+      },
     },
-  },
-  conditions: ["author~=^(eladb|Chriscbr)$", "label!=contribution/core"],
-});
+    conditions: ["author~=^(eladb|Chriscbr)$", "label!=contribution/core"],
+  });
+}
 
-project.gitpod.addCustomTask({
-  name: "Setup",
-  init: "yarn install",
-  prebuild: "bash ./projen.bash",
-  command: "npx projen build",
-});
+if (project.gitpod) {
+  project.gitpod.addCustomTask({
+    name: "Setup",
+    init: "yarn install",
+    prebuild: "bash ./projen.bash",
+    command: "npx projen build",
+  });
+}
 
 const setup = project.addTask("devenv:setup");
 setup.exec("yarn install");
 setup.spawn(project.buildTask);
-project.devContainer.addTasks(setup);
-project.npmignore.exclude("/.devcontainer.json");
+if (project.devContainer) {
+  project.devContainer.addTasks(setup);
+}
+if (project.npmignore) {
+  project.npmignore.exclude("/.devcontainer.json");
+}
 
 project.addTask("contributors:update", {
   exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | xargs -n1 -I{} all-contributors add {} code',
 });
-project.npmignore.exclude("/.all-contributorsrc");
+if (project.npmignore) {
+  project.npmignore.exclude("/.all-contributorsrc");
+}
 
-project.npmignore.exclude("/docs/");
-project.npmignore.exclude("/logo/");
-project.npmignore.exclude("/rfcs/");
-project.npmignore.exclude("/scripts/");
-project.npmignore.exclude("/ARCHITECTURE.md");
-project.npmignore.exclude("/CODE_OF_CONDUCT.md");
-project.npmignore.exclude("/CONTRIBUTING.md");
-project.npmignore.exclude("/VISION.md");
-project.npmignore.exclude("/SECURITY.md");
-project.npmignore.exclude("/.gitpod.yml");
+if (project.npmignore) {
+  project.npmignore.exclude("/docs/");
+  project.npmignore.exclude("/logo/");
+  project.npmignore.exclude("/rfcs/");
+  project.npmignore.exclude("/scripts/");
+  project.npmignore.exclude("/ARCHITECTURE.md");
+  project.npmignore.exclude("/CODE_OF_CONDUCT.md");
+  project.npmignore.exclude("/CONTRIBUTING.md");
+  project.npmignore.exclude("/VISION.md");
+  project.npmignore.exclude("/SECURITY.md");
+  project.npmignore.exclude("/.gitpod.yml");
+}
 
 function setupIntegTest() {
+  const packagePythonTask = project.tasks.tryFind("package:python");
+
   const pythonCompatTask = project.addTask("integ:python-compat", {
     exec: "scripts/python-compat.sh",
     description:
@@ -309,12 +362,16 @@ function setupIntegTest() {
     description: "Run integration tests",
   });
   integTask.spawn(project.compileTask);
-  integTask.spawn(project.tasks.tryFind("package:python"));
+  if (packagePythonTask) {
+    integTask.spawn(packagePythonTask);
+  }
   integTask.spawn(pythonCompatTask);
 
-  project.buildWorkflow.addPostBuildJobTask(integTask, {
-    tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
-  });
+  if (project.buildWorkflow) {
+    project.buildWorkflow.addPostBuildJobTask(integTask, {
+      tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
+    });
+  }
 }
 
 // build `run-task` script needed for "projen eject" functionality
@@ -339,48 +396,15 @@ function setupBundleTaskRunner() {
   project.postCompileTask.spawn(task);
 }
 
-/**
- * Bootstrapping function for projen.
- *
- * It's only meant for bootstrapping script. It should only call NodeJS built-ins
- */
-function bootstrap() {
-  console.info("bootstrapping...");
-
-  if (!existsSync("node_modules/.bin/jsii")) {
-    execCommand(
-      "yarn install --frozen-lockfile --check-files --non-interactive"
-    );
-  }
-
-  execCommand(
-    "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
-  );
-}
-
-/**
- * Execute a command and log any errors.
- *
- * Helper to execute commands during bootstrapping. It should only call NodeJS built-ins
- *
- * @param {string} command
- */
-function execCommand(command) {
-  try {
-    execSync(command, { stdio: "inherit" });
-  } catch (error) {
-    console.error(`Failed to execute command: ${command}`, error);
-    process.exit(1);
-  }
-}
-
 setupIntegTest();
 setupBundleTaskRunner();
 
 // we are projen, so re-synth after compiling.
 // fixes feedback loop where projen contibutors run "build"
 // but not all files are updated
-project.postCompileTask.spawn(project.defaultTask);
+if (project.defaultTask) {
+  project.postCompileTask.spawn(project.defaultTask);
+}
 
 new ProjectTree(project);
 
