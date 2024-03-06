@@ -18,6 +18,12 @@ test("optional metadata", () => {
     artifactId: "mfoo-bar",
     version: "1.2.3",
 
+    parentPom: {
+      groupId: "my.parent.group.id",
+      artifactId: "foo-bar-parent",
+      relativePath: "../home",
+      version: "0.0.1",
+    },
     description: "hello, world!",
     url: "https://foo/bar",
     packaging: "not_jar",

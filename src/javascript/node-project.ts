@@ -1,4 +1,4 @@
-import { join, relative } from "path";
+import { relative, posix } from "path";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -50,7 +50,7 @@ import {
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
-import { deepMerge } from "../util";
+import { deepMerge, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 import { Version } from "../version";
 
@@ -512,7 +512,13 @@ export class NodeProject extends GitHubProject {
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.workflowPackageCache = options.workflowPackageCache ?? false;
     this.artifactsDirectory = options.artifactsDirectory ?? "dist";
-    this.artifactsJavascriptDirectory = join(this.artifactsDirectory, "js");
+    const normalizedArtifactsDirectory = normalizePersistedPath(
+      this.artifactsDirectory
+    );
+    this.artifactsJavascriptDirectory = posix.join(
+      normalizedArtifactsDirectory,
+      "js"
+    );
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -709,6 +715,7 @@ export class NodeProject extends GitHubProject {
         this.release.publisher.publishToNpm({
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
+          npmProvenance: this.package.npmProvenance,
           codeArtifactOptions,
         });
       }
@@ -1051,7 +1058,7 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.4",
+        uses: "pnpm/action-setup@v3",
         with: { version: this.package.pnpmVersion },
       });
     }
@@ -1073,7 +1080,7 @@ export class NodeProject extends GitHubProject {
           : "npm";
       install.push({
         name: "Setup Node.js",
-        uses: "actions/setup-node@v3",
+        uses: "actions/setup-node@v4",
         with: {
           ...(this.nodeVersion && {
             "node-version": this.nodeVersion,

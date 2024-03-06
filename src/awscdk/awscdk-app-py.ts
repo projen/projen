@@ -98,7 +98,7 @@ export class AwsCdkPythonApp extends PythonProject {
     });
 
     if (options.sample ?? true) {
-      new AppCode(this, "app.py", this.cdkDeps.cdkMajorVersion);
+      new AppCode(this, this.appEntrypoint, this.cdkDeps.cdkMajorVersion);
       new MyStackCode(this, this.moduleName, this.cdkDeps.cdkMajorVersion);
     }
 

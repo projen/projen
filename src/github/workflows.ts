@@ -373,14 +373,14 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v3",
+      uses: "actions/setup-node@v4",
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v4",
+      uses: "actions/setup-python@v5",
       with: { "python-version": tools.python.version },
     });
   }

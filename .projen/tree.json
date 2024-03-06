@@ -272,19 +272,13 @@
           "path": ".github/pull_request_template.md"
         }
       },
-      "Projenrc#AutoId20": {
-        "metadata": {
-          "type": "component",
-          "construct": "Projenrc"
-        }
-      },
-      "Bundler#AutoId21": {
+      "Bundler#AutoId20": {
         "metadata": {
           "type": "component",
           "construct": "Bundler"
         }
       },
-      "Prettier#AutoId22": {
+      "Prettier#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "Prettier"
@@ -310,7 +304,7 @@
           "construct": "LicenseChecker"
         }
       },
-      "TypescriptConfig#AutoId23": {
+      "TypescriptConfig#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -323,7 +317,7 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId24": {
+      "Eslint#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -334,6 +328,12 @@
           "type": "file",
           "construct": "JsonFile",
           "path": ".eslintrc.json"
+        }
+      },
+      "Projenrc#AutoId24": {
+        "metadata": {
+          "type": "component",
+          "construct": "Projenrc"
         }
       },
       "SampleCode#AutoId25": {
@@ -413,11 +413,11 @@
           "path": ".github/workflows/upgrade-main.yml"
         }
       },
-      "TextFile@projen.bash": {
+      "TextFile@projen.js": {
         "metadata": {
           "type": "file",
           "construct": "TextFile",
-          "path": "projen.bash"
+          "path": "projen.js"
         }
       },
       "JsonFile@.markdownlint.json": {

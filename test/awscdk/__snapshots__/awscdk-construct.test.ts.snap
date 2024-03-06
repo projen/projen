@@ -15,7 +15,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v3",
+      "uses": "actions/checkout@v4",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -23,7 +23,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -46,9 +46,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v3",
+      "uses": "actions/upload-artifact@v4",
       "with": {
         "name": ".repo.patch",
+        "overwrite": true,
         "path": ".repo.patch",
       },
     },
@@ -66,9 +67,10 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v3",
+      "uses": "actions/upload-artifact@v4",
       "with": {
         "name": "build-artifact",
+        "overwrite": true,
         "path": "dist",
       },
     },
@@ -91,7 +93,7 @@ exports[`node version in workflow does setup default version 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v3",
+      "uses": "actions/checkout@v4",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -99,7 +101,7 @@ exports[`node version in workflow does setup default version 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.x",
       },
@@ -122,9 +124,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v3",
+      "uses": "actions/upload-artifact@v4",
       "with": {
         "name": ".repo.patch",
+        "overwrite": true,
         "path": ".repo.patch",
       },
     },
@@ -142,9 +145,10 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v3",
+      "uses": "actions/upload-artifact@v4",
       "with": {
         "name": "build-artifact",
+        "overwrite": true,
         "path": "dist",
       },
     },
@@ -167,7 +171,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v3",
+      "uses": "actions/checkout@v4",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -175,7 +179,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v3",
+      "uses": "actions/setup-node@v4",
       "with": {
         "node-version": "18.0.0",
       },
@@ -198,9 +202,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v3",
+      "uses": "actions/upload-artifact@v4",
       "with": {
         "name": ".repo.patch",
+        "overwrite": true,
         "path": ".repo.patch",
       },
     },
@@ -218,9 +223,10 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v3",
+      "uses": "actions/upload-artifact@v4",
       "with": {
         "name": "build-artifact",
+        "overwrite": true,
         "path": "dist",
       },
     },

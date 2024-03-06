@@ -1,3 +1,4 @@
+import * as TOML from "@iarna/toml";
 import { python } from "../../src";
 import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
@@ -156,29 +157,33 @@ test("poetry enabled with metadata in dependencies", () => {
     classifiers: ["Development Status :: 4 - Beta"],
     deps: [
       "regular-version-package@1.2.3",
-      'package1@{version = "^3.3.3", extras = ["mypackage-extra"]}',
-      'package2@{ path = "../mypackage/foo" }',
+      `package1@{ version = "^3.3.3", extras = ["mypackage-extra"] }`,
+      `package2@{ path = "../mypackage/foo" }`,
     ],
   });
 
   const snapshot = synthSnapshot(p);
-  // Rendered as a "normal" version
-  expect(snapshot["pyproject.toml"]).toContain(
-    'regular-version-package = "1.2.3"'
-  );
-  // package1 metadata should be rendered as its own section, and contain the specified metadata
-  expect(snapshot["pyproject.toml"]).toContain(
-    "[tool.poetry.dependencies.package1]"
-  );
-  expect(snapshot["pyproject.toml"]).toContain('version = "^3.3.3"');
-  expect(snapshot["pyproject.toml"]).toContain(
-    'extras = [ "mypackage-extra" ]'
-  );
-  // Likewise package2 metadata should be rendered
-  expect(snapshot["pyproject.toml"]).toContain(
-    "[tool.poetry.dependencies.package2]"
-  );
-  expect(snapshot["pyproject.toml"]).toContain('path = "../mypackage/foo"');
+  const actualTomlContent = snapshot["pyproject.toml"];
+  const actualObjectContent = TOML.parse(actualTomlContent) as any;
+
+  // Check that simple dependencies are structured correctly
+  expect(actualObjectContent.tool.poetry.dependencies).toMatchObject({
+    "regular-version-package": "1.2.3",
+    python: expect.any(String),
+  });
+
+  // Check that complex dependencies with metadata are structured correctly
+  // This ensures that metadata such as version constraints and extras are properly formatted
+  expect(actualObjectContent.tool.poetry.dependencies.package1).toMatchObject({
+    version: "^3.3.3",
+    extras: ["mypackage-extra"],
+  });
+
+  // This ensures that dependencies with a path reference are properly formatted
+  expect(actualObjectContent.tool.poetry.dependencies.package2).toMatchObject({
+    path: "../mypackage/foo",
+  });
+
   expect(snapshot["pyproject.toml"]).toMatchSnapshot();
 });
 
@@ -218,3 +223,52 @@ class TestPythonProject extends python.PythonProject {
     });
   }
 }
+
+test("generates correct pyproject.toml content", () => {
+  const project = new TestPythonProject({
+    poetry: true,
+    homepage: "http://www.example.com",
+    description: "A short project description",
+    license: "Apache-2.0",
+    deps: ["aws-cdk-lib@^2.128.0"],
+    devDeps: ["black@^24.2.0", "flake8@^7.0.0"],
+  });
+
+  const snapshot = synthSnapshot(project);
+  const actualTomlContent = snapshot["pyproject.toml"];
+  const actualObjectContent = TOML.parse(actualTomlContent);
+
+  const expectedObjectContent = {
+    tool: {
+      poetry: {
+        name: "test-python-project",
+        version: "0.1.0",
+        description: "A short project description",
+        license: "Apache-2.0",
+        authors: ["First Last <email@example.com>"],
+        homepage: "http://www.example.com",
+        readme: "README.md",
+        dependencies: {
+          "aws-cdk-lib": "^2.128.0",
+          python: "^3.8",
+        },
+        group: {
+          dev: {
+            dependencies: {
+              black: "^24.2.0",
+              flake8: "^7.0.0",
+              projen: "99.99.99",
+              pytest: "7.4.3",
+            },
+          },
+        },
+      },
+    },
+    "build-system": {
+      requires: ["poetry-core"],
+      "build-backend": "poetry.core.masonry.api",
+    },
+  };
+
+  expect(actualObjectContent).toEqual(expectedObjectContent);
+});

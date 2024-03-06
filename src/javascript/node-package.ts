@@ -21,7 +21,7 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
-import { isTruthy, sorted, writeFile } from "../util";
+import { isTruthy, normalizePersistedPath, sorted, writeFile } from "../util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -288,6 +288,20 @@ export interface NodePackageOptions {
   readonly npmAccess?: NpmAccess;
 
   /**
+   * Should provenance statements be generated when the package is published.
+   *
+   * A supported package manager is required to publish a package with npm provenance statements and
+   * you will need to use a supported CI/CD provider.
+   *
+   * Note that the projen `Release` and `Publisher` components are using `publib` to publish packages,
+   * which is using npm internally and supports provenance statements independently of the package manager used.
+   *
+   * @see https://docs.npmjs.com/generating-provenance-statements
+   * @default - true for public packages, false otherwise
+   */
+  readonly npmProvenance?: boolean;
+
+  /**
    * GitHub secret which contains the NPM token to use when publishing packages.
    *
    * @default "NPM_TOKEN"
@@ -495,6 +509,11 @@ export class NodePackage extends Component {
   public readonly npmAccess: NpmAccess;
 
   /**
+   * Should provenance statements be generated when package is published.
+   */
+  public readonly npmProvenance: boolean;
+
+  /**
    * The name of the lock file.
    */
   public readonly lockFile: string;
@@ -546,6 +565,7 @@ export class NodePackage extends Component {
       npmTokenSecret,
       codeArtifactOptions,
       scopedPackagesOptions,
+      npmProvenance,
     } = this.parseNpmOptions(options);
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
@@ -553,6 +573,7 @@ export class NodePackage extends Component {
     this.npmTokenSecret = npmTokenSecret;
     this.codeArtifactOptions = codeArtifactOptions;
     this.scopedPackagesOptions = scopedPackagesOptions;
+    this.npmProvenance = npmProvenance;
 
     this.processDeps(options);
 
@@ -942,6 +963,14 @@ export class NodePackage extends Component {
       );
     }
 
+    const npmProvenance =
+      options.npmProvenance ?? npmAccess === NpmAccess.PUBLIC;
+    if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
+      throw new Error(
+        `"npmProvenance" can only be enabled for public packages`
+      );
+    }
+
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
     const hasScopedPackage =
       options.scopedPackagesOptions &&
@@ -1011,6 +1040,7 @@ export class NodePackage extends Component {
       scopedPackagesOptions: this.parseScopedPackagesOptions(
         options.scopedPackagesOptions
       ),
+      npmProvenance,
     };
   }
 
@@ -1434,7 +1464,11 @@ export class NodePackage extends Component {
       for (const file of readdirSync(bindir)) {
         try {
           accessSync(join(bindir, file), constants.X_OK);
-          this.bin[file] = join(binrel, file).replace(/\\/g, "/");
+
+          const binPath = join(binrel, file);
+          const normalizedPath = normalizePersistedPath(binPath);
+
+          this.bin[file] = normalizedPath;
         } catch (e) {
           // not executable, skip
         }

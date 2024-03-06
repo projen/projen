@@ -186,7 +186,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.python.Pip.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.Pip.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.Pip.property.installTask">installTask</a></code> | <code>projen.Task</code> | A task that installs and updates dependencies. |
+| <code><a href="#projen.python.Pip.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | A task that installs and updates dependencies. |
 
 ---
 
@@ -212,10 +212,10 @@ public readonly project: Project;
 
 ---
 
-##### `installTask`<sup>Required</sup> <a name="installTask" id="projen.python.Pip.property.installTask"></a>
+##### `installCiTask`<sup>Required</sup> <a name="installCiTask" id="projen.python.Pip.property.installCiTask"></a>
 
 ```typescript
-public readonly installTask: Task;
+public readonly installCiTask: Task;
 ```
 
 - *Type:* projen.Task
@@ -418,9 +418,10 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.python.Poetry.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.Poetry.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.Poetry.property.installTask">installTask</a></code> | <code>projen.Task</code> | A task that installs and updates dependencies. |
-| <code><a href="#projen.python.Poetry.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | A task that uploads the package to a package repository. |
-| <code><a href="#projen.python.Poetry.property.publishTestTask">publishTestTask</a></code> | <code>projen.Task</code> | A task that uploads the package to the Test PyPI repository. |
+| <code><a href="#projen.python.Poetry.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | Task for installing dependencies according to the existing lockfile. |
+| <code><a href="#projen.python.Poetry.property.installTask">installTask</a></code> | <code>projen.Task</code> | Task for updating the lockfile and installing project dependencies. |
+| <code><a href="#projen.python.Poetry.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | Task for publishing the package to a package repository. |
+| <code><a href="#projen.python.Poetry.property.publishTestTask">publishTestTask</a></code> | <code>projen.Task</code> | Task for publishing the package to the Test PyPI repository for testing purposes. |
 
 ---
 
@@ -446,6 +447,18 @@ public readonly project: Project;
 
 ---
 
+##### `installCiTask`<sup>Required</sup> <a name="installCiTask" id="projen.python.Poetry.property.installCiTask"></a>
+
+```typescript
+public readonly installCiTask: Task;
+```
+
+- *Type:* projen.Task
+
+Task for installing dependencies according to the existing lockfile.
+
+---
+
 ##### `installTask`<sup>Required</sup> <a name="installTask" id="projen.python.Poetry.property.installTask"></a>
 
 ```typescript
@@ -454,7 +467,7 @@ public readonly installTask: Task;
 
 - *Type:* projen.Task
 
-A task that installs and updates dependencies.
+Task for updating the lockfile and installing project dependencies.
 
 ---
 
@@ -466,7 +479,7 @@ public readonly publishTask: Task;
 
 - *Type:* projen.Task
 
-A task that uploads the package to a package repository.
+Task for publishing the package to a package repository.
 
 ---
 
@@ -478,7 +491,7 @@ public readonly publishTestTask: Task;
 
 - *Type:* projen.Task
 
-A task that uploads the package to the Test PyPI repository.
+Task for publishing the package to the Test PyPI repository for testing purposes.
 
 ---
 
@@ -5763,14 +5776,14 @@ Installs dependencies (called during post-synthesis).
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.IPythonDeps.property.installTask">installTask</a></code> | <code>projen.Task</code> | A task that installs and updates dependencies. |
+| <code><a href="#projen.python.IPythonDeps.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | A task that installs and updates dependencies. |
 
 ---
 
-##### `installTask`<sup>Required</sup> <a name="installTask" id="projen.python.IPythonDeps.property.installTask"></a>
+##### `installCiTask`<sup>Required</sup> <a name="installCiTask" id="projen.python.IPythonDeps.property.installCiTask"></a>
 
 ```typescript
-public readonly installTask: Task;
+public readonly installCiTask: Task;
 ```
 
 - *Type:* projen.Task

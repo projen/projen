@@ -5132,6 +5132,256 @@ The username that Dependabot uses to access the registry.
 
 ---
 
+### DownloadArtifactOptions <a name="DownloadArtifactOptions" id="projen.github.DownloadArtifactOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.DownloadArtifactOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const downloadArtifactOptions: github.DownloadArtifactOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Sets environment variables for steps to use in the runner environment. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.with">with</a></code> | <code><a href="#projen.github.DownloadArtifactWith">DownloadArtifactWith</a></code> | Options for `download-artifact`. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.DownloadArtifactOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Sets environment variables for steps to use in the runner environment.
+
+You can also set environment variables for the entire workflow or a job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.DownloadArtifactOptions.property.id"></a>
+
+```typescript
+public readonly id: string;
+```
+
+- *Type:* string
+
+A unique identifier for the step.
+
+You can use the id to reference the
+step in contexts.
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.DownloadArtifactOptions.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+You can use the if conditional to prevent a job from running unless a condition is met.
+
+You can use any supported context and expression to
+create a conditional.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.DownloadArtifactOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+A name for your step to display on GitHub.
+
+---
+
+##### `workingDirectory`<sup>Optional</sup> <a name="workingDirectory" id="projen.github.DownloadArtifactOptions.property.workingDirectory"></a>
+
+```typescript
+public readonly workingDirectory: string;
+```
+
+- *Type:* string
+
+Specifies a working directory for a step.
+
+Overrides a job's working directory.
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.DownloadArtifactOptions.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+Prevents a job from failing when a step fails.
+
+Set to true to allow a job
+to pass when this step fails.
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.DownloadArtifactOptions.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `with`<sup>Required</sup> <a name="with" id="projen.github.DownloadArtifactOptions.property.with"></a>
+
+```typescript
+public readonly with: DownloadArtifactWith;
+```
+
+- *Type:* <a href="#projen.github.DownloadArtifactWith">DownloadArtifactWith</a>
+
+Options for `download-artifact`.
+
+---
+
+### DownloadArtifactWith <a name="DownloadArtifactWith" id="projen.github.DownloadArtifactWith"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.DownloadArtifactWith.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const downloadArtifactWith: github.DownloadArtifactWith = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DownloadArtifactWith.property.mergeMultiple">mergeMultiple</a></code> | <code>boolean</code> | When multiple artifacts are matched, this changes the behavior of the destination directories If true, the downloaded artifacts will be in the same directory specified by path If false, the downloaded artifacts will be extracted into individual named directories within the specified path. |
+| <code><a href="#projen.github.DownloadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to download. |
+| <code><a href="#projen.github.DownloadArtifactWith.property.path">path</a></code> | <code>string</code> | A file, directory or wildcard pattern that describes what to download. |
+| <code><a href="#projen.github.DownloadArtifactWith.property.pattern">pattern</a></code> | <code>string</code> | A glob pattern to the artifacts that should be downloaded This is ignored if name is specified. |
+| <code><a href="#projen.github.DownloadArtifactWith.property.repository">repository</a></code> | <code>string</code> | The repository owner and the repository name joined together by "/" If github-token is specified, this is the repository that artifacts will be downloaded from. |
+| <code><a href="#projen.github.DownloadArtifactWith.property.runId">runId</a></code> | <code>string</code> | The id of the workflow run where the desired download artifact was uploaded from If github-token is specified, this is the run that artifacts will be downloaded from. |
+| <code><a href="#projen.github.DownloadArtifactWith.property.token">token</a></code> | <code>string</code> | The GitHub token used to authenticate with the GitHub API to download artifacts from a different repository or from a different workflow run. |
+
+---
+
+##### `mergeMultiple`<sup>Optional</sup> <a name="mergeMultiple" id="projen.github.DownloadArtifactWith.property.mergeMultiple"></a>
+
+```typescript
+public readonly mergeMultiple: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+When multiple artifacts are matched, this changes the behavior of the destination directories If true, the downloaded artifacts will be in the same directory specified by path If false, the downloaded artifacts will be extracted into individual named directories within the specified path.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.DownloadArtifactWith.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* If unspecified, all artifacts for the run are downloaded
+
+Name of the artifact to download.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.DownloadArtifactWith.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+A file, directory or wildcard pattern that describes what to download.
+
+Supports basic tilde expansion.
+
+---
+
+##### `pattern`<sup>Optional</sup> <a name="pattern" id="projen.github.DownloadArtifactWith.property.pattern"></a>
+
+```typescript
+public readonly pattern: string;
+```
+
+- *Type:* string
+
+A glob pattern to the artifacts that should be downloaded This is ignored if name is specified.
+
+---
+
+##### `repository`<sup>Optional</sup> <a name="repository" id="projen.github.DownloadArtifactWith.property.repository"></a>
+
+```typescript
+public readonly repository: string;
+```
+
+- *Type:* string
+- *Default:* ${{ github.repository }}
+
+The repository owner and the repository name joined together by "/" If github-token is specified, this is the repository that artifacts will be downloaded from.
+
+---
+
+##### `runId`<sup>Optional</sup> <a name="runId" id="projen.github.DownloadArtifactWith.property.runId"></a>
+
+```typescript
+public readonly runId: string;
+```
+
+- *Type:* string
+- *Default:* ${{ github.run_id }}
+
+The id of the workflow run where the desired download artifact was uploaded from If github-token is specified, this is the run that artifacts will be downloaded from.
+
+---
+
+##### `token`<sup>Optional</sup> <a name="token" id="projen.github.DownloadArtifactWith.property.token"></a>
+
+```typescript
+public readonly token: string;
+```
+
+- *Type:* string
+- *Default:* If unspecified, the action will download artifacts from the current repo and the current workflow run
+
+The GitHub token used to authenticate with the GitHub API to download artifacts from a different repository or from a different workflow run.
+
+---
+
 ### GithubCredentialsAppOptions <a name="GithubCredentialsAppOptions" id="projen.github.GithubCredentialsAppOptions"></a>
 
 Options for `GithubCredentials.fromApp`.
@@ -7692,6 +7942,7 @@ const uploadArtifactWith: github.UploadArtifactWith = { ... }
 | <code><a href="#projen.github.UploadArtifactWith.property.compressionLevel">compressionLevel</a></code> | <code>number</code> | The level of compression for Zlib to be applied to the artifact archive. |
 | <code><a href="#projen.github.UploadArtifactWith.property.ifNoFilesFound">ifNoFilesFound</a></code> | <code>string</code> | The desired behavior if no files are found using the provided path. |
 | <code><a href="#projen.github.UploadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to upload. |
+| <code><a href="#projen.github.UploadArtifactWith.property.overwrite">overwrite</a></code> | <code>boolean</code> | Whether action should overwrite an existing artifact with the same name (should one exist). |
 | <code><a href="#projen.github.UploadArtifactWith.property.retentionDays">retentionDays</a></code> | <code>number</code> | Duration after which artifact will expire in days. 0 means using default repository retention. |
 
 ---
@@ -7752,6 +8003,22 @@ public readonly name: string;
 - *Default:* "artifact"
 
 Name of the artifact to upload.
+
+---
+
+##### `overwrite`<sup>Optional</sup> <a name="overwrite" id="projen.github.UploadArtifactWith.property.overwrite"></a>
+
+```typescript
+public readonly overwrite: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether action should overwrite an existing artifact with the same name (should one exist).
+
+Introduced in v4 and represents a breaking change from the behavior of the v3 action.
+To maintain backwards compatibility with existing, this should be set the `true` (the default).
 
 ---
 
@@ -8208,6 +8475,7 @@ new github.WorkflowSteps()
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.github.WorkflowSteps.checkout">checkout</a></code> | Checks out a repository. |
+| <code><a href="#projen.github.WorkflowSteps.downloadArtifact">downloadArtifact</a></code> | Downloads an artifact. |
 | <code><a href="#projen.github.WorkflowSteps.setupGitIdentity">setupGitIdentity</a></code> | Configures the git identity (user name and email). |
 | <code><a href="#projen.github.WorkflowSteps.tagExists">tagExists</a></code> | Checks if a tag exists. |
 | <code><a href="#projen.github.WorkflowSteps.uploadArtifact">uploadArtifact</a></code> | Uploads an artifact. |
@@ -8229,6 +8497,24 @@ Checks out a repository.
 - *Type:* <a href="#projen.github.CheckoutOptions">CheckoutOptions</a>
 
 Options to configure the `checkout` JobStep.
+
+---
+
+##### `downloadArtifact` <a name="downloadArtifact" id="projen.github.WorkflowSteps.downloadArtifact"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowSteps.downloadArtifact(options?: DownloadArtifactOptions)
+```
+
+Downloads an artifact.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.github.WorkflowSteps.downloadArtifact.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.DownloadArtifactOptions">DownloadArtifactOptions</a>
+
+Options to configure the `download-artifact` JobStep.
 
 ---
 

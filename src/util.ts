@@ -20,11 +20,15 @@ const MAX_BUFFER = 10 * 1024 * 1024;
  */
 export function exec(
   command: string,
-  options: { cwd: string; env?: Record<string, string> }
+  options: {
+    cwd: string;
+    env?: Record<string, string>;
+    stdio?: child_process.StdioOptions;
+  }
 ): void {
   logging.debug(command);
   child_process.execSync(command, {
-    stdio: ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
+    stdio: options.stdio || ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
     env: options.env,
@@ -509,4 +513,19 @@ export function findUp(
     return undefined;
   }
   return findUp(lookFor, path.dirname(cwd));
+}
+
+/**
+ * Normalizes a path that is going to be persisted to have a cross platform representation.
+ *
+ * Normalized paths can be persisted and doesn't need to be modified when the platform changes.
+ * `normalizePersistedPath` takes care of platform-specific properties like directory separator.
+ * It uses `path.posix.sep` that is supported both in Windows and Unix platforms.
+ *
+ *
+ * @param p the path to be normalized
+ * @returns the normalized path
+ */
+export function normalizePersistedPath(p: string) {
+  return p.replace(/\\/g, path.posix.sep);
 }

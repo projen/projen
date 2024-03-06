@@ -1832,4 +1832,20 @@ describe("npmignore", () => {
     expect(output[".npmignore"]).toMatchSnapshot();
     expect(output[".npmignore"]).toContain("/.gitattributes");
   });
+
+  test("should include npmIgnore patterns specified (via npmIgnoreOptions)", () => {
+    // GIVEN
+    const project = new TestNodeProject({
+      npmIgnoreOptions: {
+        ignorePatterns: ["/SECURITY.md"],
+      },
+    });
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".npmignore"]).toMatchSnapshot();
+    expect(output[".npmignore"]).toContain("/SECURITY.md");
+  });
 });

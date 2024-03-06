@@ -91,8 +91,42 @@ export interface PomOptions {
    * @featured
    */
   readonly url?: string;
+
+  /**
+   * A Parent Pom can be used to have a child project inherit
+   * properties/plugins/ect in order to reduce duplication and keep standards
+   * across a large amount of repos
+   *
+   * @default undefined
+   * @featured
+   */
+  readonly parentPom?: ParentPom;
 }
 
+/*
+ * Represents a Parent Maven Pom. A parent maven pom can provide things like dependencies and plugin lists/configuration.
+ * That can be helpful for trying to control configuration across a large swath of programs especially for things like
+ * enterprise configurations of plugins.
+ * @see https://maven.apache.org/guides/introduction/introduction-to-the-pom.html#project-inheritance
+ */
+export interface ParentPom {
+  /**
+   * Parent Pom Group ID
+   */
+  readonly groupId?: string;
+  /**
+   * Parent Pom Artifact ID
+   */
+  readonly artifactId?: string;
+  /**
+   * Parent Pom Version
+   */
+  readonly version?: string;
+  /**
+   * Parent Pom Relative path from the current pom
+   */
+  readonly relativePath?: string;
+}
 /**
  * Represents a Maven repository
  * @see https://maven.apache.org/guides/introduction/introduction-to-repositories.html
@@ -162,6 +196,11 @@ export class Pom extends Component {
    */
   public readonly url?: string;
 
+  /*
+   * Project Parent POM
+   */
+  private readonly parentPom?: ParentPom;
+
   private readonly properties: Record<string, any> = {};
 
   private readonly repositories: MavenRepository[] = [];
@@ -177,6 +216,7 @@ export class Pom extends Component {
     this.name = project.name;
     this.description = options.description;
     this.url = options.url;
+    this.parentPom = options.parentPom;
 
     new XmlFile(project, this.fileName, { obj: () => this.synthPom() });
   }
@@ -245,6 +285,7 @@ export class Pom extends Component {
           description: this.description,
           url: this.url,
           properties: this.properties,
+          parent: this.parentPom,
           ...this.synthRepositories(),
           ...this.synthDependencies(),
         },

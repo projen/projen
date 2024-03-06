@@ -133,14 +133,13 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "amannn/action-semantic-pull-request@v5.0.2",
+            uses: "amannn/action-semantic-pull-request@v5.4.0",
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
             with: {
               types: types.join("\n"),
               requireScope: opts.requireScope ?? false,
-              githubBaseUrl: "${{ github.api_url }}",
             },
           },
         ],

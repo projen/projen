@@ -12,14 +12,14 @@ exports[`deps upgrade commit can be signed 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v3",
+      "uses": "actions/checkout@v4",
       "with": {
         "ref": "main",
       },
     },
     {
       "name": "Download patch",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@v4",
       "with": {
         "name": ".repo.patch",
         "path": "\${{ runner.temp }}",
@@ -37,7 +37,7 @@ git config user.email "github-actions@github.com"",
     {
       "id": "create-pr",
       "name": "Create Pull Request",
-      "uses": "peter-evans/create-pull-request@v4",
+      "uses": "peter-evans/create-pull-request@v6",
       "with": {
         "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
@@ -71,7 +71,7 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/checkout@v4",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -95,9 +95,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v3",
+    "uses": "actions/upload-artifact@v4",
     "with": {
       "name": ".repo.patch",
+      "overwrite": true,
       "path": ".repo.patch",
     },
   },
@@ -148,7 +149,7 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/checkout@v4",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -172,9 +173,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v3",
+    "uses": "actions/upload-artifact@v4",
     "with": {
       "name": ".repo.patch",
+      "overwrite": true,
       "path": ".repo.patch",
     },
   },
@@ -192,7 +194,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/checkout@v4",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -201,7 +203,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
   },
   {
     "name": "Download patch",
-    "uses": "actions/download-artifact@v3",
+    "uses": "actions/download-artifact@v4",
     "with": {
       "name": ".repo.patch",
       "path": "\${{ runner.temp }}",
@@ -290,6 +292,21 @@ exports[`node project can be ejected 1`] = `
   },
   "version": "0.0.0",
 }
+`;
+
+exports[`npmignore should include npmIgnore patterns specified (via npmIgnoreOptions) 1`] = `
+"/SECURITY.md
+/.projen/
+/test-reports/
+junit.xml
+/coverage/
+permissions-backup.acl
+/dist/changelog.md
+/dist/version.txt
+/.mergify.yml
+/.projenrc.js
+/.gitattributes
+"
 `;
 
 exports[`npmignore should include sensible default ignore patterns 1`] = `

@@ -1,4 +1,4 @@
-import * as TOML from "@iarna/toml";
+import * as json2toml from "json2toml";
 import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
 import { Project } from "./project";
@@ -22,10 +22,15 @@ export class TomlFile extends ObjectFile {
       return undefined;
     }
 
-    return [
-      ...(this.marker ? [`# ${this.marker}`] : []),
-      "",
-      TOML.stringify(JSON.parse(json)),
-    ].join("\n");
+    // Convert JSON content to TOML string
+    let tomlString = json2toml(JSON.parse(json), {
+      indent: 0,
+      newlineAfterSection: true,
+    });
+
+    // Include the marker
+    return [...(this.marker ? [`# ${this.marker}`] : []), "", tomlString].join(
+      "\n"
+    );
   }
 }

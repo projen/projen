@@ -23,7 +23,7 @@ import {
   ProjenrcOptions as ProjenrcTsOptions,
   TypedocDocgen,
 } from "../typescript";
-import { deepMerge } from "../util";
+import { deepMerge, normalizePersistedPath } from "../util";
 
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
@@ -443,14 +443,13 @@ export class TypeScriptProject extends NodeProject {
     const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
     if (options.entrypointTypes || this.entrypoint !== "") {
+      const entrypointPath = path.join(
+        path.dirname(this.entrypoint),
+        path.basename(this.entrypoint, ".js")
+      );
+      const normalizedPath = normalizePersistedPath(entrypointPath);
       const entrypointTypes =
-        options.entrypointTypes ??
-        `${path
-          .join(
-            path.dirname(this.entrypoint),
-            path.basename(this.entrypoint, ".js")
-          )
-          .replace(/\\/g, "/")}.d.ts`;
+        options.entrypointTypes ?? `${normalizedPath}.d.ts`;
       this.package.addField("types", entrypointTypes);
     }
 
