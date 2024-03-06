@@ -3607,7 +3607,7 @@ jsesc@^2.5.1:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
-jsii-diff@^1.94.0:
+jsii-diff@^1.95.0:
   version "1.95.0"
   resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.95.0.tgz#ec5dddf0a524cd69a9b11ba3caa5d6215b798faa"
   integrity sha512-sfXREPhoScTW44fUVCxPtFInA3b5467cx+I7ASFiwv4KgirCaqR4c0nsTVPpnTFtt7BzNT27QyO2WsZaM05/jg==
@@ -3619,7 +3619,7 @@ jsii-diff@^1.94.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.3.19:
+jsii-docgen@^10.3.20:
   version "10.3.20"
   resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.20.tgz#13ba2d0d5278c5ebc7ddf3e0fe699205f9d37a12"
   integrity sha512-FO9ajbBMDLVWMVtIoicRYwSTtpL0tL760VZVtzydRnv2X2+gNuq6FhllbFqJTB9WAYThUL+AKVKrvv+rGc/1nQ==
@@ -3633,7 +3633,7 @@ jsii-docgen@^10.3.19:
     semver "^7.6.0"
     yargs "^16.2.0"
 
-jsii-pacmak@^1.94.0:
+jsii-pacmak@^1.95.0:
   version "1.95.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.95.0.tgz#dba9f8589b415dc0ff02430202d3447d02fb19e9"
   integrity sha512-h/eo3p3jG4/Wtb9WdavvcgXzyN5QXZck3k0xvIWp5SKxFLorQ+TWhY7BHG0e+VXl+mxcni6BuQ5wFLavq65RQQ==
