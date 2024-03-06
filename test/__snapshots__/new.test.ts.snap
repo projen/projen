@@ -26,6 +26,7 @@ const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
+  projenVersion: "latest",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -168,6 +169,7 @@ const project = new AwsCdkTypeScriptApp({
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -293,6 +295,7 @@ const project = new AwsCdkTypeScriptApp({
   defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -301,8 +304,6 @@ const project = new AwsCdkTypeScriptApp({
 });
 project.synth();"
 `;
-
-
 
 exports[`projen new --from from external tarball (relative path) 1`] = `
 {
@@ -420,6 +421,7 @@ const project = new AwsCdkTypeScriptApp({
   defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -474,6 +476,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -495,6 +498,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.0.0",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -531,6 +535,7 @@ const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: "2.3.33",
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -552,6 +557,7 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.0.0",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -574,6 +580,7 @@ const project = new cdktf.ConstructLibraryCdktf({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.0.0",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -614,6 +621,7 @@ const project = new cdk.JsiiProject({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.0.0",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -632,6 +640,7 @@ exports[`projen new nextjs 1`] = `
 const project = new web.NextJsProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -649,6 +658,7 @@ exports[`projen new nextjs-ts 1`] = `
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -666,6 +676,7 @@ exports[`projen new node --outdir path/to/mydir 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -681,6 +692,7 @@ exports[`projen new node 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -715,6 +727,7 @@ exports[`projen new react 1`] = `
 const project = new web.ReactProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -731,6 +744,7 @@ exports[`projen new react-ts 1`] = `
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -748,6 +762,7 @@ exports[`projen new typescript 1`] = `
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -765,6 +780,7 @@ exports[`projen new typescript-app 1`] = `
 const project = new typescript.TypeScriptAppProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -781,6 +797,7 @@ exports[`projen new with unknown option works 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -798,6 +815,7 @@ exports[`projenrc-json creates external project type 1`] = `
     "@pepperize/projen-awscdk-app-ts@0.0.333",
   ],
   "name": "my-project",
+  "projenVersion": "latest",
   "projenrcJson": true,
   "projenrcTs": true,
   "type": "@pepperize/projen-awscdk-app-ts.AwsCdkTypeScriptApp",
@@ -821,6 +839,7 @@ exports[`projenrc-json creates node-project 1`] = `
 {
   "defaultReleaseBranch": "main",
   "name": "my-project",
+  "projenVersion": "latest",
   "projenrcJson": true,
   "type": "projen.javascript.NodeProject",
 }
@@ -831,6 +850,7 @@ exports[`projenrc-ts creates typescript projenrc 1`] = `
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  projenVersion: "latest",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */

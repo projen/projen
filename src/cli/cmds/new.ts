@@ -53,6 +53,11 @@ class Command implements yargs.CommandModule {
       default: true,
       desc: "Run `git init` and create an initial commit (use --no-git to disable)",
     });
+    args.option("projen-version", {
+      type: "string",
+      default: "latest",
+      desc: "The version of projen to install",
+    });
     args.example(
       "projen new awscdk-app-ts",
       'Creates a new project of built-in type "awscdk-app-ts"'
