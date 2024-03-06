@@ -5445,7 +5445,7 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.NodeProjectBuildWorkflowOptions</code> | Options for PR build workflow. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -6998,10 +6998,10 @@ Define a GitHub workflow for building PRs.
 - *Deprecated:* use TypeScriptProjectOptions
 
 ```typescript
-public readonly buildWorkflowOptions: NodeProjectBuildWorkflowOptions;
+public readonly buildWorkflowOptions: BuildWorkflowOptions;
 ```
 
-- *Type:* projen.javascript.NodeProjectBuildWorkflowOptions
+- *Type:* projen.javascript.BuildWorkflowOptions
 
 Options for PR build workflow.
 
@@ -7009,7 +7009,7 @@ Options for PR build workflow.
 
 ##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflowTriggers"></a>
 
-- *Deprecated:* Instead use buildWorkflowOptions
+- *Deprecated:* - Use `buildWorkflowOptions.workflowTriggers`
 
 ```typescript
 public readonly buildWorkflowTriggers: Triggers;
@@ -7223,7 +7223,7 @@ Jest options.
 
 ##### ~~`mutableBuild`~~<sup>Optional</sup> <a name="mutableBuild" id="projen.typescript.TypeScriptLibraryProjectOptions.property.mutableBuild"></a>
 
-- *Deprecated:* In favor of buildWorkflowOptions
+- *Deprecated:* - Use `buildWorkflowOptions.mutableBuild`
 
 ```typescript
 public readonly mutableBuild: boolean;
@@ -7906,7 +7906,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.NodeProjectBuildWorkflowOptions</code> | Options for PR build workflow. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -9291,10 +9291,10 @@ Define a GitHub workflow for building PRs.
 ##### `buildWorkflowOptions`<sup>Optional</sup> <a name="buildWorkflowOptions" id="projen.typescript.TypeScriptProjectOptions.property.buildWorkflowOptions"></a>
 
 ```typescript
-public readonly buildWorkflowOptions: NodeProjectBuildWorkflowOptions;
+public readonly buildWorkflowOptions: BuildWorkflowOptions;
 ```
 
-- *Type:* projen.javascript.NodeProjectBuildWorkflowOptions
+- *Type:* projen.javascript.BuildWorkflowOptions
 
 Options for PR build workflow.
 
@@ -9302,7 +9302,7 @@ Options for PR build workflow.
 
 ##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.typescript.TypeScriptProjectOptions.property.buildWorkflowTriggers"></a>
 
-- *Deprecated:* Instead use buildWorkflowOptions
+- *Deprecated:* - Use `buildWorkflowOptions.workflowTriggers`
 
 ```typescript
 public readonly buildWorkflowTriggers: Triggers;
@@ -9490,7 +9490,7 @@ Jest options.
 
 ##### ~~`mutableBuild`~~<sup>Optional</sup> <a name="mutableBuild" id="projen.typescript.TypeScriptProjectOptions.property.mutableBuild"></a>
 
-- *Deprecated:* In favor of buildWorkflowOptions
+- *Deprecated:* - Use `buildWorkflowOptions.mutableBuild`
 
 ```typescript
 public readonly mutableBuild: boolean;

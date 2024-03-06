@@ -2791,9 +2791,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -2803,7 +2803,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -5803,9 +5803,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -5815,7 +5815,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -10209,9 +10209,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -10221,7 +10221,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -13076,9 +13076,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -13088,7 +13088,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -16090,9 +16090,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -16102,7 +16102,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -19873,9 +19873,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -19885,7 +19885,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -22749,9 +22749,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -22761,7 +22761,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -25109,9 +25109,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -25121,7 +25121,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -27733,9 +27733,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -27745,7 +27745,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -31281,9 +31281,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -31293,7 +31293,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -33629,9 +33629,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -33641,7 +33641,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -36258,9 +36258,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -36270,7 +36270,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {
@@ -38865,9 +38865,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Options for PR build workflow.",
         "featured": false,
-        "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+        "fqn": "projen.javascript.BuildWorkflowOptions",
         "fullType": {
-          "fqn": "projen.javascript.NodeProjectBuildWorkflowOptions",
+          "fqn": "projen.javascript.BuildWorkflowOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -38877,7 +38877,7 @@ exports[`inventory 1`] = `
         "path": [
           "buildWorkflowOptions",
         ],
-        "simpleType": "NodeProjectBuildWorkflowOptions",
+        "simpleType": "BuildWorkflowOptions",
         "switch": "build-workflow-options",
       },
       {

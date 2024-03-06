@@ -10,7 +10,7 @@ import {
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { BuildWorkflow } from "../build";
+import { BuildWorkflow, CommonBuildWorkflowOptions } from "../build";
 import { PROJEN_DIR } from "../common";
 import {
   AutoMerge,
@@ -48,7 +48,7 @@ import {
   Release,
   ReleaseProjectOptions,
 } from "../release";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
@@ -97,7 +97,7 @@ export interface NodeProjectOptions
   /**
    * Options for PR build workflow.
    */
-  readonly buildWorkflowOptions?: NodeProjectBuildWorkflowOptions;
+  readonly buildWorkflowOptions?: BuildWorkflowOptions;
 
   /**
    * Automatically update files modified during builds to pull-request branches. This means
@@ -108,7 +108,7 @@ export interface NodeProjectOptions
    *
    * @default true
    *
-   * @deprecated In favor of buildWorkflowOptions
+   * @deprecated - Use `buildWorkflowOptions.mutableBuild`
    */
   readonly mutableBuild?: boolean;
 
@@ -324,7 +324,7 @@ export interface NodeProjectOptions
    * Build workflow triggers
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    *
-   * @deprecated Instead use buildWorkflowOptions
+   * @deprecated - Use `buildWorkflowOptions.workflowTriggers`
    */
   readonly buildWorkflowTriggers?: Triggers;
 
@@ -341,20 +341,7 @@ export interface NodeProjectOptions
 /**
  * Build workflow options for NodeProject
  */
-export interface NodeProjectBuildWorkflowOptions {
-  /**
-   * Name of the buildfile (e.g. "build" becomes "build.yml").
-   *
-   * @default "build"
-   */
-  readonly name?: string;
-
-  /**
-   * The container image to use for builds.
-   * @default - the default workflow container
-   */
-  readonly containerImage?: string;
-
+export interface BuildWorkflowOptions extends CommonBuildWorkflowOptions {
   /**
    * Automatically update files modified during builds to pull-request branches.
    * This means that any files synthesized by projen or e.g. test snapshots will
@@ -365,52 +352,6 @@ export interface NodeProjectBuildWorkflowOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
-
-  /**
-   * Steps to execute before the build.
-   * @default []
-   */
-  readonly preBuildSteps?: JobStep[];
-
-  /**
-   * Steps to execute after build.
-   * @default []
-   */
-  readonly postBuildSteps?: JobStep[];
-
-  /**
-   * Build environment variables.
-   * @default {}
-   */
-  readonly env?: { [key: string]: string };
-
-  /**
-   * Github Runner selection labels
-   * @default ["ubuntu-latest"]
-   * @description Defines a target Runner by labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOn?: string[];
-
-  /**
-   * Github Runner Group selection options
-   * @description Defines a target Runner Group by name and/or labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOnGroup?: GroupRunnerOptions;
-
-  /**
-   * Build workflow triggers
-   * @default "{ pullRequest: {}, workflowDispatch: {} }"
-   */
-  readonly workflowTriggers?: Triggers;
-
-  /**
-   * Permissions granted to the build job
-   * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
-   * @default `{ contents: JobPermission.WRITE }`
-   */
-  readonly permissions?: JobPermissions;
 }
 
 /**
@@ -672,7 +613,7 @@ export class NodeProject extends GitHubProject {
       idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
     };
 
-    const buildWorkflowOptions: NodeProjectBuildWorkflowOptions =
+    const buildWorkflowOptions: BuildWorkflowOptions =
       options.buildWorkflowOptions ?? {};
 
     if (buildEnabled && (this.github || GitHub.of(this.root))) {
