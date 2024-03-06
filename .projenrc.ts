@@ -216,44 +216,48 @@ if (project.npmignore) {
 const bootstrapScript = new TextFile(project, bootstrapScriptFile, {
   executable: true,
   marker: true,
-  lines: [
-    "#!/usr/bin/env node",
-    `// ${PROJEN_MARKER}`,
-    "",
-    'const { existsSync } = require("fs");',
-    'const { execSync } = require("child_process");',
-    "",
-    "function execCommand(command) {",
-    "  try {",
-    '    execSync(command, { stdio: "inherit" });',
-    "  } catch (error) {",
-    "    console.error(`Failed to execute command: ${command}`, error);",
-    "    process.exit(1);",
-    "  }",
-    "}",
-    "",
-    "function bootstrap() {",
-    '  console.info("bootstrapping...");',
-    "",
-    '  if (!existsSync("node_modules/.bin/jsii")) {',
-    "    execCommand(",
-    '      "yarn install --frozen-lockfile --check-files --non-interactive"',
-    "    );",
-    "  }",
-    "",
-    "  execCommand(",
-    '    "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"',
-    "  );",
-    "}",
-    "",
-    'if (!existsSync("lib/cli/index.js")) {',
-    "  bootstrap();",
-    "}",
-    "",
-    'const args = process.argv.slice(2).join(" ");',
-    "execCommand(`node bin/projen ${args}`);",
-    "",
-  ],
+  lines: `#!/usr/bin/env node
+// ${PROJEN_MARKER}
+
+const { existsSync } = require("fs");
+const { execSync } = require("child_process");
+
+function execCommand(command) {
+  try {
+    execSync(command, { stdio: "inherit" });
+  } catch (error) {
+    console.error(\`Failed to execute command: \${command}\`, error);
+    process.exit(1);
+  }
+}
+
+const isBuild = existsSync("lib/cli/index.js");
+const hasJsii = existsSync("node_modules/.bin/jsii");
+const hasTsNode = existsSync("node_modules/.bin/ts-node");
+const needsBootstrapping = !isBuild || !hasTsNode;
+
+const installCommand = "yarn install --frozen-lockfile --check-files --non-interactive";
+const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
+
+function bootstrap() {
+  console.info("bootstrapping...");
+
+  if (!hasTsNode || !hasJsii) {
+    execCommand(installCommand);
+  }
+
+  if (!isBuild) {
+    execCommand(buildCommand);
+  }
+}
+
+if (needsBootstrapping) {
+  bootstrap();
+}
+
+const args = process.argv.slice(2).join(" ");
+execCommand(\`node bin/projen \${args}\`);
+`.split("\n"),
 });
 if (project.npmignore) {
   project.npmignore.exclude(`/${bootstrapScript.path}`);
