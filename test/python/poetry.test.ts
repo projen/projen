@@ -157,8 +157,9 @@ test("poetry enabled with metadata in dependencies", () => {
     classifiers: ["Development Status :: 4 - Beta"],
     deps: [
       "regular-version-package@1.2.3",
-      'package1@{version = "^3.3.3", extras = ["mypackage-extra"]}',
-      'package2@{ path = "../mypackage/foo" }',
+      'package1@{version = "^3.3.3", extras = ["mypackage-extra"]}', // unexpected formatting, multiple values
+      'package2@{ path = "../mypackage/foo" }', // path
+      'package3@{ version = "^4.4.4", extras = ["extra-one", "extra-two"]  }', // multiple extras
     ],
   });
 
@@ -180,6 +181,14 @@ test("poetry enabled with metadata in dependencies", () => {
     "[tool.poetry.dependencies.package2]"
   );
   expect(snapshot["pyproject.toml"]).toContain('path = "../mypackage/foo"');
+  // Likewise package3 metadata should be rendered
+  expect(snapshot["pyproject.toml"]).toContain(
+    "[tool.poetry.dependencies.package3]"
+  );
+  expect(snapshot["pyproject.toml"]).toContain('version = "^4.4.4"');
+  expect(snapshot["pyproject.toml"]).toContain(
+    'extras = [ "extra-one", "extra-two" ]'
+  );
   expect(snapshot["pyproject.toml"]).toMatchSnapshot();
 });
 

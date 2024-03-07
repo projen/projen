@@ -24,6 +24,10 @@ readme = "README.md"
     [tool.poetry.dependencies.package2]
     path = "../mypackage/foo"
 
+    [tool.poetry.dependencies.package3]
+    version = "^4.4.4"
+    extras = [ "extra-one", "extra-two" ]
+
 [tool.poetry.group.dev.dependencies]
 projen = "99.99.99"
 pytest = "7.4.3"
