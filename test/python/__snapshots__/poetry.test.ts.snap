@@ -17,6 +17,10 @@ readme = "README.md"
 regular-version-package = "1.2.3"
 python = "^3.8"
 
+[tool.poetry.dependencies.aws-lambda-powertools]
+version = "^2.28.0"
+extras = ["tracer","aws-sdk"]
+
 [tool.poetry.dependencies.package1]
 version = "^3.3.3"
 extras = ["mypackage-extra"]

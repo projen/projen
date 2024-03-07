@@ -154,31 +154,36 @@ export class Poetry
   private permitTomlInlineTableDeps(dependencies: { [key: string]: any }) {
     const formattedDependencies: { [key: string]: any } = {};
 
+    // Helper function to handle values within a TOML inline table string
+    const handleValue = (value: string) => {
+      if (value.startsWith("[") && value.endsWith("]")) {
+        // Handle array values
+        return value
+          .slice(1, -1)
+          .split(/,\s*/)
+          .map((item) => item.trim().replace(/^"|"$/g, ""));
+      } else {
+        // Handle string values
+        return value.replace(/^"|"$/g, "");
+      }
+    };
+
     for (const [key, value] of Object.entries(dependencies)) {
       if (
         typeof value === "string" &&
         value.startsWith("{") &&
         value.endsWith("}")
       ) {
-        // Parse the string as a TOML inline table
         const metadataString = value.slice(1, -1); // Remove surrounding braces
         const metadataParts = metadataString
-          .split(",")
+          .split(/,\s*(?![^\[\]]*\])/) // Split on commas not inside brackets
           .map((part) => part.trim());
+
         const metadataObject: any = {};
 
         for (const part of metadataParts) {
           const [partKey, partValue] = part.split("=").map((p) => p.trim());
-          if (partValue.startsWith("[") && partValue.endsWith("]")) {
-            // Handle array values
-            metadataObject[partKey] = partValue
-              .slice(1, -1)
-              .split(",")
-              .map((item) => item.trim().replace(/^"|"$/g, ""));
-          } else {
-            // Handle string values
-            metadataObject[partKey] = partValue.replace(/^"|"$/g, "");
-          }
+          metadataObject[partKey] = handleValue(partValue);
         }
 
         formattedDependencies[key] = metadataObject;

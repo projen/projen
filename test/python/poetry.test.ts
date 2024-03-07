@@ -159,6 +159,7 @@ test("poetry enabled with metadata in dependencies", () => {
       "regular-version-package@1.2.3",
       `package1@{ version = "^3.3.3", extras = ["mypackage-extra"] }`,
       `package2@{ path = "../mypackage/foo" }`,
+      `aws-lambda-powertools@{ version = "^2.28.0", extras = ["tracer", "aws-sdk"] }`,
     ],
   });
 
@@ -182,6 +183,14 @@ test("poetry enabled with metadata in dependencies", () => {
   // This ensures that dependencies with a path reference are properly formatted
   expect(actualObjectContent.tool.poetry.dependencies.package2).toMatchObject({
     path: "../mypackage/foo",
+  });
+
+  // This ensures that dependencies with multiple extras are properly formatted
+  expect(
+    actualObjectContent.tool.poetry.dependencies["aws-lambda-powertools"]
+  ).toMatchObject({
+    version: "^2.28.0",
+    extras: ["tracer", "aws-sdk"],
   });
 
   expect(snapshot["pyproject.toml"]).toMatchSnapshot();
