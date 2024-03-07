@@ -197,6 +197,8 @@ test("poetry correctly handles dependencies with toml inline tables", () => {
     { version: "<=1.9", python: ">=3.6,<3.8" },
     { version: "^2.0", python: ">=3.8" },
   ]);
+
+  expect(actualTomlContent).toMatchSnapshot();
 });
 
 test("poetry environment is setup with pythonExec", () => {
