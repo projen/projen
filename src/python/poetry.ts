@@ -143,13 +143,26 @@ export class Poetry
   }
 
   /**
-   * Converts Poetry dependency declarations' values from TOML inline table strings to TOML inline tables.
-   * Allows specifying versions and extras in a format like `mypackage@{ version="1.2.3", extras=["mypackage-extra"] }`.
+   * Converts Poetry dependency declarations from TOML inline table strings to their corresponding JavaScript object representation,
+   * while leaving SemVer strings unaltered.
+   *
+   * TOML inline tables allow for detailed specification of package properties, such as `version` and `extras`
    * @see https://toml.io/en/v1.0.0#inline-table
    *
-   * @param dependencies A map of dependency names to SemVer strings or TOML inline table strings.
-   * @private
+   * @example `mypackage@{ version="1.2.3", extras=["mypackage-extra"] }`
+   * // Returns:
+   * // {
+   * //   "mypackage": {
+   * //     version: "1.2.3",
+   * //     extras: ["mypackage-extra"]
+   * //   }
+   * // }
    *
+   * @private
+   * @param dependencies A map where keys are dependency names and values are either SemVer strings or TOML inline table strings
+   * representing the version and any additional properties of the dependency.
+   * @returns A map of dependency names to their parsed representations. Each complex dependency is transformed into an object
+   * with properties derived from the TOML inline table string, such as `version` and `extras`.
    */
   private permitTomlInlineTableDeps(dependencies: { [key: string]: any }) {
     const formattedDeps: { [key: string]: any } = {};
