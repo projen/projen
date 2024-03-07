@@ -54,12 +54,12 @@ const project = new cdk.JsiiProject({
     "glob@^8",
     "semver",
     "chalk",
+    "@iarna/toml",
     "xmlbuilder2",
     "ini",
     "shx",
     "fast-json-patch",
     "comment-json@4.2.2",
-    "json2toml",
   ],
 
   devDeps: [
@@ -71,7 +71,6 @@ const project = new cdk.JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
-    "@iarna/toml",
   ],
 
   peerDeps: ["constructs@^10.0.0"],

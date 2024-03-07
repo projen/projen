@@ -1,10 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "@iarna/toml",
-      "type": "build"
-    },
-    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
@@ -134,6 +130,10 @@
       "type": "build"
     },
     {
+      "name": "@iarna/toml",
+      "type": "bundled"
+    },
+    {
       "name": "case",
       "type": "bundled"
     },
@@ -161,10 +161,6 @@
     },
     {
       "name": "ini",
-      "type": "bundled"
-    },
-    {
-      "name": "json2toml",
       "type": "bundled"
     },
     {
