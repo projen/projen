@@ -152,48 +152,42 @@ export class Poetry
    *
    */
   private permitTomlInlineTableDeps(dependencies: { [key: string]: any }) {
-    const formattedDependencies: { [key: string]: any } = {};
+    const formattedDeps: { [key: string]: any } = {};
 
-    // Helper function to handle values within a TOML inline table string
-    const handleValue = (value: string) => {
+    const trimAndStripQuotes = (str: string) =>
+      str.trim().replace(/^"|"$/g, "");
+
+    const parseValue = (value: string): any => {
+      // Handle TOML inline table values
+      if (value.startsWith("{") && value.endsWith("}")) {
+        const items = value.slice(1, -1).split(/,\s*(?![^\[\]]*\])/); // Split on commas not inside brackets
+        const result: { [key: string]: any } = {};
+        items.forEach((item) => {
+          const [key, val] = item
+            .split("=")
+            .map((part) => trimAndStripQuotes(part));
+          result[key] = parseValue(val);
+        });
+        return result;
+      }
+
+      // Handle array values
       if (value.startsWith("[") && value.endsWith("]")) {
-        // Handle array values
         return value
           .slice(1, -1)
           .split(/,\s*/)
-          .map((item) => item.trim().replace(/^"|"$/g, ""));
-      } else {
-        // Handle string values
-        return value.replace(/^"|"$/g, "");
+          .map((item) => trimAndStripQuotes(item));
       }
+
+      // Handle string values
+      return value;
     };
 
     for (const [key, value] of Object.entries(dependencies)) {
-      if (
-        typeof value === "string" &&
-        value.startsWith("{") &&
-        value.endsWith("}")
-      ) {
-        const metadataString = value.slice(1, -1); // Remove surrounding braces
-        const metadataParts = metadataString
-          .split(/,\s*(?![^\[\]]*\])/) // Split on commas not inside brackets
-          .map((part) => part.trim());
-
-        const metadataObject: any = {};
-
-        for (const part of metadataParts) {
-          const [partKey, partValue] = part.split("=").map((p) => p.trim());
-          metadataObject[partKey] = handleValue(partValue);
-        }
-
-        formattedDependencies[key] = metadataObject;
-      } else {
-        // Skip conversion if the string doesn't contain a TOML inline table
-        formattedDependencies[key] = value;
-      }
+      formattedDeps[key] = parseValue(value);
     }
 
-    return formattedDependencies;
+    return formattedDeps;
   }
 
   /**
