@@ -192,7 +192,7 @@ test("poetry correctly handles dependencies with toml inline tables", () => {
     markers: "python_version <= '3.4' or sys_platform == 'win32'",
   });
 
-  // Handles multiple TOML tables
+  // Handles TOML array of tables
   expect(actualObjectContent.tool.poetry.dependencies.package5).toEqual([
     { version: "<=1.9", python: ">=3.6,<3.8" },
     { version: "^2.0", python: ">=3.8" },
