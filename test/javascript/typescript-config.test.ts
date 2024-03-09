@@ -103,6 +103,46 @@ describe("TypescriptConfig", () => {
     });
   });
 
+  test("TypeScript should allow parse package for extends witout compilerOptions.", () => {
+    withProjectDir((outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const baseConfig = new TypescriptConfig(project, {
+        // No compilerOptions
+        extends: TypescriptConfigExtends.fromPaths([
+          "@tsconfig/recommended/tsconfig.json",
+        ]),
+      });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        baseConfig.file.absolutePath,
+        ts.sys.readFile
+      );
+      expect(loadedConfig.error).toBeUndefined();
+      expect(loadedConfig.config).toHaveProperty(
+        "extends",
+        "@tsconfig/recommended/tsconfig.json"
+      );
+    });
+  });
+
+  test("TypescriptConfig requires either extends or compilerOptions.", () => {
+    expect(() => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+      });
+      new TypescriptConfig(project, {
+        // No compilerOptions
+        // No extends
+      });
+    }).toThrowError(/Must provide either `extends` or `compilerOptions`/);
+  });
+
   test("TypeScript should parse generated config with multiple extensions", () => {
     withProjectDir((outdir) => {
       const project = new NodeProject({
