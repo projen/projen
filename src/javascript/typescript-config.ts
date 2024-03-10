@@ -13,6 +13,9 @@ export interface TypescriptConfigOptions {
 
   /**
    * Base `tsconfig.json` configuration(s) to inherit from.
+   *
+   * @remarks
+   * Must provide either `extends` or `compilerOptions` (or both).
    */
   readonly extends?: TypescriptConfigExtends;
 
@@ -32,8 +35,11 @@ export interface TypescriptConfigOptions {
 
   /**
    * Compiler options to use.
+   *
+   * @remarks
+   * Must provide either `extends` or `compilerOptions` (or both).
    */
-  readonly compilerOptions: TypeScriptCompilerOptions;
+  readonly compilerOptions?: TypeScriptCompilerOptions;
 }
 
 /**
@@ -661,7 +667,7 @@ export class TypescriptConfigExtends {
 
 export class TypescriptConfig extends Component {
   private _extends: TypescriptConfigExtends;
-  public readonly compilerOptions: TypeScriptCompilerOptions;
+  public readonly compilerOptions?: TypeScriptCompilerOptions;
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
@@ -670,6 +676,12 @@ export class TypescriptConfig extends Component {
   constructor(project: Project, options: TypescriptConfigOptions) {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
+
+    if (!options.extends && !options.compilerOptions) {
+      throw new Error(
+        "TypescriptConfig: Must provide either `extends` or `compilerOptions` (or both)."
+      );
+    }
 
     this._extends = options.extends ?? TypescriptConfigExtends.fromPaths([]);
     this.include = options.include ?? ["**/*.ts"];
