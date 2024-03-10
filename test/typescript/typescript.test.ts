@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { Logger, TaskRuntime } from "../../src";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
-import { Transform } from "../../src/javascript";
+import { Transform, TypescriptConfigExtends } from "../../src/javascript";
 import {
   mergeTsconfigOptions,
   TsJestTsconfig,
@@ -93,6 +93,62 @@ describe("mergeTsconfigOptions", () => {
         },
       })
     );
+  });
+
+  test("merging compilerOptions: undefined to erase", () => {
+    const mergedTsconfigOptions = mergeTsconfigOptions(
+      {
+        compilerOptions: {
+          esModuleInterop: false,
+        },
+      },
+      {
+        compilerOptions: undefined,
+      }
+    );
+
+    console.dir(mergedTsconfigOptions, { depth: null });
+    expect(mergedTsconfigOptions).toEqual(
+      expect.not.objectContaining({
+        compilerOptions: {
+          esModuleInterop: false,
+        },
+      })
+    );
+  });
+});
+
+describe("tsconfigOptions with exends", () => {
+  test("tsconfigOptions can be undefined with exends", () => {
+    // yeah, expect(...).not.toThrow() is redundant, but expresses the intention
+    expect(() => {
+      const prj = new TypeScriptProject({
+        name: "test",
+        defaultReleaseBranch: "test",
+        tsconfig: {
+          include: ["typescript.test.ts"],
+          extends: TypescriptConfigExtends.fromPaths(["tsconfig.base.json"]),
+          // no compilerOptions,
+        },
+      });
+
+      synthSnapshot(prj);
+    }).not.toThrow();
+  });
+  test("tsconfigOptions cannot be undefined with exends undefined", () => {
+    expect(() => {
+      const prj = new TypeScriptProject({
+        name: "test",
+        defaultReleaseBranch: "test",
+        tsconfig: {
+          // extends: TypescriptConfigExtends.fromPaths(["tsconfig.base.json"]),
+          // no compilerOptions,
+          compilerOptions: undefined,
+        },
+      });
+
+      synthSnapshot(prj);
+    }).toThrow(/Must provide either `extends` or `compilerOptions`/);
   });
 });
 

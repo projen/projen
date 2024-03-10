@@ -823,10 +823,13 @@ export function mergeTsconfigOptions(
       ...current,
       include: [...(previous.include ?? []), ...(current.include ?? [])],
       exclude: [...(previous.exclude ?? []), ...(current.exclude ?? [])],
-      compilerOptions: {
-        ...previous.compilerOptions,
-        ...current.compilerOptions,
-      },
+      compilerOptions:
+        current.compilerOptions === undefined
+          ? undefined
+          : {
+              ...previous.compilerOptions,
+              ...current.compilerOptions,
+            },
     }),
     { compilerOptions: {} }
   );
