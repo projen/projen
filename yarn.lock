@@ -2843,9 +2843,9 @@ has-tostringtag@^1.0.0, has-tostringtag@^1.0.1, has-tostringtag@^1.0.2:
     has-symbols "^1.0.3"
 
 hasown@^2.0.0, hasown@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/hasown/-/hasown-2.0.1.tgz#26f48f039de2c0f8d3356c223fb8d50253519faa"
-  integrity sha512-1/th4MHjnwncwXsIW6QMzlvYL9kG5e/CpVvLRZe4XPa8TOUNbCELqmvhDmnkNsAjwaG4+I8gJJL0JBvTTLO9qA==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/hasown/-/hasown-2.0.2.tgz#003eaf91be7adc372e84ec59dc37252cedb80003"
+  integrity sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==
   dependencies:
     function-bind "^1.1.2"
 
@@ -5379,9 +5379,9 @@ typescript@5.1.x, typescript@~5.1.6:
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@next:
-  version "5.5.0-dev.20240309"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240309.tgz#71f8ce4dccbd207ae403195f4d873588633e7a5f"
-  integrity sha512-5iYI0onxTBI64bT7U5AzRRUlN1rpBZqkEX5IByWg97YSkgzN7EiRzzRoHC1dOYb19pThxBee6gpkqib8aL9UpQ==
+  version "5.5.0-dev.20240310"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240310.tgz#358ea39f5a12ad45c404316c8687229ca3a36911"
+  integrity sha512-5cC3ym7BKW/xa0duhXDdO/k3IP+1P6ZlJlZDtsyCJDIf/oX+J63a44EFvrMrpg6GH47JehqPHqJ6eaIlcyQE1Q==
 
 typescript@~3.9.10:
   version "3.9.10"
