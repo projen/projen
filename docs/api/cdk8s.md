@@ -6648,7 +6648,6 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -8065,21 +8064,7 @@ Define a GitHub workflow for building PRs.
 
 ---
 
-##### `buildWorkflowOptions`<sup>Optional</sup> <a name="buildWorkflowOptions" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.buildWorkflowOptions"></a>
-
-```typescript
-public readonly buildWorkflowOptions: BuildWorkflowOptions;
-```
-
-- *Type:* projen.javascript.BuildWorkflowOptions
-
-Options for PR build workflow.
-
----
-
-##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.buildWorkflowTriggers"></a>
-
-- *Deprecated:* - Use `buildWorkflowOptions.workflowTriggers`
+##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
 public readonly buildWorkflowTriggers: Triggers;
@@ -8265,9 +8250,7 @@ Jest options.
 
 ---
 
-##### ~~`mutableBuild`~~<sup>Optional</sup> <a name="mutableBuild" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.mutableBuild"></a>
-
-- *Deprecated:* - Use `buildWorkflowOptions.mutableBuild`
+##### `mutableBuild`<sup>Optional</sup> <a name="mutableBuild" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.mutableBuild"></a>
 
 ```typescript
 public readonly mutableBuild: boolean;
@@ -9075,7 +9058,6 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -10501,21 +10483,7 @@ Define a GitHub workflow for building PRs.
 
 ---
 
-##### `buildWorkflowOptions`<sup>Optional</sup> <a name="buildWorkflowOptions" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.buildWorkflowOptions"></a>
-
-```typescript
-public readonly buildWorkflowOptions: BuildWorkflowOptions;
-```
-
-- *Type:* projen.javascript.BuildWorkflowOptions
-
-Options for PR build workflow.
-
----
-
-##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.buildWorkflowTriggers"></a>
-
-- *Deprecated:* - Use `buildWorkflowOptions.workflowTriggers`
+##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
 public readonly buildWorkflowTriggers: Triggers;
@@ -10701,9 +10669,7 @@ Jest options.
 
 ---
 
-##### ~~`mutableBuild`~~<sup>Optional</sup> <a name="mutableBuild" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.mutableBuild"></a>
-
-- *Deprecated:* - Use `buildWorkflowOptions.mutableBuild`
+##### `mutableBuild`<sup>Optional</sup> <a name="mutableBuild" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.mutableBuild"></a>
 
 ```typescript
 public readonly mutableBuild: boolean;

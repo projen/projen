@@ -2807,26 +2807,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -4013,7 +3994,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -5836,26 +5816,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -7130,7 +7091,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -10259,26 +10219,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -11383,7 +11324,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -13143,26 +13083,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -14287,7 +14208,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -16174,26 +16094,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -17250,7 +17151,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -19992,26 +19892,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -21015,7 +20896,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -22885,26 +22765,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -23645,7 +23506,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -25262,26 +25122,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -26160,7 +26001,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -27903,26 +27743,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -28663,7 +28484,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -31468,26 +31288,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -32228,7 +32029,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -33833,26 +33633,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -34731,7 +34512,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -36479,26 +36259,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -37377,7 +37138,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -39103,26 +38863,7 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
-        "docs": "Options for PR build workflow.",
-        "featured": false,
-        "fqn": "projen.javascript.BuildWorkflowOptions",
-        "fullType": {
-          "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowOptions",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowOptions",
-        ],
-        "simpleType": "BuildWorkflowOptions",
-        "switch": "build-workflow-options",
-      },
-      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -40001,7 +39742,6 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {

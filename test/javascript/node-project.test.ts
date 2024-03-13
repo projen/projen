@@ -746,7 +746,7 @@ describe("scripts", () => {
 test("mutableBuild will push changes to PR branches", () => {
   // WHEN
   const project = new TestNodeProject({
-    buildWorkflowOptions: { mutableBuild: true },
+    mutableBuild: true,
   });
 
   // THEN
@@ -760,7 +760,7 @@ test("mutableBuild will push changes to PR branches", () => {
 test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   // WHEN
   const project = new TestNodeProject({
-    buildWorkflowOptions: { mutableBuild: false },
+    mutableBuild: false,
   });
 
   // THEN
@@ -1164,11 +1164,9 @@ describe("buildWorkflowTriggers", () => {
   test("use custom triggers in build workflow", () => {
     // WHEN
     const project = new TestNodeProject({
-      buildWorkflowOptions: {
-        workflowTriggers: {
-          push: {
-            branches: ["feature/*"],
-          },
+      buildWorkflowTriggers: {
+        push: {
+          branches: ["feature/*"],
         },
       },
     });
