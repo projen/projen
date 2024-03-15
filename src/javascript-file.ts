@@ -1,4 +1,3 @@
-import assert = require("assert");
 import { IResolver } from "./file";
 import { JsonFile, JsonFileOptions } from "./json";
 import { Project } from "./project";
@@ -295,21 +294,10 @@ export class JavascriptFile extends JsonFile {
     if (!json) {
       return undefined;
     }
-    console.log(json);
     const data = JSON.parse(json);
-    const plugins = data.plugins;
-    if (plugins) {
-      data.plugins = {};
-      assert(Array.isArray(plugins), "plugins, if defnined, must be an array");
-      for (const plugin of (plugins as Array<string>) ?? []) {
-        const pluginFixed =
-          "plugin_" + plugin.replace(/^@/g, "").replace(/(\/|-)/g, "_");
-        const [pluginToken] = this.dependencies.addImport(pluginFixed, plugin);
-        data.plugins[plugin] = pluginToken;
-      }
-    }
 
     const markerHeader = this.marker ? `// ${this.marker}\n` : "";
+    data["//"] = undefined;
 
     return new JavascriptRaw(
       `${markerHeader}${this.dependencies}
