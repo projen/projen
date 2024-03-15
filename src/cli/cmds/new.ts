@@ -1,5 +1,5 @@
+import type { SpawnSyncReturns } from "child_process";
 import * as fs from "fs";
-import { SpawnSyncReturns } from "node:child_process";
 import * as path from "path";
 import * as semver from "semver";
 import * as yargs from "yargs";
