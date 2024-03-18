@@ -372,8 +372,8 @@ export class UpgradeDependencies extends Component {
     const dependencies = [];
 
     const deps = this.project.deps.all
-      // remove those that have a pinned version
-      .filter((d) => includeConstraint || !(d.version && d.version[0] === "^"))
+      // remove those that have a pinned version (unless includeConstraint is true)
+      .filter((d) => includeConstraint || !d.version || d.version[0] === "^")
       // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
 
