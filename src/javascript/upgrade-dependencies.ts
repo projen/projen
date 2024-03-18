@@ -373,7 +373,7 @@ export class UpgradeDependencies extends Component {
 
     const deps = this.project.deps.all
       // remove those that have a pinned version (unless includeConstraint is true)
-      .filter((d) => includeConstraint || !d.version || d.version[0] === "^")
+      .filter((d) => includeConstraint || this.allowsMinorUpgrades(d.version))
       // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
 
@@ -386,6 +386,23 @@ export class UpgradeDependencies extends Component {
     }
 
     return dependencies.map((d) => d.name);
+  }
+
+  private allowsMinorUpgrades(version: string | undefined): boolean {
+    // No version means "latest"
+    if (!version) {
+      return true;
+    }
+
+    // Caret means "allow minor upgrades"
+    if (version.startsWith("^")) {
+      return true;
+    }
+
+    // If only one part of semver is specified, it means "allow minor upgrades", and "x" is a wildcard.
+    // 10, 10.x, and 10.x.x would all work. 10.1 would not.
+    const parts = version.split(".").filter((ver) => ver !== "x");
+    return parts.length === 1 && !Number.isNaN(parseInt(version[0]));
   }
 
   private createWorkflow(

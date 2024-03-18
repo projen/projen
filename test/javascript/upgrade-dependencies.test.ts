@@ -96,6 +96,33 @@ test("upgrades command includes all dependencies", () => {
   `);
 });
 
+test("upgrade command does not include non-standard dependency versions", () => {
+  const project = createProject({
+    deps: ["some-dep@workspace:*"],
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
+    [
+      {
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=constructs,jest,jest-junit,projen,standard-version",
+      },
+      {
+        "exec": "yarn install --check-files",
+      },
+      {
+        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+      },
+      {
+        "exec": "npx projen",
+      },
+      {
+        "spawn": "post-upgrade",
+      },
+    ]
+  `);
+});
+
 test("ncu upgrade command does not include dependencies with pinned versions, but package manager upgrade does", () => {
   const project = createProject({
     deps: ["some-dep@10.0.0"],
