@@ -1169,7 +1169,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,projen,standard-version,ts-jest,typescript,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,projen,standard-version,ts-jest,typescript,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert"
         },
         {
           "exec": "yarn install --check-files"
@@ -2228,7 +2228,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/node,@types/yaml,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/node,@types/yaml,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest-junit,jest,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml"
         },
         {
           "exec": "yarn install --check-files"
