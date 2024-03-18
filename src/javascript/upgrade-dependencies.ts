@@ -388,6 +388,14 @@ export class UpgradeDependencies extends Component {
     return dependencies.map((d) => d.name);
   }
 
+  /**
+   * Determines whether a given version handed in for a dependency allows minor upgrades.
+   *
+   * @example true for undefined, "^1.2.3", "1.x", "1.x.x", "1", "^1.2". false for "1.2", "1.2.x", "1.2.3".
+   *
+   * @param version semver from DependencyCoordinates.version, may be undefined
+   * @returns true if the version allows minor upgrades
+   */
   private allowsMinorUpgrades(version: string | undefined): boolean {
     // No version means "latest"
     if (!version) {
