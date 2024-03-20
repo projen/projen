@@ -3,6 +3,8 @@ import { python } from "../../src";
 import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
 
+const DEFAULT_PYTHON_VERSION = "^3.8";
+
 test("poetry enabled", () => {
   const p = new TestPythonProject({
     poetry: true,
@@ -21,7 +23,9 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"'); // default python version
+  expect(snapshot["pyproject.toml"]).toContain(
+    `python = "${DEFAULT_PYTHON_VERSION}"`
+  );
 });
 
 test("poetry and venv fails", () => {
@@ -84,21 +88,37 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"'); // default python version
+  expect(snapshot["pyproject.toml"]).toContain(
+    `python = "${DEFAULT_PYTHON_VERSION}"`
+  );
 });
 
-test("poetry enabled with specified python version", () => {
+test("poetry enabled with specified python compatible version", () => {
   const p = new TestPythonProject({
     poetry: true,
-    homepage: "http://www.example.com",
-    description: "a short project description",
-    license: "Apache-2.0",
-    classifiers: ["Development Status :: 4 - Beta"],
+    pythonCompatibleVersion: "3.10",
   });
-  p.addDependency("python@^3.8,<=3.11");
 
   const snapshot = synthSnapshot(p);
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8,<=3.11"');
+  const actualTomlContent = snapshot["pyproject.toml"];
+  const actualObjectContent = TOML.parse(actualTomlContent) as any;
+
+  expect(actualObjectContent.tool.poetry.dependencies.python).toEqual("^3.10");
+});
+
+test("poetry enabled with specified python semantic version", () => {
+  const p = new TestPythonProject({
+    poetry: true,
+    pythonSemanticVersion: "^3.8,<=3.11",
+  });
+
+  const snapshot = synthSnapshot(p);
+  const actualTomlContent = snapshot["pyproject.toml"];
+  const actualObjectContent = TOML.parse(actualTomlContent) as any;
+
+  expect(actualObjectContent.tool.poetry.dependencies.python).toEqual(
+    "^3.8,<=3.11"
+  );
 });
 
 test("poetry enabled with poetry-specific options", () => {
@@ -265,7 +285,7 @@ test("generates correct pyproject.toml content", () => {
         readme: "README.md",
         dependencies: {
           "aws-cdk-lib": "^2.128.0",
-          python: "^3.8",
+          python: DEFAULT_PYTHON_VERSION,
         },
         group: {
           dev: {

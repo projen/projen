@@ -49,6 +49,19 @@ export class Poetry
   private readonly pythonExec: string;
 
   /**
+   * Defines the Python version that the project can work with.
+   * This version follows the caret (^) notation from the SemVer standard.
+   * @default "3.8"
+   */
+  private readonly pythonCompatibleVersion?: string;
+
+  /**
+   * A specific Python version constraint following the SemVer standard.
+   * This version takes precedence over `pythonCompatibleVersion`.
+   */
+  private readonly pythonSemanticVersion?: string;
+
+  /**
    * Represents the configuration of the `pyproject.toml` file for a Poetry project.
    * This includes package metadata, dependencies, and Poetry-specific settings.
    */
@@ -56,7 +69,10 @@ export class Poetry
 
   constructor(project: Project, options: PoetryOptions) {
     super(project);
+
     this.pythonExec = options.pythonExec ?? "python";
+    this.pythonCompatibleVersion = options.pythonCompatibleVersion ?? "3.8";
+    this.pythonSemanticVersion = options.pythonSemanticVersion;
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
@@ -117,19 +133,21 @@ export class Poetry
 
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
-    let pythonDefined: boolean = false;
+
+    // Go through all project dependencies and add them
     for (const pkg of this.project.deps.all) {
-      if (pkg.name === "python") {
-        pythonDefined = true;
-      }
       if (pkg.type === DependencyType.RUNTIME) {
         dependencies[pkg.name] = pkg.version ?? "*";
       }
     }
-    if (!pythonDefined) {
-      // Python version must be defined for poetry projects. Default to ^3.8.
-      dependencies.python = "^3.8";
+
+    // Use `pythonSemanticVersion` if specified, otherwise fall back to `compatiblePythonVersion`
+    if (this.pythonSemanticVersion) {
+      dependencies.python = this.pythonSemanticVersion;
+    } else {
+      dependencies.python = `^${this.pythonCompatibleVersion}`;
     }
+
     return this.permitDependenciesWithMetadata(dependencies);
   }
 

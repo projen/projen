@@ -30,6 +30,19 @@ export interface PythonExecutableOptions {
    * @default "python"
    */
   readonly pythonExec?: string;
+
+  /**
+   * Defines the Python version that the project can work with.
+   * This version follows the caret (^) notation from the SemVer standard.
+   * @default "3.8"
+   */
+  readonly pythonCompatibleVersion?: string;
+
+  /**
+   * A specific Python version constraint following the SemVer standard.
+   * This version takes precedence over `pythonCompatibleVersion`.
+   */
+  readonly pythonSemanticVersion?: string;
 }
 
 /**
@@ -317,6 +330,8 @@ export class PythonProject extends GitHubProject {
         homepage: options.homepage,
         classifiers: options.classifiers,
         pythonExec: options.pythonExec,
+        pythonCompatibleVersion: options.pythonCompatibleVersion,
+        pythonSemanticVersion: options.pythonSemanticVersion,
         poetryOptions: {
           readme: options.readme?.filename ?? "README.md",
           ...options.poetryOptions,
