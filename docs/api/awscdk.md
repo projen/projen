@@ -14282,7 +14282,9 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pythonCompatibleVersion">pythonCompatibleVersion</a></code> | <code>string</code> | Defines the Python version that the project can work with. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pythonSemanticVersion">pythonSemanticVersion</a></code> | <code>string</code> | A specific Python version constraint following the SemVer standard. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
@@ -14859,6 +14861,21 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `pythonCompatibleVersion`<sup>Optional</sup> <a name="pythonCompatibleVersion" id="projen.awscdk.AwsCdkPythonAppOptions.property.pythonCompatibleVersion"></a>
+
+```typescript
+public readonly pythonCompatibleVersion: string;
+```
+
+- *Type:* string
+- *Default:* "3.8"
+
+Defines the Python version that the project can work with.
+
+This version follows the caret (^) notation from the SemVer standard.
+
+---
+
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec"></a>
 
 ```typescript
@@ -14869,6 +14886,20 @@ public readonly pythonExec: string;
 - *Default:* "python"
 
 Path to the python executable to use.
+
+---
+
+##### `pythonSemanticVersion`<sup>Optional</sup> <a name="pythonSemanticVersion" id="projen.awscdk.AwsCdkPythonAppOptions.property.pythonSemanticVersion"></a>
+
+```typescript
+public readonly pythonSemanticVersion: string;
+```
+
+- *Type:* string
+
+A specific Python version constraint following the SemVer standard.
+
+This version takes precedence over `pythonCompatibleVersion`.
 
 ---
 

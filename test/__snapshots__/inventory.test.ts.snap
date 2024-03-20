@@ -2193,6 +2193,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""3.8"",
+        "docs": "Defines the Python version that the project can work with.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonCompatibleVersion",
+        "optional": true,
+        "parent": "PythonExecutableOptions",
+        "path": [
+          "pythonCompatibleVersion",
+        ],
+        "simpleType": "string",
+        "switch": "python-compatible-version",
+      },
+      {
         "default": ""python"",
         "docs": "Path to the python executable to use.",
         "featured": false,
@@ -2208,6 +2225,22 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "python-exec",
+      },
+      {
+        "docs": "A specific Python version constraint following the SemVer standard.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonSemanticVersion",
+        "optional": true,
+        "parent": "PythonExecutableOptions",
+        "path": [
+          "pythonSemanticVersion",
+        ],
+        "simpleType": "string",
+        "switch": "python-semantic-version",
       },
       {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
@@ -9702,6 +9735,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""3.8"",
+        "docs": "Defines the Python version that the project can work with.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonCompatibleVersion",
+        "optional": true,
+        "parent": "PythonExecutableOptions",
+        "path": [
+          "pythonCompatibleVersion",
+        ],
+        "simpleType": "string",
+        "switch": "python-compatible-version",
+      },
+      {
         "default": ""python"",
         "docs": "Path to the python executable to use.",
         "featured": false,
@@ -9717,6 +9767,22 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "python-exec",
+      },
+      {
+        "docs": "A specific Python version constraint following the SemVer standard.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonSemanticVersion",
+        "optional": true,
+        "parent": "PythonExecutableOptions",
+        "path": [
+          "pythonSemanticVersion",
+        ],
+        "simpleType": "string",
+        "switch": "python-semantic-version",
       },
       {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
@@ -30788,6 +30854,23 @@ exports[`inventory 1`] = `
         "switch": "pytest-options",
       },
       {
+        "default": ""3.8"",
+        "docs": "Defines the Python version that the project can work with.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonCompatibleVersion",
+        "optional": true,
+        "parent": "PythonExecutableOptions",
+        "path": [
+          "pythonCompatibleVersion",
+        ],
+        "simpleType": "string",
+        "switch": "python-compatible-version",
+      },
+      {
         "default": ""python"",
         "docs": "Path to the python executable to use.",
         "featured": false,
@@ -30803,6 +30886,22 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "python-exec",
+      },
+      {
+        "docs": "A specific Python version constraint following the SemVer standard.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pythonSemanticVersion",
+        "optional": true,
+        "parent": "PythonExecutableOptions",
+        "path": [
+          "pythonSemanticVersion",
+        ],
+        "simpleType": "string",
+        "switch": "python-semantic-version",
       },
       {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
