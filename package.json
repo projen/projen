@@ -59,7 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "all-contributors-cli": "^6.26.1",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "eslint": "^8",
     "eslint-config-prettier": "^8.10.0",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -67,18 +67,18 @@
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29",
     "jest-junit": "^15",
-    "jsii": "5.1.x",
+    "jsii": "5.3.x",
     "jsii-diff": "^1.95.0",
-    "jsii-docgen": "^10.3.21",
+    "jsii-docgen": "^10.3.24",
     "jsii-pacmak": "^1.95.0",
-    "jsii-rosetta": "5.1.x",
+    "jsii-rosetta": "5.3.x",
     "license-checker": "^25.0.1",
     "markmac": "^0.1.146",
     "prettier": "^2.8.8",
     "standard-version": "^9",
     "ts-jest": "^29",
     "ts-node": "^10.9.2",
-    "typescript": "5.1.x"
+    "typescript": "5.3.x"
   },
   "peerDependencies": {
     "constructs": "^10.0.0"

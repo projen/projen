@@ -43,7 +43,7 @@ export interface AwsCdkConstructLibraryOptions
 
   /**
    * Automatically discovers and creates integration tests for each `.integ.ts`
-   * file in under your test directory.
+   * file under your test directory.
    *
    * @default true
    */
