@@ -17,8 +17,7 @@ export function installPackage(baseDir: string, spec: string): string {
     exec("npm init --yes", { cwd: baseDir });
   }
 
-  const moduleSource = isLocalModule(spec) ? "local" : "external";
-  logging.info(`installing ${moduleSource} module ${spec}...`);
+  logging.info(`installing module ${spec}...`);
   exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // Get the true installed package name
@@ -54,27 +53,6 @@ export function installPackage(baseDir: string, spec: string): string {
  */
 export function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
-}
-
-export function isLocalModule(module: string): boolean {
-  return /^(\.\/|\/)/.test(module) || /\.tgz$/.test(module);
-}
-
-export function moduleExists(cwd: string, module: string): boolean {
-  try {
-    logging.debug(`Checking if external module '${module}' exists...`);
-    // check if local path reference or tgz file
-    const localModule = isLocalModule(module);
-    if (localModule) {
-      return fs.existsSync(module);
-    } else {
-      exec(`npm view ${module}`, { cwd, stdio: "ignore" });
-      return true;
-    }
-  } catch (error) {
-    // exec throws an error if external module does not exist
-    return false;
-  }
 }
 
 export function findJsiiFilePath(
