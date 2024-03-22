@@ -17,6 +17,7 @@ test("setuptools enabled", () => {
   expect(snapshot["setup.py"]).toContain("a short project description");
   expect(snapshot["setup.py"]).toContain("Apache Software License");
   expect(snapshot["setup.py"]).toContain("Development Status :: 4 - Beta");
+  expect(snapshot["setup.py"]).toContain(">=3.8");
 });
 
 test("setuptools enabled with specified python version", () => {
