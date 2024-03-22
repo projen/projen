@@ -1262,7 +1262,7 @@ export interface AwsCodeArtifactInfo {
  */
 export function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
   const captureRegex =
-    /https:\/\/(.+)-(.+)\.d\.codeartifact\.(.+)\.amazonaws\.com/;
+    /([a-z0-9-]+)-(.+)\.d\.codeartifact\.(.+)\.amazonaws\.com/;
   const matches = url?.match(captureRegex) ?? [];
   const [_, domain, account, region] = matches;
   return { domain, account, region };
