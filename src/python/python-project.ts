@@ -326,6 +326,7 @@ export class PythonProject extends GitHubProject {
         license: options.license,
         homepage: options.homepage,
         classifiers: options.classifiers,
+        pythonExec: options.pythonExec,
         requiresPython: options.requiresPython,
         poetryOptions: {
           readme: options.readme?.filename ?? "README.md",
