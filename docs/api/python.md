@@ -3262,9 +3262,8 @@ const poetryOptions: python.PoetryOptions = { ... }
 | <code><a href="#projen.python.PoetryOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PoetryOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PoetryOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.PoetryOptions.property.pythonCompatibleVersion">pythonCompatibleVersion</a></code> | <code>string</code> | Defines the Python version that the project can work with. |
 | <code><a href="#projen.python.PoetryOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.PoetryOptions.property.pythonSemanticVersion">pythonSemanticVersion</a></code> | <code>string</code> | A specific Python version constraint following the SemVer standard. |
+| <code><a href="#projen.python.PoetryOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
 
 ---
 
@@ -3393,21 +3392,6 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
-##### `pythonCompatibleVersion`<sup>Optional</sup> <a name="pythonCompatibleVersion" id="projen.python.PoetryOptions.property.pythonCompatibleVersion"></a>
-
-```typescript
-public readonly pythonCompatibleVersion: string;
-```
-
-- *Type:* string
-- *Default:* "3.8"
-
-Defines the Python version that the project can work with.
-
-This version follows the caret (^) notation from the SemVer standard.
-
----
-
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PoetryOptions.property.pythonExec"></a>
 
 ```typescript
@@ -3421,17 +3405,18 @@ Path to the python executable to use.
 
 ---
 
-##### `pythonSemanticVersion`<sup>Optional</sup> <a name="pythonSemanticVersion" id="projen.python.PoetryOptions.property.pythonSemanticVersion"></a>
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.PoetryOptions.property.requiresPython"></a>
 
 ```typescript
-public readonly pythonSemanticVersion: string;
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
+- *Default:* ">=3.8"
 
-A specific Python version constraint following the SemVer standard.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
 
-This version takes precedence over `pythonCompatibleVersion`.
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
 
 ---
 
@@ -4253,24 +4238,8 @@ const pythonExecutableOptions: python.PythonExecutableOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.PythonExecutableOptions.property.pythonCompatibleVersion">pythonCompatibleVersion</a></code> | <code>string</code> | Defines the Python version that the project can work with. |
 | <code><a href="#projen.python.PythonExecutableOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.PythonExecutableOptions.property.pythonSemanticVersion">pythonSemanticVersion</a></code> | <code>string</code> | A specific Python version constraint following the SemVer standard. |
-
----
-
-##### `pythonCompatibleVersion`<sup>Optional</sup> <a name="pythonCompatibleVersion" id="projen.python.PythonExecutableOptions.property.pythonCompatibleVersion"></a>
-
-```typescript
-public readonly pythonCompatibleVersion: string;
-```
-
-- *Type:* string
-- *Default:* "3.8"
-
-Defines the Python version that the project can work with.
-
-This version follows the caret (^) notation from the SemVer standard.
+| <code><a href="#projen.python.PythonExecutableOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
 
 ---
 
@@ -4287,17 +4256,18 @@ Path to the python executable to use.
 
 ---
 
-##### `pythonSemanticVersion`<sup>Optional</sup> <a name="pythonSemanticVersion" id="projen.python.PythonExecutableOptions.property.pythonSemanticVersion"></a>
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.PythonExecutableOptions.property.requiresPython"></a>
 
 ```typescript
-public readonly pythonSemanticVersion: string;
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
+- *Default:* ">=3.8"
 
-A specific Python version constraint following the SemVer standard.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
 
-This version takes precedence over `pythonCompatibleVersion`.
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
 
 ---
 
@@ -4508,9 +4478,8 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PythonProjectOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.PythonProjectOptions.property.pythonCompatibleVersion">pythonCompatibleVersion</a></code> | <code>string</code> | Defines the Python version that the project can work with. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.PythonProjectOptions.property.pythonSemanticVersion">pythonSemanticVersion</a></code> | <code>string</code> | A specific Python version constraint following the SemVer standard. |
+| <code><a href="#projen.python.PythonProjectOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
 | <code><a href="#projen.python.PythonProjectOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.python.PythonProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
 | <code><a href="#projen.python.PythonProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
@@ -5070,21 +5039,6 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
-##### `pythonCompatibleVersion`<sup>Optional</sup> <a name="pythonCompatibleVersion" id="projen.python.PythonProjectOptions.property.pythonCompatibleVersion"></a>
-
-```typescript
-public readonly pythonCompatibleVersion: string;
-```
-
-- *Type:* string
-- *Default:* "3.8"
-
-Defines the Python version that the project can work with.
-
-This version follows the caret (^) notation from the SemVer standard.
-
----
-
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PythonProjectOptions.property.pythonExec"></a>
 
 ```typescript
@@ -5098,17 +5052,18 @@ Path to the python executable to use.
 
 ---
 
-##### `pythonSemanticVersion`<sup>Optional</sup> <a name="pythonSemanticVersion" id="projen.python.PythonProjectOptions.property.pythonSemanticVersion"></a>
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.PythonProjectOptions.property.requiresPython"></a>
 
 ```typescript
-public readonly pythonSemanticVersion: string;
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
+- *Default:* ">=3.8"
 
-A specific Python version constraint following the SemVer standard.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
 
-This version takes precedence over `pythonCompatibleVersion`.
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
 
 ---
 
@@ -5444,6 +5399,7 @@ const setupPyOptions: python.SetupPyOptions = { ... }
 | <code><a href="#projen.python.SetupPyOptions.property.license">license</a></code> | <code>string</code> | The project license. |
 | <code><a href="#projen.python.SetupPyOptions.property.name">name</a></code> | <code>string</code> | Name of the package. |
 | <code><a href="#projen.python.SetupPyOptions.property.packages">packages</a></code> | <code>string[]</code> | List of submodules to be packaged. |
+| <code><a href="#projen.python.SetupPyOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
 | <code><a href="#projen.python.SetupPyOptions.property.version">version</a></code> | <code>string</code> | Manually specify package version. |
 
 ---
@@ -5558,6 +5514,21 @@ List of submodules to be packaged.
 
 ---
 
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.SetupPyOptions.property.requiresPython"></a>
+
+```typescript
+public readonly requiresPython: string;
+```
+
+- *Type:* string
+- *Default:* ">=3.8"
+
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
+
+---
+
 ##### `version`<sup>Optional</sup> <a name="version" id="projen.python.SetupPyOptions.property.version"></a>
 
 ```typescript
@@ -5594,9 +5565,8 @@ const setuptoolsOptions: python.SetuptoolsOptions = { ... }
 | <code><a href="#projen.python.SetuptoolsOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.SetuptoolsOptions.property.pythonCompatibleVersion">pythonCompatibleVersion</a></code> | <code>string</code> | Defines the Python version that the project can work with. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.SetuptoolsOptions.property.pythonSemanticVersion">pythonSemanticVersion</a></code> | <code>string</code> | A specific Python version constraint following the SemVer standard. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
 
 ---
 
@@ -5725,21 +5695,6 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
-##### `pythonCompatibleVersion`<sup>Optional</sup> <a name="pythonCompatibleVersion" id="projen.python.SetuptoolsOptions.property.pythonCompatibleVersion"></a>
-
-```typescript
-public readonly pythonCompatibleVersion: string;
-```
-
-- *Type:* string
-- *Default:* "3.8"
-
-Defines the Python version that the project can work with.
-
-This version follows the caret (^) notation from the SemVer standard.
-
----
-
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.SetuptoolsOptions.property.pythonExec"></a>
 
 ```typescript
@@ -5753,17 +5708,18 @@ Path to the python executable to use.
 
 ---
 
-##### `pythonSemanticVersion`<sup>Optional</sup> <a name="pythonSemanticVersion" id="projen.python.SetuptoolsOptions.property.pythonSemanticVersion"></a>
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.SetuptoolsOptions.property.requiresPython"></a>
 
 ```typescript
-public readonly pythonSemanticVersion: string;
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
+- *Default:* ">=3.8"
 
-A specific Python version constraint following the SemVer standard.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
 
-This version takes precedence over `pythonCompatibleVersion`.
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
 
 ---
 

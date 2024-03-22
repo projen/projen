@@ -5532,9 +5532,8 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonCompatibleVersion">pythonCompatibleVersion</a></code> | <code>string</code> | Defines the Python version that the project can work with. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonSemanticVersion">pythonSemanticVersion</a></code> | <code>string</code> | A specific Python version constraint following the SemVer standard. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
@@ -6107,21 +6106,6 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
-##### `pythonCompatibleVersion`<sup>Optional</sup> <a name="pythonCompatibleVersion" id="projen.cdk8s.Cdk8sPythonOptions.property.pythonCompatibleVersion"></a>
-
-```typescript
-public readonly pythonCompatibleVersion: string;
-```
-
-- *Type:* string
-- *Default:* "3.8"
-
-Defines the Python version that the project can work with.
-
-This version follows the caret (^) notation from the SemVer standard.
-
----
-
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.cdk8s.Cdk8sPythonOptions.property.pythonExec"></a>
 
 ```typescript
@@ -6135,17 +6119,18 @@ Path to the python executable to use.
 
 ---
 
-##### `pythonSemanticVersion`<sup>Optional</sup> <a name="pythonSemanticVersion" id="projen.cdk8s.Cdk8sPythonOptions.property.pythonSemanticVersion"></a>
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.cdk8s.Cdk8sPythonOptions.property.requiresPython"></a>
 
 ```typescript
-public readonly pythonSemanticVersion: string;
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
+- *Default:* ">=3.8"
 
-A specific Python version constraint following the SemVer standard.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
 
-This version takes precedence over `pythonCompatibleVersion`.
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
 
 ---
 
