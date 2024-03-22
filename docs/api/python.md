@@ -422,6 +422,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.Poetry.property.installTask">installTask</a></code> | <code>projen.Task</code> | Task for updating the lockfile and installing project dependencies. |
 | <code><a href="#projen.python.Poetry.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | Task for publishing the package to a package repository. |
 | <code><a href="#projen.python.Poetry.property.publishTestTask">publishTestTask</a></code> | <code>projen.Task</code> | Task for publishing the package to the Test PyPI repository for testing purposes. |
+| <code><a href="#projen.python.Poetry.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field. |
 
 ---
 
@@ -492,6 +493,21 @@ public readonly publishTestTask: Task;
 - *Type:* projen.Task
 
 Task for publishing the package to the Test PyPI repository for testing purposes.
+
+---
+
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.Poetry.property.requiresPython"></a>
+
+```typescript
+public readonly requiresPython: string;
+```
+
+- *Type:* string
+- *Default:* ">=3.8"
+
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field.
+
+> [https://peps.python.org/pep-0621/#requires-python](https://peps.python.org/pep-0621/#requires-python)
 
 ---
 
@@ -3263,7 +3279,7 @@ const poetryOptions: python.PoetryOptions = { ... }
 | <code><a href="#projen.python.PoetryOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PoetryOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
 | <code><a href="#projen.python.PoetryOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.PoetryOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
+| <code><a href="#projen.python.PoetryOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field. |
 
 ---
 
@@ -3414,9 +3430,9 @@ public readonly requiresPython: string;
 - *Type:* string
 - *Default:* ">=3.8"
 
-Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field.
 
-> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
+> [https://peps.python.org/pep-0621/#requires-python](https://peps.python.org/pep-0621/#requires-python)
 
 ---
 
@@ -4239,7 +4255,7 @@ const pythonExecutableOptions: python.PythonExecutableOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.PythonExecutableOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.PythonExecutableOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
+| <code><a href="#projen.python.PythonExecutableOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field. |
 
 ---
 
@@ -4265,9 +4281,9 @@ public readonly requiresPython: string;
 - *Type:* string
 - *Default:* ">=3.8"
 
-Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field.
 
-> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
+> [https://peps.python.org/pep-0621/#requires-python](https://peps.python.org/pep-0621/#requires-python)
 
 ---
 
@@ -4479,7 +4495,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.PythonProjectOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
+| <code><a href="#projen.python.PythonProjectOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field. |
 | <code><a href="#projen.python.PythonProjectOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.python.PythonProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
 | <code><a href="#projen.python.PythonProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
@@ -5061,9 +5077,9 @@ public readonly requiresPython: string;
 - *Type:* string
 - *Default:* ">=3.8"
 
-Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field.
 
-> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
+> [https://peps.python.org/pep-0621/#requires-python](https://peps.python.org/pep-0621/#requires-python)
 
 ---
 
@@ -5399,7 +5415,7 @@ const setupPyOptions: python.SetupPyOptions = { ... }
 | <code><a href="#projen.python.SetupPyOptions.property.license">license</a></code> | <code>string</code> | The project license. |
 | <code><a href="#projen.python.SetupPyOptions.property.name">name</a></code> | <code>string</code> | Name of the package. |
 | <code><a href="#projen.python.SetupPyOptions.property.packages">packages</a></code> | <code>string[]</code> | List of submodules to be packaged. |
-| <code><a href="#projen.python.SetupPyOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
+| <code><a href="#projen.python.SetupPyOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field. |
 | <code><a href="#projen.python.SetupPyOptions.property.version">version</a></code> | <code>string</code> | Manually specify package version. |
 
 ---
@@ -5523,9 +5539,9 @@ public readonly requiresPython: string;
 - *Type:* string
 - *Default:* ">=3.8"
 
-Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field.
 
-> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
+> [https://peps.python.org/pep-0621/#requires-python](https://peps.python.org/pep-0621/#requires-python)
 
 ---
 
@@ -5566,7 +5582,7 @@ const setuptoolsOptions: python.SetuptoolsOptions = { ... }
 | <code><a href="#projen.python.SetuptoolsOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.python.SetuptoolsOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field. |
 
 ---
 
@@ -5717,9 +5733,9 @@ public readonly requiresPython: string;
 - *Type:* string
 - *Default:* ">=3.8"
 
-Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+Specifies the Python version requirements for the project, following the standard outlined in PEP 621 for the `requires-python` field.
 
-> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires)
+> [https://peps.python.org/pep-0621/#requires-python](https://peps.python.org/pep-0621/#requires-python)
 
 ---
 
