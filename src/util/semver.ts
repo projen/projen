@@ -101,42 +101,80 @@ export function toReleaseVersion(
   }
   switch (target) {
     case TargetName.PYTHON:
+      const baseVersion = `${version.major}.${version.minor}.${version.patch}`;
+
       // Python supports a limited set of identifiers... And we have a mapping table...
       // https://packaging.python.org/guides/distributing-packages-using-setuptools/#pre-release-versioning
-      const [label, sequence, ...rest] = version.prerelease;
-      if (rest.filter((elt) => elt !== 0).length > 0 || sequence == null) {
+      const releaseLabels: Record<string, string> = {
+        alpha: 'a',
+        beta: 'b',
+        rc: 'rc',
+        post: 'post',
+        dev: 'dev',
+        pre: 'pre',
+      };
+
+      const validationErrors: string[] = [];
+
+      // Ensure that prerelease composed entirely of [label, sequence] pairs
+      version.prerelease.forEach((elem, idx, arr) => {
+        const next: string | number | undefined = arr[idx + 1];
+        if (typeof elem === 'string') {
+          if (!Object.keys(releaseLabels).includes(elem)) {
+            validationErrors.push(
+              `Label ${elem} is not one of ${Object.keys(releaseLabels).join(
+                ',',
+              )}`,
+            );
+          }
+          if (next === undefined || !Number.isInteger(next)) {
+            validationErrors.push(
+              `Label ${elem} must be followed by a positive integer`,
+            );
+          }
+        }
+      });
+
+      if (validationErrors.length > 0) {
         throw new Error(
           `Unable to map prerelease identifier (in: ${assemblyVersion}) components to python: ${inspect(
-            version.prerelease
-          )}. The format should be 'X.Y.Z-label.sequence', where sequence is a positive integer, and label is "dev", "pre", "alpha", beta", or "rc"`
+            version.prerelease,
+          )}. The format should be 'X.Y.Z-[label.sequence][.post.sequence][.(dev|pre).sequence]', where sequence is a positive integer and label is one of ${inspect(
+            Object.keys(releaseLabels),
+          )}. Validation errors encountered: ${validationErrors.join(', ')}`,
         );
       }
-      if (!Number.isInteger(sequence)) {
-        throw new Error(
-          `Unable to map prerelease identifier (in: ${assemblyVersion}) to python, as sequence ${inspect(
-            sequence
-          )} is not an integer`
-        );
-      }
-      const baseVersion = `${version.major}.${version.minor}.${version.patch}`;
-      // See PEP 440: https://www.python.org/dev/peps/pep-0440/#pre-releases
-      switch (label) {
-        case "dev":
-        case "pre":
-          return `${baseVersion}.dev${sequence}`; // PEP 404 see developmental release as X.Y.devN
-        case "alpha":
-          return `${baseVersion}a${sequence}`; // PEP 404 see alpha release as X.YaN
-        case "beta":
-          return `${baseVersion}b${sequence}`; // PEP 404 see beta release as X.YbN
-        case "rc":
-          return `${baseVersion}rc${sequence}`; // PEP 404 see release candidate as X.YrcN
-        default:
-          throw new Error(
-            `Unable to map prerelease identifier (in: ${assemblyVersion}) to python, as label ${inspect(
-              label
-            )} is not mapped (only "dev", "pre", "alpha", "beta" and "rc" are)`
-          );
-      }
+
+      // PEP440 supports multiple labels in a given version, so
+      // we should attempt to identify and map as many labels as
+      // possible from the given prerelease input
+      // e.g. 1.2.3-rc.123.dev.456.post.789 => 1.2.3.rc123.dev456.post789
+      const postIdx = version.prerelease.findIndex(
+        (v) => v.toString() === 'post',
+      );
+      const devIdx = version.prerelease.findIndex((v) =>
+        ['dev', 'pre'].includes(v.toString()),
+      );
+      const preReleaseIdx = version.prerelease.findIndex((v) =>
+        ['alpha', 'beta', 'rc'].includes(v.toString()),
+      );
+      const prereleaseVersion = [
+        preReleaseIdx > -1
+          ? `${releaseLabels[version.prerelease[preReleaseIdx]]}${
+              version.prerelease[preReleaseIdx + 1] ?? 0
+            }`
+          : undefined,
+        postIdx > -1
+          ? `post${version.prerelease[postIdx + 1] ?? 0}`
+          : undefined,
+        devIdx > -1 ? `dev${version.prerelease[devIdx + 1] ?? 0}` : undefined,
+      ]
+        .filter((v) => v)
+        .join('.');
+
+      return version.build.length > 0
+        ? `${baseVersion}.${prereleaseVersion}+${version.build.join('.')}`
+        : `${baseVersion}.${prereleaseVersion}`;
     case TargetName.DOTNET:
     case TargetName.GO:
     case TargetName.JAVA:
