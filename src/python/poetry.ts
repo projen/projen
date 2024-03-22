@@ -49,17 +49,14 @@ export class Poetry
   private readonly pythonExec: string;
 
   /**
-   * Defines the Python version that the project can work with.
-   * This version follows the caret (^) notation from the SemVer standard.
-   * @default "3.8"
+   * Specifies the Python version requirements for the project, following the standard
+   * outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+   *
+   * @see https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires
+   *
+   * @default ">=3.8"
    */
-  private readonly pythonCompatibleVersion?: string;
-
-  /**
-   * A specific Python version constraint following the SemVer standard.
-   * This version takes precedence over `pythonCompatibleVersion`.
-   */
-  private readonly pythonSemanticVersion?: string;
+  private readonly requiresPython?: string;
 
   /**
    * Represents the configuration of the `pyproject.toml` file for a Poetry project.
@@ -71,8 +68,7 @@ export class Poetry
     super(project);
 
     this.pythonExec = options.pythonExec ?? "python";
-    this.pythonCompatibleVersion = options.pythonCompatibleVersion ?? "3.8";
-    this.pythonSemanticVersion = options.pythonSemanticVersion;
+    this.requiresPython = options.requiresPython ?? ">=3.8";
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
@@ -141,12 +137,8 @@ export class Poetry
       }
     }
 
-    // Use `pythonSemanticVersion` if specified, otherwise fall back to `compatiblePythonVersion`
-    if (this.pythonSemanticVersion) {
-      dependencies.python = this.pythonSemanticVersion;
-    } else {
-      dependencies.python = `^${this.pythonCompatibleVersion}`;
-    }
+    // Set the Python version specifiers for the project
+    dependencies.python = this.requiresPython;
 
     return this.permitDependenciesWithMetadata(dependencies);
   }
