@@ -19,6 +19,16 @@ test("setuptools enabled", () => {
   expect(snapshot["setup.py"]).toContain("Development Status :: 4 - Beta");
 });
 
+test("setuptools enabled with specified python version", () => {
+  const p = new TestPythonProject({
+    setuptools: true,
+    requiresPython: "^3.8,<=3.11",
+  });
+
+  const snapshot = synthSnapshot(p);
+  expect(snapshot["setup.py"]).toContain("^3.8,<=3.11");
+});
+
 class TestPythonProject extends python.PythonProject {
   constructor(options: Partial<python.PythonProjectOptions> = {}) {
     super({

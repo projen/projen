@@ -48,6 +48,16 @@ export interface SetupPyOptions {
   readonly homepage?: string;
 
   /**
+   * Specifies the Python version requirements for the project, following the standard
+   * outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+   *
+   * @see https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires
+   *
+   * @default ">=3.8"
+   */
+  readonly requiresPython?: string;
+
+  /**
    * A list of PyPI trove classifiers that describe the project.
    *
    * @see https://pypi.org/classifiers/
@@ -81,7 +91,7 @@ export class SetupPy extends FileBase {
     this.setupConfig = {
       name: project.name,
       packages: options.packages,
-      python_requires: ">=3.8",
+      python_requires: options.requiresPython,
       classifiers: [
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3 :: Only",
@@ -127,6 +137,9 @@ export class SetupPy extends FileBase {
           break;
         case "homepage":
           obj.url = value;
+          break;
+        case "requiresPython":
+          obj.python_requires = value;
           break;
         case "additionalOptions":
           Object.assign(obj, this.renameFields(value));

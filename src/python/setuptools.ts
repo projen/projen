@@ -56,7 +56,7 @@ export class Setuptools extends Component implements IPythonPackaging {
       license: options.license,
       homepage: options.homepage,
       classifiers: options.classifiers,
-      pythonRequires: this.requiresPython,
+      python_requires: this.requiresPython,
       ...options.setupConfig,
     });
   }
