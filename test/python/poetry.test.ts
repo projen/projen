@@ -3,8 +3,6 @@ import { python } from "../../src";
 import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
 
-const DEFAULT_PYTHON_VERSION = "^3.8";
-
 test("poetry enabled", () => {
   const p = new TestPythonProject({
     poetry: true,
@@ -23,9 +21,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain(
-    `python = "${DEFAULT_PYTHON_VERSION}"`
-  );
+  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"');
 });
 
 test("poetry and venv fails", () => {
@@ -88,9 +84,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain(
-    `python = "${DEFAULT_PYTHON_VERSION}"`
-  );
+  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"');
 });
 
 test("poetry enabled with specified python compatible version", () => {
@@ -285,7 +279,7 @@ test("generates correct pyproject.toml content", () => {
         readme: "README.md",
         dependencies: {
           "aws-cdk-lib": "^2.128.0",
-          python: DEFAULT_PYTHON_VERSION,
+          python: "^3.8",
         },
         group: {
           dev: {
