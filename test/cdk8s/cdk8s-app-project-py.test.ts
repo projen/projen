@@ -173,7 +173,7 @@ test("cdk8s-plus-22 undefined", () => {
 
   // THEN
   expect(output["requirements.txt"]).toContain(
-    "cdk8s-plus-22>=2.0.0rc26, <3.0.0"
+    "cdk8s-plus-22>=2.0.0rc.26, <3.0.0"
   );
 });
 
@@ -194,7 +194,7 @@ test("cdk8s-plus-22 defined", () => {
 
   // THEN
   expect(output["requirements.txt"]).toContain(
-    "cdk8s-plus-22>=2.0.0rc27, <3.0.0"
+    "cdk8s-plus-22>=2.0.0rc.27, <3.0.0"
   );
 });
 
@@ -215,5 +215,5 @@ test("cdk8s-plus-22 pinning", () => {
   const output = synthSnapshot(project);
 
   // THEN
-  expect(output["requirements.txt"]).toContain("cdk8s-plus-22==2.0.0rc26");
+  expect(output["requirements.txt"]).toContain("cdk8s-plus-22==2.0.0.rc26");
 });
