@@ -49,14 +49,14 @@ export class Poetry
   private readonly pythonExec: string;
 
   /**
-   * Specifies the Python version requirements for the project, following the standard
-   * outlined in PEP 621 for the `requires-python` field in `pyproject.toml`.
+   * Specifies the Python version requirements for the project, following
+   * the standard outlined in PEP 621 for the `requires-python` field.
    *
-   * @see https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#python-requires
+   * @see https://peps.python.org/pep-0621/#requires-python
    *
    * @default ">=3.8"
    */
-  private readonly requiresPython?: string;
+  readonly requiresPython?: string;
 
   /**
    * Represents the configuration of the `pyproject.toml` file for a Poetry project.
