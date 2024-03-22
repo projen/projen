@@ -314,6 +314,7 @@ export class PythonProject extends GitHubProject {
         classifiers: options.classifiers,
         setupConfig: options.setupConfig,
         pythonExec: options.pythonExec,
+        requiresPython: options.requiresPython,
       });
     }
 
