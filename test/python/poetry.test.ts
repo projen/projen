@@ -21,7 +21,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"');
+  expect(snapshot["pyproject.toml"]).toContain('python = ">=3.8"');
 });
 
 test("poetry and venv fails", () => {
@@ -84,26 +84,13 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"');
+  expect(snapshot["pyproject.toml"]).toContain('python = ">=3.8"');
 });
 
-test("poetry enabled with specified python compatible version", () => {
+test("poetry enabled with specified python version", () => {
   const p = new TestPythonProject({
     poetry: true,
-    pythonCompatibleVersion: "3.10",
-  });
-
-  const snapshot = synthSnapshot(p);
-  const actualTomlContent = snapshot["pyproject.toml"];
-  const actualObjectContent = TOML.parse(actualTomlContent) as any;
-
-  expect(actualObjectContent.tool.poetry.dependencies.python).toEqual("^3.10");
-});
-
-test("poetry enabled with specified python semantic version", () => {
-  const p = new TestPythonProject({
-    poetry: true,
-    pythonSemanticVersion: "^3.8,<=3.11",
+    requiresPython: "^3.8,<=3.11",
   });
 
   const snapshot = synthSnapshot(p);
@@ -279,7 +266,7 @@ test("generates correct pyproject.toml content", () => {
         readme: "README.md",
         dependencies: {
           "aws-cdk-lib": "^2.128.0",
-          python: "^3.8",
+          python: ">=3.8",
         },
         group: {
           dev: {
