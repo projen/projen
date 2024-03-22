@@ -690,6 +690,58 @@ public readonly ANTI_TAMPER_CMD: string;
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### AwsCodeArtifactInfo <a name="AwsCodeArtifactInfo" id="projen.release.AwsCodeArtifactInfo"></a>
+
+Info extracted from AWS CodeArtifact URL.
+
+#### Initializer <a name="Initializer" id="projen.release.AwsCodeArtifactInfo.Initializer"></a>
+
+```typescript
+import { release } from 'projen'
+
+const awsCodeArtifactInfo: release.AwsCodeArtifactInfo = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.release.AwsCodeArtifactInfo.property.account">account</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.release.AwsCodeArtifactInfo.property.domain">domain</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.release.AwsCodeArtifactInfo.property.region">region</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `account`<sup>Optional</sup> <a name="account" id="projen.release.AwsCodeArtifactInfo.property.account"></a>
+
+```typescript
+public readonly account: string;
+```
+
+- *Type:* string
+
+---
+
+##### `domain`<sup>Optional</sup> <a name="domain" id="projen.release.AwsCodeArtifactInfo.property.domain"></a>
+
+```typescript
+public readonly domain: string;
+```
+
+- *Type:* string
+
+---
+
+##### `region`<sup>Optional</sup> <a name="region" id="projen.release.AwsCodeArtifactInfo.property.region"></a>
+
+```typescript
+public readonly region: string;
+```
+
+- *Type:* string
+
+---
+
 ### BranchOptions <a name="BranchOptions" id="projen.release.BranchOptions"></a>
 
 Options for a release branch.
@@ -2131,6 +2183,7 @@ const jsiiReleasePyPi: release.JsiiReleasePyPi = { ... }
 | <code><a href="#projen.release.JsiiReleasePyPi.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
+| <code><a href="#projen.release.JsiiReleasePyPi.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing to AWS CodeArtifact. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -2188,6 +2241,21 @@ public readonly publishTools: Tools;
 - *Default:* no additional tools are installed
 
 Additional tools to install in the publishing job.
+
+---
+
+##### ~~`codeArtifactOptions`~~<sup>Optional</sup> <a name="codeArtifactOptions" id="projen.release.JsiiReleasePyPi.property.codeArtifactOptions"></a>
+
+- *Deprecated:* Use `PyPiPublishOptions` instead.
+
+```typescript
+public readonly codeArtifactOptions: CodeArtifactOptions;
+```
+
+- *Type:* <a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a>
+- *Default:* undefined
+
+Options for publishing to AWS CodeArtifact.
 
 ---
 
@@ -3002,6 +3070,7 @@ const pyPiPublishOptions: release.PyPiPublishOptions = { ... }
 | <code><a href="#projen.release.PyPiPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
+| <code><a href="#projen.release.PyPiPublishOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing to AWS CodeArtifact. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -3053,6 +3122,19 @@ public readonly publishTools: Tools;
 - *Default:* no additional tools are installed
 
 Additional tools to install in the publishing job.
+
+---
+
+##### `codeArtifactOptions`<sup>Optional</sup> <a name="codeArtifactOptions" id="projen.release.PyPiPublishOptions.property.codeArtifactOptions"></a>
+
+```typescript
+public readonly codeArtifactOptions: CodeArtifactOptions;
+```
+
+- *Type:* <a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a>
+- *Default:* undefined
+
+Options for publishing to AWS CodeArtifact.
 
 ---
 
