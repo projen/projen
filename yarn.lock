@@ -3659,17 +3659,17 @@ jsii-diff@^1.96.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.3.24:
-  version "10.3.24"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.24.tgz#cb6a9a57ca17b91dee33a70c294bed3a341fd830"
-  integrity sha512-1lkED/gwapIycO7SpCja5jSGa+FOe+FQCNuZnXPaWul6SWWZefpyW8RvV5FOTGNowJx52r60CwV7CT+UMvSwLw==
+jsii-docgen@^10.3.25:
+  version "10.3.25"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.3.25.tgz#d53af1f3912031df446a7ce2e705720383f49f8a"
+  integrity sha512-mR6L9ZKmOBlGRMKtZn+falJwCEDqrXVcYFa0bZDmwKU6rzCtc6jfImZaIB/2honPJi/ee02muoR1DxDfghIPoQ==
   dependencies:
-    "@jsii/spec" "^1.95.0"
+    "@jsii/spec" "^1.96.0"
     case "^1.6.3"
     fs-extra "^10.1.0"
     glob "^8.1.0"
     glob-promise "^6.0.5"
-    jsii-reflect "^1.95.0"
+    jsii-reflect "^1.96.0"
     semver "^7.6.0"
     yargs "^16.2.0"
 
@@ -3692,7 +3692,7 @@ jsii-pacmak@^1.96.0:
     xmlbuilder "^15.1.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.95.0, jsii-reflect@^1.96.0:
+jsii-reflect@^1.96.0:
   version "1.96.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.96.0.tgz#235cdd30617d226ab8190b9abbc5477740412f7f"
   integrity sha512-nvT/HPR4ZMmp+zDZbotKAeSSmQODGcpR50xzl0QXxkskzH3qCW/+fkdqFq8QL9mUrJHbwdmdk/MY6+V8zb49DQ==
@@ -5427,9 +5427,9 @@ typescript@5.3.x, typescript@~5.3:
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
 
 typescript@next:
-  version "5.5.0-dev.20240322"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240322.tgz#2318ec29a8971394749b7e7b9b37533877681855"
-  integrity sha512-z05wAbLJ5lx9QKlbZFaV+B6T8Y/9AvVb4ma+glJ0JL0lp+QeAZuWSDoBALphG6fwkvfjaCYWb5t37VcUOPTR/w==
+  version "5.5.0-dev.20240323"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240323.tgz#c6916ad6fdb5971f87ebb3a5d34d91ae75f0def3"
+  integrity sha512-FD1ido8fG+7+540B3/WeTAKq6Nr4QLO0IBrZc+jBUj4pEqwG15o/XE+GKv+dDryLvgtchSHXZWserTik0Vkq4w==
 
 typescript@~3.9.10:
   version "3.9.10"
