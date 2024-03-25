@@ -1,6 +1,13 @@
+import * as path from "path";
 import { Task } from "..";
 import { Component } from "../component";
-import { GitHub, GithubWorkflow, GitIdentity, WorkflowSteps } from "../github";
+import {
+  GitHub,
+  GithubWorkflow,
+  GitIdentity,
+  workflows,
+  WorkflowSteps,
+} from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -18,6 +25,8 @@ import {
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import { workflowNameForProject } from "../util/name";
+import { ensureRelativePathStartsWithDot } from "../util/path";
 
 const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
 const PULL_REQUEST_REPOSITORY =
@@ -123,6 +132,11 @@ export interface BuildWorkflowOptions {
 }
 
 export class BuildWorkflow extends Component {
+  /**
+   * Name of generated github workflow
+   */
+  public readonly name: string;
+
   private readonly postBuildSteps: JobStep[];
   private readonly preBuildSteps: JobStep[];
   private readonly gitIdentity: GitIdentity;
@@ -130,14 +144,13 @@ export class BuildWorkflow extends Component {
   private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
-  private readonly name: string;
 
   private readonly _postBuildJobs: string[] = [];
 
   constructor(project: Project, options: BuildWorkflowOptions) {
     super(project);
 
-    const github = GitHub.of(project);
+    const github = GitHub.of(this.project.root);
     if (!github) {
       throw new Error(
         "BuildWorkflow is currently only supported for GitHub projects"
@@ -150,7 +163,7 @@ export class BuildWorkflow extends Component {
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
     this.artifactsDirectory = options.artifactsDirectory;
-    this.name = options.name ?? "build";
+    this.name = options.name ?? workflowNameForProject("build", this.project);
     const mutableBuilds = options.mutableBuild ?? true;
 
     this.workflow = new GithubWorkflow(github, this.name);
@@ -173,7 +186,11 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
-    const jobConfig = {
+    const projectPathRelativeToRoot = path.relative(
+      this.project.root.outdir,
+      this.project.outdir
+    );
+    const jobConfig: workflows.Job = {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       container: options.containerImage
         ? { image: options.containerImage }
@@ -186,7 +203,16 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
         ...options.permissions,
       },
-      steps: (() => this.renderBuildSteps()) as any,
+      defaults: this.project.parent // is subproject,
+        ? {
+            run: {
+              workingDirectory: ensureRelativePathStartsWithDot(
+                projectPathRelativeToRoot
+              ),
+            },
+          }
+        : undefined,
+      steps: (() => this.renderBuildSteps(projectPathRelativeToRoot)) as any,
       outputs: {
         [SELF_MUTATION_HAPPENED_OUTPUT]: {
           stepId: SELF_MUTATION_STEP,
@@ -378,7 +404,7 @@ export class BuildWorkflow extends Component {
   /**
    * Called (lazily) during synth to render the build job steps.
    */
-  private renderBuildSteps(): JobStep[] {
+  private renderBuildSteps(projectPathRelativeToRoot: string): JobStep[] {
     return [
       WorkflowSteps.checkout({
         with: {
@@ -417,7 +443,9 @@ export class BuildWorkflow extends Component {
             WorkflowSteps.uploadArtifact({
               with: {
                 name: BUILD_ARTIFACT_NAME,
-                path: this.artifactsDirectory,
+                path: this.project.parent
+                  ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+                  : this.artifactsDirectory,
               },
             }),
           ]),

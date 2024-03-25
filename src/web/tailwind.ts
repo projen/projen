@@ -25,8 +25,8 @@ export class TailwindConfig {
 
     this.file = new JsonFile(project, this.fileName, {
       obj: {
-        purge: [],
-        darkMode: false,
+        content: [],
+        media: false,
         theme: {
           extend: {},
         },
