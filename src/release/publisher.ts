@@ -501,25 +501,74 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToPyPi(options: PyPiPublishOptions = {}) {
+    let permissions: JobPermissions = { contents: JobPermission.READ };
+    const prePublishSteps = options.prePublishSteps ?? [];
+    let workflowEnv: Record<string, string | undefined> = {};
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(
+      options.twineRegistryUrl
+    );
+    if (isAwsCodeArtifact) {
+      const { domain, account, region } = awsCodeArtifactInfoFromUrl(
+        options.twineRegistryUrl
+      );
+      const {
+        authProvider,
+        roleToAssume,
+        accessKeyIdSecret,
+        secretAccessKeySecret,
+      } = options.codeArtifactOptions ?? {};
+      const useOidcAuth = authProvider === CodeArtifactAuthProvider.GITHUB_OIDC;
+      if (useOidcAuth) {
+        if (!roleToAssume) {
+          throw new Error(
+            '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+          );
+        }
+        permissions = { ...permissions, idToken: JobPermission.WRITE };
+        prePublishSteps.push({
+          name: "Configure AWS Credentials via GitHub OIDC Provider",
+          uses: "aws-actions/configure-aws-credentials@v4",
+          with: {
+            "role-to-assume": roleToAssume,
+            "aws-region": region,
+          },
+        });
+      }
+      prePublishSteps.push({
+        name: "Generate CodeArtifact Token",
+        run: `echo "TWINE_PASSWORD=$(aws codeartifact get-authorization-token --domain ${domain} --domain-owner ${account} --region ${region} --query authorizationToken --output text)" >> $GITHUB_ENV`,
+        env: useOidcAuth
+          ? undefined
+          : {
+              AWS_ACCESS_KEY_ID: secret(
+                accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID"
+              ),
+              AWS_SECRET_ACCESS_KEY: secret(
+                secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY"
+              ),
+            },
+      });
+      workflowEnv = { TWINE_USERNAME: "aws" };
+    } else {
+      workflowEnv = {
+        TWINE_USERNAME: secret(options.twineUsernameSecret ?? "TWINE_USERNAME"),
+        TWINE_PASSWORD: secret(options.twinePasswordSecret ?? "TWINE_PASSWORD"),
+      };
+    }
+
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "pypi",
         registryName: "PyPI",
         publishTools: PUBLIB_TOOLCHAIN.python,
-        prePublishSteps: options.prePublishSteps ?? [],
+        permissions,
+        prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
         run: this.publibCommand("publib-pypi"),
         env: {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
         },
-        workflowEnv: {
-          TWINE_USERNAME: secret(
-            options.twineUsernameSecret ?? "TWINE_USERNAME"
-          ),
-          TWINE_PASSWORD: secret(
-            options.twinePasswordSecret ?? "TWINE_PASSWORD"
-          ),
-        },
+        workflowEnv,
       })
     );
   }
@@ -977,6 +1026,13 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
    * @default "TWINE_PASSWORD"
    */
   readonly twinePasswordSecret?: string;
+
+  /**
+   * Options for publishing to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
 }
 
 /**
@@ -1188,6 +1244,28 @@ interface VersionArtifactOptions {
  */
 export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
   return registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl);
+}
+
+/**
+ * Info extracted from AWS CodeArtifact URL
+ */
+interface AwsCodeArtifactInfo {
+  readonly domain?: string;
+  readonly account?: string;
+  readonly region?: string;
+}
+
+/**
+ * Parses info about code artifact domain from given AWS code artifact url
+ * @param url Of code artifact domain
+ * @returns domain, account, and region of code artifact domain
+ */
+function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
+  const captureRegex =
+    /([a-z0-9-]+)-(.+)\.d\.codeartifact\.(.+)\.amazonaws\.com/;
+  const matches = url?.match(captureRegex) ?? [];
+  const [_, domain, account, region] = matches;
+  return { domain, account, region };
 }
 
 /**
