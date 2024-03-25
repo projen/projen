@@ -1028,35 +1028,42 @@ export class NodeProject extends GitHubProject {
         uses: "pnpm/action-setup@v3",
         with: { version: this.package.pnpmVersion },
       });
+    } else if (this.package.packageManager === NodePackageManager.BUN) {
+      install.push({
+        name: "Setup bun",
+        uses: "oven-sh/setup-bun@v1",
+      });
     }
 
-    if (this.nodeVersion || this.workflowPackageCache) {
-      const cache =
-        this.package.packageManager === NodePackageManager.YARN
-          ? "yarn"
-          : this.package.packageManager === NodePackageManager.YARN2
-          ? "yarn"
-          : this.package.packageManager === NodePackageManager.YARN_CLASSIC
-          ? "yarn"
-          : this.package.packageManager === NodePackageManager.YARN_BERRY
-          ? "yarn"
-          : this.packageManager === NodePackageManager.BUN
-          ? "bun"
-          : this.package.packageManager === NodePackageManager.PNPM
-          ? "pnpm"
-          : "npm";
-      install.push({
-        name: "Setup Node.js",
-        uses: "actions/setup-node@v4",
-        with: {
-          ...(this.nodeVersion && {
-            "node-version": this.nodeVersion,
-          }),
-          ...(this.workflowPackageCache && {
-            cache,
-          }),
-        },
-      });
+    if (this.package.packageManager !== NodePackageManager.BUN) {
+      if (this.nodeVersion || this.workflowPackageCache) {
+        const cache =
+          this.package.packageManager === NodePackageManager.YARN
+            ? "yarn"
+            : this.package.packageManager === NodePackageManager.YARN2
+            ? "yarn"
+            : this.package.packageManager === NodePackageManager.YARN_CLASSIC
+            ? "yarn"
+            : this.package.packageManager === NodePackageManager.YARN_BERRY
+            ? "yarn"
+            : this.packageManager === NodePackageManager.BUN
+            ? "bun"
+            : this.package.packageManager === NodePackageManager.PNPM
+            ? "pnpm"
+            : "npm";
+        install.push({
+          name: "Setup Node.js",
+          uses: "actions/setup-node@v4",
+          with: {
+            ...(this.nodeVersion && {
+              "node-version": this.nodeVersion,
+            }),
+            ...(this.workflowPackageCache && {
+              cache,
+            }),
+          },
+        });
+      }
     }
 
     const mutable = options.mutable ?? false;
