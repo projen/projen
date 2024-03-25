@@ -15,6 +15,7 @@ import { PROJEN_DIR } from "../common";
 import {
   AutoMerge,
   DependabotOptions,
+  GitHub,
   GitHubProject,
   GitHubProjectOptions,
   GitIdentity,
@@ -92,7 +93,6 @@ export interface NodeProjectOptions
    * @default - true if not a subproject
    */
   readonly buildWorkflow?: boolean;
-
   /**
    * Automatically update files modified during builds to pull-request branches. This means
    * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
@@ -593,7 +593,7 @@ export class NodeProject extends GitHubProject {
       idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
     };
 
-    if (buildEnabled && this.github) {
+    if (buildEnabled && (this.github || GitHub.of(this.root))) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
         artifactsDirectory: this.artifactsDirectory,
@@ -601,6 +601,9 @@ export class NodeProject extends GitHubProject {
         gitIdentity: this.workflowGitIdentity,
         mutableBuild: options.mutableBuild,
         preBuildSteps: this.renderWorkflowSetup({
+          installStepConfiguration: {
+            workingDirectory: this.determineInstallWorkingDirectory(),
+          },
           mutable: options.mutableBuild ?? true,
         }),
         postBuildSteps: options.postBuildSteps,
