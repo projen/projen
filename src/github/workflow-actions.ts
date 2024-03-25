@@ -39,11 +39,17 @@ export class WorkflowActions {
           "git add .",
           `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,
         ].join("\n"),
+        // always run from root of repository
+        // overrides default working directory which is set by some workflows using this function
+        workingDirectory: "./",
       },
       WorkflowSteps.uploadArtifact({
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
+        with: {
+          name: GIT_PATCH_FILE,
+          path: GIT_PATCH_FILE,
+        },
       }),
     ];
 
