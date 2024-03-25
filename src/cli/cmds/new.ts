@@ -1,3 +1,4 @@
+import type { SpawnSyncReturns } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import * as semver from "semver";
@@ -18,8 +19,6 @@ import {
   CliError,
   findJsiiFilePath,
   installPackage,
-  isLocalModule,
-  moduleExists,
   renderInstallCommand,
 } from "../util";
 
@@ -299,17 +298,26 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
-  const exists = moduleExists(baseDir, spec);
-  logging.empty();
+  const installPackageWithCliError = (b: string, s: string): string => {
+    try {
+      return installPackage(b, s);
+    } catch (error: unknown) {
+      const stderr =
+        (error as SpawnSyncReturns<Buffer>)?.stderr?.toString() ?? "";
+      const isLocal = stderr.includes("code ENOENT");
+      const isRegistry = stderr.includes("code E404");
+      if (isLocal || isRegistry) {
+        const moduleSource = isLocal ? "path" : "registry";
+        throw new CliError(
+          `Could not find '${s}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
+        );
+      }
 
-  if (!exists) {
-    const moduleSource = isLocalModule(spec) ? "path" : "registry";
-    throw new CliError(
-      `Could not find '${spec}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
-    );
-  }
+      throw error;
+    }
+  };
 
-  const moduleName = installPackage(baseDir, spec);
+  const moduleName = installPackageWithCliError(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder

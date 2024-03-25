@@ -4212,12 +4212,12 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.javascript.TypescriptConfig.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.TypescriptConfig.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.javascript.TypescriptConfig.property.compilerOptions">compilerOptions</a></code> | <code><a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a></code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.exclude">exclude</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.extends">extends</a></code> | <code>string[]</code> | Array of base `tsconfig.json` paths. Any absolute paths are resolved relative to this instance, while any relative paths are used as is. |
 | <code><a href="#projen.javascript.TypescriptConfig.property.file">file</a></code> | <code>projen.JsonFile</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.include">include</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.javascript.TypescriptConfig.property.compilerOptions">compilerOptions</a></code> | <code><a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a></code> | *No description.* |
 
 ---
 
@@ -4240,16 +4240,6 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
-
----
-
-##### `compilerOptions`<sup>Required</sup> <a name="compilerOptions" id="projen.javascript.TypescriptConfig.property.compilerOptions"></a>
-
-```typescript
-public readonly compilerOptions: TypeScriptCompilerOptions;
-```
-
-- *Type:* <a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
 
 ---
 
@@ -4302,6 +4292,16 @@ public readonly include: string[];
 ```
 
 - *Type:* string[]
+
+---
+
+##### `compilerOptions`<sup>Optional</sup> <a name="compilerOptions" id="projen.javascript.TypescriptConfig.property.compilerOptions"></a>
+
+```typescript
+public readonly compilerOptions: TypeScriptCompilerOptions;
+```
+
+- *Type:* <a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
 
 ---
 
@@ -11512,7 +11512,7 @@ const typescriptConfigOptions: javascript.TypescriptConfigOptions = { ... }
 
 ---
 
-##### `compilerOptions`<sup>Required</sup> <a name="compilerOptions" id="projen.javascript.TypescriptConfigOptions.property.compilerOptions"></a>
+##### `compilerOptions`<sup>Optional</sup> <a name="compilerOptions" id="projen.javascript.TypescriptConfigOptions.property.compilerOptions"></a>
 
 ```typescript
 public readonly compilerOptions: TypeScriptCompilerOptions;

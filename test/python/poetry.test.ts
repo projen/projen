@@ -148,7 +148,7 @@ test("poetry enabled with poetry-specific options", () => {
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
-test("poetry enabled with metadata in dependencies", () => {
+test("poetry correctly handles dependencies with toml inline tables", () => {
   const p = new TestPythonProject({
     poetry: true,
     homepage: "http://www.example.com",
@@ -156,9 +156,11 @@ test("poetry enabled with metadata in dependencies", () => {
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
     deps: [
-      "regular-version-package@1.2.3",
-      `package1@{ version = "^3.3.3", extras = ["mypackage-extra"] }`,
-      `package2@{ path = "../mypackage/foo" }`,
+      `package1@{ git = "https://github.com/numpy/numpy.git", tag = "v0.13.2" }`, // `git` dependencies
+      `package2@{ path = "../my-package/", develop = false }`, // `path` dependencies
+      `package3@{ version = "^20.1", extras = ["extra1", "extra2"] }`, // Dependency `extras`
+      `package4@{ version = "^2.2", markers = "python_version <= '3.4' or sys_platform == 'win32'" }`, // Using environment markers
+      `package5@[{ version = "<=1.9", python = ">=3.6,<3.8" }, { version = "^2.0", python = ">=3.8" }]`, // Multiple constraints dependencies
     ],
   });
 
@@ -166,25 +168,37 @@ test("poetry enabled with metadata in dependencies", () => {
   const actualTomlContent = snapshot["pyproject.toml"];
   const actualObjectContent = TOML.parse(actualTomlContent) as any;
 
-  // Check that simple dependencies are structured correctly
-  expect(actualObjectContent.tool.poetry.dependencies).toMatchObject({
-    "regular-version-package": "1.2.3",
-    python: expect.any(String),
+  // Handles TOML table with strings
+  expect(actualObjectContent.tool.poetry.dependencies.package1).toEqual({
+    git: "https://github.com/numpy/numpy.git",
+    tag: "v0.13.2",
   });
 
-  // Check that complex dependencies with metadata are structured correctly
-  // This ensures that metadata such as version constraints and extras are properly formatted
-  expect(actualObjectContent.tool.poetry.dependencies.package1).toMatchObject({
-    version: "^3.3.3",
-    extras: ["mypackage-extra"],
+  // Handles TOML table with boolean
+  expect(actualObjectContent.tool.poetry.dependencies.package2).toEqual({
+    path: "../my-package/",
+    develop: false,
   });
 
-  // This ensures that dependencies with a path reference are properly formatted
-  expect(actualObjectContent.tool.poetry.dependencies.package2).toMatchObject({
-    path: "../mypackage/foo",
+  // Handles TOML table with array
+  expect(actualObjectContent.tool.poetry.dependencies.package3).toEqual({
+    version: "^20.1",
+    extras: ["extra1", "extra2"],
   });
 
-  expect(snapshot["pyproject.toml"]).toMatchSnapshot();
+  // Handles TOML table with both single and double quotes
+  expect(actualObjectContent.tool.poetry.dependencies.package4).toEqual({
+    version: "^2.2",
+    markers: "python_version <= '3.4' or sys_platform == 'win32'",
+  });
+
+  // Handles multiple TOML tables
+  expect(actualObjectContent.tool.poetry.dependencies.package5).toEqual([
+    { version: "<=1.9", python: ">=3.6,<3.8" },
+    { version: "^2.0", python: ">=3.8" },
+  ]);
+
+  expect(actualTomlContent).toMatchSnapshot();
 });
 
 test("poetry environment is setup with pythonExec", () => {
@@ -236,9 +250,10 @@ test("generates correct pyproject.toml content", () => {
 
   const snapshot = synthSnapshot(project);
   const actualTomlContent = snapshot["pyproject.toml"];
-  const actualObjectContent = TOML.parse(actualTomlContent);
 
-  const expectedObjectContent = {
+  const actualContentObject = TOML.parse(actualTomlContent);
+
+  const expectedContentObject = {
     tool: {
       poetry: {
         name: "test-python-project",
@@ -270,5 +285,5 @@ test("generates correct pyproject.toml content", () => {
     },
   };
 
-  expect(actualObjectContent).toEqual(expectedObjectContent);
+  expect(actualContentObject).toEqual(expectedContentObject);
 });
