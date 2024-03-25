@@ -1,6 +1,6 @@
 import { Prettier } from "./prettier";
-import { Project } from "..";
-import { PROJEN_RC } from "../common";
+import { Project, TaskStepOptions } from "..";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
@@ -43,7 +43,7 @@ export interface EslintOptions {
 
   /**
    * Projenrc file to lint. Use empty string to disable.
-   * @default PROJEN_RC
+   * @default "projenrc.js"
    * @deprecated provide as `devdirs`
    */
   readonly lintProjenRcFile?: string;
@@ -187,7 +187,8 @@ export class Eslint extends Component {
     }
 
     const lintProjenRc = options.lintProjenRc ?? true;
-    const lintProjenRcFile = options.lintProjenRcFile ?? PROJEN_RC;
+    const lintProjenRcFile =
+      options.lintProjenRcFile ?? DEFAULT_PROJEN_RC_JS_FILENAME;
 
     const devdirs = options.devdirs ?? [];
 
@@ -340,7 +341,7 @@ export class Eslint extends Component {
     if (lintProjenRc) {
       this.overrides = [
         {
-          files: [lintProjenRcFile || PROJEN_RC],
+          files: [lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME],
           rules: {
             "@typescript-eslint/no-require-imports": "off",
             "import/no-extraneous-dependencies": "off",
@@ -352,7 +353,9 @@ export class Eslint extends Component {
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
       // @deprecated
-      ...(lintProjenRc ? [`!${lintProjenRcFile || PROJEN_RC}`] : []),
+      ...(lintProjenRc
+        ? [`!${lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME}`]
+        : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
@@ -421,6 +424,17 @@ export class Eslint extends Component {
     if (options.prettier || Prettier.of(project)) {
       this.enablePrettier();
     }
+  }
+
+  /**
+   * Returns an immutable copy of the lintPatterns being used by this eslint configuration.
+   */
+  public get lintPatterns(): string[] {
+    if (this._lintPatterns && this._lintPatterns.size > 0) {
+      return [...this._lintPatterns];
+    }
+
+    return [];
   }
 
   /**
@@ -505,14 +519,52 @@ export class Eslint extends Component {
    * Update the task with the current list of lint patterns and file extensions
    */
   private updateTask() {
+    const taskExecCommand = "eslint";
+    const argsSet = new Set<string>();
+    if (this._fileExtensions.size > 0) {
+      argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
+    }
+    argsSet.add("--fix");
+    argsSet.add("--no-error-on-unmatched-pattern");
+    argsSet.add("$@"); // External args go here
+
+    for (const pattern of this._lintPatterns) {
+      argsSet.add(pattern);
+    }
+
     this.eslintTask.reset(
-      [
-        "eslint",
-        `--ext ${[...this._fileExtensions].join(",")}`,
-        "--fix",
-        "--no-error-on-unmatched-pattern",
-        ...this._lintPatterns,
-      ].join(" ")
+      [taskExecCommand, ...argsSet].join(" "),
+      this.buildTaskStepOptions(taskExecCommand)
     );
+  }
+
+  /**
+   * In case of external editing of the eslint task step, we preserve those changes.
+   * Otherwise, we return the default task step options.
+   *
+   * @param taskExecCommand The command that the ESLint tasks executes
+   * @returns Either the externally edited, or the default task step options
+   */
+  private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
+    const currentEslintTaskStep = this.eslintTask?.steps?.find((step) =>
+      step?.exec?.startsWith?.(taskExecCommand)
+    );
+
+    if (currentEslintTaskStep) {
+      const { args, condition, cwd, env, name, receiveArgs } =
+        currentEslintTaskStep;
+      return {
+        args,
+        condition,
+        cwd,
+        env,
+        name,
+        receiveArgs,
+      };
+    }
+
+    return {
+      receiveArgs: true,
+    };
   }
 }

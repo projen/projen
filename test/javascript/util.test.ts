@@ -8,6 +8,7 @@ import {
   tryResolveManifestPathFromSearch,
   tryResolveModuleManifest,
   tryResolveDependencyVersion,
+  installedVersionProbablyMatches,
 } from "../../src/javascript/util";
 import { mkdtemp } from "../util";
 
@@ -126,3 +127,20 @@ describe("tryResolveDependencyVersion", () => {
     }
   );
 });
+
+test.each([
+  ["^28", "^29", false],
+  ["^29", "29", true],
+  ["^29.5.9", "29", true],
+  ["^29.5.9", ">=29", true],
+  ["^30.5.9", ">=29", true],
+  [">=2", ">=3", true],
+  ["<=2", "<=1", false],
+  ["^29", ">=29", true],
+  ["^30", ">=29", true],
+])(
+  "installedVersionProbablyMatches(%p, %p) should return %p",
+  (requested, check, expected) => {
+    expect(installedVersionProbablyMatches(requested, check)).toEqual(expected);
+  }
+);

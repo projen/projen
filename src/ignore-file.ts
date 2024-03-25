@@ -1,5 +1,6 @@
 import { FileBase, IResolver } from "./file";
 import { Project } from "./project";
+import { normalizePersistedPath } from "./util";
 
 export interface IgnoreFileOptions {
   /**
@@ -15,10 +16,17 @@ export interface IgnoreFileOptions {
    * @default true
    */
   readonly filterEmptyLines?: boolean;
+
+  /**
+   * Patterns to add to the ignore file
+   *
+   * @default []
+   */
+  readonly ignorePatterns?: string[];
 }
 
 export class IgnoreFile extends FileBase {
-  private readonly _patterns = new Array<string>();
+  private readonly _patterns: string[];
   public readonly filterCommentLines: boolean;
   public readonly filterEmptyLines: boolean;
 
@@ -32,6 +40,7 @@ export class IgnoreFile extends FileBase {
     super(project, filePath, { editGitignore: filePath !== ".gitignore" });
     this.filterCommentLines = options?.filterCommentLines ?? true;
     this.filterEmptyLines = options?.filterEmptyLines ?? true;
+    this._patterns = options?.ignorePatterns ?? [];
   }
 
   /**
@@ -57,7 +66,10 @@ export class IgnoreFile extends FileBase {
       if (!isComment && !isEmptyLine) {
         this.normalizePatterns(pattern);
       }
-      this._patterns.push(pattern);
+
+      const normalizedPattern = normalizePersistedPath(pattern);
+
+      this._patterns.push(normalizedPattern);
     }
   }
 

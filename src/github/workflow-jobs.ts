@@ -2,6 +2,7 @@ import {
   CheckoutWithPatchOptions,
   CreatePullRequestOptions,
   WorkflowActions,
+  WorkflowSteps,
   workflows,
 } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
@@ -26,7 +27,7 @@ export class WorkflowJobs {
     const steps: JobStep[] = [
       ...(options.credentials?.setupSteps || []),
       ...WorkflowActions.checkoutWithPatch(options.patch),
-      ...WorkflowActions.setupGitIdentity(gitIdentity),
+      WorkflowSteps.setupGitIdentity({ gitIdentity }),
       ...WorkflowActions.createPullRequest({
         ...options,
         gitIdentity,

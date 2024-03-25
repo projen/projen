@@ -1,0 +1,6 @@
+.container {
+    border-radius: 8px;
+    padding: 2rem;
+    background-color: var(--ifm-color-primary-lightest);
+}
+

@@ -20,11 +20,15 @@ const MAX_BUFFER = 10 * 1024 * 1024;
  */
 export function exec(
   command: string,
-  options: { cwd: string; env?: Record<string, string> }
+  options: {
+    cwd: string;
+    env?: Record<string, string>;
+    stdio?: child_process.StdioOptions;
+  }
 ): void {
   logging.debug(command);
   child_process.execSync(command, {
-    stdio: ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
+    stdio: options.stdio || ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
     env: options.env,
@@ -418,9 +422,33 @@ export function isWritable(file: string) {
   }
 }
 
+/**
+ * Asserts that the file should be executable. Always returns true on Windows.
+ *
+ * In Windows, the executable attribute is stored in the system setting PATHEXT, not in each file. Then, checking for executability is equivalent to checking for existence. To bypass checking for executability, we always return true on Windows.
+ *
+ * @param filePath The path to the file
+ * @param shouldBeExecutable Whether the file should be executable
+ * @returns true if `filePath` executable attribute matches `shouldBeExecutable` or if the platform is Windows, false otherwise
+ */
+export function assertExecutablePermissions(
+  filePath: string,
+  shouldBeExecutable: boolean
+): boolean {
+  const isWindows = process.platform === "win32";
+  if (isWindows) {
+    return true;
+  }
+
+  const prevExecutable = isExecutable(filePath);
+
+  return prevExecutable === shouldBeExecutable;
+}
+
 export function isExecutable(file: string) {
   try {
     accessSync(file, fs_constants.X_OK);
+
     return true;
   } catch (e) {
     return false;
@@ -485,4 +513,19 @@ export function findUp(
     return undefined;
   }
   return findUp(lookFor, path.dirname(cwd));
+}
+
+/**
+ * Normalizes a path that is going to be persisted to have a cross platform representation.
+ *
+ * Normalized paths can be persisted and doesn't need to be modified when the platform changes.
+ * `normalizePersistedPath` takes care of platform-specific properties like directory separator.
+ * It uses `path.posix.sep` that is supported both in Windows and Unix platforms.
+ *
+ *
+ * @param p the path to be normalized
+ * @returns the normalized path
+ */
+export function normalizePersistedPath(p: string) {
+  return p.replace(/\\/g, path.posix.sep);
 }

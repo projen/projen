@@ -17,7 +17,7 @@ export function installPackage(baseDir: string, spec: string): string {
     exec("npm init --yes", { cwd: baseDir });
   }
 
-  logging.info(`installing external module ${spec}...`);
+  logging.info(`installing module ${spec}...`);
   exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // Get the true installed package name
@@ -53,6 +53,31 @@ export function installPackage(baseDir: string, spec: string): string {
  */
 export function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
+}
+
+export function findJsiiFilePath(
+  baseDir: string,
+  moduleName: string
+): string | undefined {
+  try {
+    return path.dirname(
+      require.resolve(`${moduleName}/.jsii`, {
+        paths: [baseDir],
+      })
+    );
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      error.code === "MODULE_NOT_FOUND"
+    ) {
+      // the provided module is not a jsii module
+      return undefined;
+    } else {
+      // unexpected error, throw it
+      throw error;
+    }
+  }
 }
 
 export class CliError extends Error {

@@ -383,6 +383,8 @@ export class Prettier extends Component {
         ".prettierignore",
         options.ignoreFileOptions
       );
+
+      project.addPackageIgnore("/.prettierignore");
     }
 
     project.addDevDeps("prettier");
@@ -396,11 +398,13 @@ export class Prettier extends Component {
         obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
         marker: true,
       });
+      project.addPackageIgnore("/.prettierrc.yml");
     } else {
       new JsonFile(project, ".prettierrc.json", {
         obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
         marker: false,
       });
+      project.addPackageIgnore("/.prettierrc.json");
     }
   }
 

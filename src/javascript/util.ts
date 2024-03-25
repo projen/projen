@@ -1,6 +1,8 @@
 import { existsSync, readFileSync } from "fs";
-import { basename, dirname, extname, join, sep, resolve } from "path";
+import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
+import { NodePackage } from "./node-package";
+import { Project } from "../project";
 import { findUp } from "../util";
 
 /**
@@ -25,10 +27,10 @@ export function renderBundleName(entrypoint: string) {
     parts.shift(); // just remove 'src' if its the first element for ergonomics
   }
 
-  const p = parts.join(sep);
+  const p = parts.join(posix.sep);
   const dir = dirname(p);
   const base = basename(p, extname(p));
-  return join(dir, base);
+  return posix.join(dir, base);
 }
 
 /**
@@ -216,4 +218,136 @@ export function tryResolveDependencyVersion(
     return undefined;
   }
   return manifest?.version;
+}
+
+/**
+ * Whether the given dependency version is installed
+ *
+ * This can be used to test for the presence of certain versions of devDependencies,
+ * and do something dependency-specific in certain Components. For example, test for
+ * a version of Jest and generate different configs based on the Jest version.
+ *
+ * NOTE: The implementation of this function currently is currently
+ * approximate: to do it correctly, we would need a separate implementation
+ * for every package manager, to query its installed version (either that, or we
+ * would code to query `package-lock.json`, `yarn.lock`, etc...).
+ *
+ * Instead, we will look at `package.json`, and assume that the versions
+ * picked by the package manager match ~that. This will work well enough for
+ * major version checks, but may fail for point versions.
+ *
+ * What we SHOULD do is: `actualVersion ∈ checkRange`.
+ *
+ * What we do instead is a slightly more sophisticated version of
+ * `requestedRange ∩ checkRange != ∅`. This will always give a correct result if
+ * `requestedRange ⊆ checkRange`, but may give false positives when `checkRange
+ * ⊆ requestedRange`.
+ *
+ * May return `undefined` if the question cannot be answered. These include the
+ * following cases:
+ *
+ *   - The dependency is requested via local file dependencies (`file://...`)
+ *   - The dependency uses an other type of URL, such as a GitHub URL
+ *   - The dependency is not found in the `package.json`, such as when
+ *     bootstrapping from an external projen package, and the `package.json`
+ *     file only has that one external package as a dependency
+ *
+ * Otherwise it will return `true` if the installed version is probably in the
+ * requested range, and `false` if it is probably not.
+ *
+ * This API may eventually be added to the public projen API, but only after
+ * we implement exact version checking.
+ *
+ * @param dependencyName The name of the dependency
+ * @param checkRange A particular version, or range of versions.
+ */
+export function hasDependencyVersion(
+  project: Project,
+  dependencyName: string,
+  checkRange: string
+): boolean | undefined {
+  const file = NodePackage.of(project)?.file;
+  if (!file) {
+    return undefined;
+  }
+
+  if (!existsSync(file.absolutePath)) {
+    return undefined;
+  }
+
+  const pj = JSON.parse(readFileSync(file.absolutePath, "utf-8"));
+
+  // Technicaly, we should be intersecting all ranges to come up with the most narrow dependency
+  // range, but `semver` doesn't allow doing that and we don't want to add a dependency on `semver-intersect`.
+  //
+  // Let's take the first dependency declaration we find, and assume that people
+  // set up their `package.json` correctly.
+  let requestedRange: string | undefined;
+  for (const key of ["dependencies", "devDependencies", "peerDependencies"]) {
+    const deps = pj[key] ?? {};
+    let requestedVersion = deps[dependencyName];
+    if (requestedVersion) {
+      // If this is not a valid range, it could be 'file:dep.tgz', or a GitHub URL. No way to know what
+      // version we're getting, bail out.
+      if (!semver.validRange(requestedVersion)) {
+        return undefined;
+      }
+      requestedRange = requestedVersion;
+      break;
+    }
+  }
+
+  // If the dependency is not found in the `package.json`, we can't answer the question (yet).
+  // This means that the dependency hasn't been added yet, which means we know (upstream) what we're going to request,
+  // or we're going to ask for '*' and we'll get the latest version.
+  if (!requestedRange) {
+    return undefined;
+  }
+
+  return installedVersionProbablyMatches(requestedRange, checkRange);
+}
+
+/**
+ * Whether the given requestedRange *probably* leads to the installation of a version that matches checkRange
+ *
+ * We assume that NPM always installs the most recent version of a package that
+ * is allowed by the requestedRange.
+ */
+export function installedVersionProbablyMatches(
+  requestedRange: string,
+  checkRange: string
+): boolean {
+  const options = {
+    includePrerelease: true,
+    loose: true,
+  };
+
+  // No questions asked: always true
+  if (semver.subset(requestedRange, checkRange, options)) {
+    return true;
+  }
+
+  // Also no questions asked: always false
+  if (!semver.intersects(requestedRange, checkRange, options)) {
+    return false;
+  }
+
+  // Now we're in tricky territory. We intersect, but aren't a full subset.
+  // We are in one of the following 2 situations, which we will tie-break by
+  // assuming NPM will install the most recent matching version in 'requested'.
+  //
+  // requested  | check    | result
+  // -----------|----------|-----------
+  //   >= 2     |  >= 3    | probably true (chance of FP)
+  //   <= 2     |  <= 1    | probably false (change of FN)
+  //
+  // `semver` doesn't make it easy to distinguish these cases (we can't request
+  // the `maxVersion` that satisfies a range). Instead what we do is
+  // get the `minVersion` of each range, and if they compare equal we assume
+  // we're in the bottom case with `<=` checks, and return `false`.
+
+  return !semver.eq(
+    semver.minVersion(requestedRange, options) ?? "1.2.3",
+    semver.minVersion(checkRange, options) ?? "1.2.3"
+  );
 }

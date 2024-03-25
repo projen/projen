@@ -1,3 +1,4 @@
+import * as path from "node:path";
 import { Range, major } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
@@ -186,6 +187,16 @@ export class JsiiProject extends TypeScriptProject {
 
   private readonly packageAllTask: Task;
 
+  // This project copies to whole repo into the artifactsDirectory.
+  // Which causes the release tag file to be in a path like ./dist/dist/releasetag.txt
+  // Use a TS hack to allow the release component to get the correct path from the project
+  // @ts-ignore
+  private get releaseTagFilePath(): string {
+    return path.posix.normalize(
+      path.posix.join(this.artifactsDirectory, this.artifactsDirectory)
+    );
+  }
+
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
 
@@ -312,6 +323,7 @@ export class JsiiProject extends TypeScriptProject {
         ...this.pacmakForLanguage("js", task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
+        npmProvenance: this.package.npmProvenance,
         codeArtifactOptions: options.codeArtifactOptions,
       });
       this.addPackagingTarget("js", task, extraJobOptions);
@@ -417,8 +429,8 @@ export class JsiiProject extends TypeScriptProject {
       this.npmignore.readonly = false;
     }
 
-    // When using jsii@1,x, we need to add some resolutions to avoid including
-    // TypeScript-3.9-incompatble dependencies that break the compiler.
+    // When using jsii@1.x, we need to add some resolutions to avoid including
+    // TypeScript-3.9-incompatible dependencies that break the compiler.
     if (usesLegacyJsii) {
       // https://github.com/projen/projen/issues/2165
       this.package.addPackageResolutions("@types/prettier@2.6.0");
@@ -426,10 +438,34 @@ export class JsiiProject extends TypeScriptProject {
       // https://github.com/projen/projen/issues/2264
       this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
 
-      if ((options.jsiiVersion ?? "1.x").startsWith("1.")) {
+      const jsiiVersion = options.jsiiVersion ?? "1.x";
+      if (jsiiVersion.startsWith("1.")) {
+        const majorNodeVersion = major(this.package.minNodeVersion ?? "16.0.0");
+
+        // see https://github.com/projen/projen/issues/3324
+        const nodeTypesVersionRange = (majorVersion: number): string => {
+          switch (majorVersion) {
+            case 16:
+              return `^16 <= 16.18.78`;
+            case 18:
+              return `^18 <= 18.11.19`;
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+              this.logger.warn(
+                `jsii@${jsiiVersion} and @types/node@^${majorVersion} are incompatible. Falling back to @types/node@^18.`,
+                "Please upgrade to a modern version of jsii."
+              );
+              return `^18 <= 18.11.19`;
+            default:
+              return `^${majorVersion}`;
+          }
+        };
+
         this.addDevDeps(
           // https://github.com/projen/projen/pull/3076
-          `@types/node@^${major(this.package.minNodeVersion ?? "16.0.0")}`
+          `@types/node@${nodeTypesVersionRange(majorNodeVersion)}`
         );
       }
     }
@@ -469,7 +505,16 @@ export class JsiiProject extends TypeScriptProject {
     const packageTask = this.tasks.addTask(`package:${language}`, {
       description: `Create ${language} language bindings`,
     });
-    packageTask.exec(`jsii-pacmak -v --target ${language}`);
+    const commandParts = ["jsii-pacmak", "-v"];
+
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      commandParts.push("--pack-command 'pnpm pack'");
+    }
+
+    commandParts.push(`--target ${language}`);
+
+    packageTask.exec(commandParts.join(" "));
+
     this.packageAllTask.spawn(packageTask);
     return packageTask;
   }
@@ -488,7 +533,7 @@ export class JsiiProject extends TypeScriptProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       prePublishSteps.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.4",
+        uses: "pnpm/action-setup@v3",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {

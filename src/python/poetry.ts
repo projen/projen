@@ -2,6 +2,7 @@ import * as TOML from "@iarna/toml";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { PythonExecutableOptions } from "./python-project";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -9,6 +10,10 @@ import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
 import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+
+export interface PoetryOptions
+  extends PythonPackagingOptions,
+    PythonExecutableOptions {}
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -18,23 +23,56 @@ export class Poetry
   extends Component
   implements IPythonDeps, IPythonEnv, IPythonPackaging
 {
+  /**
+   * Task for updating the lockfile and installing project dependencies.
+   */
   public readonly installTask: Task;
+
+  /**
+   * Task for installing dependencies according to the existing lockfile.
+   */
+  public readonly installCiTask: Task;
+
+  /**
+   * Task for publishing the package to a package repository.
+   */
   public readonly publishTask: Task;
 
   /**
-   * A task that uploads the package to the Test PyPI repository.
+   * Task for publishing the package to the Test PyPI repository for testing purposes.
    */
   public readonly publishTestTask: Task;
 
-  constructor(project: Project, options: PythonPackagingOptions) {
+  /**
+   * Path to the Python executable to use.
+   */
+  private readonly pythonExec: string;
+
+  /**
+   * Represents the configuration of the `pyproject.toml` file for a Poetry project.
+   * This includes package metadata, dependencies, and Poetry-specific settings.
+   */
+  private readonly pyProject: PoetryPyproject;
+
+  constructor(project: Project, options: PoetryOptions) {
     super(project);
+    this.pythonExec = options.pythonExec ?? "python";
 
     this.installTask = project.addTask("install", {
-      description: "Install and upgrade dependencies",
+      description: "Install dependencies and update lockfile",
       exec: "poetry update",
     });
 
-    this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
+    this.installCiTask = project.addTask("install:ci", {
+      description: "Install dependencies with frozen lockfile",
+      exec: "poetry check --lock && poetry install",
+    });
+
+    this.project.tasks.addEnvironment(
+      "VIRTUAL_ENV",
+      // Create .venv on the first run if it doesn't already exist
+      "$(poetry env info -p || poetry run poetry env info -p)"
+    );
     this.project.tasks.addEnvironment(
       "PATH",
       "$(echo $(poetry env info -p)/bin:$PATH)"
@@ -52,7 +90,7 @@ export class Poetry
       exec: "poetry publish",
     });
 
-    new PoetryPyproject(project, {
+    this.pyProject = new PoetryPyproject(project, {
       name: project.name,
       version: options.version,
       description: options.description ?? "",
@@ -164,7 +202,7 @@ export class Poetry
     });
     if (!envPath) {
       this.project.logger.info("Setting up a virtual environment...");
-      exec("poetry env use python", { cwd: this.project.outdir });
+      exec(`poetry env use ${this.pythonExec}`, { cwd: this.project.outdir });
       envPath = execOrUndefined("poetry env info -p", {
         cwd: this.project.outdir,
       });
@@ -180,7 +218,12 @@ export class Poetry
   public installDependencies() {
     this.project.logger.info("Installing dependencies...");
     const runtime = new TaskRuntime(this.project.outdir);
-    runtime.runTask(this.installTask.name);
+    // If the pyproject.toml file has changed, update the lockfile prior to installation
+    if (this.pyProject.file.changed) {
+      runtime.runTask(this.installTask.name);
+    } else {
+      runtime.runTask(this.installCiTask.name);
+    }
   }
 }
 
@@ -334,23 +377,30 @@ export class PoetryPyproject extends Component {
   constructor(project: Project, options: PoetryPyprojectOptions) {
     super(project);
 
-    const decamelisedOptions = decamelizeKeysRecursively(options, {
-      separator: "-",
-    });
+    const { dependencies, devDependencies, ...otherOptions } = options;
+    const decamelizedOptions = decamelizeKeysRecursively(otherOptions);
 
-    this.file = new TomlFile(project, "pyproject.toml", {
-      omitEmpty: false,
-      obj: {
-        "build-system": {
-          requires: ["poetry_core>=1.0.0"],
-          "build-backend": "poetry.core.masonry.api",
-        },
-        tool: {
-          poetry: {
-            ...decamelisedOptions,
+    const tomlStructure: any = {
+      tool: {
+        poetry: {
+          ...decamelizedOptions,
+          dependencies: dependencies,
+          group: {
+            dev: {
+              dependencies: devDependencies,
+            },
           },
         },
       },
+      "build-system": {
+        requires: ["poetry-core"],
+        "build-backend": "poetry.core.masonry.api",
+      },
+    };
+
+    this.file = new TomlFile(project, "pyproject.toml", {
+      omitEmpty: false,
+      obj: tomlStructure,
     });
   }
 }

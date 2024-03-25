@@ -13,8 +13,10 @@ export * from "./pull-request-lint";
 export * from "./github-credentials";
 export * from "./workflow-actions";
 export * from "./workflow-jobs";
+export * from "./workflow-steps";
 
 export * from "./task-workflow";
+export * from "./task-workflow-job";
 
 export * from "./github-project";
 

@@ -21,13 +21,18 @@ import { ProjenrcJson, ProjenrcJsonOptions } from "./projenrc-json";
 import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
-import { isTruthy } from "./util";
+import { isTruthy, normalizePersistedPath } from "./util";
 import {
   isProject,
   findClosestProject,
   tagAsProject,
   isComponent,
 } from "./util/constructs";
+
+/**
+ * The default output directory for a project if none is specified.
+ */
+const DEFAULT_OUTDIR = ".";
 
 /**
  * Options for `Project`.
@@ -131,7 +136,6 @@ export interface GitOptions {
    */
   readonly lfsPatterns?: string[];
 }
-
 /**
  * Base project
  */
@@ -183,7 +187,6 @@ export class Project extends Construct {
    * Absolute output directory of this project.
    */
   public readonly outdir: string;
-
   /**
    * Project tasks.
    */
@@ -209,7 +212,9 @@ export class Project extends Construct {
   /**
    * The command to use in order to run the projen CLI.
    */
-  public readonly projenCommand: string;
+  public get projenCommand(): string {
+    return this._projenCommand ?? "npx projen";
+  }
 
   /**
    * This is the "default" task, the one that executes "projen". Undefined if
@@ -238,6 +243,8 @@ export class Project extends Construct {
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
+  /** projenCommand without default value */
+  private readonly _projenCommand?: string;
 
   constructor(options: ProjectOptions) {
     const outdir = determineOutdir(options.parent, options.outdir);
@@ -262,10 +269,9 @@ export class Project extends Construct {
 
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
+    this._projenCommand = options.projenCommand;
     if (this.ejected) {
-      this.projenCommand = "scripts/run-task";
-    } else {
-      this.projenCommand = options.projenCommand ?? "npx projen";
+      this._projenCommand = "scripts/run-task";
     }
 
     this.outdir = outdir;
@@ -347,7 +353,7 @@ export class Project extends Construct {
           // replace `\` with `/` to ensure paths match across platforms
           files: this.files
             .filter((f) => f.readonly)
-            .map((f) => f.path.replace(/\\/g, "/")),
+            .map((f) => normalizePersistedPath(f.path)),
         }),
         // This file is used by projen to track the generated files, so must be committed.
         committed: true,
@@ -373,7 +379,6 @@ export class Project extends Construct {
           isComponent(c) && c.project.node.path === this.node.path
       );
   }
-
   /**
    * Returns all the subprojects within this project.
    */
@@ -540,7 +545,8 @@ export class Project extends Construct {
    * @param task The task for which the command is required
    */
   public runTaskCommand(task: Task) {
-    return `npx projen@${PROJEN_VERSION} ${task.name}`;
+    const pj = this._projenCommand ?? `npx projen@${PROJEN_VERSION}`;
+    return `${pj} ${task.name}`;
   }
 
   /**
@@ -601,7 +607,7 @@ export class Project extends Construct {
     // delete orphaned files before we start synthesizing new ones
     cleanup(
       outdir,
-      this.files.map((f) => f.path.replace(/\\/g, "/")),
+      this.files.map((f) => normalizePersistedPath(f.path)),
       this.excludeFromCleanup
     );
 
@@ -734,13 +740,13 @@ function determineOutdir(parent?: Project, outdirOption?: string) {
     const realTmp = realpathSync(tmpdir());
 
     if (realCwd.startsWith(realTmp)) {
-      return path.resolve(realCwd, outdirOption ?? ".");
+      return path.resolve(realCwd, outdirOption ?? DEFAULT_OUTDIR);
     }
 
     return mkdtempSync(path.join(tmpdir(), "projen."));
   }
 
-  return path.resolve(outdirOption ?? ".");
+  return path.resolve(outdirOption ?? DEFAULT_OUTDIR);
 }
 
 function isFile(c: Component): c is FileBase {

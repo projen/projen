@@ -897,3 +897,30 @@ describe("yarn berry", () => {
     });
   });
 });
+
+describe("npm provenance", () => {
+  test("can be enabled for public packages", () => {
+    const project = new TestProject();
+
+    const nodePackage = new NodePackage(project, {
+      packageName: "@test-scope/test-package",
+      npmAccess: NpmAccess.PUBLIC,
+      npmProvenance: true,
+    });
+
+    expect(nodePackage.npmProvenance).toStrictEqual(true);
+  });
+
+  test("should throw an error if it's enabled for non-public packages", () => {
+    const project = new TestProject();
+
+    expect(
+      () =>
+        new NodePackage(project, {
+          packageName: "@test-scope/test-package",
+          npmAccess: NpmAccess.RESTRICTED,
+          npmProvenance: true,
+        })
+    ).toThrowError(`"npmProvenance" can only be enabled for public packages`);
+  });
+});

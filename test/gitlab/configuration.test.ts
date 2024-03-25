@@ -94,6 +94,91 @@ test("throws when adding an existing includes", () => {
   );
 });
 
+test("throws when adding a job with more than 4 caches configured", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  // THEN
+  expect(
+    () =>
+      new CiConfiguration(p, "foo", {
+        jobs: {
+          build: {
+            cache: [
+              {
+                key: {
+                  files: ["$CI_COMMIT_REF_SLUG"],
+                },
+                paths: ["vendor/"],
+              },
+              {
+                key: {
+                  files: ["$CI_COMMIT_REF_SLUG"],
+                },
+                paths: ["vendor/"],
+              },
+              {
+                key: {
+                  files: ["yarn.lock"],
+                },
+              },
+              {
+                key: {
+                  files: ["$CI_COMMIT_REF_SLUG"],
+                },
+                paths: ["vendor/"],
+              },
+              {
+                key: {
+                  files: ["yarn.lock"],
+                },
+              },
+            ],
+            variables: { AWS_REGION: "eu-central-1" },
+          },
+        },
+      })
+  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
+});
+
+test("throws when adding more than 4 default caches", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  // THEN
+  expect(
+    () =>
+      new CiConfiguration(p, "foo", {
+        default: {
+          cache: [
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+            {
+              key: "${CI_COMMIT_REF_SLUG}",
+              paths: ["node_modules"],
+            },
+          ],
+        },
+      })
+  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
+});
+
 test("respected the original format when variables are added to jobs", () => {
   // GIVEN
   const p = new TestProject({
@@ -157,10 +242,40 @@ test("adds correct entries for path-based caching", () => {
   });
   new CiConfiguration(p, "foo", {
     default: {
-      cache: {
-        paths: ["node_modules"],
-        key: "${CI_COMMIT_REF_SLUG}",
-      },
+      cache: [
+        {
+          key: "${CI_COMMIT_REF_SLUG}",
+          paths: ["node_modules"],
+        },
+      ],
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
+});
+
+test("adds correct entries for multiple caches", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: [
+        {
+          key: {
+            files: ["Gemfile.lock"],
+          },
+          paths: ["vendor/ruby"],
+        },
+        {
+          key: {
+            files: ["yarn.lock"],
+          },
+          paths: [".yarn-cache/"],
+        },
+      ],
     },
   });
   const snapshot = synthSnapshot(p);
@@ -175,12 +290,14 @@ test("adds correct entries for file-based caching", () => {
   });
   new CiConfiguration(p, "foo", {
     default: {
-      cache: {
-        key: {
-          files: ["Gemfile.lock", "package.json"],
-          prefix: "${CI_COMMIT_REF_SLUG}",
+      cache: [
+        {
+          key: {
+            files: ["Gemfile.lock", "package.json"],
+            prefix: "${CI_COMMIT_REF_SLUG}",
+          },
         },
-      },
+      ],
     },
   });
   const snapshot = synthSnapshot(p);
@@ -195,9 +312,11 @@ test("adds correct entries for fallback-keys caching", () => {
   });
   new CiConfiguration(p, "foo", {
     default: {
-      cache: {
-        fallbackKeys: ["pathA", "pathB"],
-      },
+      cache: [
+        {
+          fallbackKeys: ["pathA", "pathB"],
+        },
+      ],
     },
   });
   const snapshot = synthSnapshot(p);

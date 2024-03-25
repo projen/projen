@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import { posix, win32 } from "path";
 import { TestProject } from "./util";
 import { JsonFile } from "../src/json";
@@ -10,6 +11,8 @@ import {
   formatAsPythonModule,
   getGitVersion,
   isRoot,
+  assertExecutablePermissions,
+  normalizePersistedPath,
 } from "../src/util";
 
 describe("decamelizeRecursively", () => {
@@ -278,5 +281,133 @@ describe("isRoot", () => {
     test("will return false for path to dir", () => {
       expect(isRoot("C:\\Users\\me\\code", win32)).toBe(false);
     });
+  });
+});
+
+describe("assertExecutablePermissions", () => {
+  const filePath = "/path/to/file";
+  const originalPlatform = process.platform;
+
+  beforeEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    // Restore the original platform
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+  });
+
+  test("returns true when platform is win32, regardless of shouldBeExecutable", () => {
+    // Mock the platform to be "win32"
+    Object.defineProperty(process, "platform", { value: "win32" });
+
+    expect(assertExecutablePermissions(filePath, true)).toBe(true);
+    expect(assertExecutablePermissions(filePath, false)).toBe(true);
+  });
+
+  test("returns value of shouldBeExecutable when platform is not win32 and file permissions match", () => {
+    // Mock the platform to be "linux"
+    Object.defineProperty(process, "platform", { value: "linux" });
+
+    // Mock the fs.accessSync function to not throw for executable permissions
+    jest.spyOn(fs, "accessSync").mockImplementation((_path, mode) => {
+      if (mode === fs.constants.X_OK) {
+        return;
+      } else {
+        throw new Error();
+      }
+    });
+
+    expect(assertExecutablePermissions(filePath, true)).toBe(true);
+  });
+
+  test("returns false when shouldBeExecutable is true but file is not executable", () => {
+    // Mock the platform to be "linux"
+    Object.defineProperty(process, "platform", { value: "linux" });
+
+    // Mock the fs.accessSync function to return non-executable permissions
+    jest.spyOn(fs, "accessSync").mockImplementation((_path, mode) => {
+      if (mode === fs.constants.X_OK) {
+        throw new Error();
+      } else {
+        return;
+      }
+    });
+
+    expect(assertExecutablePermissions(filePath, true)).toBe(false);
+  });
+
+  test("returns false when shouldBeExecutable is false but file is executable", () => {
+    // Mock the platform to be "linux"
+    Object.defineProperty(process, "platform", { value: "linux" });
+
+    // Mock the fs.accessSync function to return executable permissions
+    jest.spyOn(fs, "accessSync").mockImplementation((_path, mode) => {
+      if (mode === fs.constants.X_OK) {
+        return;
+      } else {
+        throw new Error();
+      }
+    });
+
+    expect(assertExecutablePermissions(filePath, false)).toBe(false);
+  });
+});
+
+describe("normalizePersistedPath", () => {
+  test("changes directory separators to forward slash on Windows", () => {
+    // GIVEN
+    const input = "C:\\path\\to\\file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("C:/path/to/file");
+  });
+
+  test("handles mixed directory separators on Windows", () => {
+    // GIVEN
+    const input = "C:\\path/to\\file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("C:/path/to/file");
+  });
+
+  test("handles path with no separators", () => {
+    // GIVEN
+    const input = "file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("file");
+  });
+
+  test("handles gitignore pattern", () => {
+    // GIVEN
+    const input = "!/path\\to/file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("!/path/to/file");
+  });
+
+  test("keeps directory separators as forward slash on Linux", () => {
+    // GIVEN
+    const input = "/path/to/file";
+
+    // WHEN
+    const output = normalizePersistedPath(input);
+
+    // THEN
+    expect(output).toEqual("/path/to/file");
   });
 });

@@ -65,7 +65,7 @@ export class GithubCredentials {
         {
           name: "Generate token",
           id: "generate_token",
-          uses: "tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c",
+          uses: "tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a",
           with: {
             app_id: `\${{ secrets.${appIdSecret} }}`,
             private_key: `\${{ secrets.${privateKeySecret} }}`,

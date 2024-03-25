@@ -4,7 +4,7 @@ exports[`inventory 1`] = `
 [
   {
     "docs": "AWS CDK app in Java.",
-    "docsurl": "https://projen.io/api/API.html#awscdkjavaapp-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdkjavaapp-",
     "fqn": "projen.awscdk.AwsCdkJavaApp",
     "moduleName": "projen",
     "options": [
@@ -731,6 +731,24 @@ exports[`inventory 1`] = `
         "switch": "parent",
       },
       {
+        "docs": "A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.",
+        "featured": true,
+        "fqn": "projen.java.ParentPom",
+        "fullType": {
+          "fqn": "projen.java.ParentPom",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "parentPom",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "parentPom",
+        ],
+        "simpleType": "ParentPom",
+        "switch": "parent-pom",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -1142,7 +1160,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK app in Python.",
-    "docsurl": "https://projen.io/api/API.html#awscdkpythonapp-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdkpythonapp-",
     "fqn": "projen.awscdk.AwsCdkPythonApp",
     "moduleName": "projen",
     "options": [
@@ -2184,7 +2202,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -2493,7 +2511,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK app in TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#awscdktypescriptapp-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdktypescriptapp-",
     "fqn": "projen.awscdk.AwsCdkTypeScriptApp",
     "moduleName": "projen",
     "options": [
@@ -2992,6 +3010,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -4085,6 +4122,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -4864,7 +4918,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -5192,6 +5246,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -5448,7 +5520,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "AWS CDK construct library project.",
-    "docsurl": "https://projen.io/api/API.html#awscdkconstructlibrary-",
+    "docsurl": "https://projen.io/docs/api/awscdk#awscdkconstructlibrary-",
     "fqn": "projen.awscdk.AwsCdkConstructLibrary",
     "moduleName": "projen",
     "options": [
@@ -5949,6 +6021,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -6662,7 +6753,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file in under your test directory.",
+        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file under your test directory.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -7126,6 +7217,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "IgnoreFileOptions",
         "switch": "npm-ignore-options",
+      },
+      {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
       },
       {
         "deprecated": true,
@@ -8001,7 +8109,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -8343,6 +8451,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -8555,7 +8681,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s app in Python.",
-    "docsurl": "https://projen.io/api/API.html#cdk8spythonapp-",
+    "docsurl": "https://projen.io/docs/api/cdk8s#cdk8spythonapp-",
     "fqn": "projen.cdk8s.Cdk8sPythonApp",
     "moduleName": "projen",
     "options": [
@@ -9585,7 +9711,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -9814,7 +9940,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s app in TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#cdk8stypescriptapp-",
+    "docsurl": "https://projen.io/docs/api/cdk8s#cdk8stypescriptapp-",
     "fqn": "projen.cdk8s.Cdk8sTypeScriptApp",
     "moduleName": "projen",
     "options": [
@@ -10290,6 +10416,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk8s-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -11307,6 +11452,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -12086,7 +12248,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -12395,6 +12557,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -12607,7 +12787,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDK8s construct library project.",
-    "docsurl": "https://projen.io/api/API.html#constructlibrarycdk8s-",
+    "docsurl": "https://projen.io/docs/api/cdk8s#constructlibrarycdk8s-",
     "fqn": "projen.cdk8s.ConstructLibraryCdk8s",
     "moduleName": "projen",
     "options": [
@@ -13029,6 +13209,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk8s-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -14137,6 +14336,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -15010,7 +15226,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -15352,6 +15568,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -15564,7 +15798,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "CDKTF construct library project.",
-    "docsurl": "https://projen.io/api/API.html#constructlibrarycdktf-",
+    "docsurl": "https://projen.io/docs/api/cdktf#constructlibrarycdktf-",
     "fqn": "projen.cdktf.ConstructLibraryCdktf",
     "moduleName": "projen",
     "options": [
@@ -15954,6 +16188,25 @@ exports[`inventory 1`] = `
         "switch": "cdktf-version",
       },
       {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
+      },
+      {
         "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
@@ -16092,7 +16345,7 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
       },
       {
-        "default": ""^10.0.12"",
+        "default": ""^10.3.0"",
         "docs": "Construct version to use.",
         "featured": false,
         "fullType": {
@@ -17026,6 +17279,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -17899,7 +18169,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -18241,6 +18511,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -18453,7 +18741,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Java project.",
-    "docsurl": "https://projen.io/api/API.html#javaproject-",
+    "docsurl": "https://projen.io/docs/api/java#javaproject-",
     "fqn": "projen.java.JavaProject",
     "moduleName": "projen",
     "options": [
@@ -18942,6 +19230,24 @@ exports[`inventory 1`] = `
         "switch": "parent",
       },
       {
+        "docs": "A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.",
+        "featured": true,
+        "fqn": "projen.java.ParentPom",
+        "fullType": {
+          "fqn": "projen.java.ParentPom",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "parentPom",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "parentPom",
+        ],
+        "simpleType": "ParentPom",
+        "switch": "parent-pom",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -19290,7 +19596,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Multi-language jsii library project.",
-    "docsurl": "https://projen.io/api/API.html#jsiiproject-",
+    "docsurl": "https://projen.io/docs/api/cdk#jsiiproject-",
     "fqn": "projen.cdk.JsiiProject",
     "moduleName": "projen",
     "options": [
@@ -19642,6 +19948,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -20699,6 +21024,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -21572,7 +21914,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -21914,6 +22256,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -22125,8 +22485,8 @@ exports[`inventory 1`] = `
     "typename": "cdk.JsiiProject",
   },
   {
-    "docs": "Next.js project without TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#nextjsproject-",
+    "docs": "Next.js project using JavaScript.",
+    "docsurl": "https://projen.io/docs/api/web#nextjsproject-",
     "fqn": "projen.web.NextJsProject",
     "moduleName": "projen",
     "options": [
@@ -22461,6 +22821,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -23255,6 +23634,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -23998,7 +24394,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -24446,8 +24842,8 @@ exports[`inventory 1`] = `
     "typename": "web.NextJsProject",
   },
   {
-    "docs": "Next.js project with TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#nextjstypescriptproject-",
+    "docs": "Next.js project using TypeScript.",
+    "docsurl": "https://projen.io/docs/api/web#nextjstypescriptproject-",
     "fqn": "projen.web.NextJsTypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -24782,6 +25178,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -25714,6 +26129,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -26493,7 +26925,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -26819,6 +27251,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -27031,7 +27481,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Node.js project.",
-    "docsurl": "https://projen.io/api/API.html#nodeproject-",
+    "docsurl": "https://projen.io/docs/api/javascript#nodeproject-",
     "fqn": "projen.javascript.NodeProject",
     "moduleName": "projen",
     "options": [
@@ -27349,6 +27799,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -28143,6 +28612,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -28886,7 +29372,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -29284,7 +29770,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Base project.",
-    "docsurl": "https://projen.io/api/API.html#project-",
+    "docsurl": "https://projen.io/docs/api/projen#project-",
     "fqn": "projen.Project",
     "moduleName": "projen",
     "options": [
@@ -29507,7 +29993,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "Python project.",
-    "docsurl": "https://projen.io/api/API.html#pythonproject-",
+    "docsurl": "https://projen.io/docs/api/python#pythonproject-",
     "fqn": "projen.python.PythonProject",
     "moduleName": "projen",
     "options": [
@@ -30311,7 +30797,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -30539,8 +31025,8 @@ exports[`inventory 1`] = `
     "typename": "python.PythonProject",
   },
   {
-    "docs": "React project without TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#reactproject-",
+    "docs": "React project using JavaScript.",
+    "docsurl": "https://projen.io/docs/api/web#reactproject-",
     "fqn": "projen.web.ReactProject",
     "moduleName": "projen",
     "options": [
@@ -30858,6 +31344,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -31652,6 +32157,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -32395,7 +32917,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -32848,8 +33370,8 @@ exports[`inventory 1`] = `
     "typename": "web.ReactProject",
   },
   {
-    "docs": "React project with TypeScript.",
-    "docsurl": "https://projen.io/api/API.html#reacttypescriptproject-",
+    "docs": "React project using TypeScript.",
+    "docsurl": "https://projen.io/docs/api/web#reacttypescriptproject-",
     "fqn": "projen.web.ReactTypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -33167,6 +33689,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -34099,6 +34640,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -34878,7 +35436,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -35209,6 +35767,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -35421,7 +35997,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "TypeScript project.",
-    "docsurl": "https://projen.io/api/API.html#typescriptproject-",
+    "docsurl": "https://projen.io/docs/api/typescript#typescriptproject-",
     "fqn": "projen.typescript.TypeScriptProject",
     "moduleName": "projen",
     "options": [
@@ -35741,6 +36317,25 @@ exports[`inventory 1`] = `
         "switch": "bundler-options",
       },
       {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
+      },
+      {
         "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
@@ -36671,6 +37266,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -37450,7 +38062,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -37759,6 +38371,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -37971,7 +38601,7 @@ exports[`inventory 1`] = `
   },
   {
     "docs": "TypeScript app.",
-    "docsurl": "https://projen.io/api/API.html#typescriptappproject-",
+    "docsurl": "https://projen.io/docs/api/typescript#typescriptappproject-",
     "fqn": "projen.typescript.TypeScriptAppProject",
     "moduleName": "projen",
     "options": [
@@ -38291,6 +38921,25 @@ exports[`inventory 1`] = `
         "switch": "bundler-options",
       },
       {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
+      },
+      {
         "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
@@ -39221,6 +39870,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -40000,7 +40666,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -40307,6 +40973,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "tsconfig-dev-file",
+      },
+      {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
       },
       {
         "default": ""latest"",

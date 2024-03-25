@@ -2,10 +2,16 @@ import { rmSync } from "fs";
 import * as path from "path";
 import { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
-import { PROJEN_MARKER, PROJEN_RC } from "./common";
+import { PROJEN_MARKER, DEFAULT_PROJEN_RC_JS_FILENAME } from "./common";
 import { Component } from "./component";
 import { ProjenrcFile } from "./projenrc";
-import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
+import {
+  assertExecutablePermissions,
+  isWritable,
+  normalizePersistedPath,
+  tryReadFileSync,
+  writeFile,
+} from "./util";
 import { findClosestProject } from "./util/constructs";
 
 export interface FileBaseOptions {
@@ -81,7 +87,8 @@ export abstract class FileBase extends Component {
     }
 
     // `marker` is empty if project is being ejected or if explicitly disabled
-    const projenrc = ProjenrcFile.of(this.project)?.filePath ?? PROJEN_RC;
+    const projenrc =
+      ProjenrcFile.of(this.project)?.filePath ?? DEFAULT_PROJEN_RC_JS_FILENAME;
     return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "${this.project.projenCommand}".`;
   }
 
@@ -92,9 +99,11 @@ export abstract class FileBase extends Component {
   ) {
     const project = findClosestProject(scope);
     const root = project.root;
-    const projectPath = path.normalize(filePath);
+    const normalizedPath = path.normalize(filePath);
+    const projectPath = normalizePersistedPath(normalizedPath);
     const absolutePath = path.resolve(project.outdir, projectPath);
-    const rootProjectPath = path.relative(root.outdir, absolutePath);
+    const relativeProjectPath = path.relative(root.outdir, absolutePath);
+    const rootProjectPath = normalizePersistedPath(relativeProjectPath);
     const autoId = `${new.target.name}@${projectPath}`;
 
     // Before actually creating the file, ensure the file path is unique within the full project tree
@@ -158,12 +167,15 @@ export abstract class FileBase extends Component {
     // check if the file was changed.
     const prev = tryReadFileSync(filePath);
     const prevReadonly = !isWritable(filePath);
-    const prevExecutable = isExecutable(filePath);
+    const successfulExecutableAssertion = assertExecutablePermissions(
+      filePath,
+      this.executable
+    );
     if (
       prev !== undefined &&
       content === prev &&
       prevReadonly === this.readonly &&
-      prevExecutable === this.executable
+      successfulExecutableAssertion
     ) {
       this.project.logger.debug(`no change in ${filePath}`);
       this._changed = false;

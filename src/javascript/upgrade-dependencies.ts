@@ -7,6 +7,7 @@ import {
   GitIdentity,
   workflows,
   WorkflowJobs,
+  WorkflowSteps,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
@@ -236,7 +237,7 @@ export class UpgradeDependencies extends Component {
         case NodePackageManager.YARN_CLASSIC:
           return "npx";
         case NodePackageManager.PNPM:
-          return "pnpx";
+          return "pnpm dlx";
         case NodePackageManager.YARN2:
         case NodePackageManager.YARN_BERRY:
           return "yarn dlx";
@@ -246,17 +247,16 @@ export class UpgradeDependencies extends Component {
     }
     const steps = new Array<TaskStep>();
 
-    const include = Array.from(
-      new Set(this.options.include ?? this.filterDependencies())
-    );
-
-    if (include.length === 0) {
+    // Package Manager upgrade should always include all deps
+    const includeForPackageManagerUpgrade = this.buildDependencyList(true);
+    if (includeForPackageManagerUpgrade.length === 0) {
       return [{ exec: "echo No dependencies to upgrade." }];
     }
 
     // Removing `npm-check-updates` from our dependency tree because it depends on a package
     // that uses an npm-specific feature that causes an invalid dependency tree when using Yarn 1.
     // See https://github.com/projen/projen/pull/3136 for more details.
+    const includeForNcu = this.buildDependencyList(false);
     const ncuCommand = [
       `${executeCommand(
         this._project.package.packageManager
@@ -265,17 +265,20 @@ export class UpgradeDependencies extends Component {
       `--target=${this.upgradeTarget}`,
       `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
       `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
-      `--filter=${include.join(",")}`,
+      `--filter=${includeForNcu.join(",")}`,
     ];
+
     // bump versions in package.json
-    steps.push({ exec: ncuCommand.join(" ") });
+    if (includeForNcu.length) {
+      steps.push({ exec: ncuCommand.join(" ") });
+    }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
     steps.push({
-      exec: this.renderUpgradePackagesCommand(include),
+      exec: this.renderUpgradePackagesCommand(includeForPackageManagerUpgrade),
     });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
@@ -356,24 +359,33 @@ export class UpgradeDependencies extends Component {
     return lazy as unknown as string;
   }
 
-  private filterDependencies(): string[] {
-    const depedencies = [];
+  private buildDependencyList(includeDependenciesWithConstraint: boolean) {
+    return Array.from(
+      new Set(
+        this.options.include ??
+          this.filterDependencies(includeDependenciesWithConstraint)
+      )
+    );
+  }
+
+  private filterDependencies(includeConstraint: boolean): string[] {
+    const dependencies = [];
 
     const deps = this.project.deps.all
       // remove those that have a pinned version
-      .filter((d) => !d.version || d.version[0] === "^")
-      // remove overriden dependencies
+      .filter((d) => includeConstraint || !(d.version && d.version[0] === "^"))
+      // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
 
     for (const type of this.depTypes) {
-      depedencies.push(
+      dependencies.push(
         ...deps
           .filter((d) => d.type === type)
           .filter((d) => !(this.options.exclude ?? []).includes(d.name))
       );
     }
 
-    return depedencies.map((d) => d.name);
+    return dependencies.map((d) => d.name);
   }
 
   private createWorkflow(
@@ -416,11 +428,7 @@ export class UpgradeDependencies extends Component {
     };
 
     const steps: workflows.JobStep[] = [
-      {
-        name: "Checkout",
-        uses: "actions/checkout@v3",
-        with: Object.keys(with_).length > 0 ? with_ : undefined,
-      },
+      WorkflowSteps.checkout({ with: with_ }),
       ...this._project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",

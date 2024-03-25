@@ -1397,7 +1397,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v2",
+            uses: "aws-actions/configure-aws-credentials@v4",
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1433,7 +1433,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v2",
+            uses: "aws-actions/configure-aws-credentials@v4",
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1564,7 +1564,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v2",
+          uses: "aws-actions/configure-aws-credentials@v4",
           with: {
             "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
             "aws-secret-access-key": secretToString(
@@ -1766,5 +1766,106 @@ describe("package manager env", () => {
       // THEN
       expect(project.tasks.env.PATH).toEqual(testCase.cmd);
     });
+  });
+});
+
+describe("Subproject", () => {
+  test("Subproject should create a release workflow in the parent project", () => {
+    // GIVEN / WHEN
+    const root = new TestNodeProject();
+    new TestNodeProject({
+      parent: root,
+      outdir: "child",
+      release: true,
+      minNodeVersion: "16.0.0",
+      workflowNodeVersion: "18.14.0",
+      releaseTagPrefix: "test-node-project@", // to avoid conflicts with the root project
+      releaseToNpm: true,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(root);
+
+    expect(snapshot).toHaveProperty([
+      ".github/workflows/release_test-node-project.yml",
+    ]);
+
+    const subprojectReleaseWorkflow = yaml.parse(
+      snapshot[".github/workflows/release_test-node-project.yml"]
+    );
+    expect(
+      subprojectReleaseWorkflow.jobs.release.steps.find(
+        (step: any) => step.name === "Install dependencies"
+      )["working-directory"]
+    ).toEqual(
+      expect.stringContaining(".") // NodeProject is responsible for setting the install working directory to root
+    );
+  });
+
+  test("Subproject release workflow options should be used in the workflow in the parent project", () => {
+    // GIVEN / WHEN
+    const SETUP_JOB_STEP_NAME = "Build Monorepo Dependencies";
+    const root = new TestNodeProject();
+    new TestNodeProject({
+      parent: root,
+      outdir: "child",
+      release: true,
+      minNodeVersion: "16.0.0",
+      workflowNodeVersion: "18.14.0",
+      releaseTagPrefix: "test-node-project@", // to avoid conflicts with the root project
+      releaseToNpm: true,
+      releaseWorkflowSetupSteps: [
+        {
+          name: SETUP_JOB_STEP_NAME,
+          run: "nx run-many --target=build-deps",
+        },
+      ],
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(root);
+
+    expect(snapshot).toHaveProperty([
+      ".github/workflows/release_test-node-project.yml",
+    ]);
+
+    const subprojectReleaseWorkflow = yaml.parse(
+      snapshot[".github/workflows/release_test-node-project.yml"]
+    );
+    expect(
+      subprojectReleaseWorkflow.jobs.release.steps.find(
+        (step: any) => step.name === SETUP_JOB_STEP_NAME
+      )
+    ).toBeDefined();
+  });
+});
+
+describe("npmignore", () => {
+  test("should include sensible default ignore patterns", () => {
+    // GIVEN
+    const project = new TestNodeProject();
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".npmignore"]).toMatchSnapshot();
+    expect(output[".npmignore"]).toContain("/.gitattributes");
+  });
+
+  test("should include npmIgnore patterns specified (via npmIgnoreOptions)", () => {
+    // GIVEN
+    const project = new TestNodeProject({
+      npmIgnoreOptions: {
+        ignorePatterns: ["/SECURITY.md"],
+      },
+    });
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".npmignore"]).toMatchSnapshot();
+    expect(output[".npmignore"]).toContain("/SECURITY.md");
   });
 });

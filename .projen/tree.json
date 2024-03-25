@@ -217,6 +217,14 @@
         "metadata": {
           "type": "component",
           "construct": "Release"
+        },
+        "nodes": {
+          "TaskWorkflowJob#release": {
+            "metadata": {
+              "type": "component",
+              "construct": "TaskWorkflowJob"
+            }
+          }
         }
       },
       "Version#AutoId17": {
@@ -231,10 +239,10 @@
           "construct": "Publisher"
         }
       },
-      "TaskWorkflow#release": {
+      "GithubWorkflow#release": {
         "metadata": {
           "type": "component",
-          "construct": "TaskWorkflow"
+          "construct": "GithubWorkflow"
         }
       },
       "YamlFile@.github--workflows--release.yml": {
@@ -264,19 +272,13 @@
           "path": ".github/pull_request_template.md"
         }
       },
-      "Projenrc#AutoId20": {
-        "metadata": {
-          "type": "component",
-          "construct": "Projenrc"
-        }
-      },
-      "Bundler#AutoId21": {
+      "Bundler#AutoId20": {
         "metadata": {
           "type": "component",
           "construct": "Bundler"
         }
       },
-      "Prettier#AutoId22": {
+      "Prettier#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "Prettier"
@@ -296,7 +298,13 @@
           "path": ".prettierrc.json"
         }
       },
-      "TypescriptConfig#AutoId23": {
+      "LicenseChecker#check-licenses": {
+        "metadata": {
+          "type": "component",
+          "construct": "LicenseChecker"
+        }
+      },
+      "TypescriptConfig#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -309,7 +317,7 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId24": {
+      "Eslint#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -320,6 +328,12 @@
           "type": "file",
           "construct": "JsonFile",
           "path": ".eslintrc.json"
+        }
+      },
+      "Projenrc#AutoId24": {
+        "metadata": {
+          "type": "component",
+          "construct": "Projenrc"
         }
       },
       "SampleCode#AutoId25": {
@@ -338,6 +352,27 @@
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
+        }
+      },
+      "TaskWorkflow#check-licenses": {
+        "metadata": {
+          "type": "component",
+          "construct": "TaskWorkflow"
+        },
+        "nodes": {
+          "TaskWorkflowJob#check-licenses": {
+            "metadata": {
+              "type": "component",
+              "construct": "TaskWorkflowJob"
+            }
+          }
+        }
+      },
+      "YamlFile@.github--workflows--check-licenses.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/check-licenses.yml"
         }
       },
       "UpgradeDependencies#AutoId28": {
@@ -378,11 +413,11 @@
           "path": ".github/workflows/upgrade-main.yml"
         }
       },
-      "TextFile@projen.bash": {
+      "TextFile@projen.js": {
         "metadata": {
           "type": "file",
           "construct": "TextFile",
-          "path": "projen.bash"
+          "path": "projen.js"
         }
       },
       "JsonFile@.markdownlint.json": {

@@ -15,7 +15,7 @@ export interface PipOptions {}
  * Manages dependencies using a requirements.txt file and the pip CLI tool.
  */
 export class Pip extends Component implements IPythonDeps {
-  public readonly installTask: Task;
+  public readonly installCiTask: Task;
 
   constructor(project: Project, _options: PipOptions = {}) {
     super(project);
@@ -27,12 +27,12 @@ export class Pip extends Component implements IPythonDeps {
       packageProvider: new DevDependencyProvider(project),
     });
 
-    this.installTask = project.addTask("install", {
+    this.installCiTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
     });
-    this.installTask.exec("pip install --upgrade pip");
-    this.installTask.exec("pip install -r requirements.txt");
-    this.installTask.exec("pip install -r requirements-dev.txt");
+    this.installCiTask.exec("pip install --upgrade pip");
+    this.installCiTask.exec("pip install -r requirements.txt");
+    this.installCiTask.exec("pip install -r requirements-dev.txt");
   }
 
   /**
@@ -60,7 +60,7 @@ export class Pip extends Component implements IPythonDeps {
     this.project.logger.info("Installing dependencies...");
 
     const runtime = new TaskRuntime(this.project.outdir);
-    runtime.runTask(this.installTask.name);
+    runtime.runTask(this.installCiTask.name);
   }
 }
 

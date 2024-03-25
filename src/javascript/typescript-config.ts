@@ -13,6 +13,9 @@ export interface TypescriptConfigOptions {
 
   /**
    * Base `tsconfig.json` configuration(s) to inherit from.
+   *
+   * @remarks
+   * Must provide either `extends` or `compilerOptions` (or both).
    */
   readonly extends?: TypescriptConfigExtends;
 
@@ -32,8 +35,11 @@ export interface TypescriptConfigOptions {
 
   /**
    * Compiler options to use.
+   *
+   * @remarks
+   * Must provide either `extends` or `compilerOptions` (or both).
    */
-  readonly compilerOptions: TypeScriptCompilerOptions;
+  readonly compilerOptions?: TypeScriptCompilerOptions;
 }
 
 /**
@@ -185,6 +191,15 @@ export interface TypeScriptCompilerOptions {
    * @see {@link https://www.typescriptlang.org/tsconfig#declarationMap}
    */
   readonly declarationMap?: boolean;
+
+  /**
+   * Downleveling is TypeScript’s term for transpiling to an older version of JavaScript.
+   * This flag is to enable support for a more accurate implementation of how modern JavaScript iterates through new concepts in older JavaScript runtimes.
+   *
+   * ECMAScript 6 added several new iteration primitives: the for / of loop (for (el of arr)), Array spread ([a, ...b]), argument spread (fn(...args)), and Symbol.iterator.
+   * downlevelIteration allows for these iteration primitives to be used more accurately in ES5 environments if a Symbol.iterator implementation is present.
+   */
+  readonly downlevelIteration?: boolean;
 
   /**
    * List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.
@@ -538,6 +553,75 @@ export interface TypeScriptCompilerOptions {
    * @see {@link https://www.typescriptlang.org/tsconfig#types}
    */
   readonly types?: string[];
+
+  /**
+   * Tells TypeScript to save information about the project graph from the last compilation to files stored on disk.
+   * This creates a series of .tsbuildinfo files in the same folder as your compilation output.
+   * They are not used by your JavaScript at runtime and can be safely deleted.
+   * You can read more about the flag in the 3.4 release notes.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#faster-subsequent-builds-with-the---incremental-flag
+   *
+   * To control which folders you want to the files to be built to, use the config option tsBuildInfoFile.
+   */
+  readonly incremental?: boolean;
+
+  /**
+   * This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases.
+   * You can read more about composite projects in the handbook.
+   */
+  readonly tsBuildInfoFile?: string;
+
+  /**
+   * Allow Unused Labels
+   *
+   * When:
+   *
+   * - `undefined` (default) provide suggestions as warnings to editors
+   * - `true` unused labels are ignored
+   * - `false` raises compiler errors about unused labels
+   *
+   * Labels are very rare in JavaScript and typically indicate an attempt to write an object literal:
+   *
+   * ```ts
+   * function verifyAge(age: number) {
+   *   // Forgot 'return' statement
+   *   if (age > 18) {
+   *     verified: true;
+   * //  ^^^^^^^^ Unused label.
+   *   }
+   * }
+   * ```
+   *
+   * @see https://www.typescriptlang.org/tsconfig#allowUnusedLabels
+   */
+  readonly allowUnusedLabels?: false;
+
+  /**
+   * Allow Unreachable Code
+   *
+   * When:
+   *
+   * - `undefined` (default) provide suggestions as warnings to editors
+   * - `true` unreachable code is ignored
+   * - `false` raises compiler errors about unreachable code
+   *
+   * These warnings are only about code which is provably unreachable due to the use of JavaScript syntax.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#allowUnreachableCode
+   */
+  readonly allowUnreachableCode?: false;
+
+  /**
+   * Check JS
+   *
+   * Works in tandem with [allowJs](https://www.typescriptlang.org/tsconfig#allowJs). When checkJs is enabled then
+   * errors are reported in JavaScript files. This is the equivalent of including // @ts-check at the top of all
+   * JavaScript files which are included in your project.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#checkJs
+   */
+  readonly checkJs?: true;
 }
 
 /**
@@ -583,7 +667,7 @@ export class TypescriptConfigExtends {
 
 export class TypescriptConfig extends Component {
   private _extends: TypescriptConfigExtends;
-  public readonly compilerOptions: TypeScriptCompilerOptions;
+  public readonly compilerOptions?: TypeScriptCompilerOptions;
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
@@ -592,6 +676,12 @@ export class TypescriptConfig extends Component {
   constructor(project: Project, options: TypescriptConfigOptions) {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
+
+    if (!options.extends && !options.compilerOptions) {
+      throw new Error(
+        "TypescriptConfig: Must provide either `extends` or `compilerOptions` (or both)."
+      );
+    }
 
     this._extends = options.extends ?? TypescriptConfigExtends.fromPaths([]);
     this.include = options.include ?? ["**/*.ts"];
