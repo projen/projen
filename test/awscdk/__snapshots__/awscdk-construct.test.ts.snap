@@ -41,6 +41,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
       "name": "Find mutations",
       "run": "git add .
 git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+      "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
@@ -118,6 +119,7 @@ exports[`node version in workflow does setup default version 1`] = `
       "name": "Find mutations",
       "run": "git add .
 git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+      "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
@@ -195,6 +197,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
       "name": "Find mutations",
       "run": "git add .
 git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+      "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
