@@ -106,12 +106,12 @@ export function toReleaseVersion(
       // Python supports a limited set of identifiers... And we have a mapping table...
       // https://packaging.python.org/guides/distributing-packages-using-setuptools/#pre-release-versioning
       const releaseLabels: Record<string, string> = {
-        alpha: 'a',
-        beta: 'b',
-        rc: 'rc',
-        post: 'post',
-        dev: 'dev',
-        pre: 'pre',
+        alpha: "a",
+        beta: "b",
+        rc: "rc",
+        post: "post",
+        dev: "dev",
+        pre: "pre",
       };
 
       const validationErrors: string[] = [];
@@ -119,17 +119,17 @@ export function toReleaseVersion(
       // Ensure that prerelease composed entirely of [label, sequence] pairs
       version.prerelease.forEach((elem, idx, arr) => {
         const next: string | number | undefined = arr[idx + 1];
-        if (typeof elem === 'string') {
+        if (typeof elem === "string") {
           if (!Object.keys(releaseLabels).includes(elem)) {
             validationErrors.push(
               `Label ${elem} is not one of ${Object.keys(releaseLabels).join(
-                ',',
-              )}`,
+                ","
+              )}`
             );
           }
           if (next === undefined || !Number.isInteger(next)) {
             validationErrors.push(
-              `Label ${elem} must be followed by a positive integer`,
+              `Label ${elem} must be followed by a positive integer`
             );
           }
         }
@@ -138,10 +138,10 @@ export function toReleaseVersion(
       if (validationErrors.length > 0) {
         throw new Error(
           `Unable to map prerelease identifier (in: ${assemblyVersion}) components to python: ${inspect(
-            version.prerelease,
+            version.prerelease
           )}. The format should be 'X.Y.Z-[label.sequence][.post.sequence][.(dev|pre).sequence]', where sequence is a positive integer and label is one of ${inspect(
-            Object.keys(releaseLabels),
-          )}. Validation errors encountered: ${validationErrors.join(', ')}`,
+            Object.keys(releaseLabels)
+          )}. Validation errors encountered: ${validationErrors.join(", ")}`
         );
       }
 
@@ -150,13 +150,13 @@ export function toReleaseVersion(
       // possible from the given prerelease input
       // e.g. 1.2.3-rc.123.dev.456.post.789 => 1.2.3.rc123.dev456.post789
       const postIdx = version.prerelease.findIndex(
-        (v) => v.toString() === 'post',
+        (v) => v.toString() === "post"
       );
       const devIdx = version.prerelease.findIndex((v) =>
-        ['dev', 'pre'].includes(v.toString()),
+        ["dev", "pre"].includes(v.toString())
       );
       const preReleaseIdx = version.prerelease.findIndex((v) =>
-        ['alpha', 'beta', 'rc'].includes(v.toString()),
+        ["alpha", "beta", "rc"].includes(v.toString())
       );
       const prereleaseVersion = [
         preReleaseIdx > -1
@@ -170,10 +170,10 @@ export function toReleaseVersion(
         devIdx > -1 ? `dev${version.prerelease[devIdx + 1] ?? 0}` : undefined,
       ]
         .filter((v) => v)
-        .join('.');
+        .join(".");
 
       return version.build.length > 0
-        ? `${baseVersion}.${prereleaseVersion}+${version.build.join('.')}`
+        ? `${baseVersion}.${prereleaseVersion}+${version.build.join(".")}`
         : `${baseVersion}.${prereleaseVersion}`;
     case TargetName.DOTNET:
     case TargetName.GO:
