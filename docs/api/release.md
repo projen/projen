@@ -690,58 +690,6 @@ public readonly ANTI_TAMPER_CMD: string;
 
 ## Structs <a name="Structs" id="Structs"></a>
 
-### AwsCodeArtifactInfo <a name="AwsCodeArtifactInfo" id="projen.release.AwsCodeArtifactInfo"></a>
-
-Info extracted from AWS CodeArtifact URL.
-
-#### Initializer <a name="Initializer" id="projen.release.AwsCodeArtifactInfo.Initializer"></a>
-
-```typescript
-import { release } from 'projen'
-
-const awsCodeArtifactInfo: release.AwsCodeArtifactInfo = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.release.AwsCodeArtifactInfo.property.account">account</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.release.AwsCodeArtifactInfo.property.domain">domain</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.release.AwsCodeArtifactInfo.property.region">region</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `account`<sup>Optional</sup> <a name="account" id="projen.release.AwsCodeArtifactInfo.property.account"></a>
-
-```typescript
-public readonly account: string;
-```
-
-- *Type:* string
-
----
-
-##### `domain`<sup>Optional</sup> <a name="domain" id="projen.release.AwsCodeArtifactInfo.property.domain"></a>
-
-```typescript
-public readonly domain: string;
-```
-
-- *Type:* string
-
----
-
-##### `region`<sup>Optional</sup> <a name="region" id="projen.release.AwsCodeArtifactInfo.property.region"></a>
-
-```typescript
-public readonly region: string;
-```
-
-- *Type:* string
-
----
-
 ### BranchOptions <a name="BranchOptions" id="projen.release.BranchOptions"></a>
 
 Options for a release branch.

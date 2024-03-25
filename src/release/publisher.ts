@@ -1249,7 +1249,7 @@ export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
 /**
  * Info extracted from AWS CodeArtifact URL
  */
-export interface AwsCodeArtifactInfo {
+interface AwsCodeArtifactInfo {
   readonly domain?: string;
   readonly account?: string;
   readonly region?: string;
@@ -1260,7 +1260,7 @@ export interface AwsCodeArtifactInfo {
  * @param url Of code artifact domain
  * @returns domain, account, and region of code artifact domain
  */
-export function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
+function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
   const captureRegex =
     /([a-z0-9-]+)-(.+)\.d\.codeartifact\.(.+)\.amazonaws\.com/;
   const matches = url?.match(captureRegex) ?? [];
