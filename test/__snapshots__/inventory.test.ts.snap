@@ -6754,7 +6754,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file in under your test directory.",
+        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file under your test directory.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",

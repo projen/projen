@@ -249,6 +249,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.build.BuildWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.build.BuildWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.build.BuildWorkflow.property.buildJobIds">buildJobIds</a></code> | <code>string[]</code> | Returns a list of job IDs that are part of the build. |
+| <code><a href="#projen.build.BuildWorkflow.property.name">name</a></code> | <code>string</code> | Name of generated github workflow. |
 
 ---
 
@@ -283,6 +284,18 @@ public readonly buildJobIds: string[];
 - *Type:* string[]
 
 Returns a list of job IDs that are part of the build.
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.build.BuildWorkflow.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Name of generated github workflow.
 
 ---
 

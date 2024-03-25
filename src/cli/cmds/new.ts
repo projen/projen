@@ -1,3 +1,4 @@
+import type { SpawnSyncReturns } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import * as semver from "semver";
@@ -14,7 +15,12 @@ import {
   isTruthy,
 } from "../../util";
 import { tryProcessMacro } from "../macros";
-import { CliError, installPackage, renderInstallCommand } from "../util";
+import {
+  CliError,
+  findJsiiFilePath,
+  installPackage,
+  renderInstallCommand,
+} from "../util";
 
 class Command implements yargs.CommandModule {
   public readonly command = "new [PROJECT-TYPE-NAME] [OPTIONS]";
@@ -292,15 +298,36 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
-  const moduleName = installPackage(baseDir, spec);
+  const installPackageWithCliError = (b: string, s: string): string => {
+    try {
+      return installPackage(b, s);
+    } catch (error: unknown) {
+      const stderr =
+        (error as SpawnSyncReturns<Buffer>)?.stderr?.toString() ?? "";
+      const isLocal = stderr.includes("code ENOENT");
+      const isRegistry = stderr.includes("code E404");
+      if (isLocal || isRegistry) {
+        const moduleSource = isLocal ? "path" : "registry";
+        throw new CliError(
+          `Could not find '${s}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
+        );
+      }
+
+      throw error;
+    }
+  };
+
+  const moduleName = installPackageWithCliError(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
-  const moduleDir = path.dirname(
-    require.resolve(`${moduleName}/.jsii`, {
-      paths: [baseDir],
-    })
-  );
+  const moduleDir = findJsiiFilePath(baseDir, moduleName);
+
+  if (!moduleDir) {
+    throw new CliError(
+      `Module '${moduleName}' does not look like it is compatible with projen. Reason: Cannot find '${moduleName}/.jsii'. All projen modules must be jsii modules!`
+    );
+  }
 
   // Only leave projects from the main (requested) package
   const projects = inventory

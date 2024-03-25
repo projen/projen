@@ -20,11 +20,15 @@ const MAX_BUFFER = 10 * 1024 * 1024;
  */
 export function exec(
   command: string,
-  options: { cwd: string; env?: Record<string, string> }
+  options: {
+    cwd: string;
+    env?: Record<string, string>;
+    stdio?: child_process.StdioOptions;
+  }
 ): void {
   logging.debug(command);
   child_process.execSync(command, {
-    stdio: ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
+    stdio: options.stdio || ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
     env: options.env,

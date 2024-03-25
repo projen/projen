@@ -68,7 +68,11 @@ export class Poetry
       exec: "poetry check --lock && poetry install",
     });
 
-    this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
+    this.project.tasks.addEnvironment(
+      "VIRTUAL_ENV",
+      // Create .venv on the first run if it doesn't already exist
+      "$(poetry env info -p || poetry run poetry env info -p)"
+    );
     this.project.tasks.addEnvironment(
       "PATH",
       "$(echo $(poetry env info -p)/bin:$PATH)"
@@ -126,7 +130,7 @@ export class Poetry
       // Python version must be defined for poetry projects. Default to ^3.8.
       dependencies.python = "^3.8";
     }
-    return this.permitDependenciesWithMetadata(dependencies);
+    return this.permitDepsWithTomlInlineTables(dependencies);
   }
 
   private synthDevDependencies() {
@@ -136,29 +140,54 @@ export class Poetry
         dependencies[pkg.name] = pkg.version ?? "*";
       }
     }
-    return this.permitDependenciesWithMetadata(dependencies);
+    return this.permitDepsWithTomlInlineTables(dependencies);
   }
 
   /**
-   * Allow for poetry dependencies to specify metadata, eg `mypackage@{ version="1.2.3", extras = ["my-package-extra"] }`
-   * @param dependencies poetry dependencies object
-   * @private
+   * Parses dependency values that may include TOML inline tables, converting them into JavaScript objects.
+   * If a dependency value cannot be parsed as a TOML inline table (indicating it is a plain SemVer string),
+   * it is left unchanged. This allows to support the full range of Poetry's dependency specification.
+   * @see https://python-poetry.org/docs/dependency-specification/
+   * @see https://toml.io/en/v1.0.0#inline-table
+   *
+   * @example
+   * // Given a `dependencies` object like this:
+   * const dependencies = {
+   *   "mypackage": "{ version = '1.2.3', extras = ['extra1', 'extra2'] }",
+   *   "anotherpackage": "^2.3.4"
+   * };
+   * // After parsing, the resulting object would be:
+   * {
+   *   "mypackage": {
+   *     version: "1.2.3",
+   *     extras: ["extra1", "extra2"]
+   *   },
+   *   "anotherpackage": "^2.3.4"
+   * }
+   * // Note: The value of `anotherpackage` remains unchanged as it is a plain SemVer string.
+   *
+   * @param dependencies An object where each key is a dependency name and each value is a string that might be
+   * either a SemVer string or a TOML inline table string.
+   * @returns A new object where each key is a dependency name and each value is either the original SemVer string
+   * or the parsed JavaScript object representation of the TOML inline table.
    */
-  private permitDependenciesWithMetadata(dependencies: { [key: string]: any }) {
-    const parseVersionMetadata = (version: any) => {
+  private permitDepsWithTomlInlineTables(dependencies: {
+    [key: string]: string;
+  }) {
+    const parseTomlInlineTable = (dependencyValue: string) => {
       try {
-        // Try parsing the version as toml to permit metadata
-        return TOML.parse(`version = ${version}`).version;
-      } catch (e) {
-        // Invalid toml means it's not metadata, so should just be treated as the string
-        return version;
+        // Attempt parsing the `dependencyValue` as a TOML inline table
+        return TOML.parse(`dependencyKey = ${dependencyValue}`).dependencyKey;
+      } catch {
+        // If parsing fails, treat the `dependencyValue` as a plain SemVer string
+        return dependencyValue;
       }
     };
+
     return Object.fromEntries(
-      Object.entries(dependencies).map(([key, value]) => [
-        key,
-        parseVersionMetadata(value),
-      ])
+      Object.entries(dependencies).map(([dependencyKey, dependencyValue]) => {
+        return [dependencyKey, parseTomlInlineTable(dependencyValue)];
+      })
     );
   }
 
