@@ -26,6 +26,7 @@ import {
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
 import { Task } from "../task";
+import { workflowNameForProject } from "../util/name";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 import { ReleasableCommits, Version } from "../version";
 
@@ -758,20 +759,6 @@ export class Release extends Component {
       return undefined;
     }
   }
-}
-
-function workflowNameForProject(base: string, project: Project): string {
-  // Subprojects
-  if (project.parent) {
-    return `${base}_${fileSafeName(project.name)}`;
-  }
-
-  // root project doesn't get a suffix
-  return base;
-}
-
-function fileSafeName(name: string): string {
-  return name.replace("@", "").replace(/\//g, "-");
 }
 
 /**
