@@ -834,9 +834,9 @@
     "@sinonjs/commons" "^3.0.0"
 
 "@tsconfig/node10@^1.0.7":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.9.tgz#df4907fc07a886922637b15e02d4cebc4c0021b2"
-  integrity sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.10.tgz#b7ebd3adfa7750628d100594f6726b054d2c33b2"
+  integrity sha512-PiaIWIoPvO6qm6t114ropMCagj6YAF24j9OkCA2mJDXFnlionEwhsBCJ8yek4aib575BI3OkART/90WsgHgLWw==
 
 "@tsconfig/node12@^1.0.7":
   version "1.0.11"
@@ -3761,12 +3761,12 @@ jsii@1.96.0:
     yargs "^16.2.0"
 
 jsii@5.3.x, jsii@~5.3.0:
-  version "5.3.29"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.3.29.tgz#1af1777b48f90f1188f375b5d9677fd75e8b0781"
-  integrity sha512-vEEOtjD8s/C8ORHvN87Bt9jHcY1diJoC1sS+TVnCkeb4V9q5fOEVr4gl/FsU5ea8dSWZHdd7VqCtr0jYAwKleg==
+  version "5.3.30"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.3.30.tgz#612ccb772d7e7c7bd464b1d6854c1fd06b344bb7"
+  integrity sha512-s+KQFP6cS/Ph6+lj/v57bfE+jXBCYCRkxPOSPBJGqqkbjYUXHjKw6qp+Afnaqe/231H7z3ZzaaR0Ghz5BtRIlQ==
   dependencies:
-    "@jsii/check-node" "1.95.0"
-    "@jsii/spec" "^1.95.0"
+    "@jsii/check-node" "1.96.0"
+    "@jsii/spec" "^1.96.0"
     case "^1.6.3"
     chalk "^4"
     downlevel-dts "^0.11.0"
@@ -5427,9 +5427,9 @@ typescript@5.3.x, typescript@~5.3:
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
 
 typescript@next:
-  version "5.5.0-dev.20240323"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240323.tgz#c6916ad6fdb5971f87ebb3a5d34d91ae75f0def3"
-  integrity sha512-FD1ido8fG+7+540B3/WeTAKq6Nr4QLO0IBrZc+jBUj4pEqwG15o/XE+GKv+dDryLvgtchSHXZWserTik0Vkq4w==
+  version "5.5.0-dev.20240324"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240324.tgz#a0eb9b003e1cf3f66c857e05cfbee8c1f9666237"
+  integrity sha512-U3uIH1GEaD9zBFzYICNRbm+eDTzrOY7qOgyjFKL9IZbK1j1upzvmaLvOiqKC+v4cgFm0fG2zVlTxn1hmKCrZdA==
 
 typescript@~3.9.10:
   version "3.9.10"
