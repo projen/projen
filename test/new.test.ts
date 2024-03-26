@@ -733,6 +733,7 @@ describe("regressions", () => {
     });
   });
 
+  // https://github.com/projen/projen/issues/2443
   test("can create external project in directory path containing a space", () => {
     const pathWithSpace = join(mkdtemp(), "path with space");
     mkdirSync(pathWithSpace, { recursive: true });
