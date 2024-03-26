@@ -1,12 +1,60 @@
+import * as assert from "assert";
 import { Prettier } from "./prettier";
 import { Project, TaskStepOptions } from "..";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
+import { JavascriptFile } from "../javascript-file";
 import { JsonFile } from "../json";
 import { Task } from "../task";
 import { YamlFile } from "../yaml";
 
+/**
+ * What format should the eslint file be.
+ *
+ */
+export enum EslintConfigFileFormat {
+  /**
+   * JavaScript file (new flat format) - using ESM-style imports/exports
+   *
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files-new
+   */
+  JAVASCRIPT_FLAT_ESM = "flat-esm",
+
+  /**
+   * JavaScript file (new flat format) - using CJS-style require/module.exports
+   *
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files-new
+   */
+  JAVASCRIPT_FLAT_CJS = "flat-cjs",
+
+  /**
+   * JavaScript file (new flat format) - using CJS-style require/module.exports
+   *
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files-new
+   */
+  JAVASCRIPT_OLD_CJS = "old-cjs",
+
+  /**
+   * JSON file
+   *
+   * @deprecated ESLINT project is transitioning away from this format, use `JAVASCRIPT_FLAT` instead
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files
+   */
+  JSON = "json",
+
+  /**
+   * YAML file
+   *
+   * @deprecated ESLINT project is transitioning away from this format, use `JAVASCRIPT_FLAT` instead
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files
+   */
+  YAML = "yaml",
+}
+
+/**
+ * Options for eslint.
+ */
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -16,8 +64,12 @@ export interface EslintOptions {
 
   /**
    * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
+   *
+   * @remarks
+   * This is actually **required**, but marked as optional so upstream projects can accept this interface
+   * and provide this value.
    */
-  readonly dirs: string[];
+  readonly dirs?: string[];
 
   /**
    * Files or glob patterns or directories with source files that include tests and build tools
@@ -82,7 +134,15 @@ export interface EslintOptions {
   readonly tsAlwaysTryTypes?: boolean;
 
   /**
+   * File format to use
+   *
+   * @default EslintConfigFileFormat.JSON
+   */
+  readonly fileFormat?: EslintConfigFileFormat;
+
+  /**
    * Write eslint configuration as YAML instead of JSON
+   * @deprecated use `fileFormat` instead
    * @default false
    */
   readonly yaml?: boolean;
@@ -171,6 +231,8 @@ export class Eslint extends Component {
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
+
+    assert(options.dirs, "dirs is required");
 
     this.nodeProject = project;
 
@@ -405,13 +467,72 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    if (options.yaml) {
+    if (
+      options.yaml &&
+      options.fileFormat &&
+      options.fileFormat !== EslintConfigFileFormat.YAML
+    ) {
+      throw new Error(
+        "Cannot specify 'yaml' and a file format different from 'yaml', please use just `fileFormat`"
+      );
+    }
+
+    const format = options.yaml
+      ? EslintConfigFileFormat.YAML
+      : options.fileFormat ?? EslintConfigFileFormat.JSON;
+
+    if (format === EslintConfigFileFormat.YAML) {
       new YamlFile(project, ".eslintrc.yml", {
         obj: this.config,
         marker: true,
       });
+    } else if (
+      format === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
+      format === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS ||
+      format === EslintConfigFileFormat.JAVASCRIPT_OLD_CJS
+    ) {
+      let configFileName: string;
+      if (format === EslintConfigFileFormat.JAVASCRIPT_OLD_CJS) {
+        configFileName = ".eslintrc.js";
+        new JavascriptFile(project, configFileName, {
+          obj: this.config,
+          marker: true,
+          allowComments: true,
+          cjs: true,
+        });
+      } else {
+        const ext =
+          format === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ? "mjs" : "cjs";
+        configFileName = `eslint.config.${ext}`;
+
+        const config = this.config;
+        const javascript = new JavascriptFile(project, configFileName, {
+          obj: config,
+          marker: true,
+          allowComments: true,
+          cjs: format !== EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM,
+        });
+        const plugins = config.plugins;
+        if (plugins) {
+          config.plugins = {};
+          assert(
+            !Array.isArray(plugins),
+            "plugins, if defined, must be an array"
+          );
+          for (const plugin of (plugins as Array<string>) ?? []) {
+            const pluginFixed =
+              "plugin_" + plugin.replace(/^@/g, "").replace(/(\/|-)/g, "_");
+            const [pluginToken] = javascript.dependencies.addImport(
+              pluginFixed,
+              plugin
+            );
+            config.plugins[plugin] = pluginToken.resolve();
+          }
+        }
+      }
     } else {
-      new JsonFile(project, ".eslintrc.json", {
+      const configFileName = ".eslintrc.json";
+      new JsonFile(project, configFileName, {
         obj: this.config,
         // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
         marker: true,
