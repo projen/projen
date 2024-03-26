@@ -8,7 +8,11 @@ import { exec } from "../util";
  * @param spec The npm package spec (e.g. `foo@^1.2` or `foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz`)
  * @returns The installed package name (e.g. `@foo/bar`)
  */
-export function installPackage(baseDir: string, spec: string): string {
+export function installPackage(
+  baseDir: string,
+  spec: string,
+  findProjen = false
+): string {
   const packageJsonPath = path.join(baseDir, "package.json");
   const packageJsonExisted = fs.existsSync(packageJsonPath);
 
@@ -22,8 +26,8 @@ export function installPackage(baseDir: string, spec: string): string {
 
   // Get the true installed package name
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-  const packageName = Object.keys(packageJson.devDependencies).find(
-    (name) => name !== "projen"
+  const packageName = Object.keys(packageJson.devDependencies).find((name) =>
+    findProjen ? name === "projen" : name !== "projen"
   );
 
   if (!packageName) {

@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { Project } from "../src";
+import { installPackage } from "../src/cli/util";
 import { GitHubProject, GitHubProjectOptions } from "../src/github";
 import * as logging from "../src/logging";
 import { Task } from "../src/task";
@@ -33,12 +34,25 @@ export class TestProject extends GitHubProject {
   }
 }
 
+interface ProjenCLIExecOptions {
+  preInstallProjen?: boolean;
+}
+
 export function execProjenCLI(
   workdir: string,
   args: string[] = [],
-  env?: Record<string, string>
+  env?: Record<string, string>,
+  { preInstallProjen = true }: ProjenCLIExecOptions = {}
 ) {
   const command = [process.execPath, PROJEN_CLI, ...args];
+
+  if (preInstallProjen) {
+    installPackage(
+      workdir,
+      `file:${path.posix.normalize(path.posix.join(__dirname, ".."))}`,
+      true
+    );
+  }
 
   return exec(command.map((x) => `"${x}"`).join(" "), { cwd: workdir, env });
 }
