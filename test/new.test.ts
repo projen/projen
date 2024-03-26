@@ -16,6 +16,13 @@ import {
 import * as inventory from "../src/inventory";
 import { execCapture } from "../src/util";
 
+const EXCLUDE_FROM_SNAPSHOT = [".git/**", "node_modules/**"];
+const EXCLUDE_FROM_SNAPSHOT_EXTENDED = [
+  ...EXCLUDE_FROM_SNAPSHOT,
+  ".github/**",
+  "yarn.lock",
+];
+
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
     withProjectDir((projectdir) => {
@@ -24,7 +31,7 @@ for (const type of inventory.discover()) {
 
       // compare generated snapshot
       const actual = directorySnapshot(projectdir, {
-        excludeGlobs: [".git/**"],
+        excludeGlobs: EXCLUDE_FROM_SNAPSHOT,
       });
 
       expect(actual).toMatchSnapshot();
@@ -50,12 +57,7 @@ describe("projen new --from", () => {
 
         // compare generated snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         expect(actual["package.json"]).toBeDefined();
@@ -112,12 +114,7 @@ describe("projen new --from", () => {
 
         // compare generated to the snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         // Not doing a snapshot test because @latest is used
@@ -138,12 +135,7 @@ describe("projen new --from", () => {
 
         // compare generated to the snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         expect(actual[".projenrc.ts"]).toContain("@taimos/projen@0.0.187");
@@ -192,12 +184,7 @@ describe("projen new --from", () => {
 
         // compare generated to the snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         expect(actual["package.json"]).toBeDefined();
@@ -226,12 +213,7 @@ describe("projen new --from", () => {
 
         // compare generated to the snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         // Cannot use snapshots because absolute path is system dependent
@@ -298,12 +280,7 @@ describe("projen new --from", () => {
 
         // compare generated snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         expect(actual[".projenrc.ts"]).toContain(
@@ -328,12 +305,7 @@ describe("projen new --from", () => {
 
         // compare generated snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         expect(actual[".projenrc.ts"]).toContain('deps: ["glob@8","lodash@4"]');
@@ -354,12 +326,7 @@ describe("projen new --from", () => {
 
         // compare generated to the snapshot
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
         });
 
         expect(actual[".projenrc.ts"]).toContain('cdkVersion: "2.50.0"');
@@ -485,7 +452,11 @@ describe("projen new --from", () => {
           "--no-synth",
         ]);
 
-        expect(directorySnapshot(projectdir)).toMatchSnapshot();
+        expect(
+          directorySnapshot(projectdir, {
+            excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
+          })
+        ).toMatchSnapshot();
       });
     });
 
@@ -501,9 +472,7 @@ describe("projen new --from", () => {
 
         // exclude node_modules to work around bug where node_modules is generated AND one of the
         // dependencies includes a file with .json extension that isn't valid JSON
-        const projenrc = directorySnapshot(projectdir, {
-          excludeGlobs: ["node_modules/**"],
-        })[".projenrc.json"];
+        const projenrc = directorySnapshot(projectdir)[".projenrc.json"];
         expect(projenrc).toMatchSnapshot();
       });
     });
@@ -527,7 +496,7 @@ describe("projen new --from", () => {
         // THEN
         const targetDirSnapshot = directorySnapshot(
           join(projectdir, "path", "to", "mydir"),
-          { excludeGlobs: ["node_modules/**"] }
+          { excludeGlobs: EXCLUDE_FROM_SNAPSHOT }
         );
         expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
         expect(targetDirSnapshot["package.json"]).toBeDefined();
@@ -626,7 +595,7 @@ describe("initial values", () => {
         "--no-post",
       ]);
       const actual = directorySnapshot(projectdir, {
-        excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+        excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
       });
       expect(actual[".projenrc.js"]).toBeDefined();
       expect(actual[".projenrc.ts"]).not.toBeDefined();
@@ -747,12 +716,7 @@ describe("regressions", () => {
           "--no-post",
         ]);
         const actual = directorySnapshot(projectdir, {
-          excludeGlobs: [
-            ".git/**",
-            ".github/**",
-            "node_modules/**",
-            "yarn.lock",
-          ],
+          excludeGlobs: EXCLUDE_FROM_SNAPSHOT,
         });
         expect(actual[".projenrc.ts"]).toBeDefined();
       },

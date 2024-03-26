@@ -46,7 +46,10 @@ export function execProjenCLI(
 ) {
   const command = [process.execPath, PROJEN_CLI, ...args];
 
-  if (preInstallProjen) {
+  // For "projen new" commands we need to pre-install the current library,
+  // to ensure the latest code is used in test cases
+  // https://github.com/projen/projen/issues/3410
+  if (preInstallProjen && args.includes("new")) {
     installPackage(
       workdir,
       `file:${path.posix.normalize(path.posix.join(__dirname, ".."))}`,
