@@ -24,12 +24,17 @@ import {
 
 class Command implements yargs.CommandModule {
   public readonly command = "new [PROJECT-TYPE-NAME] [OPTIONS]";
-  public readonly describe = "Creates a new projen project";
+  public readonly describe = [
+    "Creates a new projen project",
+    "",
+    "For a complete list of the available options for a specific project type, run:",
+    "projen new [PROJECT-TYPE-NAME] --help",
+  ].join("\n");
 
   public builder(args: yargs.Argv) {
     args.positional("PROJECT-TYPE-NAME", {
       describe:
-        "optional only when --from is used and there is a single project type in the external module",
+        "only optional with --from and the external module has only a single project type",
       type: "string",
     });
     args.option("synth", {
@@ -59,6 +64,10 @@ class Command implements yargs.CommandModule {
     args.example(
       "projen new --from projen-vue@^2",
       'Creates a new project from an external module "projen-vue" with the specified version'
+    );
+    args.example(
+      "projen new python --help",
+      'Shows all options available for the built-in project type "python"'
     );
 
     for (const type of inventory.discover()) {
