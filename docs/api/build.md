@@ -464,19 +464,84 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.buildTask">buildTask</a></code> | <code>projen.Task</code> | The task to execute in order to build the project. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.build.BuildWorkflowOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* "build"
+
+Name of the buildfile (e.g. "build" becomes "build.yml").
+
+---
+
+##### `permissions`<sup>Optional</sup> <a name="permissions" id="projen.build.BuildWorkflowOptions.property.permissions"></a>
+
+```typescript
+public readonly permissions: JobPermissions;
+```
+
+- *Type:* projen.github.workflows.JobPermissions
+- *Default:* `{ contents: JobPermission.WRITE }`
+
+Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.
+
+---
+
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute after build.
+
+---
+
+##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.build.BuildWorkflowOptions.property.preBuildSteps"></a>
+
+```typescript
+public readonly preBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute before the build.
+
+---
+
+##### `workflowTriggers`<sup>Optional</sup> <a name="workflowTriggers" id="projen.build.BuildWorkflowOptions.property.workflowTriggers"></a>
+
+```typescript
+public readonly workflowTriggers: Triggers;
+```
+
+- *Type:* projen.github.workflows.Triggers
+- *Default:* "{ pullRequest: {}, workflowDispatch: {} }"
+
+Build workflow triggers.
 
 ---
 
@@ -565,58 +630,6 @@ not be pushed back to the branch.
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="name" id="projen.build.BuildWorkflowOptions.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-- *Default:* "build"
-
-Name of the buildfile (e.g. "build" becomes "build.yml").
-
----
-
-##### `permissions`<sup>Optional</sup> <a name="permissions" id="projen.build.BuildWorkflowOptions.property.permissions"></a>
-
-```typescript
-public readonly permissions: JobPermissions;
-```
-
-- *Type:* projen.github.workflows.JobPermissions
-- *Default:* `{ contents: JobPermission.WRITE }`
-
-Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.
-
----
-
-##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowOptions.property.postBuildSteps"></a>
-
-```typescript
-public readonly postBuildSteps: JobStep[];
-```
-
-- *Type:* projen.github.workflows.JobStep[]
-- *Default:* []
-
-Steps to execute after build.
-
----
-
-##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.build.BuildWorkflowOptions.property.preBuildSteps"></a>
-
-```typescript
-public readonly preBuildSteps: JobStep[];
-```
-
-- *Type:* projen.github.workflows.JobStep[]
-- *Default:* []
-
-Steps to execute before the build.
-
----
-
 ##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.build.BuildWorkflowOptions.property.runsOn"></a>
 
 ```typescript
@@ -642,7 +655,81 @@ Github Runner Group selection options.
 
 ---
 
-##### `workflowTriggers`<sup>Optional</sup> <a name="workflowTriggers" id="projen.build.BuildWorkflowOptions.property.workflowTriggers"></a>
+### CommonBuildWorkflowOptions <a name="CommonBuildWorkflowOptions" id="projen.build.CommonBuildWorkflowOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.build.CommonBuildWorkflowOptions.Initializer"></a>
+
+```typescript
+import { build } from 'projen'
+
+const commonBuildWorkflowOptions: build.CommonBuildWorkflowOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.build.CommonBuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
+| <code><a href="#projen.build.CommonBuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
+| <code><a href="#projen.build.CommonBuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
+| <code><a href="#projen.build.CommonBuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
+| <code><a href="#projen.build.CommonBuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.build.CommonBuildWorkflowOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* "build"
+
+Name of the buildfile (e.g. "build" becomes "build.yml").
+
+---
+
+##### `permissions`<sup>Optional</sup> <a name="permissions" id="projen.build.CommonBuildWorkflowOptions.property.permissions"></a>
+
+```typescript
+public readonly permissions: JobPermissions;
+```
+
+- *Type:* projen.github.workflows.JobPermissions
+- *Default:* `{ contents: JobPermission.WRITE }`
+
+Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.
+
+---
+
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.CommonBuildWorkflowOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute after build.
+
+---
+
+##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.build.CommonBuildWorkflowOptions.property.preBuildSteps"></a>
+
+```typescript
+public readonly preBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute before the build.
+
+---
+
+##### `workflowTriggers`<sup>Optional</sup> <a name="workflowTriggers" id="projen.build.CommonBuildWorkflowOptions.property.workflowTriggers"></a>
 
 ```typescript
 public readonly workflowTriggers: Triggers;

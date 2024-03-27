@@ -5171,6 +5171,114 @@ The path of the tsconfig.json file to use for bundling.
 
 ---
 
+### BuildWorkflowOptions <a name="BuildWorkflowOptions" id="projen.javascript.BuildWorkflowOptions"></a>
+
+Build workflow options for NodeProject.
+
+#### Initializer <a name="Initializer" id="projen.javascript.BuildWorkflowOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.javascript.BuildWorkflowOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* "build"
+
+Name of the buildfile (e.g. "build" becomes "build.yml").
+
+---
+
+##### `permissions`<sup>Optional</sup> <a name="permissions" id="projen.javascript.BuildWorkflowOptions.property.permissions"></a>
+
+```typescript
+public readonly permissions: JobPermissions;
+```
+
+- *Type:* projen.github.workflows.JobPermissions
+- *Default:* `{ contents: JobPermission.WRITE }`
+
+Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.
+
+---
+
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.javascript.BuildWorkflowOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute after build.
+
+---
+
+##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.javascript.BuildWorkflowOptions.property.preBuildSteps"></a>
+
+```typescript
+public readonly preBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute before the build.
+
+---
+
+##### `workflowTriggers`<sup>Optional</sup> <a name="workflowTriggers" id="projen.javascript.BuildWorkflowOptions.property.workflowTriggers"></a>
+
+```typescript
+public readonly workflowTriggers: Triggers;
+```
+
+- *Type:* projen.github.workflows.Triggers
+- *Default:* "{ pullRequest: {}, workflowDispatch: {} }"
+
+Build workflow triggers.
+
+---
+
+##### `mutableBuild`<sup>Optional</sup> <a name="mutableBuild" id="projen.javascript.BuildWorkflowOptions.property.mutableBuild"></a>
+
+```typescript
+public readonly mutableBuild: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically update files modified during builds to pull-request branches.
+
+This means that any files synthesized by projen or e.g. test snapshots will
+always be up-to-date before a PR is merged.
+
+Implies that PR builds do not have anti-tamper checks.
+
+---
+
 ### Bundle <a name="Bundle" id="projen.javascript.Bundle"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.Bundle.Initializer"></a>
@@ -7969,6 +8077,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code><a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a></code> | Options for PR build workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code><a href="#projen.javascript.BundlerOptions">BundlerOptions</a></code> | Options for `Bundler`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code><a href="#projen.javascript.LicenseCheckerOptions">LicenseCheckerOptions</a></code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -9353,7 +9462,21 @@ Define a GitHub workflow for building PRs.
 
 ---
 
-##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers"></a>
+##### `buildWorkflowOptions`<sup>Optional</sup> <a name="buildWorkflowOptions" id="projen.javascript.NodeProjectOptions.property.buildWorkflowOptions"></a>
+
+```typescript
+public readonly buildWorkflowOptions: BuildWorkflowOptions;
+```
+
+- *Type:* <a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a>
+
+Options for PR build workflow.
+
+---
+
+##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers"></a>
+
+- *Deprecated:* - Use `buildWorkflowOptions.workflowTriggers`
 
 ```typescript
 public readonly buildWorkflowTriggers: Triggers;
@@ -9539,7 +9662,9 @@ Jest options.
 
 ---
 
-##### `mutableBuild`<sup>Optional</sup> <a name="mutableBuild" id="projen.javascript.NodeProjectOptions.property.mutableBuild"></a>
+##### ~~`mutableBuild`~~<sup>Optional</sup> <a name="mutableBuild" id="projen.javascript.NodeProjectOptions.property.mutableBuild"></a>
+
+- *Deprecated:* - Use `buildWorkflowOptions.mutableBuild`
 
 ```typescript
 public readonly mutableBuild: boolean;
