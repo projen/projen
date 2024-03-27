@@ -12,6 +12,7 @@ export * from "./stale";
 export * from "./pull-request-lint";
 export * from "./github-credentials";
 export * from "./workflow-actions";
+export * from "./workflow-job-builder";
 export * from "./workflow-jobs";
 export * from "./workflow-steps";
 

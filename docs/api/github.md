@@ -3613,6 +3613,19 @@ options to configure the TaskWorkflowJob.
 | <code><a href="#projen.github.TaskWorkflowJob.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.TaskWorkflowJob.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.github.TaskWorkflowJob.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.github.TaskWorkflowJob.addEnv">addEnv</a></code> | Add a single environment variable to the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.addEnvs">addEnvs</a></code> | Add several environment variables to the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.addNeed">addNeed</a></code> | Add a need to the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.addOutput">addOutput</a></code> | Add an output to the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.addPermission">addPermission</a></code> | Add a permission to the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.addSteps">addSteps</a></code> | Add steps to the end of the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.insertSteps">insertSteps</a></code> | Add steps in the middle of the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.prependSteps">prependSteps</a></code> | Add steps to the beginning of the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.removeEnv">removeEnv</a></code> | Remove an environment variable from the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.removeNeed">removeNeed</a></code> | Remove a need from the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.removeOutput">removeOutput</a></code> | Remove an output from the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.removePermission">removePermission</a></code> | Remove a permission from the job. |
+| <code><a href="#projen.github.TaskWorkflowJob.removeSteps">removeSteps</a></code> | Remove steps from the job. |
 
 ---
 
@@ -3649,6 +3662,244 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `addEnv` <a name="addEnv" id="projen.github.TaskWorkflowJob.addEnv"></a>
+
+```typescript
+public addEnv(name: string, value: string): WorkflowJobBuilder
+```
+
+Add a single environment variable to the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowJob.addEnv.parameter.name"></a>
+
+- *Type:* string
+
+The key of the environment variable.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.github.TaskWorkflowJob.addEnv.parameter.value"></a>
+
+- *Type:* string
+
+The value of the environment variable.
+
+---
+
+##### `addEnvs` <a name="addEnvs" id="projen.github.TaskWorkflowJob.addEnvs"></a>
+
+```typescript
+public addEnvs(envs: {[ key: string ]: string}): WorkflowJobBuilder
+```
+
+Add several environment variables to the job.
+
+###### `envs`<sup>Required</sup> <a name="envs" id="projen.github.TaskWorkflowJob.addEnvs.parameter.envs"></a>
+
+- *Type:* {[ key: string ]: string}
+
+The environment variables to add.
+
+---
+
+##### `addNeed` <a name="addNeed" id="projen.github.TaskWorkflowJob.addNeed"></a>
+
+```typescript
+public addNeed(name: string): WorkflowJobBuilder
+```
+
+Add a need to the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowJob.addNeed.parameter.name"></a>
+
+- *Type:* string
+
+The name of the job to add as a need.
+
+---
+
+##### `addOutput` <a name="addOutput" id="projen.github.TaskWorkflowJob.addOutput"></a>
+
+```typescript
+public addOutput(name: string, value: JobStepOutput): WorkflowJobBuilder
+```
+
+Add an output to the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowJob.addOutput.parameter.name"></a>
+
+- *Type:* string
+
+The name of the output.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.github.TaskWorkflowJob.addOutput.parameter.value"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>
+
+An object indicating where the value of the output is generated.
+
+---
+
+##### `addPermission` <a name="addPermission" id="projen.github.TaskWorkflowJob.addPermission"></a>
+
+```typescript
+public addPermission(scope: string, permission: JobPermission): WorkflowJobBuilder
+```
+
+Add a permission to the job.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.github.TaskWorkflowJob.addPermission.parameter.scope"></a>
+
+- *Type:* string
+
+The GitHub Permission scope to apply the permission to.
+
+---
+
+###### `permission`<sup>Required</sup> <a name="permission" id="projen.github.TaskWorkflowJob.addPermission.parameter.permission"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobPermission">JobPermission</a>
+
+The GitHub JobPermission to apply.
+
+---
+
+##### `addSteps` <a name="addSteps" id="projen.github.TaskWorkflowJob.addSteps"></a>
+
+```typescript
+public addSteps(steps: JobStep[]): WorkflowJobBuilder
+```
+
+Add steps to the end of the job.
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.github.TaskWorkflowJob.addSteps.parameter.steps"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+steps to add.
+
+---
+
+##### `insertSteps` <a name="insertSteps" id="projen.github.TaskWorkflowJob.insertSteps"></a>
+
+```typescript
+public insertSteps(index: number, steps: JobStep[]): WorkflowJobBuilder
+```
+
+Add steps in the middle of the job.
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.github.TaskWorkflowJob.insertSteps.parameter.index"></a>
+
+- *Type:* number
+
+---
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.github.TaskWorkflowJob.insertSteps.parameter.steps"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+steps to add.
+
+---
+
+##### `prependSteps` <a name="prependSteps" id="projen.github.TaskWorkflowJob.prependSteps"></a>
+
+```typescript
+public prependSteps(steps: JobStep[]): WorkflowJobBuilder
+```
+
+Add steps to the beginning of the job.
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.github.TaskWorkflowJob.prependSteps.parameter.steps"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+steps to add.
+
+---
+
+##### `removeEnv` <a name="removeEnv" id="projen.github.TaskWorkflowJob.removeEnv"></a>
+
+```typescript
+public removeEnv(name: string): WorkflowJobBuilder
+```
+
+Remove an environment variable from the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowJob.removeEnv.parameter.name"></a>
+
+- *Type:* string
+
+The name of the environment variable to remove.
+
+---
+
+##### `removeNeed` <a name="removeNeed" id="projen.github.TaskWorkflowJob.removeNeed"></a>
+
+```typescript
+public removeNeed(name: string): WorkflowJobBuilder
+```
+
+Remove a need from the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowJob.removeNeed.parameter.name"></a>
+
+- *Type:* string
+
+The name of the job to remove as a need.
+
+---
+
+##### `removeOutput` <a name="removeOutput" id="projen.github.TaskWorkflowJob.removeOutput"></a>
+
+```typescript
+public removeOutput(name: string): WorkflowJobBuilder
+```
+
+Remove an output from the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.TaskWorkflowJob.removeOutput.parameter.name"></a>
+
+- *Type:* string
+
+The name of the output to remove.
+
+---
+
+##### `removePermission` <a name="removePermission" id="projen.github.TaskWorkflowJob.removePermission"></a>
+
+```typescript
+public removePermission(scope: string): WorkflowJobBuilder
+```
+
+Remove a permission from the job.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.github.TaskWorkflowJob.removePermission.parameter.scope"></a>
+
+- *Type:* string
+
+The GitHub Permission scope to remove the permission from.
+
+---
+
+##### `removeSteps` <a name="removeSteps" id="projen.github.TaskWorkflowJob.removeSteps"></a>
+
+```typescript
+public removeSteps(indexes: number[]): WorkflowJobBuilder
+```
+
+Remove steps from the job.
+
+###### `indexes`<sup>Required</sup> <a name="indexes" id="projen.github.TaskWorkflowJob.removeSteps.parameter.indexes"></a>
+
+- *Type:* number[]
+
+The indexes of the steps to remove.
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -3716,15 +3967,15 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflowJob.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.steps">steps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.concurrency">concurrency</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.defaults">defaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | *No description.* |
-| <code><a href="#projen.github.TaskWorkflowJob.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
-| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.if">if</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.github.TaskWorkflowJob.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.github.TaskWorkflowJob.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.runsOn">runsOn</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.services">services</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>}</code> | *No description.* |
@@ -3786,6 +4037,46 @@ public readonly concurrency: any;
 
 ---
 
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TaskWorkflowJob.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJob.property.environment"></a>
+
+```typescript
+public readonly environment: any;
+```
+
+- *Type:* any
+
+---
+
+##### `needs`<sup>Optional</sup> <a name="needs" id="projen.github.TaskWorkflowJob.property.needs"></a>
+
+```typescript
+public readonly needs: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.github.TaskWorkflowJob.property.outputs"></a>
+
+```typescript
+public readonly outputs: {[ key: string ]: JobStepOutput};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}
+
+---
+
 ##### `container`<sup>Optional</sup> <a name="container" id="projen.github.TaskWorkflowJob.property.container"></a>
 
 ```typescript
@@ -3816,26 +4107,6 @@ public readonly defaults: JobDefaults;
 
 ---
 
-##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TaskWorkflowJob.property.env"></a>
-
-```typescript
-public readonly env: {[ key: string ]: string};
-```
-
-- *Type:* {[ key: string ]: string}
-
----
-
-##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJob.property.environment"></a>
-
-```typescript
-public readonly environment: any;
-```
-
-- *Type:* any
-
----
-
 ##### `if`<sup>Optional</sup> <a name="if" id="projen.github.TaskWorkflowJob.property.if"></a>
 
 ```typescript
@@ -3853,26 +4124,6 @@ public readonly name: string;
 ```
 
 - *Type:* string
-
----
-
-##### `needs`<sup>Optional</sup> <a name="needs" id="projen.github.TaskWorkflowJob.property.needs"></a>
-
-```typescript
-public readonly needs: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.github.TaskWorkflowJob.property.outputs"></a>
-
-```typescript
-public readonly outputs: {[ key: string ]: JobStepOutput};
-```
-
-- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}
 
 ---
 
@@ -3927,6 +4178,629 @@ public readonly timeoutMinutes: number;
 ---
 
 ##### `tools`<sup>Optional</sup> <a name="tools" id="projen.github.TaskWorkflowJob.property.tools"></a>
+
+```typescript
+public readonly tools: Tools;
+```
+
+- *Type:* <a href="#projen.github.workflows.Tools">Tools</a>
+
+---
+
+
+### WorkflowJobBuilder <a name="WorkflowJobBuilder" id="projen.github.WorkflowJobBuilder"></a>
+
+#### Initializers <a name="Initializers" id="projen.github.WorkflowJobBuilder.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.WorkflowJobBuilder(scope: IConstruct, options: Job, id?: string)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.WorkflowJobBuilder.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | any construct. |
+| <code><a href="#projen.github.WorkflowJobBuilder.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.workflows.Job">Job</a></code> | options to configure the Job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.github.WorkflowJobBuilder.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+any construct.
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.github.WorkflowJobBuilder.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.workflows.Job">Job</a>
+
+options to configure the Job.
+
+---
+
+##### `id`<sup>Optional</sup> <a name="id" id="projen.github.WorkflowJobBuilder.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.WorkflowJobBuilder.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.WorkflowJobBuilder.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.WorkflowJobBuilder.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.WorkflowJobBuilder.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.github.WorkflowJobBuilder.addEnv">addEnv</a></code> | Add a single environment variable to the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.addEnvs">addEnvs</a></code> | Add several environment variables to the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.addNeed">addNeed</a></code> | Add a need to the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.addOutput">addOutput</a></code> | Add an output to the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.addPermission">addPermission</a></code> | Add a permission to the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.addSteps">addSteps</a></code> | Add steps to the end of the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.insertSteps">insertSteps</a></code> | Add steps in the middle of the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.prependSteps">prependSteps</a></code> | Add steps to the beginning of the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.removeEnv">removeEnv</a></code> | Remove an environment variable from the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.removeNeed">removeNeed</a></code> | Remove a need from the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.removeOutput">removeOutput</a></code> | Remove an output from the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.removePermission">removePermission</a></code> | Remove a permission from the job. |
+| <code><a href="#projen.github.WorkflowJobBuilder.removeSteps">removeSteps</a></code> | Remove steps from the job. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.WorkflowJobBuilder.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.WorkflowJobBuilder.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.WorkflowJobBuilder.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.github.WorkflowJobBuilder.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addEnv` <a name="addEnv" id="projen.github.WorkflowJobBuilder.addEnv"></a>
+
+```typescript
+public addEnv(name: string, value: string): WorkflowJobBuilder
+```
+
+Add a single environment variable to the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.WorkflowJobBuilder.addEnv.parameter.name"></a>
+
+- *Type:* string
+
+The key of the environment variable.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.github.WorkflowJobBuilder.addEnv.parameter.value"></a>
+
+- *Type:* string
+
+The value of the environment variable.
+
+---
+
+##### `addEnvs` <a name="addEnvs" id="projen.github.WorkflowJobBuilder.addEnvs"></a>
+
+```typescript
+public addEnvs(envs: {[ key: string ]: string}): WorkflowJobBuilder
+```
+
+Add several environment variables to the job.
+
+###### `envs`<sup>Required</sup> <a name="envs" id="projen.github.WorkflowJobBuilder.addEnvs.parameter.envs"></a>
+
+- *Type:* {[ key: string ]: string}
+
+The environment variables to add.
+
+---
+
+##### `addNeed` <a name="addNeed" id="projen.github.WorkflowJobBuilder.addNeed"></a>
+
+```typescript
+public addNeed(name: string): WorkflowJobBuilder
+```
+
+Add a need to the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.WorkflowJobBuilder.addNeed.parameter.name"></a>
+
+- *Type:* string
+
+The name of the job to add as a need.
+
+---
+
+##### `addOutput` <a name="addOutput" id="projen.github.WorkflowJobBuilder.addOutput"></a>
+
+```typescript
+public addOutput(name: string, value: JobStepOutput): WorkflowJobBuilder
+```
+
+Add an output to the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.WorkflowJobBuilder.addOutput.parameter.name"></a>
+
+- *Type:* string
+
+The name of the output.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.github.WorkflowJobBuilder.addOutput.parameter.value"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>
+
+An object indicating where the value of the output is generated.
+
+---
+
+##### `addPermission` <a name="addPermission" id="projen.github.WorkflowJobBuilder.addPermission"></a>
+
+```typescript
+public addPermission(scope: string, permission: JobPermission): WorkflowJobBuilder
+```
+
+Add a permission to the job.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.github.WorkflowJobBuilder.addPermission.parameter.scope"></a>
+
+- *Type:* string
+
+The GitHub Permission scope to apply the permission to.
+
+---
+
+###### `permission`<sup>Required</sup> <a name="permission" id="projen.github.WorkflowJobBuilder.addPermission.parameter.permission"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobPermission">JobPermission</a>
+
+The GitHub JobPermission to apply.
+
+---
+
+##### `addSteps` <a name="addSteps" id="projen.github.WorkflowJobBuilder.addSteps"></a>
+
+```typescript
+public addSteps(steps: JobStep[]): WorkflowJobBuilder
+```
+
+Add steps to the end of the job.
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.github.WorkflowJobBuilder.addSteps.parameter.steps"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+steps to add.
+
+---
+
+##### `insertSteps` <a name="insertSteps" id="projen.github.WorkflowJobBuilder.insertSteps"></a>
+
+```typescript
+public insertSteps(index: number, steps: JobStep[]): WorkflowJobBuilder
+```
+
+Add steps in the middle of the job.
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.github.WorkflowJobBuilder.insertSteps.parameter.index"></a>
+
+- *Type:* number
+
+---
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.github.WorkflowJobBuilder.insertSteps.parameter.steps"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+steps to add.
+
+---
+
+##### `prependSteps` <a name="prependSteps" id="projen.github.WorkflowJobBuilder.prependSteps"></a>
+
+```typescript
+public prependSteps(steps: JobStep[]): WorkflowJobBuilder
+```
+
+Add steps to the beginning of the job.
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.github.WorkflowJobBuilder.prependSteps.parameter.steps"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+steps to add.
+
+---
+
+##### `removeEnv` <a name="removeEnv" id="projen.github.WorkflowJobBuilder.removeEnv"></a>
+
+```typescript
+public removeEnv(name: string): WorkflowJobBuilder
+```
+
+Remove an environment variable from the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.WorkflowJobBuilder.removeEnv.parameter.name"></a>
+
+- *Type:* string
+
+The name of the environment variable to remove.
+
+---
+
+##### `removeNeed` <a name="removeNeed" id="projen.github.WorkflowJobBuilder.removeNeed"></a>
+
+```typescript
+public removeNeed(name: string): WorkflowJobBuilder
+```
+
+Remove a need from the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.WorkflowJobBuilder.removeNeed.parameter.name"></a>
+
+- *Type:* string
+
+The name of the job to remove as a need.
+
+---
+
+##### `removeOutput` <a name="removeOutput" id="projen.github.WorkflowJobBuilder.removeOutput"></a>
+
+```typescript
+public removeOutput(name: string): WorkflowJobBuilder
+```
+
+Remove an output from the job.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.github.WorkflowJobBuilder.removeOutput.parameter.name"></a>
+
+- *Type:* string
+
+The name of the output to remove.
+
+---
+
+##### `removePermission` <a name="removePermission" id="projen.github.WorkflowJobBuilder.removePermission"></a>
+
+```typescript
+public removePermission(scope: string): WorkflowJobBuilder
+```
+
+Remove a permission from the job.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.github.WorkflowJobBuilder.removePermission.parameter.scope"></a>
+
+- *Type:* string
+
+The GitHub Permission scope to remove the permission from.
+
+---
+
+##### `removeSteps` <a name="removeSteps" id="projen.github.WorkflowJobBuilder.removeSteps"></a>
+
+```typescript
+public removeSteps(indexes: number[]): WorkflowJobBuilder
+```
+
+Remove steps from the job.
+
+###### `indexes`<sup>Required</sup> <a name="indexes" id="projen.github.WorkflowJobBuilder.removeSteps.parameter.indexes"></a>
+
+- *Type:* number[]
+
+The indexes of the steps to remove.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.WorkflowJobBuilder.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.WorkflowJobBuilder.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.WorkflowJobBuilder.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowJobBuilder.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.WorkflowJobBuilder.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.WorkflowJobBuilder.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.WorkflowJobBuilder.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.WorkflowJobBuilder.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.steps">steps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.concurrency">concurrency</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.environment">environment</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.defaults">defaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.if">if</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.runsOn">runsOn</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.services">services</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>}</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.strategy">strategy</a></code> | <code><a href="#projen.github.workflows.JobStrategy">JobStrategy</a></code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#projen.github.WorkflowJobBuilder.property.tools">tools</a></code> | <code><a href="#projen.github.workflows.Tools">Tools</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.WorkflowJobBuilder.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.WorkflowJobBuilder.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `permissions`<sup>Required</sup> <a name="permissions" id="projen.github.WorkflowJobBuilder.property.permissions"></a>
+
+```typescript
+public readonly permissions: JobPermissions;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobPermissions">JobPermissions</a>
+
+---
+
+##### `steps`<sup>Required</sup> <a name="steps" id="projen.github.WorkflowJobBuilder.property.steps"></a>
+
+```typescript
+public readonly steps: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+---
+
+##### `concurrency`<sup>Optional</sup> <a name="concurrency" id="projen.github.WorkflowJobBuilder.property.concurrency"></a>
+
+```typescript
+public readonly concurrency: any;
+```
+
+- *Type:* any
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.WorkflowJobBuilder.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.WorkflowJobBuilder.property.environment"></a>
+
+```typescript
+public readonly environment: any;
+```
+
+- *Type:* any
+
+---
+
+##### `needs`<sup>Optional</sup> <a name="needs" id="projen.github.WorkflowJobBuilder.property.needs"></a>
+
+```typescript
+public readonly needs: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.github.WorkflowJobBuilder.property.outputs"></a>
+
+```typescript
+public readonly outputs: {[ key: string ]: JobStepOutput};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}
+
+---
+
+##### `container`<sup>Optional</sup> <a name="container" id="projen.github.WorkflowJobBuilder.property.container"></a>
+
+```typescript
+public readonly container: ContainerOptions;
+```
+
+- *Type:* <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>
+
+---
+
+##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.WorkflowJobBuilder.property.continueOnError"></a>
+
+```typescript
+public readonly continueOnError: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `defaults`<sup>Optional</sup> <a name="defaults" id="projen.github.WorkflowJobBuilder.property.defaults"></a>
+
+```typescript
+public readonly defaults: JobDefaults;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobDefaults">JobDefaults</a>
+
+---
+
+##### `if`<sup>Optional</sup> <a name="if" id="projen.github.WorkflowJobBuilder.property.if"></a>
+
+```typescript
+public readonly if: string;
+```
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.WorkflowJobBuilder.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.WorkflowJobBuilder.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.WorkflowJobBuilder.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+---
+
+##### `services`<sup>Optional</sup> <a name="services" id="projen.github.WorkflowJobBuilder.property.services"></a>
+
+```typescript
+public readonly services: {[ key: string ]: ContainerOptions};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a>}
+
+---
+
+##### `strategy`<sup>Optional</sup> <a name="strategy" id="projen.github.WorkflowJobBuilder.property.strategy"></a>
+
+```typescript
+public readonly strategy: JobStrategy;
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStrategy">JobStrategy</a>
+
+---
+
+##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.WorkflowJobBuilder.property.timeoutMinutes"></a>
+
+```typescript
+public readonly timeoutMinutes: number;
+```
+
+- *Type:* number
+
+---
+
+##### `tools`<sup>Optional</sup> <a name="tools" id="projen.github.WorkflowJobBuilder.property.tools"></a>
 
 ```typescript
 public readonly tools: Tools;
