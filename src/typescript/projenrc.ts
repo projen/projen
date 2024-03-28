@@ -1,6 +1,10 @@
 import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
-import { TypescriptConfig, TypescriptConfigExtends } from "../javascript";
+import {
+  NodePackageType,
+  TypescriptConfig,
+  TypescriptConfigExtends,
+} from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import { TypeScriptProject } from "../typescript";
@@ -95,7 +99,11 @@ export class Projenrc extends ProjenrcFile {
       nodeVersionSplit[0] > 18 ||
       (nodeVersionSplit[0] === 18 && nodeVersionSplit[1] >= 19);
 
-    if (node18_19_or_newer && this._runner === ProjenRcRunner.TS_NODE) {
+    if (
+      node18_19_or_newer &&
+      this._runner === ProjenRcRunner.TS_NODE &&
+      this._tsProject.package.type === NodePackageType.ESM
+    ) {
       this.project.logger.warn(
         "⚠️ Using ts-node with ESM in node 18.19.x or newer is broken. Using tsx instead. ⚠️"
       );
@@ -115,7 +123,10 @@ export class Projenrc extends ProjenrcFile {
         extends: TypescriptConfigExtends.fromTypescriptConfigs([
           this._tsProject.tsconfigDev,
         ]),
-        compilerOptions: {},
+        compilerOptions: {
+          noEmit: true,
+          emitDeclarationOnly: false,
+        },
       });
 
       this.addDefaultTsxTask();

@@ -46,9 +46,10 @@ export enum NodePackageType {
 
 export interface NodePackageOptions {
   /**
-   * Package's type (module or commonjs).
+   * Package's type (NodePackageType.ESM or NodePackageType.CJS).
    *
-   * @default - NodePackageType.CJS
+   * @example NodePackageType.ESM
+   * @default NodePackageType.CJS
    * @featured
    */
   readonly packageType?: NodePackageType;
