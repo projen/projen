@@ -4260,8 +4260,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -7376,8 +7376,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -11628,8 +11628,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -14531,8 +14531,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -17493,8 +17493,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -21257,8 +21257,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -23886,8 +23886,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -26400,8 +26400,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -28902,8 +28902,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -32466,8 +32466,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -34968,8 +34968,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -37613,8 +37613,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {
@@ -40236,8 +40236,8 @@ exports[`inventory 1`] = `
         "switch": "package-name",
       },
       {
-        "default": "- NodePackageType.CJS",
-        "docs": "Package's type (module or commonjs).",
+        "default": "NodePackageType.CJS",
+        "docs": "Package's type (NodePackageType.ESM or NodePackageType.CJS).",
         "featured": true,
         "fqn": "projen.javascript.NodePackageType",
         "fullType": {

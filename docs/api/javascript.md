@@ -7305,7 +7305,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
-| <code><a href="#projen.javascript.NodePackageOptions.property.packageType">packageType</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | Package's type (module or commonjs). |
+| <code><a href="#projen.javascript.NodePackageOptions.property.packageType">packageType</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -7753,7 +7753,7 @@ public readonly packageType: NodePackageType;
 - *Type:* <a href="#projen.javascript.NodePackageType">NodePackageType</a>
 - *Default:* NodePackageType.CJS
 
-Package's type (module or commonjs).
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 
@@ -7963,7 +7963,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.packageType">packageType</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | Package's type (module or commonjs). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.packageType">packageType</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -8885,7 +8885,7 @@ public readonly packageType: NodePackageType;
 - *Type:* <a href="#projen.javascript.NodePackageType">NodePackageType</a>
 - *Default:* NodePackageType.CJS
 
-Package's type (module or commonjs).
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 

@@ -48,7 +48,6 @@ export interface NodePackageOptions {
   /**
    * Package's type (NodePackageType.ESM or NodePackageType.CJS).
    *
-   * @example NodePackageType.ESM
    * @default NodePackageType.CJS
    * @featured
    */

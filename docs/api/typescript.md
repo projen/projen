@@ -5110,7 +5110,7 @@ public readonly runner: ProjenRcRunner;
 ```
 
 - *Type:* <a href="#projen.typescript.ProjenRcRunner">ProjenRcRunner</a>
-- *Default:* ProjenRcRunner.tsNode
+- *Default:* ProjenRcRunner.TS_NODE
 
 The runner to use for the projenrc file.
 
@@ -5155,7 +5155,7 @@ const projenrcTsOptions: typescript.ProjenrcTsOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.typescript.ProjenrcTsOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
 | <code><a href="#projen.typescript.ProjenrcTsOptions.property.projenCodeDir">projenCodeDir</a></code> | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. |
-| <code><a href="#projen.typescript.ProjenrcTsOptions.property.tsconfigFileName">tsconfigFileName</a></code> | <code>string</code> | The name of the tsconfig file that will be used by ts-node when compiling projen source files. |
+| <code><a href="#projen.typescript.ProjenrcTsOptions.property.tsconfigFileName">tsconfigFileName</a></code> | <code>string</code> | The name of the tsconfig file that will be used by tsx when compiling projen source files. |
 
 ---
 
@@ -5194,7 +5194,7 @@ public readonly tsconfigFileName: string;
 - *Type:* string
 - *Default:* "tsconfig.projen.json"
 
-The name of the tsconfig file that will be used by ts-node when compiling projen source files.
+The name of the tsconfig file that will be used by tsx when compiling projen source files.
 
 ---
 
@@ -5450,7 +5450,7 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -6496,7 +6496,7 @@ public readonly packageType: NodePackageType;
 - *Type:* projen.javascript.NodePackageType
 - *Default:* NodePackageType.CJS
 
-Package's type (module or commonjs).
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 
@@ -7936,7 +7936,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -8876,7 +8876,7 @@ public readonly packageType: NodePackageType;
 - *Type:* projen.javascript.NodePackageType
 - *Default:* NodePackageType.CJS
 
-Package's type (module or commonjs).
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 

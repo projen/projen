@@ -6,10 +6,11 @@ const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -41,11 +42,11 @@ const project = new javascript.NodeProject({
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -73,10 +74,11 @@ const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -235,9 +237,10 @@ const project = new AwsCdkTypeScriptApp({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -360,9 +363,10 @@ const project = new AwsCdkTypeScriptApp({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -485,9 +489,10 @@ const project = new AwsCdkTypeScriptApp({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -610,9 +615,10 @@ const project = new AwsCdkTypeScriptApp({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -664,11 +670,11 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -687,11 +693,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -723,11 +729,11 @@ const project = new cdk8s.Cdk8sTypeScriptApp({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -746,11 +752,11 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -769,11 +775,11 @@ const project = new cdktf.ConstructLibraryCdktf({
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -810,11 +816,11 @@ const project = new cdk.JsiiProject({
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -827,12 +833,12 @@ const project = new web.NextJsProject({
   defaultReleaseBranch: "main",
   name: "my-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
-  // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
+  // tailwind: true,                    /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -846,12 +852,12 @@ const project = new web.NextJsTypeScriptProject({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
-  // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
+  // tailwind: true,                    /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -864,11 +870,11 @@ const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -899,11 +905,11 @@ const project = new web.ReactProject({
   defaultReleaseBranch: "main",
   name: "my-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -917,11 +923,11 @@ const project = new web.ReactTypeScriptProject({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -935,11 +941,11 @@ const project = new typescript.TypeScriptProject({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -953,11 +959,11 @@ const project = new typescript.TypeScriptAppProject({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();",
 }
@@ -970,11 +976,11 @@ const project = new typescript.TypeScriptProject({
   name: "my-project",
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // packageType: undefined,  /* Package's type (module or commonjs). */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;

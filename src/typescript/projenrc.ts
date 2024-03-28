@@ -60,7 +60,7 @@ export interface ProjenrcOptions {
    *
    * @see https://github.com/TypeStrong/ts-node/issues/2094
    *
-   * @default ProjenRcRunner.tsNode
+   * @default ProjenRcRunner.TS_NODE
    */
   readonly runner?: ProjenRcRunner;
 }
