@@ -29,7 +29,29 @@ const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
 
+/**
+ * Used to set the `type` field in `package.json`
+ * @see https://nodejs.org/api/packages.html#type
+ */
+export enum NodePackageType {
+  /** ESM
+   * Set `type` to `module` to enable ESM.
+   */
+  ESM = "module",
+  /** CJS
+   * Unsets `type` to be interpreted as `commonjs` to enable CJS.
+   */
+  CJS = "commonjs",
+}
+
 export interface NodePackageOptions {
+  /**
+   * Package's type (module or commonjs).
+   *
+   * @default - NodePackageType.CJS
+   * @featured
+   */
+  readonly packageType?: NodePackageType;
   /**
    * The "name" in package.json
    * @default - defaults to project name
@@ -425,6 +447,12 @@ export class NodePackage extends Component {
   }
 
   /**
+   * The type of the package - ESM or CJS
+   * @see https://nodejs.org/api/packages.html#type
+   */
+  public readonly type: NodePackageType;
+
+  /**
    * The name of the npm package.
    */
   public readonly packageName: string;
@@ -545,6 +573,8 @@ export class NodePackage extends Component {
   constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
 
+    this.type = options.packageType ?? NodePackageType.CJS;
+
     this.packageName = options.packageName ?? project.name;
     this.peerDependencyOptions = {
       pinnedDevDependency: true,
@@ -581,6 +611,7 @@ export class NodePackage extends Component {
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
+      type: this.type === NodePackageType.CJS ? undefined : "module",
       name: this.packageName,
       description: options.description,
       repository: !options.repository

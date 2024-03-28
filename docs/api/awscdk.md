@@ -10209,6 +10209,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -11167,6 +11168,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 
@@ -15431,6 +15445,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -16380,6 +16395,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 
@@ -18220,6 +18248,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -19282,6 +19311,21 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### ~~`packageType`~~<sup>Optional</sup> <a name="packageType" id="projen.awscdk.ConstructLibraryAwsOptions.property.packageType"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 

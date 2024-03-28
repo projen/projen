@@ -6,6 +6,7 @@ import {
   Eslint,
   EslintOptions,
   Jest,
+  NodePackageType,
   NodeProject,
   NodeProjectOptions,
   Projenrc as NodeProjectProjenrc,
@@ -716,6 +717,9 @@ export class TypeScriptProject extends NodeProject {
           "ts-jest",
           {
             tsconfig: TsJestTsconfig.fromFile(this.tsconfigDev.fileName),
+            ...(this.package.type === NodePackageType.ESM
+              ? { useESM: true }
+              : {}),
             ...(tsJestOptions?.transformOptions ?? {}),
           }
         ),

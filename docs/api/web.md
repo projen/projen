@@ -6600,6 +6600,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.web.NextJsProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -7539,6 +7540,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.web.NextJsProjectOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 
@@ -8602,6 +8616,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -9557,6 +9572,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.web.NextJsTypeScriptProjectOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 
@@ -10959,6 +10987,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.web.ReactProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.ReactProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.ReactProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.web.ReactProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.ReactProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -11871,6 +11900,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.web.ReactProjectOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 
@@ -13129,6 +13171,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (module or commonjs). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -14057,6 +14100,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.web.ReactTypeScriptProjectOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (module or commonjs).
 
 ---
 
