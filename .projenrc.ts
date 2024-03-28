@@ -375,23 +375,19 @@ function setupIntegTest() {
 
 // build `run-task` script needed for "projen eject" functionality
 function setupBundleTaskRunner() {
+  // TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
   const taskRunnerPath = "lib/run-task.js";
   const task = project.addTask("bundle:task-runner", {
     description: 'Bundle the run-task script needed for "projen eject"',
-    exec: `esbuild src/task-runtime.ts --outfile=${taskRunnerPath} --bundle --platform=node --external:"*/package.json"`,
+    exec:
+      `esbuild src/task-runtime.ts ` +
+      `--outfile=${taskRunnerPath} ` +
+      `--bundle ` +
+      `--platform=node ` +
+      `--external:"*/package.json" ` +
+      `--banner:js="#!/usr/bin/env node" ` +
+      `--footer:js="const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);"`,
   });
-  task.exec(
-    `echo "#!/usr/bin/env node" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null`,
-    {
-      name: "Insert Node shebang to beginning of the file",
-    }
-  );
-  task.exec(
-    `echo "const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);" >> ${taskRunnerPath}`,
-    {
-      name: "Add driver code to end of the file",
-    }
-  );
   project.postCompileTask.spawn(task);
 }
 
