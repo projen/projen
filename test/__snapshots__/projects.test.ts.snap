@@ -7,10 +7,11 @@ const project = new typescript.TypeScriptProject({
   eslintOptions: {"dirs":["src","test"],"prettier":true,"aliasMap":{"@src":"./src","@foo":"./src/foo"}},
   name: "test-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
@@ -37,10 +38,11 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   name: "test-project",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The "name" in package.json. */
+  // packageType: NodePackageType.CJS,  /* Package's type (NodePackageType.ESM or NodePackageType.CJS). */
 });
 project.synth();"
 `;
