@@ -11,6 +11,7 @@ import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
+const PROJEN_FILE_URL = `file://${process.cwd()}`;
 
 logging.disable(); // no logging during tests
 
