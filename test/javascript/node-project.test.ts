@@ -1756,6 +1756,10 @@ describe("package manager env", () => {
       packageManager: NodePackageManager.PNPM,
       cmd: '$(pnpm -c exec "node --print process.env.PATH")',
     },
+    {
+      packageManager: NodePackageManager.BUN,
+      cmd: '$(bun --eval "console.log(process.env.PATH)")',
+    },
   ].forEach((testCase) => {
     test(testCase.packageManager, () => {
       // GIVEN / WHEN
