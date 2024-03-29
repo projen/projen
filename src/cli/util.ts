@@ -8,7 +8,11 @@ import { exec } from "../util";
  * @param spec The npm package spec (e.g. `foo@^1.2` or `foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz`)
  * @returns The installed package name (e.g. `@foo/bar`)
  */
-export function installPackage(baseDir: string, spec: string): string {
+export function installPackage(
+  baseDir: string,
+  spec: string,
+  isProjen = false
+): string {
   const packageJsonPath = path.join(baseDir, "package.json");
   const packageJsonExisted = fs.existsSync(packageJsonPath);
 
@@ -17,14 +21,13 @@ export function installPackage(baseDir: string, spec: string): string {
     exec("npm init --yes", { cwd: baseDir });
   }
 
-  const moduleSource = isLocalModule(spec) ? "local" : "external";
-  logging.info(`installing ${moduleSource} module ${spec}...`);
+  logging.info(`installing module ${spec}...`);
   exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // Get the true installed package name
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-  const packageName = Object.keys(packageJson.devDependencies).find(
-    (name) => name !== "projen"
+  const packageName = Object.keys(packageJson.devDependencies).find((name) =>
+    isProjen ? name === "projen" : name !== "projen"
   );
 
   if (!packageName) {
@@ -54,27 +57,6 @@ export function installPackage(baseDir: string, spec: string): string {
  */
 export function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
-}
-
-export function isLocalModule(module: string): boolean {
-  return /^(\.\/|\/)/.test(module) || /\.tgz$/.test(module);
-}
-
-export function moduleExists(cwd: string, module: string): boolean {
-  try {
-    logging.debug(`Checking if external module '${module}' exists...`);
-    // check if local path reference or tgz file
-    const localModule = isLocalModule(module);
-    if (localModule) {
-      return fs.existsSync(module);
-    } else {
-      exec(`npm view ${module}`, { cwd, stdio: "ignore" });
-      return true;
-    }
-  } catch (error) {
-    // exec throws an error if external module does not exist
-    return false;
-  }
 }
 
 export function findJsiiFilePath(

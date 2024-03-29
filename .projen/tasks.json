@@ -47,15 +47,7 @@
       "description": "Bundle the run-task script needed for \"projen eject\"",
       "steps": [
         {
-          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\""
-        },
-        {
-          "exec": "echo \"#!/usr/bin/env node\" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null",
-          "name": "Insert Node shebang to beginning of the file"
-        },
-        {
-          "exec": "echo \"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\" >> lib/run-task.js",
-          "name": "Add driver code to end of the file"
+          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\" --banner:js=\"#!/usr/bin/env node\" --footer:js=\"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\""
         }
       ]
     },

@@ -1,3 +1,4 @@
+import type { SpawnSyncReturns } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import * as semver from "semver";
@@ -18,19 +19,22 @@ import {
   CliError,
   findJsiiFilePath,
   installPackage,
-  isLocalModule,
-  moduleExists,
   renderInstallCommand,
 } from "../util";
 
 class Command implements yargs.CommandModule {
   public readonly command = "new [PROJECT-TYPE-NAME] [OPTIONS]";
-  public readonly describe = "Creates a new projen project";
+  public readonly describe = [
+    "Creates a new projen project",
+    "",
+    "For a complete list of the available options for a specific project type, run:",
+    "projen new [PROJECT-TYPE-NAME] --help",
+  ].join("\n");
 
   public builder(args: yargs.Argv) {
     args.positional("PROJECT-TYPE-NAME", {
       describe:
-        "optional only when --from is used and there is a single project type in the external module",
+        "only optional with --from and the external module has only a single project type",
       type: "string",
     });
     args.option("synth", {
@@ -60,6 +64,10 @@ class Command implements yargs.CommandModule {
     args.example(
       "projen new --from projen-vue@^2",
       'Creates a new project from an external module "projen-vue" with the specified version'
+    );
+    args.example(
+      "projen new python --help",
+      'Shows all options available for the built-in project type "python"'
     );
 
     for (const type of inventory.discover()) {
@@ -299,17 +307,26 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
-  const exists = moduleExists(baseDir, spec);
-  logging.empty();
+  const installPackageWithCliError = (b: string, s: string): string => {
+    try {
+      return installPackage(b, s);
+    } catch (error: unknown) {
+      const stderr =
+        (error as SpawnSyncReturns<Buffer>)?.stderr?.toString() ?? "";
+      const isLocal = stderr.includes("code ENOENT");
+      const isRegistry = stderr.includes("code E404");
+      if (isLocal || isRegistry) {
+        const moduleSource = isLocal ? "path" : "registry";
+        throw new CliError(
+          `Could not find '${s}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
+        );
+      }
 
-  if (!exists) {
-    const moduleSource = isLocalModule(spec) ? "path" : "registry";
-    throw new CliError(
-      `Could not find '${spec}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
-    );
-  }
+      throw error;
+    }
+  };
 
-  const moduleName = installPackage(baseDir, spec);
+  const moduleName = installPackageWithCliError(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
