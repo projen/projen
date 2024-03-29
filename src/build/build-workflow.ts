@@ -39,7 +39,7 @@ const IS_FORK =
 const NOT_FORK = `!(${IS_FORK})`;
 const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 
-export interface CommonBuildWorkflowOptions {
+export interface BuildWorkflowCommonOptions {
   /**
    * Name of the buildfile (e.g. "build" becomes "build.yml").
    *
@@ -73,7 +73,7 @@ export interface CommonBuildWorkflowOptions {
   readonly permissions?: JobPermissions;
 }
 
-export interface BuildWorkflowOptions extends CommonBuildWorkflowOptions {
+export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   /**
    * The task to execute in order to build the project.
    */

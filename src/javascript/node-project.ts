@@ -10,7 +10,7 @@ import {
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { BuildWorkflow, CommonBuildWorkflowOptions } from "../build";
+import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
 import { PROJEN_DIR } from "../common";
 import {
   AutoMerge,
@@ -340,7 +340,7 @@ export interface NodeProjectOptions
 /**
  * Build workflow options for NodeProject
  */
-export interface BuildWorkflowOptions extends CommonBuildWorkflowOptions {
+export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   /**
    * Automatically update files modified during builds to pull-request branches.
    * This means that any files synthesized by projen or e.g. test snapshots will
