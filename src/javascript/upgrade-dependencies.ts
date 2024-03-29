@@ -373,7 +373,10 @@ export class UpgradeDependencies extends Component {
 
     const deps = this.project.deps.all
       // remove those that have a pinned version (unless includeConstraint is true)
-      .filter((d) => includeConstraint || this.allowsMinorUpgrades(d.version))
+      .filter(
+        (d) =>
+          includeConstraint || this.packageIsUsingDefaultVersioning(d.version)
+      )
       // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
 
@@ -389,28 +392,18 @@ export class UpgradeDependencies extends Component {
   }
 
   /**
-   * Determines whether a given version handed in for a dependency allows minor upgrades.
-   *
-   * @example true for undefined, "^1.2.3", "1.x", "1.x.x", "1", "^1.2". false for "1.2", "1.2.x", "1.2.3".
+   * Projen only uses npm-check-updates to upgrade dependencies when either the version is omitted, or set to "*".
+   * Otherwise, the exact version selected is placed in the package.json file and upgrading is handled through the package manager
+   * rather than npm-check-updates.
    *
    * @param version semver from DependencyCoordinates.version, may be undefined
-   * @returns true if the version allows minor upgrades
+   * @returns whether the version is the default versioning behavior
    */
-  private allowsMinorUpgrades(version: string | undefined): boolean {
+  private packageIsUsingDefaultVersioning(
+    version: string | undefined
+  ): boolean {
     // No version means "latest"
-    if (!version) {
-      return true;
-    }
-
-    // Caret means "allow minor upgrades"
-    if (version.startsWith("^")) {
-      return true;
-    }
-
-    // If only one part of semver is specified, it means "allow minor upgrades", and "x" is a wildcard.
-    // 10, 10.x, and 10.x.x would all work. 10.1 would not.
-    const parts = version.split(".").filter((ver) => ver !== "x");
-    return parts.length === 1 && !Number.isNaN(parseInt(version[0]));
+    return !version || version === "*";
   }
 
   private createWorkflow(
