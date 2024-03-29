@@ -96,7 +96,7 @@ test("upgrades command includes all dependencies", () => {
   `);
 });
 
-test("ncu upgrade command does not include dependencies with pinned versions, but package manager upgrade does", () => {
+test("ncu upgrade command does not include dependencies with any version constraint, but package manager upgrade does", () => {
   const project = createProject({
     deps: ["some-dep@10.0.0"],
   });
