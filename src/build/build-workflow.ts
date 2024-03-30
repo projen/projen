@@ -19,6 +19,7 @@ import {
   JobPermission,
   JobPermissions,
   JobStep,
+  JobStrategy,
   Tools,
   Triggers,
 } from "../github/workflows-model";
@@ -129,6 +130,45 @@ export interface BuildWorkflowOptions {
    * @default `{ contents: JobPermission.WRITE }`
    */
   readonly permissions?: JobPermissions;
+
+  /**
+   * A strategy creates a build matrix for your jobs. You can define different
+   * variations to run each job in.
+   *
+   * @example
+   *  buildWorkflowJobStrategy: {
+   *    matrix: {
+   *      domain: {
+   *        node: [
+   *          { version: "18.14.2" },
+   *          { version: "18.18" },
+   *          { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+   *          { version: "20" },
+   *        ],
+   *      },
+   *      include: [
+   *        {
+   *          node: { version: "18.14.2" },
+   *          release: true,
+   *        },
+   *      ],
+   *    },
+   *  }
+   *
+   * @default - undefined
+   */
+  readonly strategy?: JobStrategy;
+
+  /**
+   * Variable to use in conjuction with {@link strategy} to determine which run of the matrix
+   * to upload artifacts from
+   *
+   * @example
+   * uploadArtifactsVariable: "matrix.release"
+   *
+   * @default - undefined
+   */
+  readonly uploadArtifactsVariable?: string;
 }
 
 export class BuildWorkflow extends Component {
@@ -144,6 +184,7 @@ export class BuildWorkflow extends Component {
   private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
+  private readonly uploadArtifactsVariable?: string;
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -163,6 +204,7 @@ export class BuildWorkflow extends Component {
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
     this.artifactsDirectory = options.artifactsDirectory;
+    this.uploadArtifactsVariable = options.uploadArtifactsVariable;
     this.name = options.name ?? workflowNameForProject("build", this.project);
     const mutableBuilds = options.mutableBuild ?? true;
 
@@ -192,6 +234,7 @@ export class BuildWorkflow extends Component {
     );
     const jobConfig: workflows.Job = {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+      strategy: options.strategy,
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
@@ -438,9 +481,15 @@ export class BuildWorkflow extends Component {
             {
               name: "Backup artifact permissions",
               continueOnError: true,
+              if:
+                this.uploadArtifactsVariable &&
+                `success() && ${this.uploadArtifactsVariable ?? "true"}`,
               run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
             },
             WorkflowSteps.uploadArtifact({
+              if:
+                this.uploadArtifactsVariable &&
+                `success() && ${this.uploadArtifactsVariable ?? "true"}`,
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.project.parent

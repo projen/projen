@@ -27,6 +27,7 @@ import {
   JobPermissions,
   JobStep,
   JobStepConfiguration,
+  JobStrategy,
   Triggers,
 } from "../github/workflows-model";
 import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
@@ -319,6 +320,60 @@ export interface NodeProjectOptions
   readonly buildWorkflowTriggers?: Triggers;
 
   /**
+   * A strategy creates a build matrix for your jobs. You can define different
+   * variations to run each job in.
+   *
+   * @example
+   *  buildWorkflowJobStrategy: {
+   *    matrix: {
+   *      domain: {
+   *        node: [
+   *          { version: "18.14.2" },
+   *          { version: "18.18" },
+   *          { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+   *          { version: "20" },
+   *        ],
+   *      },
+   *      include: [
+   *        {
+   *          node: { version: "18.14.2" },
+   *          release: true,
+   *        },
+   *      ],
+   *    },
+   *  }
+   *
+   * @default - undefined
+   */
+
+  readonly buildWorkflowJobStrategy?: JobStrategy;
+
+  /**
+   * Node version to use in GitHub workflows
+   *
+   * May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+   *
+   * Otherwise it's just a string like "18" to set the node version used in just the build step.
+   *
+   * @example
+   * buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+   *
+   * @default - undefined
+   */
+  readonly buildWorkflowNodeVersion?: string;
+
+  /**
+   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix
+   * to upload artifacts from
+   *
+   * @example
+   * buildWorkflowUploadArtifactsVariable: "matrix.release"
+   *
+   * @default - undefined
+   */
+  readonly buildWorkflowUploadArtifactsVariable?: string;
+
+  /**
    * Configure which licenses should be deemed acceptable for use by dependencies
    *
    * This setting will cause the build to fail, if any prohibited or not allowed licenses ares encountered.
@@ -607,6 +662,7 @@ export class NodeProject extends GitHubProject {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
           mutable: options.mutableBuild ?? true,
+          nodeVersion: options.buildWorkflowNodeVersion ?? this.nodeVersion,
         }),
         postBuildSteps: options.postBuildSteps,
         ...filteredRunsOnOptions(
@@ -615,6 +671,8 @@ export class NodeProject extends GitHubProject {
         ),
         workflowTriggers: options.buildWorkflowTriggers,
         permissions: workflowPermissions,
+        strategy: options.buildWorkflowJobStrategy,
+        uploadArtifactsVariable: options.buildWorkflowUploadArtifactsVariable,
       });
 
       this.buildWorkflow.addPostBuildSteps(
@@ -646,7 +704,10 @@ export class NodeProject extends GitHubProject {
         ],
         postBuildSteps: [
           ...(options.postBuildSteps ?? []),
-          ...this.renderUploadCoverageJobStep(options),
+          ...this.renderUploadCoverageJobStep({
+            ...options,
+            buildWorkflowUploadArtifactsVariable: undefined,
+          }),
         ],
 
         workflowNodeVersion: this.nodeVersion,
@@ -836,6 +897,9 @@ export class NodeProject extends GitHubProject {
         {
           name: "Upload coverage to Codecov",
           uses: "codecov/codecov-action@v3",
+          if: options.buildWorkflowUploadArtifactsVariable
+            ? `success() && ${options.buildWorkflowUploadArtifactsVariable}`
+            : undefined,
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1053,12 +1117,13 @@ export class NodeProject extends GitHubProject {
             : this.package.packageManager === NodePackageManager.PNPM
             ? "pnpm"
             : "npm";
+        const nodeVersion = options.nodeVersion ?? this.nodeVersion;
         install.push({
           name: "Setup Node.js",
           uses: "actions/setup-node@v4",
           with: {
             ...(this.nodeVersion && {
-              "node-version": this.nodeVersion,
+              "node-version": nodeVersion,
             }),
             ...(this.workflowPackageCache && {
               cache,
@@ -1257,4 +1322,9 @@ export interface RenderWorkflowSetupOptions {
    * @default false
    */
   readonly mutable?: boolean;
+  /**
+   * Value to use instead of node version in the setup, for example when using a strategy matrix.
+   * @default - use the node version from the project
+   */
+  readonly nodeVersion?: string;
 }

@@ -476,6 +476,8 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.strategy">strategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.uploadArtifactsVariable">uploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link strategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 
 ---
@@ -641,6 +643,66 @@ public readonly runsOnGroup: GroupRunnerOptions;
 Github Runner Group selection options.
 
 ---
+
+##### `strategy`<sup>Optional</sup> <a name="strategy" id="projen.build.BuildWorkflowOptions.property.strategy"></a>
+
+```typescript
+public readonly strategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `uploadArtifactsVariable`<sup>Optional</sup> <a name="uploadArtifactsVariable" id="projen.build.BuildWorkflowOptions.property.uploadArtifactsVariable"></a>
+
+```typescript
+public readonly uploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link strategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+uploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `workflowTriggers`<sup>Optional</sup> <a name="workflowTriggers" id="projen.build.BuildWorkflowOptions.property.workflowTriggers"></a>
 

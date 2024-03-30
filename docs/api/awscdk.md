@@ -10244,7 +10244,10 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -11677,6 +11680,70 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowJobStrategy`<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowJobStrategy"></a>
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `buildWorkflowNodeVersion`<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowNodeVersion"></a>
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -11689,6 +11756,26 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### `buildWorkflowUploadArtifactsVariable`<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `bundlerOptions`<sup>Optional</sup> <a name="bundlerOptions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.bundlerOptions"></a>
 
@@ -15466,7 +15553,10 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -16890,6 +16980,70 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowJobStrategy`<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowJobStrategy"></a>
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `buildWorkflowNodeVersion`<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowNodeVersion"></a>
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -16902,6 +17056,26 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### `buildWorkflowUploadArtifactsVariable`<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `bundlerOptions`<sup>Optional</sup> <a name="bundlerOptions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.bundlerOptions"></a>
 
@@ -18255,7 +18429,10 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -19856,6 +20033,74 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### ~~`buildWorkflowJobStrategy`~~<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowJobStrategy"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### ~~`buildWorkflowNodeVersion`~~<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowNodeVersion"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowTriggers"></a>
 
 - *Deprecated:* use `AwsCdkConstructLibraryOptions`
@@ -19870,6 +20115,28 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### ~~`buildWorkflowUploadArtifactsVariable`~~<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### ~~`bundlerOptions`~~<sup>Optional</sup> <a name="bundlerOptions" id="projen.awscdk.ConstructLibraryAwsOptions.property.bundlerOptions"></a>
 

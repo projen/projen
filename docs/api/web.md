@@ -6635,7 +6635,10 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -8049,6 +8052,70 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowJobStrategy`<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.web.NextJsProjectOptions.property.buildWorkflowJobStrategy"></a>
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `buildWorkflowNodeVersion`<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.web.NextJsProjectOptions.property.buildWorkflowNodeVersion"></a>
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.NextJsProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -8061,6 +8128,26 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### `buildWorkflowUploadArtifactsVariable`<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.web.NextJsProjectOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `bundlerOptions`<sup>Optional</sup> <a name="bundlerOptions" id="projen.web.NextJsProjectOptions.property.bundlerOptions"></a>
 
@@ -8637,7 +8724,10 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -10067,6 +10157,70 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowJobStrategy`<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowJobStrategy"></a>
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `buildWorkflowNodeVersion`<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowNodeVersion"></a>
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -10079,6 +10233,26 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### `buildWorkflowUploadArtifactsVariable`<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.web.NextJsTypeScriptProjectOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `bundlerOptions`<sup>Optional</sup> <a name="bundlerOptions" id="projen.web.NextJsTypeScriptProjectOptions.property.bundlerOptions"></a>
 
@@ -10994,7 +11168,10 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.web.ReactProjectOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.web.ReactProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.web.ReactProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -12381,6 +12558,70 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowJobStrategy`<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.web.ReactProjectOptions.property.buildWorkflowJobStrategy"></a>
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `buildWorkflowNodeVersion`<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.web.ReactProjectOptions.property.buildWorkflowNodeVersion"></a>
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.ReactProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -12393,6 +12634,26 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### `buildWorkflowUploadArtifactsVariable`<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.web.ReactProjectOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `bundlerOptions`<sup>Optional</sup> <a name="bundlerOptions" id="projen.web.ReactProjectOptions.property.bundlerOptions"></a>
 
@@ -13164,7 +13425,10 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowJobStrategy">buildWorkflowJobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowNodeVersion">buildWorkflowNodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowUploadArtifactsVariable">buildWorkflowUploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
@@ -14567,6 +14831,70 @@ Define a GitHub workflow for building PRs.
 
 ---
 
+##### `buildWorkflowJobStrategy`<sup>Optional</sup> <a name="buildWorkflowJobStrategy" id="projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowJobStrategy"></a>
+
+```typescript
+public readonly buildWorkflowJobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ buildWorkflowJobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `buildWorkflowNodeVersion`<sup>Optional</sup> <a name="buildWorkflowNodeVersion" id="projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowNodeVersion"></a>
+
+```typescript
+public readonly buildWorkflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowNodeVersion: "${{ matrix.node.version }}"
+```
+
+
 ##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowTriggers"></a>
 
 ```typescript
@@ -14579,6 +14907,26 @@ public readonly buildWorkflowTriggers: Triggers;
 Build workflow triggers.
 
 ---
+
+##### `buildWorkflowUploadArtifactsVariable`<sup>Optional</sup> <a name="buildWorkflowUploadArtifactsVariable" id="projen.web.ReactTypeScriptProjectOptions.property.buildWorkflowUploadArtifactsVariable"></a>
+
+```typescript
+public readonly buildWorkflowUploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+buildWorkflowUploadArtifactsVariable: "matrix.release"
+```
+
 
 ##### `bundlerOptions`<sup>Optional</sup> <a name="bundlerOptions" id="projen.web.ReactTypeScriptProjectOptions.property.bundlerOptions"></a>
 

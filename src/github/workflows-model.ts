@@ -483,7 +483,12 @@ export interface JobStrategy {
   readonly maxParallel?: number;
 }
 
-type JobMatrixValue = string | boolean | number;
+// A variable configuration in a matrix can be an array of objects.
+type JobMatrixValue =
+  | string
+  | boolean
+  | number
+  | Record<string, string | boolean | number>;
 
 /**
  * A job matrix.
