@@ -45,7 +45,7 @@ export interface ProjenrcOptions {
    * Whether to use `SWC` for ts-node.
    *
    * @default false
-   * @deprecated use `runner` instead
+   * @deprecated use `runner: ProjenRcRunner.TS_NODE_SWC` instead
    */
   readonly swc?: boolean;
 
@@ -111,8 +111,8 @@ export class Projenrc extends ProjenrcFile {
     }
 
     if (this._runner === ProjenRcRunner.TSX) {
-      // construct a "tsconfig.projenrc.json" that's based on tsconfigDev, but onlu includes the projenrc file
-      // and files under "projenrc" directory, so we can call tsc and tsx on JUST the projenrc file
+      // construct a "tsconfig.projenrc.json" that's based on tsconfigDev, but only includes the projenrc file and
+      // files under "projenrc" directory, so we can call tsc and tsx on JUST the projenrc file
       const PROJEN_TSCONFIG_FILENAME = "tsconfig.projenrc.json";
       this.projenTsconfig = new TypescriptConfig(this._tsProject, {
         fileName: PROJEN_TSCONFIG_FILENAME,

@@ -21,7 +21,7 @@ export interface ProjenrcTsOptions {
   readonly projenCodeDir?: string;
 
   /**
-   * The name of the tsconfig file that will be used by tsx
+   * The name of the tsconfig file that will be used by ts-node
    * when compiling projen source files.
    *
    * @default "tsconfig.projen.json"

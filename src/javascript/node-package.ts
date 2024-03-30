@@ -30,7 +30,7 @@ const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
 
 /**
- * Used to set the `type` field in `package.json`
+ * Used to set the `type` field in `package.json` - values other than `commonjs` will be used directly.
  * @see https://nodejs.org/api/packages.html#type
  */
 export enum NodePackageType {
@@ -611,7 +611,7 @@ export class NodePackage extends Component {
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
-      type: this.type === NodePackageType.CJS ? undefined : "module",
+      type: this.type === NodePackageType.CJS ? undefined : this.type,
       name: this.packageName,
       description: options.description,
       repository: !options.repository
