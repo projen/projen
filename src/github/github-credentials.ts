@@ -52,7 +52,7 @@ export class GithubCredentials {
    * can be specified here.
    *
    * @see https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app
-   * @see https://projen.io/github.html#github-app
+   * @see https://projen.io/docs/integrations/github/#github-app
    * @default - app id stored in "PROJEN_APP_ID" and private key stored in "PROJEN_APP_PRIVATE_KEY" with all permissions attached to the app
    */
   public static fromApp(options: GithubCredentialsAppOptions = {}) {

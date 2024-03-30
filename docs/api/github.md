@@ -8237,7 +8237,7 @@ The GitHub App must be installed on the GitHub repo, its App ID and a
 private key must be added as secrets to the repo. The name of the secrets
 can be specified here.
 
-> [https://projen.io/github.html#github-app](https://projen.io/github.html#github-app)
+> [https://projen.io/docs/integrations/github/#github-app](https://projen.io/docs/integrations/github/#github-app)
 
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.github.GithubCredentials.fromApp.parameter.options"></a>
 
