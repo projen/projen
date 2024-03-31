@@ -374,6 +374,17 @@ export interface NodeProjectOptions
   readonly buildWorkflowUploadArtifactsVariable?: string;
 
   /**
+   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine variable to use for `runs-on` on
+   * the build job
+   *
+   * @example
+   * buildWorkflowRunsOnVariable: "matrix.runsOn"
+   *
+   * @default - undefined
+   */
+  readonly buildWorkflowRunsOnVariable?: string;
+
+  /**
    * Configure which licenses should be deemed acceptable for use by dependencies
    *
    * This setting will cause the build to fail, if any prohibited or not allowed licenses ares encountered.
@@ -673,6 +684,9 @@ export class NodeProject extends GitHubProject {
         permissions: workflowPermissions,
         strategy: options.buildWorkflowJobStrategy,
         uploadArtifactsVariable: options.buildWorkflowUploadArtifactsVariable,
+        buildRunsOn: options.buildWorkflowRunsOnVariable
+          ? [`\${{ ${options.buildWorkflowRunsOnVariable} }}`]
+          : undefined,
       });
 
       this.buildWorkflow.addPostBuildSteps(
