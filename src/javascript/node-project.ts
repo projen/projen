@@ -107,7 +107,7 @@ export interface NodeProjectOptions
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
-   * Uses codecov/codecov-action@v3
+   * Uses codecov/codecov-action@v4
    * A secret is required for private repos. Configured with `@codeCovTokenSecret`
    * @default false
    */
@@ -910,7 +910,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v3",
+          uses: "codecov/codecov-action@v4",
           if: options.buildWorkflowUploadArtifactsVariable
             ? `success() && ${options.buildWorkflowUploadArtifactsVariable}`
             : undefined,
