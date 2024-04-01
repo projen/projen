@@ -54,12 +54,6 @@ export interface BuildWorkflowCommonOptions {
   readonly preBuildSteps?: JobStep[];
 
   /**
-   * Steps to execute after build.
-   * @default []
-   */
-  readonly postBuildSteps?: JobStep[];
-
-  /**
    * Build workflow triggers
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
@@ -104,6 +98,12 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Steps to execute after build.
+   * @default []
+   */
+  readonly postBuildSteps?: JobStep[];
 
   /**
    * Git identity to use for the workflow.

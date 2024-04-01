@@ -635,9 +635,7 @@ export class NodeProject extends GitHubProject {
           mutable:
             buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
-        postBuildSteps: (buildWorkflowOptions.postBuildSteps ?? []).concat(
-          options.postBuildSteps ?? []
-        ),
+        postBuildSteps: options.postBuildSteps,
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
           options.workflowRunsOnGroup

@@ -466,7 +466,6 @@ const buildWorkflowCommonOptions: build.BuildWorkflowCommonOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
-| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 
@@ -495,19 +494,6 @@ public readonly permissions: JobPermissions;
 - *Default:* `{ contents: JobPermission.WRITE }`
 
 Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.
-
----
-
-##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowCommonOptions.property.postBuildSteps"></a>
-
-```typescript
-public readonly postBuildSteps: JobStep[];
-```
-
-- *Type:* projen.github.workflows.JobStep[]
-- *Default:* []
-
-Steps to execute after build.
 
 ---
 
@@ -553,7 +539,6 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
@@ -562,6 +547,7 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 
@@ -590,19 +576,6 @@ public readonly permissions: JobPermissions;
 - *Default:* `{ contents: JobPermission.WRITE }`
 
 Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.
-
----
-
-##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowOptions.property.postBuildSteps"></a>
-
-```typescript
-public readonly postBuildSteps: JobStep[];
-```
-
-- *Type:* projen.github.workflows.JobStep[]
-- *Default:* []
-
-Steps to execute after build.
 
 ---
 
@@ -714,6 +687,19 @@ Implies that PR builds do not have anti-tamper checks.
 This is enabled by default only if `githubTokenSecret` is set. Otherwise it
 is disabled, which implies that file changes that happen during build will
 not be pushed back to the branch.
+
+---
+
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute after build.
 
 ---
 
