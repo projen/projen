@@ -694,27 +694,29 @@ test("extend github release workflow", () => {
 test("github build workflow matrix", () => {
   const buildRunsOn = "matrix.runsOn";
   const options = {
-    buildWorkflowJobStrategy: {
-      matrix: {
-        domain: {
-          runsOn: ["ubuntu-latest", "windows-latest"],
-          node: [
-            { version: "18.14.2" },
-            { version: "18.18" },
-            { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
-            { version: "20" },
+    buildWorkflowOptions: {
+      jobStrategy: {
+        matrix: {
+          domain: {
+            runsOn: ["ubuntu-latest", "windows-latest"],
+            node: [
+              { version: "18.14.2" },
+              { version: "18.18" },
+              { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+              { version: "20" },
+            ],
+          },
+          include: [
+            {
+              node: { version: "18.14.2" },
+              release: true,
+            },
           ],
         },
-        include: [
-          {
-            node: { version: "18.14.2" },
-            release: true,
-          },
-        ],
       },
+      uploadArtifactsVariable: "matrix.release",
+      runsOnVariable: buildRunsOn,
     },
-    buildWorkflowUploadArtifactsVariable: "matrix.release",
-    buildWorkflowRunsOnVariable: buildRunsOn,
   } satisfies Partial<NodeProjectOptions>;
   const project = new TestNodeProject(options);
 
@@ -730,22 +732,33 @@ test("github build workflow matrix", () => {
   const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
   const workflow = parseYaml(workflowYaml);
   expect(workflow.jobs.build.strategy.matrix).toEqual({
-    ...options.buildWorkflowJobStrategy.matrix.domain,
-    include: options.buildWorkflowJobStrategy.matrix.include,
+    ...options.buildWorkflowOptions.jobStrategy.matrix.domain,
+    include: options.buildWorkflowOptions.jobStrategy.matrix.include,
   });
   expect(workflow.jobs.build["runs-on"]).toBe(`\${{ ${buildRunsOn} }}`);
   expect(workflow.jobs["self-mutation"]?.["runs-on"]).toBe("ubuntu-latest");
 
-  expect(
-    workflow.jobs["self-mutation"]?.steps.find(
-      (step) => (step.name = "Backup artifact permissions")
-    ).if
-  ).toBe(`"success() && ${options.buildWorkflowUploadArtifactsVariable}"`);
-  expect(
-    workflow.jobs["self-mutation"]?.steps.find(
-      (step) => (step.name = "Upload artifact")
-    ).if
-  ).toBe(`"success() && ${options.buildWorkflowUploadArtifactsVariable}"`);
+  expect(Array.isArray(workflow.jobs["self-mutation"]?.steps)).toBeTruthy();
+  for (const expectedStepName of [
+    "Backup artifact permissions",
+    "Upload artifact",
+  ]) {
+    const foundStep = workflow.jobs.build?.steps.find(
+      (step: unknown) =>
+        typeof step === "object" &&
+        step !== null &&
+        "name" in step &&
+        step?.name === expectedStepName
+    );
+    expect(
+      typeof foundStep === "object" &&
+        foundStep !== null &&
+        "if" in foundStep &&
+        foundStep?.if
+    ).toBe(
+      `success() && ${options.buildWorkflowOptions.uploadArtifactsVariable}`
+    );
+  }
 });
 
 test("codecov upload added to github release workflow", () => {

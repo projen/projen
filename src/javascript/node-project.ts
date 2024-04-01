@@ -57,6 +57,79 @@ import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
 
+export interface BuildWorkflowOptions {
+  /**
+   * Build workflow triggers
+   * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   */
+  readonly triggers?: Triggers;
+
+  /**
+   * A strategy creates a build matrix for your jobs. You can define different
+   * variations to run each job in.
+   *
+   * @example
+   *  jobStrategy: {
+   *    matrix: {
+   *      domain: {
+   *        node: [
+   *          { version: "18.14.2" },
+   *          { version: "18.18" },
+   *          { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+   *          { version: "20" },
+   *        ],
+   *      },
+   *      include: [
+   *        {
+   *          node: { version: "18.14.2" },
+   *          release: true,
+   *        },
+   *      ],
+   *    },
+   *  }
+   *
+   * @default - undefined
+   */
+
+  readonly jobStrategy?: JobStrategy;
+
+  /**
+   * Node version to use in GitHub workflows
+   *
+   * May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+   *
+   * Otherwise it's just a string like "18" to set the node version used in just the build step.
+   *
+   * @example
+   * nodeVersion: "${{ matrix.node.version }}"
+   *
+   * @default - undefined
+   */
+  readonly nodeVersion?: string;
+
+  /**
+   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix
+   * to upload artifacts from
+   *
+   * @example
+   * uploadArtifactsVariable: "matrix.release"
+   *
+   * @default - undefined
+   */
+  readonly uploadArtifactsVariable?: string;
+
+  /**
+   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine variable to use for `runs-on` on
+   * the build job
+   *
+   * @example
+   * runsOnVariable: "matrix.runsOn"
+   *
+   * @default - undefined
+   */
+  readonly runsOnVariable?: string;
+}
+
 export interface NodeProjectOptions
   extends GitHubProjectOptions,
     NodePackageOptions,
@@ -316,73 +389,15 @@ export interface NodeProjectOptions
   /**
    * Build workflow triggers
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   * @deprecated use `buildWorkflowOptions.triggers`
    */
   readonly buildWorkflowTriggers?: Triggers;
 
   /**
-   * A strategy creates a build matrix for your jobs. You can define different
-   * variations to run each job in.
-   *
-   * @example
-   *  buildWorkflowJobStrategy: {
-   *    matrix: {
-   *      domain: {
-   *        node: [
-   *          { version: "18.14.2" },
-   *          { version: "18.18" },
-   *          { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
-   *          { version: "20" },
-   *        ],
-   *      },
-   *      include: [
-   *        {
-   *          node: { version: "18.14.2" },
-   *          release: true,
-   *        },
-   *      ],
-   *    },
-   *  }
-   *
+   * Build workflow options
    * @default - undefined
    */
-
-  readonly buildWorkflowJobStrategy?: JobStrategy;
-
-  /**
-   * Node version to use in GitHub workflows
-   *
-   * May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
-   *
-   * Otherwise it's just a string like "18" to set the node version used in just the build step.
-   *
-   * @example
-   * buildWorkflowNodeVersion: "${{ matrix.node.version }}"
-   *
-   * @default - undefined
-   */
-  readonly buildWorkflowNodeVersion?: string;
-
-  /**
-   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix
-   * to upload artifacts from
-   *
-   * @example
-   * buildWorkflowUploadArtifactsVariable: "matrix.release"
-   *
-   * @default - undefined
-   */
-  readonly buildWorkflowUploadArtifactsVariable?: string;
-
-  /**
-   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine variable to use for `runs-on` on
-   * the build job
-   *
-   * @example
-   * buildWorkflowRunsOnVariable: "matrix.runsOn"
-   *
-   * @default - undefined
-   */
-  readonly buildWorkflowRunsOnVariable?: string;
+  readonly buildWorkflowOptions?: BuildWorkflowOptions;
 
   /**
    * Configure which licenses should be deemed acceptable for use by dependencies
@@ -673,19 +688,23 @@ export class NodeProject extends GitHubProject {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
           mutable: options.mutableBuild ?? true,
-          nodeVersion: options.buildWorkflowNodeVersion ?? this.nodeVersion,
+          nodeVersion:
+            options.buildWorkflowOptions?.nodeVersion ?? this.nodeVersion,
         }),
         postBuildSteps: options.postBuildSteps,
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
           options.workflowRunsOnGroup
         ),
-        workflowTriggers: options.buildWorkflowTriggers,
+        workflowTriggers:
+          options.buildWorkflowOptions?.triggers ??
+          options.buildWorkflowTriggers,
         permissions: workflowPermissions,
-        strategy: options.buildWorkflowJobStrategy,
-        uploadArtifactsVariable: options.buildWorkflowUploadArtifactsVariable,
-        buildRunsOn: options.buildWorkflowRunsOnVariable
-          ? [`\${{ ${options.buildWorkflowRunsOnVariable} }}`]
+        strategy: options.buildWorkflowOptions?.jobStrategy,
+        uploadArtifactsVariable:
+          options.buildWorkflowOptions?.uploadArtifactsVariable,
+        buildRunsOn: options.buildWorkflowOptions?.runsOnVariable
+          ? [`\${{ ${options.buildWorkflowOptions?.runsOnVariable} }}`]
           : undefined,
       });
 
@@ -720,7 +739,10 @@ export class NodeProject extends GitHubProject {
           ...(options.postBuildSteps ?? []),
           ...this.renderUploadCoverageJobStep({
             ...options,
-            buildWorkflowUploadArtifactsVariable: undefined,
+            buildWorkflowOptions: {
+              ...(options.buildWorkflowOptions ?? {}),
+              uploadArtifactsVariable: undefined,
+            },
           }),
         ],
 
@@ -911,8 +933,8 @@ export class NodeProject extends GitHubProject {
         {
           name: "Upload coverage to Codecov",
           uses: "codecov/codecov-action@v3",
-          if: options.buildWorkflowUploadArtifactsVariable
-            ? `success() && ${options.buildWorkflowUploadArtifactsVariable}`
+          if: options.buildWorkflowOptions?.uploadArtifactsVariable
+            ? `success() && ${options.buildWorkflowOptions?.uploadArtifactsVariable}`
             : undefined,
           with: options.codeCovTokenSecret
             ? {
