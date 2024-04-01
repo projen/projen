@@ -54,6 +54,7 @@ describe("name", () => {
           },
           include: [
             {
+              runsOn: "ubuntu-latest",
               node: { version: "18.14.2" },
               release: true,
             },

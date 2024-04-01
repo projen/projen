@@ -708,6 +708,7 @@ test("github build workflow matrix", () => {
           },
           include: [
             {
+              runsOn: "ubuntu-latest",
               node: { version: "18.14.2" },
               release: true,
             },
