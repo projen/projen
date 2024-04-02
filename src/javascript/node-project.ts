@@ -27,6 +27,7 @@ import {
   JobPermissions,
   JobStep,
   JobStepConfiguration,
+  JobStrategy,
   Triggers,
 } from "../github/workflows-model";
 import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
@@ -55,6 +56,79 @@ import { ensureRelativePathStartsWithDot } from "../util/path";
 import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
+
+export interface BuildWorkflowOptions {
+  /**
+   * Build workflow triggers
+   * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   */
+  readonly triggers?: Triggers;
+
+  /**
+   * A strategy creates a build matrix for your jobs. You can define different
+   * variations to run each job in.
+   *
+   * @example
+   *  jobStrategy: {
+   *    matrix: {
+   *      domain: {
+   *        node: [
+   *          { version: "18.14.2" },
+   *          { version: "18.18" },
+   *          { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+   *          { version: "20" },
+   *        ],
+   *      },
+   *      include: [
+   *        {
+   *          node: { version: "18.14.2" },
+   *          release: true,
+   *        },
+   *      ],
+   *    },
+   *  }
+   *
+   * @default - undefined
+   */
+
+  readonly jobStrategy?: JobStrategy;
+
+  /**
+   * Node version to use in GitHub workflows
+   *
+   * May be used in conjuction with {@link buildWorkflowJobStrategy}, in which case you need the `${{ ... }}` syntax.
+   *
+   * Otherwise it's just a string like "18" to set the node version used in just the build step.
+   *
+   * @example
+   * nodeVersion: "${{ matrix.node.version }}"
+   *
+   * @default - undefined
+   */
+  readonly nodeVersion?: string;
+
+  /**
+   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine which run of the matrix
+   * to upload artifacts from
+   *
+   * @example
+   * uploadArtifactsVariable: "matrix.release"
+   *
+   * @default - undefined
+   */
+  readonly uploadArtifactsVariable?: string;
+
+  /**
+   * Variable to use in conjuction with {@link buildWorkflowJobStrategy} to determine variable to use for `runs-on` on
+   * the build job
+   *
+   * @example
+   * runsOnVariable: "matrix.runsOn"
+   *
+   * @default - undefined
+   */
+  readonly runsOnVariable?: string;
+}
 
 export interface NodeProjectOptions
   extends GitHubProjectOptions,
@@ -315,8 +389,15 @@ export interface NodeProjectOptions
   /**
    * Build workflow triggers
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   * @deprecated use `buildWorkflowOptions.triggers`
    */
   readonly buildWorkflowTriggers?: Triggers;
+
+  /**
+   * Build workflow options
+   * @default - undefined
+   */
+  readonly buildWorkflowOptions?: BuildWorkflowOptions;
 
   /**
    * Configure which licenses should be deemed acceptable for use by dependencies
@@ -607,14 +688,24 @@ export class NodeProject extends GitHubProject {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
           mutable: options.mutableBuild ?? true,
+          nodeVersion:
+            options.buildWorkflowOptions?.nodeVersion ?? this.nodeVersion,
         }),
         postBuildSteps: options.postBuildSteps,
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
           options.workflowRunsOnGroup
         ),
-        workflowTriggers: options.buildWorkflowTriggers,
+        workflowTriggers:
+          options.buildWorkflowOptions?.triggers ??
+          options.buildWorkflowTriggers,
         permissions: workflowPermissions,
+        strategy: options.buildWorkflowOptions?.jobStrategy,
+        uploadArtifactsVariable:
+          options.buildWorkflowOptions?.uploadArtifactsVariable,
+        buildRunsOn: options.buildWorkflowOptions?.runsOnVariable
+          ? [`\${{ ${options.buildWorkflowOptions?.runsOnVariable} }}`]
+          : undefined,
       });
 
       this.buildWorkflow.addPostBuildSteps(
@@ -646,7 +737,13 @@ export class NodeProject extends GitHubProject {
         ],
         postBuildSteps: [
           ...(options.postBuildSteps ?? []),
-          ...this.renderUploadCoverageJobStep(options),
+          ...this.renderUploadCoverageJobStep({
+            ...options,
+            buildWorkflowOptions: {
+              ...(options.buildWorkflowOptions ?? {}),
+              uploadArtifactsVariable: undefined,
+            },
+          }),
         ],
 
         workflowNodeVersion: this.nodeVersion,
@@ -836,6 +933,9 @@ export class NodeProject extends GitHubProject {
         {
           name: "Upload coverage to Codecov",
           uses: "codecov/codecov-action@v3",
+          if: options.buildWorkflowOptions?.uploadArtifactsVariable
+            ? `success() && ${options.buildWorkflowOptions?.uploadArtifactsVariable}`
+            : undefined,
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1053,12 +1153,13 @@ export class NodeProject extends GitHubProject {
             : this.package.packageManager === NodePackageManager.PNPM
             ? "pnpm"
             : "npm";
+        const nodeVersion = options.nodeVersion ?? this.nodeVersion;
         install.push({
           name: "Setup Node.js",
           uses: "actions/setup-node@v4",
           with: {
             ...(this.nodeVersion && {
-              "node-version": this.nodeVersion,
+              "node-version": nodeVersion,
             }),
             ...(this.workflowPackageCache && {
               cache,
@@ -1257,4 +1358,9 @@ export interface RenderWorkflowSetupOptions {
    * @default false
    */
   readonly mutable?: boolean;
+  /**
+   * Value to use instead of node version in the setup, for example when using a strategy matrix.
+   * @default - use the node version from the project
+   */
+  readonly nodeVersion?: string;
 }

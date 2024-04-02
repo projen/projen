@@ -7,6 +7,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - node:
+              version: 18.14.2
+            release: true
+        node:
+          - version: 18.14.2
+          - version: "18.18"
+          - version: "18.20"
+          - version: "20"
     permissions:
       contents: write
     outputs:
@@ -22,12 +33,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18.14.2
+          node-version: ${{ matrix.node.version }}
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
         run: node ./projen.js build
       - name: Upload coverage to Codecov
+        if: success() && matrix.release
         uses: codecov/codecov-action@v3
         with:
           directory: coverage
@@ -51,9 +63,11 @@ jobs:
           cat .repo.patch
           exit 1
       - name: Backup artifact permissions
+        if: success() && matrix.release
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        if: success() && matrix.release
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact

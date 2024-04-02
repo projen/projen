@@ -5171,6 +5171,145 @@ The path of the tsconfig.json file to use for bundling.
 
 ---
 
+### BuildWorkflowOptions <a name="BuildWorkflowOptions" id="projen.javascript.BuildWorkflowOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.BuildWorkflowOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.jobStrategy">jobStrategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | Node version to use in GitHub workflows. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.runsOnVariable">runsOnVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy } to determine variable to use for `runs-on` on the build job. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.triggers">triggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.uploadArtifactsVariable">uploadArtifactsVariable</a></code> | <code>string</code> | Variable to use in conjuction with {@link buildWorkflowJobStrategy } to determine which run of the matrix to upload artifacts from. |
+
+---
+
+##### `jobStrategy`<sup>Optional</sup> <a name="jobStrategy" id="projen.javascript.BuildWorkflowOptions.property.jobStrategy"></a>
+
+```typescript
+public readonly jobStrategy: JobStrategy;
+```
+
+- *Type:* projen.github.workflows.JobStrategy
+- *Default:* undefined
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+---
+
+*Example*
+
+```typescript
+ jobStrategy: {
+   matrix: {
+     domain: {
+       node: [
+         { version: "18.14.2" },
+         { version: "18.18" },
+         { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+         { version: "20" },
+       ],
+     },
+     include: [
+       {
+         node: { version: "18.14.2" },
+         release: true,
+       },
+     ],
+   },
+ }
+```
+
+
+##### `nodeVersion`<sup>Optional</sup> <a name="nodeVersion" id="projen.javascript.BuildWorkflowOptions.property.nodeVersion"></a>
+
+```typescript
+public readonly nodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Node version to use in GitHub workflows.
+
+May be used in conjuction with {@link buildWorkflowJobStrategy }, in which case you need the `${{ ... }}` syntax.
+
+Otherwise it's just a string like "18" to set the node version used in just the build step.
+
+---
+
+*Example*
+
+```typescript
+nodeVersion: "${{ matrix.node.version }}"
+```
+
+
+##### `runsOnVariable`<sup>Optional</sup> <a name="runsOnVariable" id="projen.javascript.BuildWorkflowOptions.property.runsOnVariable"></a>
+
+```typescript
+public readonly runsOnVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy } to determine variable to use for `runs-on` on the build job.
+
+---
+
+*Example*
+
+```typescript
+runsOnVariable: "matrix.runsOn"
+```
+
+
+##### `triggers`<sup>Optional</sup> <a name="triggers" id="projen.javascript.BuildWorkflowOptions.property.triggers"></a>
+
+```typescript
+public readonly triggers: Triggers;
+```
+
+- *Type:* projen.github.workflows.Triggers
+- *Default:* "{ pullRequest: {}, workflowDispatch: {} }"
+
+Build workflow triggers.
+
+---
+
+##### `uploadArtifactsVariable`<sup>Optional</sup> <a name="uploadArtifactsVariable" id="projen.javascript.BuildWorkflowOptions.property.uploadArtifactsVariable"></a>
+
+```typescript
+public readonly uploadArtifactsVariable: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Variable to use in conjuction with {@link buildWorkflowJobStrategy } to determine which run of the matrix to upload artifacts from.
+
+---
+
+*Example*
+
+```typescript
+uploadArtifactsVariable: "matrix.release"
+```
+
+
 ### Bundle <a name="Bundle" id="projen.javascript.Bundle"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.Bundle.Initializer"></a>
@@ -7969,6 +8108,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code><a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a></code> | Build workflow options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code><a href="#projen.javascript.BundlerOptions">BundlerOptions</a></code> | Options for `Bundler`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code><a href="#projen.javascript.LicenseCheckerOptions">LicenseCheckerOptions</a></code> | Configure which licenses should be deemed acceptable for use by dependencies. |
@@ -9353,7 +9493,22 @@ Define a GitHub workflow for building PRs.
 
 ---
 
-##### `buildWorkflowTriggers`<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers"></a>
+##### `buildWorkflowOptions`<sup>Optional</sup> <a name="buildWorkflowOptions" id="projen.javascript.NodeProjectOptions.property.buildWorkflowOptions"></a>
+
+```typescript
+public readonly buildWorkflowOptions: BuildWorkflowOptions;
+```
+
+- *Type:* <a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a>
+- *Default:* undefined
+
+Build workflow options.
+
+---
+
+##### ~~`buildWorkflowTriggers`~~<sup>Optional</sup> <a name="buildWorkflowTriggers" id="projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers"></a>
+
+- *Deprecated:* use `buildWorkflowOptions.triggers`
 
 ```typescript
 public readonly buildWorkflowTriggers: Triggers;
@@ -10470,6 +10625,7 @@ const renderWorkflowSetupOptions: javascript.RenderWorkflowSetupOptions = { ... 
 | --- | --- | --- |
 | <code><a href="#projen.javascript.RenderWorkflowSetupOptions.property.installStepConfiguration">installStepConfiguration</a></code> | <code>projen.github.workflows.JobStepConfiguration</code> | Configure the install step in the workflow setup. |
 | <code><a href="#projen.javascript.RenderWorkflowSetupOptions.property.mutable">mutable</a></code> | <code>boolean</code> | Should the package lockfile be updated? |
+| <code><a href="#projen.javascript.RenderWorkflowSetupOptions.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | Value to use instead of node version in the setup, for example when using a strategy matrix. |
 
 ---
 
@@ -10503,6 +10659,19 @@ public readonly mutable: boolean;
 - *Default:* false
 
 Should the package lockfile be updated?
+
+---
+
+##### `nodeVersion`<sup>Optional</sup> <a name="nodeVersion" id="projen.javascript.RenderWorkflowSetupOptions.property.nodeVersion"></a>
+
+```typescript
+public readonly nodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* use the node version from the project
+
+Value to use instead of node version in the setup, for example when using a strategy matrix.
 
 ---
 

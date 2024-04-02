@@ -255,11 +255,11 @@ function renderJobs(
         needs: arrayOrScalar(job.needs),
         if: job.if,
         permissions: kebabCaseKeys(job.permissions),
+        strategy: renderJobStrategy(job.strategy),
         concurrency: job.concurrency,
         uses: job.uses,
         with: job.with,
         secrets: job.secrets,
-        strategy: renderJobStrategy(job.strategy),
       };
     }
 
@@ -274,6 +274,7 @@ function renderJobs(
       name: job.name,
       needs: arrayOrScalar(job.needs),
       "runs-on": arrayOrScalar(job.runsOnGroup) ?? arrayOrScalar(job.runsOn),
+      strategy: renderJobStrategy(job.strategy),
       permissions: kebabCaseKeys(job.permissions),
       environment: job.environment,
       concurrency: job.concurrency,
@@ -283,7 +284,6 @@ function renderJobs(
       if: job.if,
       steps: steps.map(renderStep),
       "timeout-minutes": job.timeoutMinutes,
-      strategy: renderJobStrategy(job.strategy),
       "continue-on-error": job.continueOnError,
       container: job.container,
       services: job.services,

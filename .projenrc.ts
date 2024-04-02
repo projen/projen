@@ -80,6 +80,29 @@ const project = new cdk.JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "16.0.0", // Do not change this before a version has been EOL for a while
+
+  buildWorkflowOptions: {
+    jobStrategy: {
+      matrix: {
+        domain: {
+          node: [
+            { version: "18.14.2" },
+            { version: "18.18" },
+            { version: "18.20" }, // some tools behave differently in 18.20 than 18.18
+            { version: "20" },
+          ],
+        },
+        include: [
+          {
+            node: { version: "18.14.2" },
+            release: true,
+          },
+        ],
+      },
+    },
+    nodeVersion: "${{ matrix.node.version }}",
+    uploadArtifactsVariable: "matrix.release",
+  },
   workflowNodeVersion: "18.14.2",
 
   codeCov: true,
