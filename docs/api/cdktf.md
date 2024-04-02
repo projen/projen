@@ -3345,7 +3345,7 @@ public readonly projenDevDependency: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true
+- *Default:* true if not a subproject
 
 Indicates of "projen" should be installed as a devDependency.
 

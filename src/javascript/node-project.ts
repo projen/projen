@@ -84,7 +84,7 @@ export interface NodeProjectOptions
   /**
    * Indicates of "projen" should be installed as a devDependency.
    *
-   * @default true
+   * @default - true if not a subproject
    */
   readonly projenDevDependency?: boolean;
 
@@ -590,7 +590,7 @@ export class NodeProject extends GitHubProject {
 
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
 
-    const projen = options.projenDevDependency ?? true;
+    const projen = options.projenDevDependency ?? (this.parent ? false : true);
     if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
