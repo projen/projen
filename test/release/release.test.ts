@@ -491,7 +491,7 @@ describe("Single Project", () => {
     expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
   });
 
-  test("AWS CodeArtifact is supported by npm", () => {
+  test("AWS CodeArtifact is supported by npm and pypi", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -507,6 +507,10 @@ describe("Single Project", () => {
     release.publisher.publishToNpm({
       registry:
         "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    });
+    release.publisher.publishToPyPi({
+      twineRegistryUrl:
+        "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/pypi/my_repo/",
     });
 
     // THEN
@@ -514,7 +518,7 @@ describe("Single Project", () => {
     expect(outdir).toMatchSnapshot();
   });
 
-  test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
+  test("AWS CodeArtifact is supported by npm and pypi with AWS access keys", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -530,6 +534,14 @@ describe("Single Project", () => {
     release.publisher.publishToNpm({
       registry:
         "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+      codeArtifactOptions: {
+        accessKeyIdSecret: "OTHER_AWS_ACCESS_KEY_ID",
+        secretAccessKeySecret: "OTHER_AWS_SECRET_ACCESS_KEY",
+      },
+    });
+    release.publisher.publishToPyPi({
+      twineRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/pypi/my_repo/",
       codeArtifactOptions: {
         accessKeyIdSecret: "OTHER_AWS_ACCESS_KEY_ID",
         secretAccessKeySecret: "OTHER_AWS_SECRET_ACCESS_KEY",
@@ -585,6 +597,14 @@ describe("Single Project", () => {
     release.publisher.publishToNpm({
       registry:
         "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+      codeArtifactOptions: {
+        roleToAssume: roleArn,
+        authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+      },
+    });
+    release.publisher.publishToPyPi({
+      twineRegistryUrl:
+        "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/pypi/my_repo/",
       codeArtifactOptions: {
         roleToAssume: roleArn,
         authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
