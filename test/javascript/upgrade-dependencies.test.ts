@@ -114,7 +114,7 @@ test("ncu upgrade command does not include dependencies with any version constra
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade constructs jest jest-junit projen standard-version other-dep some-dep",
       },
       {
         "exec": "npx projen",
@@ -179,7 +179,7 @@ test("ncu upgrade command is not added if no ncu upgrades are needed", () => {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade some-dep",
+        "exec": "yarn upgrade other-dep some-dep",
       },
       {
         "exec": "npx projen",
