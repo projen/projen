@@ -960,6 +960,36 @@ Additional tools to install in the publishing job.
 
 ---
 
+### ContinuousReleaseOptions <a name="ContinuousReleaseOptions" id="projen.release.ContinuousReleaseOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.release.ContinuousReleaseOptions.Initializer"></a>
+
+```typescript
+import { release } from 'projen'
+
+const continuousReleaseOptions: release.ContinuousReleaseOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.release.ContinuousReleaseOptions.property.paths">paths</a></code> | <code>string[]</code> | Paths for which pushes should trigger a release. |
+
+---
+
+##### `paths`<sup>Optional</sup> <a name="paths" id="projen.release.ContinuousReleaseOptions.property.paths"></a>
+
+```typescript
+public readonly paths: string[];
+```
+
+- *Type:* string[]
+
+Paths for which pushes should trigger a release.
+
+---
+
 ### GitHubReleasesPublishOptions <a name="GitHubReleasesPublishOptions" id="projen.release.GitHubReleasesPublishOptions"></a>
 
 Publishing options for GitHub releases.
@@ -4021,12 +4051,18 @@ and release artifact automation
 ```typescript
 import { release } from 'projen'
 
-release.ReleaseTrigger.continuous()
+release.ReleaseTrigger.continuous(options?: ContinuousReleaseOptions)
 ```
 
 Creates a continuous release trigger.
 
 Automated releases will occur on every commit.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.release.ReleaseTrigger.continuous.parameter.options"></a>
+
+- *Type:* <a href="#projen.release.ContinuousReleaseOptions">ContinuousReleaseOptions</a>
+
+---
 
 ##### `manual` <a name="manual" id="projen.release.ReleaseTrigger.manual"></a>
 
@@ -4086,6 +4122,7 @@ release options.
 | <code><a href="#projen.release.ReleaseTrigger.property.isManual">isManual</a></code> | <code>boolean</code> | Whether or not this is a manual release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.property.changelogPath">changelogPath</a></code> | <code>string</code> | Project-level changelog file path. |
 | <code><a href="#projen.release.ReleaseTrigger.property.gitPushCommand">gitPushCommand</a></code> | <code>string</code> | Override git-push command used when releasing manually. |
+| <code><a href="#projen.release.ReleaseTrigger.property.paths">paths</a></code> | <code>string[]</code> | Paths for which pushes will trigger a release when `isContinuous` is `true`. |
 | <code><a href="#projen.release.ReleaseTrigger.property.schedule">schedule</a></code> | <code>string</code> | Cron schedule for releases. |
 
 ---
@@ -4137,6 +4174,18 @@ public readonly gitPushCommand: string;
 Override git-push command used when releasing manually.
 
 Set to an empty string to disable pushing.
+
+---
+
+##### `paths`<sup>Optional</sup> <a name="paths" id="projen.release.ReleaseTrigger.property.paths"></a>
+
+```typescript
+public readonly paths: string[];
+```
+
+- *Type:* string[]
+
+Paths for which pushes will trigger a release when `isContinuous` is `true`.
 
 ---
 
