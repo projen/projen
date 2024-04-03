@@ -158,7 +158,7 @@ test("ncu upgrade command should include dependencies with * versions, along wit
 
 test("ncu upgrade command is not added if no ncu upgrades are needed", () => {
   const project = createProject({
-    deps: ["some-dep@10.0.0"],
+    deps: ["some-dep@^10", "other-dep@10.0.0"],
     depsUpgradeOptions: {
       exclude: [
         "constructs",
