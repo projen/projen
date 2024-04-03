@@ -98,7 +98,7 @@ test("upgrades command includes all dependencies", () => {
 
 test("ncu upgrade command does not include dependencies with any version constraint, but package manager upgrade does", () => {
   const project = createProject({
-    deps: ["some-dep@10.0.0"],
+    deps: ["some-dep@^10", "other-dep@10.0.0"],
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
