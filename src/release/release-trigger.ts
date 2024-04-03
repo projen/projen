@@ -34,6 +34,13 @@ export interface ManualReleaseOptions {
   readonly gitPushCommand?: string;
 }
 
+export interface ContinuousReleaseOptions {
+  /**
+   * Paths for which pushes should trigger a release
+   */
+  readonly paths?: string[];
+}
+
 interface ReleaseTriggerOptions {
   /**
    * Project-level changelog file path.
@@ -48,6 +55,11 @@ interface ReleaseTriggerOptions {
    * @default false
    */
   readonly continuous?: boolean;
+
+  /**
+   * Paths for which pushes (continuous release) should trigger a release
+   */
+  readonly paths?: string[];
 
   /**
    * Cron schedule for release.
@@ -119,9 +131,10 @@ export class ReleaseTrigger {
    *
    * Automated releases will occur on every commit.
    */
-  public static continuous() {
+  public static continuous(options: ContinuousReleaseOptions = {}) {
     return new ReleaseTrigger({
       continuous: true,
+      paths: options.paths,
     });
   }
 
@@ -145,6 +158,11 @@ export class ReleaseTrigger {
   public readonly isContinuous: boolean;
 
   /**
+   * Paths for which pushes will trigger a release when `isContinuous` is `true`
+   */
+  public readonly paths?: string[];
+
+  /**
    * Override git-push command used when releasing manually.
    *
    * Set to an empty string to disable pushing.
@@ -153,6 +171,7 @@ export class ReleaseTrigger {
 
   private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
+    this.paths = options.paths;
     this.schedule = options.schedule;
     this.changelogPath = options.changelogPath;
     this.gitPushCommand = options.gitPushCommand;

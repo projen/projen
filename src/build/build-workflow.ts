@@ -39,7 +39,35 @@ const IS_FORK =
 const NOT_FORK = `!(${IS_FORK})`;
 const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 
-export interface BuildWorkflowOptions {
+export interface BuildWorkflowCommonOptions {
+  /**
+   * Name of the buildfile (e.g. "build" becomes "build.yml").
+   *
+   * @default "build"
+   */
+  readonly name?: string;
+
+  /**
+   * Steps to execute before the build.
+   * @default []
+   */
+  readonly preBuildSteps?: JobStep[];
+
+  /**
+   * Build workflow triggers
+   * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   */
+  readonly workflowTriggers?: Triggers;
+
+  /**
+   * Permissions granted to the build job
+   * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
+   * @default `{ contents: JobPermission.WRITE }`
+   */
+  readonly permissions?: JobPermissions;
+}
+
+export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   /**
    * The task to execute in order to build the project.
    */
@@ -49,13 +77,6 @@ export interface BuildWorkflowOptions {
    * A name of a directory that includes build artifacts.
    */
   readonly artifactsDirectory: string;
-
-  /**
-   * Name of the buildfile (e.g. "build" becomes "build.yml").
-   *
-   * @default "build"
-   */
-  readonly name?: string;
 
   /**
    * The container image to use for builds.
@@ -77,12 +98,6 @@ export interface BuildWorkflowOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
-
-  /**
-   * Steps to execute before the build.
-   * @default []
-   */
-  readonly preBuildSteps?: JobStep[];
 
   /**
    * Steps to execute after build.
@@ -116,19 +131,6 @@ export interface BuildWorkflowOptions {
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOnGroup?: GroupRunnerOptions;
-
-  /**
-   * Build workflow triggers
-   * @default "{ pullRequest: {}, workflowDispatch: {} }"
-   */
-  readonly workflowTriggers?: Triggers;
-
-  /**
-   * Permissions granted to the build job
-   * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
-   * @default `{ contents: JobPermission.WRITE }`
-   */
-  readonly permissions?: JobPermissions;
 }
 
 export class BuildWorkflow extends Component {

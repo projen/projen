@@ -10,7 +10,7 @@ import {
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { BuildWorkflow } from "../build";
+import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
 import { PROJEN_DIR } from "../common";
 import {
   AutoMerge,
@@ -94,6 +94,11 @@ export interface NodeProjectOptions
    */
   readonly buildWorkflow?: boolean;
   /**
+   * Options for PR build workflow.
+   */
+  readonly buildWorkflowOptions?: BuildWorkflowOptions;
+
+  /**
    * Automatically update files modified during builds to pull-request branches. This means
    * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
    * before a PR is merged.
@@ -101,6 +106,8 @@ export interface NodeProjectOptions
    * Implies that PR builds do not have anti-tamper checks.
    *
    * @default true
+   *
+   * @deprecated - Use `buildWorkflowOptions.mutableBuild`
    */
   readonly mutableBuild?: boolean;
 
@@ -315,6 +322,8 @@ export interface NodeProjectOptions
   /**
    * Build workflow triggers
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   *
+   * @deprecated - Use `buildWorkflowOptions.workflowTriggers`
    */
   readonly buildWorkflowTriggers?: Triggers;
 
@@ -326,6 +335,22 @@ export interface NodeProjectOptions
    * @default - no license checks are run during the build and all licenses will be accepted
    */
   readonly checkLicenses?: LicenseCheckerOptions;
+}
+
+/**
+ * Build workflow options for NodeProject
+ */
+export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
+  /**
+   * Automatically update files modified during builds to pull-request branches.
+   * This means that any files synthesized by projen or e.g. test snapshots will
+   * always be up-to-date before a PR is merged.
+   *
+   * Implies that PR builds do not have anti-tamper checks.
+   *
+   * @default true
+   */
+  readonly mutableBuild?: boolean;
 }
 
 /**
@@ -595,6 +620,9 @@ export class NodeProject extends GitHubProject {
       idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
     };
 
+    const buildWorkflowOptions: BuildWorkflowOptions =
+      options.buildWorkflowOptions ?? {};
+
     if (buildEnabled && (this.github || GitHub.of(this.root))) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
@@ -606,8 +634,9 @@ export class NodeProject extends GitHubProject {
           installStepConfiguration: {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
-          mutable: options.mutableBuild ?? true,
-        }),
+          mutable:
+            buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
+        }).concat(buildWorkflowOptions.preBuildSteps ?? []),
         postBuildSteps: options.postBuildSteps,
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
@@ -615,6 +644,7 @@ export class NodeProject extends GitHubProject {
         ),
         workflowTriggers: options.buildWorkflowTriggers,
         permissions: workflowPermissions,
+        ...buildWorkflowOptions,
       });
 
       this.buildWorkflow.addPostBuildSteps(
