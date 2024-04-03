@@ -73,6 +73,20 @@ describe("continuous release", () => {
   test("does not have a changelog", () => {
     expect(releaseTrigger.changelogPath).toBeUndefined();
   });
+
+  test("does not set path by default", () => {
+    expect(releaseTrigger.paths).toBeUndefined();
+  });
+
+  describe("path configuration", () => {
+    beforeAll(() => {
+      releaseTrigger = ReleaseTrigger.continuous({ paths: ["foo/**"] });
+    });
+
+    test("it has path configured", () => {
+      expect(releaseTrigger.paths).toEqual(["foo/**"]);
+    });
+  });
 });
 
 describe("scheduled release", () => {

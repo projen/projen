@@ -707,7 +707,7 @@ export class Release extends Component {
           ? [{ cron: this.releaseTrigger.schedule }]
           : undefined,
         push: this.releaseTrigger.isContinuous
-          ? { branches: [branchName] }
+          ? { branches: [branchName], paths: this.releaseTrigger.paths }
           : undefined,
         workflowDispatch: {}, // allow manual triggering
       });

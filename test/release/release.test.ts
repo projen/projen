@@ -230,6 +230,60 @@ describe("Single Project", () => {
     });
   });
 
+  test("continuous release on every push", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.continuous(),
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow).toMatchObject({
+      on: {
+        push: {
+          branches: ["main"],
+        },
+      },
+    });
+    expect(workflow.on.push.paths).toBeUndefined();
+  });
+
+  test("continuous release on pushes to certain paths", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.continuous({ paths: ["sub/**"] }),
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow).toMatchObject({
+      on: {
+        push: {
+          branches: ["main"],
+          paths: ["sub/**"],
+        },
+      },
+    });
+  });
+
   test("manual release publish happens after anti-tamper check", () => {
     // GIVEN
     const project = new TestProject();
