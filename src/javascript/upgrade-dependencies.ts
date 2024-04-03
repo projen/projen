@@ -372,7 +372,7 @@ export class UpgradeDependencies extends Component {
     const dependencies = [];
 
     const deps = this.project.deps.all
-      // remove those that have a pinned version (unless includeConstraint is true)
+      // remove those that have a constraint version (unless includeConstraint is true)
       .filter(
         (d) =>
           includeConstraint || this.packageIsUsingDefaultVersioning(d.version)
