@@ -323,6 +323,55 @@ permissions-backup.acl
 "
 `;
 
+exports[`provided preBuildSteps for build workflow get combined with setup steps 1`] = `
+[
+  {
+    "name": "Checkout",
+    "uses": "actions/checkout@v4",
+    "with": {
+      "ref": "\${{ github.event.pull_request.head.ref }}",
+      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+    },
+  },
+  {
+    "name": "Install dependencies",
+    "run": "yarn install --check-files",
+  },
+  {
+    "name": "hello",
+    "run": "echo hello",
+  },
+  {
+    "name": "build",
+    "run": "npx projen build",
+  },
+  {
+    "id": "self_mutation",
+    "name": "Find mutations",
+    "run": "git add .
+git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "working-directory": "./",
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v4",
+    "with": {
+      "name": ".repo.patch",
+      "overwrite": true,
+      "path": ".repo.patch",
+    },
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Fail build on mutation",
+    "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
+cat .repo.patch
+exit 1",
+  },
+]
+`;
+
 exports[`renovatebot ignored dependency overrides 1`] = `
 {
   "extends": [
