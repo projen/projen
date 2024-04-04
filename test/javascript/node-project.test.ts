@@ -770,6 +770,23 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
 });
 
+test("provided preBuildSteps for build workflow get combined with setup steps", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    buildWorkflowOptions: {
+      preBuildSteps: [{ name: "hello", run: "echo hello" }],
+    },
+  });
+
+  // THEN
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  expect(workflow.jobs.build.steps).toMatchSnapshot();
+  expect(workflow.jobs.build.steps[0]?.name).toEqual("Checkout");
+  expect(workflow.jobs.build.steps[1]?.name).toEqual("Install dependencies");
+  expect(workflow.jobs.build.steps[2]?.name).toEqual("hello");
+});
+
 test("projen synth is only executed for subprojects", () => {
   // GIVEN
   const root = new TestNodeProject();
