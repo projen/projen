@@ -1171,7 +1171,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,projen,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-docgen,jsii-pacmak,projen,typescript"
         },
         {
           "exec": "yarn install --check-files"
@@ -2231,7 +2231,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,jsii,json-schema-to-typescript,projen,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-docgen,jsii-pacmak,json-schema-to-typescript,projen,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
         },
         {
           "exec": "yarn install --check-files"
