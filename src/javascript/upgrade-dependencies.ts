@@ -374,7 +374,8 @@ export class UpgradeDependencies extends Component {
     const deps = this.project.deps.all
       // remove those that have a constraint version (unless includeConstraint is true)
       .filter(
-        (d) => includeConstraint || this.isProjenManagedVersion(d.version)
+        (d) =>
+          includeConstraint || this.packageCanBeUpgradedInPackageJson(d.version)
       )
       // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
@@ -391,14 +392,16 @@ export class UpgradeDependencies extends Component {
   }
 
   /**
-   * Projen fully manages a package's version when either the version is omitted, or set to "*".
+   * Projen can alter a package's version in package.json when either the version is omitted, or set to "*".
    * Otherwise, the exact version selected is placed in the package.json file and upgrading is handled through the package manager
    * rather than npm-check-updates.
    *
    * @param version semver from DependencyCoordinates.version, may be undefined
    * @returns whether the version is the default versioning behavior
    */
-  private isProjenManagedVersion(version: string | undefined): boolean {
+  private packageCanBeUpgradedInPackageJson(
+    version: string | undefined
+  ): boolean {
     // No version means "latest"
     return !version || version === "*";
   }
