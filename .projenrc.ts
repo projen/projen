@@ -41,8 +41,8 @@ const project = new cdk.JsiiProject({
     },
   },
 
-  jsiiVersion: "5.3.x",
-  typescriptVersion: "5.3.x",
+  jsiiVersion: "5.4.x",
+  typescriptVersion: "5.4.x",
 
   deps: ["constructs@^10.0.0"],
 
