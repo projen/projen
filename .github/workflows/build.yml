@@ -6,7 +6,7 @@ on:
   workflow_dispatch: {}
 jobs:
   build:
-    runs-on: ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner.os }}
     permissions:
       contents: write
     outputs:
@@ -62,12 +62,11 @@ jobs:
     strategy:
       matrix:
         runner:
-          - ubuntu-latest
-          - windows-latest
-        experimental:
-          - false
-          - true
-    continue-on-error: ${{ matrix.experimental }}
+          - os: ubuntu-latest
+            experimental: false
+          - os: windows-latest
+            experimental: true
+    continue-on-error: ${{ matrix.runner.experimental }}
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
