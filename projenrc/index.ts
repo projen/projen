@@ -344,7 +344,6 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
   const buildWorkflow = project.tryFindObjectFile(
     ".github/workflows/build.yml"
   );
-  // console.log(buildWorkflow);
   buildWorkflow?.patch(
     JsonPatch.add("/jobs/build/strategy", {
       matrix: {
