@@ -601,6 +601,11 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       {
+        "name": "react-scripts",
+        "type": "build",
+        "version": "^5",
+      },
+      {
         "name": "typescript",
         "type": "build",
         "version": "^4.0.3",
@@ -622,11 +627,6 @@ tsconfig.tsbuildinfo
       {
         "name": "react-dom",
         "type": "runtime",
-      },
-      {
-        "name": "react-scripts",
-        "type": "runtime",
-        "version": "^5",
       },
       {
         "name": "web-vitals",
@@ -793,7 +793,7 @@ tsconfig.tsbuildinfo
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen typescript react react-dom react-scripts web-vitals",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts typescript react react-dom web-vitals",
           },
           {
             "exec": "npx projen",
@@ -1035,7 +1035,6 @@ tsconfig.tsbuildinfo
     "dependencies": {
       "react": "*",
       "react-dom": "*",
-      "react-scripts": "^5",
       "web-vitals": "*",
     },
     "devDependencies": {
@@ -1053,6 +1052,7 @@ tsconfig.tsbuildinfo
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "projen": "*",
+      "react-scripts": "^5",
       "typescript": "^4.0.3",
     },
     "eslintConfig": {
