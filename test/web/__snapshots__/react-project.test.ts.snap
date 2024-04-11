@@ -396,6 +396,11 @@ permissions-backup.acl
         "type": "build",
       },
       {
+        "name": "react-scripts",
+        "type": "build",
+        "version": "^5",
+      },
+      {
         "name": "standard-version",
         "type": "build",
         "version": "^9",
@@ -407,11 +412,6 @@ permissions-backup.acl
       {
         "name": "react-dom",
         "type": "runtime",
-      },
-      {
-        "name": "react-scripts",
-        "type": "runtime",
-        "version": "^5",
       },
       {
         "name": "web-vitals",
@@ -628,7 +628,7 @@ permissions-backup.acl
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event constructs projen standard-version react react-dom react-scripts web-vitals",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event constructs projen react-scripts standard-version react react-dom web-vitals",
           },
           {
             "exec": "npx projen",
@@ -861,7 +861,6 @@ permissions-backup.acl
     "dependencies": {
       "react": "*",
       "react-dom": "*",
-      "react-scripts": "^5",
       "web-vitals": "*",
     },
     "devDependencies": {
@@ -870,6 +869,7 @@ permissions-backup.acl
       "@testing-library/user-event": "*",
       "constructs": "^10.0.0",
       "projen": "*",
+      "react-scripts": "^5",
       "standard-version": "^9",
     },
     "eslintConfig": {

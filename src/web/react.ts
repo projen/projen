@@ -205,8 +205,9 @@ export class ReactComponent extends Component {
     // No compile for react app
     project.compileTask.reset();
 
-    project.addDeps("react", "react-dom", "react-scripts@^5", "web-vitals");
+    project.addDeps("react", "react-dom", "web-vitals");
     project.addDevDeps(
+      "react-scripts@^5",
       "@testing-library/jest-dom",
       "@testing-library/react",
       "@testing-library/user-event"
