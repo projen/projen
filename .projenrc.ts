@@ -159,7 +159,6 @@ setupProjenBootstrap(project, bootstrapScriptFile);
 // because snapshots include the projen marker...
 project.addExcludeFromCleanup("test/**");
 
-// TODO: generic function, not scoped for specific tools
 setupGitignore(project);
 
 setupMarkdown(project);
@@ -174,7 +173,6 @@ setupDevcontainer(project);
 
 setupAllContributors(project);
 
-// TODO: generic function, not scoped for specific tools
 setupNpmignore(project);
 
 setupIntegTest(project);
