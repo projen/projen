@@ -4486,7 +4486,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -7603,7 +7603,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -11856,7 +11856,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -14760,7 +14760,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -17723,7 +17723,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -21488,7 +21488,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -24118,7 +24118,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -26633,7 +26633,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -29136,7 +29136,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -32701,7 +32701,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -35204,7 +35204,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -37850,7 +37850,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -40474,7 +40474,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
