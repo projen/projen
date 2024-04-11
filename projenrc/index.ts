@@ -346,15 +346,13 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
   );
   // console.log(buildWorkflow);
   buildWorkflow?.patch(
-    JsonPatch.add("/jobs/build", {
-      "runs-on": "${{ matrix.runner }}",
-      "continue-on-error": "${{ matrix.experimental }}",
-      strategy: {
-        matrix: {
-          runner: ["ubuntu-latest", "windows-latest"],
-          experimental: [false, true],
-        },
+    JsonPatch.add("/jobs/build/strategy", {
+      matrix: {
+        runner: ["ubuntu-latest", "windows-latest"],
+        experimental: [false, true],
       },
-    })
+    }),
+    JsonPatch.add("/jobs/build/runs-on", "${{ matrix.runner }}"),
+    JsonPatch.add("/jobs/build/continue-on-error", "${{ matrix.experimental }}")
   );
 }
