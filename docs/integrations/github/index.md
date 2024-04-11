@@ -44,7 +44,9 @@ Add the token as a secret to your repo under the name `PROJEN_GITHUB_TOKEN`.
 
 Follow the [GitHub docs instructions](https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app) for creating a GitHub App. Enable read & write permission for "Contents" and "Pull Request" scopes.
 
-Add the App ID as a secret to your repo under the name `PROJEN_APP_ID` and the private key you generate as a secret to your repo under the name `PROJEN_APP_PRIVATE_KEY`.
+Add the App ID as a secret to your repo under the name `PROJEN_APP_ID` and generate a private key for the app to store as a secret to your repo under the name `PROJEN_APP_PRIVATE_KEY`.
+
+[Install the application](https://docs.github.com/en/apps/using-github-apps/installing-your-own-github-app) ensuring that the repo(s) that you wish to grant access to are selected.
 
 Then, configure your projenrc file to use the GitHub app for API access:
 
