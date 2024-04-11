@@ -630,6 +630,9 @@ export class NodeProject extends GitHubProject {
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,
         mutableBuild: options.mutableBuild,
+        workflowTriggers: options.buildWorkflowTriggers,
+        permissions: workflowPermissions,
+        ...buildWorkflowOptions,
         preBuildSteps: this.renderWorkflowSetup({
           installStepConfiguration: {
             workingDirectory: this.determineInstallWorkingDirectory(),
@@ -642,9 +645,6 @@ export class NodeProject extends GitHubProject {
           options.workflowRunsOn,
           options.workflowRunsOnGroup
         ),
-        workflowTriggers: options.buildWorkflowTriggers,
-        permissions: workflowPermissions,
-        ...buildWorkflowOptions,
       });
 
       this.buildWorkflow.addPostBuildSteps(

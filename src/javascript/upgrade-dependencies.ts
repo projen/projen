@@ -372,8 +372,11 @@ export class UpgradeDependencies extends Component {
     const dependencies = [];
 
     const deps = this.project.deps.all
-      // remove those that have a pinned version
-      .filter((d) => includeConstraint || !(d.version && d.version[0] === "^"))
+      // remove those that have a constraint version (unless includeConstraint is true)
+      .filter(
+        (d) =>
+          includeConstraint || this.packageCanBeUpgradedInPackageJson(d.version)
+      )
       // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
 
@@ -386,6 +389,21 @@ export class UpgradeDependencies extends Component {
     }
 
     return dependencies.map((d) => d.name);
+  }
+
+  /**
+   * Projen can alter a package's version in package.json when either the version is omitted, or set to "*".
+   * Otherwise, the exact version selected is placed in the package.json file and upgrading is handled through the package manager
+   * rather than npm-check-updates.
+   *
+   * @param version semver from DependencyCoordinates.version, may be undefined
+   * @returns whether the version is the default versioning behavior
+   */
+  private packageCanBeUpgradedInPackageJson(
+    version: string | undefined
+  ): boolean {
+    // No version means "latest"
+    return !version || version === "*";
   }
 
   private createWorkflow(

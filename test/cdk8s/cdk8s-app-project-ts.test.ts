@@ -186,7 +186,7 @@ test("upgrade task ignores pinned versions", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,cdk8s-cli,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,cdk8s-plus-22,cdk8s,constructs",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
       },
       {
         "exec": "yarn install --check-files",
