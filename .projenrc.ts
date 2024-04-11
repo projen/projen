@@ -1,24 +1,26 @@
 import {
   setupAllContributors,
-  setupBootstrap,
+  setupProjenBootstrap,
   setupBundleTaskRunner,
   setupCheckLicenses,
   setupDevcontainer,
-  setupDocs,
-  setupFileExclusions as setupGitignore,
+  setupJsiiDocgen,
+  setupGitignore,
   setupGitpod,
   setupIntegTest,
   setupMarkdown,
   setupMergify,
   setupNpmignore,
-  setupUpgrade,
+  setupUpgradeDependencies,
   setupVscode,
+  setupGithubWorkflowWindows,
 } from "./projenrc";
-import { cdk, ProjectTree, ReleasableCommits } from "./src";
+import { ProjectTree, ReleasableCommits } from "./src";
+import { JsiiProject } from "./src/cdk";
 
 const bootstrapScriptFile = "projen.js";
 
-const project = new cdk.JsiiProject({
+const project = new JsiiProject({
   name: "projen",
   description: "CDK for software projects",
   repositoryUrl: "https://github.com/projen/projen.git",
@@ -148,15 +150,16 @@ const project = new cdk.JsiiProject({
 
 setupCheckLicenses(project);
 
-setupUpgrade(project);
+setupUpgradeDependencies(project);
 
-setupDocs(project);
+setupJsiiDocgen(project);
 
-setupBootstrap(project, bootstrapScriptFile);
+setupProjenBootstrap(project, bootstrapScriptFile);
 
 // because snapshots include the projen marker...
 project.addExcludeFromCleanup("test/**");
 
+// TODO: generic function, not scoped for specific tools
 setupGitignore(project);
 
 setupMarkdown(project);
@@ -171,10 +174,13 @@ setupDevcontainer(project);
 
 setupAllContributors(project);
 
+// TODO: generic function, not scoped for specific tools
 setupNpmignore(project);
 
 setupIntegTest(project);
 setupBundleTaskRunner(project);
+
+setupGithubWorkflowWindows(project);
 
 // we are projen, so re-synth after compiling.
 // fixes feedback loop where projen contibutors run "build"

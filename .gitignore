@@ -57,7 +57,7 @@ tsconfig.json
 !/.github/workflows/upgrade-bundled-main.yml
 !/.github/workflows/upgrade-main.yml
 !/projen.js
-!test/inventory/**
+!/test/inventory/**
 /.idea
 **/.tool-versions
 !/.markdownlint.json

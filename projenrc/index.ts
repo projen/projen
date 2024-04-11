@@ -1,14 +1,18 @@
-import {
-  DependencyType,
-  JsonFile,
-  TextFile,
-  cdk,
-  github,
-  javascript,
-} from "../src";
+import { DependencyType, JsonFile, JsonPatch, Project, TextFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
+import { TaskWorkflow } from "../src/github";
+import {
+  NodeProject,
+  UpgradeDependencies,
+  UpgradeDependenciesSchedule,
+} from "../src/javascript";
 
-export function setupIntegTest(project: cdk.JsiiProject) {
+/**
+ * Add integration tests tasks to a project
+ *
+ * @param project The project to add the tasks to
+ */
+export function setupIntegTest(project: NodeProject) {
   const packagePythonTask = project.tasks.tryFind("package:python");
 
   const pythonCompatTask = project.addTask("integ:python-compat", {
@@ -25,14 +29,17 @@ export function setupIntegTest(project: cdk.JsiiProject) {
   }
   integTask.spawn(pythonCompatTask);
 
-  if (project.buildWorkflow) {
-    project.buildWorkflow.addPostBuildJobTask(integTask, {
-      tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
-    });
-  }
+  project.buildWorkflow?.addPostBuildJobTask(integTask, {
+    tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
+  });
 }
 
-export function setupBundleTaskRunner(project: cdk.JsiiProject) {
+/**
+ * Add a task to bundle the run-task script needed for "projen eject"
+ *
+ * @param project The project to add the task to
+ */
+export function setupBundleTaskRunner(project: Project) {
   // build `run-task` script needed for "projen eject" functionality
   // TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
   const taskRunnerPath = "lib/run-task.js";
@@ -50,8 +57,14 @@ export function setupBundleTaskRunner(project: cdk.JsiiProject) {
   project.postCompileTask.spawn(task);
 }
 
-export function setupBootstrap(
-  project: cdk.JsiiProject,
+/**
+ * Setup the projen bootstrap script
+ *
+ * @param project The project to add the tasks to
+ * @param bootstrapScriptFile The path to the bootstrap script
+ */
+export function setupProjenBootstrap(
+  project: NodeProject,
   bootstrapScriptFile: string
 ) {
   // this script is what we use as the projen command in this project
@@ -102,19 +115,23 @@ const args = process.argv.slice(2).join(" ");
 execCommand(\`node bin/projen \${args}\`);
 `.split("\n"),
   });
-  if (project.npmignore) {
-    project.npmignore.exclude(`/${bootstrapScript.path}`);
-  }
+
+  project.npmignore?.exclude(`/${bootstrapScript.path}`);
 }
 
-export function setupCheckLicenses(project: cdk.JsiiProject) {
+/**
+ * Add a task to check licenses
+ *
+ * @param project The project to add the task to
+ */
+export function setupCheckLicenses(project: NodeProject) {
   if (project.github) {
     const installCiTask = project.tasks.tryFind("install:ci");
     const checkLicensesTask = project.tasks.tryFind("check-licenses");
 
     if (installCiTask && checkLicensesTask) {
       // Run license checker as a separate CI job
-      new github.TaskWorkflow(project.github, {
+      new TaskWorkflow(project.github, {
         name: "check-licenses",
         jobId: "check-licenses",
         triggers: {
@@ -135,7 +152,12 @@ export function setupCheckLicenses(project: cdk.JsiiProject) {
   }
 }
 
-export function setupDocs(project: cdk.JsiiProject) {
+/**
+ * Add a task to generate API docs
+ *
+ * @param project The project to add the task to
+ */
+export function setupJsiiDocgen(project: NodeProject) {
   const docgenTask = project.tasks.tryFind("docgen");
 
   if (docgenTask) {
@@ -145,16 +167,19 @@ export function setupDocs(project: cdk.JsiiProject) {
   }
 
   // ignoring the entire docusaurus folder because it's not needed in the published package
-  if (project.npmignore) {
-    project.npmignore.exclude("/docusaurus/");
-  }
+  project.npmignore?.exclude("/docusaurus/");
 }
 
-export function setupUpgrade(project: cdk.JsiiProject) {
+/**
+ * Add a task to upgrade dependencies
+ *
+ * @param project The project to add the task to
+ */
+export function setupUpgradeDependencies(project: NodeProject) {
   // Upgrade Dependencies in two parts:
   // a) Upgrade bundled dependencies as a releasable fix
   // b) Upgrade devDependencies as a chore
-  new javascript.UpgradeDependencies(project, {
+  new UpgradeDependencies(project, {
     taskName: "upgrade-bundled",
     types: [DependencyType.BUNDLED],
     semanticCommit: "fix",
@@ -162,12 +187,10 @@ export function setupUpgrade(project: cdk.JsiiProject) {
     workflowOptions: {
       labels: ["auto-approve"],
       // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
-      schedule: javascript.UpgradeDependenciesSchedule.expressions([
-        "0 12 * * *",
-      ]),
+      schedule: UpgradeDependenciesSchedule.expressions(["0 12 * * *"]),
     },
   });
-  new javascript.UpgradeDependencies(project, {
+  new UpgradeDependencies(project, {
     taskName: "upgrade",
     exclude: [
       // exclude the bundled deps
@@ -185,13 +208,23 @@ export function setupUpgrade(project: cdk.JsiiProject) {
   });
 }
 
-export function setupFileExclusions(project: cdk.JsiiProject) {
-  project.gitignore.include("test/inventory/**");
+/**
+ * Add only the gitignore inclusions and exclusions rules that are not related to other tools
+ *
+ * @param project The project to add the rules to
+ */
+export function setupGitignore(project: Project) {
+  project.gitignore.include("/test/inventory/**");
   project.gitignore.exclude("/.idea");
   project.gitignore.exclude("**/.tool-versions");
 }
 
-export function setupMarkdown(project: cdk.JsiiProject) {
+/**
+ * Setup markdown readme macros and markdownlint
+ *
+ * @param project The project to add the rules to
+ */
+export function setupMarkdown(project: NodeProject) {
   // expand markdown macros in readme
   const macros = project.addTask("readme-macros");
   macros.exec("mv README.md README.md.bak");
@@ -208,81 +241,116 @@ export function setupMarkdown(project: cdk.JsiiProject) {
       },
     },
   });
-  if (project.npmignore) {
-    project.npmignore.exclude("/.markdownlint.json");
-  }
+  project.npmignore?.exclude("/.markdownlint.json");
 }
 
-export function setupVscode(project: cdk.JsiiProject) {
-  if (project.vscode) {
-    project.vscode.launchConfiguration.addConfiguration({
-      type: "pwa-node",
-      request: "launch",
-      name: "projen CLI",
-      skipFiles: ["<node_internals>/**"],
-      program: "${workspaceFolder}/lib/cli/index.js",
-      outFiles: ["${workspaceFolder}/lib/**/*.js"],
-    });
-  }
+/**
+ * Setup vscode configuration
+ *
+ * @param project The project to add the configuration to
+ */
+export function setupVscode(project: NodeProject) {
+  project.vscode?.launchConfiguration.addConfiguration({
+    type: "pwa-node",
+    request: "launch",
+    name: "projen CLI",
+    skipFiles: ["<node_internals>/**"],
+    program: "${workspaceFolder}/lib/cli/index.js",
+    outFiles: ["${workspaceFolder}/lib/**/*.js"],
+  });
 }
 
-export function setupMergify(project: cdk.JsiiProject) {
-  if (project.github && project.github.mergify) {
-    project.github.mergify.addRule({
-      name: "Label core contributions",
-      actions: {
-        label: {
-          add: ["contribution/core"],
-        },
+/**
+ * Setup mergify rules
+ * @param project The project to add the rules to
+ */
+export function setupMergify(project: NodeProject) {
+  project.github?.mergify?.addRule({
+    name: "Label core contributions",
+    actions: {
+      label: {
+        add: ["contribution/core"],
       },
-      conditions: ["author~=^(eladb|Chriscbr)$", "label!=contribution/core"],
-    });
-  }
+    },
+    conditions: ["author~=^(eladb|Chriscbr)$", "label!=contribution/core"],
+  });
 }
 
-export function setupGitpod(project: cdk.JsiiProject) {
-  if (project.gitpod) {
-    project.gitpod.addCustomTask({
-      name: "Setup",
-      init: "yarn install",
-      prebuild: "bash ./projen.bash",
-      command: "npx projen build",
-    });
-  }
+/**
+ * Setup gitpod configuration
+ *
+ * @param project The project to add the configuration to
+ */
+export function setupGitpod(project: NodeProject) {
+  project.gitpod?.addCustomTask({
+    name: "Setup",
+    init: "yarn install",
+    prebuild: "bash ./projen.bash",
+    command: "npx projen build",
+  });
 }
 
-export function setupDevcontainer(project: cdk.JsiiProject) {
+/**
+ * Setup devcontainer configuration
+ *
+ * @param project The project to add the configuration to
+ */
+export function setupDevcontainer(project: NodeProject) {
   const setup = project.addTask("devenv:setup");
   setup.exec("yarn install");
   setup.spawn(project.buildTask);
-  if (project.devContainer) {
-    project.devContainer.addTasks(setup);
-  }
-  if (project.npmignore) {
-    project.npmignore.exclude("/.devcontainer.json");
-  }
+  project.devContainer?.addTasks(setup);
+
+  project.npmignore?.exclude("/.devcontainer.json");
 }
 
-export function setupAllContributors(project: cdk.JsiiProject) {
+/**
+ * Setup all-contributors
+ *
+ * @param project The project to add the configuration to
+ */
+export function setupAllContributors(project: NodeProject) {
   project.addTask("contributors:update", {
     exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | xargs -n1 -I{} all-contributors add {} code',
   });
-  if (project.npmignore) {
-    project.npmignore.exclude("/.all-contributorsrc");
-  }
+  project.npmignore?.exclude("/.all-contributorsrc");
 }
 
-export function setupNpmignore(project: cdk.JsiiProject) {
-  if (project.npmignore) {
-    project.npmignore.exclude("/docs/");
-    project.npmignore.exclude("/logo/");
-    project.npmignore.exclude("/rfcs/");
-    project.npmignore.exclude("/scripts/");
-    project.npmignore.exclude("/ARCHITECTURE.md");
-    project.npmignore.exclude("/CODE_OF_CONDUCT.md");
-    project.npmignore.exclude("/CONTRIBUTING.md");
-    project.npmignore.exclude("/VISION.md");
-    project.npmignore.exclude("/SECURITY.md");
-    project.npmignore.exclude("/.gitpod.yml");
-  }
+/**
+ * Add the npmignore rules that are not related to other tools
+ *
+ * @param project The project to add the rules to
+ */
+export function setupNpmignore(project: NodeProject) {
+  project.npmignore?.exclude("/docs/");
+  project.npmignore?.exclude("/logo/");
+  project.npmignore?.exclude("/rfcs/");
+  project.npmignore?.exclude("/scripts/");
+  project.npmignore?.exclude("/ARCHITECTURE.md");
+  project.npmignore?.exclude("/CODE_OF_CONDUCT.md");
+  project.npmignore?.exclude("/CONTRIBUTING.md");
+  project.npmignore?.exclude("/VISION.md");
+  project.npmignore?.exclude("/SECURITY.md");
+  project.npmignore?.exclude("/.gitpod.yml");
+}
+
+/**
+ * Setup the github workflow for windows
+ *
+ * @param project The project to add the configuration to
+ */
+export function setupGithubWorkflowWindows(project: NodeProject) {
+  // TODO: workflows should expose file path. Use workflow path instead of hardcoded string
+  const buildWorkflow = project.tryFindObjectFile(
+    ".github/workflows/build.yml"
+  );
+  // console.log(buildWorkflow);
+  buildWorkflow?.patch(
+    JsonPatch.add("/jobs/build/strategy", {
+      matrix: {
+        runner: ["ubuntu-latest", "windows-latest"],
+      },
+    }),
+    JsonPatch.add("/jobs/build/runs-on", "${{ matrix.runner }}")
+  );
 }
