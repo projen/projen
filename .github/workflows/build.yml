@@ -27,6 +27,7 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: node ./projen.js build
+        continue-on-error: ${{ matrix.runner.experimental }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
@@ -66,7 +67,6 @@ jobs:
             experimental: false
           - os: windows-latest
             experimental: true
-    continue-on-error: ${{ matrix.runner.experimental }}
   self-mutation:
     needs: build
     runs-on: ubuntu-latest

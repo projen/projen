@@ -355,7 +355,7 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
     }),
     JsonPatch.add("/jobs/build/runs-on", "${{ matrix.runner.os }}"),
     JsonPatch.add(
-      "/jobs/build/continue-on-error",
+      "/jobs/build/steps/3/continue-on-error",
       "${{ matrix.runner.experimental }}"
     )
   );
