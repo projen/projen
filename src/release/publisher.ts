@@ -166,6 +166,8 @@ export class Publisher extends Component {
   private readonly workflowNodeVersion: string;
   private readonly workflowContainerImage?: string;
 
+  private publishJobs: string[] = [];
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -294,6 +296,7 @@ export class Publisher extends Component {
           GITHUB_REF: "${{ github.ref }}",
         },
         run: this.githubReleaseCommand(options, branchOptions),
+        dependsOn: this.publishJobs,
       };
     });
   }
@@ -346,6 +349,7 @@ export class Publisher extends Component {
       });
     }
 
+    this.publishJobs.push(`release_npm`);
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error(
@@ -355,7 +359,6 @@ export class Publisher extends Component {
 
       const npmProvenance = options.npmProvenance ? "true" : undefined;
       const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
-
       return {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
@@ -395,6 +398,7 @@ export class Publisher extends Component {
               ? options.codeArtifactOptions?.roleToAssume
               : undefined,
         },
+        dependsOn: [],
       };
     });
   }
@@ -407,6 +411,7 @@ export class Publisher extends Component {
     const isGitHubPackages = options.nugetServer?.startsWith(
       GITHUB_PACKAGES_NUGET_REPOSITORY
     );
+    this.publishJobs.push(`release_nuget`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "nuget",
@@ -427,6 +432,7 @@ export class Publisher extends Component {
           ),
           NUGET_SERVER: options.nugetServer ?? undefined,
         },
+        dependsOn: [],
       })
     );
   }
@@ -450,6 +456,7 @@ export class Publisher extends Component {
       );
     }
 
+    this.publishJobs.push(`release_maven`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "maven",
@@ -492,6 +499,7 @@ export class Publisher extends Component {
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
+        dependsOn: [],
       })
     );
   }
@@ -556,6 +564,7 @@ export class Publisher extends Component {
       };
     }
 
+    this.publishJobs.push(`release_pypi`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "pypi",
@@ -569,6 +578,7 @@ export class Publisher extends Component {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
         },
         workflowEnv,
+        dependsOn: [],
       })
     );
   }
@@ -599,6 +609,7 @@ export class Publisher extends Component {
       );
     }
 
+    this.publishJobs.push(`release_golang`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "golang",
@@ -617,6 +628,7 @@ export class Publisher extends Component {
           GIT_COMMIT_MESSAGE: options.gitCommitMessage,
         },
         workflowEnv: workflowEnv,
+        dependsOn: [],
       })
     );
   }
@@ -739,7 +751,7 @@ export class Publisher extends Component {
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,
-          needs: [this.buildJobId],
+          needs: [this.buildJobId, ...(opts.dependsOn ?? [])],
           ...filteredRunsOnOptions(this.runsOn, this.runsOnGroup),
           container,
           steps,
@@ -839,6 +851,11 @@ interface PublishJobOptions {
    * @default - no tools are installed
    */
   readonly publishTools?: Tools;
+
+  /**
+   * List of jobs this publishing job depends on.
+   */
+  readonly dependsOn: string[];
 }
 
 /**
