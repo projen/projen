@@ -32,6 +32,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: coverage
+        if: ${{ !matrix.runner.experimental }}
       - name: Find mutations
         id: self_mutation
         run: |-
@@ -39,7 +40,7 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
         working-directory: ./
       - name: Upload patch
-        if: steps.self_mutation.outputs.self_mutation_happened
+        if: ${{ !matrix.runner.experimental }}
         uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
@@ -54,12 +55,14 @@ jobs:
       - name: Backup artifact permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
+        if: ${{ !matrix.runner.experimental }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
           overwrite: true
+        if: ${{ !matrix.runner.experimental }}
     strategy:
       matrix:
         runner:

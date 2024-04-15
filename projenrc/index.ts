@@ -340,10 +340,33 @@ export function setupNpmignore(project: NodeProject) {
  * @param project The project to add the configuration to
  */
 export function setupGithubWorkflowWindows(project: NodeProject) {
+  const skippedStepIndexes = [
+    // Upload coverage to Codecov
+    4,
+
+    // Upload patch
+    6,
+
+    // Backup artifact permissions
+    8,
+
+    // Upload artifact
+    9,
+  ];
+
+  const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
+    JsonPatch.add(
+      `/jobs/build/steps/${stepIndex}/if`,
+      "${{ !matrix.runner.experimental }}"
+    )
+  );
+
   // TODO: workflows should expose file path. Use workflow path instead of hardcoded string
   const buildWorkflow = project.tryFindObjectFile(
     ".github/workflows/build.yml"
   );
+
+  // Set windows-latest runner to experimental
   buildWorkflow?.patch(
     JsonPatch.add("/jobs/build/strategy", {
       matrix: {
@@ -354,9 +377,14 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
       },
     }),
     JsonPatch.add("/jobs/build/runs-on", "${{ matrix.runner.os }}"),
+
+    // Allow step to fail on windows
     JsonPatch.add(
       "/jobs/build/steps/3/continue-on-error",
       "${{ matrix.runner.experimental }}"
-    )
+    ),
+
+    // Skip steps that shouldn't run on Windows
+    ...skippedStepPatches
   );
 }
