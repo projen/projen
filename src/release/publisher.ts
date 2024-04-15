@@ -166,7 +166,7 @@ export class Publisher extends Component {
   private readonly workflowNodeVersion: string;
   private readonly workflowContainerImage?: string;
 
-  private publishJobs: string[] = [];
+  private packageManagersPublishJobs: string[] = [];
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -296,7 +296,7 @@ export class Publisher extends Component {
           GITHUB_REF: "${{ github.ref }}",
         },
         run: this.githubReleaseCommand(options, branchOptions),
-        dependsOn: this.publishJobs,
+        dependsOn: this.packageManagersPublishJobs,
       };
     });
   }
@@ -349,7 +349,7 @@ export class Publisher extends Component {
       });
     }
 
-    this.publishJobs.push(`release_npm`);
+    this.packageManagersPublishJobs.push(`release_npm`);
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error(
@@ -411,7 +411,7 @@ export class Publisher extends Component {
     const isGitHubPackages = options.nugetServer?.startsWith(
       GITHUB_PACKAGES_NUGET_REPOSITORY
     );
-    this.publishJobs.push(`release_nuget`);
+    this.packageManagersPublishJobs.push(`release_nuget`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "nuget",
@@ -456,7 +456,7 @@ export class Publisher extends Component {
       );
     }
 
-    this.publishJobs.push(`release_maven`);
+    this.packageManagersPublishJobs.push(`release_maven`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "maven",
@@ -564,7 +564,7 @@ export class Publisher extends Component {
       };
     }
 
-    this.publishJobs.push(`release_pypi`);
+    this.packageManagersPublishJobs.push(`release_pypi`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "pypi",
@@ -609,7 +609,7 @@ export class Publisher extends Component {
       );
     }
 
-    this.publishJobs.push(`release_golang`);
+    this.packageManagersPublishJobs.push(`release_golang`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "golang",
@@ -853,9 +853,11 @@ interface PublishJobOptions {
   readonly publishTools?: Tools;
 
   /**
-   * List of jobs this publishing job depends on.
+   * List of jobs this publishing job depends on, in addition to the build job.
+   *
+   * @default - will only depend on the build job.
    */
-  readonly dependsOn: string[];
+  readonly dependsOn?: string[];
 }
 
 /**
