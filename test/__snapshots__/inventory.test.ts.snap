@@ -731,6 +731,24 @@ exports[`inventory 1`] = `
         "switch": "parent",
       },
       {
+        "docs": "A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.",
+        "featured": true,
+        "fqn": "projen.java.ParentPom",
+        "fullType": {
+          "fqn": "projen.java.ParentPom",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "parentPom",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "parentPom",
+        ],
+        "simpleType": "ParentPom",
+        "switch": "parent-pom",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -2184,7 +2202,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -2789,7 +2807,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -2992,6 +3029,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -3476,6 +3532,23 @@ exports[`inventory 1`] = `
         "switch": "eslint-options",
       },
       {
+        "default": "false",
+        "docs": "Enable experimental support for the AWS CDK integ-runner.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "experimentalIntegRunner",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": [
+          "experimentalIntegRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "experimental-integ-runner",
+      },
+      {
         "default": "true",
         "docs": "Include all feature flags in cdk.json.",
         "featured": false,
@@ -3940,6 +4013,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -4068,6 +4142,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -4153,7 +4244,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -4395,7 +4486,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -4847,7 +4938,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -5175,6 +5266,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -5387,6 +5496,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "awscdk-app-ts",
@@ -5690,7 +5836,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -5895,6 +6060,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -6464,6 +6648,23 @@ exports[`inventory 1`] = `
         "switch": "exclude-typescript",
       },
       {
+        "default": "false",
+        "docs": "Enable experimental support for the AWS CDK integ-runner.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "experimentalIntegRunner",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": [
+          "experimentalIntegRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "experimental-integ-runner",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -6591,7 +6792,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
-        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file in under your test directory.",
+        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file under your test directory.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6929,6 +7130,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -7057,6 +7259,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -7142,7 +7361,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -7384,7 +7603,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -7930,7 +8149,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -8272,6 +8491,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -8441,6 +8678,43 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "awscdk-construct",
     "typename": "awscdk.AwsCdkConstructLibrary",
@@ -8559,7 +8833,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.28"",
-        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "docs": "Minimum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8632,7 +8906,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.0-rc.26"",
-        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "docs": "Minimum version of the cdk8s-plus-XX to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8666,7 +8940,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.3.33"",
-        "docs": "Minumum version of the cdk8s to depend on.",
+        "docs": "Minimum version of the cdk8s to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -9477,7 +9751,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -9985,7 +10259,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -10044,7 +10337,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.28"",
-        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "docs": "Minimum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10117,7 +10410,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.0.0-rc.26"",
-        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "docs": "Minimum version of the cdk8s-plus-XX to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10151,7 +10444,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""2.3.33"",
-        "docs": "Minumum version of the cdk8s to depend on.",
+        "docs": "Minimum version of the cdk8s to depend on.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10182,6 +10475,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk8s-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -11071,6 +11383,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -11199,6 +11512,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -11284,7 +11614,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -11526,7 +11856,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -11978,7 +12308,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -12287,6 +12617,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -12455,6 +12803,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "cdk8s-app-ts",
@@ -12758,7 +13143,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -12884,6 +13288,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk8s-version-pinning",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -13864,6 +14287,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -13992,6 +14416,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -14077,7 +14518,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -14319,7 +14760,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -14865,7 +15306,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -15207,6 +15648,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -15375,6 +15834,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "cdk8s-construct",
@@ -15678,7 +16174,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -15770,6 +16285,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "cdktf-version",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -15910,7 +16444,7 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
       },
       {
-        "default": ""^10.0.12"",
+        "default": ""^10.3.0"",
         "docs": "Construct version to use.",
         "featured": false,
         "fullType": {
@@ -16716,6 +17250,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -16844,6 +17379,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -16929,7 +17481,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -17171,7 +17723,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -17717,7 +18269,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -18059,6 +18611,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -18227,6 +18797,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "cdktf-construct",
@@ -18721,6 +19328,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "Project",
         "switch": "parent",
+      },
+      {
+        "docs": "A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.",
+        "featured": true,
+        "fqn": "projen.java.ParentPom",
+        "fullType": {
+          "fqn": "projen.java.ParentPom",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "parentPom",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "parentPom",
+        ],
+        "simpleType": "ParentPom",
+        "switch": "parent-pom",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -19367,7 +19992,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -19423,6 +20067,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -20352,6 +21015,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -20480,6 +21144,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -20565,7 +21246,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -20807,7 +21488,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -21353,7 +22034,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -21695,6 +22376,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -21864,12 +22563,49 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "jsii",
     "typename": "cdk.JsiiProject",
   },
   {
-    "docs": "Next.js project without TypeScript.",
+    "docs": "Next.js project using JavaScript.",
     "docsurl": "https://projen.io/docs/api/web#nextjsproject-",
     "fqn": "projen.web.NextJsProject",
     "moduleName": "projen",
@@ -22149,7 +22885,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -22205,6 +22960,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -22871,6 +23645,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -22999,6 +23774,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -23084,7 +23876,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -23326,7 +24118,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -23742,7 +24534,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -24148,12 +24940,49 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "nextjs",
     "typename": "web.NextJsProject",
   },
   {
-    "docs": "Next.js project with TypeScript.",
+    "docs": "Next.js project using TypeScript.",
     "docsurl": "https://projen.io/docs/api/web#nextjstypescriptproject-",
     "fqn": "projen.web.NextJsTypeScriptProject",
     "moduleName": "projen",
@@ -24433,7 +25262,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -24489,6 +25337,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -25293,6 +26160,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -25421,6 +26289,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -25506,7 +26391,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -25748,7 +26633,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -26200,7 +27085,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -26526,6 +27411,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -26694,6 +27597,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "nextjs-ts",
@@ -26963,7 +27903,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -27019,6 +27978,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -27685,6 +28663,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -27813,6 +28792,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -27898,7 +28894,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -28140,7 +29136,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -28556,7 +29552,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -28910,6 +29906,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "node",
@@ -29944,7 +30977,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "pythonExec",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonExecutableOptions",
         "path": [
           "pythonExec",
         ],
@@ -30172,7 +31205,7 @@ exports[`inventory 1`] = `
     "typename": "python.PythonProject",
   },
   {
-    "docs": "React project without TypeScript.",
+    "docs": "React project using JavaScript.",
     "docsurl": "https://projen.io/docs/api/web#reactproject-",
     "fqn": "projen.web.ReactProject",
     "moduleName": "projen",
@@ -30435,7 +31468,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -30491,6 +31543,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -31157,6 +32228,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -31285,6 +32357,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -31370,7 +32459,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -31612,7 +32701,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -32028,7 +33117,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -32439,12 +33528,49 @@ exports[`inventory 1`] = `
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
       },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
+      },
     ],
     "pjid": "react",
     "typename": "web.ReactProject",
   },
   {
-    "docs": "React project with TypeScript.",
+    "docs": "React project using TypeScript.",
     "docsurl": "https://projen.io/docs/api/web#reacttypescriptproject-",
     "fqn": "projen.web.ReactTypeScriptProject",
     "moduleName": "projen",
@@ -32707,7 +33833,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -32763,6 +33908,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -33567,6 +34731,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -33695,6 +34860,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -33780,7 +34962,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -34022,7 +35204,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -34474,7 +35656,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -34805,6 +35987,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -34973,6 +36173,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "react-ts",
@@ -35242,7 +36479,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -35298,6 +36554,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -36102,6 +37377,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -36230,6 +37506,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -36315,7 +37608,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -36557,7 +37850,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -37009,7 +38302,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -37318,6 +38611,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -37486,6 +38797,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "typescript",
@@ -37755,7 +39103,26 @@ exports[`inventory 1`] = `
         "switch": "build-workflow",
       },
       {
+        "docs": "Options for PR build workflow.",
+        "featured": false,
+        "fqn": "projen.javascript.BuildWorkflowOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BuildWorkflowOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "buildWorkflowOptions",
+        ],
+        "simpleType": "BuildWorkflowOptions",
+        "switch": "build-workflow-options",
+      },
+      {
         "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
+        "deprecated": true,
         "docs": "Build workflow triggers.",
         "featured": false,
         "fqn": "projen.github.workflows.Triggers",
@@ -37811,6 +39178,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "BundlerOptions",
         "switch": "bundler-options",
+      },
+      {
+        "default": "- no license checks are run during the build and all licenses will be accepted",
+        "docs": "Configure which licenses should be deemed acceptable for use by dependencies.",
+        "featured": false,
+        "fqn": "projen.javascript.LicenseCheckerOptions",
+        "fullType": {
+          "fqn": "projen.javascript.LicenseCheckerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "checkLicenses",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "checkLicenses",
+        ],
+        "simpleType": "LicenseCheckerOptions",
+        "switch": "check-licenses",
       },
       {
         "default": "- true, but false for subprojects",
@@ -38615,6 +40001,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Automatically update files modified during builds to pull-request branches.",
         "featured": false,
         "fullType": {
@@ -38743,6 +40130,23 @@ exports[`inventory 1`] = `
         "switch": "npm-ignore-options",
       },
       {
+        "default": "- true for public packages, false otherwise",
+        "docs": "Should provenance statements be generated when the package is published.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmProvenance",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmProvenance",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-provenance",
+      },
+      {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -38828,7 +40232,7 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN",
+        "default": "NodePackageManager.YARN_CLASSIC",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
@@ -39070,7 +40474,7 @@ exports[`inventory 1`] = `
         "switch": "projen-credentials",
       },
       {
-        "default": "true",
+        "default": "- true if not a subproject",
         "docs": "Indicates of "projen" should be installed as a devDependency.",
         "featured": false,
         "fullType": {
@@ -39522,7 +40926,7 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
-        "default": ""Release"",
+        "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
         "fullType": {
@@ -39831,6 +41235,24 @@ exports[`inventory 1`] = `
         "switch": "tsconfig-dev-file",
       },
       {
+        "docs": "Options for ts-jest.",
+        "featured": false,
+        "fqn": "projen.typescript.TsJestOptions",
+        "fullType": {
+          "fqn": "projen.typescript.TsJestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "tsJestOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsJestOptions",
+        ],
+        "simpleType": "TsJestOptions",
+        "switch": "ts-jest-options",
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -39999,6 +41421,43 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "workflow-runs-on",
+      },
+      {
+        "docs": "Github Runner Group selection options.",
+        "featured": false,
+        "fqn": "projen.GroupRunnerOptions",
+        "fullType": {
+          "fqn": "projen.GroupRunnerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowRunsOnGroup",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "workflowRunsOnGroup",
+        ],
+        "simpleType": "GroupRunnerOptions",
+        "switch": "workflow-runs-on-group",
+      },
+      {
+        "default": "- Yarn Berry v4 with all default options",
+        "docs": "Options for Yarn Berry.",
+        "featured": false,
+        "fqn": "projen.javascript.YarnBerryOptions",
+        "fullType": {
+          "fqn": "projen.javascript.YarnBerryOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "yarnBerryOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "yarnBerryOptions",
+        ],
+        "simpleType": "YarnBerryOptions",
+        "switch": "yarn-berry-options",
       },
     ],
     "pjid": "typescript-app",

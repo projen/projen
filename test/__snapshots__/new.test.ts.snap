@@ -132,14 +132,13 @@ exports[`projen new --from using registry existing package 1`] = `
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "0.0.333",
     "@types/jest": "*",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.1.0",
     "esbuild": "*",
     "eslint": "^8",
     "eslint-config-prettier": "*",
-    "eslint-import-resolver-node": "*",
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
@@ -166,12 +165,6 @@ exports[`projen new --from using registry existing package 1`] = `
       "cobertura",
       "text",
     ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.dev.json",
-      },
-    },
-    "preset": "ts-jest",
     "reporters": [
       "default",
       [
@@ -189,6 +182,14 @@ exports[`projen new --from using registry existing package 1`] = `
     "testPathIgnorePatterns": [
       "/node_modules/",
     ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
     "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
@@ -256,14 +257,13 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
     "@types/jest": "*",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.1.0",
     "esbuild": "*",
     "eslint": "^8",
     "eslint-config-prettier": "*",
-    "eslint-import-resolver-node": "*",
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
@@ -290,12 +290,6 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
       "cobertura",
       "text",
     ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.dev.json",
-      },
-    },
-    "preset": "ts-jest",
     "reporters": [
       "default",
       [
@@ -313,6 +307,14 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "testPathIgnorePatterns": [
       "/node_modules/",
     ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
     "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
@@ -380,14 +382,13 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
   "devDependencies": {
     "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "@types/jest": "*",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.1.0",
     "esbuild": "*",
     "eslint": "^8",
     "eslint-config-prettier": "*",
-    "eslint-import-resolver-node": "*",
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
@@ -414,12 +415,6 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
       "cobertura",
       "text",
     ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.dev.json",
-      },
-    },
-    "preset": "ts-jest",
     "reporters": [
       "default",
       [
@@ -437,6 +432,14 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "testPathIgnorePatterns": [
       "/node_modules/",
     ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
     "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
@@ -503,14 +506,13 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
   },
   "devDependencies": {
     "@types/jest": "*",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk": "^2.1.0",
     "esbuild": "*",
     "eslint": "^8",
     "eslint-config-prettier": "*",
-    "eslint-import-resolver-node": "*",
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
@@ -538,12 +540,6 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
       "cobertura",
       "text",
     ],
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.dev.json",
-      },
-    },
-    "preset": "ts-jest",
     "reporters": [
       "default",
       [
@@ -561,6 +557,14 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "testPathIgnorePatterns": [
       "/node_modules/",
     ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
     "watchPathIgnorePatterns": [
       "/node_modules/",
     ],
