@@ -29,6 +29,7 @@ const PUBLIB_TOOLCHAIN = {
   go: { go: { version: "^1.16.0" } },
   dotnet: { dotnet: { version: "3.x" } },
 };
+const PUBLISH_JOB_PREFIX = "release_";
 
 /**
  * Options for `Publisher`.
@@ -349,7 +350,8 @@ export class Publisher extends Component {
       });
     }
 
-    this.packageManagersPublishJobs.push(`release_npm`);
+    const name = "npm";
+    this.packageManagersPublishJobs.push(`${PUBLISH_JOB_PREFIX}${name}`);
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error(
@@ -360,7 +362,7 @@ export class Publisher extends Component {
       const npmProvenance = options.npmProvenance ? "true" : undefined;
       const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
       return {
-        name: "npm",
+        name,
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
@@ -398,7 +400,6 @@ export class Publisher extends Component {
               ? options.codeArtifactOptions?.roleToAssume
               : undefined,
         },
-        dependsOn: [],
       };
     });
   }
@@ -411,10 +412,11 @@ export class Publisher extends Component {
     const isGitHubPackages = options.nugetServer?.startsWith(
       GITHUB_PACKAGES_NUGET_REPOSITORY
     );
-    this.packageManagersPublishJobs.push(`release_nuget`);
+    const name = "nuget";
+    this.packageManagersPublishJobs.push(`${PUBLISH_JOB_PREFIX}${name}`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "nuget",
+        name,
         publishTools: PUBLIB_TOOLCHAIN.dotnet,
         prePublishSteps: options.prePublishSteps ?? [],
         postPublishSteps: options.postPublishSteps ?? [],
@@ -432,7 +434,6 @@ export class Publisher extends Component {
           ),
           NUGET_SERVER: options.nugetServer ?? undefined,
         },
-        dependsOn: [],
       })
     );
   }
@@ -456,10 +457,11 @@ export class Publisher extends Component {
       );
     }
 
-    this.packageManagersPublishJobs.push(`release_maven`);
+    const name = "maven";
+    this.packageManagersPublishJobs.push(`${PUBLISH_JOB_PREFIX}${name}`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "maven",
+        name,
         registryName: "Maven Central",
         publishTools: PUBLIB_TOOLCHAIN.java,
         prePublishSteps: options.prePublishSteps ?? [],
@@ -499,7 +501,6 @@ export class Publisher extends Component {
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
-        dependsOn: [],
       })
     );
   }
@@ -564,10 +565,11 @@ export class Publisher extends Component {
       };
     }
 
-    this.packageManagersPublishJobs.push(`release_pypi`);
+    const name = "pypi";
+    this.packageManagersPublishJobs.push(`${PUBLISH_JOB_PREFIX}${name}`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "pypi",
+        name,
         registryName: "PyPI",
         publishTools: PUBLIB_TOOLCHAIN.python,
         permissions,
@@ -578,7 +580,6 @@ export class Publisher extends Component {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
         },
         workflowEnv,
-        dependsOn: [],
       })
     );
   }
@@ -609,10 +610,11 @@ export class Publisher extends Component {
       );
     }
 
-    this.packageManagersPublishJobs.push(`release_golang`);
+    const name = "golang";
+    this.packageManagersPublishJobs.push(`${PUBLISH_JOB_PREFIX}${name}`);
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "golang",
+        name,
         publishTools: PUBLIB_TOOLCHAIN.go,
         prePublishSteps: prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
@@ -628,7 +630,6 @@ export class Publisher extends Component {
           GIT_COMMIT_MESSAGE: options.gitCommitMessage,
         },
         workflowEnv: workflowEnv,
-        dependsOn: [],
       })
     );
   }
