@@ -344,9 +344,6 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
     // Upload coverage to Codecov
     4,
 
-    // Upload patch
-    6,
-
     // Backup artifact permissions
     8,
 
@@ -382,6 +379,11 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
     JsonPatch.add(
       "/jobs/build/steps/3/continue-on-error",
       "${{ matrix.runner.experimental }}"
+    ),
+
+    JsonPatch.add(
+      `/jobs/build/steps/6/if`,
+      "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
     ),
 
     // Skip steps that shouldn't run on Windows
