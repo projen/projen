@@ -128,7 +128,7 @@ describe("github-workflow", () => {
     workflow.addJob("working-dir", {
       runsOn: ["ubuntu-latest"],
       permissions: {},
-      steps: [{ uses: "actions/checkout@v3" }],
+      steps: [{ uses: "actions/checkout@v4" }],
     });
     workflow.removeJob("working-dir");
 
@@ -149,7 +149,7 @@ describe("github-workflow", () => {
     workflow.addJob("working-dir", {
       runsOn: ["ubuntu-latest"],
       permissions: {},
-      steps: [{ uses: "actions/checkout@v3" }],
+      steps: [{ uses: "actions/checkout@v4" }],
     });
     workflow.updateJob("working-dir", {
       runsOn: ["ubuntu-latest"],
@@ -176,7 +176,7 @@ describe("github-workflow", () => {
       ghw.addJob("working-dir", {
         runsOn: ["ubuntu-latest"],
         permissions: {},
-        steps: [{ uses: "actions/checkout@v3" }],
+        steps: [{ uses: "actions/checkout@v4" }],
       });
 
       const snapshot = synthSnapshot(project);
@@ -193,18 +193,18 @@ describe("github-workflow", () => {
       ghw.addJob("working-dir", {
         runsOn: ["ubuntu-latest"],
         permissions: {},
-        steps: [{ uses: "actions/checkout@v3" }],
+        steps: [{ uses: "actions/checkout@v4" }],
       });
 
       project.github?.actions.set(
-        "actions/checkout@v3",
+        "actions/checkout@v4",
         "replacement/checkout"
       );
 
       const snapshot = synthSnapshot(project);
       const wf = snapshot[`.github/workflows/${workflowName}.yml`];
 
-      expect(wf).not.toContain("actions/checkout@v3");
+      expect(wf).not.toContain("actions/checkout@v4");
       expect(wf).toContain("replacement/checkout");
     });
 
@@ -215,7 +215,7 @@ describe("github-workflow", () => {
       ghw.addJob("working-dir", {
         runsOn: ["ubuntu-latest"],
         permissions: {},
-        steps: [{ uses: "actions/checkout@v3" }],
+        steps: [{ uses: "actions/checkout@v4" }],
       });
 
       project.github?.actions.set("actions/checkout", "replacement/checkout");
@@ -223,7 +223,7 @@ describe("github-workflow", () => {
       const snapshot = synthSnapshot(project);
       const wf = snapshot[`.github/workflows/${workflowName}.yml`];
 
-      expect(wf).not.toContain("actions/checkout@v3");
+      expect(wf).not.toContain("actions/checkout@v4");
       expect(wf).toContain("replacement/checkout");
     });
 
@@ -237,12 +237,13 @@ describe("github-workflow", () => {
         steps: [
           { uses: "actions/checkout@v2" },
           { uses: "actions/checkout@v3" },
+          { uses: "actions/checkout@v4" },
         ],
       });
 
       project.github?.actions.set(
-        "actions/checkout@v2",
-        "actions/checkout@explicit-v2"
+        "actions/checkout@v4",
+        "actions/checkout@explicit-v4"
       );
       project.github?.actions.set(
         "actions/checkout",
@@ -255,7 +256,8 @@ describe("github-workflow", () => {
       expect(wf).toMatchSnapshot();
       expect(wf).not.toContain("actions/checkout@v2");
       expect(wf).not.toContain("actions/checkout@v3");
-      expect(wf).toContain("actions/checkout@explicit-v2");
+      expect(wf).not.toContain("actions/checkout@v4");
+      expect(wf).toContain("actions/checkout@explicit-v4");
       expect(wf).toContain("actions/checkout@generic-override");
     });
   });
