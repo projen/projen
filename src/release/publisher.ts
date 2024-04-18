@@ -297,7 +297,6 @@ export class Publisher extends Component {
           GITHUB_REF: "${{ github.ref }}",
         },
         run: this.githubReleaseCommand(options, branchOptions),
-        dependsOn: this.packageManagersPublishJobs,
       };
     });
   }
@@ -743,6 +742,11 @@ export class Publisher extends Component {
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
 
+      const needs =
+        jobname === `${PUBLISH_JOB_PREFIX}github`
+          ? this.packageManagersPublishJobs
+          : [];
+
       return {
         [jobname]: {
           tools: {
@@ -752,7 +756,7 @@ export class Publisher extends Component {
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,
-          needs: [this.buildJobId, ...(opts.dependsOn ?? [])],
+          needs: [this.buildJobId, ...needs],
           ...filteredRunsOnOptions(this.runsOn, this.runsOnGroup),
           container,
           steps,
@@ -852,13 +856,6 @@ interface PublishJobOptions {
    * @default - no tools are installed
    */
   readonly publishTools?: Tools;
-
-  /**
-   * List of jobs this publishing job depends on, in addition to the build job.
-   *
-   * @default - will only depend on the build job.
-   */
-  readonly dependsOn?: string[];
 }
 
 /**
