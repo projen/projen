@@ -641,7 +641,7 @@ export class Publisher extends Component {
   ) {
     this._jobFactories.push((branch, branchOptions) => {
       const opts = factory(branch, branchOptions);
-      const jobname = `release_${opts.name}`;
+      const jobname = `${PUBLISH_JOB_PREFIX}${opts.name}`;
       if (jobname in this._jobFactories) {
         throw new Error(`Duplicate job with name "${jobname}"`);
       }
