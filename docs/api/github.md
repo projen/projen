@@ -8189,8 +8189,8 @@ If an override for the same action name is set multiple times, the last override
 // Force any use of `actions/checkout` to use a pin a specific commit
 project.github.actions.set("actions/checkout", "actions/checkout@aaaaaa");
 
-// But pin usage of `v3` to a different commit
-project.github.actions.set("actions/checkout@v3", "actions/checkout@ffffff");
+// But pin usage of `v4` to a different commit
+project.github.actions.set("actions/checkout@v4", "actions/checkout@ffffff");
 ```
 
 

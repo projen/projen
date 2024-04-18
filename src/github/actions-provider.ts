@@ -17,8 +17,8 @@ export class GitHubActionsProvider {
    * // Force any use of `actions/checkout` to use a pin a specific commit
    * project.github.actions.set("actions/checkout", "actions/checkout@aaaaaa");
    *
-   * // But pin usage of `v3` to a different commit
-   * project.github.actions.set("actions/checkout@v3", "actions/checkout@ffffff");
+   * // But pin usage of `v4` to a different commit
+   * project.github.actions.set("actions/checkout@v4", "actions/checkout@ffffff");
    */
   public set(action: string, override: string): void {
     this.actions.set(action, override);
