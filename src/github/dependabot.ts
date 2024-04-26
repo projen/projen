@@ -91,6 +91,12 @@ export interface DependabotOptions {
    * @default []
    */
   readonly groups?: { [name: string]: DependabotGroup };
+
+  /**
+   * https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#target-branch
+   * You can configure the target branch for raising pull requests for version updates against
+   */
+  readonly targetBranch?: string;
 }
 
 /**
@@ -390,6 +396,7 @@ export class Dependabot extends Component {
             options.openPullRequestsLimit !== undefined
               ? options.openPullRequestsLimit
               : undefined,
+          "target-branch": options.targetBranch,
         },
       ],
     };
