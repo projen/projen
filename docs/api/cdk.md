@@ -3825,8 +3825,9 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -5843,10 +5844,10 @@ compile the code in-memory.
 ##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.cdk.ConstructLibraryOptions.property.tsconfig"></a>
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -5856,13 +5857,28 @@ Custom TSConfig.
 ##### `tsconfigDev`<sup>Optional</sup> <a name="tsconfigDev" id="projen.cdk.ConstructLibraryOptions.property.tsconfigDev"></a>
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### `tsconfigDevExtendsTsconfig`<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.cdk.ConstructLibraryOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 
@@ -7019,8 +7035,9 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -9036,10 +9053,10 @@ compile the code in-memory.
 ##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.cdk.JsiiProjectOptions.property.tsconfig"></a>
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -9049,13 +9066,28 @@ Custom TSConfig.
 ##### `tsconfigDev`<sup>Optional</sup> <a name="tsconfigDev" id="projen.cdk.JsiiProjectOptions.property.tsconfigDev"></a>
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### `tsconfigDevExtendsTsconfig`<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.cdk.JsiiProjectOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 

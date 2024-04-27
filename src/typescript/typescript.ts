@@ -11,6 +11,7 @@ import {
   Projenrc as NodeProjectProjenrc,
   Transform,
   TypeScriptCompilerOptions,
+  TypeScriptSetCompilerOptionsMergeMethod,
   TypescriptConfig,
   TypescriptConfigOptions,
 } from "../javascript";
@@ -234,6 +235,15 @@ export interface TsJestOptions {
   readonly transformOptions?: TsJestTransformOptions;
 }
 
+export interface TypescriptProjectConfigOptions
+  extends TypescriptConfigOptions {
+  /**
+   * Method used to merge provided compiler options with the defaults
+   * @default TypeScriptSetCompilerOptionsMergeMethod.MERGE
+   */
+  readonly compilerOptionsMergeMethod?: TypeScriptSetCompilerOptionsMergeMethod;
+}
+
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Typescript  artifacts output directory
@@ -302,13 +312,22 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * Custom TSConfig
    * @default - default options
    */
-  readonly tsconfig?: TypescriptConfigOptions;
+  readonly tsconfig?: TypescriptProjectConfigOptions;
 
   /**
    * Custom tsconfig options for the development tsconfig.json file (used for testing).
    * @default - use the production tsconfig options
    */
-  readonly tsconfigDev?: TypescriptConfigOptions;
+  readonly tsconfigDev?: TypescriptProjectConfigOptions;
+
+  /**
+   * Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+   *
+   * Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
+   *
+   * @default - false
+   */
+  readonly tsconfigDevExtendsTsconfig?: boolean;
 
   /**
    * The name of the development tsconfig.json file.
@@ -484,41 +503,74 @@ export class TypeScriptProject extends NodeProject {
     }
 
     if (!options.disableTsconfig) {
-      this.tsconfig = new TypescriptConfig(
-        this,
-        mergeTsconfigOptions(
-          {
-            include: [`${this.srcdir}/**/*.ts`],
-            // exclude: ['node_modules'], // TODO: shouldn't we exclude node_modules?
-            compilerOptions: {
-              rootDir: this.srcdir,
-              outDir: this.libdir,
-              ...compilerOptionDefaults,
-            },
-          },
-          options.tsconfig
-        )
-      );
+      this.tsconfig = new TypescriptConfig(this, {
+        fileName: options.tsconfig?.fileName,
+        include: [
+          `${this.srcdir}/**/*.ts`,
+          ...(options.tsconfig?.include ?? []),
+        ],
+        exclude: options.tsconfig?.exclude ?? [],
+        compilerOptions: {
+          rootDir: this.srcdir,
+          outDir: this.libdir,
+          ...(options.tsconfig?.compilerOptionsMergeMethod !==
+          TypeScriptSetCompilerOptionsMergeMethod.OVERRIDE
+            ? compilerOptionDefaults
+            : {}),
+        },
+        extends: options.tsconfig?.extends,
+      });
+
+      if (options.tsconfig?.compilerOptions) {
+        this.tsconfig.setCompilerOptions(
+          options.tsconfig.compilerOptions,
+          options.tsconfig.compilerOptionsMergeMethod
+        );
+      }
     }
 
     if (options.disableTsconfigDev) {
       this.tsconfigDev = this.tsconfig!;
     } else {
       const tsconfigDevFile = options.tsconfigDevFile ?? "tsconfig.dev.json";
-      this.tsconfigDev = new TypescriptConfig(
-        this,
-        mergeTsconfigOptions(
-          {
-            fileName: tsconfigDevFile,
-            include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
 
-            exclude: ["node_modules"],
-            compilerOptions: compilerOptionDefaults,
-          },
-          options.tsconfig,
-          options.tsconfigDev
-        )
-      );
+      this.tsconfigDev = new TypescriptConfig(this, {
+        fileName: tsconfigDevFile,
+        include: [
+          `${this.srcdir}/**/*.ts`,
+          `${this.testdir}/**/*.ts`,
+          ...(options.tsconfig?.include ?? []),
+          ...(options.tsconfigDev?.include ?? []),
+        ],
+        exclude: ["node_modules", ...(options.tsconfigDev?.exclude ?? [])],
+        compilerOptions: options.tsconfigDev?.extends ? undefined : {}, // we'll maybe populate compilerOptions below
+        // No rootDir since we want the whole project covered
+        // No outDir since we won't write the output by default
+        extends: options.tsconfigDev?.extends,
+      });
+
+      if (this.tsconfig) {
+        if (options.tsconfigDevExtendsTsconfig) {
+          this.tsconfigDev.addExtends(this.tsconfig);
+        } else {
+          this.tsconfigDev.setCompilerOptions(
+            this.tsconfig.compilerOptions ?? {},
+            TypeScriptSetCompilerOptionsMergeMethod.OVERRIDE
+          );
+        }
+      } else {
+        this.tsconfigDev.setCompilerOptions(
+          compilerOptionDefaults,
+          TypeScriptSetCompilerOptionsMergeMethod.MERGE
+        );
+      }
+
+      if (options.tsconfigDev?.compilerOptions) {
+        this.tsconfigDev.setCompilerOptions(
+          options.tsconfigDev.compilerOptions,
+          options.tsconfigDev.compilerOptionsMergeMethod
+        );
+      }
     }
 
     this.gitignore.include(`/${this.srcdir}/`);
@@ -809,25 +861,3 @@ export class TypeScriptLibraryProject extends TypeScriptProject {}
  */
 export interface TypeScriptLibraryProjectOptions
   extends TypeScriptProjectOptions {}
-
-/**
- * @internal
- */
-export function mergeTsconfigOptions(
-  ...options: (TypescriptConfigOptions | undefined)[]
-): TypescriptConfigOptions {
-  const definedOptions = options.filter(Boolean) as TypescriptConfigOptions[];
-  return definedOptions.reduce<TypescriptConfigOptions>(
-    (previous, current) => ({
-      ...previous,
-      ...current,
-      include: [...(previous.include ?? []), ...(current.include ?? [])],
-      exclude: [...(previous.exclude ?? []), ...(current.exclude ?? [])],
-      compilerOptions: {
-        ...previous.compilerOptions,
-        ...current.compilerOptions,
-      },
-    }),
-    { compilerOptions: {} }
-  );
-}

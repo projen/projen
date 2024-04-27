@@ -5494,8 +5494,9 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a></code> | Custom TSConfig. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a></code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code><a href="#projen.typescript.TsJestOptions">TsJestOptions</a></code> | Options for ts-jest. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -7753,10 +7754,10 @@ compile the code in-memory.
 - *Deprecated:* use TypeScriptProjectOptions
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a>
 - *Default:* default options
 
 Custom TSConfig.
@@ -7768,13 +7769,30 @@ Custom TSConfig.
 - *Deprecated:* use TypeScriptProjectOptions
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a>
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### ~~`tsconfigDevExtendsTsconfig`~~<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 
@@ -7822,6 +7840,103 @@ TypeScript version to use.
 
 NOTE: Typescript is not semantically versioned and should remain on the
 same minor, so we recommend using a `~` dependency (e.g. `~1.2.3`).
+
+---
+
+### TypescriptProjectConfigOptions <a name="TypescriptProjectConfigOptions" id="projen.typescript.TypescriptProjectConfigOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.typescript.TypescriptProjectConfigOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const typescriptProjectConfigOptions: typescript.TypescriptProjectConfigOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypescriptProjectConfigOptions.property.compilerOptions">compilerOptions</a></code> | <code>projen.javascript.TypeScriptCompilerOptions</code> | Compiler options to use. |
+| <code><a href="#projen.typescript.TypescriptProjectConfigOptions.property.exclude">exclude</a></code> | <code>string[]</code> | Filters results from the "include" option. |
+| <code><a href="#projen.typescript.TypescriptProjectConfigOptions.property.extends">extends</a></code> | <code>projen.javascript.TypescriptConfigExtends</code> | Base `tsconfig.json` configuration(s) to inherit from. |
+| <code><a href="#projen.typescript.TypescriptProjectConfigOptions.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptProjectConfigOptions.property.include">include</a></code> | <code>string[]</code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation. |
+| <code><a href="#projen.typescript.TypescriptProjectConfigOptions.property.compilerOptionsMergeMethod">compilerOptionsMergeMethod</a></code> | <code>projen.javascript.TypeScriptSetCompilerOptionsMergeMethod</code> | Method used to merge provided compiler options with the defaults. |
+
+---
+
+##### `compilerOptions`<sup>Optional</sup> <a name="compilerOptions" id="projen.typescript.TypescriptProjectConfigOptions.property.compilerOptions"></a>
+
+```typescript
+public readonly compilerOptions: TypeScriptCompilerOptions;
+```
+
+- *Type:* projen.javascript.TypeScriptCompilerOptions
+
+Compiler options to use.
+
+---
+
+##### `exclude`<sup>Optional</sup> <a name="exclude" id="projen.typescript.TypescriptProjectConfigOptions.property.exclude"></a>
+
+```typescript
+public readonly exclude: string[];
+```
+
+- *Type:* string[]
+- *Default:* node_modules is excluded by default
+
+Filters results from the "include" option.
+
+---
+
+##### `extends`<sup>Optional</sup> <a name="extends" id="projen.typescript.TypescriptProjectConfigOptions.property.extends"></a>
+
+```typescript
+public readonly extends: TypescriptConfigExtends;
+```
+
+- *Type:* projen.javascript.TypescriptConfigExtends
+
+Base `tsconfig.json` configuration(s) to inherit from.
+
+---
+
+##### `fileName`<sup>Optional</sup> <a name="fileName" id="projen.typescript.TypescriptProjectConfigOptions.property.fileName"></a>
+
+```typescript
+public readonly fileName: string;
+```
+
+- *Type:* string
+- *Default:* "tsconfig.json"
+
+---
+
+##### `include`<sup>Optional</sup> <a name="include" id="projen.typescript.TypescriptProjectConfigOptions.property.include"></a>
+
+```typescript
+public readonly include: string[];
+```
+
+- *Type:* string[]
+- *Default:* all .ts files recursively
+
+Specifies a list of glob patterns that match TypeScript files to be included in compilation.
+
+---
+
+##### `compilerOptionsMergeMethod`<sup>Optional</sup> <a name="compilerOptionsMergeMethod" id="projen.typescript.TypescriptProjectConfigOptions.property.compilerOptionsMergeMethod"></a>
+
+```typescript
+public readonly compilerOptionsMergeMethod: TypeScriptSetCompilerOptionsMergeMethod;
+```
+
+- *Type:* projen.javascript.TypeScriptSetCompilerOptionsMergeMethod
+- *Default:* TypeScriptSetCompilerOptionsMergeMethod.MERGE
+
+Method used to merge provided compiler options with the defaults.
 
 ---
 
@@ -7979,8 +8094,9 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a></code> | Custom TSConfig. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a></code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code><a href="#projen.typescript.TsJestOptions">TsJestOptions</a></code> | Options for ts-jest. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -9980,10 +10096,10 @@ compile the code in-memory.
 ##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.typescript.TypeScriptProjectOptions.property.tsconfig"></a>
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a>
 - *Default:* default options
 
 Custom TSConfig.
@@ -9993,13 +10109,28 @@ Custom TSConfig.
 ##### `tsconfigDev`<sup>Optional</sup> <a name="tsconfigDev" id="projen.typescript.TypeScriptProjectOptions.property.tsconfigDev"></a>
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a>
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### `tsconfigDevExtendsTsconfig`<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.typescript.TypeScriptProjectOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 

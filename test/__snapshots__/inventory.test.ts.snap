@@ -5214,9 +5214,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -5226,16 +5226,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -5245,8 +5245,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -8439,9 +8456,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -8451,16 +8468,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -8470,8 +8487,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -12565,9 +12599,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -12577,16 +12611,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -12596,8 +12630,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -15596,9 +15647,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -15608,16 +15659,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -15627,8 +15678,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -18559,9 +18627,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -18571,16 +18639,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -18590,8 +18658,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -22324,9 +22409,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -22336,16 +22421,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -22355,8 +22440,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -27359,9 +27461,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -27371,16 +27473,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -27390,8 +27492,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -35935,9 +36054,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -35947,16 +36066,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -35966,8 +36085,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -38559,9 +38695,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -38571,16 +38707,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -38590,8 +38726,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",
@@ -41183,9 +41336,9 @@ exports[`inventory 1`] = `
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -41195,16 +41348,16 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfig",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig",
       },
       {
         "default": "- use the production tsconfig options",
         "docs": "Custom tsconfig options for the development tsconfig.json file (used for testing).",
         "featured": false,
-        "fqn": "projen.javascript.TypescriptConfigOptions",
+        "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         "fullType": {
-          "fqn": "projen.javascript.TypescriptConfigOptions",
+          "fqn": "projen.typescript.TypescriptProjectConfigOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -41214,8 +41367,25 @@ exports[`inventory 1`] = `
         "path": [
           "tsconfigDev",
         ],
-        "simpleType": "TypescriptConfigOptions",
+        "simpleType": "TypescriptProjectConfigOptions",
         "switch": "tsconfig-dev",
+      },
+      {
+        "default": "- false",
+        "docs": "Use extends instead of duplication to make tsconfigDev inherit from tsconfig.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "tsconfigDevExtendsTsconfig",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "tsconfigDevExtendsTsconfig",
+        ],
+        "simpleType": "boolean",
+        "switch": "tsconfig-dev-extends-tsconfig",
       },
       {
         "default": ""tsconfig.dev.json"",

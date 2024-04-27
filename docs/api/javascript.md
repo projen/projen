@@ -4056,6 +4056,7 @@ new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptio
 | <code><a href="#projen.javascript.TypescriptConfig.addExtends">addExtends</a></code> | Extend from base `TypescriptConfig` instance. |
 | <code><a href="#projen.javascript.TypescriptConfig.addInclude">addInclude</a></code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.resolveExtendsPath">resolveExtendsPath</a></code> | Resolve valid TypeScript extends paths relative to this config. |
+| <code><a href="#projen.javascript.TypescriptConfig.setCompilerOptions">setCompilerOptions</a></code> | Set the `compilerOptions` field. |
 
 ---
 
@@ -4149,6 +4150,30 @@ Path to resolve against.
 
 ---
 
+##### `setCompilerOptions` <a name="setCompilerOptions" id="projen.javascript.TypescriptConfig.setCompilerOptions"></a>
+
+```typescript
+public setCompilerOptions(newOptions: TypeScriptCompilerOptions, mergeMethod?: TypeScriptSetCompilerOptionsMergeMethod): void
+```
+
+Set the `compilerOptions` field.
+
+###### `newOptions`<sup>Required</sup> <a name="newOptions" id="projen.javascript.TypescriptConfig.setCompilerOptions.parameter.newOptions"></a>
+
+- *Type:* <a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
+
+New `compilerOptions` to merge or override with.
+
+---
+
+###### `mergeMethod`<sup>Optional</sup> <a name="mergeMethod" id="projen.javascript.TypescriptConfig.setCompilerOptions.parameter.mergeMethod"></a>
+
+- *Type:* <a href="#projen.javascript.TypeScriptSetCompilerOptionsMergeMethod">TypeScriptSetCompilerOptionsMergeMethod</a>
+
+How to merge the new options with the existing ones.
+
+---
+
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
 | **Name** | **Description** |
@@ -4212,12 +4237,12 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.javascript.TypescriptConfig.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.TypescriptConfig.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.TypescriptConfig.property.compilerOptions">compilerOptions</a></code> | <code><a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a></code> | Copy of the contents of the `compilerOptions` field. |
 | <code><a href="#projen.javascript.TypescriptConfig.property.exclude">exclude</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.extends">extends</a></code> | <code>string[]</code> | Array of base `tsconfig.json` paths. Any absolute paths are resolved relative to this instance, while any relative paths are used as is. |
 | <code><a href="#projen.javascript.TypescriptConfig.property.file">file</a></code> | <code>projen.JsonFile</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfig.property.include">include</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.javascript.TypescriptConfig.property.compilerOptions">compilerOptions</a></code> | <code><a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a></code> | *No description.* |
 
 ---
 
@@ -4240,6 +4265,18 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `compilerOptions`<sup>Required</sup> <a name="compilerOptions" id="projen.javascript.TypescriptConfig.property.compilerOptions"></a>
+
+```typescript
+public readonly compilerOptions: TypeScriptCompilerOptions;
+```
+
+- *Type:* <a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
+
+Copy of the contents of the `compilerOptions` field.
 
 ---
 
@@ -4292,16 +4329,6 @@ public readonly include: string[];
 ```
 
 - *Type:* string[]
-
----
-
-##### `compilerOptions`<sup>Optional</sup> <a name="compilerOptions" id="projen.javascript.TypescriptConfig.property.compilerOptions"></a>
-
-```typescript
-public readonly compilerOptions: TypeScriptCompilerOptions;
-```
-
-- *Type:* <a href="#projen.javascript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
 
 ---
 
@@ -14774,6 +14801,41 @@ Resolution strategy which attempts to mimic resolution patterns of modern bundle
 from TypeScript 5.0 onwards.
 
 > [https://www.typescriptlang.org/tsconfig#moduleResolution](https://www.typescriptlang.org/tsconfig#moduleResolution)
+
+---
+
+
+### TypeScriptSetCompilerOptionsMergeMethod <a name="TypeScriptSetCompilerOptionsMergeMethod" id="projen.javascript.TypeScriptSetCompilerOptionsMergeMethod"></a>
+
+Determines how TypeScript should merge `compilerOptions` such as in {@link TypescriptConfig.setCompilerOptions}.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.TypeScriptSetCompilerOptionsMergeMethod.MERGE_ALL">MERGE_ALL</a></code> | Merge **all** `compilerOptions` with the existing options, including `rootDir` and `outdir`. |
+| <code><a href="#projen.javascript.TypeScriptSetCompilerOptionsMergeMethod.MERGE">MERGE</a></code> | Merge "safe" `compilerOptions` that are not managed by a project, such as `rootDir` and `outdir`. |
+| <code><a href="#projen.javascript.TypeScriptSetCompilerOptionsMergeMethod.OVERRIDE">OVERRIDE</a></code> | Override "safe" `compilerOptions` that are not managed by a project, such as `rootDir` and `outdir` This will *reset* `compilerOptions` to the given value *except* `rootDir` and `outDir`. |
+
+---
+
+##### `MERGE_ALL` <a name="MERGE_ALL" id="projen.javascript.TypeScriptSetCompilerOptionsMergeMethod.MERGE_ALL"></a>
+
+Merge **all** `compilerOptions` with the existing options, including `rootDir` and `outdir`.
+
+---
+
+
+##### `MERGE` <a name="MERGE" id="projen.javascript.TypeScriptSetCompilerOptionsMergeMethod.MERGE"></a>
+
+Merge "safe" `compilerOptions` that are not managed by a project, such as `rootDir` and `outdir`.
+
+---
+
+
+##### `OVERRIDE` <a name="OVERRIDE" id="projen.javascript.TypeScriptSetCompilerOptionsMergeMethod.OVERRIDE"></a>
+
+Override "safe" `compilerOptions` that are not managed by a project, such as `rootDir` and `outdir` This will *reset* `compilerOptions` to the given value *except* `rootDir` and `outDir`.
 
 ---
 

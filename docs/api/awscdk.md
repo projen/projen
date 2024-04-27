@@ -10292,8 +10292,9 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -12324,10 +12325,10 @@ compile the code in-memory.
 ##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfig"></a>
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -12337,13 +12338,28 @@ Custom TSConfig.
 ##### `tsconfigDev`<sup>Optional</sup> <a name="tsconfigDev" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDev"></a>
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### `tsconfigDevExtendsTsconfig`<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 
@@ -15531,8 +15547,9 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -17554,10 +17571,10 @@ compile the code in-memory.
 ##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfig"></a>
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -17567,13 +17584,28 @@ Custom TSConfig.
 ##### `tsconfigDev`<sup>Optional</sup> <a name="tsconfigDev" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDev"></a>
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### `tsconfigDevExtendsTsconfig`<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 
@@ -18337,8 +18369,9 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptProjectConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -20627,10 +20660,10 @@ compile the code in-memory.
 - *Deprecated:* use `AwsCdkConstructLibraryOptions`
 
 ```typescript
-public readonly tsconfig: TypescriptConfigOptions;
+public readonly tsconfig: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -20642,13 +20675,30 @@ Custom TSConfig.
 - *Deprecated:* use `AwsCdkConstructLibraryOptions`
 
 ```typescript
-public readonly tsconfigDev: TypescriptConfigOptions;
+public readonly tsconfigDev: TypescriptProjectConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptProjectConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
+
+---
+
+##### ~~`tsconfigDevExtendsTsconfig`~~<sup>Optional</sup> <a name="tsconfigDevExtendsTsconfig" id="projen.awscdk.ConstructLibraryAwsOptions.property.tsconfigDevExtendsTsconfig"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly tsconfigDevExtendsTsconfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use extends instead of duplication to make tsconfigDev inherit from tsconfig.
+
+Ignored if `disableTsconfig` or `disableTsconfigDev` is set to true.
 
 ---
 
