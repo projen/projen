@@ -517,7 +517,11 @@ jobs:
           overwrite: true
   release_github:
     name: Publish to GitHub Releases
-    needs: release
+    needs:
+      - release
+      - release_npm
+      - release_maven
+      - release_pypi
     runs-on: ubuntu-latest
     permissions:
       contents: write
