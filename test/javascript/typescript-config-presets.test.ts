@@ -1,13 +1,8 @@
-import { writeFileSync, mkdirSync } from "fs";
-import * as path from "path";
-import * as semver from "semver";
 import * as ts from "typescript";
 import {
   NodeProject,
-  TypescriptConfig,
-  TypescriptConfigExtends,
   TypeScriptModuleResolution,
-  TypeScriptSetCompilerOptionsMergeMethod,
+  TypescriptConfig,
 } from "../../src/javascript";
 import {
   Node18TypescriptConfigPresets,
@@ -33,7 +28,10 @@ describe("TypescriptConfigPresets", () => {
           outdir,
         });
         const tsConfig = new TypescriptConfig(project, {
-          compilerOptions: ProjenClassicTypescriptConfigPresets.compilerOptions,
+          compilerOptions: {
+            outDir: "testOurDir",
+            ...ProjenClassicTypescriptConfigPresets.compilerOptions,
+          },
         });
         Node18TypescriptConfigPresets.applyPreset(tsConfig);
         project.synth();
@@ -70,7 +68,7 @@ describe("TypescriptConfigPresets", () => {
 
           lib: ["es2023"],
           module: "node16",
-          target: "es2022",
+          target: "ES2022",
 
           strict: true,
           esModuleInterop: true,
@@ -126,7 +124,7 @@ describe("TypescriptConfigPresets", () => {
 
           lib: ["es2023"],
           module: "node16",
-          target: "es2022",
+          target: "ES2022",
 
           strict: true,
           esModuleInterop: true,

@@ -1132,7 +1132,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers source files only. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
 ---
@@ -1829,6 +1829,27 @@ public readonly tsconfigDev: TypescriptConfig;
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
+Same as `tsconfig` if {@link TypeScriptProjectOptions.disableTsconfig`options.disableTsconfigDev`} is set to `true`.
+
+The file will be named {@link TypescriptProjectConfigOptions.fileName`options.tsconfigDev.fileName`} or `tsconfig.dev.json`.
+The file name can be retrieved from {@link TypescriptConfig.fileName`tsconfig.fileName`}.
+
+Configured with all options from {@link TypeScriptProjectOptions.tsconfigDevoptions.tsconfigDev} including:
+- `include` - added after the includes from {@link tsconfig} (if not disabled), and {@link TypeScriptProjectOptions.testdiroptions.testdir}
+- `exclude` - added after `"node_modules"`
+- `extends` - if {@link TypeScriptProjectOptions.tsconfigDevExtendsTsconfigoptions.tsconfigDevExtendsTsconfig} is
+  set to `true`, the file *also* extends {@link tsconfig} (if not disabled).
+
+Special attention is given to {@link TypescriptProjectConfigOptions.compilerOptionsoptions.tsconfigDev.compilerOptions}:
+- `rootDir` and `outDir` are left undefined, so the whole project is covered.
+- if {@link TypeScriptProjectOptions.tsconfigDevExtendsTsconfig`options.tsconfigDevExtendsTsconfig`} is set to `false`,
+  the `compilerOptions` are set to `tsconfig.compilerOptions`
+- {@link TypeScriptProjectOptions.tsconfigDevPresets`options.tsconfigDevPresets`} (if defined) is applied
+- in the case of `options.disableTsconfig` being set to `true` and `options.tsconfigDevPresets` being undefined then
+  `TypescriptConfigPresetsOptions.PROJEN_CLASSIC` is applied
+- the provided `options.tsconfig.compilerOptions` are merged in using
+  {@link TypescriptProjectConfigOptions.compilerOptionsMergeMethod`options.tsconfigDev.compilerOptionsMergeMethod`}.
+
 ---
 
 ##### `watchTask`<sup>Required</sup> <a name="watchTask" id="projen.typescript.TypeScriptAppProject.property.watchTask"></a>
@@ -1870,6 +1891,26 @@ public readonly tsconfig: TypescriptConfig;
 ```
 
 - *Type:* projen.javascript.TypescriptConfig
+
+A typescript configuration file which covers source files only.
+
+Exists unless {@link TypeScriptProjectOptions.disableTsconfig`options.disableTsconfig`} is set to `true`.
+
+The file will be named {@link TypescriptProjectConfigOptions.fileNameoptions.tsconfig.fileName} or `tsconfig.json`.
+The file name can be retrieved from {@link TypescriptConfig.fileName`tsconfig.fileName`}.
+
+Configured with all options from {@link TypeScriptProjectOptions.tsconfigoptions.tsconfig} including:
+- `include` - added after {@link TypeScriptProjectOptions.srcdiroptions.srcdir}
+- `exclude`
+- `extends`
+
+Special attention is given to {@link TypescriptProjectConfigOptions.compilerOptionsoptions.tsconfig.compilerOptions}:
+- `rootDir` and `outDir` are set to {@link TypeScriptProjectOptions.srcdir`options.srcdir`} and
+  {@link TypeScriptProjectOptions.libdir`options.libdir`} respectively.
+- {@link TypeScriptProjectOptions.tsconfigPresets`options.tsconfigPresets`} (defaulting to
+  {@link TypescriptConfigPresetsOptions.PROJEN_CLASSIC`PROJEN_CLASSIC`}) is applied, then the provided
+  `options.tsconfig.compilerOptions` are merged in using
+  {@link TypescriptProjectConfigOptions.compilerOptionsMergeMethod`options.tsconfig.compilerOptionsMergeMethod`}.
 
 ---
 
@@ -2633,7 +2674,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers source files only. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
 ---
@@ -3434,6 +3475,27 @@ public readonly tsconfigDev: TypescriptConfig;
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
+Same as `tsconfig` if {@link TypeScriptProjectOptions.disableTsconfig`options.disableTsconfigDev`} is set to `true`.
+
+The file will be named {@link TypescriptProjectConfigOptions.fileName`options.tsconfigDev.fileName`} or `tsconfig.dev.json`.
+The file name can be retrieved from {@link TypescriptConfig.fileName`tsconfig.fileName`}.
+
+Configured with all options from {@link TypeScriptProjectOptions.tsconfigDevoptions.tsconfigDev} including:
+- `include` - added after the includes from {@link tsconfig} (if not disabled), and {@link TypeScriptProjectOptions.testdiroptions.testdir}
+- `exclude` - added after `"node_modules"`
+- `extends` - if {@link TypeScriptProjectOptions.tsconfigDevExtendsTsconfigoptions.tsconfigDevExtendsTsconfig} is
+  set to `true`, the file *also* extends {@link tsconfig} (if not disabled).
+
+Special attention is given to {@link TypescriptProjectConfigOptions.compilerOptionsoptions.tsconfigDev.compilerOptions}:
+- `rootDir` and `outDir` are left undefined, so the whole project is covered.
+- if {@link TypeScriptProjectOptions.tsconfigDevExtendsTsconfig`options.tsconfigDevExtendsTsconfig`} is set to `false`,
+  the `compilerOptions` are set to `tsconfig.compilerOptions`
+- {@link TypeScriptProjectOptions.tsconfigDevPresets`options.tsconfigDevPresets`} (if defined) is applied
+- in the case of `options.disableTsconfig` being set to `true` and `options.tsconfigDevPresets` being undefined then
+  `TypescriptConfigPresetsOptions.PROJEN_CLASSIC` is applied
+- the provided `options.tsconfig.compilerOptions` are merged in using
+  {@link TypescriptProjectConfigOptions.compilerOptionsMergeMethod`options.tsconfigDev.compilerOptionsMergeMethod`}.
+
 ---
 
 ##### ~~`watchTask`~~<sup>Required</sup> <a name="watchTask" id="projen.typescript.TypeScriptLibraryProject.property.watchTask"></a>
@@ -3483,6 +3545,26 @@ public readonly tsconfig: TypescriptConfig;
 ```
 
 - *Type:* projen.javascript.TypescriptConfig
+
+A typescript configuration file which covers source files only.
+
+Exists unless {@link TypeScriptProjectOptions.disableTsconfig`options.disableTsconfig`} is set to `true`.
+
+The file will be named {@link TypescriptProjectConfigOptions.fileNameoptions.tsconfig.fileName} or `tsconfig.json`.
+The file name can be retrieved from {@link TypescriptConfig.fileName`tsconfig.fileName`}.
+
+Configured with all options from {@link TypeScriptProjectOptions.tsconfigoptions.tsconfig} including:
+- `include` - added after {@link TypeScriptProjectOptions.srcdiroptions.srcdir}
+- `exclude`
+- `extends`
+
+Special attention is given to {@link TypescriptProjectConfigOptions.compilerOptionsoptions.tsconfig.compilerOptions}:
+- `rootDir` and `outDir` are set to {@link TypeScriptProjectOptions.srcdir`options.srcdir`} and
+  {@link TypeScriptProjectOptions.libdir`options.libdir`} respectively.
+- {@link TypeScriptProjectOptions.tsconfigPresets`options.tsconfigPresets`} (defaulting to
+  {@link TypescriptConfigPresetsOptions.PROJEN_CLASSIC`PROJEN_CLASSIC`}) is applied, then the provided
+  `options.tsconfig.compilerOptions` are merged in using
+  {@link TypescriptProjectConfigOptions.compilerOptionsMergeMethod`options.tsconfig.compilerOptionsMergeMethod`}.
 
 ---
 
@@ -4254,7 +4336,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers source files only. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
 ---
@@ -4951,6 +5033,27 @@ public readonly tsconfigDev: TypescriptConfig;
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
+Same as `tsconfig` if {@link TypeScriptProjectOptions.disableTsconfig`options.disableTsconfigDev`} is set to `true`.
+
+The file will be named {@link TypescriptProjectConfigOptions.fileName`options.tsconfigDev.fileName`} or `tsconfig.dev.json`.
+The file name can be retrieved from {@link TypescriptConfig.fileName`tsconfig.fileName`}.
+
+Configured with all options from {@link TypeScriptProjectOptions.tsconfigDevoptions.tsconfigDev} including:
+- `include` - added after the includes from {@link tsconfig} (if not disabled), and {@link TypeScriptProjectOptions.testdiroptions.testdir}
+- `exclude` - added after `"node_modules"`
+- `extends` - if {@link TypeScriptProjectOptions.tsconfigDevExtendsTsconfigoptions.tsconfigDevExtendsTsconfig} is
+  set to `true`, the file *also* extends {@link tsconfig} (if not disabled).
+
+Special attention is given to {@link TypescriptProjectConfigOptions.compilerOptionsoptions.tsconfigDev.compilerOptions}:
+- `rootDir` and `outDir` are left undefined, so the whole project is covered.
+- if {@link TypeScriptProjectOptions.tsconfigDevExtendsTsconfig`options.tsconfigDevExtendsTsconfig`} is set to `false`,
+  the `compilerOptions` are set to `tsconfig.compilerOptions`
+- {@link TypeScriptProjectOptions.tsconfigDevPresets`options.tsconfigDevPresets`} (if defined) is applied
+- in the case of `options.disableTsconfig` being set to `true` and `options.tsconfigDevPresets` being undefined then
+  `TypescriptConfigPresetsOptions.PROJEN_CLASSIC` is applied
+- the provided `options.tsconfig.compilerOptions` are merged in using
+  {@link TypescriptProjectConfigOptions.compilerOptionsMergeMethod`options.tsconfigDev.compilerOptionsMergeMethod`}.
+
 ---
 
 ##### `watchTask`<sup>Required</sup> <a name="watchTask" id="projen.typescript.TypeScriptProject.property.watchTask"></a>
@@ -4992,6 +5095,26 @@ public readonly tsconfig: TypescriptConfig;
 ```
 
 - *Type:* projen.javascript.TypescriptConfig
+
+A typescript configuration file which covers source files only.
+
+Exists unless {@link TypeScriptProjectOptions.disableTsconfig`options.disableTsconfig`} is set to `true`.
+
+The file will be named {@link TypescriptProjectConfigOptions.fileNameoptions.tsconfig.fileName} or `tsconfig.json`.
+The file name can be retrieved from {@link TypescriptConfig.fileName`tsconfig.fileName`}.
+
+Configured with all options from {@link TypeScriptProjectOptions.tsconfigoptions.tsconfig} including:
+- `include` - added after {@link TypeScriptProjectOptions.srcdiroptions.srcdir}
+- `exclude`
+- `extends`
+
+Special attention is given to {@link TypescriptProjectConfigOptions.compilerOptionsoptions.tsconfig.compilerOptions}:
+- `rootDir` and `outDir` are set to {@link TypeScriptProjectOptions.srcdir`options.srcdir`} and
+  {@link TypeScriptProjectOptions.libdir`options.libdir`} respectively.
+- {@link TypeScriptProjectOptions.tsconfigPresets`options.tsconfigPresets`} (defaulting to
+  {@link TypescriptConfigPresetsOptions.PROJEN_CLASSIC`PROJEN_CLASSIC`}) is applied, then the provided
+  `options.tsconfig.compilerOptions` are merged in using
+  {@link TypescriptProjectConfigOptions.compilerOptionsMergeMethod`options.tsconfig.compilerOptionsMergeMethod`}.
 
 ---
 
@@ -5498,6 +5621,8 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a></code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevPresets">tsconfigDevPresets</a></code> | <code>projen.javascript.TypescriptConfigPresetsOptions</code> | Presets to choose as the base for the tsconfig dev file. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigPresets">tsconfigPresets</a></code> | <code>projen.javascript.TypescriptConfigPresetsOptions</code> | Presets to choose as the base for the tsconfig file. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code><a href="#projen.typescript.TsJestOptions">TsJestOptions</a></code> | Options for ts-jest. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 
@@ -7811,6 +7936,36 @@ The name of the development tsconfig.json file.
 
 ---
 
+##### ~~`tsconfigDevPresets`~~<sup>Optional</sup> <a name="tsconfigDevPresets" id="projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevPresets"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly tsconfigDevPresets: TypescriptConfigPresetsOptions;
+```
+
+- *Type:* projen.javascript.TypescriptConfigPresetsOptions
+- *Default:* TypescriptConfigPresetsOptions.PROJEN_CLASSIC
+
+Presets to choose as the base for the tsconfig dev file.
+
+---
+
+##### ~~`tsconfigPresets`~~<sup>Optional</sup> <a name="tsconfigPresets" id="projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigPresets"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly tsconfigPresets: TypescriptConfigPresetsOptions;
+```
+
+- *Type:* projen.javascript.TypescriptConfigPresetsOptions
+- *Default:* TypescriptConfigPresetsOptions.PROJEN_CLASSIC
+
+Presets to choose as the base for the tsconfig file.
+
+---
+
 ##### ~~`tsJestOptions`~~<sup>Optional</sup> <a name="tsJestOptions" id="projen.typescript.TypeScriptLibraryProjectOptions.property.tsJestOptions"></a>
 
 - *Deprecated:* use TypeScriptProjectOptions
@@ -8098,6 +8253,8 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptProjectConfigOptions">TypescriptProjectConfigOptions</a></code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDevExtendsTsconfig">tsconfigDevExtendsTsconfig</a></code> | <code>boolean</code> | Use extends instead of duplication to make tsconfigDev inherit from tsconfig. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDevPresets">tsconfigDevPresets</a></code> | <code>projen.javascript.TypescriptConfigPresetsOptions</code> | Presets to choose as the base for the tsconfig dev file. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigPresets">tsconfigPresets</a></code> | <code>projen.javascript.TypescriptConfigPresetsOptions</code> | Presets to choose as the base for the tsconfig file. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code><a href="#projen.typescript.TsJestOptions">TsJestOptions</a></code> | Options for ts-jest. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 
@@ -10144,6 +10301,32 @@ public readonly tsconfigDevFile: string;
 - *Default:* "tsconfig.dev.json"
 
 The name of the development tsconfig.json file.
+
+---
+
+##### `tsconfigDevPresets`<sup>Optional</sup> <a name="tsconfigDevPresets" id="projen.typescript.TypeScriptProjectOptions.property.tsconfigDevPresets"></a>
+
+```typescript
+public readonly tsconfigDevPresets: TypescriptConfigPresetsOptions;
+```
+
+- *Type:* projen.javascript.TypescriptConfigPresetsOptions
+- *Default:* TypescriptConfigPresetsOptions.PROJEN_CLASSIC
+
+Presets to choose as the base for the tsconfig dev file.
+
+---
+
+##### `tsconfigPresets`<sup>Optional</sup> <a name="tsconfigPresets" id="projen.typescript.TypeScriptProjectOptions.property.tsconfigPresets"></a>
+
+```typescript
+public readonly tsconfigPresets: TypescriptConfigPresetsOptions;
+```
+
+- *Type:* projen.javascript.TypescriptConfigPresetsOptions
+- *Default:* TypescriptConfigPresetsOptions.PROJEN_CLASSIC
+
+Presets to choose as the base for the tsconfig file.
 
 ---
 
