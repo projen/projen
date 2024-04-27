@@ -440,6 +440,12 @@
           "path": ".vscode/launch.json"
         }
       },
+      "WindowsBuild": {
+        "metadata": {
+          "type": "component",
+          "construct": "WindowsBuild"
+        }
+      },
       "ProjectTree": {
         "metadata": {
           "type": "component",

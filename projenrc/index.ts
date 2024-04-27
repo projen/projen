@@ -1,4 +1,4 @@
-import { DependencyType, JsonFile, JsonPatch, Project, TextFile } from "../src";
+import { DependencyType, JsonFile, Project, TextFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
 import { TaskWorkflow } from "../src/github";
 import {
@@ -6,6 +6,8 @@ import {
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
+
+export * from "./windows-build";
 
 /**
  * Add integration tests tasks to a project
@@ -332,58 +334,4 @@ export function setupNpmignore(project: NodeProject) {
   project.npmignore?.exclude("/VISION.md");
   project.npmignore?.exclude("/SECURITY.md");
   project.npmignore?.exclude("/.gitpod.yml");
-}
-
-/**
- * Setup the github workflow for windows
- *
- * @param project The project to add the configuration to
- */
-export function setupGithubWorkflowWindows(project: NodeProject) {
-  const skippedStepIndexes = [
-    // Upload coverage to Codecov
-    4,
-
-    // Backup artifact permissions
-    8,
-
-    // Upload artifact
-    9,
-  ];
-
-  const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
-    JsonPatch.add(
-      `/jobs/build/steps/${stepIndex}/if`,
-      "${{ !matrix.runner.experimental }}"
-    )
-  );
-
-  const buildWorkflow = project.github?.tryFindWorkflow('build')?.file;
-
-  // Set windows-latest runner to experimental
-  buildWorkflow?.patch(
-    JsonPatch.add("/jobs/build/strategy", {
-      matrix: {
-        runner: [
-          { os: "ubuntu-latest", experimental: false },
-          { os: "windows-latest", experimental: true },
-        ],
-      },
-    }),
-    JsonPatch.add("/jobs/build/runs-on", "${{ matrix.runner.os }}"),
-
-    // Allow step to fail on windows
-    JsonPatch.add(
-      "/jobs/build/steps/3/continue-on-error",
-      "${{ matrix.runner.experimental }}"
-    ),
-
-    JsonPatch.add(
-      `/jobs/build/steps/6/if`,
-      "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
-    ),
-
-    // Skip steps that shouldn't run on Windows
-    ...skippedStepPatches
-  );
 }

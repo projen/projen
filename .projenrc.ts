@@ -13,7 +13,7 @@ import {
   setupNpmignore,
   setupUpgradeDependencies,
   setupVscode,
-  setupGithubWorkflowWindows,
+  WindowsBuild,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -178,7 +178,7 @@ setupNpmignore(project);
 setupIntegTest(project);
 setupBundleTaskRunner(project);
 
-setupGithubWorkflowWindows(project);
+new WindowsBuild(project);
 
 // we are projen, so re-synth after compiling.
 // fixes feedback loop where projen contibutors run "build"
