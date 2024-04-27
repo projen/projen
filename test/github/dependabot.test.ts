@@ -280,6 +280,36 @@ describe("dependabot", () => {
       expect(dependabot).toContain("dependency-name: projen");
     });
   });
+
+  describe("target branch", () => {
+    test("empty target branch", () => {
+      const project = createProject();
+
+      new Dependabot(project.github!, {});
+
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toBeDefined();
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain("target-branch4");
+    });
+
+    test("develop as the target branch", () => {
+      const project = createProject();
+
+      const targetBranch = "develop";
+
+      new Dependabot(project.github!, {
+        targetBranch: targetBranch,
+      });
+
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toBeDefined();
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain(`target-branch: ${targetBranch}`);
+    });
+  });
 });
 
 type ProjectOptions = Omit<
