@@ -11,6 +11,15 @@ export class WindowsBuild extends Component {
   public constructor(scope: IConstruct) {
     super(scope, "WindowsBuild");
 
+    const github = GitHub.of(this.project)!;
+    const buildWorkflowFile = github.tryFindWorkflow("build")?.file;
+
+    const JOB_BUILD = "build";
+    const JOB_BUILD_MATRIX = "build_matrix";
+    const buildJobPath = (path?: string) => {
+      return `/jobs/${JOB_BUILD}${path ?? ""}`;
+    };
+
     const skippedStepIndexes = [
       // Upload coverage to Codecov
       4,
@@ -24,18 +33,14 @@ export class WindowsBuild extends Component {
 
     const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
       JsonPatch.add(
-        `/jobs/build/steps/${stepIndex}/if`,
+        buildJobPath(`/steps/${stepIndex}/if`),
         "${{ !matrix.runner.experimental }}"
       )
     );
 
-    const buildWorkflow = GitHub.of(this.project)?.tryFindWorkflow(
-      "build"
-    )?.file;
-
     // Set windows-latest runner to experimental
-    buildWorkflow?.patch(
-      JsonPatch.add("/jobs/build/strategy", {
+    buildWorkflowFile?.patch(
+      JsonPatch.add(buildJobPath("/strategy"), {
         matrix: {
           runner: [
             { os: "ubuntu-latest", experimental: false },
@@ -43,21 +48,39 @@ export class WindowsBuild extends Component {
           ],
         },
       }),
-      JsonPatch.add("/jobs/build/runs-on", "${{ matrix.runner.os }}"),
+      JsonPatch.add(buildJobPath("/runs-on"), "${{ matrix.runner.os }}"),
 
       // Allow step to fail on windows
       JsonPatch.add(
-        "/jobs/build/steps/3/continue-on-error",
+        buildJobPath("/continue-on-error"),
         "${{ matrix.runner.experimental }}"
       ),
 
       JsonPatch.add(
-        `/jobs/build/steps/6/if`,
+        buildJobPath("/steps/6/if"),
         "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
       ),
 
       // Skip steps that shouldn't run on Windows
-      ...skippedStepPatches
+      ...skippedStepPatches,
+
+      // Rename workflow
+      JsonPatch.move(buildJobPath(), `/jobs/${JOB_BUILD_MATRIX}`),
+
+      // Add the join target job for branch protection
+      JsonPatch.add(buildJobPath(), {
+        "runs-on": "ubuntu-latest",
+        needs: [JOB_BUILD_MATRIX],
+        outputs: {
+          self_mutation_happened: `\${{ needs.${JOB_BUILD_MATRIX}.outputs.self_mutation_happened }}`,
+        },
+        steps: [
+          {
+            name: "OK",
+            run: 'echo "OK"',
+          },
+        ],
+      })
     );
   }
 }
