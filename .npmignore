@@ -41,3 +41,4 @@ tsconfig.tsbuildinfo
 /.gitpod.yml
 /.gitattributes
 /.projenrc.ts
+/projenrc
