@@ -111,7 +111,7 @@ This can be useful when a specific version of an action must be used due to inco
 Specific overrides take precedence over overrides without a version.
 
 ```ts
-project.github.actions.set("actions/checkout@v3", "actions/checkout@ac59398");
+project.github.actions.set("actions/checkout@v4", "actions/checkout@ac59398");
 project.github.actions.set("actions/checkout", "actions/checkout@main");
 ```
 
@@ -119,7 +119,7 @@ Different versions of `actions/checkout` are resolved to different overrides:
 
 ```yaml
 steps:
-  # Was: actions/checkout@v3
+  # Was: actions/checkout@v4
   - uses: actions/checkout@ac59398
 
   # Was: actions/checkout@v2

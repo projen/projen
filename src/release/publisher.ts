@@ -29,6 +29,7 @@ const PUBLIB_TOOLCHAIN = {
   go: { go: { version: "^1.16.0" } },
   dotnet: { dotnet: { version: "3.x" } },
 };
+const PUBLISH_JOB_PREFIX = "release_";
 
 /**
  * Options for `Publisher`.
@@ -166,6 +167,10 @@ export class Publisher extends Component {
   private readonly workflowNodeVersion: string;
   private readonly workflowContainerImage?: string;
 
+  // List of publish jobs added to the publisher
+  // Maps between the basename and the jobname
+  private readonly publishJobs: Record<string, string> = {};
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -277,9 +282,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
+    const jobName = "github";
+    this.addPublishJob(jobName, (_branch, branchOptions): PublishJobOptions => {
       return {
-        name: "github",
         registryName: "GitHub Releases",
         prePublishSteps: options.prePublishSteps ?? this._gitHubPrePublishing,
         postPublishSteps:
@@ -288,6 +293,9 @@ export class Publisher extends Component {
         permissions: {
           contents: JobPermission.WRITE,
         },
+        needs: Object.entries(this.publishJobs)
+          .filter(([name, _]) => name != jobName)
+          .map(([_, job]) => job),
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
           GITHUB_REPOSITORY: "${{ github.repository }}",
@@ -346,7 +354,7 @@ export class Publisher extends Component {
       });
     }
 
-    this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
+    this.addPublishJob("npm", (_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error(
           "cannot set branch-level npmDistTag and npmDistTag in publishToNpm()"
@@ -355,9 +363,7 @@ export class Publisher extends Component {
 
       const npmProvenance = options.npmProvenance ? "true" : undefined;
       const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
-
       return {
-        name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
@@ -407,9 +413,10 @@ export class Publisher extends Component {
     const isGitHubPackages = options.nugetServer?.startsWith(
       GITHUB_PACKAGES_NUGET_REPOSITORY
     );
+
     this.addPublishJob(
+      "nuget",
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "nuget",
         publishTools: PUBLIB_TOOLCHAIN.dotnet,
         prePublishSteps: options.prePublishSteps ?? [],
         postPublishSteps: options.postPublishSteps ?? [],
@@ -451,8 +458,8 @@ export class Publisher extends Component {
     }
 
     this.addPublishJob(
+      "maven",
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "maven",
         registryName: "Maven Central",
         publishTools: PUBLIB_TOOLCHAIN.java,
         prePublishSteps: options.prePublishSteps ?? [],
@@ -557,8 +564,8 @@ export class Publisher extends Component {
     }
 
     this.addPublishJob(
+      "pypi",
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "pypi",
         registryName: "PyPI",
         publishTools: PUBLIB_TOOLCHAIN.python,
         permissions,
@@ -600,8 +607,8 @@ export class Publisher extends Component {
     }
 
     this.addPublishJob(
+      "golang",
       (_branch, _branchOptions): PublishJobOptions => ({
-        name: "golang",
         publishTools: PUBLIB_TOOLCHAIN.go,
         prePublishSteps: prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
@@ -622,14 +629,21 @@ export class Publisher extends Component {
   }
 
   private addPublishJob(
+    /**
+     * The basename of the publish job (should be lowercase).
+     * Will be extended with a prefix.
+     */
+    basename: string,
     factory: (
       branch: string,
       branchOptions: Partial<BranchOptions>
     ) => PublishJobOptions
   ) {
+    const jobname = `${PUBLISH_JOB_PREFIX}${basename}`;
+    this.publishJobs[basename] = jobname;
+
     this._jobFactories.push((branch, branchOptions) => {
       const opts = factory(branch, branchOptions);
-      const jobname = `release_${opts.name}`;
       if (jobname in this._jobFactories) {
         throw new Error(`Duplicate job with name "${jobname}"`);
       }
@@ -644,9 +658,9 @@ export class Publisher extends Component {
       const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {}).filter(
         ([_, value]) => value != undefined
       ) as string[][];
-      for (const [name, expression] of workflowEnvEntries) {
-        requiredEnv.push(name);
-        jobEnv[name] = expression;
+      for (const [env, expression] of workflowEnvEntries) {
+        requiredEnv.push(env);
+        jobEnv[env] = expression;
       }
 
       if (this.publishTasks) {
@@ -655,7 +669,7 @@ export class Publisher extends Component {
 
         // define a task which can be used through `projen publish:xxx`.
         const task = this.project.addTask(
-          `publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`,
+          `publish:${basename.toLocaleLowerCase()}${branchSuffix}`,
           {
             description: `Publish this package to ${opts.registryName}`,
             env: opts.env,
@@ -739,7 +753,7 @@ export class Publisher extends Component {
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,
-          needs: [this.buildJobId],
+          needs: [this.buildJobId, ...(opts.needs ?? [])],
           ...filteredRunsOnOptions(this.runsOn, this.runsOnGroup),
           container,
           steps,
@@ -815,11 +829,6 @@ interface PublishJobOptions {
   readonly permissions?: JobPermissions;
 
   /**
-   * The name of the publish job (should be lowercase).
-   */
-  readonly name: string;
-
-  /**
    * Environment to include only in the workflow (and not tasks).
    */
   readonly workflowEnv?: { [name: string]: string | undefined };
@@ -839,6 +848,11 @@ interface PublishJobOptions {
    * @default - no tools are installed
    */
   readonly publishTools?: Tools;
+
+  /**
+   * Additional jobs the publish jobs depends on.
+   */
+  readonly needs?: string[];
 }
 
 /**

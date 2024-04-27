@@ -34,7 +34,7 @@ jobs:
       - name: release
         run: node ./projen.js release
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           directory: coverage
       - name: Check if version has already been tagged
@@ -61,7 +61,12 @@ jobs:
           overwrite: true
   release_github:
     name: Publish to GitHub Releases
-    needs: release
+    needs:
+      - release
+      - release_npm
+      - release_maven
+      - release_pypi
+      - release_golang
     runs-on: ubuntu-latest
     permissions:
       contents: write

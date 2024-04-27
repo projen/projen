@@ -665,7 +665,7 @@ test("extend github release workflow", () => {
       steps: [
         {
           name: "Check out the repo",
-          uses: "actions/checkout@v3",
+          uses: "actions/checkout@v4",
         },
         {
           name: "Push to Docker Hub",
@@ -696,7 +696,7 @@ test("codecov upload added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).toContain("uses: codecov/codecov-action@v3");
+  expect(workflow).toContain("uses: codecov/codecov-action@v4");
 });
 
 test("codecov upload not added to github release workflow", () => {
@@ -705,7 +705,7 @@ test("codecov upload not added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).not.toContain("uses: codecov/codecov-action@v3");
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v4");
 });
 
 describe("scripts", () => {

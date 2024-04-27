@@ -4838,6 +4838,7 @@ const dependabotOptions: github.DependabotOptions = { ... }
 | <code><a href="#projen.github.DependabotOptions.property.registries">registries</a></code> | <code>{[ key: string ]: <a href="#projen.github.DependabotRegistry">DependabotRegistry</a>}</code> | Map of package registries to use. |
 | <code><a href="#projen.github.DependabotOptions.property.reviewers">reviewers</a></code> | <code>string[]</code> | Specify individual reviewers or teams of reviewers for all pull requests raised for a package manager. |
 | <code><a href="#projen.github.DependabotOptions.property.scheduleInterval">scheduleInterval</a></code> | <code><a href="#projen.github.DependabotScheduleInterval">DependabotScheduleInterval</a></code> | How often to check for new versions and raise pull requests. |
+| <code><a href="#projen.github.DependabotOptions.property.targetBranch">targetBranch</a></code> | <code>string</code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#target-branch You can configure the target branch for raising pull requests for version updates against. |
 | <code><a href="#projen.github.DependabotOptions.property.versioningStrategy">versioningStrategy</a></code> | <code><a href="#projen.github.VersioningStrategy">VersioningStrategy</a></code> | The strategy to use when edits manifest and lock files. |
 
 ---
@@ -4983,6 +4984,18 @@ public readonly scheduleInterval: DependabotScheduleInterval;
 - *Default:* ScheduleInterval.DAILY
 
 How often to check for new versions and raise pull requests.
+
+---
+
+##### `targetBranch`<sup>Optional</sup> <a name="targetBranch" id="projen.github.DependabotOptions.property.targetBranch"></a>
+
+```typescript
+public readonly targetBranch: string;
+```
+
+- *Type:* string
+
+https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#target-branch You can configure the target branch for raising pull requests for version updates against.
 
 ---
 
@@ -8189,8 +8202,8 @@ If an override for the same action name is set multiple times, the last override
 // Force any use of `actions/checkout` to use a pin a specific commit
 project.github.actions.set("actions/checkout", "actions/checkout@aaaaaa");
 
-// But pin usage of `v3` to a different commit
-project.github.actions.set("actions/checkout@v3", "actions/checkout@ffffff");
+// But pin usage of `v4` to a different commit
+project.github.actions.set("actions/checkout@v4", "actions/checkout@ffffff");
 ```
 
 
