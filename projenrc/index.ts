@@ -358,10 +358,7 @@ export function setupGithubWorkflowWindows(project: NodeProject) {
     )
   );
 
-  // TODO: workflows should expose file path. Use workflow path instead of hardcoded string
-  const buildWorkflow = project.tryFindObjectFile(
-    ".github/workflows/build.yml"
-  );
+  const buildWorkflow = project.github?.tryFindWorkflow('build')?.file;
 
   // Set windows-latest runner to experimental
   buildWorkflow?.patch(
