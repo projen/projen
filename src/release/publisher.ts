@@ -629,14 +629,18 @@ export class Publisher extends Component {
   }
 
   private addPublishJob(
-    name: string,
+    /**
+     * The basename of the publish job (should be lowercase).
+     * Will be extended with a prefix.
+     */
+    basename: string,
     factory: (
       branch: string,
       branchOptions: Partial<BranchOptions>
     ) => PublishJobOptions
   ) {
-    const jobname = `${PUBLISH_JOB_PREFIX}${name}`;
-    this.publishJobs[name] = jobname;
+    const jobname = `${PUBLISH_JOB_PREFIX}${basename}`;
+    this.publishJobs[basename] = jobname;
 
     this._jobFactories.push((branch, branchOptions) => {
       const opts = factory(branch, branchOptions);
@@ -665,7 +669,7 @@ export class Publisher extends Component {
 
         // define a task which can be used through `projen publish:xxx`.
         const task = this.project.addTask(
-          `publish:${name.toLocaleLowerCase()}${branchSuffix}`,
+          `publish:${basename.toLocaleLowerCase()}${branchSuffix}`,
           {
             description: `Publish this package to ${opts.registryName}`,
             env: opts.env,
@@ -739,11 +743,6 @@ export class Publisher extends Component {
         );
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
-
-      // const needs =
-      //   jobname === `${PUBLISH_JOB_PREFIX}github`
-      //     ? this.packageManagersPublishJobs
-      //     : [];
 
       return {
         [jobname]: {
