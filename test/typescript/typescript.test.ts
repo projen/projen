@@ -143,7 +143,7 @@ describe("compilerOptionsMergeMethod options", () => {
     );
   });
 
-  test("compilerOptionsMergeMethod === TypeScriptSetCompilerOptionsMergeMethod.MERGE_ALL", () => {
+  test("TypeScriptSetCompilerOptionsMergeMethod.MERGE_ALL", () => {
     const prj = new TypeScriptProject({
       name: "test",
       defaultReleaseBranch: "test",
@@ -175,6 +175,63 @@ describe("compilerOptionsMergeMethod options", () => {
           strictNullChecks: true,
           // all of the other defaults will be here as well
         }),
+      })
+    );
+  });
+
+  test("tsconfigDevExtendsTsconfig", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "test",
+      tsconfig: {
+        include: ["typescript.test.ts"],
+        compilerOptions: {
+          outDir: "foo",
+          rootDir: "bar",
+          esModuleInterop: false,
+        },
+        compilerOptionsMergeMethod:
+          TypeScriptSetCompilerOptionsMergeMethod.MERGE_ALL,
+      },
+      tsconfigDev: {
+        compilerOptions: {
+          esModuleInterop: true,
+        },
+      },
+      tsconfigDevExtendsTsconfig: true,
+    });
+
+    const out = synthSnapshot(prj);
+
+    expect(out["tsconfig.json"]).toEqual(
+      expect.objectContaining({
+        include: expect.arrayContaining([
+          `${prj.srcdir}/**/*.ts`,
+          "typescript.test.ts",
+        ]),
+        compilerOptions: expect.objectContaining({
+          outDir: "foo",
+          rootDir: "bar",
+          esModuleInterop: false,
+          strict: true,
+          strictNullChecks: true,
+          // all of the other defaults will be here as well
+        }),
+      })
+    );
+
+    expect(out["tsconfig.dev.json"]).toEqual(
+      expect.objectContaining({
+        include: [
+          "src/**/*.ts",
+          "test/**/*.ts",
+          "typescript.test.ts",
+          ".projenrc.js",
+        ],
+        compilerOptions: {
+          esModuleInterop: true,
+        },
+        extends: "./tsconfig.json",
       })
     );
   });
