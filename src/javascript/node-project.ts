@@ -829,9 +829,9 @@ export class NodeProject extends GitHubProject {
       const pkgMgr =
         this.package.packageManager === NodePackageManager.PNPM
           ? "pnpm"
-          : "npm"; // sadly we cannot use --pack-destination because it is not supported by older npm
+          : "npm";
       this.packageTask.exec(
-        `mv $(${pkgMgr} pack) ${this.artifactsJavascriptDirectory}/`
+        `${pkgMgr} pack --pack-destination ${this.artifactsJavascriptDirectory}`
       );
     }
 
