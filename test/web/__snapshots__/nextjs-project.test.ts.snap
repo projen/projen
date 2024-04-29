@@ -573,7 +573,7 @@ permissions-backup.acl
             "exec": "mkdir -p dist/js",
           },
           {
-            "exec": "mv $(npm pack) dist/js/",
+            "exec": "npm pack --pack-destination dist/js",
           },
         ],
       },
