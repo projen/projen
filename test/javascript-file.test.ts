@@ -6,30 +6,47 @@ import {
 } from "../src/javascript-file";
 
 test("JavascriptRaw can make js-type eslint output", () => {
+  // make a dependencies object to track imports
   const dependencies = new JavascriptDependencies();
+
+  // add a few imports
   const [jsdoc] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
   const [js] = dependencies.addImport("js", "@eslint/js");
 
+  // create a files array to modify later
+  const files: Array<string> = [];
+
+  // make a data object
   const data = [
     {
-      files: ["**/*.js"],
+      files,
       plugins: {
         jsdoc,
       },
       rules: {
         "jsdoc/require-description": "error",
+
+        // insert a spread operator, value doesn't matter
         [`...${js}.blah`]: true,
         "jsdoc/check-values": "error",
+
+        // insert a second spread operator, value doesn't matter
         [`...(${jsdoc}.fakeTest ? {"fakeTest": "warn"} : {})`]: true,
       },
     },
   ];
-  const value = new JavascriptRaw(
-    `${dependencies}
+
+  // now make a file with that data, including any imports, but don't resolve it yet
+  const unresolvedValue = new JavascriptRaw(`${dependencies}
 
 export default ${JavascriptDataStructure.value(data)};
-`
-  ).resolve();
+`);
+
+  // modify the data
+  files.push("**/*.js");
+
+  // now resolve the code into value
+  const value = unresolvedValue.resolve();
 
   console.log(value);
 
