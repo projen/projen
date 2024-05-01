@@ -28,12 +28,12 @@ export class JavascriptFunction extends CodeResolvableBase {
 
     const header = this.name ? `function ${this.name}` : ``;
     const parametersValue = this.properties
-      .map((p) => doStringify(p, 0, ""))
+      .map((p) => javascriptStringify(p, 0, ""))
       .join(", ");
     const parameters = `(${parametersValue})`;
     const arrow = this.name ? " " : " => ";
     const bodyValue = (Array.isArray(this.body) ? this.body : [this.body])
-      .map((p) => dentPlus + doStringify(p, 0, ""))
+      .map((p) => dentPlus + javascriptStringify(p, 0, ""))
       .join("\n");
     const body = CodeTokenMap.instance.resolve(`{\n${bodyValue}\n${dent}}`, {
       level: level + 1,
@@ -71,7 +71,7 @@ export class JavascriptDataStructure extends CodeResolvableBase {
     super();
   }
   stringify(level = 0, idt = "  ") {
-    return doStringify(this.body, level, idt) ?? "undefined";
+    return javascriptStringify(this.body, level, idt) ?? "undefined";
   }
 }
 
@@ -139,85 +139,6 @@ export class JavascriptDependencies extends CodeResolvableBase {
   }
 }
 
-function doStringify(
-  data: unknown,
-  level = 0,
-  idt: string = "  "
-): string | undefined {
-  const dent = idt.repeat(level);
-  const dentPlus = idt.repeat(level + 1);
-  if (data instanceof JavascriptFunction || data instanceof JavascriptRaw) {
-    return data.stringify(level, idt ?? "");
-  }
-  if (typeof data === "number") {
-    return data.toString();
-  }
-  if (data instanceof Date) {
-    return `new Date(${JSON.stringify(data.toISOString())})`;
-  }
-  if (Array.isArray(data)) {
-    const r: Array<string> = [];
-    for (const val of data) {
-      const value = doStringify(val, level + 1, idt);
-      if (value) {
-        r.push(value);
-      }
-    }
-    if (idt) {
-      return r.length === 0
-        ? "[]"
-        : `[\n${r.map((l) => dentPlus + l).join(",\n")},\n${dent}]`;
-    }
-    return `[${r.join(", ")}]`;
-  }
-  if (data && typeof data === "object") {
-    const r: Array<string> = [];
-    if (!Object.entries(data).length) {
-      return "{}";
-    }
-    r.push("{");
-    for (const [key, val] of Object.entries(data)) {
-      // Four possible outputs per row:
-      // 1. `key: value,`
-      // 2. `"key": value`
-      // 3. `[key]: "value"`
-      // 4. `...key` (value is ignored)
-
-      const value = doStringify(val, level + 1, idt);
-      let keyString = key;
-      // if the key is a token, resolve it (3,4)
-      if (unresolved(key)) {
-        console.log("key", key);
-        // and if it starts with `...` then we drop it in place (4)
-        const resolvedKey = CodeTokenMap.instance.resolve(key, { level, idt });
-        if (resolvedKey?.match(/^\.\.\./)) {
-          r.push(dentPlus + `${resolvedKey},`);
-          continue;
-        } else {
-          // otherwise we wrap it in `[]` (3)
-          keyString = `[${resolvedKey}]`;
-        }
-      } else {
-        // if the key is a valid identifier, we use it as is (1)
-        // otherwise we quote it and wrap it in quotes (2)
-        keyString = keyString.match(/^[a-zA-Z_][a-zA-Z_0-9]*$/)
-          ? keyString
-          : JSON.stringify(keyString);
-      }
-
-      // if the value is not undefined, we add it to the output
-      // if you want the value to be exactly undefined,
-      // then use`JavascriptRaw.value("undefined")`
-      if (value !== undefined) {
-        r.push(dentPlus + keyString + ": " + value + ",");
-      }
-    }
-    r.push(dent + "}");
-    return r.join(idt ? "\n" : " ");
-  }
-  return JSON.stringify(data);
-}
-
 /**
  * Options for the JsConfigFile class.
  */
@@ -263,4 +184,83 @@ ${
 `
     ).resolve();
   }
+}
+
+function javascriptStringify(
+  data: unknown,
+  level = 0,
+  idt: string = "  "
+): string | undefined {
+  const dent = idt.repeat(level);
+  const dentPlus = idt.repeat(level + 1);
+  if (data instanceof JavascriptFunction || data instanceof JavascriptRaw) {
+    return data.stringify(level, idt ?? "");
+  }
+  if (typeof data === "number") {
+    return data.toString();
+  }
+  if (data instanceof Date) {
+    return `new Date(${JSON.stringify(data.toISOString())})`;
+  }
+  if (Array.isArray(data)) {
+    const r: Array<string> = [];
+    for (const val of data) {
+      const value = javascriptStringify(val, level + 1, idt);
+      if (value) {
+        r.push(value);
+      }
+    }
+    if (idt) {
+      return r.length === 0
+        ? "[]"
+        : `[\n${r.map((l) => dentPlus + l).join(",\n")},\n${dent}]`;
+    }
+    return `[${r.join(", ")}]`;
+  }
+  if (data && typeof data === "object") {
+    const r: Array<string> = [];
+    if (!Object.entries(data).length) {
+      return "{}";
+    }
+    r.push("{");
+    for (const [key, val] of Object.entries(data)) {
+      // Four possible outputs per row:
+      // 1. `key: value,`
+      // 2. `"key": value`
+      // 3. `[key]: "value"`
+      // 4. `...key` (value is ignored)
+
+      const value = javascriptStringify(val, level + 1, idt);
+      let keyString = key;
+      // if the key is a token, resolve it (3,4)
+      if (unresolved(key)) {
+        console.log("key", key);
+        // and if it starts with `...` then we drop it in place (4)
+        const resolvedKey = CodeTokenMap.instance.resolve(key, { level, idt });
+        if (resolvedKey?.match(/^\.\.\./)) {
+          r.push(dentPlus + `${resolvedKey},`);
+          continue;
+        } else {
+          // otherwise we wrap it in `[]` (3)
+          keyString = `[${resolvedKey}]`;
+        }
+      } else {
+        // if the key is a valid identifier, we use it as is (1)
+        // otherwise we quote it and wrap it in quotes (2)
+        keyString = keyString.match(/^[a-zA-Z_][a-zA-Z_0-9]*$/)
+          ? keyString
+          : JSON.stringify(keyString);
+      }
+
+      // if the value is not undefined, we add it to the output
+      // if you want the value to be exactly undefined,
+      // then use`JavascriptRaw.value("undefined")`
+      if (value !== undefined) {
+        r.push(dentPlus + keyString + ": " + value + ",");
+      }
+    }
+    r.push(dent + "}");
+    return r.join(idt ? "\n" : " ");
+  }
+  return JSON.stringify(data);
 }
