@@ -20,7 +20,7 @@ export class JavascriptFunction extends CodeResolvableBase {
     private readonly properties: Array<unknown>,
     private readonly body: unknown
   ) {
-    super();
+    super("JSFunctionToken");
   }
   stringify(level = 0, idt = "  ") {
     const dent = idt ? idt.repeat(level) : "";
@@ -48,16 +48,20 @@ export class JavascriptRaw extends CodeResolvableBase {
     return new JavascriptRaw(body);
   }
   constructor(private readonly body: string | Array<string>) {
-    super();
+    super("JSRawToken");
   }
   stringify(level: number, idt: string) {
     if (typeof this.body === "string") {
-      return CodeTokenMap.instance.resolve(this.body, { level, idt }) || "";
+      return (
+        CodeTokenMap.instance.resolve(this.body, { level, idt })?.toString() ||
+        ""
+      );
     }
     return this.body
       .map(
         (l) =>
-          idt.repeat(level) + CodeTokenMap.instance.resolve(l, { level, idt })
+          idt.repeat(level) +
+          CodeTokenMap.instance.resolve(l, { level, idt })?.toString()
       )
       .join("\n");
   }
@@ -68,7 +72,7 @@ export class JavascriptDataStructure extends CodeResolvableBase {
     return new JavascriptDataStructure(body);
   }
   constructor(private readonly body: unknown) {
-    super();
+    super("JSDataToken");
   }
   stringify(level = 0, idt = "  ") {
     return javascriptStringify(this.body, level, idt) ?? "undefined";
@@ -84,14 +88,24 @@ export class JavascriptDependencies extends CodeResolvableBase {
   froms = new Set<string>();
   cjs: boolean;
   constructor(props: JavascriptDependenciesOptions = {}) {
-    super();
+    super("JSDependenciesToken");
 
     this.cjs = props.cjs ?? false;
   }
-  addImport(imports: Array<string> | string, from: string) {
+  addImport(
+    imports: Array<string> | string,
+    from: string
+  ): Array<JavascriptRaw> {
     if (typeof imports === "string") {
       if (this.defaultImports.has(from)) {
-        throw new Error(`Default import already exists for ${from}`);
+        if (this.defaultImports.get(from) === imports) {
+          return [JavascriptRaw.value(imports)];
+        }
+        throw new Error(
+          `Default import already exists for ${from}: ${this.defaultImports.get(
+            from
+          )} !== ${imports}`
+        );
       }
       this.defaultImports.set(from, imports);
       this.froms.add(from);
@@ -159,8 +173,8 @@ export class JavascriptFile extends JsonFile {
     options: JavascriptFileOptions
   ) {
     super(project, filePath, { ...options, allowComments: false });
-    this.dependencies = new JavascriptDependencies();
     this.cjs = options.cjs ?? false;
+    this.dependencies = new JavascriptDependencies({ cjs: this.cjs });
     if (!options.obj) {
       throw new Error('"obj" cannot be undefined');
     }
@@ -193,6 +207,12 @@ function javascriptStringify(
 ): string | undefined {
   const dent = idt.repeat(level);
   const dentPlus = idt.repeat(level + 1);
+  if (typeof data === "function") {
+    data = data();
+  }
+  if (typeof data === "string" && unresolved(data)) {
+    data = CodeTokenMap.instance.resolve(data, { level, idt });
+  }
   if (data instanceof JavascriptFunction || data instanceof JavascriptRaw) {
     return data.stringify(level, idt ?? "");
   }
@@ -234,9 +254,11 @@ function javascriptStringify(
       let keyString = key;
       // if the key is a token, resolve it (3,4)
       if (unresolved(key)) {
-        console.log("key", key);
+        // console.log("key", key);
         // and if it starts with `...` then we drop it in place (4)
-        const resolvedKey = CodeTokenMap.instance.resolve(key, { level, idt });
+        const resolvedKey = CodeTokenMap.instance
+          .resolve(key, { level, idt })
+          ?.toString();
         if (resolvedKey?.match(/^\.\.\./)) {
           r.push(dentPlus + `${resolvedKey},`);
           continue;

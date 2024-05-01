@@ -4,7 +4,7 @@ import { Project, TaskStepOptions } from "..";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
-import { JavascriptFile } from "../javascript-file";
+import { JavascriptFile, JavascriptRaw } from "../javascript-file";
 import { JsonFile } from "../json";
 import { Task } from "../task";
 import { YamlFile } from "../yaml";
@@ -221,12 +221,23 @@ export class Eslint extends Component {
    */
   public readonly ignorePatterns: string[];
 
+  /**
+   * File format
+   */
+  public readonly fileFormat: EslintConfigFileFormat;
+
+  /**
+   * File name
+   */
+  public readonly fileName: string;
+
   private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
   private readonly _plugins = new Set<string>();
   private readonly _extends = new Set<string>();
   private readonly _fileExtensions: Set<string>;
   private readonly _lintPatterns: Set<string>;
+  private _javascript?: JavascriptFile;
   private readonly nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintOptions) {
@@ -421,7 +432,7 @@ export class Eslint extends Component {
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
-      "coverage",
+      "./coverage",
     ];
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
@@ -436,7 +447,7 @@ export class Eslint extends Component {
         node: true,
       },
       root: true,
-      plugins: this._plugins,
+      plugins: () => this.renderPlugins(),
       parser: "@typescript-eslint/parser",
       parserOptions: {
         ecmaVersion: 2018,
@@ -480,9 +491,11 @@ export class Eslint extends Component {
     const format = options.yaml
       ? EslintConfigFileFormat.YAML
       : options.fileFormat ?? EslintConfigFileFormat.JSON;
+    this.fileFormat = format;
 
     if (format === EslintConfigFileFormat.YAML) {
-      new YamlFile(project, ".eslintrc.yml", {
+      this.fileName = ".eslintrc.yml";
+      new YamlFile(project, this.fileName, {
         obj: this.config,
         marker: true,
       });
@@ -505,34 +518,87 @@ export class Eslint extends Component {
           format === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ? "mjs" : "cjs";
         configFileName = `eslint.config.${ext}`;
 
-        const config = this.config;
-        const javascript = new JavascriptFile(project, configFileName, {
-          obj: config,
+        this._javascript = new JavascriptFile(project, configFileName, {
+          obj: () =>
+            [
+              ...this.renderExtends(...(this.config.extends ?? [])).map(
+                (e) => ({
+                  files: this.config.files,
+                  [`...${e}`]: true,
+                })
+              ),
+              this.config,
+              ...(this.overrides ?? []).flatMap((overrideVal) => [
+                ...this.renderExtends(...(overrideVal.extends ?? [])).map(
+                  (e) => ({
+                    files: overrideVal.files,
+                    [`...${e}`]: true,
+                  })
+                ),
+                overrideVal,
+              ]),
+            ].map(
+              (
+                config:
+                  | string
+                  | (unknown & {
+                      parser?: string;
+                      parserOptions?: never;
+                      env?: never;
+                      ignorePatterns?: Array<string>;
+                      noInlineConfig?: never;
+                      reportUnusedDisableDirectives?: never;
+                    })
+              ) => {
+                if (typeof config === "string") {
+                  return config;
+                }
+                return {
+                  ...config,
+                  parser: undefined,
+                  parserOptions: undefined,
+                  env: undefined,
+                  root: undefined,
+                  ignorePatterns: undefined,
+                  ignores:
+                    // if it starts with a !, has a /, or has a **, then leve it alone
+                    // otherwise, add a **/ prefix
+                    config.ignorePatterns?.map((p) =>
+                      p.match(/(\/|\*\*|^\!)/) ? p : `**/${p}`
+                    ),
+                  languageOptions: config.parser
+                    ? {
+                        parser: this.renderParser(config.parser),
+                        parserOptions: config.parserOptions,
+                        globals: config.env,
+                      }
+                    : undefined,
+                  overrides: undefined,
+                  extends: undefined,
+                  noInlineConfig: undefined,
+                  reportUnusedDisableDirectives: undefined,
+                  ...(config.noInlineConfig ||
+                  config.reportUnusedDisableDirectives
+                    ? {
+                        linterOptions: {
+                          noInlineConfig: config.noInlineConfig,
+                          reportUnusedDisableDirectives:
+                            config.reportUnusedDisableDirectives,
+                        },
+                      }
+                    : {}),
+                };
+              }
+            ),
           marker: true,
           allowComments: true,
           cjs: format !== EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM,
         });
-        const plugins = config.plugins;
-        if (plugins) {
-          config.plugins = {};
-          assert(
-            !Array.isArray(plugins),
-            "plugins, if defined, must be an array"
-          );
-          for (const plugin of (plugins as Array<string>) ?? []) {
-            const pluginFixed =
-              "plugin_" + plugin.replace(/^@/g, "").replace(/(\/|-)/g, "_");
-            const [pluginToken] = javascript.dependencies.addImport(
-              pluginFixed,
-              plugin
-            );
-            config.plugins[plugin] = pluginToken.resolve();
-          }
-        }
       }
+      this.fileName = configFileName;
     } else {
-      const configFileName = ".eslintrc.json";
-      new JsonFile(project, configFileName, {
+      this.fileName = ".eslintrc.json";
+      new JsonFile(project, this.fileName, {
         obj: this.config,
         // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
         marker: true,
@@ -636,6 +702,152 @@ export class Eslint extends Component {
     return Array.from(this._allowDevDeps);
   }
 
+  private renderParser(parserName: string): string | undefined {
+    if (
+      this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
+      this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS
+    ) {
+      if (!this._javascript) {
+        throw new Error("Cannot render plugins without a JavascriptFile");
+      }
+      // "@foo" -> "@foo/eslint-parser"
+      // "foo" -> "eslint-parser-foo"
+      const parserModule = parserName.startsWith("@")
+        ? parserName
+        : `eslint-parser-${parserName}`;
+
+      // "@foo" -> "parserFoo"
+      // "foo" -> "parserFoo"
+      const parserFixed = `parser${parserName
+        .replace(/^@/g, "")
+        .replace(/(?:^|-|\/)(.)/g, (_, c) => c.toUpperCase())}`;
+      const [parserToken] = this._javascript.dependencies.addImport(
+        parserFixed,
+        parserModule
+      );
+
+      return parserToken.toString();
+    } else {
+      return parserName;
+    }
+  }
+
+  private renderPlugins(): Record<string, string> | Array<string> | undefined {
+    const plugins = this._plugins;
+    if (
+      this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
+      this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS
+    ) {
+      if (!this._javascript) {
+        throw new Error("Cannot render plugins without a JavascriptFile");
+      }
+      if (plugins) {
+        const output: Record<string, string> = {};
+        for (const plugin of plugins) {
+          // "@foo" -> "@foo/eslint-plugin"
+          // "foo" -> "eslint-plugin-foo"
+          const pluginModule = plugin.startsWith("@")
+            ? `${plugin}/eslint-plugin`
+            : `eslint-plugin-${plugin}`;
+
+          // "@foo" -> "pluginFoo"
+          // "foo" -> "pluginFoo"
+          const pluginFixed = `plugin${plugin
+            .replace(/^@/g, "")
+            .replace(/(?:^|-)(.)/g, (_, c) => c.toUpperCase())}`;
+          const [pluginToken] = this._javascript.dependencies.addImport(
+            pluginFixed,
+            pluginModule
+          );
+
+          output[plugin] = pluginToken.toString();
+        }
+        return output;
+      }
+      return undefined;
+    } else {
+      return [...plugins];
+    }
+  }
+
+  /**
+   * Take each extends and make it a require/import and place it ahead of the config that set "extends".
+   *
+   * See {@link https://eslint.org/docs/latest/use/configure/migration-guide#predefined-and-shareable-configs|Migration Guide: Predefined and Shareable Configs}
+   */
+  private renderExtends(...extendsNames: string[]): Array<string> {
+    if (
+      !(
+        this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
+        this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS
+      )
+    ) {
+      throw new Error(
+        "renderExtends should only be called for JavaScript flat format eslint files"
+      );
+    }
+
+    if (!this._javascript) {
+      throw new Error("Cannot render extends without a JavascriptFile");
+    }
+
+    const output: Array<string> = [];
+    for (const extendsName of extendsNames) {
+      //'eslint:recommended'
+      if (extendsName.startsWith("eslint:")) {
+        const [pluginToken] = this._javascript.dependencies.addImport(
+          "js",
+          "@eslint/js"
+        );
+        output.push(
+          JavascriptRaw.value(`${pluginToken}.configs.recommended`).toString()
+        );
+      }
+
+      //'plugin:@typescript-eslint/recommended'
+      //'plugin:import/typescript'
+      else if (extendsName.startsWith("plugin:")) {
+        // "plugin:@typescript-eslint/recommended" -> "@typescript-eslint/eslint-plugin"
+        // "plugin:import/typescript" -> "eslint-plugin-import"
+        const pluginModule = extendsName.startsWith("plugin:@")
+          ? `${extendsName.replace(/(^plugin:|\/.*$)/g, "")}/eslint-plugin`
+          : `eslint-plugin-${extendsName.replace(/(^plugin:|\/.*$)/g, "")}`;
+
+        // "plugin:@typescript-eslint/recommended" -> "pluginTypescriptEslint"
+        // "plugin:import/typescript" -> "pluginImport"
+        const pluginFixed = `plugin${extendsName
+          .replace(/(^plugin:@?|\/.*$)/g, "")
+          .replace(/(?:^|-)(.)/g, (_, c) => c.toUpperCase())}`;
+
+        const [pluginToken] = this._javascript.dependencies.addImport(
+          pluginFixed,
+          pluginModule
+        );
+        output.push(
+          JavascriptRaw.value(
+            `${pluginToken}.configs.${extendsName.replace(/.*\/(.*)$/, "$1")}`
+          ).toString()
+        );
+      }
+
+      //'./node_modules/coding-standard/eslintDefaults.js'
+      else {
+        // "./node_modules/coding-standard/eslintDefaults.js" -> "codingStandardEslintDefaults"
+        const extendImport = `extends${extendsName
+          .replace(/(\/node_modules\/)/, "")
+          .replace(/\.[mc]?[tj]s$/, "")
+          .replace(/(?:[^a-zA-Z0-9]+|^)(.)/g, (_, c) => c.toUpperCase())}`;
+
+        const [pluginToken] = this._javascript.dependencies.addImport(
+          extendImport,
+          extendsName
+        );
+        output.push(pluginToken.toString());
+      }
+    }
+    return output;
+  }
+
   /**
    * Update the task with the current list of lint patterns and file extensions
    */
@@ -643,7 +855,17 @@ export class Eslint extends Component {
     const taskExecCommand = "eslint";
     const argsSet = new Set<string>();
     if (this._fileExtensions.size > 0) {
-      argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
+      if (
+        this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
+        this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS
+      ) {
+        // see https://eslint.org/docs/latest/use/configure/migration-guide#--ext
+        this.config.files = [...this._fileExtensions.values()].map(
+          (ext) => `**/*${ext}`
+        );
+      } else {
+        argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
+      }
     }
     argsSet.add("--fix");
     argsSet.add("--no-error-on-unmatched-pattern");

@@ -108,10 +108,13 @@ export class CodeTokenMap {
   public resolve(
     s: string,
     context: ICodeResolutionContext
-  ): string | undefined {
+  ): string | ICodeResolvable | undefined {
     const fragments = this.lookupString(s);
     if (!fragments) {
       return undefined;
+    }
+    if (fragments.length === 3 && fragments[0] === "" && fragments[2] === "") {
+      return fragments[1];
     }
     for (const [i, fragment] of fragments.entries()) {
       // See note above about how

@@ -1,6 +1,7 @@
 import { CodeTokenMap } from "./code-token-map";
 
 export interface ICodeResolvable {
+  hint?: string;
   stringify(level: number, idt: string): string;
   resolve(context: ICodeResolutionContext): string;
   toString(): string;
@@ -31,6 +32,12 @@ export interface ICodeResolutionContext {
 }
 
 export abstract class CodeResolvableBase implements ICodeResolvable {
+  hint: string;
+
+  constructor(hint?: string) {
+    this.hint = hint ?? "CodeToken";
+  }
+
   abstract stringify(level: number, idt: string): string;
 
   resolve(context?: ICodeResolutionContext): string {
@@ -44,7 +51,7 @@ export abstract class CodeResolvableBase implements ICodeResolvable {
   }
 
   toString(): string {
-    return CodeTokenMap.instance.registerString(this);
+    return CodeTokenMap.instance.registerString(this, this.hint);
   }
 }
 
