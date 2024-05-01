@@ -3,11 +3,50 @@ import { Project, TaskStepOptions } from "..";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
-import { JsConfigFile } from "../js-config";
+import { JavascriptFile } from "../javascript-file";
 import { JsonFile } from "../json";
 import { Task } from "../task";
 import { YamlFile } from "../yaml";
 
+/**
+ * What format should the eslint file be.
+ *
+ */
+export enum EslintConfigFileFormat {
+  /**
+   * JavaScript file (new flat format) - using ESM-style imports/exports
+   *
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files-new
+   */
+  JAVASCRIPT_FLAT_ESM = "flat-esm",
+
+  /**
+   * JavaScript file (new flat format) - using CJS-style require/module.exports
+   *
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files-new
+   */
+  JAVASCRIPT_FLAT_CJS = "flat-cjs",
+
+  /**
+   * JSON file
+   *
+   * @deprecated ESLINT project is transitioning away from this format, use `JAVASCRIPT_FLAT` instead
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files
+   */
+  JSON = "json",
+
+  /**
+   * YAML file
+   *
+   * @deprecated ESLINT project is transitioning away from this format, use `JAVASCRIPT_FLAT` instead
+   * @see https://eslint.org/docs/latest/use/configure/configuration-files
+   */
+  YAML = "yaml",
+}
+
+/**
+ * Options for eslint.
+ */
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -83,16 +122,18 @@ export interface EslintOptions {
   readonly tsAlwaysTryTypes?: boolean;
 
   /**
+   * File format to use
+   *
+   * @default EslintConfigFileFormat.JSON
+   */
+  readonly fileFormat?: EslintConfigFileFormat;
+
+  /**
    * Write eslint configuration as YAML instead of JSON
+   * @deprecated use `fileFormat` instead
    * @default false
    */
   readonly yaml?: boolean;
-
-  /**
-   * Write eslint configuration as JsConfig file instead of JSON
-   * @default false
-   */
-  readonly jsConfig?: boolean;
 }
 
 /**
@@ -412,27 +453,45 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    if (options.yaml) {
+    if (options.yaml && options.fileFormat !== EslintConfigFileFormat.YAML) {
+      throw new Error(
+        "Cannot specify 'yaml' and a file format different from 'yaml', please use just `fileFormat`"
+      );
+    }
+
+    const format = options.yaml
+      ? EslintConfigFileFormat.YAML
+      : options.fileFormat ?? EslintConfigFileFormat.JSON;
+
+    if (format === EslintConfigFileFormat.YAML) {
       new YamlFile(project, ".eslintrc.yml", {
         obj: this.config,
         marker: true,
       });
     } else {
-      let Config: typeof JsonFile | typeof JsConfigFile;
       let configFileName: string;
-      if (options.jsConfig) {
-        Config = JsConfigFile;
-        configFileName = ".eslintrc.js";
+      if (
+        format === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
+        format === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS
+      ) {
+        const ext =
+          format === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ? "mjs" : "cjs";
+        configFileName = `.eslintrc.${ext}`;
+        new JavascriptFile(project, configFileName, {
+          obj: this.config,
+          marker: true,
+          allowComments: true,
+          cjs: format === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS,
+        });
       } else {
-        Config = JsonFile;
         configFileName = ".eslintrc.json";
+        new JsonFile(project, configFileName, {
+          obj: this.config,
+          // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
+          marker: true,
+          allowComments: true,
+        });
       }
-      new Config(project, configFileName, {
-        obj: this.config,
-        // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
-        marker: true,
-        allowComments: true,
-      });
     }
 
     // if the user enabled prettier explicitly _or_ if the project has a
