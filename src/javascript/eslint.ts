@@ -447,7 +447,7 @@ export class Eslint extends Component {
         node: true,
       },
       root: true,
-      plugins: () => this.renderPlugins(),
+      plugins: this._plugins,
       parser: "@typescript-eslint/parser",
       parserOptions: {
         ecmaVersion: 2018,
@@ -540,7 +540,7 @@ export class Eslint extends Component {
             ].map(
               (
                 config:
-                  | string
+                  | string // this is for plugin-provided configs, expands to something like `...externalConfigs`
                   | (unknown & {
                       parser?: string;
                       parserOptions?: never;
@@ -548,6 +548,7 @@ export class Eslint extends Component {
                       ignorePatterns?: Array<string>;
                       noInlineConfig?: never;
                       reportUnusedDisableDirectives?: never;
+                      plugins?: Set<string> | Array<string>;
                     })
               ) => {
                 if (typeof config === "string") {
@@ -555,10 +556,13 @@ export class Eslint extends Component {
                 }
                 return {
                   ...config,
-                  parser: undefined,
-                  parserOptions: undefined,
-                  env: undefined,
+                  plugins: this.renderPlugins(config.plugins),
                   root: undefined,
+                  overrides: undefined,
+                  extends: undefined,
+                  noInlineConfig: undefined,
+                  reportUnusedDisableDirectives: undefined,
+
                   ignorePatterns: undefined,
                   ignores:
                     // if it starts with a !, has a /, or has a **, then leve it alone
@@ -566,17 +570,21 @@ export class Eslint extends Component {
                     config.ignorePatterns?.map((p) =>
                       p.match(/(\/|\*\*|^\!)/) ? p : `**/${p}`
                     ),
-                  languageOptions: config.parser
-                    ? {
-                        parser: this.renderParser(config.parser),
-                        parserOptions: config.parserOptions,
-                        globals: config.env,
-                      }
-                    : undefined,
-                  overrides: undefined,
-                  extends: undefined,
-                  noInlineConfig: undefined,
-                  reportUnusedDisableDirectives: undefined,
+
+                  parser: undefined,
+                  parserOptions: undefined,
+                  env: undefined,
+                  languageOptions:
+                    config.parser || config.env
+                      ? {
+                          parser: config.parser
+                            ? this.renderParser(config.parser)
+                            : undefined,
+                          parserOptions: config.parserOptions,
+                          globals: config.env,
+                        }
+                      : undefined,
+
                   ...(config.noInlineConfig ||
                   config.reportUnusedDisableDirectives
                     ? {
@@ -732,8 +740,13 @@ export class Eslint extends Component {
     }
   }
 
-  private renderPlugins(): Record<string, string> | Array<string> | undefined {
-    const plugins = this._plugins;
+  private renderPlugins(
+    plugins: Set<string> | Array<string> | undefined
+  ): Record<string, string> | Array<string> | undefined {
+    if (!plugins) {
+      return undefined;
+    }
+
     if (
       this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM ||
       this.fileFormat === EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS
