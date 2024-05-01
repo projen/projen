@@ -1,59 +1,10 @@
+import { CodeResolvableBase } from "./code-resolvable";
+import { CodeTokenMap, unresolved } from "./code-token-map";
 import { IResolver } from "./file";
 import { JsonFile, JsonFileOptions } from "./json";
 import { Project } from "./project";
 
-class CodeToken {
-  static tokenMap = new Map<string, (level: number, idt: string) => string>();
-
-  static resolve(code: string, level: number, idt: string) {
-    return code.replace(/(?<!\\)\$\{Token\d+\}/g, (token) =>
-      CodeToken.resolveToken(token, level, idt)
-    );
-  }
-
-  static isResolved(code: string) {
-    return !/(?<!\\)\$\{Token\d+\}/.test(code);
-  }
-
-  static resolveToken(token: string, level: number, idt: string) {
-    const resolveValue = CodeToken.tokenMap.get(token);
-    if (resolveValue) {
-      return resolveValue(level, idt);
-    }
-    return token;
-  }
-
-  readonly token: string;
-  constructor(resolveValue: (level: number, idt: string) => string) {
-    this.token = `\${Token${CodeToken.tokenMap.size}}`;
-    CodeToken.tokenMap.set(this.token, resolveValue);
-  }
-}
-
-abstract class CodeStringifier {
-  token?: string;
-  abstract stringify(level: number, idt: string): string;
-
-  resolve(indentation: string | number = 2): string {
-    const idt =
-      typeof indentation === "number" ? " ".repeat(indentation) : indentation;
-    let value = this.stringify(0, idt) ?? "";
-    // let count = 0;
-    // while (!CodeToken.isResolved(value) && count++ < 10) {
-    //   value = CodeToken.resolve(value, 0, idt);
-    // }
-    return value;
-  }
-
-  toString() {
-    this.token ??= new CodeToken(
-      (level, idt) => this.stringify(level, idt) ?? ""
-    ).token;
-    return this.token;
-  }
-}
-
-export class JavascriptFunction extends CodeStringifier {
+export class JavascriptFunction extends CodeResolvableBase {
   static named(
     name: string | undefined,
     properties: Array<unknown>,
@@ -84,30 +35,35 @@ export class JavascriptFunction extends CodeStringifier {
     const bodyValue = (Array.isArray(this.body) ? this.body : [this.body])
       .map((p) => dentPlus + doStringify(p, 0, ""))
       .join("\n");
-    const body = CodeToken.resolve(`{\n${bodyValue}\n${dent}}`, level + 1, idt);
+    const body = CodeTokenMap.instance.resolve(`{\n${bodyValue}\n${dent}}`, {
+      level: level + 1,
+      idt,
+    });
     return `${header}${parameters}${arrow}${body}`;
   }
 }
 
-export class JavascriptRaw extends CodeStringifier {
+export class JavascriptRaw extends CodeResolvableBase {
   static value(body: string | Array<string>) {
     return new JavascriptRaw(body);
   }
   constructor(private readonly body: string | Array<string>) {
     super();
   }
-  stringify(level = 0, idt = "  ") {
+  stringify(level: number, idt: string) {
     if (typeof this.body === "string") {
-      return CodeToken.resolve(this.body, level, idt);
-    } else {
-      return this.body
-        .map((l) => idt.repeat(level) + CodeToken.resolve(l, level, idt))
-        .join("\n");
+      return CodeTokenMap.instance.resolve(this.body, { level, idt }) || "";
     }
+    return this.body
+      .map(
+        (l) =>
+          idt.repeat(level) + CodeTokenMap.instance.resolve(l, { level, idt })
+      )
+      .join("\n");
   }
 }
 
-export class JavascriptDataStructure extends CodeStringifier {
+export class JavascriptDataStructure extends CodeResolvableBase {
   static value(body: unknown) {
     return new JavascriptDataStructure(body);
   }
@@ -122,7 +78,7 @@ export class JavascriptDataStructure extends CodeStringifier {
 interface JavascriptDependenciesOptions {
   cjs?: boolean;
 }
-export class JavascriptDependencies extends CodeStringifier {
+export class JavascriptDependencies extends CodeResolvableBase {
   imports: Map<string, Array<string>> = new Map();
   defaultImports: Map<string, string> = new Map();
   froms = new Set<string>();
@@ -149,7 +105,7 @@ export class JavascriptDependencies extends CodeStringifier {
     this.froms.add(from);
     return imports.map((i) => JavascriptRaw.value(i));
   }
-  stringify(level = 0, _idt = "  ") {
+  stringify(level: number, _idt: string) {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
@@ -230,11 +186,11 @@ function doStringify(
       const value = doStringify(val, level + 1, idt);
       let keyString = key;
       // if the key is a token, resolve it (3,4)
-      if (!CodeToken.isResolved(key)) {
+      if (unresolved(key)) {
         console.log("key", key);
         // and if it starts with `...` then we drop it in place (4)
-        const resolvedKey = CodeToken.resolve(key, level, idt);
-        if (resolvedKey.match(/^\.\.\./)) {
+        const resolvedKey = CodeTokenMap.instance.resolve(key, { level, idt });
+        if (resolvedKey?.match(/^\.\.\./)) {
           r.push(dentPlus + `${resolvedKey},`);
           continue;
         } else {
