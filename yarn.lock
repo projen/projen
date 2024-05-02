@@ -964,9 +964,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.12.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.7.tgz#04080362fa3dd6c5822061aa3124f5c152cff384"
-  integrity sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==
+  version "20.12.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.8.tgz#35897bf2bfe3469847ab04634636de09552e8256"
+  integrity sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==
   dependencies:
     undici-types "~5.26.4"
 
@@ -2090,9 +2090,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.668:
-  version "1.4.752"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.752.tgz#99227455547c8254488e3dab7d316c34a2c067b8"
-  integrity sha512-P3QJreYI/AUTcfBVrC4zy9KvnZWekViThgQMX/VpJ+IsOBbcX5JFpORM4qWapwWQ+agb2nYAOyn/4PMXOk0m2Q==
+  version "1.4.753"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.753.tgz#1e9850081cbf732d669310ef8685bef0b5f5b8dd"
+  integrity sha512-Wn1XKa0Lc5kMe5UIwQc4+i5lhhBggF0l82C1bE3oOMASt4JVqdOyRIVc8mh0kiuL5CCptqwQJBmFbaPglLrN0Q==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -2246,7 +2246,7 @@ esbuild@^0.20.2:
     "@esbuild/win32-ia32" "0.20.2"
     "@esbuild/win32-x64" "0.20.2"
 
-escalade@^3.1.1:
+escalade@^3.1.1, escalade@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.2.tgz#54076e9ab29ea5bf3d8f1ed62acffbb88272df27"
   integrity sha512-ErCHMCae19vR8vQGe50xIsVomy19rg6gFu3+r3jkEO46suLMWBksvVyoGgQV+jOfl84ZSOSlmv6Gxa89PmTGmA==
@@ -3655,17 +3655,17 @@ jsii-diff@^1.98.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.4.3:
-  version "10.4.3"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.4.3.tgz#ab71ca4d635651b561bb0286e7982fec170f7043"
-  integrity sha512-y0VxnjNCMg4wt9y8OhMCR4sloWNvnvqCahZI1ygJgzk0WuwVzf6MAJnCifbWm8rcNxOsHOxxhFbMu/C4vBGRBg==
+jsii-docgen@^10.4.4:
+  version "10.4.4"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.4.4.tgz#404507d99d8d73db6e6a3c2b684a9e33cf89f414"
+  integrity sha512-WsrY9xRlknfGwlTCu+DQWiADpO5H317YcL4kYubGuR6b+DA8AsSdrGG3T6Xr8RfkJ5GY6maJbk3q6HbQsqhpuQ==
   dependencies:
-    "@jsii/spec" "^1.97.0"
+    "@jsii/spec" "^1.98.0"
     case "^1.6.3"
     fs-extra "^10.1.0"
     glob "^8.1.0"
     glob-promise "^6.0.5"
-    jsii-reflect "^1.97.0"
+    jsii-reflect "^1.98.0"
     semver "^7.6.0"
     yargs "^16.2.0"
 
@@ -3687,7 +3687,7 @@ jsii-pacmak@^1.98.0:
     xmlbuilder "^15.1.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.97.0, jsii-reflect@^1.98.0:
+jsii-reflect@^1.98.0:
   version "1.98.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.98.0.tgz#e370e901d2e93ec8d5ea7bc6348e2dba498a8cf1"
   integrity sha512-HulKk6pQOk0zkqJXRaweV5PezvAghZAX4cuB7i0sBA0/kz1ypqB1KFhBiZ1PLeeMzAfb1/WmCF2UTu9xzQit4w==
@@ -5385,9 +5385,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.5.0-dev.20240430"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240430.tgz#2ca12cdba2888d271662dc7991b7b2edbb6628f2"
-  integrity sha512-HDHiMzAPPZucY1VLkXpTF9qrxwqXv0h/SEDnZs59DPOPKlGlAn4c0o+1t45+kOvD2PhfzFpwHymQnmWBlNFAJA==
+  version "5.5.0-dev.20240501"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240501.tgz#07c6a1218a28aaef0cd6448ad29e156c8fca517b"
+  integrity sha512-ry5YMM62bkOOYR6VO0R7oN0neikzkMQIx86y3i3NDrywalpn75kIWPkEPocIcNISml8q92v9j3V0aQ+Ejr9TcA==
 
 uglify-js@^3.1.4:
   version "3.17.4"
@@ -5420,11 +5420,11 @@ universalify@^2.0.0:
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
 update-browserslist-db@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.13.tgz#3c5e4f5c083661bd38ef64b6328c26ed6c8248c4"
-  integrity sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.14.tgz#46a9367c323f8ade9a9dddb7f3ae7814b3a0b31c"
+  integrity sha512-JixKH8GR2pWYshIPUg/NujK3JO7JiqEEUiNArE86NQyrgUuZeTlZQN3xuS/yiV5Kb48ev9K6RqNkaJjXsdg7Jw==
   dependencies:
-    escalade "^3.1.1"
+    escalade "^3.1.2"
     picocolors "^1.0.0"
 
 uri-js@^4.2.2, uri-js@^4.4.1:
