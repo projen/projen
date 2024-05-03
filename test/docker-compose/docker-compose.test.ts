@@ -249,6 +249,31 @@ describe("docker-compose", () => {
     assertDockerComposeFileValidates(project.outdir);
   });
 
+  test("can set privileged mode", () => {
+    const project = new TestProject();
+    const dc = new DockerCompose(project, {
+      services: {
+        alpine: {
+          image: "alpine",
+          privileged: true,
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: "3.3",
+      services: {
+        alpine: {
+          image: "alpine",
+          privileged: true,
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
   describe("can add a volume", () => {
     test("bind volume", () => {
       const project = new TestProject();
