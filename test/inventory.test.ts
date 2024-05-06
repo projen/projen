@@ -118,11 +118,11 @@ describe("all default values in docstrings are renderable JS values", () => {
 });
 
 test("@pjnew is parsed as initial value", () => {
-  const jsiiVersionOption = result
+  const option = result
     .find((p) => p.pjid === "typescript")
     ?.options.find((o) => o.name === "projenrcTs");
 
-  expect(jsiiVersionOption?.initialValue).toBe("true");
+  expect(option?.initialValue).toBe("true");
 });
 
 test("all allowed default values can be discovered and rendered", () => {
