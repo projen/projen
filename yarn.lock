@@ -3719,12 +3719,12 @@ jsii-rosetta@5.4.x:
     yargs "^17.7.2"
 
 jsii@5.4.x, jsii@~5.4.0:
-  version "5.4.9"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.9.tgz#8a45ab4747536779aed8fcf5930ce697cc939b23"
-  integrity sha512-FnDNf93NnY3+4fwbKMGsfK+T0ojDzo5JSoEDYHa6YIgQNcAIsag+eUJyIsCsjND0y5dkdMPmnGjlq0U+DrF9QQ==
+  version "5.4.10"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.10.tgz#6da39667269fca54bc4fb3b7c2bb380057955642"
+  integrity sha512-pzfKF/S9gXngQcLROHgB1WhNW0qXLwpSlx3UDXuOzLBr0rcycJT9sQXHL0tQ4mHuzV2qu60Xcfgtp2HLzZaXFA==
   dependencies:
-    "@jsii/check-node" "1.97.0"
-    "@jsii/spec" "^1.97.0"
+    "@jsii/check-node" "1.98.0"
+    "@jsii/spec" "^1.98.0"
     case "^1.6.3"
     chalk "^4"
     downlevel-dts "^0.11.0"
@@ -5385,9 +5385,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.5.0-dev.20240504"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240504.tgz#5eaf4fd6910c980595957b6678e4c08c8dcd4a66"
-  integrity sha512-DCn87xYYzHMmF56NZpjUNpZO5GujB3Xr2JdJh1AP8U2FcUM40h0ZWqFXbqF+qukJ7B8LG5HIRIaNfl8+z/c8vw==
+  version "5.5.0-dev.20240505"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240505.tgz#b260abb922031d45be2e14d6178c7350626a1397"
+  integrity sha512-pS7FxfKdWwZcCywfyjwwVAIV/Tb6YBAcVv63WJFhSf7RclqKUTwkGbvtii/VvHtfaW50/1LdYvHU0z+Xs3xTiQ==
 
 uglify-js@^3.1.4:
   version "3.17.4"
