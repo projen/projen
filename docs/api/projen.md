@@ -9891,6 +9891,7 @@ const dockerComposeServiceDescription: DockerComposeServiceDescription = { ... }
 | <code><a href="#projen.DockerComposeServiceDescription.property.networks">networks</a></code> | <code><a href="#projen.IDockerComposeNetworkBinding">IDockerComposeNetworkBinding</a>[]</code> | Add some networks to the service. |
 | <code><a href="#projen.DockerComposeServiceDescription.property.platform">platform</a></code> | <code>string</code> | Add platform. |
 | <code><a href="#projen.DockerComposeServiceDescription.property.ports">ports</a></code> | <code><a href="#projen.DockerComposeServicePort">DockerComposeServicePort</a>[]</code> | Map some ports. |
+| <code><a href="#projen.DockerComposeServiceDescription.property.privileged">privileged</a></code> | <code>boolean</code> | Run in privileged mode. |
 | <code><a href="#projen.DockerComposeServiceDescription.property.volumes">volumes</a></code> | <code><a href="#projen.IDockerComposeVolumeBinding">IDockerComposeVolumeBinding</a>[]</code> | Mount some volumes into the service. |
 
 ---
@@ -10028,6 +10029,19 @@ public readonly ports: DockerComposeServicePort[];
 - *Default:* no ports are mapped
 
 Map some ports.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="privileged" id="projen.DockerComposeServiceDescription.property.privileged"></a>
+
+```typescript
+public readonly privileged: boolean;
+```
+
+- *Type:* boolean
+- *Default:* no privileged mode flag is provided
+
+Run in privileged mode.
 
 ---
 
@@ -14004,6 +14018,7 @@ Add a volume to the service.
 | <code><a href="#projen.DockerComposeService.property.image">image</a></code> | <code>string</code> | Docker image. |
 | <code><a href="#projen.DockerComposeService.property.imageBuild">imageBuild</a></code> | <code><a href="#projen.DockerComposeBuild">DockerComposeBuild</a></code> | Docker image build instructions. |
 | <code><a href="#projen.DockerComposeService.property.platform">platform</a></code> | <code>string</code> | Target platform. |
+| <code><a href="#projen.DockerComposeService.property.privileged">privileged</a></code> | <code>boolean</code> | Run in privileged mode. |
 
 ---
 
@@ -14148,6 +14163,18 @@ public readonly platform: string;
 - *Type:* string
 
 Target platform.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="privileged" id="projen.DockerComposeService.property.privileged"></a>
+
+```typescript
+public readonly privileged: boolean;
+```
+
+- *Type:* boolean
+
+Run in privileged mode.
 
 ---
 

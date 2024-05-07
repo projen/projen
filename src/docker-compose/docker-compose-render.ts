@@ -27,6 +27,7 @@ interface DockerComposeFileServiceSchema {
   readonly environment?: Record<string, string>;
   readonly labels?: Record<string, string>;
   readonly entrypoint?: string[];
+  readonly privileged?: boolean;
 }
 
 /**
@@ -130,6 +131,10 @@ export function renderDockerComposeFile(
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "platform",
         serviceDescription.platform
+      ),
+      ...getObjectWithKeyAndValueIfValueIsDefined(
+        "privileged",
+        serviceDescription.privileged
       ),
       ...(Object.keys(serviceDescription.environment).length > 0
         ? { environment: serviceDescription.environment }

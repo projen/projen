@@ -79,6 +79,11 @@ export class DockerComposeService implements IDockerComposeServiceName {
    */
   public readonly platform?: string;
 
+  /**
+   * Run in privileged mode
+   */
+  public readonly privileged?: boolean;
+
   constructor(
     serviceName: string,
     serviceDescription: DockerComposeServiceDescription
@@ -104,6 +109,7 @@ export class DockerComposeService implements IDockerComposeServiceName {
     this.labels = serviceDescription.labels ?? {};
     this.entrypoint = serviceDescription.entrypoint;
     this.platform = serviceDescription.platform;
+    this.privileged = serviceDescription.privileged;
   }
 
   /**
@@ -236,4 +242,10 @@ export interface DockerComposeServiceDescription {
    * @default - no platform is provided
    */
   readonly platform?: string;
+
+  /**
+   * Run in privileged mode
+   * @default - no privileged mode flag is provided
+   */
+  readonly privileged?: boolean;
 }
