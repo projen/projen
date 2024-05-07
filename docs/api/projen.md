@@ -9847,7 +9847,7 @@ public readonly schemaVersion: string;
 ```
 
 - *Type:* string
-- *Default:* 3.3
+- *Default:* no version is provided
 
 Docker Compose schema version do be used.
 
