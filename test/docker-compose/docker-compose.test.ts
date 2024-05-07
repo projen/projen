@@ -280,7 +280,6 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
       services: {
         alpine: {
           image: "alpine",
