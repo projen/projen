@@ -98,7 +98,6 @@ describe("docker-compose", () => {
     const project = new TestProject();
 
     const dc = new DockerCompose(project, {
-      schemaVersion: "3.1",
       services: {
         myservice: {
           image: "nginx",
@@ -107,7 +106,6 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.1",
       services: {
         myservice: {
           image: "nginx",
