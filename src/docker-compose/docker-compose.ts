@@ -38,6 +38,7 @@ export interface DockerComposeProps {
   /**
    * Docker Compose schema version do be used
    * @default - no version is provided
+   * @deprecated
    */
   readonly schemaVersion?: string;
 
