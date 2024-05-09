@@ -38,7 +38,8 @@ export interface DockerComposeProps {
   /**
    * Docker Compose schema version do be used
    * @default - no version is provided
-   * @deprecated
+   * @deprecated - The top level `version` field is obsolete per the Compose Specification.
+   * {@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements Compose Specification}
    */
   readonly schemaVersion?: string;
 
