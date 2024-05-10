@@ -35,14 +35,14 @@ interface DockerComposeFileServiceSchema {
  * @internal
  */
 interface DockerComposeFileSchema {
-  version: string;
+  version?: string;
   services: Record<string, DockerComposeFileServiceSchema>;
   volumes?: Record<string, DockerComposeVolumeConfig>;
 }
 
 export function renderDockerComposeFile(
   serviceDescriptions: Record<string, DockerComposeService>,
-  version: string
+  version?: string
 ): object {
   // Record volume configuration
   const volumeConfig: Record<string, DockerComposeVolumeConfig> = {};
@@ -154,7 +154,7 @@ export function renderDockerComposeFile(
   // Explicit with the type here because the decamelize step after this wipes
   // out types.
   const input: DockerComposeFileSchema = {
-    version,
+    ...(version ? { version } : {}),
     services,
     ...(Object.keys(volumeConfig).length > 0 ? { volumes: volumeConfig } : {}),
     ...(Object.keys(networkConfig).length > 0
