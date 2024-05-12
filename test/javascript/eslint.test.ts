@@ -287,9 +287,9 @@ test.each([
 );
 
 test.each([
-  // EslintConfigFileFormat.JSON,
-  // EslintConfigFileFormat.YAML,
-  // EslintConfigFileFormat.JAVASCRIPT_OLD_CJS,
+  EslintConfigFileFormat.JSON,
+  EslintConfigFileFormat.YAML,
+  EslintConfigFileFormat.JAVASCRIPT_OLD_CJS,
   EslintConfigFileFormat.JAVASCRIPT_FLAT_CJS,
   EslintConfigFileFormat.JAVASCRIPT_FLAT_ESM,
 ])("eslint runs with %s", (fileFormat: EslintConfigFileFormat) => {

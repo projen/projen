@@ -1,8 +1,10 @@
 import { synthSnapshot } from "./util";
+import { ICodeResolvable } from "../src/code-resolvable";
 import { NodeProject } from "../src/javascript";
 import {
+  CJSJavascriptDependencies,
+  ESMJavascriptDependencies,
   JavascriptDataStructure,
-  JavascriptDependencies,
   JavascriptFile,
   JavascriptFunction,
   JavascriptRaw,
@@ -10,7 +12,7 @@ import {
 
 test("JavascriptRaw can make js-type eslint output", () => {
   // make a dependencies object to track imports
-  const dependencies = new JavascriptDependencies();
+  const dependencies = new ESMJavascriptDependencies();
 
   // add a few imports
   const [jsdoc] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
@@ -40,7 +42,7 @@ test("JavascriptRaw can make js-type eslint output", () => {
   ];
 
   // now make a file with that data, including any imports, but don't resolve it yet
-  const unresolvedValue = new JavascriptRaw(`${dependencies}
+  const unresolvedValue = JavascriptRaw.value(`${dependencies}
 
 export default ${JavascriptDataStructure.value(data)};
 `);
@@ -80,7 +82,7 @@ export default [
 test("JavascriptRaw value-type test", () => {
   const testValue = "testValue";
 
-  const value = new JavascriptRaw(
+  const value = JavascriptRaw.value(
     `const token = "someValue";
   const test = ${JavascriptDataStructure.value({
     null: null,
@@ -168,7 +170,7 @@ test("JavascriptRaw value-type test", () => {
 
 describe("JavascriptDependencies support import (ESM) syntax", () => {
   test("default export", () => {
-    const dependencies = new JavascriptDependencies();
+    const dependencies = new ESMJavascriptDependencies();
     dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     dependencies.addImport("js", "@eslint/js");
 
@@ -178,7 +180,7 @@ import js from '@eslint/js';`);
   });
 
   test("subvalues", () => {
-    const dependencies = new JavascriptDependencies();
+    const dependencies = new ESMJavascriptDependencies();
     dependencies.addImport(["subValue1, subValue2"], "eslint-plugin-jsdoc");
     dependencies.addImport(["t1", "t2"], "@eslint/js");
 
@@ -189,7 +191,7 @@ import { t1, t2 } from '@eslint/js';`);
   });
 
   test("default export and subvalues", () => {
-    const dependencies = new JavascriptDependencies();
+    const dependencies = new ESMJavascriptDependencies();
     dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     dependencies.addImport(["subValue1", "subValue2"], "eslint-plugin-jsdoc");
     dependencies.addImport("js", "@eslint/js");
@@ -200,11 +202,31 @@ import { t1, t2 } from '@eslint/js';`);
       .toEqual(`import jsdoc, { subValue1, subValue2 } from 'eslint-plugin-jsdoc';
 import js, { t1, t2 } from '@eslint/js';`);
   });
+
+  test("duplicated default export with different name", () => {
+    const dependencies = new ESMJavascriptDependencies();
+    const [jsdocToken] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
+    const [jsdocAgainToken] = dependencies.addImport(
+      "jsdocAgain",
+      "eslint-plugin-jsdoc"
+    );
+
+    expect(jsdocToken).toEqual(jsdocAgainToken);
+
+    const value = JavascriptRaw.value(
+      `${dependencies}
+const x = ${jsdocToken};
+const y = ${jsdocAgainToken};`
+    ).resolve();
+    expect(value).toEqual(`import jsdoc from 'eslint-plugin-jsdoc';
+const x = jsdoc;
+const y = jsdoc;`);
+  });
 });
 
 describe("JavascriptDependencies support require (CJS) syntax", () => {
   test("default export", () => {
-    const dependencies = new JavascriptDependencies({ cjs: true });
+    const dependencies = new CJSJavascriptDependencies();
     dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     dependencies.addImport("js", "@eslint/js");
 
@@ -214,7 +236,7 @@ const js = require('@eslint/js');`);
   });
 
   test("subvalues", () => {
-    const dependencies = new JavascriptDependencies({ cjs: true });
+    const dependencies = new CJSJavascriptDependencies();
     dependencies.addImport(["subValue1, subValue2"], "eslint-plugin-jsdoc");
     dependencies.addImport(["t1", "t2"], "@eslint/js");
 
@@ -225,7 +247,7 @@ const { t1, t2 } = require('@eslint/js');`);
   });
 
   test("default export and subvalues", () => {
-    const dependencies = new JavascriptDependencies({ cjs: true });
+    const dependencies = new CJSJavascriptDependencies();
     dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     dependencies.addImport(["subValue1", "subValue2"], "eslint-plugin-jsdoc");
     dependencies.addImport("js", "@eslint/js");
@@ -412,5 +434,118 @@ describe("JavascriptFile", () => {
       };
       "
     `);
+  });
+});
+
+// There are doing double duty: They serve as mildy redundant and simple tests,
+// but also as a place to copy the documentation examples and paste them in the
+// docs. This means they're formatted properly and working.
+describe("JavascriptFile doc exmamples", () => {
+  test("JavascriptFunction docs: JavascriptFunction.named example", () => {
+    const name = "foo";
+    const namedFunc = JavascriptFunction.named(
+      name,
+      ["a", "b=2"], // the "b=2" is just to show that these are used literally
+      JavascriptRaw.value("return a + b;")
+    );
+
+    // Example of how to make a convenience function to call this function
+    const namedFuncCaller = (...params: unknown[]) =>
+      JavascriptFunction.call(name, ...params);
+
+    // Use `namedFunc` to actually define the function
+    // Use `namedFuncCaller()` to call the function
+    const namedFuncUsage = JavascriptRaw.value(
+      `const fooValue = ${namedFuncCaller(1, 2)};
+
+${namedFunc}`
+    ).resolve();
+
+    expect(namedFuncUsage).toEqual(
+      `const fooValue = foo(1, 2);
+
+function foo(a, b=2) {
+  return a + b;
+}`
+    );
+  });
+
+  test("JavascriptFunction docs: JavascriptFunction.arrow example", () => {
+    const name = "foo";
+    const arrowFun = JavascriptFunction.arrow(
+      ["a", "...b"], // the ...b is just to show that these are used literally
+      JavascriptRaw.value("return a + b[0];")
+    );
+
+    // Example of how to make a convenience function to call this function
+    const arrowFuncCaller = (...params: unknown[]) =>
+      JavascriptFunction.call(name, ...params);
+
+    // Use `arrowFun` to actually define the function
+    // Use `arrowFuncCaller()` to call the function
+    const arrowFuncUsage = JavascriptRaw.value(
+      `const ${name} = ${arrowFun};
+const fooValue = ${arrowFuncCaller(1, 2)};
+`
+    ).resolve();
+
+    expect(arrowFuncUsage).toEqual(
+      `const foo = (a, ...b) => {
+  return a + b[0];
+};
+const fooValue = foo(1, 2);
+`
+    );
+  });
+
+  test("JavascriptDataStructure docs: no-indent example", () => {
+    const dataStructUsage = JavascriptDataStructure.value({
+      a: 1,
+      b: 2,
+    }).resolve({ indentation: 0 });
+
+    expect(dataStructUsage).toEqual(`{ a: 1, b: 2, }`);
+  });
+
+  test("JavascriptDataStructure docs: example", () => {
+    const data = [
+      {
+        string: "value", // string vlaue
+        number: 1234, // numebr value
+        boolean: true, // boolean value
+        null: null, // null value
+        [`...${JavascriptRaw.value("spread")}`]: true, // spread, value of true ignored, except if it's undefined
+        [`...${JavascriptRaw.value("dontSpread")}`]: undefined, // remove, since undefined
+      },
+    ];
+
+    const dataStructUsage = JavascriptDataStructure.value(data).resolve();
+
+    expect(dataStructUsage).toEqual(
+      `[
+  {
+    string: "value",
+    number: 1234,
+    boolean: true,
+    null: null,
+    ...spread,
+  },
+]`
+    );
+  });
+
+  test("JavascriptRaw docs", () => {
+    const aCode: ICodeResolvable = JavascriptRaw.value("const a = 1;");
+    const bCode: ICodeResolvable = JavascriptRaw.value("const b = 2;");
+    const finalCode: ICodeResolvable = JavascriptRaw.value([
+      aCode.toString(),
+      bCode.toString(),
+    ]);
+
+    console.log(aCode.toString());
+
+    const generatedJavascriptCode = finalCode.resolve();
+
+    expect(generatedJavascriptCode).toEqual(`const a = 1;\nconst b = 2;`);
   });
 });

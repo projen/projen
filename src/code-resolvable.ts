@@ -3,7 +3,7 @@ import { CodeTokenMap } from "./code-token-map";
 export interface ICodeResolvable {
   hint?: string;
   stringify(level: number, idt: string): string;
-  resolve(context: ICodeResolutionContext): string;
+  resolve(context?: ICodeResolutionContext): string;
   toString(): string;
 }
 
@@ -43,10 +43,6 @@ export abstract class CodeResolvableBase implements ICodeResolvable {
   resolve(context?: ICodeResolutionContext): string {
     const idt: string = context?.idt ?? " ".repeat(context?.indentation ?? 2);
     let value = this.stringify(0, idt) ?? "";
-    // let count = 0;
-    // while (!CodeToken.isResolved(value) && count++ < 10) {
-    //   value = CodeToken.resolve(value, 0, idt);
-    // }
     return value;
   }
 

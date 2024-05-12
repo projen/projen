@@ -1,24 +1,133 @@
-import { CodeResolvableBase } from "./code-resolvable";
+import { CodeResolvableBase, ICodeResolvable } from "./code-resolvable";
 import { CodeTokenMap, unresolved } from "./code-token-map";
 import { IResolver } from "./file";
 import { JsonFile, JsonFileOptions } from "./json";
+import * as logging from "./logging";
 import { Project } from "./project";
 
+/**
+ * Represents a Javascript function. The function can be defined as an arrow function or a named function.
+ *
+ * Create a named function with `JavascriptFunction.named(name, properties, body)`, and an arrow function can be
+ * created with `JavascriptFunction.arrow(properties, body)`. Both are {@link ICodeResolvable} objects, and can be
+ * used in any place that expects a string to make a token that can later be resolved, turning it into a string of the
+ * represented code with {@link ICodeResolvable.resolve|ICodeResolvable.resolve()}.
+ * *
+ * You can also generate a {@link JavascriptRaw} object to call a function with `JavascriptFunction.call(name, ...)`.
+ *
+ * @example
+ *
+ * A named function is pretty straightforward to make and use:
+ * ```typescript
+ *     const name = "foo";
+ *     const namedFunc = JavascriptFunction.named(
+ *       name,
+ *       ["a", "b=2"], // the "b=2" is just to show that these are used literally
+ *       JavascriptRaw.value("return a + b;")
+ *     );
+ *
+ *     // Example of how to make a convenience function to call this function
+ *     const namedFuncCaller = (...params: unknown[]) =>
+ *       JavascriptFunction.call(name, ...params);
+ *
+ *     // Use `namedFunc` to actually define the function
+ *     // Use `namedFuncCaller()` to call the function
+ *     const namedFuncUsage = JavascriptRaw.value(
+ *       `const fooValue = ${namedFuncCaller(1, 2)};
+ *
+ * ${namedFunc}`
+ *     ).resolve();
+ * ```
+ *
+ * Will leave `namedFuncUsage` as:
+ * ```javascript
+ * const fooValue = foo(1, 2);
+ *
+ * function foo(a, b=2) {
+ *   return a + b;
+ * }
+ * ```
+ *
+ * Arrow funtions work similarly:
+ *
+ * ```typescript
+ * const name = "foo";
+ * const arrowFun = JavascriptFunction.arrow(
+ *   ["a", "...b"], // the "...b" is just to show that these are used literally
+ *   JavascriptRaw.value("return a + b[0];")
+ * );
+ *
+ * // Example of how to make a convenience function to call this function
+ * const arrowFuncCaller = (...params: unknown[]) =>
+ *   JavascriptFunction.call(name, ...params);
+ *
+ * // Use `arrowFun` to actually define the function
+ * // Use `arrowFuncCaller()` to call the function
+ * const arrowFuncUsage = JavascriptRaw.value(
+ *   `const ${name} = ${arrowFun};
+ * const fooValue = ${arrowFuncCaller(1, 2)};
+ * `
+ * ).resolve();
+ * ```
+ *
+ * Will leave `namedFuncUsage` as:
+ * ```javascript
+ * const foo = (a, ...b) => {
+ *   return a + b[0];
+ * };
+ * const fooValue = foo(1, 2);
+ * ```
+ */
 export class JavascriptFunction extends CodeResolvableBase {
-  static named(
-    name: string | undefined,
-    properties: Array<unknown>,
-    body: unknown
-  ) {
+  /**
+   * Make a named function.
+   * @param name The name of the generated function
+   * @param properties The names of the properties the function takes, can include `...` to indicate a rest parameter,
+   * or provide a default value with `=`, etc.
+   * @param body The body of the function, usually a `JavaScriptRaw`, but takes any `ICodeResolvable` or an array
+   * of `ICodeResolvable`s
+   * @returns A token that can be used to generate the function definition
+   */
+  public static named(
+    name: string,
+    properties: Array<ICodeResolvable | string>,
+    body: ICodeResolvable | Array<ICodeResolvable>
+  ): JavascriptFunction {
     return new JavascriptFunction(name, properties, body);
   }
-  static arrow(properties: Array<unknown>, body: unknown) {
+
+  /**
+   * Make an arrow function.
+   * @param properties The names of the properties the function takes, can include `...` to indicate a rest parameter,
+   * or provide a default value with `=`, etc.
+   * @param body The body of the function, usually a `JavaScriptRaw`, but takes any `ICodeResolvable` or an array
+   * of `ICodeResolvable`s
+   * @returns An object that, when used as a string, can be used to generate the function definition
+   */
+  public static arrow(
+    properties: Array<ICodeResolvable | string>,
+    body: ICodeResolvable | Array<ICodeResolvable>
+  ): JavascriptFunction {
     return new JavascriptFunction(undefined, properties, body);
   }
-  constructor(
+
+  /**
+   * Make a call to a function
+   * @param name The name of the function to call
+   * @param params The parameters to pass to the function
+   * @returns An object that, when used as a string, will generate the function call
+   */
+  public static call(
+    name: string | undefined,
+    ...params: unknown[]
+  ): JavascriptRaw {
+    return JavascriptRaw.value(`${name}(${params.join(", ")})`);
+  }
+
+  private constructor(
     private readonly name: string | undefined,
-    private readonly properties: Array<unknown>,
-    private readonly body: unknown
+    private readonly properties: Array<ICodeResolvable | string>,
+    private readonly body: ICodeResolvable | Array<ICodeResolvable>
   ) {
     super("JSFunctionToken");
   }
@@ -28,7 +137,13 @@ export class JavascriptFunction extends CodeResolvableBase {
 
     const header = this.name ? `function ${this.name}` : ``;
     const parametersValue = this.properties
-      .map((p) => javascriptStringify(p, 0, ""))
+      .map((p) =>
+        javascriptStringify(
+          typeof p === "string" ? JavascriptRaw.value(p) : p,
+          0,
+          ""
+        )
+      )
       .join(", ");
     const parameters = `(${parametersValue})`;
     const arrow = this.name ? " " : " => ";
@@ -43,31 +158,86 @@ export class JavascriptFunction extends CodeResolvableBase {
   }
 }
 
+/**
+ * Represents a raw Javascript code to be used literally, without escaping.
+ *
+ * `JavascriptRaw` is a {@link ICodeResolvable} object, and thus can be used in any place that expects a string to make
+ * a token that can later be resolved, turning it into a string of the represented code with {@link ICodeResolvable.resolve|ICodeResolvable.resolve()}.
+ *
+ * Create one with `JavascriptRaw.value(body)`, where body is a string or an array of strings, and the strings can
+ * contain tokens of other `ICodeResolvable` objects that will be resolved when `resolve()` is called.
+ *
+ * @example
+ *
+ * ```typescript
+ * // The types are unnecessary here, but included for clarity in the example
+ * const aCode: ICodeResolvable = JavascriptRaw.value("const a = 1;");
+ * const bCode: ICodeResolvable = JavascriptRaw.value("const b = 2;");
+ * const finalCode: ICodeResolvable = JavascriptRaw.value([aCode, bCode]);
+ *
+ * const generatedJavascriptCode = finalCode.resolve();
+ * ```
+ *
+ * Note that the string value of `aCode` and `bCode` will be something like `${Token[JSRawToken.9]}`.
+ *
+ * If printed the value of `generatedJavascriptCode` will be:
+ * ```javascript
+ * const a = 1;
+ * const b = 2;
+ * ```
+ */
 export class JavascriptRaw extends CodeResolvableBase {
-  static value(body: string | Array<string>) {
+  /**
+   * Generate a raw Javascript code token
+   * @param body A string or array of strings that represent the raw Javascript code to be used literally
+   * @returns An object that, when used as a string, will generate the raw Javascript code
+   */
+  public static value(body: string | Array<string>) {
     return new JavascriptRaw(body);
   }
-  constructor(private readonly body: string | Array<string>) {
+
+  private constructor(private readonly body: string | Array<string>) {
     super("JSRawToken");
   }
-  stringify(level: number, idt: string) {
+
+  public stringify(level: number, idt: string) {
     if (typeof this.body === "string") {
       return (
-        CodeTokenMap.instance.resolve(this.body, { level, idt })?.toString() ||
-        ""
+        CodeTokenMap.instance.resolve(this.body, { level, idt }, true) || ""
       );
     }
     return this.body
       .map(
         (l) =>
           idt.repeat(level) +
-          CodeTokenMap.instance.resolve(l, { level, idt })?.toString()
+          CodeTokenMap.instance.resolve(l, { level, idt }, true)
       )
       .join("\n");
   }
 }
 
+/**
+ * Represents a Javascript data structure, such as an object or an array
+ *
+ * Create one with `JavascriptDataStructure.value(body)`, where body is any data structure that can be converted to
+ * Javascript code, including tokens
+ *
+ * Most values will be encoded similar to how JSON is. For example, `JavascriptDataStructure.value({a: 1, b: 2})` will
+ * generate `{"a": 1, "b": 2}` except with line-breaks and indention set by when `resolve()` is called.
+ *
+ * Functions in the values of an object or array will be called and their results used. To literally represent the
+ * creation of a function, use {@link JavascriptFunction}.
+ *
+ * Objects with keys that have the `...` prefix will be replaced by that spread operator, and the value will be ignored,
+ *  with the exception of `undefined` which will be removed.
+ */
 export class JavascriptDataStructure extends CodeResolvableBase {
+  /**
+   * Generate Javascript code given the provided data structure - arrays will be formatted with `[]` and objects with
+   * `{}`, including indention, etc.
+   * @param body Any data structure that can be converted to Javascript code, including tokens
+   * @returns An object that, when used as a string, will generate the raw Javascript code
+   */
   static value(body: unknown) {
     return new JavascriptDataStructure(body);
   }
@@ -79,18 +249,12 @@ export class JavascriptDataStructure extends CodeResolvableBase {
   }
 }
 
-interface JavascriptDependenciesOptions {
-  cjs?: boolean;
-}
-export class JavascriptDependencies extends CodeResolvableBase {
+export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
   imports: Map<string, Array<string>> = new Map();
   defaultImports: Map<string, string> = new Map();
   froms = new Set<string>();
-  cjs: boolean;
-  constructor(props: JavascriptDependenciesOptions = {}) {
+  constructor() {
     super("JSDependenciesToken");
-
-    this.cjs = props.cjs ?? false;
   }
   addImport(
     imports: Array<string> | string,
@@ -98,14 +262,16 @@ export class JavascriptDependencies extends CodeResolvableBase {
   ): Array<JavascriptRaw> {
     if (typeof imports === "string") {
       if (this.defaultImports.has(from)) {
-        if (this.defaultImports.get(from) === imports) {
-          return [JavascriptRaw.value(imports)];
+        const oldImports = this.defaultImports.get(from);
+        if (!oldImports) {
+          throw new Error(
+            `Something went horribly wrong - we should never get here.`
+          );
         }
-        throw new Error(
-          `Default import already exists for ${from}: ${this.defaultImports.get(
-            from
-          )} !== ${imports}`
+        logging.warn(
+          `Default import already exists for ${from}: Using '${oldImports}', and ignoring the new name '${imports}'`
         );
+        return [JavascriptRaw.value(oldImports)];
       }
       this.defaultImports.set(from, imports);
       this.froms.add(from);
@@ -119,6 +285,8 @@ export class JavascriptDependencies extends CodeResolvableBase {
     this.froms.add(from);
     return imports.map((i) => JavascriptRaw.value(i));
   }
+}
+export class CJSJavascriptDependencies extends JavascriptDependenciesBase {
   stringify(level: number, _idt: string) {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
@@ -128,25 +296,36 @@ export class JavascriptDependencies extends CodeResolvableBase {
       const imports = this.imports.get(from) ?? [];
       const defaultImport = this.defaultImports.get(from);
       const value = imports.map((i) => i.toString()).join(", ");
+
       if (defaultImport && imports.length > 0) {
-        if (this.cjs) {
-          out.push(`const ${defaultImport} = require('${from}');`);
-          out.push(`const { ${value} } = ${defaultImport};`);
-        } else {
-          out.push(`import ${defaultImport}, { ${value} } from '${from}';`);
-        }
+        out.push(`const ${defaultImport} = require('${from}');`);
+        out.push(`const { ${value} } = ${defaultImport};`);
       } else if (defaultImport) {
-        if (this.cjs) {
-          out.push(`const ${defaultImport} = require('${from}');`);
-        } else {
-          out.push(`import ${defaultImport} from '${from}';`);
-        }
+        out.push(`const ${defaultImport} = require('${from}');`);
       } else {
-        if (this.cjs) {
-          out.push(`const { ${value} } = require('${from}');`);
-        } else {
-          out.push(`import { ${value} } from '${from}';`);
-        }
+        out.push(`const { ${value} } = require('${from}');`);
+      }
+    }
+    return out.join("\n");
+  }
+}
+export class ESMJavascriptDependencies extends JavascriptDependenciesBase {
+  stringify(level: number, _idt: string) {
+    if (level !== 0) {
+      throw new Error("JavascriptDependencies cannot be nested");
+    }
+    const out: Array<string> = [];
+    for (const from of this.froms) {
+      const imports = this.imports.get(from) ?? [];
+      const defaultImport = this.defaultImports.get(from);
+      const value = imports.map((i) => i.toString()).join(", ");
+
+      if (defaultImport && imports.length > 0) {
+        out.push(`import ${defaultImport}, { ${value} } from '${from}';`);
+      } else if (defaultImport) {
+        out.push(`import ${defaultImport} from '${from}';`);
+      } else {
+        out.push(`import { ${value} } from '${from}';`);
       }
     }
     return out.join("\n");
@@ -156,16 +335,20 @@ export class JavascriptDependencies extends CodeResolvableBase {
 /**
  * Options for the JsConfigFile class.
  */
-export interface JavascriptFileOptions
-  extends JavascriptDependenciesOptions,
-    JsonFileOptions {}
+
+export interface JavascriptFileOptions extends JsonFileOptions {
+  /**
+   * Whether to use CommonJS (require) or ESM (import/export) for the file.
+   */
+  cjs: boolean;
+}
 
 /**
  * Represents a JS configuratin file (e.g. .eslintrc.js).
  * Suppor
  */
 export class JavascriptFile extends JsonFile {
-  public dependencies: JavascriptDependencies;
+  public dependencies: JavascriptDependenciesBase;
   cjs: boolean;
   constructor(
     project: Project,
@@ -174,7 +357,9 @@ export class JavascriptFile extends JsonFile {
   ) {
     super(project, filePath, { ...options, allowComments: false });
     this.cjs = options.cjs ?? false;
-    this.dependencies = new JavascriptDependencies({ cjs: this.cjs });
+    this.dependencies = options.cjs
+      ? new CJSJavascriptDependencies()
+      : new ESMJavascriptDependencies();
     if (!options.obj) {
       throw new Error('"obj" cannot be undefined');
     }
@@ -188,13 +373,14 @@ export class JavascriptFile extends JsonFile {
     const data = JSON.parse(json);
 
     const markerHeader = this.marker ? `// ${this.marker}\n` : "";
+
+    // Clear the "//" key created by JsonFile
     data["//"] = undefined;
 
-    return new JavascriptRaw(
+    const defaultExport = this.cjs ? `module.exports =` : `export default`;
+    return JavascriptRaw.value(
       `${markerHeader}${this.dependencies}
-${
-  this.cjs ? `module.exports =` : `export default`
-} ${JavascriptDataStructure.value(data)};
+${defaultExport} ${JavascriptDataStructure.value(data)};
 `
     ).resolve();
   }
@@ -252,20 +438,30 @@ function javascriptStringify(
 
       const value = javascriptStringify(val, level + 1, idt);
       let keyString = key;
-      // if the key is a token, resolve it (3,4)
+      // if the key is a token, resolve it (3)
       if (unresolved(key)) {
         // console.log("key", key);
-        // and if it starts with `...` then we drop it in place (4)
         const resolvedKey = CodeTokenMap.instance
           .resolve(key, { level, idt })
           ?.toString();
+        // and if it starts with `...` then we drop it in place (4)
         if (resolvedKey?.match(/^\.\.\./)) {
-          r.push(dentPlus + `${resolvedKey},`);
+          if (value !== undefined) {
+            r.push(dentPlus + `${resolvedKey},`);
+          }
           continue;
         } else {
           // otherwise we wrap it in `[]` (3)
           keyString = `[${resolvedKey}]`;
         }
+      }
+
+      // and if it starts with `...` then we drop it in place (4)
+      if (keyString?.match(/^\.\.\./)) {
+        if (value !== undefined) {
+          r.push(dentPlus + `${keyString},`);
+        }
+        continue;
       } else {
         // if the key is a valid identifier, we use it as is (1)
         // otherwise we quote it and wrap it in quotes (2)

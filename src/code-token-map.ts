@@ -1,9 +1,10 @@
 import {
   isCodeResolvable,
-  type ICodeResolutionContext,
-  type ICodeResolvable,
+  ICodeResolutionContext,
+  ICodeResolvable,
 } from "./code-resolvable";
 
+/* eslint-disable-next-line no-duplicate-imports */
 // Much of this code is borrowed from the AWS CDK project
 // The AWS CDK usage is significantly more complex, as it can handle tokens in
 // data structes that expect numbers or arrays. This is a simplified version
@@ -103,17 +104,41 @@ export class CodeTokenMap {
   }
 
   /**
-   * Resolve all of the token markers in the string, with the given context.
+   * Resolve all of the token markers in the string, with the given context, toeither a string or an ICodeResolvable.
+   *
+   * If `fullyResolved` is `false` the default)` then if there is only the one token with nothing around it, the return
+   * value will the resolvable object itself.
+   *
+   * Otherwise the return value will be a string with the tokens fully resolved.
    */
   public resolve(
     s: string,
-    context: ICodeResolutionContext
+    context: ICodeResolutionContext,
+    fullyResolved?: boolean
+  ): string | ICodeResolvable | undefined;
+  public resolve(
+    s: string,
+    context: ICodeResolutionContext,
+    fullyResolved: true
+  ): string | undefined;
+  public resolve(
+    s: string,
+    context: ICodeResolutionContext,
+    fullyResolved = false
   ): string | ICodeResolvable | undefined {
     const fragments = this.lookupString(s);
     if (!fragments) {
       return undefined;
     }
-    if (fragments.length === 3 && fragments[0] === "" && fragments[2] === "") {
+    if (
+      fragments.length === 3 &&
+      fragments[0] === "" &&
+      fragments[2] === "" &&
+      isCodeResolvable(fragments[1])
+    ) {
+      if (fullyResolved && isCodeResolvable(fragments[1])) {
+        return fragments[1].resolve(context);
+      }
       return fragments[1];
     }
     for (const [i, fragment] of fragments.entries()) {

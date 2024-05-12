@@ -241,8 +241,8 @@ const pluginPrettier = require('eslint-plugin-prettier');
 const extendsCodingStandardEslintDefaults = require('./node_modules/coding-standard/eslintDefaults.js');
 const extendsCodingStandardEslintrcEs6 = require('./node_modules/coding-standard/.eslintrc-es6');
 const extendsProjenEslintrc = require('./projen/eslintrc.js');
-const parserTypescriptEslintParser = require('@typescript-eslint/parser');
 const pluginTypescriptEslint = require('@typescript-eslint/eslint-plugin');
+const parserTypescriptEslintParser = require('@typescript-eslint/parser');
 module.exports = [
   {
     files: [
@@ -416,8 +416,8 @@ import pluginPrettier from 'eslint-plugin-prettier';
 import extendsCodingStandardEslintDefaults from './node_modules/coding-standard/eslintDefaults.js';
 import extendsCodingStandardEslintrcEs6 from './node_modules/coding-standard/.eslintrc-es6';
 import extendsProjenEslintrc from './projen/eslintrc.js';
-import parserTypescriptEslintParser from '@typescript-eslint/parser';
 import pluginTypescriptEslint from '@typescript-eslint/eslint-plugin';
+import parserTypescriptEslintParser from '@typescript-eslint/parser';
 export default [
   {
     files: [
