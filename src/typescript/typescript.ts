@@ -675,7 +675,7 @@ export class TypeScriptProject extends NodeProject {
 
     jest.addTestMatch(`<rootDir>/${this.srcdir}/**/__tests__/**/*.ts?(x)`);
     jest.addTestMatch(
-      `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
+      `<rootDir>/@(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
     // Test for the ts-jest version that was requested;

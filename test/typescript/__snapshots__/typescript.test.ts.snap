@@ -1224,7 +1224,7 @@ tsconfig.tsbuildinfo
       ],
       "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
