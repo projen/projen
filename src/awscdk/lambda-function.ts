@@ -11,6 +11,7 @@ import { Bundler, BundlingOptions, Eslint } from "../javascript";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
 import { TypeScriptProject } from "../typescript";
+import { normalizePersistedPath } from "../util";
 
 /**
  * Common options for `LambdaFunction`. Applies to all functions in
@@ -136,12 +137,12 @@ export class LambdaFunction extends Component {
 
     const runtime = options.runtime ?? LambdaRuntime.NODEJS_18_X;
 
+    const entrypoint = normalizePersistedPath(options.entrypoint);
+
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
     const eslint = Eslint.of(project);
-    eslint?.allowDevDeps(options.entrypoint);
-
-    const entrypoint = options.entrypoint;
+    eslint?.allowDevDeps(entrypoint);
 
     if (
       !entrypoint.endsWith(TYPESCRIPT_LAMBDA_EXT) &&
