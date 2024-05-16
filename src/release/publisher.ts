@@ -299,7 +299,7 @@ export class Publisher extends Component {
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
           GITHUB_REPOSITORY: "${{ github.repository }}",
-          GITHUB_REF: "${{ github.ref }}",
+          GITHUB_REF: "${{ github.sha }}",
         },
         run: this.githubReleaseCommand(options, branchOptions),
       };
