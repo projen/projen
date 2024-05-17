@@ -4315,7 +4315,7 @@ const workflowRule: gitlab.WorkflowRule = { ... }
 | <code><a href="#projen.gitlab.WorkflowRule.property.exists">exists</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.gitlab.WorkflowRule.property.if">if</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.gitlab.WorkflowRule.property.variables">variables</a></code> | <code>{[ key: string ]: string \| number}</code> | *No description.* |
-| <code><a href="#projen.gitlab.WorkflowRule.property.when">when</a></code> | <code><a href="#projen.gitlab.JobWhen">JobWhen</a></code> | *No description.* |
+| <code><a href="#projen.gitlab.WorkflowRule.property.when">when</a></code> | <code><a href="#projen.gitlab.WorkflowWhen">WorkflowWhen</a></code> | *No description.* |
 
 ---
 
@@ -4362,10 +4362,10 @@ public readonly variables: {[ key: string ]: string | number};
 ##### `when`<sup>Optional</sup> <a name="when" id="projen.gitlab.WorkflowRule.property.when"></a>
 
 ```typescript
-public readonly when: JobWhen;
+public readonly when: WorkflowWhen;
 ```
 
-- *Type:* <a href="#projen.gitlab.JobWhen">JobWhen</a>
+- *Type:* <a href="#projen.gitlab.WorkflowWhen">WorkflowWhen</a>
 
 ---
 
