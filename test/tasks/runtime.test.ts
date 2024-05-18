@@ -74,7 +74,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: `node -e "console.log(process.env.VALUE + '!')"`,
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
       env: {
         VALUE: "my_environment_var",
       },
@@ -142,7 +142,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: `node -e "console.log(process.env.VALUE + '!')"`,
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
       env: {
         VALUE: `$(node -e "console.log('dynamic_value')")`,
       },
@@ -181,7 +181,7 @@ describe("environment variables", () => {
     p.addTask("test:env", {
       steps: [
         {
-          exec: `node -e "console.log(process.env.VALUE + '!')"`,
+          exec: `node -e "console.log('%s!', process.env.VALUE)"`,
           env: { VALUE: 1 as unknown as string },
         },
       ],
@@ -202,7 +202,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: `node -e "console.log(process.env.VALUE + '!')"`,
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
       env: {
         VALUE: 1 as unknown as string,
       },
@@ -222,7 +222,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: `node -e "console.log(process.env.VALUE + '!')"`,
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
     });
     p.tasks.addEnvironment("VALUE", 1 as unknown as string);
 
@@ -323,7 +323,7 @@ describe("cwd", () => {
   test("default cwd is project root", () => {
     const p = new TestProject();
     p.addTask("testme", {
-      exec: `node -e 'console.log(\`cwd is \${process.cwd()}\`)'`,
+      exec: `node -e "console.log('cwd is %s', process.cwd())"`,
     });
     expect(
       executeTask(p, "testme")[0].includes(basename(p.outdir))
@@ -334,7 +334,7 @@ describe("cwd", () => {
     const p = new TestProject();
     const task = p.addTask("testme");
     task.exec(`cd ${tmpdir()}`);
-    task.exec(`node -e 'console.log(\`cwd is \${process.cwd()}\`)'`);
+    task.exec(`node -e "console.log('cwd is %s', process.cwd())"`);
     expect(
       executeTask(p, "testme")[0].includes(basename(p.outdir))
     ).toBeTruthy();
@@ -347,8 +347,8 @@ describe("cwd", () => {
     const task = p.addTask("testme", {
       cwd,
     });
-    task.exec(`node -e 'console.log(\`step1=\${process.cwd()}\`)'`);
-    task.exec(`node -e 'console.log(\`step2=\${process.cwd()}\`)'`);
+    task.exec(`node -e "console.log('step1=%s', process.cwd())"`);
+    task.exec(`node -e "console.log('step2=%s', process.cwd())"`);
     for (const line of executeTask(p, "testme")) {
       expect(line.includes("mypwd")).toBeTruthy();
     }
@@ -361,8 +361,8 @@ describe("cwd", () => {
     mkdirSync(taskcwd, { recursive: true });
     mkdirSync(stepcwd, { recursive: true });
     const task = p.addTask("testme", { cwd: taskcwd });
-    task.exec(`node -e 'console.log(\`step1=\${process.cwd()}\`)'`);
-    task.exec(`node -e 'console.log(\`step2=\${process.cwd()}\`)'`, {
+    task.exec(`node -e "console.log('step1=%s', process.cwd())"`);
+    task.exec(`node -e "console.log('step2=%s', process.cwd())"`, {
       cwd: stepcwd,
     });
 
@@ -421,10 +421,10 @@ test("env is inherited from parent tasks", () => {
   const parent = p.addTask("parent", { env: { E1: "parent1", E2: "parent2" } });
   const child = p.addTask("child", {
     env: { E2: "child1", E3: "child2" },
-    exec: `node -e 'console.log(\`child: [\${process.env.E1},\${process.env.E2},\${process.env.E3}]\`)'`,
+    exec: `node -e "console.log('child: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3)"`,
   });
   parent.exec(
-    `node -e 'console.log(\`parent: [\${process.env.E1},\${process.env.E2},\${process.env.E3 !== undefined ? process.env.E3: ""}]\`)'`
+    `node -e "console.log('parent: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3 ?? '')"`
   );
   parent.spawn(child);
 
@@ -439,7 +439,7 @@ test("requiredEnv can be used to specify required environment variables", () => 
   const p = new TestProject();
   p.addTask("my-task", {
     requiredEnv: ["ENV1", "ENV2", "ENV3"],
-    exec: `node -e 'console.log(\`\${process.env.ENV1} \${process.env.ENV2} \${process.env.ENV3}\`)'`,
+    exec: `node -e "console.log('%s %s %s', process.env.ENV1, process.env.ENV2, process.env.ENV3)"`,
   });
 
   expect(() => executeTask(p, "my-task")).toThrow(
