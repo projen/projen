@@ -158,7 +158,7 @@ export class ReleasableCommits {
     // @see: https://github.com/conventional-commits/parser/blob/eeefb961ebf5b9dfea0fea8b06f8ad34a1e439b9/lib/parser.js
     // -E requires this to be POSIX Extended Regular Expression, which comes with certain limitations
     // see https://en.wikibooks.org/wiki/Regular_Expressions/POSIX-Extended_Regular_Expressions for details
-    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(${allowedTypes}){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'`;
+    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep "^(${allowedTypes}){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+"`;
 
     return new ReleasableCommits(withPath(cmd, path));
   }
