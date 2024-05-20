@@ -43,8 +43,8 @@ export class WindowsBuild extends Component {
       JsonPatch.add(buildJobPath("/strategy"), {
         matrix: {
           runner: [
-            { os: "ubuntu-latest", experimental: false },
-            { os: "windows-latest", experimental: true },
+            { os: "ubuntu-latest", experimental: false, shell: "bash" },
+            { os: "windows-latest", experimental: true, shell: "cmd" },
           ],
         },
       }),
@@ -59,6 +59,11 @@ export class WindowsBuild extends Component {
       JsonPatch.add(
         buildJobPath("/steps/6/if"),
         "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
+      ),
+
+      JsonPatch.add(
+        buildJobPath("/steps/3/shell"),
+        "${{ matrix.runner.shell }}"
       ),
 
       // Skip steps that shouldn't run on Windows
