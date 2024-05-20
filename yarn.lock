@@ -3711,9 +3711,9 @@ jsii-rosetta@5.4.x:
     yargs "^17.7.2"
 
 jsii@5.4.x, jsii@~5.4.0:
-  version "5.4.15"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.15.tgz#7b2f654f2ccffaf211546f09d4b5d525e25c3ec5"
-  integrity sha512-syw2kfZJyb+A6G9ApsmlTBUd/+xMCAQRjml45NSZs6k7+4ifVByOfiIoA05e8zfkn+nOOC+BcTFlHeYubiBHKQ==
+  version "5.4.16"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.16.tgz#a06ce5b424136a519e0ceb8f32a8ef259628316d"
+  integrity sha512-9+V1t9F0kraIeSq0Ojdf1nElDlrOgR5+KOSj31NgUdWLI6yVuf2aZVzx8mPW3oZK+IouOLiixNiMUkHtsuAdsw==
   dependencies:
     "@jsii/check-node" "1.98.0"
     "@jsii/spec" "^1.98.0"
@@ -5375,9 +5375,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.5.0-dev.20240518"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240518.tgz#950e469483b16e7f1a65517f699c6bca5f98a1ca"
-  integrity sha512-em3QI0xBSMKY7x1UuXS14NG0HHPgiuXZ7LcV2pBO1OCPwSLkBS3x1phVzrmTMVO6v+6PnI7yIZsgBqr5tjnWnQ==
+  version "5.5.0-dev.20240519"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240519.tgz#654eee89c410c3380d74d86d47d05d7c22db175d"
+  integrity sha512-WCk836BrP8utieqEbEyKVh/4OkykqhDWO/NsjCp9g9Jm2YyK4yYI7MBOHvcDYZmo4x7e0i9/eLnu4Fcuzv/utw==
 
 uglify-js@^3.1.4:
   version "3.17.4"
