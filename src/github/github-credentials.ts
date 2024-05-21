@@ -59,23 +59,21 @@ export class GithubCredentials {
     const appIdSecret = options.appIdSecret ?? "PROJEN_APP_ID";
     const privateKeySecret =
       options.privateKeySecret ?? "PROJEN_APP_PRIVATE_KEY";
-    const permissions = options.permissions
-      ? JSON.stringify(snakeCaseKeys(options.permissions))
-      : undefined;
-    const uses = permissions
-      ? "tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a"
-      : "actions/create-github-app-token@v1";
 
     return new GithubCredentials({
       setupSteps: [
         {
           name: "Generate token",
           id: "generate_token",
-          uses: uses,
+          uses: options.permissions
+            ? "tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a"
+            : "actions/create-github-app-token@v1",
           with: {
             app_id: `\${{ secrets.${appIdSecret} }}`,
             private_key: `\${{ secrets.${privateKeySecret} }}`,
-            permissions: permissions,
+            permissions: options.permissions
+              ? JSON.stringify(snakeCaseKeys(options.permissions))
+              : undefined,
           },
         },
       ],
