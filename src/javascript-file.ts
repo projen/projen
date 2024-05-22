@@ -131,7 +131,11 @@ export class JavascriptFunction extends CodeResolvableBase {
   ) {
     super("JSFunctionToken");
   }
-  stringify(level = 0, idt = "  ") {
+
+  /**
+   * Internal use only. Use {@link resolve} instead.
+   */
+  public stringify(level = 0, idt = "  ") {
     const dent = idt ? idt.repeat(level) : "";
     const dentPlus = idt ? idt.repeat(level + 1) : "";
 
@@ -200,6 +204,9 @@ export class JavascriptRaw extends CodeResolvableBase {
     super("JSRawToken");
   }
 
+  /**
+   * Internal use only. Use {@link resolve} instead.
+   */
   public stringify(level: number, idt: string) {
     if (typeof this.body === "string") {
       return (
@@ -238,25 +245,93 @@ export class JavascriptDataStructure extends CodeResolvableBase {
    * @param body Any data structure that can be converted to Javascript code, including tokens
    * @returns An object that, when used as a string, will generate the raw Javascript code
    */
-  static value(body: unknown) {
+  public static value(body: unknown) {
     return new JavascriptDataStructure(body);
   }
-  constructor(private readonly body: unknown) {
+
+  private constructor(private readonly body: unknown) {
     super("JSDataToken");
   }
-  stringify(level = 0, idt = "  ") {
+
+  /**
+   * Internal use only. Use {@link resolve} instead.
+   */
+  public stringify(level = 0, idt = "  ") {
     return javascriptStringify(this.body, level, idt) ?? "undefined";
   }
 }
 
+/**
+ * Represents a Javascript `import` ({@link ESMJavascriptDependencies}) or `require` ({@link CJSJavascriptDependencies})
+ * statement.
+ *
+ * Both have the same API, and can be used to generate the import/require statements for a Javascript file.
+ *
+ * Create a new one with `CJSJavascriptDependencies.value()` or `ESMJavascriptDependencies.value()`, and then add
+ * imports with `addImport(imports, from)`. See {@link addImport} for more details.
+ * @example
+ *
+ * ```typescript
+ * const deps = CJSJavascriptDependencies.value();
+ * // or: const deps = ESMJavascriptDependencies.value();
+ * const [jsdoc] = deps.addImport("jsdoc", "eslint-plugin-jsdoc");
+ * const [subValue1, subValue2] = deps.addImport(["subValue1", "subValue2"], "eslint-plugin-jsdoc");
+ * const [js] = deps.addImport("js", "@eslint/js");
+ * const [t1, t2] = deps.addImport(["t1", "t2"], "@eslint/js");
+ *
+ * const code = deps.resolve();
+ * ```
+ *
+ * Will leave `code` as:
+ * ```javascript
+ * const jsdoc = require('eslint-plugin-jsdoc');
+ * const { subValue1, subValue2 } = jsdoc;
+ * const js = require('@eslint/js');
+ * const { t1, t2 } = js;
+ * ```
+ *
+ * Or, in the case of `ESMJavascriptDependencies`:
+ * ```javascript
+ * import jsdoc, { subValue1, subValue2 } from 'eslint-plugin-jsdoc';
+ * import js, { t1, t2 } from '@eslint/js';
+ * ```
+ */
 export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
-  imports: Map<string, Array<string>> = new Map();
-  defaultImports: Map<string, string> = new Map();
-  froms = new Set<string>();
-  constructor() {
+  protected imports: Map<string, Array<string>> = new Map();
+  protected defaultImports: Map<string, string> = new Map();
+  protected froms = new Set<string>();
+
+  protected constructor() {
     super("JSDependenciesToken");
   }
-  addImport(
+
+  /**
+   * Add an import to the dependencies.
+   * @param imports The import(s) to add. If a string, it will be used as the name of the import. If an array of
+   * strings, each string will be used as the name of an import.
+   * @param from The module to import from
+   * @returns An array of {@link JavascriptRaw} objects that represent the imports
+   * @example
+   * ```typescript
+   * const deps = CJSJavascriptDependencies.value(); // or ESMJavascriptDependencies.value();
+   * const [jsdoc] = deps.addImport("jsdoc", "eslint-plugin-jsdoc");
+   * const [subValue1, subValue2] = deps.addImport(["subValue1", "subValue2"], "eslint-plugin-values");
+   *
+   * const code = JavascriptRaw.value(`${deps}
+   *
+   * ${jsdoc}.doSomething(${subValue1}, ${subValue2});
+   * `).resolve();
+   * ```
+   *
+   * Will leave `code` as:
+   * ```javascript
+   * const jsdoc = require('eslint-plugin-jsdoc');
+   * const { subValue1, subValue2 } = require('eslint-plugin-values');
+   *
+   * jsdoc.doSomething(subValue1, subValue2);
+   * ```
+   **/
+  public addImport(
     imports: Array<string> | string,
     from: string
   ): Array<JavascriptRaw> {
@@ -286,8 +361,19 @@ export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
     return imports.map((i) => JavascriptRaw.value(i));
   }
 }
+
+/**
+ * Represents a Javascript CommonJS (CJS) `require` statement. See {@link JavascriptDependenciesBase} for code examples.
+ */
 export class CJSJavascriptDependencies extends JavascriptDependenciesBase {
-  stringify(level: number, _idt: string) {
+  public static value() {
+    return new CJSJavascriptDependencies();
+  }
+
+  /**
+   * Internal use only. Use {@link resolve} instead.
+   */
+  public stringify(level: number, _idt: string) {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
@@ -309,8 +395,19 @@ export class CJSJavascriptDependencies extends JavascriptDependenciesBase {
     return out.join("\n");
   }
 }
+
+/**
+ * Represents a Javascript ECMAScript modules (ESM) `import` statement. See {@link JavascriptDependenciesBase} for code examples.
+ */
 export class ESMJavascriptDependencies extends JavascriptDependenciesBase {
-  stringify(level: number, _idt: string) {
+  public static value() {
+    return new ESMJavascriptDependencies();
+  }
+
+  /**
+   * Internal use only. Use {@link resolve} instead.
+   */
+  public stringify(level: number, _idt: string) {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
@@ -345,11 +442,11 @@ export interface JavascriptFileOptions extends JsonFileOptions {
 
 /**
  * Represents a JS configuratin file (e.g. .eslintrc.js).
- * Suppor
  */
 export class JavascriptFile extends JsonFile {
-  public dependencies: JavascriptDependenciesBase;
-  cjs: boolean;
+  public readonly dependencies: JavascriptDependenciesBase;
+  public readonly cjs: boolean;
+
   constructor(
     project: Project,
     filePath: string,
@@ -358,8 +455,8 @@ export class JavascriptFile extends JsonFile {
     super(project, filePath, { ...options, allowComments: false });
     this.cjs = options.cjs ?? false;
     this.dependencies = options.cjs
-      ? new CJSJavascriptDependencies()
-      : new ESMJavascriptDependencies();
+      ? CJSJavascriptDependencies.value()
+      : ESMJavascriptDependencies.value();
     if (!options.obj) {
       throw new Error('"obj" cannot be undefined');
     }
@@ -386,6 +483,9 @@ ${defaultExport} ${JavascriptDataStructure.value(data)};
   }
 }
 
+/**
+ * Internal function housing commmon code to convert a data structure to a string of Javascript code.
+ */
 function javascriptStringify(
   data: unknown,
   level = 0,

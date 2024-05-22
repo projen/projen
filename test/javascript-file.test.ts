@@ -12,7 +12,7 @@ import {
 
 test("JavascriptRaw can make js-type eslint output", () => {
   // make a dependencies object to track imports
-  const dependencies = new ESMJavascriptDependencies();
+  const dependencies = ESMJavascriptDependencies.value();
 
   // add a few imports
   const [jsdoc] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
@@ -170,7 +170,7 @@ test("JavascriptRaw value-type test", () => {
 
 describe("JavascriptDependencies support import (ESM) syntax", () => {
   test("default export", () => {
-    const dependencies = new ESMJavascriptDependencies();
+    const dependencies = ESMJavascriptDependencies.value();
     dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     dependencies.addImport("js", "@eslint/js");
 
@@ -180,7 +180,7 @@ import js from '@eslint/js';`);
   });
 
   test("subvalues", () => {
-    const dependencies = new ESMJavascriptDependencies();
+    const dependencies = ESMJavascriptDependencies.value();
     dependencies.addImport(["subValue1, subValue2"], "eslint-plugin-jsdoc");
     dependencies.addImport(["t1", "t2"], "@eslint/js");
 
@@ -191,9 +191,12 @@ import { t1, t2 } from '@eslint/js';`);
   });
 
   test("default export and subvalues", () => {
-    const dependencies = new ESMJavascriptDependencies();
-    dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
-    dependencies.addImport(["subValue1", "subValue2"], "eslint-plugin-jsdoc");
+    const dependencies = ESMJavascriptDependencies.value();
+    const [jsdoc] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
+    const [subValue1, subValue2] = dependencies.addImport(
+      ["subValue1", "subValue2"],
+      "eslint-plugin-jsdoc"
+    );
     dependencies.addImport("js", "@eslint/js");
     dependencies.addImport(["t1", "t2"], "@eslint/js");
 
@@ -201,10 +204,13 @@ import { t1, t2 } from '@eslint/js';`);
     expect(value)
       .toEqual(`import jsdoc, { subValue1, subValue2 } from 'eslint-plugin-jsdoc';
 import js, { t1, t2 } from '@eslint/js';`);
+    expect(jsdoc.resolve()).toEqual("jsdoc");
+    expect(subValue1.resolve()).toEqual("subValue1");
+    expect(subValue2.resolve()).toEqual("subValue2");
   });
 
   test("duplicated default export with different name", () => {
-    const dependencies = new ESMJavascriptDependencies();
+    const dependencies = ESMJavascriptDependencies.value();
     const [jsdocToken] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     const [jsdocAgainToken] = dependencies.addImport(
       "jsdocAgain",
@@ -226,7 +232,7 @@ const y = jsdoc;`);
 
 describe("JavascriptDependencies support require (CJS) syntax", () => {
   test("default export", () => {
-    const dependencies = new CJSJavascriptDependencies();
+    const dependencies = CJSJavascriptDependencies.value();
     dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
     dependencies.addImport("js", "@eslint/js");
 
@@ -236,7 +242,7 @@ const js = require('@eslint/js');`);
   });
 
   test("subvalues", () => {
-    const dependencies = new CJSJavascriptDependencies();
+    const dependencies = CJSJavascriptDependencies.value();
     dependencies.addImport(["subValue1, subValue2"], "eslint-plugin-jsdoc");
     dependencies.addImport(["t1", "t2"], "@eslint/js");
 
@@ -247,9 +253,12 @@ const { t1, t2 } = require('@eslint/js');`);
   });
 
   test("default export and subvalues", () => {
-    const dependencies = new CJSJavascriptDependencies();
-    dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
-    dependencies.addImport(["subValue1", "subValue2"], "eslint-plugin-jsdoc");
+    const dependencies = CJSJavascriptDependencies.value();
+    const [jsdoc] = dependencies.addImport("jsdoc", "eslint-plugin-jsdoc");
+    const [subValue1, subValue2] = dependencies.addImport(
+      ["subValue1", "subValue2"],
+      "eslint-plugin-jsdoc"
+    );
     dependencies.addImport("js", "@eslint/js");
     dependencies.addImport(["t1", "t2"], "@eslint/js");
 
@@ -258,6 +267,9 @@ const { t1, t2 } = require('@eslint/js');`);
 const { subValue1, subValue2 } = jsdoc;
 const js = require('@eslint/js');
 const { t1, t2 } = js;`);
+    expect(jsdoc.resolve()).toEqual("jsdoc");
+    expect(subValue1.resolve()).toEqual("subValue1");
+    expect(subValue2.resolve()).toEqual("subValue2");
   });
 });
 
