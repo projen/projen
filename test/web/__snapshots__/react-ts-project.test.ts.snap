@@ -571,12 +571,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "constructs",
@@ -1045,8 +1045,8 @@ tsconfig.tsbuildinfo
       "@types/node": "^18",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "@typescript-eslint/eslint-plugin": "^6",
-      "@typescript-eslint/parser": "^6",
+      "@typescript-eslint/eslint-plugin": "^7",
+      "@typescript-eslint/parser": "^7",
       "constructs": "^10.0.0",
       "eslint": "^8",
       "eslint-import-resolver-typescript": "*",
