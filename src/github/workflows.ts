@@ -394,7 +394,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v3",
+      uses: "actions/setup-dotnet@v4",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }
