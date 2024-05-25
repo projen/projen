@@ -305,77 +305,131 @@ describe("deps upgrade", () => {
 });
 
 describe("npm publishing options", () => {
-  test("defaults", () => {
-    // GIVEN
-    const project = new TestProject();
+  describe("unscoped package", () => {
+    test("defaults with npmProvenance enabled", () => {
+      // GIVEN
+      const project = new TestProject();
 
-    // WHEN
-    const npm = new NodePackage(project, {
-      packageName: "my-package",
+      // WHEN
+      const npm = new NodePackage(project, {
+        packageName: "my-package",
+        npmProvenance: true,
+      });
+
+      // THEN
+      expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+      expect(npm.npmRegistry).toStrictEqual("registry.npmjs.org");
+      expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
+      expect(npm.npmTokenSecret).toStrictEqual("NPM_TOKEN");
+
+      // npmProvenance requires publish config to be present
+      expect(
+        synthSnapshot(project)["package.json"].publishConfig
+      ).toHaveProperty("access", "public");
     });
 
-    // THEN
-    expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
-    expect(npm.npmRegistry).toStrictEqual("registry.npmjs.org");
-    expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
-    expect(npm.npmTokenSecret).toStrictEqual("NPM_TOKEN");
+    test("defaults with npmProvenance disabled", () => {
+      // GIVEN
+      const project = new TestProject();
 
-    // since these are all defaults, publishConfig is not defined.
-    expect(
-      synthSnapshot(project)["package.json"].publishConfig
-    ).toBeUndefined();
-  });
+      // WHEN
+      const npm = new NodePackage(project, {
+        packageName: "my-package",
+        npmProvenance: false,
+      });
 
-  test("scoped packages default to RESTRICTED access", () => {
-    // GIVEN
-    const project = new TestProject();
+      // THEN
+      expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+      expect(npm.npmRegistry).toStrictEqual("registry.npmjs.org");
+      expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
+      expect(npm.npmTokenSecret).toStrictEqual("NPM_TOKEN");
 
-    // WHEN
-    const npm = new NodePackage(project, {
-      packageName: "scoped@my-package",
+      // without npmProvenance we don't need to render publishConfig
+      expect(
+        synthSnapshot(project)["package.json"].publishConfig
+      ).toBeUndefined();
     });
 
-    // THEN
-    expect(npm.npmAccess).toStrictEqual(NpmAccess.RESTRICTED);
+    test("unscoped package cannot be RESTRICTED", () => {
+      // GIVEN
+      const project = new TestProject();
 
-    // since these are all defaults, publishConfig is not defined.
-    expect(packageJson(project).publishConfig).toBeUndefined();
+      // THEN
+      expect(
+        () =>
+          new NodePackage(project, {
+            packageName: "my-package",
+            npmAccess: NpmAccess.RESTRICTED,
+          })
+      ).toThrow(/"npmAccess" cannot be RESTRICTED for non-scoped npm package/);
+    });
   });
 
-  test("non-scoped package cannot be RESTRICTED", () => {
-    // GIVEN
-    const project = new TestProject();
+  describe("scoped package", () => {
+    test("scoped packages default to RESTRICTED access", () => {
+      // GIVEN
+      const project = new TestProject();
 
-    // THEN
-    expect(
-      () =>
-        new NodePackage(project, {
-          packageName: "my-package",
-          npmAccess: NpmAccess.RESTRICTED,
-        })
-    ).toThrow(/"npmAccess" cannot be RESTRICTED for non-scoped npm package/);
-  });
+      // WHEN
+      const npm = new NodePackage(project, {
+        packageName: "scoped@my-package",
+      });
 
-  test("custom settings", () => {
-    // GIVEN
-    const project = new TestProject();
+      // THEN
+      expect(npm.npmAccess).toStrictEqual(NpmAccess.RESTRICTED);
+      expect(npm.npmProvenance).toStrictEqual(false);
 
-    // WHEN
-    const npm = new NodePackage(project, {
-      packageName: "scoped@my-package",
-      npmRegistryUrl: "https://foo.bar",
-      npmAccess: NpmAccess.PUBLIC,
-      npmTokenSecret: "GITHUB_TOKEN",
+      // since these are all defaults, publishConfig is not defined.
+      expect(packageJson(project).publishConfig).toBeUndefined();
     });
 
-    // THEN
-    expect(npm.npmRegistry).toStrictEqual("foo.bar");
-    expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/");
-    expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
-    expect(npm.npmTokenSecret).toStrictEqual("GITHUB_TOKEN");
-    expect(packageJson(project).publishConfig).toStrictEqual({
-      access: "public",
-      registry: "https://foo.bar/",
+    test.each([[true, false]])(
+      "public with npmProvenance=%s",
+      (npmProvenance: boolean) => {
+        // GIVEN
+        const project = new TestProject();
+
+        // WHEN
+        const npm = new NodePackage(project, {
+          packageName: "@projen/my-package",
+          npmAccess: NpmAccess.PUBLIC,
+          npmProvenance,
+        });
+
+        // THEN
+        expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+        expect(npm.npmRegistry).toStrictEqual("registry.npmjs.org");
+        expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
+        expect(npm.npmTokenSecret).toStrictEqual("NPM_TOKEN");
+
+        // Since public is not the standard access, we always expect access to be rendered
+        expect(
+          synthSnapshot(project)["package.json"].publishConfig
+        ).toHaveProperty("access", "public");
+      }
+    );
+
+    test("custom settings", () => {
+      // GIVEN
+      const project = new TestProject();
+
+      // WHEN
+      const npm = new NodePackage(project, {
+        packageName: "scoped@my-package",
+        npmRegistryUrl: "https://foo.bar",
+        npmAccess: NpmAccess.PUBLIC,
+        npmTokenSecret: "GITHUB_TOKEN",
+      });
+
+      // THEN
+      expect(npm.npmRegistry).toStrictEqual("foo.bar");
+      expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/");
+      expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+      expect(npm.npmTokenSecret).toStrictEqual("GITHUB_TOKEN");
+      expect(packageJson(project).publishConfig).toStrictEqual({
+        access: "public",
+        registry: "https://foo.bar/",
+      });
     });
   });
 
@@ -391,9 +445,10 @@ describe("npm publishing options", () => {
     // THEN
     expect(npm.npmRegistry).toStrictEqual("foo.bar/path/");
     expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/path/");
-    expect(packageJson(project).publishConfig).toStrictEqual({
-      registry: "https://foo.bar/path/",
-    });
+    expect(packageJson(project).publishConfig).toHaveProperty(
+      "registry",
+      "https://foo.bar/path/"
+    );
   });
 
   test("AWS CodeArtifact registry with default authProvider", () => {
@@ -413,10 +468,10 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistryUrl).toStrictEqual(
       "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
     );
-    expect(packageJson(project).publishConfig).toStrictEqual({
-      registry:
-        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
-    });
+    expect(packageJson(project).publishConfig).toHaveProperty(
+      "registry",
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+    );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
       "AWS_ACCESS_KEY_ID"
     );
@@ -442,10 +497,10 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistryUrl).toStrictEqual(
       "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
     );
-    expect(packageJson(project).publishConfig).toStrictEqual({
-      registry:
-        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
-    });
+    expect(packageJson(project).publishConfig).toHaveProperty(
+      "registry",
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+    );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
       "AWS_ACCESS_KEY_ID"
     );
