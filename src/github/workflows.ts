@@ -387,7 +387,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v3",
+      uses: "actions/setup-go@v5",
       with: { "go-version": tools.go.version },
     });
   }
