@@ -1063,6 +1063,9 @@ tsconfig.tsbuildinfo
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
+    "publishConfig": {
+      "access": "public",
+    },
     "resolutions": {
       "@types/express": "4.17.13",
       "@types/express-serve-static-core": "4.17.30",
