@@ -19,6 +19,9 @@ exports[`npm overrides 1`] = `
     "other-dep": "*",
     "some-dep": "1.0.0",
   },
+  "publishConfig": {
+    "access": "public",
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -45,6 +48,9 @@ exports[`pnpm overrides 1`] = `
       "some-dep": "1.0.0",
     },
   },
+  "publishConfig": {
+    "access": "public",
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -66,6 +72,9 @@ exports[`pnpm overrides in root project only, not subprojects 1`] = `
   "main": "lib/index.js",
   "name": "my-project",
   "pnpm": {},
+  "publishConfig": {
+    "access": "public",
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -86,6 +95,9 @@ exports[`pnpm overrides in root project only, not subprojects 2`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "sub-project",
+  "publishConfig": {
+    "access": "public",
+  },
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",
@@ -111,6 +123,9 @@ exports[`yarn resolutions 1`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "my-project",
+  "publishConfig": {
+    "access": "public",
+  },
   "resolutions": {
     "other-dep": "*",
     "some-dep": "1.0.0",
@@ -136,6 +151,9 @@ exports[`yarn_berry resolutions 1`] = `
   "main": "lib/index.js",
   "name": "my-project",
   "packageManager": "yarn@4.0.1",
+  "publishConfig": {
+    "access": "public",
+  },
   "resolutions": {
     "other-dep": "*",
     "some-dep": "1.0.0",
@@ -160,6 +178,9 @@ exports[`yarn_classic resolutions 1`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "my-project",
+  "publishConfig": {
+    "access": "public",
+  },
   "resolutions": {
     "other-dep": "*",
     "some-dep": "1.0.0",
@@ -185,6 +206,9 @@ exports[`yarn2 resolutions 1`] = `
   "main": "lib/index.js",
   "name": "my-project",
   "packageManager": "yarn@4.0.1",
+  "publishConfig": {
+    "access": "public",
+  },
   "resolutions": {
     "other-dep": "*",
     "some-dep": "1.0.0",

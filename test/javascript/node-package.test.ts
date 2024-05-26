@@ -215,7 +215,7 @@ test("no install if package.json did not change at all", () => {
   const outdir = mkdtemp({ cleanup: false });
 
   const orig = {
-    name: "test",
+    name: "@projen/test",
     scripts: {
       build: "npx projen build",
       compile: "npx projen compile",
@@ -241,7 +241,7 @@ test("no install if package.json did not change at all", () => {
   );
   mkdirSync(join(outdir, "node_modules")); // <-- also causes an "install"
 
-  const project = new Project({ name: "test", outdir });
+  const project = new Project({ name: "@projen/test", outdir });
   project.addExcludeFromCleanup("package.json");
   const pkg = new NodePackage(project);
 
@@ -909,6 +909,22 @@ describe("npm provenance", () => {
     });
 
     expect(nodePackage.npmProvenance).toStrictEqual(true);
+  });
+
+  test("must always render npmAccess", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageName: "@test-scope/test-package",
+      npmAccess: NpmAccess.PUBLIC,
+      npmProvenance: true,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].publishConfig).toHaveProperty(
+      "access",
+      "public"
+    );
   });
 
   test("should throw an error if it's enabled for non-public packages", () => {

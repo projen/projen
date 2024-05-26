@@ -1432,6 +1432,12 @@ export class NodePackage extends Component {
   }
 
   private renderPublishConfig() {
+    // When npm provenance is enabled, we need to always render the public access
+    // But when npmAccess is the set to the default, we prefer to omit it
+    const shouldOmitAccess =
+      !this.npmProvenance &&
+      this.npmAccess === defaultNpmAccess(this.packageName);
+
     // omit values if they are the same as the npm defaults
     return resolveJson(
       {
@@ -1439,10 +1445,7 @@ export class NodePackage extends Component {
           this.npmRegistryUrl !== DEFAULT_NPM_REGISTRY_URL
             ? this.npmRegistryUrl
             : undefined,
-        access:
-          this.npmAccess !== defaultNpmAccess(this.packageName)
-            ? this.npmAccess
-            : undefined,
+        access: shouldOmitAccess ? undefined : this.npmAccess,
       },
       { omitEmpty: true }
     );
