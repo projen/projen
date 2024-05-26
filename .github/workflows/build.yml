@@ -127,7 +127,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.14.2
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
@@ -156,7 +156,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: 1.16.x
       - name: Download build artifacts
@@ -244,8 +244,12 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_matrix
+    if: always()
     outputs:
       self_mutation_happened: ${{ needs.build_matrix.outputs.self_mutation_happened }}
     steps:
-      - name: OK
-        run: echo "OK"
+      - name: Build result
+        run: echo ${{needs.build_matrix.result}}
+      - if: ${{ needs.build_matrix.result != 'success' }}
+        name: Set status based on matrix build
+        run: exit 1
