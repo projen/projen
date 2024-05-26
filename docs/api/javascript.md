@@ -6233,11 +6233,11 @@ public readonly coverageProvider: string;
 ```
 
 - *Type:* string
-- *Default:* "babel"
+- *Default:* "v8"
 
 Indicates which provider should be used to instrument code for coverage.
 
-Allowed values are babel (default) or v8
+Allowed values are v8 (default) or babel
 
 ---
 
