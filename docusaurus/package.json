@@ -18,18 +18,19 @@
     "@docusaurus/core": "^3.3.2",
     "@docusaurus/preset-classic": "^3.3.2",
     "@mdx-js/react": "^3.0.0",
+    "@orama/plugin-docusaurus-v3": "^2.0.18",
     "clsx": "^1.2.1",
     "prism-react-renderer": "^2.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tailwindcss": "^3.3.5"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.3.2",
     "@docusaurus/tsconfig": "^3.3.2",
     "@docusaurus/types": "^3.3.2",
-    "@tsconfig/docusaurus": "^2.0.2",
-    "typescript": "^5.2.2"
+    "@tsconfig/docusaurus": "^2.0.3",
+    "typescript": "^5.4.5"
   },
   "browserslist": {
     "production": [
