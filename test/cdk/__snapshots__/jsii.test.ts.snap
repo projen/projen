@@ -1789,7 +1789,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-dotnet@v3",
+      "uses": "actions/setup-dotnet@v4",
       "with": {
         "dotnet-version": "3.x",
       },
@@ -1911,7 +1911,7 @@ exports[`language bindings snapshot dotnet 1`] = `
       },
     },
     {
-      "uses": "actions/setup-dotnet@v3",
+      "uses": "actions/setup-dotnet@v4",
       "with": {
         "dotnet-version": "3.x",
       },
@@ -2607,7 +2607,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
@@ -2765,7 +2765,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
