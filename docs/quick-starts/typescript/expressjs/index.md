@@ -132,11 +132,11 @@ projen's TypeScript project comes with a `test` task already, so we just need to
     ✓ responds with Hello World! (23 ms)
 
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
-----------|---------|----------|---------|---------|-------------------
-All files |   77.77 |    66.66 |      50 |   77.77 |
- index.ts |   77.77 |    66.66 |      50 |   77.77 | 12-13
-----------|---------|----------|---------|---------|-------------------
+| File       | % Stmts   | % Branch   | % Funcs   | % Lines   | Uncovered Line #s   |
+| ---------- | --------- | ---------- | --------- | --------- | ------------------- |
+| All files  | 77.77     | 66.66      | 50        | 77.77     |
+| index.ts   | 77.77     | 66.66      | 50        | 77.77     | 12-13               |
+| ---------- | --------- | ---------- | --------- | --------- | ------------------- |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
@@ -150,4 +150,4 @@ Ran all test suites.
 While Express.js can be run from a single file, it usually is not a best practice to do so. Instead,
 consider following the structure created by the [Express.js generator](https://expressjs.com/en/starter/generator.html).
 
-Better yet, challenge yourself to [use projen to create a project for you based on the generator](/docs/custom/)!
+Better yet, challenge yourself to [use projen to create a project for you based on the generator](../../../custom/custom-projects.md)!

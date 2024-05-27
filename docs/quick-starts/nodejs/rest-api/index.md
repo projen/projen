@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# How to build a simple Node.js API
+# Rest API with Node.js
 
 In this example, we'll guide you through create a Node.js API using [express](https://expressjs.com/).
 
