@@ -103,7 +103,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/docs/Introduction',
+                to: '/docs/introduction',
               },
             ],
           },
@@ -137,7 +137,7 @@ const config = {
       },
     }),
   plugins: [
-    async function myPlugin(context, options) {
+    async function myPlugin(_context, _options) {
       return {
         name: "docusaurus-tailwindcss",
         configurePostCss(postcssOptions) {
@@ -148,6 +148,23 @@ const config = {
         },
       };
     }
+  ],
+  themes: [
+    [
+      require("@easyops-cn/docusaurus-search-local"),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+
+        hashed: true,
+        language: ["en"],
+        indexBlog: false,
+        docsDir: '../docs',
+        explicitSearchResultPath: true,
+        searchResultContextMaxLength: 250,
+        searchContextByPaths: ["docs", "docs/api"],
+        useAllContextsWithNoSearchContext: true,
+      }),
+    ],
   ],
 };
 
