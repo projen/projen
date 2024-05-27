@@ -549,8 +549,14 @@ export interface TypeScriptCompilerOptions {
   readonly paths?: { [key: string]: string[] };
 
   /**
+   * If typeRoots is specified, only packages under typeRoots will be included
+   * @see https://www.typescriptlang.org/tsconfig/#typeRoots
+   */
+  readonly typeRoots?: string[];
+
+  /**
    * If types is specified, only packages listed will be included in the global scope
-   * @see {@link https://www.typescriptlang.org/tsconfig#types}
+   * @see https://www.typescriptlang.org/tsconfig#types
    */
   readonly types?: string[];
 

@@ -10739,6 +10739,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.stripInternal">stripInternal</a></code> | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.target">target</a></code> | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.tsBuildInfoFile">tsBuildInfoFile</a></code> | <code>string</code> | This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.typeRoots">typeRoots</a></code> | <code>string[]</code> | If typeRoots is specified, only packages under typeRoots will be included. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.types">types</a></code> | <code>string[]</code> | If types is specified, only packages listed will be included in the global scope. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.useUnknownInCatchVariables">useUnknownInCatchVariables</a></code> | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.verbatimModuleSyntax">verbatimModuleSyntax</a></code> | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers. |
@@ -11559,6 +11560,20 @@ You can read more about composite projects in the handbook.
 
 ---
 
+##### `typeRoots`<sup>Optional</sup> <a name="typeRoots" id="projen.javascript.TypeScriptCompilerOptions.property.typeRoots"></a>
+
+```typescript
+public readonly typeRoots: string[];
+```
+
+- *Type:* string[]
+
+If typeRoots is specified, only packages under typeRoots will be included.
+
+> [https://www.typescriptlang.org/tsconfig/#typeRoots](https://www.typescriptlang.org/tsconfig/#typeRoots)
+
+---
+
 ##### `types`<sup>Optional</sup> <a name="types" id="projen.javascript.TypeScriptCompilerOptions.property.types"></a>
 
 ```typescript
@@ -11569,7 +11584,7 @@ public readonly types: string[];
 
 If types is specified, only packages listed will be included in the global scope.
 
-> [{@link https://www.typescriptlang.org/tsconfig#types}]({@link https://www.typescriptlang.org/tsconfig#types})
+> [https://www.typescriptlang.org/tsconfig#types](https://www.typescriptlang.org/tsconfig#types)
 
 ---
 
