@@ -160,8 +160,13 @@ const config = {
         indexBlog: false,
         docsDir: '../docs',
         explicitSearchResultPath: true,
-        searchResultContextMaxLength: 250,
-        searchContextByPaths: ["docs", "docs/api"],
+        highlightSearchTermsOnTargetPage: true,
+        searchContextByPaths: [
+          {
+            label: "API Reference",
+            path: 'docs/api'
+          },
+        ],
         useAllContextsWithNoSearchContext: true,
       }),
     ],
