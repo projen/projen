@@ -235,7 +235,7 @@ export class MyProject extends GitHubProject {
 ```
 
 For more information on the `IgnoreFile` class, see the
-[API documentation](/docs/API#projen-ignorefile).
+[API documentation](../api/projen.md#projen.IgnoreFile).
 
 ## Default Pull Request template
 
