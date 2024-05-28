@@ -132,14 +132,6 @@
   },
   "version": "0.0.0",
   "jest": {
-    "coverageProvider": "v8",
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "clover",
-      "cobertura",
-      "text-summary"
-    ],
     "maxWorkers": "50%",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.ts?(x)",
@@ -147,6 +139,12 @@
     ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "cobertura"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
