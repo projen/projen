@@ -111,6 +111,14 @@ const project = new JsiiProject({
     // makes it very hard to iterate with jest --watch
     coverageText: false,
     jestConfig: {
+      // Adding text-summary as a replacement for text
+      coverageReporters: [
+        "json",
+        "lcov",
+        "clover",
+        "cobertura",
+        "text-summary",
+      ],
       // By default jest will try to use all CPU cores on the running machine.
       // But some of our integration tests spawn child processes - so by
       // creating one jest worker per test, some of the child processes will get
