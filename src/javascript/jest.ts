@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as semver from "semver";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
@@ -67,8 +68,8 @@ export interface JestConfigOptions {
 
   /**
    * Indicates which provider should be used to instrument code for coverage.
-   * Allowed values are v8 (default) or babel
-   * @default - "v8"
+   * Allowed values are babel (default) or v8
+   * @default - "babel"
    */
   readonly coverageProvider?: "babel" | "v8";
 
@@ -704,12 +705,7 @@ export class Jest extends Component {
     this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
     project.addDevDeps(`jest${this.jestVersion}`);
 
-    // use native v8 coverage collection as default
-    // https://jestjs.io/docs/en/cli#--coverageproviderprovider
-    const coverageProvider = this.jestConfig?.coverageProvider ?? "v8";
-
     this.jestConfig = {
-      coverageProvider,
       ...options.jestConfig,
       additionalOptions: undefined,
       ...options.jestConfig?.additionalOptions,
@@ -905,6 +901,16 @@ export class Jest extends Component {
       this.file && this.file.path != "jest.config.json"
         ? ` -c ${this.file.path}`
         : "";
+
+    // as recommended in the jest docs, node > 14 may use native v8 coverage collection
+    // https://jestjs.io/docs/en/cli#--coverageproviderprovider
+    if (
+      this.project instanceof NodeProject &&
+      this.project.package.minNodeVersion &&
+      semver.gte(this.project.package.minNodeVersion, "14.0.0")
+    ) {
+      jestOpts.push("--coverageProvider=v8");
+    }
 
     if (updateSnapshot === UpdateSnapshot.ALWAYS) {
       jestOpts.push("--updateSnapshot");
