@@ -313,8 +313,10 @@ export class Project extends Construct {
 
       // Subtasks should call the root task for synth
       if (this.parent) {
+        const cwd = path.relative(this.outdir, this.root.outdir);
+        const normalizedCwd = normalizePersistedPath(cwd);
         this.defaultTask.exec(`${this.projenCommand} ${Project.DEFAULT_TASK}`, {
-          cwd: path.relative(this.outdir, this.root.outdir),
+          cwd: normalizedCwd,
         });
       }
 
