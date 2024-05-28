@@ -1,3 +1,4 @@
+import { EOL } from "os";
 import * as path from "path";
 import * as vm from "vm";
 import { resolveProjectType } from "./inventory";
@@ -154,5 +155,5 @@ function createProject(opts: CreateProjectOptions) {
   const postSynth = opts.post ?? true;
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   process.env.PROJEN_CREATE_PROJECT = "true";
-  vm.runInContext(initProjectCode.join("\n"), ctx);
+  vm.runInContext(initProjectCode.join(EOL), ctx);
 }
