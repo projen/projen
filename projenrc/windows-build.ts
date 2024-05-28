@@ -61,7 +61,6 @@ export class WindowsBuild extends Component {
         "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
       ),
 
-      JsonPatch.add(buildJobPath("/steps/3/shell"), "bash"),
       JsonPatch.add(
         buildJobPath("/steps/3/if"),
         "${{ !matrix.runner.experimental }}"
