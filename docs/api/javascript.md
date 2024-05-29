@@ -10712,6 +10712,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.jsxImportSource">jsxImportSource</a></code> | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.lib">lib</a></code> | <code>string[]</code> | Reference for type definitions / libraries to use (eg. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.module">module</a></code> | <code>string</code> | Sets the module system for the program. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.moduleDetection">moduleDetection</a></code> | <code><a href="#projen.javascript.TypeScriptModuleDetection">TypeScriptModuleDetection</a></code> | This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript). |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.moduleResolution">moduleResolution</a></code> | <code><a href="#projen.javascript.TypeScriptModuleResolution">TypeScriptModuleResolution</a></code> | Determine how modules get resolved. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.noEmit">noEmit</a></code> | <code>boolean</code> | Do not emit outputs. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.noEmitOnError">noEmitOnError</a></code> | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported. |
@@ -11182,6 +11183,19 @@ public readonly module: string;
 Sets the module system for the program.
 
 See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
+
+---
+
+##### `moduleDetection`<sup>Optional</sup> <a name="moduleDetection" id="projen.javascript.TypeScriptCompilerOptions.property.moduleDetection"></a>
+
+```typescript
+public readonly moduleDetection: TypeScriptModuleDetection;
+```
+
+- *Type:* <a href="#projen.javascript.TypeScriptModuleDetection">TypeScriptModuleDetection</a>
+- *Default:* "auto"
+
+This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript).
 
 ---
 
@@ -14724,6 +14738,49 @@ Passes `key` separately from props and always passes `children` as props (since 
 ##### `REACT_JSXDEV` <a name="REACT_JSXDEV" id="projen.javascript.TypeScriptJsxMode.REACT_JSXDEV"></a>
 
 Same as `REACT_JSX` with additional debug data.
+
+---
+
+
+### TypeScriptModuleDetection <a name="TypeScriptModuleDetection" id="projen.javascript.TypeScriptModuleDetection"></a>
+
+This setting controls how TypeScript determines whether a file is a script or a module.
+
+> [https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.TypeScriptModuleDetection.AUTO">AUTO</a></code> | TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx. |
+| <code><a href="#projen.javascript.TypeScriptModuleDetection.LEGACY">LEGACY</a></code> | The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module. |
+| <code><a href="#projen.javascript.TypeScriptModuleDetection.FORCE">FORCE</a></code> | Ensures that every non-declaration file is treated as a module. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.javascript.TypeScriptModuleDetection.AUTO"></a>
+
+TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+##### `LEGACY` <a name="LEGACY" id="projen.javascript.TypeScriptModuleDetection.LEGACY"></a>
+
+The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+##### `FORCE` <a name="FORCE" id="projen.javascript.TypeScriptModuleDetection.FORCE"></a>
+
+Ensures that every non-declaration file is treated as a module.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
 
 ---
 

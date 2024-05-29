@@ -85,6 +85,34 @@ export enum TypeScriptModuleResolution {
 }
 
 /**
+ * This setting controls how TypeScript determines whether a file is a script or a module.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript
+ */
+export enum TypeScriptModuleDetection {
+  /**
+   * TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/#moduleDetection
+   */
+  AUTO = "auto",
+
+  /**
+   * The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/#moduleDetection
+   */
+  LEGACY = "legacy",
+
+  /**
+   * Ensures that every non-declaration file is treated as a module.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/#moduleDetection
+   */
+  FORCE = "force",
+}
+
+/**
  * This flag controls how `import` works, there are 3 different options.
  *
  * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
@@ -322,6 +350,13 @@ export interface TypeScriptCompilerOptions {
    * @default [ "es2018" ]
    */
   readonly lib?: string[];
+
+  /**
+   * This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript).
+   *
+   * @default "auto"
+   */
+  readonly moduleDetection?: TypeScriptModuleDetection;
 
   /**
    * Sets the module system for the program.
