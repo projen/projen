@@ -1071,7 +1071,7 @@ export default function Home() {
         "dom.iterable",
         "esnext",
       ],
-      "module": "esnext",
+      "module": "commonjs",
       "moduleResolution": "bundler",
       "noEmit": true,
       "noEmitOnError": false,
