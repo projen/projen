@@ -157,7 +157,7 @@ function createProject(opts: CreateProjectOptions) {
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   process.env.PROJEN_CREATE_PROJECT = "true";
   const multilineInitProjectCode = initProjectCode.join(EOL);
-  util.inspect(ctx);
-  util.inspect(multilineInitProjectCode);
+  console.log(util.inspect(ctx));
+  console.log(util.inspect(multilineInitProjectCode));
   vm.runInContext(multilineInitProjectCode, ctx);
 }
