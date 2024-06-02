@@ -1,5 +1,6 @@
 import { EOL } from "os";
 import * as path from "path";
+import * as util from "util";
 import * as vm from "vm";
 import { resolveProjectType } from "./inventory";
 import { renderJavaScriptOptions } from "./javascript/render-options";
@@ -156,6 +157,7 @@ function createProject(opts: CreateProjectOptions) {
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   process.env.PROJEN_CREATE_PROJECT = "true";
   const multilineInitProjectCode = initProjectCode.join(EOL);
-  console.log(multilineInitProjectCode);
+  util.inspect(ctx);
+  util.inspect(multilineInitProjectCode);
   vm.runInContext(multilineInitProjectCode, ctx);
 }
