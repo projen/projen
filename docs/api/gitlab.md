@@ -4369,6 +4369,57 @@ public readonly when: WorkflowWhen;
 
 ---
 
+## Classes <a name="Classes" id="Classes"></a>
+
+### Reference <a name="Reference" id="projen.gitlab.Reference"></a>
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.gitlab.Reference.to">to</a></code> | Select keyword configuration from other job sections and reuse it in the current section. |
+
+---
+
+##### `to` <a name="to" id="projen.gitlab.Reference.to"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+gitlab.Reference.to(location: string)
+```
+
+Select keyword configuration from other job sections and reuse it in the current section.
+
+> [https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags](https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags)
+
+###### `location`<sup>Required</sup> <a name="location" id="projen.gitlab.Reference.to.parameter.location"></a>
+
+- *Type:* string
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.gitlab.Reference.property.location">location</a></code> | <code>string[]</code> | The location that is referenced. |
+
+---
+
+##### `location`<sup>Required</sup> <a name="location" id="projen.gitlab.Reference.property.location"></a>
+
+```typescript
+public readonly location: string[];
+```
+
+- *Type:* string[]
+
+The location that is referenced.
+
+---
+
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
 

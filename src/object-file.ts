@@ -247,7 +247,19 @@ export abstract class ObjectFile extends FileBase {
     for (const operation of this.patchOperations) {
       patched = JsonPatch.apply(patched, ...operation);
     }
-    return patched ? JSON.stringify(patched, undefined, 2) : undefined;
+    return patched ? this.stringifyContent(patched) : undefined;
+  }
+
+  /**
+   * Converts an object into a string.
+   * This is called from `synthesizeContent` and can be used to further customize
+   * how the object file is written to disk.
+   *
+   * @param obj
+   * @returns the stringified content of the object
+   */
+  protected stringifyContent(obj: any): string {
+    return JSON.stringify(obj, undefined, 2);
   }
 }
 
