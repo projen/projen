@@ -955,9 +955,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.13.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.13.0.tgz#011a76bc1e71ae9a026dddcfd7039084f752c4b6"
-  integrity sha512-FM6AOb3khNkNIXPnHFDYaHerSv8uN22C91z098AnGccVu+Pcdhi+pNUFDi0iLmPIsVE0JBD0KVS7mzUYt4nRzQ==
+  version "20.14.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.0.tgz#49ceec7b34f8621470cff44677fa9d461a477f17"
+  integrity sha512-5cHBxFGJx6L4s56Bubp4fglrEpmyJypsqI6RgzMfBHWUJQGWAAi8cWcgetEbZXHYXo9C2Fa4EEds/uSyS4cxmA==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1483,9 +1483,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001587:
-  version "1.0.30001625"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001625.tgz#ead1b155ea691d6a87938754d3cb119c24465b03"
-  integrity sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==
+  version "1.0.30001626"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001626.tgz#328623664a28493b4a9019af7ce03ea39fbe898c"
+  integrity sha512-JRW7kAH8PFJzoPCJhLSHgDgKg5348hsQ68aqb+slnzuB5QFERv846oA/mRChmlLAOdEDeOkRn3ynb1gSFnjt3w==
 
 case@^1.6.3:
   version "1.6.3"
@@ -3710,9 +3710,9 @@ jsii-rosetta@5.4.x:
     yargs "^17.7.2"
 
 jsii@5.4.x, jsii@~5.4.0:
-  version "5.4.18"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.18.tgz#82298308de4077b52dba631c891d32a9d21b340d"
-  integrity sha512-ocVGqfYmXk0SCKmygQt+OS9dfCnIMIdAfwqdyhwaY3AnNlRxN6d74Yg6Pz9GaB4zeE9skFBlOJLLtn2J+EKULQ==
+  version "5.4.20"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.20.tgz#d348ff3556d36a209a76eccc96e1ce2258192e47"
+  integrity sha512-kZoopDv3Gy6wKOt6aYzPhMvEErOAnQXoeUjd3sGAODey/mUVJRvXoScYVvmmtVgKqt+120OFPhVRWzgefwio+g==
   dependencies:
     "@jsii/check-node" "1.98.0"
     "@jsii/spec" "^1.98.0"
@@ -5374,9 +5374,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.5.0-dev.20240601"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240601.tgz#f5f62280f540c4673eb89a801ba4c6b431de55a1"
-  integrity sha512-JdOf4SBFb/i7lh8CiIsRk1SOEA2uwr/2qoYjmPWiLP6L4ttAJd0Chb0PbGAItbRy9Cf55iej67T2l9D0NCmE6w==
+  version "5.5.0-dev.20240602"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240602.tgz#7699e7a191be9fc8cd41b042f64cab45503e812a"
+  integrity sha512-R5PnpSfGGNylti0nmjM7R3zjr+9osr8M0tUItQDcc960/qa9gDTgA8F4f64IZeT9e7IoJklxXjyAdBjVpI909A==
 
 uglify-js@^3.1.4:
   version "3.17.4"
