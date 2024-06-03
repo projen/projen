@@ -17,6 +17,13 @@ export interface JsonFileOptions extends ObjectFileOptions {
    * @default - false for .json files, true for .json5 and .jsonc files
    */
   readonly allowComments?: boolean;
+
+  /**
+   * The number of spaces to use when indenting code.
+   *
+   * @default 2
+   */
+  readonly indent?: number;
 }
 
 /**
@@ -24,12 +31,19 @@ export interface JsonFileOptions extends ObjectFileOptions {
  */
 export class JsonFile extends ObjectFile {
   private readonly newline: boolean;
+
+  /**
+   * The number of spaces to use when indenting code.
+   */
+  public readonly indent: number;
+
   readonly supportsComments: boolean;
 
   constructor(scope: IConstruct, filePath: string, options: JsonFileOptions) {
     super(scope, filePath, options);
 
     this.newline = options.newline ?? true;
+    this.indent = options.indent ?? 2;
     this.supportsComments =
       options.allowComments ??
       (filePath.toLowerCase().endsWith("json5") ||
@@ -40,19 +54,12 @@ export class JsonFile extends ObjectFile {
     }
   }
 
-  protected synthesizeContent(resolver: IResolver): string | undefined {
-    const json = super.synthesizeContent(resolver);
-    if (!json) {
-      return undefined;
-    }
-
-    const sanitized = JSON.parse(json);
-
+  protected stringifyContent(obj: any): string {
     if (this.marker && !this.supportsComments) {
-      sanitized["//"] = this.marker;
+      obj["//"] = this.marker;
     }
 
-    let content = JSON.stringify(sanitized, undefined, 2);
+    let content = JSON.stringify(obj, undefined, this.indent);
     if (this.marker && this.supportsComments) {
       content = `// ${this.marker}\n${content}`;
     }

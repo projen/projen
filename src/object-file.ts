@@ -247,7 +247,7 @@ export abstract class ObjectFile extends FileBase {
     for (const operation of this.patchOperations) {
       patched = JsonPatch.apply(patched, ...operation);
     }
-    return this.stringifyContent(patched);
+    return patched ? this.stringifyContent(patched) : undefined;
   }
 
   /**
@@ -258,8 +258,8 @@ export abstract class ObjectFile extends FileBase {
    * @param obj
    * @returns the stringified content of the object
    */
-  protected stringifyContent(obj: object | undefined): string | undefined {
-    return obj ? JSON.stringify(obj, undefined, 2) : undefined;
+  protected stringifyContent(obj: any): string {
+    return JSON.stringify(obj, undefined, 2);
   }
 }
 

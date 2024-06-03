@@ -64,7 +64,7 @@ export class YamlFile extends ObjectFile {
     return super.synthesizeContent(yamlResolver);
   }
 
-  protected stringifyContent(obj: object | undefined): string | undefined {
+  protected stringifyContent(obj: any): string {
     let yaml = YAML.stringify(obj, {
       indent: this.indent,
       lineWidth: this.lineWidth,
