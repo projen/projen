@@ -391,18 +391,6 @@ export class CiConfiguration extends Component {
       : undefined;
   }
 }
-/**
- * Is the value a structure containing data like a struct or an array.
- * Notably this will reject objects with constructors.
- */
-function isDataStructure(obj: object) {
-  return (
-    Array.isArray(obj) ||
-    (typeof obj === "object" &&
-      obj != null &&
-      obj.constructor.name === "Object")
-  );
-}
 
 function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
   if (typeof obj !== "object" || obj == null) {
@@ -413,9 +401,19 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
     return obj.map((o) => snakeCaseKeys(o)) as any;
   }
 
+  // Don't snake-case objects with constructors, these are yaml tags
+  if (typeof obj === "object" && obj.constructor.name !== "Object") {
+    return obj;
+  }
+
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
-    if (isDataStructure(v) && !["idTokens", "variables"].includes(k)) {
+    if (
+      typeof v === "object" &&
+      v != null &&
+      k !== "variables" &&
+      k !== "idTokens"
+    ) {
       v = snakeCaseKeys(v);
     }
     result[skipTopLevel ? k : snake(k)] = v;
