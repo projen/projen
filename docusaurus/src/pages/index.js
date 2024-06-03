@@ -27,7 +27,7 @@ export default function Home() {
                                 Rapidly build modern applications
                                 <span className="lg:block mt-3"> with advanced configuration management</span>
                             </h2>
-                            <a href={`${siteConfig.baseUrl}docs/getting-started/`}
+                            <a href={`${siteConfig.baseUrl}docs/introduction/getting-started`}
                                className="rounded text-white bg-blue-500 hover:text-white py-3 px-8 inline-block lg:mb-36">Get
                                 Started</a>
                         </div>
@@ -128,7 +128,7 @@ export default function Home() {
                             <div className="lg:col-start-2 lg:col-span-2">
                                 <p className="text-xl lg:text-2xl text-center">
                                     You’re not alone. Developers from all over the world manage their complex configurations using
-                                    projen. <a href={`${siteConfig.baseUrl}docs/getting-started/`} className="text-blue-500 dark:text-blue-300 underline">Get started</a> today
+                                    projen. <a href={`${siteConfig.baseUrl}docs/introduction/getting-started`} className="text-blue-500 dark:text-blue-300 underline">Get started</a> today
                                     and get these benefits:
                                 </p>
                             </div>
