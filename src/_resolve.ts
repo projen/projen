@@ -58,6 +58,9 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
 
   // only allow data types (i.e. objects without constructors)
   if (value.constructor && value.constructor?.name !== "Object") {
+    if (options.keepObjects) {
+      return value;
+    }
     throw new Error(
       `only data types can be resolved. trying to resolve object of type ${value.constructor?.name}`
     );

@@ -247,6 +247,12 @@ export interface ResolveOptions {
   readonly omitEmpty?: boolean;
 
   /**
+   * Omits empty arrays and objects.
+   * @default false
+   */
+  readonly keepObjects?: boolean;
+
+  /**
    * Context arguments.
    * @default []
    */

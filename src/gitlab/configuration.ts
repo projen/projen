@@ -159,8 +159,6 @@ export class CiConfiguration extends Component {
       committed: true,
       // string replacement for !reference tags: https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags
       // otherwise, it will be rendered in quotes and not be recognized by GitLab
-      searchValue: new RegExp(/"!reference \[(.+?), (.+?)\]"/g).source,
-      replaceValue: "!reference [$1, $2]",
     });
     const defaults = options?.default;
     if (defaults) {
@@ -390,6 +388,15 @@ export class CiConfiguration extends Component {
       : undefined;
   }
 }
+/**
+ * Is the object a struct-like object.
+ * Notably this will reject objects with constructors.
+ */
+function isStruct(obj: object) {
+  return (
+    typeof obj === "object" && obj.constructor.name === "Object" && obj != null
+  );
+}
 
 function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
   if (typeof obj !== "object" || obj == null) {
@@ -402,12 +409,7 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
 
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
-    if (
-      typeof v === "object" &&
-      v != null &&
-      k !== "variables" &&
-      k !== "idTokens"
-    ) {
+    if (isStruct(v) && !["idTokens", "variables"].includes(k)) {
       v = snakeCaseKeys(v);
     }
     result[skipTopLevel ? k : snake(k)] = v;

@@ -32,37 +32,45 @@ export class YamlFile extends ObjectFile {
    * Maximum line width (set to 0 to disable folding).
    */
   public lineWidth: number;
-  /**
-   * Search value for `String.replace()` on the resulting YAML.
-   */
-  private readonly searchValue?: string;
-  /**
-   * Replace value for `String.replace()` on the resulting YAML.
-   */
-  private readonly replaceValue?: string;
 
   constructor(scope: IConstruct, filePath: string, options: YamlFileOptions) {
     super(scope, filePath, options);
     this.lineWidth = options.lineWidth ?? 0;
-    this.searchValue = options.searchValue;
-    this.replaceValue = options.replaceValue;
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
-    const json = super.synthesizeContent(resolver);
-    if (!json) {
-      return undefined;
-    }
+    const yamlResolver: IResolver = {
+      resolve(value, options?): any {
+        return resolver.resolve(value, {
+          ...options,
+          keepObjects: true,
+        });
+      },
+    };
+    return super.synthesizeContent(yamlResolver);
+  }
 
-    let yaml = YAML.stringify(JSON.parse(json), {
+  protected stringifyContent(obj: object | undefined): string | undefined {
+    let yaml = YAML.stringify(obj, {
       indent: 2,
       lineWidth: this.lineWidth,
+      customTags: [referenceTag],
     });
-    if (this.searchValue && this.replaceValue) {
-      const searchValueRegex = new RegExp(this.searchValue, "g");
-      yaml = yaml.replace(searchValueRegex, this.replaceValue);
-    }
 
     return [...(this.marker ? [`# ${this.marker}`] : []), "", yaml].join("\n");
   }
 }
+
+const referenceTag: YAML.CollectionTag = {
+  tag: "!reference",
+  collection: "seq",
+  identify: (v) => typeof v == "object" && v?.constructor.name == "Reference",
+  createNode(schema, v: any, _ctx) {
+    const ref = new YAML.YAMLSeq(schema);
+    if (typeof v == "object" && v?.constructor.name == "Reference") {
+      ref.items.push(...v.seq);
+    }
+    ref.flow = true;
+    return ref;
+  },
+};

@@ -407,7 +407,18 @@ test("does not render !reference in quotes", () => {
   // GIVEN
   const p = new TestProject({
     stale: true,
+    github: false,
   });
+  class Reference {
+    static to(...seq: string[]): string {
+      return new Reference(seq) as any;
+    }
+    public readonly seq: string[];
+    private constructor(seq: string[]) {
+      this.seq = seq;
+    }
+  }
+
   new CiConfiguration(p, "job-names", {
     jobs: {
       ".build": {
@@ -415,11 +426,17 @@ test("does not render !reference in quotes", () => {
       },
       test: {
         stage: "test",
-        script: ["!reference [.build, script]", "echo 'Testing the project'"],
+        script: [
+          Reference.to(".build", "script"),
+          "echo 'Testing the project'",
+        ],
       },
       release: {
         stage: "release",
-        script: ["!reference [.build, script]", "echo 'Releasing the project'"],
+        script: [
+          Reference.to(".build", "script"),
+          "echo 'Releasing the project'",
+        ],
       },
     },
   });
@@ -437,12 +454,12 @@ stages:
 test:
   stage: test
   script:
-    - !reference [.build, script]
+    - !reference [ .build, script ]
     - echo 'Testing the project'
 release:
   stage: release
   script:
-    - !reference [.build, script]
+    - !reference [ .build, script ]
     - echo 'Releasing the project'
 `
   );
