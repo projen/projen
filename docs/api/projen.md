@@ -12017,6 +12017,7 @@ const resolveOptions: ResolveOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.ResolveOptions.property.args">args</a></code> | <code>any[]</code> | Context arguments. |
+| <code><a href="#projen.ResolveOptions.property.keepObjects">keepObjects</a></code> | <code>boolean</code> | Omits empty arrays and objects. |
 | <code><a href="#projen.ResolveOptions.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Omits empty arrays and objects. |
 
 ---
@@ -12031,6 +12032,19 @@ public readonly args: any[];
 - *Default:* []
 
 Context arguments.
+
+---
+
+##### `keepObjects`<sup>Optional</sup> <a name="keepObjects" id="projen.ResolveOptions.property.keepObjects"></a>
+
+```typescript
+public readonly keepObjects: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Omits empty arrays and objects.
 
 ---
 

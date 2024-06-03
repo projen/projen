@@ -163,7 +163,7 @@ export class CiConfiguration extends Component {
     });
 
     // Register custom tags to the YAML file
-    this.file.useCustomTags([referenceTag]);
+    this.file._useCustomTags([referenceTag]);
 
     const defaults = options?.default;
     if (defaults) {

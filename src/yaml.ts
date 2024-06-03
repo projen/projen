@@ -74,7 +74,7 @@ export class YamlFile extends ObjectFile {
    * Adds additional tags to include in the schema.
    * @internal
    */
-  public useCustomTags(tags: YAML.Tags) {
+  public _useCustomTags(tags: YAML.Tags) {
     this.customTags.push(...tags);
   }
 }
