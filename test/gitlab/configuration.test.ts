@@ -320,8 +320,11 @@ test("adds correct entries for fallback-keys caching", () => {
     },
   });
   const snapshot = synthSnapshot(p);
+  const config = snapshot[".gitlab/ci-templates/foo.yml"];
+
   // THEN
-  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
+  expect(YAML.parse(config).default.cache[0]).toHaveProperty("fallback_keys");
+  expect(config).toMatchSnapshot();
 });
 
 test("does not snake job names", () => {

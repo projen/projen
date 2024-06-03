@@ -158,8 +158,6 @@ export class CiConfiguration extends Component {
       obj: () => this.renderCI(),
       // GitLab needs to read the file from the repository in order to work.
       committed: true,
-      // string replacement for !reference tags: https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags
-      // otherwise, it will be rendered in quotes and not be recognized by GitLab
     });
 
     // Register custom tags to the YAML file
@@ -394,12 +392,15 @@ export class CiConfiguration extends Component {
   }
 }
 /**
- * Is the object a struct-like object.
+ * Is the value a structure containing data like a struct or an array.
  * Notably this will reject objects with constructors.
  */
-function isStruct(obj: object) {
+function isDataStructure(obj: object) {
   return (
-    typeof obj === "object" && obj.constructor.name === "Object" && obj != null
+    Array.isArray(obj) ||
+    (typeof obj === "object" &&
+      obj != null &&
+      obj.constructor.name === "Object")
   );
 }
 
@@ -414,7 +415,7 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
 
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
-    if (isStruct(v) && !["idTokens", "variables"].includes(k)) {
+    if (isDataStructure(v) && !["idTokens", "variables"].includes(k)) {
       v = snakeCaseKeys(v);
     }
     result[skipTopLevel ? k : snake(k)] = v;
