@@ -10,18 +10,16 @@ export interface YamlFileOptions extends ObjectFileOptions {
   /**
    * Maximum line width (set to 0 to disable folding).
    *
-   * @default - 0
+   * @default 0 - (no line folding)
    */
   readonly lineWidth?: number;
+
   /**
-   * Search value for `String.replace()` on the resulting YAML.
-   * Will be converted to a regex with the `g` flag.
+   * The number of spaces to use when indenting code.
+   *
+   * @default 2
    */
-  readonly searchValue?: string;
-  /**
-   * Replace value for `String.replace()` on the resulting YAML.
-   */
-  readonly replaceValue?: string;
+  readonly indent?: number;
 }
 
 /**
@@ -31,7 +29,12 @@ export class YamlFile extends ObjectFile {
   /**
    * Maximum line width (set to 0 to disable folding).
    */
-  public lineWidth: number;
+  public readonly lineWidth: number;
+
+  /**
+   * The number of spaces to use when indenting code.
+   */
+  public readonly indent: number;
 
   /**
    * Array of additional tags to include in the schema.
@@ -42,6 +45,7 @@ export class YamlFile extends ObjectFile {
   constructor(scope: IConstruct, filePath: string, options: YamlFileOptions) {
     super(scope, filePath, options);
     this.lineWidth = options.lineWidth ?? 0;
+    this.indent = options.indent ?? 2;
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
@@ -62,7 +66,7 @@ export class YamlFile extends ObjectFile {
 
   protected stringifyContent(obj: object | undefined): string | undefined {
     let yaml = YAML.stringify(obj, {
-      indent: 2,
+      indent: this.indent,
       lineWidth: this.lineWidth,
       customTags: this.customTags,
     });
