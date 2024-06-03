@@ -1,5 +1,4 @@
 import { IConstruct } from "constructs";
-import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
 
 /**
