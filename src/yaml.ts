@@ -33,6 +33,12 @@ export class YamlFile extends ObjectFile {
    */
   public lineWidth: number;
 
+  /**
+   * Array of additional tags to include in the schema.
+   * @internal
+   */
+  private readonly customTags: YAML.Tags = [];
+
   constructor(scope: IConstruct, filePath: string, options: YamlFileOptions) {
     super(scope, filePath, options);
     this.lineWidth = options.lineWidth ?? 0;
@@ -41,6 +47,10 @@ export class YamlFile extends ObjectFile {
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const yamlResolver: IResolver = {
       resolve(value, options?): any {
+        // if (referenceTag.identify?.(value)) {
+        //   return value;
+        // }
+
         return resolver.resolve(value, {
           ...options,
           keepObjects: true,
@@ -54,23 +64,17 @@ export class YamlFile extends ObjectFile {
     let yaml = YAML.stringify(obj, {
       indent: 2,
       lineWidth: this.lineWidth,
-      customTags: [referenceTag],
+      customTags: this.customTags,
     });
 
     return [...(this.marker ? [`# ${this.marker}`] : []), "", yaml].join("\n");
   }
-}
 
-const referenceTag: YAML.CollectionTag = {
-  tag: "!reference",
-  collection: "seq",
-  identify: (v) => typeof v == "object" && v?.constructor.name == "Reference",
-  createNode(schema, v: any, _ctx) {
-    const ref = new YAML.YAMLSeq(schema);
-    if (typeof v == "object" && v?.constructor.name == "Reference") {
-      ref.items.push(...v.seq);
-    }
-    ref.flow = true;
-    return ref;
-  },
-};
+  /**
+   * Adds additional tags to include in the schema.
+   * @internal
+   */
+  public useCustomTags(tags: YAML.Tags) {
+    this.customTags.push(...tags);
+  }
+}

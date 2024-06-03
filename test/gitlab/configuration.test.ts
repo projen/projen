@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { CiConfiguration } from "../../src/gitlab";
+import { CiConfiguration, Reference } from "../../src/gitlab";
 import { synthSnapshot, TestProject } from "../util";
 
 test("throws when adding an existing service with same name and alias", () => {
@@ -409,15 +409,6 @@ test("does not render !reference in quotes", () => {
     stale: true,
     github: false,
   });
-  class Reference {
-    static to(...seq: string[]): string {
-      return new Reference(seq) as any;
-    }
-    public readonly seq: string[];
-    private constructor(seq: string[]) {
-      this.seq = seq;
-    }
-  }
 
   new CiConfiguration(p, "job-names", {
     jobs: {

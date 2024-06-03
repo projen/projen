@@ -1,5 +1,6 @@
-import * as path from "path";
+import { parse } from "path";
 import { snake } from "case";
+import * as YAML from "yaml";
 import {
   Artifacts,
   Cache,
@@ -148,7 +149,7 @@ export class CiConfiguration extends Component {
     options?: CiConfigurationOptions
   ) {
     super(project);
-    this.name = path.parse(name).name;
+    this.name = parse(name).name;
     this.path =
       this.name === "gitlab-ci"
         ? ".gitlab-ci.yml"
@@ -160,6 +161,10 @@ export class CiConfiguration extends Component {
       // string replacement for !reference tags: https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags
       // otherwise, it will be rendered in quotes and not be recognized by GitLab
     });
+
+    // Register custom tags to the YAML file
+    this.file.useCustomTags([referenceTag]);
+
     const defaults = options?.default;
     if (defaults) {
       this.defaultAfterScript.push(...(defaults.afterScript ?? []));
@@ -416,3 +421,35 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
   }
   return result as any;
 }
+
+export class Reference {
+  /**
+   * Select keyword configuration from other job sections and reuse it in the current section.
+   * @see https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags
+   */
+  static to(...location: string[]): string {
+    return new Reference(location) as any;
+  }
+  /**
+   * The location that is referenced.
+   */
+  public readonly location: string[];
+
+  private constructor(seq: string[]) {
+    this.location = seq;
+  }
+}
+
+const referenceTag: YAML.CollectionTag = {
+  tag: "!reference",
+  collection: "seq",
+  identify: (value) => value instanceof Reference,
+  createNode(schema, value: any, _ctx) {
+    const ref = new YAML.YAMLSeq(schema);
+    if (value instanceof Reference) {
+      ref.items.push(...value.location);
+    }
+    ref.flow = true;
+    return ref;
+  },
+};
