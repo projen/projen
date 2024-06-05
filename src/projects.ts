@@ -1,6 +1,5 @@
 import { EOL } from "os";
 import * as path from "path";
-import * as util from "util";
 import * as vm from "vm";
 import { resolveProjectType } from "./inventory";
 import { renderJavaScriptOptions } from "./javascript/render-options";
