@@ -1148,14 +1148,14 @@ ajv@^6.12.4:
     uri-js "^4.2.2"
 
 ajv@^8.13.0:
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.15.0.tgz#d918c661e3e820bbbc65a320e182ee56a1aa978a"
-  integrity sha512-15BTtQUOsSrmHCy+B4VnAiJAJxJ8IFgu6fcjFQF3jQYZ78nLSQthlFg4ehp+NLIyfvFgOlxNsjKIEhydtFPVHQ==
+  version "8.16.0"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.16.0.tgz#22e2a92b94f005f7e0f9c9d39652ef0b8f6f0cb4"
+  integrity sha512-F0twR8U1ZU67JIEtekUcLkXkoO5mMMmgGD8sK/xUFzJ805jxHQl92hImFAqqXMyMYjSPOyUPAwHYhB72g5sTXw==
   dependencies:
     fast-deep-equal "^3.1.3"
-    fast-uri "^2.3.0"
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
+    uri-js "^4.4.1"
 
 all-contributors-cli@^6.26.1:
   version "6.26.1"
@@ -2079,9 +2079,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.668:
-  version "1.4.788"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.788.tgz#a3545959d5cfa0a266d3e551386c040be34e7e06"
-  integrity sha512-ubp5+Ev/VV8KuRoWnfP2QF2Bg+O2ZFdb49DiiNbz2VmgkIqrnyYaqIOqj8A6K/3p1xV0QcU5hBQ1+BmB6ot1OA==
+  version "1.4.789"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.789.tgz#fec941cb753ee139da562a5a8ff31fc3e828b411"
+  integrity sha512-0VbyiaXoT++Fi2vHGo2ThOeS6X3vgRCWrjPeO2FeIAWL6ItiSJ9BqlH8LfCXe3X1IdcG+S0iLoNaxQWhfZoGzQ==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -2482,11 +2482,6 @@ fast-levenshtein@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==
-
-fast-uri@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-2.3.0.tgz#bdae493942483d299e7285dcb4627767d42e2793"
-  integrity sha512-eel5UKGn369gGEWOqBShmFJWfq/xSJvsgDzgLYC845GneayWvXBf0lJCBn5qTABfewy1ZDPoaR5OZCP+kssfuw==
 
 fastq@^1.6.0:
   version "1.17.1"
@@ -3644,10 +3639,10 @@ jsii-diff@^1.99.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.4.12:
-  version "10.4.12"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.4.12.tgz#875a46c074599ac1bd9f45e5c809dce4a793447c"
-  integrity sha512-8/y4DE7Uen2MuT8dEmRJpOjvdFEErk3LKQgSr9NlhsoqmETBf539lO13in5WvONoDXzSo/JekoechXIQVHVJZg==
+jsii-docgen@^10.4.13:
+  version "10.4.13"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.4.13.tgz#1d9c3512f0f61c474ae14a6ed0983827351c81e5"
+  integrity sha512-3VsknAxbqgGz7mlnG5rD8HTQQ+DfUTrYEERblfhRMEMbC4EQluGgSj+g/FNgjL9hn8OYvzqqgm9Ph1qCa1Cl9Q==
   dependencies:
     "@jsii/spec" "^1.99.0"
     case "^1.6.3"
@@ -5367,9 +5362,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.5.0-dev.20240603"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240603.tgz#a1b7311df5039a8abbaaa2213c21cac6ec547490"
-  integrity sha512-gdm3Sh1A+Pjj9ZlfBEJY3o2rs3tvpcSbu3vYqcCijMe09BePQBtZlsuShuPn+zCnP+qBLxdKjFiw5v1tkna3tA==
+  version "5.6.0-dev.20240604"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240604.tgz#fbd76239289315304a05cf03a425e75085cbbec1"
+  integrity sha512-uwpkMy5U51ERVvVtQmDZwjYllREGrqP35JcdR5yWIoZ7ZE2I1oDsDs3mtLiiiccyHspCZ54Z741ibuP3NbACtg==
 
 uglify-js@^3.1.4:
   version "3.17.4"
@@ -5409,7 +5404,7 @@ update-browserslist-db@^1.0.13:
     escalade "^3.1.2"
     picocolors "^1.0.1"
 
-uri-js@^4.2.2:
+uri-js@^4.2.2, uri-js@^4.4.1:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-4.4.1.tgz#9b1a52595225859e55f669d928f88c6c57f2a77e"
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
