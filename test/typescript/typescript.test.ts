@@ -404,6 +404,20 @@ describe("jestConfig", () => {
         tsconfig: "bar",
       });
     });
+
+    test("matches tests in test, src, and projenrc folders by default", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+      });
+      const snapshot = synthSnapshot(prj);
+      const jestConfig = snapshot["package.json"].jest;
+
+      expect(jestConfig.testMatch).toEqual([
+        "<rootDir>/@(src|test|projenrc)/**/__tests__/**/*.ts?(x)",
+        "<rootDir>/@(src|test|projenrc)/**/*(*.)@(spec|test).ts?(x)",
+      ]);
+    });
   });
 
   describe("Legacy", () => {

@@ -1393,8 +1393,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       ],
       "testMatch": [
-        "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(src|test|projenrc)/**/__tests__/**/*.ts?(x)",
+        "<rootDir>/@(src|test|projenrc)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
