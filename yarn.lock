@@ -1495,9 +1495,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001587:
-  version "1.0.30001628"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001628.tgz#90b6cd85ddc2e9f831de0225f4ca5a130c8d8222"
-  integrity sha512-S3BnR4Kh26TBxbi5t5kpbcUlLJb9lhtDXISDPwOfI+JoC+ik0QksvkZtUVyikw3hjnkgkMPSJ8oIM9yMm9vflA==
+  version "1.0.30001629"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001629.tgz#907a36f4669031bd8a1a8dbc2fa08b29e0db297e"
+  integrity sha512-c3dl911slnQhmxUIT4HhYzT7wnBK/XYpGnYLOj4nJBaRiw52Ibe7YxlDaAeRECvA786zCuExhxIUJ2K7nHMrBw==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2083,9 +2083,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.668:
-  version "1.4.790"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.790.tgz#2a3a5509593745c5d65d8acd66b308f2a25da041"
-  integrity sha512-eVGeQxpaBYbomDBa/Mehrs28MdvCXfJmEFzaMFsv8jH/MJDLIylJN81eTJ5kvx7B7p18OiPK0BkC06lydEy63A==
+  version "1.4.793"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.793.tgz#7536a58ab166fb399683e837d5e1ae5f5f593e2a"
+  integrity sha512-eGGzOCtlwNLVoMgOAXKLvesX6X7HM/KMJ+3x/yjcCBbZfpFhQvZUFvhnHxJT3jHJ8RpstR5npd0krWLPTCoh0g==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5366,9 +5366,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.6.0-dev.20240605"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240605.tgz#da0175383eb38829771b81ac62cf3c028fd3c0e5"
-  integrity sha512-T6LUM8t7yOOvOZSJ1CX+yG6u2ijKRPzhICi3GMv5hA4wWQz/fd54zkZLABkSH67DAHIJUFDtDAEt98Hnd30RJg==
+  version "5.6.0-dev.20240606"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240606.tgz#2305c0fafb700558f9053173d623493a7874cbf2"
+  integrity sha512-q7dle76No7lsX4VV/pRjSFZOlCqaOwJaVW0AS9PWKr9rLsxTHPuUC9EmGiiERQnODfh/c2gN+wiNK525JOtemw==
 
 uglify-js@^3.1.4:
   version "3.17.4"
