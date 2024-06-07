@@ -925,6 +925,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.cdkDeps">cdkDeps</a></code> | <code><a href="#projen.awscdk.AwsCdkDeps">AwsCdkDeps</a></code> | *No description.* |
@@ -1656,6 +1657,16 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
+
+---
+
+##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.awscdk.AwsCdkConstructLibrary.property.projenrcTs"></a>
+
+```typescript
+public readonly projenrcTs: Projenrc;
+```
+
+- *Type:* projen.typescript.Projenrc
 
 ---
 
@@ -5596,6 +5607,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.appEntrypoint">appEntrypoint</a></code> | <code>string</code> | The CDK app entrypoint. |
@@ -6329,6 +6341,16 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
+
+---
+
+##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.awscdk.AwsCdkTypeScriptApp.property.projenrcTs"></a>
+
+```typescript
+public readonly projenrcTs: Projenrc;
+```
+
+- *Type:* projen.typescript.Projenrc
 
 ---
 
@@ -7683,6 +7705,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.cdkDeps">cdkDeps</a></code> | <code><a href="#projen.awscdk.AwsCdkDeps">AwsCdkDeps</a></code> | *No description.* |
@@ -8524,6 +8547,18 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
+
+---
+
+##### ~~`projenrcTs`~~<sup>Optional</sup> <a name="projenrcTs" id="projen.awscdk.ConstructLibraryAws.property.projenrcTs"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibrary`
+
+```typescript
+public readonly projenrcTs: Projenrc;
+```
+
+- *Type:* projen.typescript.Projenrc
 
 ---
 

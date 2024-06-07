@@ -2252,6 +2252,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.appEntrypoint">appEntrypoint</a></code> | <code>string</code> | The CDK8s app entrypoint. |
@@ -2982,6 +2983,16 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
+
+---
+
+##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.cdk8s.Cdk8sTypeScriptApp.property.projenrcTs"></a>
+
+```typescript
+public readonly projenrcTs: Projenrc;
+```
+
+- *Type:* projen.typescript.Projenrc
 
 ---
 
@@ -3783,6 +3794,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.cdk8sVersion">cdk8sVersion</a></code> | <code>string</code> | The CDK8s version this app is using. |
@@ -4513,6 +4525,16 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
+
+---
+
+##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.cdk8s.ConstructLibraryCdk8s.property.projenrcTs"></a>
+
+```typescript
+public readonly projenrcTs: Projenrc;
+```
+
+- *Type:* projen.typescript.Projenrc
 
 ---
 
