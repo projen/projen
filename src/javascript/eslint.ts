@@ -26,7 +26,6 @@ export interface EslintOptions {
    * @default []
    */
   readonly devdirs?: string[];
-
   /**
    * File types that should be linted (e.g. [ ".js", ".ts" ])
    * @default [".ts"]
@@ -61,6 +60,15 @@ export interface EslintOptions {
    * @default false
    */
   readonly prettier?: boolean;
+
+  /**
+   * The extends array in eslint is order dependent.
+   * Setting this option true will make a best effort to properly sort the extends array
+   * according to ESLint best practices.
+   *
+   * @default true
+   */
+  readonly sortExtends?: boolean;
 
   /**
    * Enable import alias for module paths
@@ -381,7 +389,8 @@ export class Eslint extends Component {
         sourceType: "module",
         project: tsconfig,
       },
-      extends: this._extends,
+      extends: () =>
+        this.sortExtendsArray(options.sortExtends ?? true, this._extends),
       settings: {
         "import/parsers": {
           "@typescript-eslint/parser": [".ts", ".tsx"],
@@ -566,5 +575,37 @@ export class Eslint extends Component {
     return {
       receiveArgs: true,
     };
+  }
+
+  /**
+   * The extends array in eslint is order dependent and this method will sort the extends array if needed.
+   *
+   * @param shouldSortExtends Whether or not to sort the extends array
+   * @param extendsSet The Set of extends to sort
+   * @returns Either the original extends array or a sorted version of it
+   */
+  private sortExtendsArray(
+    shouldSortExtends: boolean,
+    extendsSet: Set<string>
+  ): string[] {
+    if (!shouldSortExtends) {
+      return Array.from(extendsSet);
+    }
+
+    const extendsPinnedToEndInSortOrder = [
+      "plugin:prettier/recommended",
+      "prettier",
+    ];
+
+    const extendsArray = Array.from(extendsSet);
+
+    return [
+      ...extendsArray.filter(
+        (extendsItem) => !extendsPinnedToEndInSortOrder.includes(extendsItem)
+      ),
+      ...extendsPinnedToEndInSortOrder.filter((extendsItem) =>
+        extendsArray.includes(extendsItem)
+      ),
+    ];
   }
 }

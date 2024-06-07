@@ -5722,6 +5722,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRc">lintProjenRc</a></code> | <code>boolean</code> | Should we lint .projenrc.js. |
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRcFile">lintProjenRcFile</a></code> | <code>string</code> | Projenrc file to lint. |
 | <code><a href="#projen.javascript.EslintOptions.property.prettier">prettier</a></code> | <code>boolean</code> | Enable prettier for code formatting. |
+| <code><a href="#projen.javascript.EslintOptions.property.sortExtends">sortExtends</a></code> | <code>boolean</code> | The extends array in eslint is order dependent. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsAlwaysTryTypes">tsAlwaysTryTypes</a></code> | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to `tsconfig.json` which should be used by eslint. |
 | <code><a href="#projen.javascript.EslintOptions.property.yaml">yaml</a></code> | <code>boolean</code> | Write eslint configuration as YAML instead of JSON. |
@@ -5849,6 +5850,22 @@ public readonly prettier: boolean;
 - *Default:* false
 
 Enable prettier for code formatting.
+
+---
+
+##### `sortExtends`<sup>Optional</sup> <a name="sortExtends" id="projen.javascript.EslintOptions.property.sortExtends"></a>
+
+```typescript
+public readonly sortExtends: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+The extends array in eslint is order dependent.
+
+Setting this option true will make a best effort to properly sort the extends array
+according to ESLint best practices.
 
 ---
 

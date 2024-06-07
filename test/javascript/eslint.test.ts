@@ -104,16 +104,44 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
   });
 
   // WHEN
-  new Eslint(project, {
+  const eslint = new Eslint(project, {
     dirs: ["src"],
     lintProjenRc: false,
   });
 
+  eslint.addExtends("plugin:some-plugin/recommended");
+
   // THEN
   const output = synthSnapshot(project);
-  expect(output[".eslintrc.json"].extends).toContain(
+  // Prettier should be last in the extends array
+  expect(output[".eslintrc.json"].extends.at(-1)).toEqual(
     "plugin:prettier/recommended"
   );
+});
+
+test("settings sortExtends to false should leave the extends array order alone", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    lintProjenRc: false,
+    sortExtends: false,
+  });
+
+  eslint.addExtends("plugin:some-plugin/recommended");
+
+  // THEN
+  const output = synthSnapshot(project);
+
+  const extendsArray = output[".eslintrc.json"].extends;
+  expect(extendsArray.at(-1)).toEqual("plugin:some-plugin/recommended");
+  expect(extendsArray).toContain("plugin:prettier/recommended");
 });
 
 test("can output yml instead of json", () => {
