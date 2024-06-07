@@ -283,7 +283,7 @@ export class Eslint extends Component {
       ],
 
       // Cannot import from the same module twice
-      "no-duplicate-imports": ["error"],
+      "import/no-duplicates": ["error"],
 
       // Cannot shadow names
       "no-shadow": ["off"],

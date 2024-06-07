@@ -172,7 +172,7 @@ exports[`cdk-watchful 1`] = `
         }
       }
     ],
-    "no-duplicate-imports": [
+    "import/no-duplicates": [
       "error"
     ],
     "no-shadow": [
@@ -1699,7 +1699,7 @@ exports[`cdk8s 1`] = `
         }
       }
     ],
-    "no-duplicate-imports": [
+    "import/no-duplicates": [
       "error"
     ],
     "no-shadow": [
@@ -2896,7 +2896,7 @@ exports[`cdk8s-cli 1`] = `
         }
       }
     ],
-    "no-duplicate-imports": [
+    "import/no-duplicates": [
       "error"
     ],
     "no-shadow": [
