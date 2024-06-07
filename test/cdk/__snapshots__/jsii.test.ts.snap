@@ -110,6 +110,9 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
       "dot-notation": [
         "error",
       ],
+      "import/no-duplicates": [
+        "error",
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -158,9 +161,6 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
         },
       ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-duplicate-imports": [
         "error",
       ],
       "no-multi-spaces": [

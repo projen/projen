@@ -709,8 +709,8 @@ export class TypescriptConfigExtends {
 export class TypescriptConfig extends Component {
   private _extends: TypescriptConfigExtends;
   public readonly compilerOptions?: TypeScriptCompilerOptions;
-  public readonly include: string[];
-  public readonly exclude: string[];
+  private readonly includeSet: Set<string>;
+  private readonly excludeSet: Set<string>;
   public readonly fileName: string;
   public readonly file: JsonFile;
 
@@ -725,8 +725,12 @@ export class TypescriptConfig extends Component {
     }
 
     this._extends = options.extends ?? TypescriptConfigExtends.fromPaths([]);
-    this.include = options.include ?? ["**/*.ts"];
-    this.exclude = options.exclude ?? ["node_modules"];
+    this.includeSet = options.include
+      ? new Set(options.include)
+      : new Set(["**/*.ts"]);
+    this.excludeSet = options.exclude
+      ? new Set(options.exclude)
+      : new Set(["node_modules"]);
     this.fileName = fileName;
 
     this.compilerOptions = options.compilerOptions;
@@ -744,6 +748,14 @@ export class TypescriptConfig extends Component {
     if (project instanceof NodeProject) {
       project.npmignore?.exclude(`/${fileName}`);
     }
+  }
+
+  public get include(): string[] {
+    return [...this.includeSet];
+  }
+
+  public get exclude(): string[] {
+    return [...this.excludeSet];
   }
 
   /**
@@ -838,12 +850,50 @@ export class TypescriptConfig extends Component {
     ]);
   }
 
+  /**
+   * Add an include pattern to the `include` array of the TSConfig.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#include
+   *
+   * @param pattern The pattern to add.
+   */
   public addInclude(pattern: string) {
     this.include.push(pattern);
+    this.includeSet.add(pattern);
   }
 
+  /**
+   * Add an exclude pattern to the `exclude` array of the TSConfig.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#exclude
+   *
+   * @param pattern The pattern to add.
+   */
   public addExclude(pattern: string) {
     this.exclude.push(pattern);
+    this.excludeSet.add(pattern);
+  }
+
+  /**
+   * Remove an include pattern from the `include` array of the TSConfig.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#include
+   *
+   * @param pattern The pattern to remove.
+   */
+  public removeInclude(pattern: string) {
+    this.includeSet.delete(pattern);
+  }
+
+  /**
+   * Remove an exclude pattern from the `exclude` array of the TSConfig.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#exclude
+   *
+   * @param pattern The pattern to remove.
+   */
+  public removeExclude(pattern: string) {
+    this.excludeSet.delete(pattern);
   }
 
   preSynthesize() {
