@@ -204,6 +204,23 @@ describe("environment variables", () => {
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
   });
+
+  test("spawn env params are respected", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const spawnee = p.addTask("test:env:spawn", {
+      exec: "echo ${VALUE}",
+      env: { VALUE: "bar" },
+    });
+
+    const spawner = p.addTask("test:env:spawner");
+    spawner.spawn(spawnee, { env: { VALUE: "foo" } });
+
+    // THEN
+    expect(executeTask(p, "test:env:spawner")).toEqual(["foo"]);
+  });
 });
 
 describe("task condition", () => {
