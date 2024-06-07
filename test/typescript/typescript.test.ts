@@ -405,7 +405,7 @@ describe("jestConfig", () => {
       });
     });
 
-    test("matches tests in test, src, and projenrc folders by default", () => {
+    test("matches tests in test, src, and projenrc folders by default when projenrcTs is true", () => {
       const prj = new TypeScriptProject({
         defaultReleaseBranch: "main",
         name: "test",
