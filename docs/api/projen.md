@@ -15255,7 +15255,7 @@ new TaskRuntime(workdir: string)
 ##### `runTask` <a name="runTask" id="projen.TaskRuntime.runTask"></a>
 
 ```typescript
-public runTask(name: string, parents?: string[], args?: string | number[]): void
+public runTask(name: string, parents?: string[], args?: string | number[], env?: {[ key: string ]: string}): void
 ```
 
 Runs the task.
@@ -15277,6 +15277,12 @@ The task name.
 ###### `args`<sup>Optional</sup> <a name="args" id="projen.TaskRuntime.runTask.parameter.args"></a>
 
 - *Type:* string | number[]
+
+---
+
+###### `env`<sup>Optional</sup> <a name="env" id="projen.TaskRuntime.runTask.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
 
 ---
 
