@@ -88,7 +88,7 @@ export class Version extends Component {
       this.releaseTagFileName
     );
 
-    const env: Record<string, string> = {
+    const commonEnv: Record<string, string> = {
       OUTFILE: versionInputFile,
       CHANGELOG: changelogFile,
       BUMPFILE: bumpFile,
@@ -99,21 +99,21 @@ export class Version extends Component {
     };
 
     if (options.releasableCommits) {
-      env.RELEASABLE_COMMITS = options.releasableCommits.cmd;
+      commonEnv.RELEASABLE_COMMITS = options.releasableCommits.cmd;
     }
 
     this.bumpTask = project.addTask("bump", {
       description:
         "Bumps version based on latest git tag and generates a changelog entry",
       condition: changesSinceLastRelease,
-      env: env,
+      env: { ...commonEnv },
     });
 
     this.bumpTask.builtin("release/bump-version");
 
     this.unbumpTask = project.addTask("unbump", {
       description: "Restores version to 0.0.0",
-      env: env,
+      env: { ...commonEnv },
     });
 
     this.unbumpTask.builtin("release/reset-version");
