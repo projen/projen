@@ -89,7 +89,7 @@ class RunTask {
     private readonly task: TaskSpec,
     parents: string[] = [],
     args: Array<string | number> = [],
-    env: { [name: string]: string } = {}
+    envParam: { [name: string]: string } = {}
   ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
 
@@ -100,7 +100,7 @@ class RunTask {
       return;
     }
 
-    this.env = this.resolveEnvironment(env, parents);
+    this.env = this.resolveEnvironment(envParam, parents);
 
     const envlogs = [];
     for (const [k, v] of Object.entries(this.env)) {
