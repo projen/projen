@@ -4052,9 +4052,11 @@ new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptio
 | <code><a href="#projen.javascript.TypescriptConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.javascript.TypescriptConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.TypescriptConfig.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.javascript.TypescriptConfig.addExclude">addExclude</a></code> | *No description.* |
+| <code><a href="#projen.javascript.TypescriptConfig.addExclude">addExclude</a></code> | Add an exclude pattern to the `exclude` array of the TSConfig. |
 | <code><a href="#projen.javascript.TypescriptConfig.addExtends">addExtends</a></code> | Extend from base `TypescriptConfig` instance. |
-| <code><a href="#projen.javascript.TypescriptConfig.addInclude">addInclude</a></code> | *No description.* |
+| <code><a href="#projen.javascript.TypescriptConfig.addInclude">addInclude</a></code> | Add an include pattern to the `include` array of the TSConfig. |
+| <code><a href="#projen.javascript.TypescriptConfig.removeExclude">removeExclude</a></code> | Remove an exclude pattern from the `exclude` array of the TSConfig. |
+| <code><a href="#projen.javascript.TypescriptConfig.removeInclude">removeInclude</a></code> | Remove an include pattern from the `include` array of the TSConfig. |
 | <code><a href="#projen.javascript.TypescriptConfig.resolveExtendsPath">resolveExtendsPath</a></code> | Resolve valid TypeScript extends paths relative to this config. |
 
 ---
@@ -4099,9 +4101,15 @@ Synthesizes files to the project output directory.
 public addExclude(pattern: string): void
 ```
 
+Add an exclude pattern to the `exclude` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#exclude](https://www.typescriptlang.org/tsconfig#exclude)
+
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.addExclude.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to add.
 
 ---
 
@@ -4127,9 +4135,51 @@ Base `TypescriptConfig` instance.
 public addInclude(pattern: string): void
 ```
 
+Add an include pattern to the `include` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#include](https://www.typescriptlang.org/tsconfig#include)
+
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.addInclude.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to add.
+
+---
+
+##### `removeExclude` <a name="removeExclude" id="projen.javascript.TypescriptConfig.removeExclude"></a>
+
+```typescript
+public removeExclude(pattern: string): void
+```
+
+Remove an exclude pattern from the `exclude` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#exclude](https://www.typescriptlang.org/tsconfig#exclude)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.removeExclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to remove.
+
+---
+
+##### `removeInclude` <a name="removeInclude" id="projen.javascript.TypescriptConfig.removeInclude"></a>
+
+```typescript
+public removeInclude(pattern: string): void
+```
+
+Remove an include pattern from the `include` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#include](https://www.typescriptlang.org/tsconfig#include)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.removeInclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to remove.
 
 ---
 
