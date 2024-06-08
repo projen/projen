@@ -307,7 +307,7 @@ function renderCommentedOptionsInOrder(
     result.push(
       `${TAB}${paramRender}${makePadding(
         marginSize - paramRender.length + 2
-      )}/* ${docstring} */`
+      )}/* ${docstring.replace(/\r?\n/g, " ")} */`
     );
   }
   return result;
