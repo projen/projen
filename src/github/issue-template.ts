@@ -1,5 +1,6 @@
 import * as path from "path";
-import { GitHub } from "./github";
+import { IConstruct } from "constructs";
+import * as YAML from "yaml";
 import { Component } from "../component";
 import { TextFile } from "../textfile";
 import { YamlFile } from "../yaml";
@@ -59,12 +60,6 @@ export interface IssueTemplateOptions {
   readonly templatePath?: string;
 
   /**
-   * Whether to include a config.yml file for configuring the issue template chooser.
-   * Defaults to false.
-   */
-  readonly includeConfig?: boolean;
-
-  /**
    * Configuration options for the config.yml file.
    * Only applicable if includeConfig is true.
    */
@@ -76,40 +71,15 @@ export interface IssueTemplateOptions {
  * see  {@link https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests}
  */
 export class IssueTemplate extends Component {
-  constructor(github: GitHub, options: IssueTemplateOptions) {
-    super(github.project);
-    const project = github.project;
-
-    const templatePath = options.templatePath || ".github/ISSUE_TEMPLATE";
+  constructor(scope: IConstruct, options: IssueTemplateOptions) {
+    super(scope);
+    const project = this.project;
 
     // Create issue template files
-    for (const [fileName, content] of Object.entries(options.templates)) {
-      const filePath = path.join(templatePath, fileName);
-      const fileExtension = path.extname(fileName).toLowerCase();
-      switch (fileExtension) {
-        case ".md":
-          new TextFile(project, filePath, {
-            lines: [content],
-            marker: false,
-            committed: true,
-          });
-          break;
-        case ".yml":
-          new YamlFile(project, filePath, {
-            obj: content,
-            marker: false,
-            committed: true,
-          });
-          break;
-        default:
-          throw new Error(`Unsupported file extension: ${fileExtension}`);
-      }
-    }
-
-    const includeConfig = options.includeConfig ?? false;
+    this.addTemplates(options);
 
     // Create config.yml file if requested
-    if (includeConfig) {
+    if (options.configOptions) {
       const blankIssues = options.configOptions?.blankIssuesEnabled;
       const contactLinks = options.configOptions?.contactLinks;
 
@@ -121,6 +91,40 @@ export class IssueTemplate extends Component {
         marker: false,
         committed: true,
       });
+    }
+  }
+
+  /**
+   * Adds issue templates to the project.
+   *
+   * @param options - The options for adding issue templates.
+   *
+   * @throws {Error} If an unsupported file extension is encountered.
+   */
+  public addTemplates(options: IssueTemplateOptions) {
+    const templatePath = ".github/ISSUE_TEMPLATE";
+
+    for (const [fileName, content] of Object.entries(options.templates)) {
+      const filePath = path.join(templatePath, fileName);
+      const fileExtension = path.extname(fileName).toLowerCase();
+      switch (fileExtension) {
+        case ".md":
+          new TextFile(this.project, filePath, {
+            lines: [content],
+            marker: false,
+            committed: true,
+          });
+          break;
+        case ".yml":
+          new YamlFile(this.project, filePath, {
+            obj: YAML.parse(content),
+            marker: false,
+            committed: true,
+          });
+          break;
+        default:
+          throw new Error(`Unsupported file extension: ${fileExtension}`);
+      }
     }
   }
 }

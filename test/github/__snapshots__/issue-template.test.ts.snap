@@ -14,6 +14,12 @@ exports[`issue-template includes bug-report.md 1`] = `"<!-- Bug report template 
 
 exports[`issue-template includes feature-request.yml 1`] = `
 "
-<!-- Feature request template content -->
+name: Feature Request
+description: Suggest a new feature for the project
+title: "[FEATURE] "
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this feature request
 "
 `;

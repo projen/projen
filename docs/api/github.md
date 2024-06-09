@@ -2358,19 +2358,19 @@ Generates Issue Templates for GitHub repositories see  {@link https://docs.githu
 ```typescript
 import { github } from 'projen'
 
-new github.IssueTemplate(github: GitHub, options: IssueTemplateOptions)
+new github.IssueTemplate(scope: IConstruct, options: IssueTemplateOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.IssueTemplate.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
+| <code><a href="#projen.github.IssueTemplate.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.github.IssueTemplate.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.IssueTemplateOptions">IssueTemplateOptions</a></code> | *No description.* |
 
 ---
 
-##### `github`<sup>Required</sup> <a name="github" id="projen.github.IssueTemplate.Initializer.parameter.github"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.github.IssueTemplate.Initializer.parameter.scope"></a>
 
-- *Type:* <a href="#projen.github.GitHub">GitHub</a>
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -2388,6 +2388,7 @@ new github.IssueTemplate(github: GitHub, options: IssueTemplateOptions)
 | <code><a href="#projen.github.IssueTemplate.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.IssueTemplate.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.github.IssueTemplate.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.github.IssueTemplate.addTemplates">addTemplates</a></code> | Adds issue templates to the project. |
 
 ---
 
@@ -2424,6 +2425,22 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `addTemplates` <a name="addTemplates" id="projen.github.IssueTemplate.addTemplates"></a>
+
+```typescript
+public addTemplates(options: IssueTemplateOptions): void
+```
+
+Adds issue templates to the project.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.github.IssueTemplate.addTemplates.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.IssueTemplateOptions">IssueTemplateOptions</a>
+
+The options for adding issue templates.
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -6678,7 +6695,6 @@ const issueTemplateOptions: github.IssueTemplateOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.IssueTemplateOptions.property.templates">templates</a></code> | <code>{[ key: string ]: string}</code> | An array of issue template file names and their contents. |
 | <code><a href="#projen.github.IssueTemplateOptions.property.configOptions">configOptions</a></code> | <code><a href="#projen.github.IssueTemplateConfigOptions">IssueTemplateConfigOptions</a></code> | Configuration options for the config.yml file. Only applicable if includeConfig is true. |
-| <code><a href="#projen.github.IssueTemplateOptions.property.includeConfig">includeConfig</a></code> | <code>boolean</code> | Whether to include a config.yml file for configuring the issue template chooser. Defaults to false. |
 | <code><a href="#projen.github.IssueTemplateOptions.property.templatePath">templatePath</a></code> | <code>string</code> | The path within the repository where the issue templates should be created. |
 
 ---
@@ -6706,18 +6722,6 @@ public readonly configOptions: IssueTemplateConfigOptions;
 - *Type:* <a href="#projen.github.IssueTemplateConfigOptions">IssueTemplateConfigOptions</a>
 
 Configuration options for the config.yml file. Only applicable if includeConfig is true.
-
----
-
-##### `includeConfig`<sup>Optional</sup> <a name="includeConfig" id="projen.github.IssueTemplateOptions.property.includeConfig"></a>
-
-```typescript
-public readonly includeConfig: boolean;
-```
-
-- *Type:* boolean
-
-Whether to include a config.yml file for configuring the issue template chooser. Defaults to false.
 
 ---
 
