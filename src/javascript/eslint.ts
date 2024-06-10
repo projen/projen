@@ -112,7 +112,7 @@ export interface EslintOverride {
   readonly excludedFiles?: string[];
 
   /**
-   * The overriden rules
+   * The overridden rules
    */
   readonly rules?: { [rule: string]: any };
 
@@ -137,7 +137,7 @@ export interface EslintOverride {
  */
 export class Eslint extends Component {
   /**
-   * Returns the singletone Eslint component of a project or undefined if there is none.
+   * Returns the singleton Eslint component of a project or undefined if there is none.
    */
   public static of(project: Project): Eslint | undefined {
     const isEslint = (c: Component): c is Eslint => c instanceof Eslint;
