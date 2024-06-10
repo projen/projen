@@ -678,6 +678,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.addSetupFileAfterEnv">addSetupFileAfterEnv</a></code> | Adds a a setup file to Jest's setupFilesAfterEnv configuration. |
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
+| <code><a href="#projen.javascript.Jest.addTestMatchesForRootDirs">addTestMatchesForRootDirs</a></code> | Adds the standard test match patterns for a directory. |
 | <code><a href="#projen.javascript.Jest.addWatchIgnorePattern">addWatchIgnorePattern</a></code> | Adds a watch ignore pattern. |
 
 ---
@@ -847,6 +848,24 @@ Adds a test match pattern.
 - *Type:* string
 
 glob pattern to match for tests.
+
+---
+
+##### `addTestMatchesForRootDirs` <a name="addTestMatchesForRootDirs" id="projen.javascript.Jest.addTestMatchesForRootDirs"></a>
+
+```typescript
+public addTestMatchesForRootDirs(dirs: string[]): void
+```
+
+Adds the standard test match patterns for a directory.
+
+(spec, test, __tests__, etc)
+
+###### `dirs`<sup>Required</sup> <a name="dirs" id="projen.javascript.Jest.addTestMatchesForRootDirs.parameter.dirs"></a>
+
+- *Type:* string[]
+
+The directories to add test matches for.
 
 ---
 

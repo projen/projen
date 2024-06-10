@@ -673,13 +673,13 @@ export class TypeScriptProject extends NodeProject {
       `ts-jest${jest.jestVersion}`
     );
 
-    const validTestRootDirs = [this.srcdir, this.testdir, "projenrc"];
+    const validTestRootDirs = [this.srcdir, this.testdir];
     const validTestRootDirsRegex = `@(${validTestRootDirs.join("|")})`;
     jest.addTestMatch(
-      `<rootDir>/${validTestRootDirsRegex}/**/__tests__/**/*.ts?(x)`
+      `<rootDir>/${validTestRootDirsRegex}/**/__tests__/**/*.[jt]s?(x)`
     );
     jest.addTestMatch(
-      `<rootDir>/${validTestRootDirsRegex}/**/*(*.)@(spec|test).ts?(x)`
+      `<rootDir>/${validTestRootDirsRegex}/**/?(*.)+(spec|test).[jt]s?(x)`
     );
 
     // Test for the ts-jest version that was requested;

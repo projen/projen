@@ -142,8 +142,8 @@
     ],
     "maxWorkers": "50%",
     "testMatch": [
-      "<rootDir>/@(src|test|projenrc)/**/__tests__/**/*.ts?(x)",
-      "<rootDir>/@(src|test|projenrc)/**/*(*.)@(spec|test).ts?(x)"
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
