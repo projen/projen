@@ -1,8 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
-import { Jest } from "./jest";
-import { NodeProject } from "./node-project";
 import { renderJavaScriptOptions } from "./render-options";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { Project } from "../project";

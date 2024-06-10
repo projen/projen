@@ -1,5 +1,6 @@
 import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
+import { Jest } from "../javascript/jest";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import { TypeScriptProject } from "../typescript";
@@ -94,6 +95,10 @@ export class Projenrc extends ProjenrcFile {
         "import/no-extraneous-dependencies": "off",
       },
     });
+
+    this._tsProject.jest?.addTestMatch(
+      ...Jest.buildTestMatchPatternsForDirs([this._projenCodeDir])
+    );
   }
 
   private generateProjenrc() {

@@ -219,15 +219,9 @@ test("addTestMatch() can be used to add patterns", () => {
 
 test("buildTestMatchPatternsForDirs() can be used to build test match patterns for directories", () => {
   // GIVEN
-  const project = new NodeProject({
-    outdir: mkdtemp(),
-    defaultReleaseBranch: "master",
-    name: "test",
-  });
-  const jest = new Jest(project, {});
 
   // WHEN
-  const testMatches = jest.buildTestMatchPatternsForDirs(["foo", "bar/baz"]);
+  const testMatches = Jest.buildTestMatchPatternsForDirs(["foo", "bar/baz"]);
 
   // THEN
   expect(testMatches).toStrictEqual([

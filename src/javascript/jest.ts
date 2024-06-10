@@ -663,6 +663,23 @@ export class Jest extends Component {
   }
 
   /**
+   * Build standard test match patterns for a directory.
+   * @param dirs The directories to add test matches for. Matches any folder if not specified.
+   * @returns The test match patterns.
+   */
+  public static buildTestMatchPatternsForDirs(dirs?: string[]): string[] {
+    if (dirs) {
+      return [
+        `<rootDir>/@(${dirs.join("|")})/**/?(*.)+(spec|test).[jt]s?(x)`,
+        `<rootDir>/@(${dirs.join("|")})/**/__tests__/**/*.[jt]s?(x)`,
+      ];
+    }
+
+    // Jest defaults
+    return ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"];
+  }
+
+  /**
    * Escape hatch.
    */
   readonly config: any;
@@ -728,7 +745,7 @@ export class Jest extends Component {
       "cobertura",
     ];
     this.testMatch =
-      this.jestConfig?.testMatch ?? this.buildTestMatchPatternsForDirs();
+      this.jestConfig?.testMatch ?? Jest.buildTestMatchPatternsForDirs();
 
     const coverageDirectory = this.jestConfig?.coverageDirectory ?? "coverage";
 
@@ -814,24 +831,6 @@ export class Jest extends Component {
   public addTestMatch(...patterns: string[]) {
     this.testMatch.push(...patterns);
   }
-
-  /**
-   * Build standard test match patterns for a directory.
-   * @param dirs The directories to add test matches for. Matches any folder if not specified.
-   * @returns The test match patterns.
-   */
-  public buildTestMatchPatternsForDirs(dirs?: string[]): string[] {
-    if (dirs) {
-      return [
-        `<rootDir>/@(${dirs.join("|")})/**/?(*.)+(spec|test).[jt]s?(x)`,
-        `<rootDir>/@(${dirs.join("|")})/**/__tests__/**/*.[jt]s?(x)`,
-      ];
-    }
-
-    // Jest defaults
-    return ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"];
-  }
-
   /**
    * Adds a watch ignore pattern.
    * @param pattern The pattern (regular expression).

@@ -62,3 +62,42 @@ test("adds .projenrc.ts to .gitignore DO NOT IGNORE and packageIgnore IGNORE", (
   expect(snapshot[".gitignore"]).toContain("!/.projenrc.ts"); // Don't ignore here
   expect(snapshot[".npmignore"]).toContain("/.projenrc.ts"); // Ignore here
 });
+
+test("adds default projencodedir to jest testMatch patterns", () => {
+  // GIVEN / WHEN
+  const prj = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    projenrcTs: true,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(prj);
+  const testMatch = snapshot["package.json"].jest.testMatch;
+  expect(testMatch).toContain(
+    "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)"
+  );
+  expect(testMatch).toContain(
+    "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)"
+  );
+});
+
+test("adds custom projencodedir to jest testMatch patterns", () => {
+  // GIVEN / WHEN
+  const prj = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    projenrcTs: true,
+    projenrcTsOptions: {
+      projenCodeDir: "foo",
+    },
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(prj);
+  const testMatch = snapshot["package.json"].jest.testMatch;
+  expect(testMatch).toContain(
+    "<rootDir>/@(foo)/**/?(*.)+(spec|test).[jt]s?(x)"
+  );
+  expect(testMatch).toContain("<rootDir>/@(foo)/**/__tests__/**/*.[jt]s?(x)");
+});
