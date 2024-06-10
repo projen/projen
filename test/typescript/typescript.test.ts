@@ -405,17 +405,20 @@ describe("jestConfig", () => {
       });
     });
 
-    test("matches tests in test, src, and projenrc folders by default when projenrcTs is true", () => {
+    test("sets testMatch to include src and test dirs by default", () => {
       const prj = new TypeScriptProject({
         defaultReleaseBranch: "main",
         name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {},
+        },
       });
       const snapshot = synthSnapshot(prj);
       const jestConfig = snapshot["package.json"].jest;
-
-      expect(jestConfig.testMatch).toEqual([
-        "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
+      expect(jestConfig.testMatch).toStrictEqual([
+        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
+        "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
       ]);
     });
   });

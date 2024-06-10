@@ -678,8 +678,8 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.addSetupFileAfterEnv">addSetupFileAfterEnv</a></code> | Adds a a setup file to Jest's setupFilesAfterEnv configuration. |
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
-| <code><a href="#projen.javascript.Jest.addTestMatchesForRootDirs">addTestMatchesForRootDirs</a></code> | Adds the standard test match patterns for a directory. |
 | <code><a href="#projen.javascript.Jest.addWatchIgnorePattern">addWatchIgnorePattern</a></code> | Adds a watch ignore pattern. |
+| <code><a href="#projen.javascript.Jest.buildTestMatchPatternsForDirs">buildTestMatchPatternsForDirs</a></code> | Build standard test match patterns for a directory. |
 
 ---
 
@@ -838,34 +838,16 @@ public addSnapshotResolver(file: string): void
 ##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.Jest.addTestMatch"></a>
 
 ```typescript
-public addTestMatch(pattern: string): void
+public addTestMatch(patterns: string): void
 ```
 
 Adds a test match pattern.
 
-###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Jest.addTestMatch.parameter.pattern"></a>
+###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.javascript.Jest.addTestMatch.parameter.patterns"></a>
 
 - *Type:* string
 
 glob pattern to match for tests.
-
----
-
-##### `addTestMatchesForRootDirs` <a name="addTestMatchesForRootDirs" id="projen.javascript.Jest.addTestMatchesForRootDirs"></a>
-
-```typescript
-public addTestMatchesForRootDirs(dirs: string[]): void
-```
-
-Adds the standard test match patterns for a directory.
-
-(spec, test, __tests__, etc)
-
-###### `dirs`<sup>Required</sup> <a name="dirs" id="projen.javascript.Jest.addTestMatchesForRootDirs.parameter.dirs"></a>
-
-- *Type:* string[]
-
-The directories to add test matches for.
 
 ---
 
@@ -882,6 +864,24 @@ Adds a watch ignore pattern.
 - *Type:* string
 
 The pattern (regular expression).
+
+---
+
+##### `buildTestMatchPatternsForDirs` <a name="buildTestMatchPatternsForDirs" id="projen.javascript.Jest.buildTestMatchPatternsForDirs"></a>
+
+```typescript
+public buildTestMatchPatternsForDirs(dirs?: string[]): string[]
+```
+
+Build standard test match patterns for a directory.
+
+###### `dirs`<sup>Optional</sup> <a name="dirs" id="projen.javascript.Jest.buildTestMatchPatternsForDirs.parameter.dirs"></a>
+
+- *Type:* string[]
+
+The directories to add test matches for.
+
+Matches any folder if not specified.
 
 ---
 

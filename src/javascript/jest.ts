@@ -727,10 +727,8 @@ export class Jest extends Component {
       "clover",
       "cobertura",
     ];
-    this.testMatch = this.jestConfig?.testMatch ?? [
-      "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).[tj]s?(x)",
-    ];
+    this.testMatch =
+      this.jestConfig?.testMatch ?? this.buildTestMatchPatternsForDirs();
 
     const coverageDirectory = this.jestConfig?.coverageDirectory ?? "coverage";
 
@@ -811,10 +809,27 @@ export class Jest extends Component {
 
   /**
    * Adds a test match pattern.
-   * @param pattern glob pattern to match for tests
+   * @param patterns glob pattern to match for tests
    */
-  public addTestMatch(pattern: string) {
-    this.testMatch.push(pattern);
+  public addTestMatch(...patterns: string[]) {
+    this.testMatch.push(...patterns);
+  }
+
+  /**
+   * Build standard test match patterns for a directory.
+   * @param dirs The directories to add test matches for. Matches any folder if not specified.
+   * @returns The test match patterns.
+   */
+  public buildTestMatchPatternsForDirs(dirs?: string[]): string[] {
+    if (dirs) {
+      return [
+        `<rootDir>/@(${dirs.join("|")})/**/?(*.)+(spec|test).[jt]s?(x)`,
+        `<rootDir>/@(${dirs.join("|")})/**/__tests__/**/*.[jt]s?(x)`,
+      ];
+    }
+
+    // Jest defaults
+    return ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"];
   }
 
   /**

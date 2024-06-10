@@ -623,7 +623,7 @@ export class TypeScriptProject extends NodeProject {
     const srctest = this.testdir;
 
     this.npmignore?.exclude(`/${libtest}/`);
-    jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
+    jest.addTestMatch(...jest.buildTestMatchPatternsForDirs([libtest]));
     jest.addWatchIgnorePattern(`/${this.srcdir}/`);
 
     const resolveSnapshotPath = (test: string, ext: string) => {
@@ -673,13 +673,8 @@ export class TypeScriptProject extends NodeProject {
       `ts-jest${jest.jestVersion}`
     );
 
-    const validTestRootDirs = [this.srcdir, this.testdir];
-    const validTestRootDirsRegex = `@(${validTestRootDirs.join("|")})`;
     jest.addTestMatch(
-      `<rootDir>/${validTestRootDirsRegex}/**/__tests__/**/*.[jt]s?(x)`
-    );
-    jest.addTestMatch(
-      `<rootDir>/${validTestRootDirsRegex}/**/?(*.)+(spec|test).[jt]s?(x)`
+      ...jest.buildTestMatchPatternsForDirs([this.srcdir, this.testdir])
     );
 
     // Test for the ts-jest version that was requested;

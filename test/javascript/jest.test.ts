@@ -192,7 +192,8 @@ test("testdir is under src", () => {
   // THEN
   const files = synthSnapshot(project);
   expect(files["package.json"].jest.testMatch).toStrictEqual([
-    "**/lib/boom/bam/__tests/**/?(*.)+(spec|test).js?(x)",
+    "<rootDir>/@(lib/boom/bam/__tests)/**/?(*.)+(spec|test).[jt]s?(x)",
+    "<rootDir>/@(lib/boom/bam/__tests)/**/__tests__/**/*.[jt]s?(x)",
   ]);
 });
 
@@ -213,6 +214,25 @@ test("addTestMatch() can be used to add patterns", () => {
   expect(synthSnapshot(project)["package.json"].jest.testMatch).toStrictEqual([
     "foo/**",
     "bar/baz/**",
+  ]);
+});
+
+test("buildTestMatchPatternsForDirs() can be used to build test match patterns for directories", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  const testMatches = jest.buildTestMatchPatternsForDirs(["foo", "bar/baz"]);
+
+  // THEN
+  expect(testMatches).toStrictEqual([
+    "<rootDir>/@(foo|bar/baz)/**/?(*.)+(spec|test).[jt]s?(x)",
+    "<rootDir>/@(foo|bar/baz)/**/__tests__/**/*.[jt]s?(x)",
   ]);
 });
 
