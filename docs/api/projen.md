@@ -15415,6 +15415,41 @@ the project to produce a snapshot for.
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
 
+### ICompareString <a name="ICompareString" id="projen.ICompareString"></a>
+
+- *Implemented By:* <a href="#projen.ICompareString">ICompareString</a>
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ICompareString.compare">compare</a></code> | *No description.* |
+
+---
+
+##### `compare` <a name="compare" id="projen.ICompareString.compare"></a>
+
+```typescript
+public compare(a: string, b: string): number
+```
+
+###### `a`<sup>Required</sup> <a name="a" id="projen.ICompareString.compare.parameter.a"></a>
+
+- *Type:* string
+
+The first string.
+
+---
+
+###### `b`<sup>Required</sup> <a name="b" id="projen.ICompareString.compare.parameter.b"></a>
+
+- *Type:* string
+
+The second string.
+
+---
+
+
 ### IDevEnvironment <a name="IDevEnvironment" id="projen.IDevEnvironment"></a>
 
 - *Implemented By:* projen.vscode.DevContainer, <a href="#projen.Gitpod">Gitpod</a>, projen.vscode.IDevContainerEnvironment, <a href="#projen.IDevEnvironment">IDevEnvironment</a>

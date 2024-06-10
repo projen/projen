@@ -119,7 +119,7 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
   );
 });
 
-test("settings sortExtends to false should leave the extends array order alone", () => {
+test("settings sortExtends to a meaningless comparer should leave the extends array order alone", () => {
   // GIVEN
   const project = new NodeProject({
     name: "test",
@@ -131,7 +131,9 @@ test("settings sortExtends to false should leave the extends array order alone",
   const eslint = new Eslint(project, {
     dirs: ["src"],
     lintProjenRc: false,
-    sortExtends: false,
+    sortExtends: {
+      compare: () => 0,
+    },
   });
 
   eslint.addExtends("plugin:some-plugin/recommended");
@@ -140,8 +142,44 @@ test("settings sortExtends to false should leave the extends array order alone",
   const output = synthSnapshot(project);
 
   const extendsArray = output[".eslintrc.json"].extends;
-  expect(extendsArray.at(-1)).toEqual("plugin:some-plugin/recommended");
-  expect(extendsArray).toContain("plugin:prettier/recommended");
+
+  expect(extendsArray).toEqual([
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "plugin:some-plugin/recommended",
+  ]);
+});
+
+test("settings sortExtends to a comparer should use that to sort the extends array", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    lintProjenRc: false,
+    sortExtends: {
+      // Backwards alphanumeric
+      compare: (a, b) => b.localeCompare(a),
+    },
+  });
+
+  eslint.addExtends("plugin:some-plugin/recommended");
+
+  // THEN
+  const output = synthSnapshot(project);
+
+  const extendsArray = output[".eslintrc.json"].extends;
+
+  expect(extendsArray).toEqual([
+    "plugin:some-plugin/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/typescript",
+  ]);
 });
 
 test("can output yml instead of json", () => {

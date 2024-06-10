@@ -448,7 +448,7 @@ glob pattern.
 | --- | --- |
 | <code><a href="#projen.javascript.Eslint.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.javascript.Eslint.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.javascript.Eslint.of">of</a></code> | Returns the singletone Eslint component of a project or undefined if there is none. |
+| <code><a href="#projen.javascript.Eslint.of">of</a></code> | Returns the singleton Eslint component of a project or undefined if there is none. |
 
 ---
 
@@ -508,7 +508,7 @@ import { javascript } from 'projen'
 javascript.Eslint.of(project: Project)
 ```
 
-Returns the singletone Eslint component of a project or undefined if there is none.
+Returns the singleton Eslint component of a project or undefined if there is none.
 
 ###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Eslint.of.parameter.project"></a>
 
@@ -5722,7 +5722,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRc">lintProjenRc</a></code> | <code>boolean</code> | Should we lint .projenrc.js. |
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRcFile">lintProjenRcFile</a></code> | <code>string</code> | Projenrc file to lint. |
 | <code><a href="#projen.javascript.EslintOptions.property.prettier">prettier</a></code> | <code>boolean</code> | Enable prettier for code formatting. |
-| <code><a href="#projen.javascript.EslintOptions.property.sortExtends">sortExtends</a></code> | <code>boolean</code> | The extends array in eslint is order dependent. |
+| <code><a href="#projen.javascript.EslintOptions.property.sortExtends">sortExtends</a></code> | <code>projen.ICompareString</code> | The extends array in eslint is order dependent. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsAlwaysTryTypes">tsAlwaysTryTypes</a></code> | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to `tsconfig.json` which should be used by eslint. |
 | <code><a href="#projen.javascript.EslintOptions.property.yaml">yaml</a></code> | <code>boolean</code> | Write eslint configuration as YAML instead of JSON. |
@@ -5856,16 +5856,15 @@ Enable prettier for code formatting.
 ##### `sortExtends`<sup>Optional</sup> <a name="sortExtends" id="projen.javascript.EslintOptions.property.sortExtends"></a>
 
 ```typescript
-public readonly sortExtends: boolean;
+public readonly sortExtends: ICompareString;
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* projen.ICompareString
+- *Default:* Use known ESLint best practices to place "prettier" plugins at the end of the array
 
 The extends array in eslint is order dependent.
 
-Setting this option true will make a best effort to properly sort the extends array
-according to ESLint best practices.
+This option allows to sort the extends array in any way seen fit.
 
 ---
 
@@ -5931,7 +5930,7 @@ const eslintOverride: javascript.EslintOverride = { ... }
 | <code><a href="#projen.javascript.EslintOverride.property.extends">extends</a></code> | <code>string[]</code> | Config(s) to extend in this override. |
 | <code><a href="#projen.javascript.EslintOverride.property.parser">parser</a></code> | <code>string</code> | The overridden parser. |
 | <code><a href="#projen.javascript.EslintOverride.property.plugins">plugins</a></code> | <code>string[]</code> | `plugins` override. |
-| <code><a href="#projen.javascript.EslintOverride.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | The overriden rules. |
+| <code><a href="#projen.javascript.EslintOverride.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | The overridden rules. |
 
 ---
 
@@ -6005,7 +6004,7 @@ public readonly rules: {[ key: string ]: any};
 
 - *Type:* {[ key: string ]: any}
 
-The overriden rules.
+The overridden rules.
 
 ---
 
