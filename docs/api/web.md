@@ -2296,7 +2296,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.web.NextJsTypeScriptProject.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.assetsdir">assetsdir</a></code> | <code>string</code> | The directory in which app assets reside. |
@@ -3027,16 +3026,6 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
-
----
-
-##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.web.NextJsTypeScriptProject.property.projenrcTs"></a>
-
-```typescript
-public readonly projenrcTs: Projenrc;
-```
-
-- *Type:* projen.typescript.Projenrc
 
 ---
 
@@ -5657,7 +5646,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.ReactTypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.web.ReactTypeScriptProject.property.projenrcTs">projenrcTs</a></code> | <code>projen.typescript.Projenrc</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
@@ -6386,16 +6374,6 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
-
----
-
-##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.web.ReactTypeScriptProject.property.projenrcTs"></a>
-
-```typescript
-public readonly projenrcTs: Projenrc;
-```
-
-- *Type:* projen.typescript.Projenrc
 
 ---
 

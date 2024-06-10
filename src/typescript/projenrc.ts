@@ -28,14 +28,13 @@ export interface ProjenrcOptions {
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
-const DEFAULT_PROJEN_CODE_DIR = "projenrc";
 
 /**
  * Sets up a typescript project to use TypeScript for projenrc.
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
-  public readonly projenCodeDir: string;
+  private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
   private readonly _swc: boolean;
 
@@ -44,7 +43,7 @@ export class Projenrc extends ProjenrcFile {
     this._tsProject = project;
 
     this.filePath = options.filename ?? DEFAULT_FILENAME;
-    this.projenCodeDir = options.projenCodeDir ?? DEFAULT_PROJEN_CODE_DIR;
+    this._projenCodeDir = options.projenCodeDir ?? "projenrc";
     this._swc = options.swc ?? false;
 
     this.addDefaultTask();
@@ -76,17 +75,17 @@ export class Projenrc extends ProjenrcFile {
     super.preSynthesize();
 
     this._tsProject.addPackageIgnore(`/${this.filePath}`);
-    this._tsProject.addPackageIgnore(`/${this.projenCodeDir}`);
+    this._tsProject.addPackageIgnore(`/${this._projenCodeDir}`);
 
     this._tsProject.tsconfigDev.addInclude(this.filePath);
-    this._tsProject.tsconfigDev.addInclude(`${this.projenCodeDir}/**/*.ts`);
+    this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
 
-    this._tsProject.eslint?.addLintPattern(this.projenCodeDir);
+    this._tsProject.eslint?.addLintPattern(this._projenCodeDir);
     this._tsProject.eslint?.addLintPattern(this.filePath);
     this._tsProject.eslint?.allowDevDeps(this.filePath);
-    this._tsProject.eslint?.allowDevDeps(`${this.projenCodeDir}/**/*.ts`);
+    this._tsProject.eslint?.allowDevDeps(`${this._projenCodeDir}/**/*.ts`);
     this._tsProject.eslint?.addIgnorePattern(`!${this.filePath}`);
-    this._tsProject.eslint?.addIgnorePattern(`!${this.projenCodeDir}/**/*.ts`);
+    this._tsProject.eslint?.addIgnorePattern(`!${this._projenCodeDir}/**/*.ts`);
 
     this._tsProject.eslint?.addOverride({
       files: [this.filePath],

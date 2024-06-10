@@ -372,7 +372,6 @@ export class TypeScriptProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
-  public readonly projenrcTs?: ProjenrcTs;
   public readonly tsconfigEslint?: TypescriptConfig;
   public readonly tsconfig?: TypescriptConfig;
 
@@ -550,6 +549,14 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude("/.projenrc.js");
     this.npmignore?.exclude("tsconfig.tsbuildinfo");
 
+    if (this.jest) {
+      if (compiledTests) {
+        this.addJestCompiled(this.jest);
+      } else {
+        this.addJestNoCompile(this.jest, options?.tsJestOptions);
+      }
+    }
+
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${this.tsconfigDev.fileName}`,
@@ -566,21 +573,13 @@ export class TypeScriptProject extends NodeProject {
     // when this is a root project
     if (!this.parent) {
       if (options.projenrcTs) {
-        this.projenrcTs = new ProjenrcTs(this, options.projenrcTsOptions);
+        new ProjenrcTs(this, options.projenrcTsOptions);
       } else {
         // projenrc.js created in NodeProject needs to be added in tsconfigDev
         const projenrcJs = NodeProjectProjenrc.of(this);
         if (projenrcJs) {
           this.tsconfigDev.addInclude(projenrcJs.filePath);
         }
-      }
-    }
-
-    if (this.jest) {
-      if (compiledTests) {
-        this.addJestCompiled(this.jest);
-      } else {
-        this.addJestNoCompile(this.jest, options?.tsJestOptions);
       }
     }
 
@@ -674,11 +673,7 @@ export class TypeScriptProject extends NodeProject {
       `ts-jest${jest.jestVersion}`
     );
 
-    const validTestRootDirs = [
-      this.srcdir,
-      this.testdir,
-      this.projenrcTs?.projenCodeDir,
-    ].filter(Boolean) as string[];
+    const validTestRootDirs = [this.srcdir, this.testdir, "projenrc"];
     const validTestRootDirsRegex = `@(${validTestRootDirs.join("|")})`;
     jest.addTestMatch(
       `<rootDir>/${validTestRootDirsRegex}/**/__tests__/**/*.ts?(x)`

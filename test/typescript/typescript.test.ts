@@ -409,7 +409,6 @@ describe("jestConfig", () => {
       const prj = new TypeScriptProject({
         defaultReleaseBranch: "main",
         name: "test",
-        projenrcTs: true,
       });
       const snapshot = synthSnapshot(prj);
       const jestConfig = snapshot["package.json"].jest;

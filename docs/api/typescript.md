@@ -161,7 +161,6 @@ The project.
 | <code><a href="#projen.typescript.Projenrc.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.typescript.Projenrc.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.typescript.Projenrc.property.filePath">filePath</a></code> | <code>string</code> | The path of the projenrc file. |
-| <code><a href="#projen.typescript.Projenrc.property.projenCodeDir">projenCodeDir</a></code> | <code>string</code> | *No description.* |
 
 ---
 
@@ -196,16 +195,6 @@ public readonly filePath: string;
 - *Type:* string
 
 The path of the projenrc file.
-
----
-
-##### `projenCodeDir`<sup>Required</sup> <a name="projenCodeDir" id="projen.typescript.Projenrc.property.projenCodeDir"></a>
-
-```typescript
-public readonly projenCodeDir: string;
-```
-
-- *Type:* string
 
 ---
 
@@ -1143,7 +1132,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptAppProject.property.projenrcTs">projenrcTs</a></code> | <code><a href="#projen.typescript.Projenrc">Projenrc</a></code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
@@ -1872,16 +1860,6 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
-
----
-
-##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.typescript.TypeScriptAppProject.property.projenrcTs"></a>
-
-```typescript
-public readonly projenrcTs: Projenrc;
-```
-
-- *Type:* <a href="#projen.typescript.Projenrc">Projenrc</a>
 
 ---
 
@@ -2655,7 +2633,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.projenrcTs">projenrcTs</a></code> | <code><a href="#projen.typescript.Projenrc">Projenrc</a></code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
@@ -3497,18 +3474,6 @@ public readonly eslint: Eslint;
 
 ---
 
-##### ~~`projenrcTs`~~<sup>Optional</sup> <a name="projenrcTs" id="projen.typescript.TypeScriptLibraryProject.property.projenrcTs"></a>
-
-- *Deprecated:* use `TypeScriptProject`
-
-```typescript
-public readonly projenrcTs: Projenrc;
-```
-
-- *Type:* <a href="#projen.typescript.Projenrc">Projenrc</a>
-
----
-
 ##### ~~`tsconfig`~~<sup>Optional</sup> <a name="tsconfig" id="projen.typescript.TypeScriptLibraryProject.property.tsconfig"></a>
 
 - *Deprecated:* use `TypeScriptProject`
@@ -4289,7 +4254,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptProject.property.projenrcTs">projenrcTs</a></code> | <code><a href="#projen.typescript.Projenrc">Projenrc</a></code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
@@ -5018,16 +4982,6 @@ public readonly eslint: Eslint;
 ```
 
 - *Type:* projen.javascript.Eslint
-
----
-
-##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.typescript.TypeScriptProject.property.projenrcTs"></a>
-
-```typescript
-public readonly projenrcTs: Projenrc;
-```
-
-- *Type:* <a href="#projen.typescript.Projenrc">Projenrc</a>
 
 ---
 
