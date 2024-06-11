@@ -1,11 +1,11 @@
 import { Prettier } from "./prettier";
 import { Project, TaskStepOptions } from "..";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
+import { ICompareString } from "../compare";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Task } from "../task";
-import { ICompareString } from "../util/types";
 import { YamlFile } from "../yaml";
 
 export interface EslintOptions {

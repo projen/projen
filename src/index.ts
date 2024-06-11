@@ -1,3 +1,4 @@
+export * from "./compare";
 export * from "./component";
 export * from "./dev-env";
 export * from "./dependencies";
@@ -33,7 +34,6 @@ export * from "./task-runtime";
 export * from "./testing";
 export * from "./textfile";
 export * from "./toml";
-export * from "./util/types";
 export * from "./version";
 export * from "./yaml";
 export * from "./xmlfile";
