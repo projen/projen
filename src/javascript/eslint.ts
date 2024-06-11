@@ -66,7 +66,7 @@ export interface EslintOptions {
    * The extends array in eslint is order dependent.
    * This option allows to sort the extends array in any way seen fit.
    *
-   * @default Use known ESLint best practices to place "prettier" plugins at the end of the array
+   * @default - Use known ESLint best practices to place "prettier" plugins at the end of the array
    */
   readonly sortExtends?: ICompareString;
 
