@@ -281,8 +281,7 @@ function renderCommentedOptionsByModule(
     result.push(`${TAB}/* ${moduleName} */`);
     for (const option of optionGroup) {
       const paramRender = renders[option.name];
-      const docstring =
-        option.docs?.replace(/\r\n?|\n/g, " ") || "No documentation found.";
+      const docstring = option.docs || "No documentation found.";
       result.push(
         `${TAB}${paramRender}${makePadding(
           marginSize - paramRender.length + 2
@@ -304,8 +303,7 @@ function renderCommentedOptionsInOrder(
   );
   for (const option of options) {
     const paramRender = renders[option.name];
-    const docstring =
-      option.docs?.replace(/\r\n?|\n/g, " ") || "No documentation found.";
+    const docstring = option.docs || "No documentation found.";
     result.push(
       `${TAB}${paramRender}${makePadding(
         marginSize - paramRender.length + 2

@@ -249,7 +249,7 @@ export function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
     pjid,
     fqn,
     options: discoverOptions(jsii, fqn),
-    docs: typeinfo.docs?.summary?.replace(/\r\n?|\n/g, " "),
+    docs: typeinfo.docs?.summary,
     docsurl,
   } as ProjectType;
 }
@@ -335,7 +335,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         parent: struct.name,
         name: prop.name,
         fqn: prop.type?.fqn,
-        docs: prop.docs.summary?.replace(/\r\n?|\n/g, " "),
+        docs: prop.docs.summary,
         simpleType: prop.type ? getSimpleTypeName(prop.type) : "unknown",
         fullType: prop.type,
         kind: jsiiKind,
