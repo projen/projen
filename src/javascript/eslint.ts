@@ -34,6 +34,11 @@ export interface EslintOptions {
   readonly fileExtensions?: string[];
 
   /**
+   * Options for eslint command executed by eslint task
+   */
+  readonly comandOptions?: EslintCommandOptions;
+
+  /**
    * List of file patterns that should not be linted, using the same syntax
    * as .gitignore patterns.
    *
@@ -86,6 +91,19 @@ export interface EslintOptions {
    * @default false
    */
   readonly yaml?: boolean;
+}
+
+export interface EslintCommandOptions {
+  /**
+   * Whether to include --fix flag in base eslint task
+   * @default true
+   */
+  readonly fix?: boolean;
+
+  /**
+   * Extra flag arguments to pass to eslint command
+   */
+  readonly extraFlagArgs?: string[];
 }
 
 /**
@@ -166,6 +184,7 @@ export class Eslint extends Component {
   private readonly _plugins = new Set<string>();
   private readonly _extends = new Set<string>();
   private readonly _fileExtensions: Set<string>;
+  private readonly _flagArgs: Set<string>;
   private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
 
@@ -201,6 +220,13 @@ export class Eslint extends Component {
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
 
+    const commandOptions = options.comandOptions ?? {};
+    const { fix = true, extraFlagArgs = [] } = commandOptions;
+    this._flagArgs = new Set(extraFlagArgs);
+    if (fix) {
+      this._flagArgs.add("--fix");
+    }
+    this._flagArgs.add("--no-error-on-unmatched-pattern");
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
     });
@@ -524,8 +550,7 @@ export class Eslint extends Component {
     if (this._fileExtensions.size > 0) {
       argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
     }
-    argsSet.add("--fix");
-    argsSet.add("--no-error-on-unmatched-pattern");
+    argsSet.add(`${[...this._flagArgs].join(" ")}`);
     argsSet.add("$@"); // External args go here
 
     for (const pattern of this._lintPatterns) {

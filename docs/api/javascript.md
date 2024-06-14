@@ -5699,6 +5699,50 @@ public readonly statements: number;
 
 ---
 
+### EslintCommandOptions <a name="EslintCommandOptions" id="projen.javascript.EslintCommandOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintCommandOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintCommandOptions: javascript.EslintCommandOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintCommandOptions.property.extraFlagArgs">extraFlagArgs</a></code> | <code>string[]</code> | Extra flag arguments to pass to eslint command. |
+| <code><a href="#projen.javascript.EslintCommandOptions.property.fix">fix</a></code> | <code>boolean</code> | Whether to include --fix flag in base eslint task. |
+
+---
+
+##### `extraFlagArgs`<sup>Optional</sup> <a name="extraFlagArgs" id="projen.javascript.EslintCommandOptions.property.extraFlagArgs"></a>
+
+```typescript
+public readonly extraFlagArgs: string[];
+```
+
+- *Type:* string[]
+
+Extra flag arguments to pass to eslint command.
+
+---
+
+##### `fix`<sup>Optional</sup> <a name="fix" id="projen.javascript.EslintCommandOptions.property.fix"></a>
+
+```typescript
+public readonly fix: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to include --fix flag in base eslint task.
+
+---
+
 ### EslintOptions <a name="EslintOptions" id="projen.javascript.EslintOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.EslintOptions.Initializer"></a>
@@ -5716,6 +5760,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.dirs">dirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasExtensions">aliasExtensions</a></code> | <code>string[]</code> | Enable import alias for module paths. |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasMap">aliasMap</a></code> | <code>{[ key: string ]: string}</code> | Enable import alias for module paths. |
+| <code><a href="#projen.javascript.EslintOptions.property.comandOptions">comandOptions</a></code> | <code><a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a></code> | Options for eslint command executed by eslint task. |
 | <code><a href="#projen.javascript.EslintOptions.property.devdirs">devdirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files that include tests and build tools. |
 | <code><a href="#projen.javascript.EslintOptions.property.fileExtensions">fileExtensions</a></code> | <code>string[]</code> | File types that should be linted (e.g. [ ".js", ".ts" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns. |
@@ -5763,6 +5808,18 @@ public readonly aliasMap: {[ key: string ]: string};
 - *Default:* undefined
 
 Enable import alias for module paths.
+
+---
+
+##### `comandOptions`<sup>Optional</sup> <a name="comandOptions" id="projen.javascript.EslintOptions.property.comandOptions"></a>
+
+```typescript
+public readonly comandOptions: EslintCommandOptions;
+```
+
+- *Type:* <a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a>
+
+Options for eslint command executed by eslint task.
 
 ---
 
