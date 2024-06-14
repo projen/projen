@@ -236,7 +236,7 @@ describe("environment variables", () => {
 
     // WHEN
     const spawnee = p.addTask("test:env:spawn", {
-      exec: "echo ${VALUE}",
+      exec: `node -e "console.log('%s', process.env.VALUE)"`,
       env: { VALUE: "bar" },
     });
 
