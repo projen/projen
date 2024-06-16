@@ -141,6 +141,7 @@
       "text-summary"
     ],
     "maxWorkers": "50%",
+    "verbose": true,
     "testMatch": [
       "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
