@@ -6,6 +6,7 @@ import { DependencyType } from "../dependencies";
 import { ProjectOption, readJsiiManifest } from "../inventory";
 import { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
+import { normalizePersistedPath } from "../util";
 
 /**
  * Options for `Projenrc`.
@@ -116,7 +117,9 @@ export class Projenrc extends ProjenrcFile {
       this.javaClass + ".java"
     );
 
-    return relative(this.project.outdir, javaFile);
+    const relativePath = relative(this.project.outdir, javaFile);
+
+    return normalizePersistedPath(relativePath);
   }
 
   private generateProjenrc() {
