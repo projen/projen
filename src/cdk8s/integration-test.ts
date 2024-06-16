@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "path/posix";
 import { IntegrationTestBaseOptions, IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
