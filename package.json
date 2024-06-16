@@ -36,6 +36,7 @@
     "readme-macros": "node ./projen.js readme-macros",
     "release": "node ./projen.js release",
     "test": "node ./projen.js test",
+    "test:update": "node ./projen.js test:update",
     "test:watch": "node ./projen.js test:watch",
     "unbump": "node ./projen.js unbump",
     "upgrade": "node ./projen.js upgrade",
@@ -141,7 +142,6 @@
       "text-summary"
     ],
     "maxWorkers": "50%",
-    "verbose": true,
     "testMatch": [
       "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
