@@ -36,7 +36,7 @@ export interface EslintOptions {
   /**
    * Options for eslint command executed by eslint task
    */
-  readonly comandOptions?: EslintCommandOptions;
+  readonly commandOptions?: EslintCommandOptions;
 
   /**
    * List of file patterns that should not be linted, using the same syntax
@@ -220,7 +220,7 @@ export class Eslint extends Component {
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
 
-    const commandOptions = options.comandOptions ?? {};
+    const commandOptions = options.commandOptions ?? {};
     const { fix = true, extraFlagArgs = [] } = commandOptions;
     this._flagArgs = new Set(extraFlagArgs);
     if (fix) {

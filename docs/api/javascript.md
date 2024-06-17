@@ -5760,7 +5760,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.dirs">dirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasExtensions">aliasExtensions</a></code> | <code>string[]</code> | Enable import alias for module paths. |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasMap">aliasMap</a></code> | <code>{[ key: string ]: string}</code> | Enable import alias for module paths. |
-| <code><a href="#projen.javascript.EslintOptions.property.comandOptions">comandOptions</a></code> | <code><a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a></code> | Options for eslint command executed by eslint task. |
+| <code><a href="#projen.javascript.EslintOptions.property.commandOptions">commandOptions</a></code> | <code><a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a></code> | Options for eslint command executed by eslint task. |
 | <code><a href="#projen.javascript.EslintOptions.property.devdirs">devdirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files that include tests and build tools. |
 | <code><a href="#projen.javascript.EslintOptions.property.fileExtensions">fileExtensions</a></code> | <code>string[]</code> | File types that should be linted (e.g. [ ".js", ".ts" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns. |
@@ -5811,10 +5811,10 @@ Enable import alias for module paths.
 
 ---
 
-##### `comandOptions`<sup>Optional</sup> <a name="comandOptions" id="projen.javascript.EslintOptions.property.comandOptions"></a>
+##### `commandOptions`<sup>Optional</sup> <a name="commandOptions" id="projen.javascript.EslintOptions.property.commandOptions"></a>
 
 ```typescript
-public readonly comandOptions: EslintCommandOptions;
+public readonly commandOptions: EslintCommandOptions;
 ```
 
 - *Type:* <a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a>
