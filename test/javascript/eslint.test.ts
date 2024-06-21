@@ -113,13 +113,55 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
 
   // THEN
   const output = synthSnapshot(project);
+
   // Prettier should be last in the extends array
-  expect(output[".eslintrc.json"].extends.at(-1)).toEqual(
-    "plugin:prettier/recommended"
-  );
+  const extendsArray = output[".eslintrc.json"].extends;
+  expect(extendsArray).toEqual([
+    "plugin:import/typescript",
+    "plugin:some-plugin/recommended",
+    "plugin:prettier/recommended",
+  ]);
 });
 
-test("settings sortExtends to a meaningless comparer should leave the extends array order alone", () => {
+test("not setting sortExtends should correctly produce the default order", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    lintProjenRc: false,
+  });
+
+  // Add the prettier plugins in the incorrect order
+  eslint.addExtends("prettier");
+  eslint.addExtends("plugin:prettier/recommended");
+
+  // Add some other plugins
+  eslint.addExtends("plugin:some-plugin/recommended");
+  eslint.addExtends("plugin:a-second-plugin/recommended");
+
+  // THEN
+  const output = synthSnapshot(project);
+  const extendsArray = output[".eslintrc.json"].extends;
+
+  expect(extendsArray).toEqual([
+    "plugin:import/typescript", // always added
+
+    // Should stay in order they were added into
+    "plugin:some-plugin/recommended",
+    "plugin:a-second-plugin/recommended",
+
+    // ordered according to best practices
+    "plugin:prettier/recommended",
+    "prettier",
+  ]);
+});
+
+test("setting sortExtends to a meaningless comparer should leave the extends array order alone", () => {
   // GIVEN
   const project = new NodeProject({
     name: "test",
@@ -150,7 +192,7 @@ test("settings sortExtends to a meaningless comparer should leave the extends ar
   ]);
 });
 
-test("settings sortExtends to a comparer should use that to sort the extends array", () => {
+test("setting sortExtends to a comparer should use that to sort the extends array", () => {
   // GIVEN
   const project = new NodeProject({
     name: "test",

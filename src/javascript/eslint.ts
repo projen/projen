@@ -176,6 +176,7 @@ export class Eslint extends Component {
   private readonly _fileExtensions: Set<string>;
   private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
+  private readonly sortExtends: ICompareString;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
@@ -208,6 +209,8 @@ export class Eslint extends Component {
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
+
+    this.sortExtends = options.sortExtends ?? new ExtendsDefaultOrder();
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
@@ -389,7 +392,10 @@ export class Eslint extends Component {
         sourceType: "module",
         project: tsconfig,
       },
-      extends: () => this.sortExtendsArray(this._extends, options.sortExtends),
+      extends: () =>
+        Array.from(this._extends).sort((a, b) =>
+          this.sortExtends.compare(a, b)
+        ),
       settings: {
         "import/parsers": {
           "@typescript-eslint/parser": [".ts", ".tsx"],
@@ -575,37 +581,21 @@ export class Eslint extends Component {
       receiveArgs: true,
     };
   }
+}
 
-  /**
-   * The extends array in eslint is order dependent and this method will sort the extends array if needed.
-   *
-   * @param extendsSet The Set of extends to sort
-   * @param sortExtends The compare function to use for sorting, optional
-   * @returns A sorted extends array
-   */
-  private sortExtendsArray(
-    extendsSet: Set<string>,
-    sortExtends: ICompareString | undefined
-  ): string[] {
-    if (sortExtends?.compare) {
-      return Array.from(extendsSet).sort((a, b) => sortExtends.compare(a, b));
-    }
+/**
+ * A compare protocol tp sort the extends array in eslint config using known ESLint best practices.
+ *
+ * Places "prettier" plugins at the end of the array
+ */
+class ExtendsDefaultOrder implements ICompareString {
+  // This is the order that ESLint best practices suggest
+  private static ORDER = ["plugin:prettier/recommended", "prettier"];
 
-    // This is the order that ESLint best practices suggest
-    const extendsPinnedToEndInSortOrder = [
-      "plugin:prettier/recommended",
-      "prettier",
-    ];
-
-    const extendsArray = Array.from(extendsSet);
-
-    return [
-      ...extendsArray.filter(
-        (extendsItem) => !extendsPinnedToEndInSortOrder.includes(extendsItem)
-      ),
-      ...extendsPinnedToEndInSortOrder.filter((extendsItem) =>
-        extendsArray.includes(extendsItem)
-      ),
-    ];
+  public compare(a: string, b: string): number {
+    return (
+      ExtendsDefaultOrder.ORDER.indexOf(a) -
+      ExtendsDefaultOrder.ORDER.indexOf(b)
+    );
   }
 }
