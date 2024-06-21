@@ -417,8 +417,8 @@ describe("jestConfig", () => {
       const snapshot = synthSnapshot(prj);
       const jestConfig = snapshot["package.json"].jest;
       expect(jestConfig.testMatch).toStrictEqual([
-        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
-        "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
+        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+        "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ]);
     });
   });

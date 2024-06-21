@@ -75,11 +75,9 @@ test("adds default projencodedir to jest testMatch patterns", () => {
   const snapshot = synthSnapshot(prj);
   const testMatch = snapshot["package.json"].jest.testMatch;
   expect(testMatch).toContain(
-    "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)"
+    "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)"
   );
-  expect(testMatch).toContain(
-    "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)"
-  );
+  expect(testMatch).toContain("<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)");
 });
 
 test("adds custom projencodedir to jest testMatch patterns", () => {
@@ -96,8 +94,6 @@ test("adds custom projencodedir to jest testMatch patterns", () => {
   // THEN
   const snapshot = synthSnapshot(prj);
   const testMatch = snapshot["package.json"].jest.testMatch;
-  expect(testMatch).toContain(
-    "<rootDir>/@(foo)/**/?(*.)+(spec|test).[jt]s?(x)"
-  );
-  expect(testMatch).toContain("<rootDir>/@(foo)/**/__tests__/**/*.[jt]s?(x)");
+  expect(testMatch).toContain("<rootDir>/@(foo)/**/?(*.)+(spec|test).ts?(x)");
+  expect(testMatch).toContain("<rootDir>/@(foo)/**/__tests__/**/*.ts?(x)");
 });

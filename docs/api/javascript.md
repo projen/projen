@@ -679,6 +679,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
 | <code><a href="#projen.javascript.Jest.addWatchIgnorePattern">addWatchIgnorePattern</a></code> | Adds a watch ignore pattern. |
+| <code><a href="#projen.javascript.Jest.discoverTestMatchPatternsForDirs">discoverTestMatchPatternsForDirs</a></code> | Build standard test match patterns for a directory. |
 
 ---
 
@@ -837,12 +838,12 @@ public addSnapshotResolver(file: string): void
 ##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.Jest.addTestMatch"></a>
 
 ```typescript
-public addTestMatch(patterns: string): void
+public addTestMatch(pattern: string): void
 ```
 
 Adds a test match pattern.
 
-###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.javascript.Jest.addTestMatch.parameter.patterns"></a>
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Jest.addTestMatch.parameter.pattern"></a>
 
 - *Type:* string
 
@@ -866,13 +867,40 @@ The pattern (regular expression).
 
 ---
 
+##### `discoverTestMatchPatternsForDirs` <a name="discoverTestMatchPatternsForDirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs"></a>
+
+```typescript
+public discoverTestMatchPatternsForDirs(dirs?: string[], fileExtensionPattern?: string): void
+```
+
+Build standard test match patterns for a directory.
+
+###### `dirs`<sup>Optional</sup> <a name="dirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.dirs"></a>
+
+- *Type:* string[]
+
+The directories to add test matches for.
+
+Matches any folder if not specified or an empty array.
+
+---
+
+###### `fileExtensionPattern`<sup>Optional</sup> <a name="fileExtensionPattern" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.fileExtensionPattern"></a>
+
+- *Type:* string
+
+The file extension pattern to use.
+
+Defaults to "[jt]s?(x)".
+
+---
+
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.javascript.Jest.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.javascript.Jest.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.javascript.Jest.buildTestMatchPatternsForDirs">buildTestMatchPatternsForDirs</a></code> | Build standard test match patterns for a directory. |
 | <code><a href="#projen.javascript.Jest.of">of</a></code> | Returns the singleton Jest component of a project or undefined if there is none. |
 
 ---
@@ -922,26 +950,6 @@ Test whether the given construct is a component.
 ###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.Jest.isComponent.parameter.x"></a>
 
 - *Type:* any
-
----
-
-##### `buildTestMatchPatternsForDirs` <a name="buildTestMatchPatternsForDirs" id="projen.javascript.Jest.buildTestMatchPatternsForDirs"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.Jest.buildTestMatchPatternsForDirs(dirs?: string[])
-```
-
-Build standard test match patterns for a directory.
-
-###### `dirs`<sup>Optional</sup> <a name="dirs" id="projen.javascript.Jest.buildTestMatchPatternsForDirs.parameter.dirs"></a>
-
-- *Type:* string[]
-
-The directories to add test matches for.
-
-Matches any folder if not specified.
 
 ---
 
@@ -3841,7 +3849,10 @@ The .prettierIgnore file.
 
 ### Projenrc <a name="Projenrc" id="projen.javascript.Projenrc"></a>
 
-Sets up a javascript or python project to use TypeScript for projenrc.
+A projenrc file written in JavaScript.
+
+This component can be instantiated in any type of project
+and has no expectations around the project's main language.
 
 #### Initializers <a name="Initializers" id="projen.javascript.Projenrc.Initializer"></a>
 

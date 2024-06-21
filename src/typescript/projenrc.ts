@@ -1,6 +1,5 @@
 import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
-import { Jest } from "../javascript/jest";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import { TypeScriptProject } from "../typescript";
@@ -96,8 +95,9 @@ export class Projenrc extends ProjenrcFile {
       },
     });
 
-    this._tsProject.jest?.addTestMatch(
-      ...Jest.buildTestMatchPatternsForDirs([this._projenCodeDir])
+    this._tsProject.jest?.discoverTestMatchPatternsForDirs(
+      [this._projenCodeDir],
+      this._tsProject.tsconfig?.compilerOptions?.allowJs ? undefined : "ts?(x)"
     );
   }
 

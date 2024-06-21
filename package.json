@@ -142,10 +142,10 @@
     ],
     "maxWorkers": "50%",
     "testMatch": [
-      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
-      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)"
+      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,

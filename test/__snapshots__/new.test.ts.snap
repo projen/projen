@@ -176,11 +176,11 @@ exports[`projen new --from using registry existing package 1`] = `
       ],
     ],
     "testMatch": [
-      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
-      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -307,11 +307,11 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
       ],
     ],
     "testMatch": [
-      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
-      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -438,11 +438,11 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
       ],
     ],
     "testMatch": [
-      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
-      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -569,11 +569,11 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
       ],
     ],
     "testMatch": [
-      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(src|test)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
-      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).[jt]s?(x)",
-      "<rootDir>/@(projenrc)/**/__tests__/**/*.[jt]s?(x)",
+      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
