@@ -15,7 +15,10 @@ export interface ProjenrcOptions {
 }
 
 /**
- * Sets up a javascript or python project to use TypeScript for projenrc.
+ * A projenrc file written in JavaScript
+ *
+ * This component can be instantiated in any type of project
+ * and has no expectations around the project's main language.
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
