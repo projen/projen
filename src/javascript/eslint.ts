@@ -1,6 +1,7 @@
 import { Prettier } from "./prettier";
 import { Project, TaskStepOptions } from "..";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
+import { ICompareString } from "../compare";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
@@ -26,7 +27,6 @@ export interface EslintOptions {
    * @default []
    */
   readonly devdirs?: string[];
-
   /**
    * File types that should be linted (e.g. [ ".js", ".ts" ])
    * @default [".ts"]
@@ -61,6 +61,14 @@ export interface EslintOptions {
    * @default false
    */
   readonly prettier?: boolean;
+
+  /**
+   * The extends array in eslint is order dependent.
+   * This option allows to sort the extends array in any way seen fit.
+   *
+   * @default - Use known ESLint best practices to place "prettier" plugins at the end of the array
+   */
+  readonly sortExtends?: ICompareString;
 
   /**
    * Enable import alias for module paths
@@ -104,7 +112,7 @@ export interface EslintOverride {
   readonly excludedFiles?: string[];
 
   /**
-   * The overriden rules
+   * The overridden rules
    */
   readonly rules?: { [rule: string]: any };
 
@@ -129,7 +137,7 @@ export interface EslintOverride {
  */
 export class Eslint extends Component {
   /**
-   * Returns the singletone Eslint component of a project or undefined if there is none.
+   * Returns the singleton Eslint component of a project or undefined if there is none.
    */
   public static of(project: Project): Eslint | undefined {
     const isEslint = (c: Component): c is Eslint => c instanceof Eslint;
@@ -168,6 +176,7 @@ export class Eslint extends Component {
   private readonly _fileExtensions: Set<string>;
   private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
+  private readonly sortExtends: ICompareString;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
@@ -200,6 +209,8 @@ export class Eslint extends Component {
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
+
+    this.sortExtends = options.sortExtends ?? new ExtendsDefaultOrder();
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
@@ -381,7 +392,10 @@ export class Eslint extends Component {
         sourceType: "module",
         project: tsconfig,
       },
-      extends: this._extends,
+      extends: () =>
+        Array.from(this._extends).sort((a, b) =>
+          this.sortExtends.compare(a, b)
+        ),
       settings: {
         "import/parsers": {
           "@typescript-eslint/parser": [".ts", ".tsx"],
@@ -566,5 +580,22 @@ export class Eslint extends Component {
     return {
       receiveArgs: true,
     };
+  }
+}
+
+/**
+ * A compare protocol tp sort the extends array in eslint config using known ESLint best practices.
+ *
+ * Places "prettier" plugins at the end of the array
+ */
+class ExtendsDefaultOrder implements ICompareString {
+  // This is the order that ESLint best practices suggest
+  private static ORDER = ["plugin:prettier/recommended", "prettier"];
+
+  public compare(a: string, b: string): number {
+    return (
+      ExtendsDefaultOrder.ORDER.indexOf(a) -
+      ExtendsDefaultOrder.ORDER.indexOf(b)
+    );
   }
 }
