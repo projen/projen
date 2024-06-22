@@ -67,7 +67,6 @@ export interface IssueTemplateOptions {
 export class IssueTemplate extends Component {
   constructor(scope: IConstruct, options: IssueTemplateOptions) {
     super(scope);
-    const project = this.project;
 
     // Create issue template files
     this.addTemplates(options);
@@ -77,7 +76,7 @@ export class IssueTemplate extends Component {
       const blankIssues = options.configOptions?.blankIssuesEnabled;
       const contactLinks = options.configOptions?.contactLinks;
 
-      new YamlFile(project, ".github/config.yml", {
+      new YamlFile(this, ".github/config.yml", {
         obj: {
           blank_issues_enabled: blankIssues,
           contact_links: contactLinks,
@@ -103,14 +102,14 @@ export class IssueTemplate extends Component {
       const fileExtension = path.extname(fileName).toLowerCase();
       switch (fileExtension) {
         case ".md":
-          new TextFile(this.project, filePath, {
+          new TextFile(this, filePath, {
             lines: [content],
             marker: false,
             committed: true,
           });
           break;
         case ".yml":
-          new YamlFile(this.project, filePath, {
+          new YamlFile(this, filePath, {
             obj: YAML.parse(content),
             marker: false,
             committed: true,
