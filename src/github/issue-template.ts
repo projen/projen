@@ -54,12 +54,6 @@ export interface IssueTemplateOptions {
   readonly templates: { [fileName: string]: string };
 
   /**
-   * The path within the repository where the issue templates should be created.
-   * Defaults to '.github/ISSUE_TEMPLATE'.
-   */
-  readonly templatePath?: string;
-
-  /**
    * Configuration options for the config.yml file.
    * Only applicable if includeConfig is true.
    */

@@ -6695,7 +6695,6 @@ const issueTemplateOptions: github.IssueTemplateOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.IssueTemplateOptions.property.templates">templates</a></code> | <code>{[ key: string ]: string}</code> | An array of issue template file names and their contents. |
 | <code><a href="#projen.github.IssueTemplateOptions.property.configOptions">configOptions</a></code> | <code><a href="#projen.github.IssueTemplateConfigOptions">IssueTemplateConfigOptions</a></code> | Configuration options for the config.yml file. Only applicable if includeConfig is true. |
-| <code><a href="#projen.github.IssueTemplateOptions.property.templatePath">templatePath</a></code> | <code>string</code> | The path within the repository where the issue templates should be created. |
 
 ---
 
@@ -6722,20 +6721,6 @@ public readonly configOptions: IssueTemplateConfigOptions;
 - *Type:* <a href="#projen.github.IssueTemplateConfigOptions">IssueTemplateConfigOptions</a>
 
 Configuration options for the config.yml file. Only applicable if includeConfig is true.
-
----
-
-##### `templatePath`<sup>Optional</sup> <a name="templatePath" id="projen.github.IssueTemplateOptions.property.templatePath"></a>
-
-```typescript
-public readonly templatePath: string;
-```
-
-- *Type:* string
-
-The path within the repository where the issue templates should be created.
-
-Defaults to '.github/ISSUE_TEMPLATE'.
 
 ---
 
