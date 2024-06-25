@@ -3,9 +3,9 @@
 CircleCi uses `.circleci/config.yml` to specify the configuration of a pipeline. 
 Configuration reference can be found [here](https://circleci.com/docs/2.0/configuration-reference).
 
-Initial configuration can be created through options of [CircleCiProps](src/circleci/model.ts).
+Initial configuration can be created through options of [CircleCiProps](https://github.com/projen/projen/blob/main/src/circleci/model.ts).
 Additionally, you can add workflows or orbs later to your pipeline.
-For full configuration example checkout [Circleci Tests](test/cirlceci/circleci.test.ts)
+For full configuration example checkout [Circleci Tests](https://github.com/projen/projen/blob/main/test/circleci/circleci.test.ts)
 
 ```js
 const { circleci, typescript } = require('projen');

@@ -245,6 +245,7 @@ exports[`node project can be ejected 1`] = `
     "coveragePathIgnorePatterns": [
       "/node_modules/",
     ],
+    "coverageProvider": "v8",
     "coverageReporters": [
       "json",
       "lcov",
@@ -275,6 +276,9 @@ exports[`node project can be ejected 1`] = `
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "test-node-project",
+  "publishConfig": {
+    "access": "public",
+  },
   "scripts": {
     "build": "scripts/run-task build",
     "bump": "scripts/run-task bump",

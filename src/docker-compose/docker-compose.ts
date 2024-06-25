@@ -37,7 +37,9 @@ export interface DockerComposeProps {
 
   /**
    * Docker Compose schema version do be used
-   * @default 3.3
+   * @default - no version is provided
+   * @deprecated - The top level `version` field is obsolete per the Compose Specification.
+   * {@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements Compose Specification}
    */
   readonly schemaVersion?: string;
 
@@ -155,7 +157,7 @@ export class DockerCompose extends Component {
   public readonly file: YamlFile;
 
   private readonly services: Record<string, DockerComposeService>;
-  private readonly version: string;
+  private readonly version?: string;
 
   constructor(project: Project, props?: DockerComposeProps) {
     super(project);
@@ -170,7 +172,7 @@ export class DockerCompose extends Component {
     if (props?.schemaVersion && !parseFloat(props.schemaVersion)) {
       throw Error("Version tag needs to be a number");
     }
-    this.version = props?.schemaVersion ? props.schemaVersion : "3.3";
+    this.version = props?.schemaVersion;
     this.services = {};
 
     // Add the services provided via the constructor argument.

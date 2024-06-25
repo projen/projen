@@ -366,7 +366,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v3",
+      uses: "actions/setup-java@v4",
       with: { distribution: "temurin", "java-version": tools.java.version },
     });
   }
@@ -387,14 +387,14 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v3",
+      uses: "actions/setup-go@v5",
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v3",
+      uses: "actions/setup-dotnet@v4",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

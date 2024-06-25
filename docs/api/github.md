@@ -2538,6 +2538,191 @@ public readonly project: Project;
 ---
 
 
+### PullRequestBackport <a name="PullRequestBackport" id="projen.github.PullRequestBackport"></a>
+
+#### Initializers <a name="Initializers" id="projen.github.PullRequestBackport.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.PullRequestBackport(scope: IConstruct, options?: PullRequestBackportOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.PullRequestBackport.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.github.PullRequestBackport.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.github.PullRequestBackport.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.PullRequestBackport.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.PullRequestBackport.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.PullRequestBackport.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.PullRequestBackport.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.PullRequestBackport.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.PullRequestBackport.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.PullRequestBackport.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.PullRequestBackport.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.github.PullRequestBackport.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.PullRequestBackport.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.PullRequestBackport.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.PullRequestBackport.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.PullRequestBackport.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.PullRequestBackport.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.PullRequestBackport.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.PullRequestBackport.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.PullRequestBackport.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.PullRequestBackport.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.PullRequestBackport.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.PullRequestBackport.property.file">file</a></code> | <code>projen.JsonFile</code> | *No description.* |
+| <code><a href="#projen.github.PullRequestBackport.property.workflow">workflow</a></code> | <code><a href="#projen.github.GithubWorkflow">GithubWorkflow</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.PullRequestBackport.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.PullRequestBackport.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.github.PullRequestBackport.property.file"></a>
+
+```typescript
+public readonly file: JsonFile;
+```
+
+- *Type:* projen.JsonFile
+
+---
+
+##### `workflow`<sup>Required</sup> <a name="workflow" id="projen.github.PullRequestBackport.property.workflow"></a>
+
+```typescript
+public readonly workflow: GithubWorkflow;
+```
+
+- *Type:* <a href="#projen.github.GithubWorkflow">GithubWorkflow</a>
+
+---
+
+
 ### PullRequestLint <a name="PullRequestLint" id="projen.github.PullRequestLint"></a>
 
 Configure validations to run on GitHub pull requests.
@@ -5499,6 +5684,8 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | <code><a href="#projen.github.GitHubOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for Mergify. |
 | <code><a href="#projen.github.GitHubOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.github.GitHubOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
+| <code><a href="#projen.github.GitHubOptions.property.pullRequestBackport">pullRequestBackport</a></code> | <code>boolean</code> | Add a workflow that allows backport of PRs to other branches using labels. |
+| <code><a href="#projen.github.GitHubOptions.property.pullRequestBackportOptions">pullRequestBackportOptions</a></code> | <code><a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a></code> | Options for configuring pull request backport. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLint">pullRequestLint</a></code> | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLintOptions">pullRequestLintOptions</a></code> | <code><a href="#projen.github.PullRequestLintOptions">PullRequestLintOptions</a></code> | Options for configuring a pull request linter. |
 | <code><a href="#projen.github.GitHubOptions.property.workflows">workflows</a></code> | <code>boolean</code> | Enables GitHub workflows. |
@@ -5572,6 +5759,37 @@ The name of a secret which includes a GitHub Personal Access Token to be used by
 
 This token needs to have the `repo`, `workflows`
 and `packages` scope.
+
+---
+
+##### `pullRequestBackport`<sup>Optional</sup> <a name="pullRequestBackport" id="projen.github.GitHubOptions.property.pullRequestBackport"></a>
+
+```typescript
+public readonly pullRequestBackport: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Add a workflow that allows backport of PRs to other branches using labels.
+
+When opening a new PR add a backport label to it,
+and the PR will be backported to the target branches once the PR is merged.
+
+Should not be used together with mergify.
+
+---
+
+##### `pullRequestBackportOptions`<sup>Optional</sup> <a name="pullRequestBackportOptions" id="projen.github.GitHubOptions.property.pullRequestBackportOptions"></a>
+
+```typescript
+public readonly pullRequestBackportOptions: PullRequestBackportOptions;
+```
+
+- *Type:* <a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a>
+- *Default:* see defaults in `PullRequestBackportOptions`
+
+Options for configuring pull request backport.
 
 ---
 
@@ -6402,6 +6620,126 @@ The name of the rule.
 
 This is not used by the engine directly,
 but is used when reporting information about a rule.
+
+---
+
+### PullRequestBackportOptions <a name="PullRequestBackportOptions" id="projen.github.PullRequestBackportOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.PullRequestBackportOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const pullRequestBackportOptions: github.PullRequestBackportOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.autoApproveBackport">autoApproveBackport</a></code> | <code>boolean</code> | Automatically approve backport PRs if the 'auto approve' workflow is available. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.backportBranchNamePrefix">backportBranchNamePrefix</a></code> | <code>string</code> | The prefix used to name backport branches. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.backportPRLabels">backportPRLabels</a></code> | <code>string[]</code> | The labels added to the created backport PR. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.branches">branches</a></code> | <code>string[]</code> | List of branches that can be a target for backports. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.createWithConflicts">createWithConflicts</a></code> | <code>boolean</code> | Should this created Backport PRs with conflicts. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.labelPrefix">labelPrefix</a></code> | <code>string</code> | The prefix used to detect PRs that should be backported. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.workflowName">workflowName</a></code> | <code>string</code> | The name of the workflow. |
+
+---
+
+##### `autoApproveBackport`<sup>Optional</sup> <a name="autoApproveBackport" id="projen.github.PullRequestBackportOptions.property.autoApproveBackport"></a>
+
+```typescript
+public readonly autoApproveBackport: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically approve backport PRs if the 'auto approve' workflow is available.
+
+---
+
+##### `backportBranchNamePrefix`<sup>Optional</sup> <a name="backportBranchNamePrefix" id="projen.github.PullRequestBackportOptions.property.backportBranchNamePrefix"></a>
+
+```typescript
+public readonly backportBranchNamePrefix: string;
+```
+
+- *Type:* string
+- *Default:* "backport/"
+
+The prefix used to name backport branches.
+
+Make sure to include a separator at the end like `/` or `_`.
+
+---
+
+##### `backportPRLabels`<sup>Optional</sup> <a name="backportPRLabels" id="projen.github.PullRequestBackportOptions.property.backportPRLabels"></a>
+
+```typescript
+public readonly backportPRLabels: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["backport"]
+
+The labels added to the created backport PR.
+
+---
+
+##### `branches`<sup>Optional</sup> <a name="branches" id="projen.github.PullRequestBackportOptions.property.branches"></a>
+
+```typescript
+public readonly branches: string[];
+```
+
+- *Type:* string[]
+- *Default:* allow backports to all release branches
+
+List of branches that can be a target for backports.
+
+---
+
+##### `createWithConflicts`<sup>Optional</sup> <a name="createWithConflicts" id="projen.github.PullRequestBackportOptions.property.createWithConflicts"></a>
+
+```typescript
+public readonly createWithConflicts: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Should this created Backport PRs with conflicts.
+
+Conflicts will have to be resolved manually, but a PR is always created.
+Set to `false` to prevent the backport PR from being created if there are conflicts.
+
+---
+
+##### `labelPrefix`<sup>Optional</sup> <a name="labelPrefix" id="projen.github.PullRequestBackportOptions.property.labelPrefix"></a>
+
+```typescript
+public readonly labelPrefix: string;
+```
+
+- *Type:* string
+- *Default:* "backport-to-"
+
+The prefix used to detect PRs that should be backported.
+
+---
+
+##### `workflowName`<sup>Optional</sup> <a name="workflowName" id="projen.github.PullRequestBackportOptions.property.workflowName"></a>
+
+```typescript
+public readonly workflowName: string;
+```
+
+- *Type:* string
+- *Default:* "backport"
+
+The name of the workflow.
 
 ---
 

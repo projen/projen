@@ -796,6 +796,9 @@ tsconfig.tsbuildinfo
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
+    "publishConfig": {
+      "access": "public",
+    },
     "scripts": {
       "build": "npx projen build",
       "compile": "npx projen compile",
@@ -1068,7 +1071,7 @@ export default function Home() {
         "dom.iterable",
         "esnext",
       ],
-      "module": "esnext",
+      "module": "commonjs",
       "moduleResolution": "bundler",
       "noEmit": true,
       "noEmitOnError": false,

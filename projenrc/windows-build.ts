@@ -71,13 +71,19 @@ export class WindowsBuild extends Component {
       JsonPatch.add(buildJobPath(), {
         "runs-on": "ubuntu-latest",
         needs: [JOB_BUILD_MATRIX],
+        if: "always()",
         outputs: {
           self_mutation_happened: `\${{ needs.${JOB_BUILD_MATRIX}.outputs.self_mutation_happened }}`,
         },
         steps: [
           {
-            name: "OK",
-            run: 'echo "OK"',
+            name: "Build result",
+            run: `echo \${{needs.${JOB_BUILD_MATRIX}.result}}`,
+          },
+          {
+            if: `\${{ needs.${JOB_BUILD_MATRIX}.result != 'success' }}`,
+            name: "Set status based on matrix build",
+            run: "exit 1",
           },
         ],
       })

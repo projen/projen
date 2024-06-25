@@ -110,6 +110,9 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
       "dot-notation": [
         "error",
       ],
+      "import/no-duplicates": [
+        "error",
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -158,9 +161,6 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
         },
       ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-duplicate-imports": [
         "error",
       ],
       "no-multi-spaces": [
@@ -477,7 +477,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -726,12 +726,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "constructs",
@@ -1344,8 +1344,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "devDependencies": {
       "@types/jest": "^27",
       "@types/node": "^16 <= 16.18.78",
-      "@typescript-eslint/eslint-plugin": "^6",
-      "@typescript-eslint/parser": "^6",
+      "@typescript-eslint/eslint-plugin": "^7",
+      "@typescript-eslint/parser": "^7",
       "constructs": "^10.0.0",
       "eslint": "^8",
       "eslint-import-resolver-typescript": "*",
@@ -1369,6 +1369,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
+      "coverageProvider": "v8",
       "coverageReporters": [
         "json",
         "lcov",
@@ -1393,7 +1394,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       ],
       "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
@@ -1413,6 +1414,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "access": "public",
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
@@ -1607,6 +1611,9 @@ exports[`JsiiProject with jsiiVersion: '*' synthesizes 1`] = `
       "dot-notation": [
         "error",
       ],
+      "import/no-duplicates": [
+        "error",
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -1655,9 +1662,6 @@ exports[`JsiiProject with jsiiVersion: '*' synthesizes 1`] = `
         },
       ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-duplicate-imports": [
         "error",
       ],
       "no-multi-spaces": [
@@ -1974,7 +1978,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -2222,12 +2226,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "constructs",
@@ -2826,8 +2830,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "devDependencies": {
       "@types/jest": "*",
       "@types/node": "^18",
-      "@typescript-eslint/eslint-plugin": "^6",
-      "@typescript-eslint/parser": "^6",
+      "@typescript-eslint/eslint-plugin": "^7",
+      "@typescript-eslint/parser": "^7",
       "constructs": "^10.0.0",
       "eslint": "^8",
       "eslint-import-resolver-typescript": "*",
@@ -2851,6 +2855,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
+      "coverageProvider": "v8",
       "coverageReporters": [
         "json",
         "lcov",
@@ -2869,7 +2874,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       ],
       "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
@@ -2897,6 +2902,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "access": "public",
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
@@ -3087,6 +3095,9 @@ exports[`JsiiProject with jsiiVersion: '^1.78.1' synthesizes 1`] = `
       "dot-notation": [
         "error",
       ],
+      "import/no-duplicates": [
+        "error",
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -3135,9 +3146,6 @@ exports[`JsiiProject with jsiiVersion: '^1.78.1' synthesizes 1`] = `
         },
       ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-duplicate-imports": [
         "error",
       ],
       "no-multi-spaces": [
@@ -3453,7 +3461,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -3701,12 +3709,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "constructs",
@@ -4301,8 +4309,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "devDependencies": {
       "@types/jest": "^27",
       "@types/node": "^18",
-      "@typescript-eslint/eslint-plugin": "^6",
-      "@typescript-eslint/parser": "^6",
+      "@typescript-eslint/eslint-plugin": "^7",
+      "@typescript-eslint/parser": "^7",
       "constructs": "^10.0.0",
       "eslint": "^8",
       "eslint-import-resolver-typescript": "*",
@@ -4325,6 +4333,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
+      "coverageProvider": "v8",
       "coverageReporters": [
         "json",
         "lcov",
@@ -4349,7 +4358,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       ],
       "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
@@ -4369,6 +4378,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "access": "public",
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",
@@ -4562,6 +4574,9 @@ exports[`JsiiProject with jsiiVersion: '~5.0.0' synthesizes 1`] = `
       "dot-notation": [
         "error",
       ],
+      "import/no-duplicates": [
+        "error",
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -4610,9 +4625,6 @@ exports[`JsiiProject with jsiiVersion: '~5.0.0' synthesizes 1`] = `
         },
       ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-duplicate-imports": [
         "error",
       ],
       "no-multi-spaces": [
@@ -4929,7 +4941,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -5177,12 +5189,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "constructs",
@@ -5783,8 +5795,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "devDependencies": {
       "@types/jest": "*",
       "@types/node": "^18",
-      "@typescript-eslint/eslint-plugin": "^6",
-      "@typescript-eslint/parser": "^6",
+      "@typescript-eslint/eslint-plugin": "^7",
+      "@typescript-eslint/parser": "^7",
       "constructs": "^10.0.0",
       "eslint": "^8",
       "eslint-import-resolver-typescript": "*",
@@ -5808,6 +5820,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
+      "coverageProvider": "v8",
       "coverageReporters": [
         "json",
         "lcov",
@@ -5826,7 +5839,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       ],
       "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
@@ -5854,6 +5867,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "publishConfig": {
+      "access": "public",
+    },
     "repository": {
       "type": "git",
       "url": "github.com/projen/projen.dummy",

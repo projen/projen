@@ -110,6 +110,9 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
       "dot-notation": [
         "error",
       ],
+      "import/no-duplicates": [
+        "error",
+      ],
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -158,9 +161,6 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
         },
       ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-duplicate-imports": [
         "error",
       ],
       "no-multi-spaces": [
@@ -477,7 +477,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -726,12 +726,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^6",
+        "version": "^7",
       },
       {
         "name": "constructs",
@@ -1344,8 +1344,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "devDependencies": {
       "@types/jest": "^27",
       "@types/node": "^16 <= 16.18.78",
-      "@typescript-eslint/eslint-plugin": "^6",
-      "@typescript-eslint/parser": "^6",
+      "@typescript-eslint/eslint-plugin": "^7",
+      "@typescript-eslint/parser": "^7",
       "constructs": "^10.0.0",
       "eslint": "^8",
       "eslint-import-resolver-typescript": "*",
@@ -1369,6 +1369,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "coveragePathIgnorePatterns": [
         "/node_modules/",
       ],
+      "coverageProvider": "v8",
       "coverageReporters": [
         "json",
         "lcov",
@@ -1393,7 +1394,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       ],
       "testMatch": [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": [
         "/node_modules/",
@@ -1413,6 +1414,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "project",
+    "publishConfig": {
+      "access": "public",
+    },
     "repository": {
       "type": "git",
       "url": "https://github.com/foo/bar.git",
@@ -1598,7 +1602,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-go@v3",
+      "uses": "actions/setup-go@v5",
       "with": {
         "go-version": "^1.16.0",
       },
@@ -1656,7 +1660,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v3",
+      "uses": "actions/setup-java@v4",
       "with": {
         "distribution": "temurin",
         "java-version": "11.x",
@@ -1789,7 +1793,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-dotnet@v3",
+      "uses": "actions/setup-dotnet@v4",
       "with": {
         "dotnet-version": "3.x",
       },
@@ -1911,7 +1915,7 @@ exports[`language bindings snapshot dotnet 1`] = `
       },
     },
     {
-      "uses": "actions/setup-dotnet@v3",
+      "uses": "actions/setup-dotnet@v4",
       "with": {
         "dotnet-version": "3.x",
       },
@@ -1963,7 +1967,7 @@ exports[`language bindings snapshot go 1`] = `
       },
     },
     {
-      "uses": "actions/setup-go@v3",
+      "uses": "actions/setup-go@v5",
       "with": {
         "go-version": "^1.16.0",
       },
@@ -2009,7 +2013,7 @@ exports[`language bindings snapshot java 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v3",
+      "uses": "actions/setup-java@v4",
       "with": {
         "distribution": "temurin",
         "java-version": "11.x",
@@ -2236,7 +2240,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -2284,7 +2288,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
@@ -2399,7 +2403,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -2447,7 +2451,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version: ^1.16.0
       - name: Download build artifacts
@@ -2559,7 +2563,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -2607,7 +2611,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
@@ -2717,7 +2721,7 @@ jobs:
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.ref }}
+          GITHUB_REF: \${{ github.sha }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
@@ -2765,7 +2769,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 3.x
       - name: Download build artifacts

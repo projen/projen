@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Custom Project Installation
 
-This quick start will help you install a pre-created [custom project](/docs/custom/).
+This quick start will help you install a pre-created [custom project](../../custom/custom-projects.md).
 It's not always clear what project type to pass in if the project's README does not explicitly
 tell you.
 

@@ -645,7 +645,7 @@ export interface WorkflowRule {
   /* Use variables in rules to define variables for specific conditions. */
   readonly variables?: Record<string, number | string>;
   /* Conditions for when to run the job. Defaults to 'on_success' */
-  readonly when?: JobWhen;
+  readonly when?: WorkflowWhen;
 }
 
 /**

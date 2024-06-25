@@ -94,6 +94,29 @@ describe("docker-compose", () => {
     assertDockerComposeFileValidates(project.outdir);
   });
 
+  test("not defining schemaVersion will omit version from output", () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      services: {
+        myservice: {
+          image: "nginx",
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      services: {
+        myservice: {
+          image: "nginx",
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
   test("version tag explicit set and created as int", () => {
     const project = new TestProject();
 
@@ -131,7 +154,6 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
       services: {
         myservice: {
           image: "nginx",
@@ -162,7 +184,6 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
       services: {
         custom: {
           build: {
@@ -211,7 +232,6 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
       services: {
         alpine: {
           image: "alpine",
@@ -236,11 +256,34 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
       services: {
         alpine: {
           image: "alpine",
           entrypoint: ["sh"],
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
+  test("can set privileged mode", () => {
+    const project = new TestProject();
+    const dc = new DockerCompose(project, {
+      services: {
+        alpine: {
+          image: "alpine",
+          privileged: true,
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      services: {
+        alpine: {
+          image: "alpine",
+          privileged: true,
         },
       },
     });
@@ -262,7 +305,6 @@ describe("docker-compose", () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -293,7 +335,6 @@ describe("docker-compose", () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -335,7 +376,6 @@ describe("docker-compose", () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           web: {
             image: "nginx",
@@ -373,7 +413,6 @@ describe("docker-compose", () => {
       service.addVolume(DockerCompose.namedVolume("html", "/var/www/html"));
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -398,7 +437,6 @@ describe("docker-compose", () => {
 
   describe("can map a port", () => {
     const expected = {
-      version: "3.3",
       services: {
         port: {
           image: "nginx",
@@ -464,7 +502,6 @@ describe("docker-compose", () => {
 
   describe("can add depends_on", () => {
     const expected = {
-      version: "3.3",
       services: {
         first: { image: "alpine" },
         second: {
@@ -509,7 +546,6 @@ describe("docker-compose", () => {
 
   describe("can add environment variables", () => {
     const expected = {
-      version: "3.3",
       services: {
         www: {
           image: "nginx",
@@ -572,7 +608,6 @@ describe("docker-compose", () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -617,7 +652,6 @@ describe("docker-compose", () => {
       );
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -666,7 +700,6 @@ describe("docker-compose", () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -691,7 +724,6 @@ describe("docker-compose", () => {
       service.addLabel("my.label", "my_value");
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",
@@ -739,7 +771,6 @@ describe("docker-compose", () => {
 
   describe("can create a wordpress dev env", () => {
     const expected = {
-      version: "3.3",
       services: {
         setup: {
           image: "alpine",
@@ -942,7 +973,6 @@ describe("docker-compose", () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
-        version: "3.3",
         services: {
           myservice: {
             image: "nginx",

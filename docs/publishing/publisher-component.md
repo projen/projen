@@ -102,13 +102,18 @@ publisher.publishToMaven({
 
 The NPM target comes with dynamic defaults that support AWS CodeArtifact.
 If the respective registry URL is detected to be AWS CodeArtifact, other relevant options will automatically be set to fitting values.
-The authentication will done using [AWS CLI](https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html). It is neccessary to provide AWS IAM CLI `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in GitHub Secrets.
+
+Authentication to CodeArtifact is performed using the [AWS CLI](https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html). As such, the workflow needs access to the AWS Account containing your CodeArtifact repository. Access can be provided via the `CodeArtifactAuthProvider.GITHUB_OIDC` (recommended) or `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR` (not recommended) AWS auth providers.
 
 **npm**
 
 ```ts
 publisher.publishToNpm({ 
   registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+  codeArtifactOptions: {
+    authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+    roleToAssume: 'arn:aws:iam::123456789012:role/your-github-actions-role'
+  },
 });
 ```
 

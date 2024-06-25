@@ -91,8 +91,4 @@ project.addTask('hello', {
 project.synth();
 ```
 
-Continue to the [next section](build-a-simple-nodejs-api.md) to see a more detailed example of building a Node.js API.
-
-
-
-
+Continue to the [Rest API with Node.js](../quick-starts/nodejs/rest-api/index.md) quick start to see a more detailed example of building a Node.js API.

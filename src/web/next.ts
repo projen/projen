@@ -166,6 +166,13 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           },
         },
       },
+      // ts-config for projen default needs to be overridden to commonjs
+      // https://stackoverflow.com/questions/67089549/is-it-ok-to-use-module-commonjs-in-tsconfig-json-for-a-next-js-project-usi
+      tsconfigDev: {
+        compilerOptions: {
+          module: "commonjs",
+        },
+      },
     };
 
     // never generate default TypeScript sample code, since this class provides its own

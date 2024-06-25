@@ -9840,14 +9840,17 @@ A name to add to the docker-compose.yml filename.
 ```
 
 
-##### `schemaVersion`<sup>Optional</sup> <a name="schemaVersion" id="projen.DockerComposeProps.property.schemaVersion"></a>
+##### ~~`schemaVersion`~~<sup>Optional</sup> <a name="schemaVersion" id="projen.DockerComposeProps.property.schemaVersion"></a>
+
+- *Deprecated:* - The top level `version` field is obsolete per the Compose Specification.
+{@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements Compose Specification}
 
 ```typescript
 public readonly schemaVersion: string;
 ```
 
 - *Type:* string
-- *Default:* 3.3
+- *Default:* no version is provided
 
 Docker Compose schema version do be used.
 
@@ -9891,6 +9894,7 @@ const dockerComposeServiceDescription: DockerComposeServiceDescription = { ... }
 | <code><a href="#projen.DockerComposeServiceDescription.property.networks">networks</a></code> | <code><a href="#projen.IDockerComposeNetworkBinding">IDockerComposeNetworkBinding</a>[]</code> | Add some networks to the service. |
 | <code><a href="#projen.DockerComposeServiceDescription.property.platform">platform</a></code> | <code>string</code> | Add platform. |
 | <code><a href="#projen.DockerComposeServiceDescription.property.ports">ports</a></code> | <code><a href="#projen.DockerComposeServicePort">DockerComposeServicePort</a>[]</code> | Map some ports. |
+| <code><a href="#projen.DockerComposeServiceDescription.property.privileged">privileged</a></code> | <code>boolean</code> | Run in privileged mode. |
 | <code><a href="#projen.DockerComposeServiceDescription.property.volumes">volumes</a></code> | <code><a href="#projen.IDockerComposeVolumeBinding">IDockerComposeVolumeBinding</a>[]</code> | Mount some volumes into the service. |
 
 ---
@@ -10028,6 +10032,19 @@ public readonly ports: DockerComposeServicePort[];
 - *Default:* no ports are mapped
 
 Map some ports.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="privileged" id="projen.DockerComposeServiceDescription.property.privileged"></a>
+
+```typescript
+public readonly privileged: boolean;
+```
+
+- *Type:* boolean
+- *Default:* no privileged mode flag is provided
+
+Run in privileged mode.
 
 ---
 
@@ -14004,6 +14021,7 @@ Add a volume to the service.
 | <code><a href="#projen.DockerComposeService.property.image">image</a></code> | <code>string</code> | Docker image. |
 | <code><a href="#projen.DockerComposeService.property.imageBuild">imageBuild</a></code> | <code><a href="#projen.DockerComposeBuild">DockerComposeBuild</a></code> | Docker image build instructions. |
 | <code><a href="#projen.DockerComposeService.property.platform">platform</a></code> | <code>string</code> | Target platform. |
+| <code><a href="#projen.DockerComposeService.property.privileged">privileged</a></code> | <code>boolean</code> | Run in privileged mode. |
 
 ---
 
@@ -14148,6 +14166,18 @@ public readonly platform: string;
 - *Type:* string
 
 Target platform.
+
+---
+
+##### `privileged`<sup>Optional</sup> <a name="privileged" id="projen.DockerComposeService.property.privileged"></a>
+
+```typescript
+public readonly privileged: boolean;
+```
+
+- *Type:* boolean
+
+Run in privileged mode.
 
 ---
 
@@ -15225,7 +15255,7 @@ new TaskRuntime(workdir: string)
 ##### `runTask` <a name="runTask" id="projen.TaskRuntime.runTask"></a>
 
 ```typescript
-public runTask(name: string, parents?: string[], args?: string | number[]): void
+public runTask(name: string, parents?: string[], args?: string | number[], env?: {[ key: string ]: string}): void
 ```
 
 Runs the task.
@@ -15247,6 +15277,12 @@ The task name.
 ###### `args`<sup>Optional</sup> <a name="args" id="projen.TaskRuntime.runTask.parameter.args"></a>
 
 - *Type:* string | number[]
+
+---
+
+###### `env`<sup>Optional</sup> <a name="env" id="projen.TaskRuntime.runTask.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
 
 ---
 
@@ -15378,6 +15414,41 @@ the project to produce a snapshot for.
 
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
+
+### ICompareString <a name="ICompareString" id="projen.ICompareString"></a>
+
+- *Implemented By:* <a href="#projen.ICompareString">ICompareString</a>
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ICompareString.compare">compare</a></code> | *No description.* |
+
+---
+
+##### `compare` <a name="compare" id="projen.ICompareString.compare"></a>
+
+```typescript
+public compare(a: string, b: string): number
+```
+
+###### `a`<sup>Required</sup> <a name="a" id="projen.ICompareString.compare.parameter.a"></a>
+
+- *Type:* string
+
+The first string.
+
+---
+
+###### `b`<sup>Required</sup> <a name="b" id="projen.ICompareString.compare.parameter.b"></a>
+
+- *Type:* string
+
+The second string.
+
+---
+
 
 ### IDevEnvironment <a name="IDevEnvironment" id="projen.IDevEnvironment"></a>
 

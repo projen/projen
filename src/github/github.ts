@@ -3,6 +3,10 @@ import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
+import {
+  PullRequestBackport,
+  PullRequestBackportOptions,
+} from "./pull-request-backport";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
@@ -29,6 +33,24 @@ export interface GitHubOptions {
    * @default true
    */
   readonly workflows?: boolean;
+
+  /**
+   * Add a workflow that allows backport of PRs to other branches using labels.
+   * When opening a new PR add a backport label to it,
+   * and the PR will be backported to the target branches once the PR is merged.
+   *
+   * Should not be used together with mergify.
+   *
+   * @default false
+   */
+  readonly pullRequestBackport?: boolean;
+
+  /**
+   * Options for configuring pull request backport.
+   *
+   * @default - see defaults in `PullRequestBackportOptions`
+   */
+  readonly pullRequestBackportOptions?: PullRequestBackportOptions;
 
   /**
    * Add a workflow that performs basic checks for pull requests, like
@@ -136,6 +158,15 @@ export class GitHub extends Component {
 
     if (options.pullRequestLint ?? true) {
       new PullRequestLint(this, options.pullRequestLintOptions);
+    }
+
+    if (options.pullRequestBackport ?? false) {
+      if (options.mergify) {
+        this.project.logger.warn(
+          "pullRequestBackport should not be used with mergify as mergify provides its own backport functionality. Please disable pullRequestBackport or mergify."
+        );
+      }
+      new PullRequestBackport(this, options.pullRequestBackportOptions);
     }
   }
 

@@ -109,6 +109,9 @@ exports[`devdirs 1`] = `
     "dot-notation": [
       "error",
     ],
+    "import/no-duplicates": [
+      "error",
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -157,9 +160,6 @@ exports[`devdirs 1`] = `
       },
     ],
     "no-bitwise": [
-      "error",
-    ],
-    "no-duplicate-imports": [
       "error",
     ],
     "no-multi-spaces": [
@@ -937,6 +937,9 @@ exports[`prettier snapshot 1`] = `
     "dot-notation": [
       "error",
     ],
+    "import/no-duplicates": [
+      "error",
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -965,9 +968,6 @@ exports[`prettier snapshot 1`] = `
       "error",
     ],
     "no-bitwise": [
-      "error",
-    ],
-    "no-duplicate-imports": [
       "error",
     ],
     "no-multiple-empty-lines": [

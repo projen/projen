@@ -448,7 +448,7 @@ glob pattern.
 | --- | --- |
 | <code><a href="#projen.javascript.Eslint.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.javascript.Eslint.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.javascript.Eslint.of">of</a></code> | Returns the singletone Eslint component of a project or undefined if there is none. |
+| <code><a href="#projen.javascript.Eslint.of">of</a></code> | Returns the singleton Eslint component of a project or undefined if there is none. |
 
 ---
 
@@ -508,7 +508,7 @@ import { javascript } from 'projen'
 javascript.Eslint.of(project: Project)
 ```
 
-Returns the singletone Eslint component of a project or undefined if there is none.
+Returns the singleton Eslint component of a project or undefined if there is none.
 
 ###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Eslint.of.parameter.project"></a>
 
@@ -4078,9 +4078,11 @@ new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptio
 | <code><a href="#projen.javascript.TypescriptConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.javascript.TypescriptConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.TypescriptConfig.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.javascript.TypescriptConfig.addExclude">addExclude</a></code> | *No description.* |
+| <code><a href="#projen.javascript.TypescriptConfig.addExclude">addExclude</a></code> | Add an exclude pattern to the `exclude` array of the TSConfig. |
 | <code><a href="#projen.javascript.TypescriptConfig.addExtends">addExtends</a></code> | Extend from base `TypescriptConfig` instance. |
-| <code><a href="#projen.javascript.TypescriptConfig.addInclude">addInclude</a></code> | *No description.* |
+| <code><a href="#projen.javascript.TypescriptConfig.addInclude">addInclude</a></code> | Add an include pattern to the `include` array of the TSConfig. |
+| <code><a href="#projen.javascript.TypescriptConfig.removeExclude">removeExclude</a></code> | Remove an exclude pattern from the `exclude` array of the TSConfig. |
+| <code><a href="#projen.javascript.TypescriptConfig.removeInclude">removeInclude</a></code> | Remove an include pattern from the `include` array of the TSConfig. |
 | <code><a href="#projen.javascript.TypescriptConfig.resolveExtendsPath">resolveExtendsPath</a></code> | Resolve valid TypeScript extends paths relative to this config. |
 
 ---
@@ -4125,9 +4127,15 @@ Synthesizes files to the project output directory.
 public addExclude(pattern: string): void
 ```
 
+Add an exclude pattern to the `exclude` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#exclude](https://www.typescriptlang.org/tsconfig#exclude)
+
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.addExclude.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to add.
 
 ---
 
@@ -4153,9 +4161,51 @@ Base `TypescriptConfig` instance.
 public addInclude(pattern: string): void
 ```
 
+Add an include pattern to the `include` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#include](https://www.typescriptlang.org/tsconfig#include)
+
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.addInclude.parameter.pattern"></a>
 
 - *Type:* string
+
+The pattern to add.
+
+---
+
+##### `removeExclude` <a name="removeExclude" id="projen.javascript.TypescriptConfig.removeExclude"></a>
+
+```typescript
+public removeExclude(pattern: string): void
+```
+
+Remove an exclude pattern from the `exclude` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#exclude](https://www.typescriptlang.org/tsconfig#exclude)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.removeExclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to remove.
+
+---
+
+##### `removeInclude` <a name="removeInclude" id="projen.javascript.TypescriptConfig.removeInclude"></a>
+
+```typescript
+public removeInclude(pattern: string): void
+```
+
+Remove an include pattern from the `include` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#include](https://www.typescriptlang.org/tsconfig#include)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TypescriptConfig.removeInclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to remove.
 
 ---
 
@@ -5701,6 +5751,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRc">lintProjenRc</a></code> | <code>boolean</code> | Should we lint .projenrc.js. |
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRcFile">lintProjenRcFile</a></code> | <code>string</code> | Projenrc file to lint. |
 | <code><a href="#projen.javascript.EslintOptions.property.prettier">prettier</a></code> | <code>boolean</code> | Enable prettier for code formatting. |
+| <code><a href="#projen.javascript.EslintOptions.property.sortExtends">sortExtends</a></code> | <code>projen.ICompareString</code> | The extends array in eslint is order dependent. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsAlwaysTryTypes">tsAlwaysTryTypes</a></code> | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to `tsconfig.json` which should be used by eslint. |
 | <code><a href="#projen.javascript.EslintOptions.property.yaml">yaml</a></code> | <code>boolean</code> | Write eslint configuration as YAML instead of JSON. |
@@ -5844,6 +5895,21 @@ Enable prettier for code formatting.
 
 ---
 
+##### `sortExtends`<sup>Optional</sup> <a name="sortExtends" id="projen.javascript.EslintOptions.property.sortExtends"></a>
+
+```typescript
+public readonly sortExtends: ICompareString;
+```
+
+- *Type:* projen.ICompareString
+- *Default:* Use known ESLint best practices to place "prettier" plugins at the end of the array
+
+The extends array in eslint is order dependent.
+
+This option allows to sort the extends array in any way seen fit.
+
+---
+
 ##### `tsAlwaysTryTypes`<sup>Optional</sup> <a name="tsAlwaysTryTypes" id="projen.javascript.EslintOptions.property.tsAlwaysTryTypes"></a>
 
 ```typescript
@@ -5908,7 +5974,7 @@ const eslintOverride: javascript.EslintOverride = { ... }
 | <code><a href="#projen.javascript.EslintOverride.property.extends">extends</a></code> | <code>string[]</code> | Config(s) to extend in this override. |
 | <code><a href="#projen.javascript.EslintOverride.property.parser">parser</a></code> | <code>string</code> | The overridden parser. |
 | <code><a href="#projen.javascript.EslintOverride.property.plugins">plugins</a></code> | <code>string[]</code> | `plugins` override. |
-| <code><a href="#projen.javascript.EslintOverride.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | The overriden rules. |
+| <code><a href="#projen.javascript.EslintOverride.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | The overridden rules. |
 
 ---
 
@@ -5982,7 +6048,7 @@ public readonly rules: {[ key: string ]: any};
 
 - *Type:* {[ key: string ]: any}
 
-The overriden rules.
+The overridden rules.
 
 ---
 
@@ -6277,11 +6343,11 @@ public readonly coverageProvider: string;
 ```
 
 - *Type:* string
-- *Default:* "babel"
+- *Default:* "v8"
 
 Indicates which provider should be used to instrument code for coverage.
 
-Allowed values are babel (default) or v8
+Allowed values are v8 (default) or babel
 
 ---
 
@@ -10756,6 +10822,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.jsxImportSource">jsxImportSource</a></code> | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.lib">lib</a></code> | <code>string[]</code> | Reference for type definitions / libraries to use (eg. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.module">module</a></code> | <code>string</code> | Sets the module system for the program. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.moduleDetection">moduleDetection</a></code> | <code><a href="#projen.javascript.TypeScriptModuleDetection">TypeScriptModuleDetection</a></code> | This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript). |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.moduleResolution">moduleResolution</a></code> | <code><a href="#projen.javascript.TypeScriptModuleResolution">TypeScriptModuleResolution</a></code> | Determine how modules get resolved. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.noEmit">noEmit</a></code> | <code>boolean</code> | Do not emit outputs. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.noEmitOnError">noEmitOnError</a></code> | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported. |
@@ -10783,6 +10850,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.stripInternal">stripInternal</a></code> | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.target">target</a></code> | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.tsBuildInfoFile">tsBuildInfoFile</a></code> | <code>string</code> | This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.typeRoots">typeRoots</a></code> | <code>string[]</code> | If typeRoots is specified, only packages under typeRoots will be included. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.types">types</a></code> | <code>string[]</code> | If types is specified, only packages listed will be included in the global scope. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.useUnknownInCatchVariables">useUnknownInCatchVariables</a></code> | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.verbatimModuleSyntax">verbatimModuleSyntax</a></code> | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers. |
@@ -11228,6 +11296,19 @@ See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
 
 ---
 
+##### `moduleDetection`<sup>Optional</sup> <a name="moduleDetection" id="projen.javascript.TypeScriptCompilerOptions.property.moduleDetection"></a>
+
+```typescript
+public readonly moduleDetection: TypeScriptModuleDetection;
+```
+
+- *Type:* <a href="#projen.javascript.TypeScriptModuleDetection">TypeScriptModuleDetection</a>
+- *Default:* "auto"
+
+This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript).
+
+---
+
 ##### `moduleResolution`<sup>Optional</sup> <a name="moduleResolution" id="projen.javascript.TypeScriptCompilerOptions.property.moduleResolution"></a>
 
 ```typescript
@@ -11603,6 +11684,20 @@ You can read more about composite projects in the handbook.
 
 ---
 
+##### `typeRoots`<sup>Optional</sup> <a name="typeRoots" id="projen.javascript.TypeScriptCompilerOptions.property.typeRoots"></a>
+
+```typescript
+public readonly typeRoots: string[];
+```
+
+- *Type:* string[]
+
+If typeRoots is specified, only packages under typeRoots will be included.
+
+> [https://www.typescriptlang.org/tsconfig/#typeRoots](https://www.typescriptlang.org/tsconfig/#typeRoots)
+
+---
+
 ##### `types`<sup>Optional</sup> <a name="types" id="projen.javascript.TypeScriptCompilerOptions.property.types"></a>
 
 ```typescript
@@ -11613,7 +11708,7 @@ public readonly types: string[];
 
 If types is specified, only packages listed will be included in the global scope.
 
-> [{@link https://www.typescriptlang.org/tsconfig#types}]({@link https://www.typescriptlang.org/tsconfig#types})
+> [https://www.typescriptlang.org/tsconfig#types](https://www.typescriptlang.org/tsconfig#types)
 
 ---
 
@@ -14818,6 +14913,49 @@ Passes `key` separately from props and always passes `children` as props (since 
 ##### `REACT_JSXDEV` <a name="REACT_JSXDEV" id="projen.javascript.TypeScriptJsxMode.REACT_JSXDEV"></a>
 
 Same as `REACT_JSX` with additional debug data.
+
+---
+
+
+### TypeScriptModuleDetection <a name="TypeScriptModuleDetection" id="projen.javascript.TypeScriptModuleDetection"></a>
+
+This setting controls how TypeScript determines whether a file is a script or a module.
+
+> [https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.TypeScriptModuleDetection.AUTO">AUTO</a></code> | TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx. |
+| <code><a href="#projen.javascript.TypeScriptModuleDetection.LEGACY">LEGACY</a></code> | The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module. |
+| <code><a href="#projen.javascript.TypeScriptModuleDetection.FORCE">FORCE</a></code> | Ensures that every non-declaration file is treated as a module. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.javascript.TypeScriptModuleDetection.AUTO"></a>
+
+TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+##### `LEGACY` <a name="LEGACY" id="projen.javascript.TypeScriptModuleDetection.LEGACY"></a>
+
+The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+##### `FORCE` <a name="FORCE" id="projen.javascript.TypeScriptModuleDetection.FORCE"></a>
+
+Ensures that every non-declaration file is treated as a module.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
 
 ---
 
