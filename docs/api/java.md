@@ -1696,6 +1696,7 @@ new java.Pom(project: Project, options: PomOptions)
 | <code><a href="#projen.java.Pom.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.java.Pom.addDependency">addDependency</a></code> | Adds a runtime dependency. |
 | <code><a href="#projen.java.Pom.addPlugin">addPlugin</a></code> | Adds a build plugin to the pom. |
+| <code><a href="#projen.java.Pom.addPluginRepository">addPluginRepository</a></code> | *No description.* |
 | <code><a href="#projen.java.Pom.addProperty">addProperty</a></code> | Adds a key/value property to the pom. |
 | <code><a href="#projen.java.Pom.addRepository">addRepository</a></code> | Adds a repository to the pom. |
 | <code><a href="#projen.java.Pom.addTestDependency">addTestDependency</a></code> | Adds a test dependency. |
@@ -1775,6 +1776,18 @@ dependency spec (`group/artifact@version`).
 - *Type:* <a href="#projen.java.PluginOptions">PluginOptions</a>
 
 plugin options.
+
+---
+
+##### `addPluginRepository` <a name="addPluginRepository" id="projen.java.Pom.addPluginRepository"></a>
+
+```typescript
+public addPluginRepository(repository: MavenRepository): void
+```
+
+###### `repository`<sup>Required</sup> <a name="repository" id="projen.java.Pom.addPluginRepository.parameter.repository"></a>
+
+- *Type:* <a href="#projen.java.MavenRepository">MavenRepository</a>
 
 ---
 
@@ -3952,6 +3965,7 @@ const mavenRepository: java.MavenRepository = { ... }
 | <code><a href="#projen.java.MavenRepository.property.url">url</a></code> | <code>string</code> | The url of the repository. |
 | <code><a href="#projen.java.MavenRepository.property.layout">layout</a></code> | <code>string</code> | The layout of the repository. |
 | <code><a href="#projen.java.MavenRepository.property.name">name</a></code> | <code>string</code> | The name of the repository. |
+| <code><a href="#projen.java.MavenRepository.property.policyRepository">policyRepository</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | Repository Policy. |
 
 ---
 
@@ -4000,6 +4014,76 @@ public readonly name: string;
 - *Type:* string
 
 The name of the repository.
+
+---
+
+##### `policyRepository`<sup>Optional</sup> <a name="policyRepository" id="projen.java.MavenRepository.property.policyRepository"></a>
+
+```typescript
+public readonly policyRepository: MavenRepositoryPolicy;
+```
+
+- *Type:* <a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a>
+
+Repository Policy.
+
+---
+
+### MavenRepositoryPolicy <a name="MavenRepositoryPolicy" id="projen.java.MavenRepositoryPolicy"></a>
+
+Represents a Maven Repository Policy.
+
+> [https://maven.apache.org/settings.html#repositories](https://maven.apache.org/settings.html#repositories)
+
+#### Initializer <a name="Initializer" id="projen.java.MavenRepositoryPolicy.Initializer"></a>
+
+```typescript
+import { java } from 'projen'
+
+const mavenRepositoryPolicy: java.MavenRepositoryPolicy = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.java.MavenRepositoryPolicy.property.checksumPolicy">checksumPolicy</a></code> | <code><a href="#projen.java.ChecksumPolicy">ChecksumPolicy</a></code> | Checksum Policy. |
+| <code><a href="#projen.java.MavenRepositoryPolicy.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.java.MavenRepositoryPolicy.property.updatePolicy">updatePolicy</a></code> | <code><a href="#projen.java.UpdatePolicy">UpdatePolicy</a></code> | Update Policy. |
+
+---
+
+##### `checksumPolicy`<sup>Optional</sup> <a name="checksumPolicy" id="projen.java.MavenRepositoryPolicy.property.checksumPolicy"></a>
+
+```typescript
+public readonly checksumPolicy: ChecksumPolicy;
+```
+
+- *Type:* <a href="#projen.java.ChecksumPolicy">ChecksumPolicy</a>
+
+Checksum Policy.
+
+---
+
+##### `enabled`<sup>Optional</sup> <a name="enabled" id="projen.java.MavenRepositoryPolicy.property.enabled"></a>
+
+```typescript
+public readonly enabled: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `updatePolicy`<sup>Optional</sup> <a name="updatePolicy" id="projen.java.MavenRepositoryPolicy.property.updatePolicy"></a>
+
+```typescript
+public readonly updatePolicy: UpdatePolicy;
+```
+
+- *Type:* <a href="#projen.java.UpdatePolicy">UpdatePolicy</a>
+
+Update Policy.
 
 ---
 
@@ -4447,5 +4531,113 @@ If this is disabled, projenrc should be under
 
 ---
 
+## Classes <a name="Classes" id="Classes"></a>
 
+### UpdatePolicy <a name="UpdatePolicy" id="projen.java.UpdatePolicy"></a>
+
+#### Initializers <a name="Initializers" id="projen.java.UpdatePolicy.Initializer"></a>
+
+```typescript
+import { java } from 'projen'
+
+new java.UpdatePolicy()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.java.UpdatePolicy.interval">interval</a></code> | *No description.* |
+
+---
+
+##### `interval` <a name="interval" id="projen.java.UpdatePolicy.interval"></a>
+
+```typescript
+import { java } from 'projen'
+
+java.UpdatePolicy.interval(num: number)
+```
+
+###### `num`<sup>Required</sup> <a name="num" id="projen.java.UpdatePolicy.interval.parameter.num"></a>
+
+- *Type:* number
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.java.UpdatePolicy.property.always">always</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.java.UpdatePolicy.property.never">never</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.java.UpdatePolicy.property.update">update</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `always`<sup>Required</sup> <a name="always" id="projen.java.UpdatePolicy.property.always"></a>
+
+```typescript
+public readonly always: string;
+```
+
+- *Type:* string
+
+---
+
+##### `never`<sup>Required</sup> <a name="never" id="projen.java.UpdatePolicy.property.never"></a>
+
+```typescript
+public readonly never: string;
+```
+
+- *Type:* string
+
+---
+
+##### `update`<sup>Required</sup> <a name="update" id="projen.java.UpdatePolicy.property.update"></a>
+
+```typescript
+public readonly update: string;
+```
+
+- *Type:* string
+
+---
+
+
+
+## Enums <a name="Enums" id="Enums"></a>
+
+### ChecksumPolicy <a name="ChecksumPolicy" id="projen.java.ChecksumPolicy"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.java.ChecksumPolicy.IGNORE">IGNORE</a></code> | *No description.* |
+| <code><a href="#projen.java.ChecksumPolicy.FAIL">FAIL</a></code> | *No description.* |
+| <code><a href="#projen.java.ChecksumPolicy.WARN">WARN</a></code> | *No description.* |
+
+---
+
+##### `IGNORE` <a name="IGNORE" id="projen.java.ChecksumPolicy.IGNORE"></a>
+
+---
+
+
+##### `FAIL` <a name="FAIL" id="projen.java.ChecksumPolicy.FAIL"></a>
+
+---
+
+
+##### `WARN` <a name="WARN" id="projen.java.ChecksumPolicy.WARN"></a>
+
+---
 
