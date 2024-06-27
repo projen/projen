@@ -127,6 +127,7 @@ export interface ParentPom {
    */
   readonly relativePath?: string;
 }
+
 /**
  * Represents a Maven repository
  * @see https://maven.apache.org/guides/introduction/introduction-to-repositories.html
@@ -148,6 +149,55 @@ export interface MavenRepository {
    * The layout of the repository
    */
   readonly layout?: string;
+  /**
+   * Repository Policy
+   */
+  readonly policyRepository?: MavenRepositoryPolicy;
+}
+
+/**
+ * Represents a Maven Repository Policy
+ * @see https://maven.apache.org/settings.html#repositories
+ */
+export interface MavenRepositoryPolicy {
+  /*
+   * Is enabled
+   */
+  readonly enabled?: boolean;
+
+  /**
+   * Update Policy
+   */
+  readonly updatePolicy?: UpdatePolicy;
+
+  /**
+   * Checksum Policy
+   */
+  readonly checksumPolicy?: ChecksumPolicy;
+}
+
+export class UpdatePolicy {
+  static get always() {
+    return "always";
+  }
+
+  static get update() {
+    return "update";
+  }
+
+  static get never() {
+    return "never";
+  }
+
+  static interval(num: number) {
+    return `interval:${num}`;
+  }
+}
+
+export enum ChecksumPolicy {
+  IGNORE = "ignore",
+  FAIL = "fail",
+  WARN = "warn",
 }
 
 /**
@@ -204,6 +254,8 @@ export class Pom extends Component {
   private readonly properties: Record<string, any> = {};
 
   private readonly repositories: MavenRepository[] = [];
+
+  private readonly pluginRepositories: MavenRepository[] = [];
 
   constructor(project: Project, options: PomOptions) {
     super(project);
@@ -271,6 +323,10 @@ export class Pom extends Component {
     this.repositories.push(repository);
   }
 
+  public addPluginRepository(repository: MavenRepository) {
+    this.pluginRepositories.push(repository);
+  }
+
   private synthPom() {
     return resolve(
       {
@@ -288,6 +344,7 @@ export class Pom extends Component {
           parent: this.parentPom,
           ...this.synthRepositories(),
           ...this.synthDependencies(),
+          ...this.synthPluginRepositories(),
         },
       },
       { omitEmpty: true }
@@ -343,6 +400,16 @@ export class Pom extends Component {
 
     return {
       repositories: { repository: this.repositories },
+    };
+  }
+
+  private synthPluginRepositories() {
+    if (this.pluginRepositories.length === 0) {
+      return;
+    }
+
+    return {
+      pluginRepositories: { pluginRepositories: this.pluginRepositories },
     };
   }
 }
