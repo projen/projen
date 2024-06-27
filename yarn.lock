@@ -3630,17 +3630,17 @@ jsii-diff@^1.101.0:
     log4js "^6.9.1"
     yargs "^16.2.0"
 
-jsii-docgen@^10.4.16:
-  version "10.4.16"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.4.16.tgz#abf3b7d6c89c9a2667ff5fe4724b8545d820ef45"
-  integrity sha512-d2YndKNk7ihifsixiChFKQZoimKZbaGpTktKkNEp7wCUhV9RcE3E5dq6GQLIU/9BWxAK4MZvrtRV+vD8Ub6Ieg==
+jsii-docgen@^10.4.17:
+  version "10.4.17"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.4.17.tgz#9131146db170acda99de80be3066f6d14fadb018"
+  integrity sha512-wW/icqHbjif+sdoC3ZIvk4Mc5RehV93I/fT11onxWO6RgOOhab1qTybP+1u1JdtRbjTNC0LmdyBlHkxTUsXeKA==
   dependencies:
-    "@jsii/spec" "^1.100.0"
+    "@jsii/spec" "^1.101.0"
     case "^1.6.3"
     fs-extra "^10.1.0"
     glob "^8.1.0"
     glob-promise "^6.0.7"
-    jsii-reflect "^1.100.0"
+    jsii-reflect "^1.101.0"
     semver "^7.6.2"
     yargs "^16.2.0"
 
@@ -3662,7 +3662,7 @@ jsii-pacmak@^1.101.0:
     xmlbuilder "^15.1.1"
     yargs "^16.2.0"
 
-jsii-reflect@^1.100.0, jsii-reflect@^1.101.0:
+jsii-reflect@^1.101.0:
   version "1.101.0"
   resolved "https://registry.yarnpkg.com/jsii-reflect/-/jsii-reflect-1.101.0.tgz#e96fa687ba9db5c4b70995839aacceea11abc288"
   integrity sha512-ZCFb+laktj/ekNadUYksf+jLZq4fjoQeNe344GwslJOaemGjgAeqy0atV2H8nvTYU8ubszFApUPpdoRvtxgdPw==
@@ -3694,12 +3694,12 @@ jsii-rosetta@5.4.x:
     yargs "^17.7.2"
 
 jsii@5.4.x, jsii@~5.4.0:
-  version "5.4.23"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.23.tgz#25e83bac4c55b93d764e01d0f631113b21c00f45"
-  integrity sha512-HTJ/xogVNMuk/PhUFba9b8puPJBcvpOE2Je//TO+wGmFaHHTSrIacJPAvXSmVSs5WUNye7Ji2dOz5N2xtzi72Q==
+  version "5.4.24"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.4.24.tgz#69701c7a317f64b5a7d0687a7844bf68d4b1c91d"
+  integrity sha512-9xC4LDmWCrhNKQk2LApB5KSDko8SR0VaTqd97fwjxmYmVImUmbMEiqXGUA/AD6NUAePlexoFeX929z2EPJ4s+g==
   dependencies:
-    "@jsii/check-node" "1.100.0"
-    "@jsii/spec" "^1.100.0"
+    "@jsii/check-node" "1.101.0"
+    "@jsii/spec" "^1.101.0"
     case "^1.6.3"
     chalk "^4"
     downlevel-dts "^0.11.0"
