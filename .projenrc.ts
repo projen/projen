@@ -17,6 +17,7 @@ import {
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
+import { UpdateSnapshot } from "./src/javascript";
 
 const bootstrapScriptFile = "projen.js";
 
@@ -110,6 +111,7 @@ const project = new JsiiProject({
   jestOptions: {
     // makes it very hard to iterate with jest --watch
     coverageText: false,
+    updateSnapshot: UpdateSnapshot.NEVER,
     jestConfig: {
       // Adding text-summary as a replacement for text
       coverageReporters: [

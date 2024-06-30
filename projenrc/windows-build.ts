@@ -43,8 +43,8 @@ export class WindowsBuild extends Component {
       JsonPatch.add(buildJobPath("/strategy"), {
         matrix: {
           runner: [
-            { os: "ubuntu-latest", experimental: false },
-            { os: "windows-latest", experimental: true },
+            { os: "ubuntu-latest", experimental: false, shell: "bash" },
+            { os: "windows-latest", experimental: true, shell: "cmd" },
           ],
         },
       }),
@@ -61,8 +61,20 @@ export class WindowsBuild extends Component {
         "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
       ),
 
+      JsonPatch.add(
+        buildJobPath("/steps/3/if"),
+        "${{ !matrix.runner.experimental }}"
+      ),
+
       // Skip steps that shouldn't run on Windows
       ...skippedStepPatches,
+
+      JsonPatch.add(buildJobPath("/steps/4"), {
+        name: "build on windows",
+        run: "node ./projen.js build",
+        shell: "cmd",
+        if: "${{ matrix.runner.experimental }}",
+      }),
 
       // Rename workflow
       JsonPatch.move(buildJobPath(), `/jobs/${JOB_BUILD_MATRIX}`),

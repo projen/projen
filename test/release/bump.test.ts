@@ -577,7 +577,7 @@ async function testBump(
     await fs.mkdir(dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, message);
     git("add .");
-    git(`commit -m "${message}"`);
+    git(`commit -F "${filePath}"`);
   };
 
   await commit("initial commit");

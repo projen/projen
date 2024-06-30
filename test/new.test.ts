@@ -14,7 +14,7 @@ import {
   withProjectDir,
 } from "./util";
 import * as inventory from "../src/inventory";
-import { execCapture } from "../src/util";
+import { execCapture, normalizePersistedPath } from "../src/util";
 
 const EXCLUDE_FROM_SNAPSHOT = [".git/**", "node_modules/**"];
 const EXCLUDE_FROM_SNAPSHOT_EXTENDED = [
@@ -204,6 +204,7 @@ describe("projen new --from", () => {
           projectdir,
           "pepperize-projen-awscdk-app-ts-0.0.333.tgz"
         );
+        const normalizedTarball = normalizePersistedPath(tarball);
 
         execProjenCLI(projectdir, ["new", "--from", tarball, "--no-post"]);
 
@@ -221,13 +222,13 @@ describe("projen new --from", () => {
         expect(actual["package.json"]).toBeDefined();
         expect(actual["package.json"]).toHaveProperty("devDependencies");
         expect(actual["package.json"].devDependencies).toMatchObject({
-          [tarball]: "*",
+          [normalizedTarball]: "*",
         });
         expect(actual[".projenrc.ts"]).toBeDefined();
         expect(actual[".projenrc.ts"]).toContain(
           `import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts`
         );
-        expect(actual[".projenrc.ts"]).toContain(tarball);
+        expect(actual[".projenrc.ts"]).toContain(normalizedTarball);
       });
     });
 

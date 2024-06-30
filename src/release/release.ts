@@ -26,6 +26,7 @@ import {
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
 import { Task } from "../task";
+import { normalizePersistedPath } from "../util";
 import { workflowNameForProject } from "../util/name";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 import { ReleasableCommits, Version } from "../version";
@@ -680,6 +681,10 @@ export class Release extends Component {
       this.project.root.outdir,
       this.project.outdir
     );
+    const normalizedProjectPathRelativeToRoot = normalizePersistedPath(
+      projectPathRelativeToRoot
+    );
+
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
@@ -692,8 +697,8 @@ export class Release extends Component {
         with: {
           name: BUILD_ARTIFACT_NAME,
           path:
-            projectPathRelativeToRoot.length > 0
-              ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+            normalizedProjectPathRelativeToRoot.length > 0
+              ? `${normalizedProjectPathRelativeToRoot}/${this.artifactsDirectory}`
               : this.artifactsDirectory,
         },
       })
@@ -740,11 +745,11 @@ export class Release extends Component {
         preBuildSteps,
         postBuildSteps,
         jobDefaults:
-          projectPathRelativeToRoot.length > 0 // is subproject
+          normalizedProjectPathRelativeToRoot.length > 0 // is subproject
             ? {
                 run: {
                   workingDirectory: ensureRelativePathStartsWithDot(
-                    projectPathRelativeToRoot
+                    normalizedProjectPathRelativeToRoot
                   ),
                 },
               }
