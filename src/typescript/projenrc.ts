@@ -94,6 +94,11 @@ export class Projenrc extends ProjenrcFile {
         "import/no-extraneous-dependencies": "off",
       },
     });
+
+    this._tsProject.jest?.discoverTestMatchPatternsForDirs(
+      [this._projenCodeDir],
+      this._tsProject.tsconfig?.compilerOptions?.allowJs ? undefined : "ts?(x)"
+    );
   }
 
   private generateProjenrc() {
