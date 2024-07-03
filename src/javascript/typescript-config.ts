@@ -636,7 +636,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @see https://www.typescriptlang.org/tsconfig#allowUnusedLabels
    */
-  readonly allowUnusedLabels?: false;
+  readonly allowUnusedLabels?: boolean;
 
   /**
    * Allow Unreachable Code
@@ -651,7 +651,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @see https://www.typescriptlang.org/tsconfig#allowUnreachableCode
    */
-  readonly allowUnreachableCode?: false;
+  readonly allowUnreachableCode?: boolean;
 
   /**
    * Check JS
@@ -662,7 +662,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @see https://www.typescriptlang.org/tsconfig#checkJs
    */
-  readonly checkJs?: true;
+  readonly checkJs?: boolean;
 }
 
 /**
