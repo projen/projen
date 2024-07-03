@@ -870,12 +870,12 @@ The pattern (regular expression).
 ##### `discoverTestMatchPatternsForDirs` <a name="discoverTestMatchPatternsForDirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs"></a>
 
 ```typescript
-public discoverTestMatchPatternsForDirs(dirs?: string[], fileExtensionPattern?: string): void
+public discoverTestMatchPatternsForDirs(dirs: string[], options?: JestDiscoverTestMatchPatternsForDirsOptions): void
 ```
 
 Build standard test match patterns for a directory.
 
-###### `dirs`<sup>Optional</sup> <a name="dirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.dirs"></a>
+###### `dirs`<sup>Required</sup> <a name="dirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.dirs"></a>
 
 - *Type:* string[]
 
@@ -885,13 +885,11 @@ Matches any folder if not specified or an empty array.
 
 ---
 
-###### `fileExtensionPattern`<sup>Optional</sup> <a name="fileExtensionPattern" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.fileExtensionPattern"></a>
+###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.options"></a>
 
-- *Type:* string
+- *Type:* <a href="#projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions">JestDiscoverTestMatchPatternsForDirsOptions</a>
 
-The file extension pattern to use.
-
-Defaults to "[jt]s?(x)".
+Options for building test match patterns.
 
 ---
 
@@ -7175,6 +7173,40 @@ public readonly watchPlugins: WatchPlugin[];
 
 - *Type:* <a href="#projen.javascript.WatchPlugin">WatchPlugin</a>[]
 - *Default:* 
+
+---
+
+### JestDiscoverTestMatchPatternsForDirsOptions <a name="JestDiscoverTestMatchPatternsForDirsOptions" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions"></a>
+
+Options for discoverTestMatchPatternsForDirs.
+
+#### Initializer <a name="Initializer" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const jestDiscoverTestMatchPatternsForDirsOptions: javascript.JestDiscoverTestMatchPatternsForDirsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.property.fileExtensionPattern">fileExtensionPattern</a></code> | <code>string</code> | The file extension pattern to use. |
+
+---
+
+##### `fileExtensionPattern`<sup>Optional</sup> <a name="fileExtensionPattern" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.property.fileExtensionPattern"></a>
+
+```typescript
+public readonly fileExtensionPattern: string;
+```
+
+- *Type:* string
+
+The file extension pattern to use.
+
+Defaults to "[jt]s?(x)".
 
 ---
 

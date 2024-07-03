@@ -97,7 +97,11 @@ export class Projenrc extends ProjenrcFile {
 
     this._tsProject.jest?.discoverTestMatchPatternsForDirs(
       [this._projenCodeDir],
-      this._tsProject.tsconfig?.compilerOptions?.allowJs ? undefined : "ts?(x)"
+      {
+        fileExtensionPattern: this._tsProject.tsconfig?.compilerOptions?.allowJs
+          ? undefined
+          : "ts?(x)",
+      }
     );
   }
 

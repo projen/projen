@@ -488,6 +488,14 @@ export interface JestConfigOptions {
   readonly [name: string]: any;
 }
 
+/**
+ * Options for discoverTestMatchPatternsForDirs.
+ */
+export interface JestDiscoverTestMatchPatternsForDirsOptions {
+  /** The file extension pattern to use. Defaults to "[jt]s?(x)". */
+  readonly fileExtensionPattern?: string;
+}
+
 export class Transform {
   public constructor(
     private readonly name: string,
@@ -756,7 +764,7 @@ export class Jest extends Component {
       testMatch: () =>
         this.testMatch.length > 0
           ? this.testMatch
-          : this.buildTestMatchPatternsForDirs(),
+          : [`**/__tests__/**/*.[jt]s?(x)`, `**/?(*.)+(spec|test).[jt]s?(x)`], // Jest defaults
       reporters: this.reporters,
       snapshotResolver: (() => this._snapshotResolver) as any,
     } satisfies JestConfigOptions;
@@ -825,16 +833,13 @@ export class Jest extends Component {
   /**
    * Build standard test match patterns for a directory.
    * @param dirs The directories to add test matches for. Matches any folder if not specified or an empty array.
-   * @param fileExtensionPattern The file extension pattern to use. Defaults to "[jt]s?(x)".
+   * @param options Options for building test match patterns.
    */
   public discoverTestMatchPatternsForDirs(
-    dirs?: string[],
-    fileExtensionPattern = "[jt]s?(x)"
+    dirs: string[],
+    options?: JestDiscoverTestMatchPatternsForDirsOptions
   ): void {
-    const testPatterns = this.buildTestMatchPatternsForDirs(
-      dirs,
-      fileExtensionPattern
-    );
+    const testPatterns = this.buildTestMatchPatternsForDirs(dirs, options);
 
     testPatterns.forEach((pattern) => this.addTestMatch(pattern));
   }
@@ -846,24 +851,17 @@ export class Jest extends Component {
    * @returns The test match patterns.
    */
   private buildTestMatchPatternsForDirs(
-    dirs?: string[],
-    fileExtensionPattern = "[jt]s?(x)"
+    dirs: string[],
+    options?: JestDiscoverTestMatchPatternsForDirsOptions
   ): string[] {
-    if (dirs && dirs.length > 0) {
-      return [
-        `<rootDir>/@(${dirs.join(
-          "|"
-        )})/**/?(*.)+(spec|test).${fileExtensionPattern}`,
-        `<rootDir>/@(${dirs.join(
-          "|"
-        )})/**/__tests__/**/*.${fileExtensionPattern}`,
-      ];
-    }
-
-    // Jest defaults
+    const fileExtensionPattern = options?.fileExtensionPattern ?? "[jt]s?(x)";
     return [
-      `**/__tests__/**/*.${fileExtensionPattern}`,
-      `**/?(*.)+(spec|test).${fileExtensionPattern}`,
+      `<rootDir>/@(${dirs.join(
+        "|"
+      )})/**/?(*.)+(spec|test).${fileExtensionPattern}`,
+      `<rootDir>/@(${dirs.join(
+        "|"
+      )})/**/__tests__/**/*.${fileExtensionPattern}`,
     ];
   }
 
