@@ -1118,9 +1118,9 @@ acorn-walk@^8.1.1:
     acorn "^8.11.0"
 
 acorn@^8.11.0, acorn@^8.4.1, acorn@^8.9.0:
-  version "8.12.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.12.0.tgz#1627bfa2e058148036133b8d9b51a700663c294c"
-  integrity sha512-RTvkC4w+KNXrM39/lWCUaG0IbRkWdCv7W/IOW9oU6SawyxulvkQy5HQPVTKxEjczcUvapcrw3cFx/60VN/NRNw==
+  version "8.12.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.12.1.tgz#71616bdccbe25e27a54439e0046e89ca76df2248"
+  integrity sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==
 
 add-stream@^1.0.0:
   version "1.0.0"
@@ -1481,9 +1481,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001629:
-  version "1.0.30001639"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001639.tgz#972b3a6adeacdd8f46af5fc7f771e9639f6c1521"
-  integrity sha512-eFHflNTBIlFwP2AIKaYuBQN/apnUoKNhBdza8ZnW/h2di4LCZ4xFqYlxUxo+LQ76KFI1PGcC1QDxMbxTZpSCAg==
+  version "1.0.30001640"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001640.tgz#32c467d4bf1f1a0faa63fc793c2ba81169e7652f"
+  integrity sha512-lA4VMpW0PSUrFnkmVuEKBUovSWKhj7puyCg8StBChgu298N1AtuF1sKWEvfDuimSEDbhlb/KqPKC3fs1HbuQUA==
 
 case@^1.6.3:
   version "1.6.3"
@@ -5351,9 +5351,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.6.0-dev.20240702"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240702.tgz#7cc7d517bdecff718710a92594cc5acf7ebe1047"
-  integrity sha512-hbRazJD/2++Y7fBv6NZtCyoMfoVYmuDlGs+jqdWicZfXP6Fp8q9FDFnuvYpKNq1fXwBrGIUXEZlXssvXIWy/FQ==
+  version "5.6.0-dev.20240703"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240703.tgz#4b1fad9790ff4827a9210c6943b3039b53a739da"
+  integrity sha512-AAOGWtykhMpxB4l+5CwojT2aBVAszalz9guzYaZMavmKHWxm3HciR+cIcKqDgR22hR7fPBJHtOti7uFCo4mt4A==
 
 uglify-js@^3.1.4:
   version "3.18.0"
