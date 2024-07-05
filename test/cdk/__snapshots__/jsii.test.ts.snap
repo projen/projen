@@ -1604,7 +1604,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     {
       "uses": "actions/setup-go@v5",
       "with": {
-        "go-version": "^1.16.0",
+        "go-version": "^1.18.0",
       },
     },
     {
@@ -1663,7 +1663,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       "uses": "actions/setup-java@v4",
       "with": {
         "distribution": "temurin",
-        "java-version": "11.x",
+        "java-version": "20.x",
       },
     },
     {
@@ -1795,7 +1795,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     {
       "uses": "actions/setup-dotnet@v4",
       "with": {
-        "dotnet-version": "3.x",
+        "dotnet-version": "6.x",
       },
     },
     {
@@ -2290,7 +2290,7 @@ jobs:
           node-version: 18.x
       - uses: actions/setup-go@v5
         with:
-          go-version: ^1.16.0
+          go-version: ^1.18.0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2453,7 +2453,7 @@ jobs:
           node-version: 18.x
       - uses: actions/setup-go@v5
         with:
-          go-version: ^1.16.0
+          go-version: ^1.18.0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2613,7 +2613,7 @@ jobs:
           node-version: 18.x
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 3.x
+          dotnet-version: 6.x
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2771,7 +2771,7 @@ jobs:
           node-version: 18.x
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 3.x
+          dotnet-version: 6.x
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
