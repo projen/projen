@@ -956,9 +956,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.14.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.9.tgz#12e8e765ab27f8c421a1820c99f5f313a933b420"
-  integrity sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==
+  version "20.14.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.10.tgz#a1a218290f1b6428682e3af044785e5874db469a"
+  integrity sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==
   dependencies:
     undici-types "~5.26.4"
 
@@ -2069,9 +2069,9 @@ downlevel-dts@^0.11.0:
     typescript next
 
 electron-to-chromium@^1.4.796:
-  version "1.4.816"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.816.tgz#3624649d1e7fde5cdbadf59d31a524245d8ee85f"
-  integrity sha512-EKH5X5oqC6hLmiS7/vYtZHZFTNdhsYG5NVPRN6Yn0kQHNBlT59+xSM8HBy66P5fxWpKgZbPqb+diC64ng295Jw==
+  version "1.4.817"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.817.tgz#da9808e35212408cf4052b51679786fcb54fec39"
+  integrity sha512-3znu+lZMIbTe8ZOs360OMJvVroVF2NpNI8T5jfLnDetVvj0uNmIucZzQVYMSJfsu9f47Ssox1Gt46PR+R+1JUg==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5351,9 +5351,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.6.0-dev.20240704"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240704.tgz#0353b1d32c5df73b6eb2d0024b573610fa1ca75c"
-  integrity sha512-dQ7dYp9FShLdziOgRehsozaKrvgCjR0/LTtrGAUq3Ec/gx0Tf38wmd/lGyNREOqfNMJkQCbVBMMCATXdj0aa9g==
+  version "5.6.0-dev.20240705"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240705.tgz#ed36b36611136af840fe90d5f82289ff2d8e693b"
+  integrity sha512-Z1GBiSYZqdb2B4kkFvX6sDIFZzCGD7+RtHI2/ci9IIZA1CPS6qzbiB/D2RmPupSCXpQ8FRqax1RU0tlD/n70oA==
 
 uglify-js@^3.1.4:
   version "3.18.0"
