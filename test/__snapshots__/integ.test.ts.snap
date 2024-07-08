@@ -379,8 +379,8 @@ jobs:
     steps:
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 20.x
+          distribution: corretto
+          java-version: "11"
       - uses: actions/setup-node@v4
         with:
           node-version: 16.0.0
@@ -593,8 +593,8 @@ jobs:
     steps:
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 20.x
+          distribution: corretto
+          java-version: "11"
       - uses: actions/setup-node@v4
         with:
           node-version: 16.0.0
