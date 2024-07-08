@@ -1663,7 +1663,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       "uses": "actions/setup-java@v4",
       "with": {
         "distribution": "corretto",
-        "java-version": "16",
+        "java-version": "11",
       },
     },
     {
@@ -2016,7 +2016,7 @@ exports[`language bindings snapshot java 1`] = `
       "uses": "actions/setup-java@v4",
       "with": {
         "distribution": "corretto",
-        "java-version": "16",
+        "java-version": "11",
       },
     },
     {

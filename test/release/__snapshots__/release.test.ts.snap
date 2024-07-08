@@ -3103,7 +3103,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: corretto
-          java-version: "16"
+          java-version: "11"
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
@@ -4415,7 +4415,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: corretto
-          java-version: "16"
+          java-version: "11"
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
