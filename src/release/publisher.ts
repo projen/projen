@@ -24,7 +24,7 @@ const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 const PUBLIB_TOOLCHAIN = {
   js: {},
-  java: { java: { version: "20.x" } },
+  java: { java: { version: "11" } },
   python: { python: { version: "3.x" } },
   go: { go: { version: "^1.18.0" } },
   dotnet: { dotnet: { version: "6.x" } },
