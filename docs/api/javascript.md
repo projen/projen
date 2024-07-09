@@ -679,6 +679,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
 | <code><a href="#projen.javascript.Jest.addWatchIgnorePattern">addWatchIgnorePattern</a></code> | Adds a watch ignore pattern. |
+| <code><a href="#projen.javascript.Jest.discoverTestMatchPatternsForDirs">discoverTestMatchPatternsForDirs</a></code> | Build standard test match patterns for a directory. |
 
 ---
 
@@ -863,6 +864,32 @@ Adds a watch ignore pattern.
 - *Type:* string
 
 The pattern (regular expression).
+
+---
+
+##### `discoverTestMatchPatternsForDirs` <a name="discoverTestMatchPatternsForDirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs"></a>
+
+```typescript
+public discoverTestMatchPatternsForDirs(dirs: string[], options?: JestDiscoverTestMatchPatternsForDirsOptions): void
+```
+
+Build standard test match patterns for a directory.
+
+###### `dirs`<sup>Required</sup> <a name="dirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.dirs"></a>
+
+- *Type:* string[]
+
+The directories to add test matches for.
+
+Matches any folder if not specified or an empty array.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions">JestDiscoverTestMatchPatternsForDirsOptions</a>
+
+Options for building test match patterns.
 
 ---
 
@@ -3820,7 +3847,10 @@ The .prettierIgnore file.
 
 ### Projenrc <a name="Projenrc" id="projen.javascript.Projenrc"></a>
 
-Sets up a javascript project to use TypeScript for projenrc.
+A projenrc file written in JavaScript.
+
+This component can be instantiated in any type of project
+and has no expectations around the project's main language.
 
 #### Initializers <a name="Initializers" id="projen.javascript.Projenrc.Initializer"></a>
 
@@ -7143,6 +7173,40 @@ public readonly watchPlugins: WatchPlugin[];
 
 - *Type:* <a href="#projen.javascript.WatchPlugin">WatchPlugin</a>[]
 - *Default:* 
+
+---
+
+### JestDiscoverTestMatchPatternsForDirsOptions <a name="JestDiscoverTestMatchPatternsForDirsOptions" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions"></a>
+
+Options for discoverTestMatchPatternsForDirs.
+
+#### Initializer <a name="Initializer" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const jestDiscoverTestMatchPatternsForDirsOptions: javascript.JestDiscoverTestMatchPatternsForDirsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.property.fileExtensionPattern">fileExtensionPattern</a></code> | <code>string</code> | The file extension pattern to use. |
+
+---
+
+##### `fileExtensionPattern`<sup>Optional</sup> <a name="fileExtensionPattern" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.property.fileExtensionPattern"></a>
+
+```typescript
+public readonly fileExtensionPattern: string;
+```
+
+- *Type:* string
+
+The file extension pattern to use.
+
+Defaults to "[jt]s?(x)".
 
 ---
 
