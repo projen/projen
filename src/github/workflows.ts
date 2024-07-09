@@ -367,7 +367,7 @@ function setupTools(tools: workflows.Tools) {
   if (tools.java) {
     steps.push({
       uses: "actions/setup-java@v4",
-      with: { distribution: "temurin", "java-version": tools.java.version },
+      with: { distribution: "corretto", "java-version": tools.java.version },
     });
   }
 

@@ -263,6 +263,8 @@ export interface IncludeRule {
   readonly exists?: string[];
   /* Clauses to specify when to add a job to a pipeline.*/
   readonly if?: string;
+  /* Specify to update a job’s needs for specific conditions. */
+  readonly needs?: string[];
   /* Execute scripts after a waiting period written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly startIn?: string;
   /* Use variables in rules to define variables for specific conditions. */
