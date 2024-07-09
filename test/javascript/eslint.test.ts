@@ -182,6 +182,26 @@ test("creates a eslint task", () => {
   expect(eslint.eslintTask._renderSpec()).toMatchObject(manifest.tasks.eslint);
 });
 
+test("excludes --fix flag when fix is disabled", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    commandOptions: { fix: false },
+  });
+
+  // THEN
+  const taskStep = eslint.eslintTask.steps[0];
+  expect(taskStep.exec).not.toContain("--fix");
+  expect(taskStep?.args ?? []).not.toContain(expect.stringContaining("--fix"));
+});
+
 test("omit --ext when no extensions are specified", () => {
   // GIVEN
   const project = new NodeProject({
@@ -220,6 +240,25 @@ test("add --ext when extensions are specified", () => {
   // THEN
   const taskStep = eslint.eslintTask.steps[0];
   expect(taskStep.exec).toContain("--ext");
+});
+
+test("supports specifying extra task args", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+    commandOptions: { extraFlagArgs: ["--cache"] },
+  });
+
+  // THEN
+  const taskStep = eslint.eslintTask.steps[0];
+  expect(taskStep.exec).toContain("--cache");
 });
 
 test("allow modification of the eslint task", () => {
