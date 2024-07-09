@@ -2648,7 +2648,7 @@ const includeRule: gitlab.IncludeRule = { ... }
 | <code><a href="#projen.gitlab.IncludeRule.property.changes">changes</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.gitlab.IncludeRule.property.exists">exists</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.gitlab.IncludeRule.property.if">if</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.gitlab.IncludeRule.property.needs">needs</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.gitlab.IncludeRule.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.gitlab.IncludeRule.property.startIn">startIn</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.gitlab.IncludeRule.property.variables">variables</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
 | <code><a href="#projen.gitlab.IncludeRule.property.when">when</a></code> | <code><a href="#projen.gitlab.JobWhen">JobWhen</a></code> | *No description.* |
