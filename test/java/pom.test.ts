@@ -124,6 +124,9 @@ test("addPlugin() with multiple executions", () => {
         id: "default-compile",
         phase: "none",
         goals: [],
+        configuration: {
+          source: 1.8,
+        },
       },
     ],
   });
