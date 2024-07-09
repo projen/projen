@@ -99,6 +99,41 @@ test("addPlugin()", () => {
   expect(actualPom(pom)).toMatchSnapshot();
 });
 
+test("addPlugin() with multiple executions", () => {
+  const pom = new TestPom();
+
+  pom.addPlugin("org.apache.maven.plugins/maven-compiler-plugin@3.8.1", {
+    dependencies: ["org.projen/projen@^0.14"],
+    configuration: {
+      source: "1.8",
+      target: "1.8",
+    },
+  });
+
+  pom.addPlugin("org.apache.maven.plugins/maven-shade-plugin@3.2.2", {
+    configuration: {
+      createDependencyReducedPom: false,
+    },
+    executions: [
+      {
+        id: "shade-task",
+        phase: "package",
+        goals: ["shade"],
+      },
+      {
+        id: "default-compile",
+        phase: "none",
+        goals: [],
+        configuration: {
+          source: 1.8,
+        },
+      },
+    ],
+  });
+
+  expect(actualPom(pom)).toMatchSnapshot();
+});
+
 test("addRepository()", () => {
   const pom = new TestPom();
 

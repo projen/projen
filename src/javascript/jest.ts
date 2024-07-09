@@ -488,6 +488,14 @@ export interface JestConfigOptions {
   readonly [name: string]: any;
 }
 
+/**
+ * Options for discoverTestMatchPatternsForDirs.
+ */
+export interface JestDiscoverTestMatchPatternsForDirsOptions {
+  /** The file extension pattern to use. Defaults to "[jt]s?(x)". */
+  readonly fileExtensionPattern?: string;
+}
+
 export class Transform {
   public constructor(
     private readonly name: string,
@@ -661,7 +669,6 @@ export class Jest extends Component {
     const isJest = (c: Component): c is Jest => c instanceof Jest;
     return project.components.find(isJest);
   }
-
   /**
    * Escape hatch.
    */
@@ -677,7 +684,7 @@ export class Jest extends Component {
    */
   readonly file?: JsonFile;
 
-  private readonly testMatch: string[];
+  private readonly testMatch = new Array<string>();
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
@@ -727,10 +734,12 @@ export class Jest extends Component {
       "clover",
       "cobertura",
     ];
-    this.testMatch = this.jestConfig?.testMatch ?? [
-      "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).[tj]s?(x)",
-    ];
+
+    if (this.jestConfig?.testMatch && this.jestConfig.testMatch.length > 0) {
+      this.jestConfig.testMatch.forEach((pattern) =>
+        this.addTestMatch(pattern)
+      );
+    }
 
     const coverageDirectory = this.jestConfig?.coverageDirectory ?? "coverage";
 
@@ -751,7 +760,11 @@ export class Jest extends Component {
         this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
       watchPathIgnorePatterns: this.watchIgnorePatterns,
-      testMatch: this.testMatch,
+      // @ts-expect-error - lazily loading the testMatch in order to only apply defaults if none are ever added
+      testMatch: () =>
+        this.testMatch.length > 0
+          ? this.testMatch
+          : [`**/__tests__/**/*.[jt]s?(x)`, `**/?(*.)+(spec|test).[jt]s?(x)`], // Jest defaults
       reporters: this.reporters,
       snapshotResolver: (() => this._snapshotResolver) as any,
     } satisfies JestConfigOptions;
@@ -815,6 +828,41 @@ export class Jest extends Component {
    */
   public addTestMatch(pattern: string) {
     this.testMatch.push(pattern);
+  }
+
+  /**
+   * Build standard test match patterns for a directory.
+   * @param dirs The directories to add test matches for. Matches any folder if not specified or an empty array.
+   * @param options Options for building test match patterns.
+   */
+  public discoverTestMatchPatternsForDirs(
+    dirs: string[],
+    options?: JestDiscoverTestMatchPatternsForDirsOptions
+  ): void {
+    const testPatterns = this.buildTestMatchPatternsForDirs(dirs, options);
+
+    testPatterns.forEach((pattern) => this.addTestMatch(pattern));
+  }
+
+  /**
+   * Build standard test match patterns for a directory.
+   * @param dirs The directories to add test matches for. Matches any folder if not specified.
+   * @param fileExtensionPattern The file extension pattern to use. Defaults to "[jt]s?(x)".
+   * @returns The test match patterns.
+   */
+  private buildTestMatchPatternsForDirs(
+    dirs: string[],
+    options?: JestDiscoverTestMatchPatternsForDirsOptions
+  ): string[] {
+    const fileExtensionPattern = options?.fileExtensionPattern ?? "[jt]s?(x)";
+    return [
+      `<rootDir>/@(${dirs.join(
+        "|"
+      )})/**/?(*.)+(spec|test).${fileExtensionPattern}`,
+      `<rootDir>/@(${dirs.join(
+        "|"
+      )})/**/__tests__/**/*.${fileExtensionPattern}`,
+    ];
   }
 
   /**

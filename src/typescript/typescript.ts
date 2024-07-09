@@ -623,7 +623,11 @@ export class TypeScriptProject extends NodeProject {
     const srctest = this.testdir;
 
     this.npmignore?.exclude(`/${libtest}/`);
-    jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
+    jest.discoverTestMatchPatternsForDirs([libtest], {
+      fileExtensionPattern: this.tsconfig?.compilerOptions?.allowJs
+        ? undefined
+        : "ts?(x)",
+    });
     jest.addWatchIgnorePattern(`/${this.srcdir}/`);
 
     const resolveSnapshotPath = (test: string, ext: string) => {
@@ -673,10 +677,11 @@ export class TypeScriptProject extends NodeProject {
       `ts-jest${jest.jestVersion}`
     );
 
-    jest.addTestMatch(`<rootDir>/${this.srcdir}/**/__tests__/**/*.ts?(x)`);
-    jest.addTestMatch(
-      `<rootDir>/@(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
-    );
+    jest.discoverTestMatchPatternsForDirs([this.srcdir, this.testdir], {
+      fileExtensionPattern: this.tsconfig?.compilerOptions?.allowJs
+        ? undefined
+        : "ts?(x)",
+    });
 
     // Test for the ts-jest version that was requested;
     //

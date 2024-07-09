@@ -4120,6 +4120,7 @@ const pluginExecution: java.PluginExecution = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.java.PluginExecution.property.goals">goals</a></code> | <code>string[]</code> | Which Maven goals this plugin should be associated with. |
 | <code><a href="#projen.java.PluginExecution.property.id">id</a></code> | <code>string</code> | The ID. |
+| <code><a href="#projen.java.PluginExecution.property.configuration">configuration</a></code> | <code>{[ key: string ]: any}</code> | Execution key/value configuration. |
 | <code><a href="#projen.java.PluginExecution.property.phase">phase</a></code> | <code>string</code> | The phase in which the plugin should execute. |
 
 ---
@@ -4145,6 +4146,19 @@ public readonly id: string;
 - *Type:* string
 
 The ID.
+
+---
+
+##### `configuration`<sup>Optional</sup> <a name="configuration" id="projen.java.PluginExecution.property.configuration"></a>
+
+```typescript
+public readonly configuration: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Execution key/value configuration.
 
 ---
 

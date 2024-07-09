@@ -391,6 +391,12 @@ export interface PluginExecution {
    * The phase in which the plugin should execute.
    */
   readonly phase?: string;
+
+  /**
+   * Execution key/value configuration
+   * @default {}
+   */
+  readonly configuration?: { [key: string]: any };
 }
 
 /**
@@ -426,12 +432,13 @@ function pluginConfig(options: PluginOptions = {}) {
             ),
           }
         : undefined,
-    executions: options.executions?.map((e) => ({
-      execution: {
+    executions: {
+      execution: options.executions?.map((e) => ({
         id: e.id,
         goals: e.goals.map((goal) => ({ goal })),
         phase: e.phase,
-      },
-    })),
+        configuration: e.configuration,
+      })),
+    },
   };
 }
