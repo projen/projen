@@ -2695,6 +2695,16 @@ public readonly if: string;
 
 ---
 
+##### `needs`<sup>Optional</sup> <a name="needs" id="projen.gitlab.IncludeRule.property.needs"></a>
+
+```typescript
+public readonly needs: string[];
+```
+
+- *Type:* string[]
+
+---
+
 ##### `startIn`<sup>Optional</sup> <a name="startIn" id="projen.gitlab.IncludeRule.property.startIn"></a>
 
 ```typescript
