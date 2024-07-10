@@ -1,3 +1,4 @@
+export * from "./code-resolvable";
 export * from "./compare";
 export * from "./component";
 export * from "./dev-env";

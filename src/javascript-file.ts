@@ -1,9 +1,9 @@
+import { CodeResolvableBase, ICodeResolvable } from "./code-resolvable";
+import { CodeTokenMap, unresolved } from "./code-token-map";
 import { IResolver } from "./file";
 import * as logging from "./logging";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
 import { Project } from "./project";
-import { CodeResolvableBase, ICodeResolvable } from "./util/code-resolvable";
-import { CodeTokenMap, unresolved } from "./util/code-token-map";
 
 /**
  * Represents a Javascript function. The function can be defined as an arrow function or a named function.
@@ -18,7 +18,6 @@ import { CodeTokenMap, unresolved } from "./util/code-token-map";
  * @example
  *
  * A named function is pretty straightforward to make and use:
- * ```typescript
  *     const name = "foo";
  *     const namedFunc = JavascriptFunction.named(
  *       name,
@@ -37,20 +36,16 @@ import { CodeTokenMap, unresolved } from "./util/code-token-map";
  *
  * ${namedFunc}`
  *     ).resolve();
- * ```
  *
  * Will leave `namedFuncUsage` as:
- * ```javascript
  * const fooValue = foo(1, 2);
  *
  * function foo(a, b=2) {
  *   return a + b;
  * }
- * ```
  *
  * Arrow functions work similarly:
  *
- * ```typescript
  * const name = "foo";
  * const arrowFun = JavascriptFunction.arrow(
  *   ["a", "...b"], // the "...b" is just to show that these are used literally
@@ -68,15 +63,12 @@ import { CodeTokenMap, unresolved } from "./util/code-token-map";
  * const fooValue = ${arrowFuncCaller(1, 2)};
  * `
  * ).resolve();
- * ```
  *
  * Will leave `namedFuncUsage` as:
- * ```javascript
  * const foo = (a, ...b) => {
  *   return a + b[0];
  * };
  * const fooValue = foo(1, 2);
- * ```
  */
 export class JavascriptFunction extends CodeResolvableBase {
   /**
@@ -173,22 +165,18 @@ export class JavascriptFunction extends CodeResolvableBase {
  *
  * @example
  *
- * ```typescript
  * // The types are unnecessary here, but included for clarity in the example
  * const aCode: ICodeResolvable = JavascriptRaw.value("const a = 1;");
  * const bCode: ICodeResolvable = JavascriptRaw.value("const b = 2;");
  * const finalCode: ICodeResolvable = JavascriptRaw.value([aCode, bCode]);
  *
  * const generatedJavascriptCode = finalCode.resolve();
- * ```
  *
  * Note that the string value of `aCode` and `bCode` will be something like `${Token[JSRawToken.9]}`.
  *
  * If printed the value of `generatedJavascriptCode` will be:
- * ```javascript
  * const a = 1;
  * const b = 2;
- * ```
  */
 export class JavascriptRaw extends CodeResolvableBase {
   /**
@@ -271,7 +259,6 @@ export class JavascriptDataStructure extends CodeResolvableBase {
  * imports with `addImport(imports, from)`. See {@link addImport} for more details.
  * @example
  *
- * ```typescript
  * const deps = CJSJavascriptDependencies.value();
  * // or: const deps = ESMJavascriptDependencies.value();
  * const [jsdoc] = deps.addImport("jsdoc", "eslint-plugin-jsdoc");
@@ -280,21 +267,16 @@ export class JavascriptDataStructure extends CodeResolvableBase {
  * const [t1, t2] = deps.addImport(["t1", "t2"], "@eslint/js");
  *
  * const code = deps.resolve();
- * ```
  *
  * Will leave `code` as:
- * ```javascript
  * const jsdoc = require('eslint-plugin-jsdoc');
  * const { subValue1, subValue2 } = jsdoc;
  * const js = require('@eslint/js');
  * const { t1, t2 } = js;
- * ```
  *
  * Or, in the case of `ESMJavascriptDependencies`:
- * ```javascript
  * import jsdoc, { subValue1, subValue2 } from 'eslint-plugin-jsdoc';
  * import js, { t1, t2 } from '@eslint/js';
- * ```
  */
 export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
   protected imports: Map<string, Array<string>> = new Map();
@@ -312,7 +294,6 @@ export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
    * @param from The module to import from
    * @returns An array of {@link JavascriptRaw} objects that represent the imports
    * @example
-   * ```typescript
    * const deps = CJSJavascriptDependencies.value(); // or ESMJavascriptDependencies.value();
    * const [jsdoc] = deps.addImport("jsdoc", "eslint-plugin-jsdoc");
    * const [subValue1, subValue2] = deps.addImport(["subValue1", "subValue2"], "eslint-plugin-values");
@@ -321,15 +302,12 @@ export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
    *
    * ${jsdoc}.doSomething(${subValue1}, ${subValue2});
    * `).resolve();
-   * ```
    *
    * Will leave `code` as:
-   * ```javascript
    * const jsdoc = require('eslint-plugin-jsdoc');
    * const { subValue1, subValue2 } = require('eslint-plugin-values');
    *
    * jsdoc.doSomething(subValue1, subValue2);
-   * ```
    **/
   public addImport(
     imports: Array<string> | string,
