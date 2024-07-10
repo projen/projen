@@ -103,7 +103,7 @@ export interface EslintOptions {
 
 export interface EslintCommandOptions {
   /**
-   * Whether to include --fix flag in base eslint task
+   * Whether to fix eslint issues when running the eslint task
    * @default true
    */
   readonly fix?: boolean;
@@ -111,7 +111,7 @@ export interface EslintCommandOptions {
   /**
    * Extra flag arguments to pass to eslint command
    */
-  readonly extraFlagArgs?: string[];
+  readonly extraArgs?: string[];
 }
 
 /**
@@ -230,7 +230,7 @@ export class Eslint extends Component {
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
 
     const commandOptions = options.commandOptions ?? {};
-    const { fix = true, extraFlagArgs = [] } = commandOptions;
+    const { fix = true, extraArgs: extraFlagArgs = [] } = commandOptions;
     this._flagArgs = new Set(extraFlagArgs);
     if (fix) {
       this._flagArgs.add("--fix");

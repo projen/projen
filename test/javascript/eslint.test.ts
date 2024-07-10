@@ -361,7 +361,7 @@ test("supports specifying extra task args", () => {
   // WHEN
   const eslint = new Eslint(project, {
     dirs: ["src"],
-    commandOptions: { extraFlagArgs: ["--cache"] },
+    commandOptions: { extraArgs: ["--cache"] },
   });
 
   // THEN

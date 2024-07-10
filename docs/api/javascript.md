@@ -5743,15 +5743,15 @@ const eslintCommandOptions: javascript.EslintCommandOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.EslintCommandOptions.property.extraFlagArgs">extraFlagArgs</a></code> | <code>string[]</code> | Extra flag arguments to pass to eslint command. |
-| <code><a href="#projen.javascript.EslintCommandOptions.property.fix">fix</a></code> | <code>boolean</code> | Whether to include --fix flag in base eslint task. |
+| <code><a href="#projen.javascript.EslintCommandOptions.property.extraArgs">extraArgs</a></code> | <code>string[]</code> | Extra flag arguments to pass to eslint command. |
+| <code><a href="#projen.javascript.EslintCommandOptions.property.fix">fix</a></code> | <code>boolean</code> | Whether to fix eslint issues when running the eslint task. |
 
 ---
 
-##### `extraFlagArgs`<sup>Optional</sup> <a name="extraFlagArgs" id="projen.javascript.EslintCommandOptions.property.extraFlagArgs"></a>
+##### `extraArgs`<sup>Optional</sup> <a name="extraArgs" id="projen.javascript.EslintCommandOptions.property.extraArgs"></a>
 
 ```typescript
-public readonly extraFlagArgs: string[];
+public readonly extraArgs: string[];
 ```
 
 - *Type:* string[]
@@ -5769,7 +5769,7 @@ public readonly fix: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Whether to include --fix flag in base eslint task.
+Whether to fix eslint issues when running the eslint task.
 
 ---
 
