@@ -279,9 +279,9 @@ export class JavascriptDataStructure extends CodeResolvableBase {
  * import js, { t1, t2 } from '@eslint/js';
  */
 export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
-  protected imports: Map<string, Array<string>> = new Map();
-  protected defaultImports: Map<string, string> = new Map();
-  protected froms = new Set<string>();
+  protected readonly imports: Map<string, Array<string>> = new Map();
+  protected readonly defaultImports: Map<string, string> = new Map();
+  protected readonly froms = new Set<string>();
 
   protected constructor() {
     super("JSDependenciesToken");
@@ -414,7 +414,7 @@ export interface JavascriptFileOptions extends ObjectFileOptions {
   /**
    * Whether to use CommonJS (require) or ESM (import/export) for the file.
    */
-  cjs: boolean;
+  readonly cjs: boolean;
 }
 
 /**
@@ -511,7 +511,6 @@ function javascriptStringify(
       let keyString = key;
       // if the key is a token, resolve it (3)
       if (unresolved(key)) {
-        // console.log("key", key);
         const resolvedKey = CodeTokenMap.instance
           .resolve(key, { level, idt })
           ?.toString();
