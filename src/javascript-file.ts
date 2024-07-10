@@ -5,6 +5,9 @@ import * as logging from "./logging";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
 import { Project } from "./project";
 
+const DEFAULT_LEVEL = 0;
+const DEFAULT_IDT = "  ";
+
 /**
  * Represents a Javascript function. The function can be defined as an arrow function or a named function.
  *
@@ -127,7 +130,7 @@ export class JavascriptFunction extends CodeResolvableBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level = 0, idt = "  ") {
+  public stringify(level = DEFAULT_LEVEL, idt = DEFAULT_IDT) {
     const dent = idt ? idt.repeat(level) : "";
     const dentPlus = idt ? idt.repeat(level + 1) : "";
 
@@ -195,7 +198,7 @@ export class JavascriptRaw extends CodeResolvableBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level: number = 0, idt: string = "  ") {
+  public stringify(level: number = DEFAULT_LEVEL, idt: string = DEFAULT_IDT) {
     if (typeof this.body === "string") {
       return (
         CodeTokenMap.instance.resolve(this.body, { level, idt }, true) || ""
@@ -244,7 +247,7 @@ export class JavascriptDataStructure extends CodeResolvableBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level = 0, idt = "  ") {
+  public stringify(level = DEFAULT_LEVEL, idt = DEFAULT_IDT) {
     return javascriptStringify(this.body, level, idt) ?? "undefined";
   }
 }
@@ -361,7 +364,7 @@ export class CJSJavascriptDependencies extends JavascriptDependenciesBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level: number = 0, _idt: string = "  ") {
+  public stringify(level: number = DEFAULT_LEVEL, _idt: string = DEFAULT_IDT) {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
@@ -395,7 +398,7 @@ export class ESMJavascriptDependencies extends JavascriptDependenciesBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level: number = 0, _idt: string = "  ") {
+  public stringify(level: number = DEFAULT_LEVEL, _idt: string = DEFAULT_IDT) {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
@@ -469,8 +472,8 @@ ${defaultExport} ${JavascriptDataStructure.value(data)};
  */
 function javascriptStringify(
   data: unknown,
-  level = 0,
-  idt: string = "  "
+  level = DEFAULT_LEVEL,
+  idt: string = DEFAULT_IDT
 ): string | undefined {
   const dent = idt.repeat(level);
   const dentPlus = idt.repeat(level + 1);
