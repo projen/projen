@@ -1,8 +1,8 @@
 import { CodeResolvableBase, ICodeResolvable } from "./code-resolvable";
 import { CodeTokenMap, unresolved } from "./code-token-map";
 import { IResolver } from "./file";
-import { JsonFile, JsonFileOptions } from "./json";
 import * as logging from "./logging";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
 import { Project } from "./project";
 
 /**
@@ -432,7 +432,7 @@ export class ESMJavascriptDependencies extends JavascriptDependenciesBase {
 /**
  * Options for the JsConfigFile class.
  */
-export interface JavascriptFileOptions extends JsonFileOptions {
+export interface JavascriptFileOptions extends ObjectFileOptions {
   /**
    * Whether to use CommonJS (require) or ESM (import/export) for the file.
    */
@@ -442,7 +442,7 @@ export interface JavascriptFileOptions extends JsonFileOptions {
 /**
  * Represents a JS configuration file (e.g. .eslintrc.js).
  */
-export class JavascriptFile extends JsonFile {
+export class JavascriptFile extends ObjectFile {
   public readonly dependencies: JavascriptDependenciesBase;
   public readonly cjs: boolean;
 
@@ -451,14 +451,11 @@ export class JavascriptFile extends JsonFile {
     filePath: string,
     options: JavascriptFileOptions
   ) {
-    super(project, filePath, { ...options, allowComments: false });
+    super(project, filePath, options);
     this.cjs = options.cjs ?? false;
     this.dependencies = options.cjs
       ? CJSJavascriptDependencies.value()
       : ESMJavascriptDependencies.value();
-    if (!options.obj) {
-      throw new Error('"obj" cannot be undefined');
-    }
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
@@ -469,9 +466,6 @@ export class JavascriptFile extends JsonFile {
     const data = JSON.parse(json);
 
     const markerHeader = this.marker ? `// ${this.marker}\n` : "";
-
-    // Clear the "//" key created by JsonFile
-    data["//"] = undefined;
 
     const defaultExport = this.cjs ? `module.exports =` : `export default`;
     return JavascriptRaw.value(

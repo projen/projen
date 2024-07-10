@@ -287,7 +287,6 @@ describe("JavascriptFile", () => {
         exportedValue: "value",
       },
       marker: true,
-      allowComments: true,
       cjs: true,
     });
 
@@ -318,7 +317,6 @@ describe("JavascriptFile", () => {
         exportedValue: "value",
       },
       marker: true,
-      allowComments: true,
       cjs: false,
     });
 
@@ -349,7 +347,6 @@ describe("JavascriptFile", () => {
         exportedValue: "value",
       },
       marker: true,
-      allowComments: true,
       cjs: false,
     });
     file.addOverride("exportedValue", "newValue");
@@ -381,7 +378,6 @@ describe("JavascriptFile", () => {
         exportedValue: "value",
       },
       marker: true,
-      allowComments: true,
       cjs: false,
     });
     const [newValueToken] = file.dependencies.addImport("fs", "fs");
@@ -419,7 +415,6 @@ describe("JavascriptFile", () => {
         exportedValue: "value",
       },
       marker: true,
-      allowComments: true,
       cjs: false,
     });
     const [newValueToken] = file.dependencies.addImport("fs", "fs");
