@@ -195,7 +195,7 @@ export class JavascriptRaw extends CodeResolvableBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level: number, idt: string) {
+  public stringify(level: number = 0, idt: string = "  ") {
     if (typeof this.body === "string") {
       return (
         CodeTokenMap.instance.resolve(this.body, { level, idt }, true) || ""
@@ -279,12 +279,22 @@ export class JavascriptDataStructure extends CodeResolvableBase {
  * import js, { t1, t2 } from '@eslint/js';
  */
 export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
-  protected readonly imports: Map<string, Array<string>> = new Map();
-  protected readonly defaultImports: Map<string, string> = new Map();
-  protected readonly froms = new Set<string>();
+  private readonly _defaultImports: Map<string, string> = new Map();
+  private readonly _imports: Map<string, Array<string>> = new Map();
+  private readonly _froms = new Set<string>();
 
   protected constructor() {
     super("JSDependenciesToken");
+  }
+
+  protected get defaultImports(): { [key: string]: string } {
+    return Object.fromEntries(this._defaultImports.entries());
+  }
+  protected get imports(): { [key: string]: string[] } {
+    return Object.fromEntries(this._imports.entries());
+  }
+  protected get froms(): string[] {
+    return Array.from(this._froms);
   }
 
   /**
@@ -314,8 +324,8 @@ export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
     from: string
   ): Array<JavascriptRaw> {
     if (typeof imports === "string") {
-      if (this.defaultImports.has(from)) {
-        const oldImports = this.defaultImports.get(from);
+      if (this._defaultImports.has(from)) {
+        const oldImports = this._defaultImports.get(from);
         if (!oldImports) {
           throw new Error(
             `Something went horribly wrong - we should never get here.`
@@ -326,16 +336,16 @@ export abstract class JavascriptDependenciesBase extends CodeResolvableBase {
         );
         return [JavascriptRaw.value(oldImports)];
       }
-      this.defaultImports.set(from, imports);
-      this.froms.add(from);
+      this._defaultImports.set(from, imports);
+      this._froms.add(from);
       return [JavascriptRaw.value(imports)];
     }
-    if (this.imports.has(from)) {
-      this.imports.set(from, this.imports.get(from)!.concat(imports));
+    if (this._imports.has(from)) {
+      this._imports.set(from, this._imports.get(from)!.concat(imports));
     } else {
-      this.imports.set(from, imports);
+      this._imports.set(from, imports);
     }
-    this.froms.add(from);
+    this._froms.add(from);
     return imports.map((i) => JavascriptRaw.value(i));
   }
 }
@@ -351,14 +361,14 @@ export class CJSJavascriptDependencies extends JavascriptDependenciesBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level: number, _idt: string) {
+  public stringify(level: number = 0, _idt: string = "  ") {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
     const out: Array<string> = [];
     for (const from of this.froms) {
-      const imports = this.imports.get(from) ?? [];
-      const defaultImport = this.defaultImports.get(from);
+      const imports = this.imports[from] ?? [];
+      const defaultImport = this.defaultImports[from];
       const value = imports.map((i) => i.toString()).join(", ");
 
       if (defaultImport && imports.length > 0) {
@@ -385,14 +395,14 @@ export class ESMJavascriptDependencies extends JavascriptDependenciesBase {
   /**
    * Internal use only. Use {@link resolve} instead.
    */
-  public stringify(level: number, _idt: string) {
+  public stringify(level: number = 0, _idt: string = "  ") {
     if (level !== 0) {
       throw new Error("JavascriptDependencies cannot be nested");
     }
     const out: Array<string> = [];
     for (const from of this.froms) {
-      const imports = this.imports.get(from) ?? [];
-      const defaultImport = this.defaultImports.get(from);
+      const imports = this.imports[from] ?? [];
+      const defaultImport = this.defaultImports[from];
       const value = imports.map((i) => i.toString()).join(", ");
 
       if (defaultImport && imports.length > 0) {
