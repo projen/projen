@@ -1,9 +1,9 @@
-import { CodeResolvableBase, ICodeResolvable } from "./code-resolvable";
-import { CodeTokenMap, unresolved } from "./code-token-map";
 import { IResolver } from "./file";
 import * as logging from "./logging";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
 import { Project } from "./project";
+import { CodeResolvableBase, ICodeResolvable } from "./util/code-resolvable";
+import { CodeTokenMap, unresolved } from "./util/code-token-map";
 
 /**
  * Represents a Javascript function. The function can be defined as an arrow function or a named function.

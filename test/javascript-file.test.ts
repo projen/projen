@@ -1,5 +1,4 @@
 import { synthSnapshot } from "./util";
-import { ICodeResolvable } from "../src/code-resolvable";
 import { NodeProject } from "../src/javascript";
 import {
   CJSJavascriptDependencies,
@@ -9,6 +8,7 @@ import {
   JavascriptFunction,
   JavascriptRaw,
 } from "../src/javascript-file";
+import { ICodeResolvable } from "../src/util/code-resolvable";
 
 test("JavascriptRaw can make js-type eslint output", () => {
   // make a dependencies object to track imports
