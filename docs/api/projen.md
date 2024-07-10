@@ -23,6 +23,461 @@ The following submodules are available:
 
 ## Constructs <a name="Constructs" id="Constructs"></a>
 
+### CJSJavascriptFile <a name="CJSJavascriptFile" id="projen.CJSJavascriptFile"></a>
+
+Represents a Javascript file that uses CommonJS (CJS) modules and syntax.
+
+#### Initializers <a name="Initializers" id="projen.CJSJavascriptFile.Initializer"></a>
+
+```typescript
+import { CJSJavascriptFile } from 'projen'
+
+new CJSJavascriptFile(project: Project, filePath: string, options: ObjectFileOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.CJSJavascriptFile.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.CJSJavascriptFile.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.CJSJavascriptFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.ObjectFileOptions">ObjectFileOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.CJSJavascriptFile.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.CJSJavascriptFile.Initializer.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.CJSJavascriptFile.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.ObjectFileOptions">ObjectFileOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.CJSJavascriptFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.CJSJavascriptFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.CJSJavascriptFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.CJSJavascriptFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.CJSJavascriptFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
+| <code><a href="#projen.CJSJavascriptFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
+| <code><a href="#projen.CJSJavascriptFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
+| <code><a href="#projen.CJSJavascriptFile.patch">patch</a></code> | Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information. |
+
+---
+
+##### `toString` <a name="toString" id="projen.CJSJavascriptFile.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.CJSJavascriptFile.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.CJSJavascriptFile.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.CJSJavascriptFile.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.CJSJavascriptFile.addDeletionOverride"></a>
+
+```typescript
+public addDeletionOverride(path: string): void
+```
+
+Syntactic sugar for `addOverride(path, undefined)`.
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.CJSJavascriptFile.addDeletionOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the value to delete.
+
+---
+
+##### `addOverride` <a name="addOverride" id="projen.CJSJavascriptFile.addOverride"></a>
+
+```typescript
+public addOverride(path: string, value: any): void
+```
+
+Adds an override to the synthesized object file.
+
+If the override is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example,
+```typescript
+project.tsconfig.file.addOverride('compilerOptions.alwaysStrict', true);
+project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable', 'esnext']);
+```
+would add the overrides
+```json
+"compilerOptions": {
+  "alwaysStrict": true,
+  "lib": [
+    "dom",
+    "dom.iterable",
+    "esnext"
+  ]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.CJSJavascriptFile.addOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to override values in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.CJSJavascriptFile.addOverride.parameter.value"></a>
+
+- *Type:* any
+
+The value.
+
+Could be primitive or complex.
+
+---
+
+##### `addToArray` <a name="addToArray" id="projen.CJSJavascriptFile.addToArray"></a>
+
+```typescript
+public addToArray(path: string, values: any): void
+```
+
+Adds to an array in the synthesized object file.
+
+If the array is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2019"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.addToArray('compilerOptions.exclude', 'coverage');
+project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.CJSJavascriptFile.addToArray.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to att to arrays in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `values`<sup>Required</sup> <a name="values" id="projen.CJSJavascriptFile.addToArray.parameter.values"></a>
+
+- *Type:* any
+
+The values to add.
+
+Could be primitive or complex.
+
+---
+
+##### `patch` <a name="patch" id="projen.CJSJavascriptFile.patch"></a>
+
+```typescript
+public patch(patches: JsonPatch): void
+```
+
+Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2019"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `patches`<sup>Required</sup> <a name="patches" id="projen.CJSJavascriptFile.patch.parameter.patches"></a>
+
+- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+
+The patch operations to apply.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.CJSJavascriptFile.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.CJSJavascriptFile.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.CJSJavascriptFile.isConstruct"></a>
+
+```typescript
+import { CJSJavascriptFile } from 'projen'
+
+CJSJavascriptFile.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.CJSJavascriptFile.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.CJSJavascriptFile.isComponent"></a>
+
+```typescript
+import { CJSJavascriptFile } from 'projen'
+
+CJSJavascriptFile.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.CJSJavascriptFile.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.CJSJavascriptFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.CJSJavascriptFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.CJSJavascriptFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.CJSJavascriptFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.CJSJavascriptFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.CJSJavascriptFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.CJSJavascriptFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.CJSJavascriptFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.CJSJavascriptFile.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
+| <code><a href="#projen.CJSJavascriptFile.property.dependencies">dependencies</a></code> | <code><a href="#projen.JavascriptDependenciesBase">JavascriptDependenciesBase</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.CJSJavascriptFile.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.CJSJavascriptFile.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.CJSJavascriptFile.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.CJSJavascriptFile.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.CJSJavascriptFile.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.CJSJavascriptFile.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.CJSJavascriptFile.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.CJSJavascriptFile.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `omitEmpty`<sup>Required</sup> <a name="omitEmpty" id="projen.CJSJavascriptFile.property.omitEmpty"></a>
+
+```typescript
+public readonly omitEmpty: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if empty objects and arrays are omitted from the output object.
+
+---
+
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.CJSJavascriptFile.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: JavascriptDependenciesBase;
+```
+
+- *Type:* <a href="#projen.JavascriptDependenciesBase">JavascriptDependenciesBase</a>
+
+---
+
+
 ### Component <a name="Component" id="projen.Component"></a>
 
 Represents a project component.
@@ -875,6 +1330,461 @@ public readonly file: YamlFile;
 - *Type:* <a href="#projen.YamlFile">YamlFile</a>
 
 The Docker Compose file.
+
+---
+
+
+### ESMJavascriptFile <a name="ESMJavascriptFile" id="projen.ESMJavascriptFile"></a>
+
+Represents a Javascript file that uses ECMAScript modules (ESM) and syntax.
+
+#### Initializers <a name="Initializers" id="projen.ESMJavascriptFile.Initializer"></a>
+
+```typescript
+import { ESMJavascriptFile } from 'projen'
+
+new ESMJavascriptFile(project: Project, filePath: string, options: ObjectFileOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ESMJavascriptFile.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.ESMJavascriptFile.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ESMJavascriptFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.ObjectFileOptions">ObjectFileOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.ESMJavascriptFile.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.ESMJavascriptFile.Initializer.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.ESMJavascriptFile.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.ObjectFileOptions">ObjectFileOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ESMJavascriptFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ESMJavascriptFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.ESMJavascriptFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ESMJavascriptFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.ESMJavascriptFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
+| <code><a href="#projen.ESMJavascriptFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
+| <code><a href="#projen.ESMJavascriptFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
+| <code><a href="#projen.ESMJavascriptFile.patch">patch</a></code> | Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information. |
+
+---
+
+##### `toString` <a name="toString" id="projen.ESMJavascriptFile.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.ESMJavascriptFile.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.ESMJavascriptFile.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.ESMJavascriptFile.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.ESMJavascriptFile.addDeletionOverride"></a>
+
+```typescript
+public addDeletionOverride(path: string): void
+```
+
+Syntactic sugar for `addOverride(path, undefined)`.
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.ESMJavascriptFile.addDeletionOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the value to delete.
+
+---
+
+##### `addOverride` <a name="addOverride" id="projen.ESMJavascriptFile.addOverride"></a>
+
+```typescript
+public addOverride(path: string, value: any): void
+```
+
+Adds an override to the synthesized object file.
+
+If the override is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example,
+```typescript
+project.tsconfig.file.addOverride('compilerOptions.alwaysStrict', true);
+project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable', 'esnext']);
+```
+would add the overrides
+```json
+"compilerOptions": {
+  "alwaysStrict": true,
+  "lib": [
+    "dom",
+    "dom.iterable",
+    "esnext"
+  ]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.ESMJavascriptFile.addOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to override values in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.ESMJavascriptFile.addOverride.parameter.value"></a>
+
+- *Type:* any
+
+The value.
+
+Could be primitive or complex.
+
+---
+
+##### `addToArray` <a name="addToArray" id="projen.ESMJavascriptFile.addToArray"></a>
+
+```typescript
+public addToArray(path: string, values: any): void
+```
+
+Adds to an array in the synthesized object file.
+
+If the array is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2019"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.addToArray('compilerOptions.exclude', 'coverage');
+project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.ESMJavascriptFile.addToArray.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to att to arrays in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `values`<sup>Required</sup> <a name="values" id="projen.ESMJavascriptFile.addToArray.parameter.values"></a>
+
+- *Type:* any
+
+The values to add.
+
+Could be primitive or complex.
+
+---
+
+##### `patch` <a name="patch" id="projen.ESMJavascriptFile.patch"></a>
+
+```typescript
+public patch(patches: JsonPatch): void
+```
+
+Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2019"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `patches`<sup>Required</sup> <a name="patches" id="projen.ESMJavascriptFile.patch.parameter.patches"></a>
+
+- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+
+The patch operations to apply.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ESMJavascriptFile.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.ESMJavascriptFile.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.ESMJavascriptFile.isConstruct"></a>
+
+```typescript
+import { ESMJavascriptFile } from 'projen'
+
+ESMJavascriptFile.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.ESMJavascriptFile.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.ESMJavascriptFile.isComponent"></a>
+
+```typescript
+import { ESMJavascriptFile } from 'projen'
+
+ESMJavascriptFile.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.ESMJavascriptFile.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ESMJavascriptFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.ESMJavascriptFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.ESMJavascriptFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.ESMJavascriptFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.ESMJavascriptFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.ESMJavascriptFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.ESMJavascriptFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.ESMJavascriptFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.ESMJavascriptFile.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
+| <code><a href="#projen.ESMJavascriptFile.property.dependencies">dependencies</a></code> | <code><a href="#projen.JavascriptDependenciesBase">JavascriptDependenciesBase</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.ESMJavascriptFile.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.ESMJavascriptFile.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.ESMJavascriptFile.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.ESMJavascriptFile.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.ESMJavascriptFile.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.ESMJavascriptFile.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.ESMJavascriptFile.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.ESMJavascriptFile.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `omitEmpty`<sup>Required</sup> <a name="omitEmpty" id="projen.ESMJavascriptFile.property.omitEmpty"></a>
+
+```typescript
+public readonly omitEmpty: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if empty objects and arrays are omitted from the output object.
+
+---
+
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.ESMJavascriptFile.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: JavascriptDependenciesBase;
+```
+
+- *Type:* <a href="#projen.JavascriptDependenciesBase">JavascriptDependenciesBase</a>
 
 ---
 
@@ -2530,41 +3440,41 @@ Indicates if empty objects and arrays are omitted from the output object.
 ---
 
 
-### JavascriptFile <a name="JavascriptFile" id="projen.JavascriptFile"></a>
+### JavascriptFileBase <a name="JavascriptFileBase" id="projen.JavascriptFileBase"></a>
 
 Represents a JS configuration file (e.g. .eslintrc.js).
 
-#### Initializers <a name="Initializers" id="projen.JavascriptFile.Initializer"></a>
+#### Initializers <a name="Initializers" id="projen.JavascriptFileBase.Initializer"></a>
 
 ```typescript
-import { JavascriptFile } from 'projen'
+import { JavascriptFileBase } from 'projen'
 
-new JavascriptFile(project: Project, filePath: string, options: JavascriptFileOptions)
+new JavascriptFileBase(project: Project, filePath: string, options: ObjectFileOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.JavascriptFile.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
-| <code><a href="#projen.JavascriptFile.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.JavascriptFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.JavascriptFileOptions">JavascriptFileOptions</a></code> | *No description.* |
+| <code><a href="#projen.JavascriptFileBase.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.JavascriptFileBase.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.JavascriptFileBase.Initializer.parameter.options">options</a></code> | <code><a href="#projen.ObjectFileOptions">ObjectFileOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.JavascriptFile.Initializer.parameter.project"></a>
+##### `project`<sup>Required</sup> <a name="project" id="projen.JavascriptFileBase.Initializer.parameter.project"></a>
 
 - *Type:* <a href="#projen.Project">Project</a>
 
 ---
 
-##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.JavascriptFile.Initializer.parameter.filePath"></a>
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.JavascriptFileBase.Initializer.parameter.filePath"></a>
 
 - *Type:* string
 
 ---
 
-##### `options`<sup>Required</sup> <a name="options" id="projen.JavascriptFile.Initializer.parameter.options"></a>
+##### `options`<sup>Required</sup> <a name="options" id="projen.JavascriptFileBase.Initializer.parameter.options"></a>
 
-- *Type:* <a href="#projen.JavascriptFileOptions">JavascriptFileOptions</a>
+- *Type:* <a href="#projen.ObjectFileOptions">ObjectFileOptions</a>
 
 ---
 
@@ -2572,18 +3482,18 @@ new JavascriptFile(project: Project, filePath: string, options: JavascriptFileOp
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.JavascriptFile.toString">toString</a></code> | Returns a string representation of this construct. |
-| <code><a href="#projen.JavascriptFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
-| <code><a href="#projen.JavascriptFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
-| <code><a href="#projen.JavascriptFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
-| <code><a href="#projen.JavascriptFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
-| <code><a href="#projen.JavascriptFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
-| <code><a href="#projen.JavascriptFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
-| <code><a href="#projen.JavascriptFile.patch">patch</a></code> | Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information. |
+| <code><a href="#projen.JavascriptFileBase.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.JavascriptFileBase.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.JavascriptFileBase.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.JavascriptFileBase.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.JavascriptFileBase.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
+| <code><a href="#projen.JavascriptFileBase.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
+| <code><a href="#projen.JavascriptFileBase.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
+| <code><a href="#projen.JavascriptFileBase.patch">patch</a></code> | Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information. |
 
 ---
 
-##### `toString` <a name="toString" id="projen.JavascriptFile.toString"></a>
+##### `toString` <a name="toString" id="projen.JavascriptFileBase.toString"></a>
 
 ```typescript
 public toString(): string
@@ -2591,7 +3501,7 @@ public toString(): string
 
 Returns a string representation of this construct.
 
-##### `postSynthesize` <a name="postSynthesize" id="projen.JavascriptFile.postSynthesize"></a>
+##### `postSynthesize` <a name="postSynthesize" id="projen.JavascriptFileBase.postSynthesize"></a>
 
 ```typescript
 public postSynthesize(): void
@@ -2601,7 +3511,7 @@ Called after synthesis.
 
 Order is *not* guaranteed.
 
-##### `preSynthesize` <a name="preSynthesize" id="projen.JavascriptFile.preSynthesize"></a>
+##### `preSynthesize` <a name="preSynthesize" id="projen.JavascriptFileBase.preSynthesize"></a>
 
 ```typescript
 public preSynthesize(): void
@@ -2609,7 +3519,7 @@ public preSynthesize(): void
 
 Called before synthesis.
 
-##### `synthesize` <a name="synthesize" id="projen.JavascriptFile.synthesize"></a>
+##### `synthesize` <a name="synthesize" id="projen.JavascriptFileBase.synthesize"></a>
 
 ```typescript
 public synthesize(): void
@@ -2617,7 +3527,7 @@ public synthesize(): void
 
 Writes the file to the project's output directory.
 
-##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.JavascriptFile.addDeletionOverride"></a>
+##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.JavascriptFileBase.addDeletionOverride"></a>
 
 ```typescript
 public addDeletionOverride(path: string): void
@@ -2625,7 +3535,7 @@ public addDeletionOverride(path: string): void
 
 Syntactic sugar for `addOverride(path, undefined)`.
 
-###### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFile.addDeletionOverride.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFileBase.addDeletionOverride.parameter.path"></a>
 
 - *Type:* string
 
@@ -2633,7 +3543,7 @@ The path of the value to delete.
 
 ---
 
-##### `addOverride` <a name="addOverride" id="projen.JavascriptFile.addOverride"></a>
+##### `addOverride` <a name="addOverride" id="projen.JavascriptFileBase.addOverride"></a>
 
 ```typescript
 public addOverride(path: string, value: any): void
@@ -2667,7 +3577,7 @@ would add the overrides
 ...
 ```
 
-###### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFile.addOverride.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFileBase.addOverride.parameter.path"></a>
 
 - *Type:* string
 
@@ -2678,7 +3588,7 @@ will be created as needed.
 
 ---
 
-###### `value`<sup>Required</sup> <a name="value" id="projen.JavascriptFile.addOverride.parameter.value"></a>
+###### `value`<sup>Required</sup> <a name="value" id="projen.JavascriptFileBase.addOverride.parameter.value"></a>
 
 - *Type:* any
 
@@ -2688,7 +3598,7 @@ Could be primitive or complex.
 
 ---
 
-##### `addToArray` <a name="addToArray" id="projen.JavascriptFile.addToArray"></a>
+##### `addToArray` <a name="addToArray" id="projen.JavascriptFileBase.addToArray"></a>
 
 ```typescript
 public addToArray(path: string, values: any): void
@@ -2727,7 +3637,7 @@ would result in the following object file
 ...
 ```
 
-###### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFile.addToArray.parameter.path"></a>
+###### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFileBase.addToArray.parameter.path"></a>
 
 - *Type:* string
 
@@ -2738,7 +3648,7 @@ will be created as needed.
 
 ---
 
-###### `values`<sup>Required</sup> <a name="values" id="projen.JavascriptFile.addToArray.parameter.values"></a>
+###### `values`<sup>Required</sup> <a name="values" id="projen.JavascriptFileBase.addToArray.parameter.values"></a>
 
 - *Type:* any
 
@@ -2748,7 +3658,7 @@ Could be primitive or complex.
 
 ---
 
-##### `patch` <a name="patch" id="projen.JavascriptFile.patch"></a>
+##### `patch` <a name="patch" id="projen.JavascriptFileBase.patch"></a>
 
 ```typescript
 public patch(patches: JsonPatch): void
@@ -2780,7 +3690,7 @@ would result in the following object file
 ...
 ```
 
-###### `patches`<sup>Required</sup> <a name="patches" id="projen.JavascriptFile.patch.parameter.patches"></a>
+###### `patches`<sup>Required</sup> <a name="patches" id="projen.JavascriptFileBase.patch.parameter.patches"></a>
 
 - *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
 
@@ -2792,17 +3702,17 @@ The patch operations to apply.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.JavascriptFile.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
-| <code><a href="#projen.JavascriptFile.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.JavascriptFileBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.JavascriptFileBase.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
 
 ---
 
-##### `isConstruct` <a name="isConstruct" id="projen.JavascriptFile.isConstruct"></a>
+##### `isConstruct` <a name="isConstruct" id="projen.JavascriptFileBase.isConstruct"></a>
 
 ```typescript
-import { JavascriptFile } from 'projen'
+import { JavascriptFileBase } from 'projen'
 
-JavascriptFile.isConstruct(x: any)
+JavascriptFileBase.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
@@ -2821,7 +3731,7 @@ library can be accidentally installed, and `instanceof` will behave
 unpredictably. It is safest to avoid using `instanceof`, and using
 this type-testing method instead.
 
-###### `x`<sup>Required</sup> <a name="x" id="projen.JavascriptFile.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="projen.JavascriptFileBase.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -2829,17 +3739,17 @@ Any object.
 
 ---
 
-##### `isComponent` <a name="isComponent" id="projen.JavascriptFile.isComponent"></a>
+##### `isComponent` <a name="isComponent" id="projen.JavascriptFileBase.isComponent"></a>
 
 ```typescript
-import { JavascriptFile } from 'projen'
+import { JavascriptFileBase } from 'projen'
 
-JavascriptFile.isComponent(x: any)
+JavascriptFileBase.isComponent(x: any)
 ```
 
 Test whether the given construct is a component.
 
-###### `x`<sup>Required</sup> <a name="x" id="projen.JavascriptFile.isComponent.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="projen.JavascriptFileBase.isComponent.parameter.x"></a>
 
 - *Type:* any
 
@@ -2849,21 +3759,20 @@ Test whether the given construct is a component.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.JavascriptFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.JavascriptFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
-| <code><a href="#projen.JavascriptFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
-| <code><a href="#projen.JavascriptFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
-| <code><a href="#projen.JavascriptFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
-| <code><a href="#projen.JavascriptFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
-| <code><a href="#projen.JavascriptFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
-| <code><a href="#projen.JavascriptFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
-| <code><a href="#projen.JavascriptFile.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
-| <code><a href="#projen.JavascriptFile.property.cjs">cjs</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.JavascriptFile.property.dependencies">dependencies</a></code> | <code><a href="#projen.JavascriptDependenciesBase">JavascriptDependenciesBase</a></code> | *No description.* |
+| <code><a href="#projen.JavascriptFileBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.JavascriptFileBase.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.JavascriptFileBase.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.JavascriptFileBase.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.JavascriptFileBase.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.JavascriptFileBase.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.JavascriptFileBase.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.JavascriptFileBase.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.JavascriptFileBase.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
+| <code><a href="#projen.JavascriptFileBase.property.dependencies">dependencies</a></code> | <code><a href="#projen.JavascriptDependenciesBase">JavascriptDependenciesBase</a></code> | *No description.* |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="projen.JavascriptFile.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="projen.JavascriptFileBase.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -2875,7 +3784,7 @@ The tree node.
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.JavascriptFile.property.project"></a>
+##### `project`<sup>Required</sup> <a name="project" id="projen.JavascriptFileBase.property.project"></a>
 
 ```typescript
 public readonly project: Project;
@@ -2885,7 +3794,7 @@ public readonly project: Project;
 
 ---
 
-##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.JavascriptFile.property.absolutePath"></a>
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.JavascriptFileBase.property.absolutePath"></a>
 
 ```typescript
 public readonly absolutePath: string;
@@ -2897,7 +3806,7 @@ The absolute path of this file.
 
 ---
 
-##### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFile.property.path"></a>
+##### `path`<sup>Required</sup> <a name="path" id="projen.JavascriptFileBase.property.path"></a>
 
 ```typescript
 public readonly path: string;
@@ -2909,7 +3818,7 @@ The file path, relative to the project's outdir.
 
 ---
 
-##### `changed`<sup>Optional</sup> <a name="changed" id="projen.JavascriptFile.property.changed"></a>
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.JavascriptFileBase.property.changed"></a>
 
 ```typescript
 public readonly changed: boolean;
@@ -2925,7 +3834,7 @@ file has not been synthesized yet.
 
 ---
 
-##### `marker`<sup>Optional</sup> <a name="marker" id="projen.JavascriptFile.property.marker"></a>
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.JavascriptFileBase.property.marker"></a>
 
 ```typescript
 public readonly marker: string;
@@ -2939,7 +3848,7 @@ Value is undefined if the project is being ejected.
 
 ---
 
-##### `executable`<sup>Required</sup> <a name="executable" id="projen.JavascriptFile.property.executable"></a>
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.JavascriptFileBase.property.executable"></a>
 
 ```typescript
 public readonly executable: boolean;
@@ -2951,7 +3860,7 @@ Indicates if the file should be marked as executable.
 
 ---
 
-##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.JavascriptFile.property.readonly"></a>
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.JavascriptFileBase.property.readonly"></a>
 
 ```typescript
 public readonly readonly: boolean;
@@ -2963,7 +3872,7 @@ Indicates if the file should be read-only or read-write.
 
 ---
 
-##### `omitEmpty`<sup>Required</sup> <a name="omitEmpty" id="projen.JavascriptFile.property.omitEmpty"></a>
+##### `omitEmpty`<sup>Required</sup> <a name="omitEmpty" id="projen.JavascriptFileBase.property.omitEmpty"></a>
 
 ```typescript
 public readonly omitEmpty: boolean;
@@ -2975,17 +3884,7 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 ---
 
-##### `cjs`<sup>Required</sup> <a name="cjs" id="projen.JavascriptFile.property.cjs"></a>
-
-```typescript
-public readonly cjs: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.JavascriptFile.property.dependencies"></a>
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.JavascriptFileBase.property.dependencies"></a>
 
 ```typescript
 public readonly dependencies: JavascriptDependenciesBase;
@@ -11579,146 +12478,6 @@ public readonly type: ProjectType;
 - *Type:* <a href="#projen.ProjectType">ProjectType</a>
 
 Project metadata.
-
----
-
-### JavascriptFileOptions <a name="JavascriptFileOptions" id="projen.JavascriptFileOptions"></a>
-
-Options for the JsConfigFile class.
-
-#### Initializer <a name="Initializer" id="projen.JavascriptFileOptions.Initializer"></a>
-
-```typescript
-import { JavascriptFileOptions } from 'projen'
-
-const javascriptFileOptions: JavascriptFileOptions = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.JavascriptFileOptions.property.committed">committed</a></code> | <code>boolean</code> | Indicates whether this file should be committed to git or ignored. |
-| <code><a href="#projen.JavascriptFileOptions.property.editGitignore">editGitignore</a></code> | <code>boolean</code> | Update the project's .gitignore file. |
-| <code><a href="#projen.JavascriptFileOptions.property.executable">executable</a></code> | <code>boolean</code> | Whether the generated file should be marked as executable. |
-| <code><a href="#projen.JavascriptFileOptions.property.marker">marker</a></code> | <code>boolean</code> | Adds the projen marker to the file. |
-| <code><a href="#projen.JavascriptFileOptions.property.readonly">readonly</a></code> | <code>boolean</code> | Whether the generated file should be readonly. |
-| <code><a href="#projen.JavascriptFileOptions.property.obj">obj</a></code> | <code>any</code> | The object that will be serialized. You can modify the object's contents before synthesis. |
-| <code><a href="#projen.JavascriptFileOptions.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Omits empty objects and arrays. |
-| <code><a href="#projen.JavascriptFileOptions.property.cjs">cjs</a></code> | <code>boolean</code> | Whether to use CommonJS (require) or ESM (import/export) for the file. |
-
----
-
-##### `committed`<sup>Optional</sup> <a name="committed" id="projen.JavascriptFileOptions.property.committed"></a>
-
-```typescript
-public readonly committed: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Indicates whether this file should be committed to git or ignored.
-
-By
-default, all generated files are committed and anti-tamper is used to
-protect against manual modifications.
-
----
-
-##### `editGitignore`<sup>Optional</sup> <a name="editGitignore" id="projen.JavascriptFileOptions.property.editGitignore"></a>
-
-```typescript
-public readonly editGitignore: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Update the project's .gitignore file.
-
----
-
-##### `executable`<sup>Optional</sup> <a name="executable" id="projen.JavascriptFileOptions.property.executable"></a>
-
-```typescript
-public readonly executable: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Whether the generated file should be marked as executable.
-
----
-
-##### `marker`<sup>Optional</sup> <a name="marker" id="projen.JavascriptFileOptions.property.marker"></a>
-
-```typescript
-public readonly marker: boolean;
-```
-
-- *Type:* boolean
-- *Default:* marker will be included as long as the project is not ejected
-
-Adds the projen marker to the file.
-
----
-
-##### `readonly`<sup>Optional</sup> <a name="readonly" id="projen.JavascriptFileOptions.property.readonly"></a>
-
-```typescript
-public readonly readonly: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Whether the generated file should be readonly.
-
----
-
-##### `obj`<sup>Optional</sup> <a name="obj" id="projen.JavascriptFileOptions.property.obj"></a>
-
-```typescript
-public readonly obj: any;
-```
-
-- *Type:* any
-- *Default:* {} an empty object (use `file.obj` to mutate).
-
-The object that will be serialized. You can modify the object's contents before synthesis.
-
-Serialization of the object is similar to JSON.stringify with few enhancements:
-- values that are functions will be called during synthesis and the result will be serialized - this allow to have lazy values.
-- `Set` will be converted to array
-- `Map` will be converted to a plain object ({ key: value, ... }})
-- `RegExp` without flags will be converted to string representation of the source
-
----
-
-##### `omitEmpty`<sup>Optional</sup> <a name="omitEmpty" id="projen.JavascriptFileOptions.property.omitEmpty"></a>
-
-```typescript
-public readonly omitEmpty: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Omits empty objects and arrays.
-
----
-
-##### `cjs`<sup>Required</sup> <a name="cjs" id="projen.JavascriptFileOptions.property.cjs"></a>
-
-```typescript
-public readonly cjs: boolean;
-```
-
-- *Type:* boolean
-
-Whether to use CommonJS (require) or ESM (import/export) for the file.
 
 ---
 

@@ -3,9 +3,10 @@ import { ICodeResolvable } from "../src/code-resolvable";
 import { NodeProject } from "../src/javascript";
 import {
   CJSJavascriptDependencies,
+  CJSJavascriptFile,
   ESMJavascriptDependencies,
+  ESMJavascriptFile,
   JavascriptDataStructure,
-  JavascriptFile,
   JavascriptFunction,
   JavascriptRaw,
 } from "../src/javascript-file";
@@ -282,12 +283,11 @@ describe("JavascriptFile", () => {
 
     const configFileName = "testFilename.js";
 
-    new JavascriptFile(project, configFileName, {
+    new CJSJavascriptFile(project, configFileName, {
       obj: {
         exportedValue: "value",
       },
       marker: true,
-      cjs: true,
     });
 
     // THEN
@@ -312,12 +312,11 @@ describe("JavascriptFile", () => {
 
     const configFileName = "testFilename.mjs";
 
-    new JavascriptFile(project, configFileName, {
+    new ESMJavascriptFile(project, configFileName, {
       obj: {
         exportedValue: "value",
       },
       marker: true,
-      cjs: false,
     });
 
     // THEN
@@ -342,12 +341,11 @@ describe("JavascriptFile", () => {
 
     const configFileName = "testFilename.mjs";
 
-    const file = new JavascriptFile(project, configFileName, {
+    const file = new ESMJavascriptFile(project, configFileName, {
       obj: {
         exportedValue: "value",
       },
       marker: true,
-      cjs: false,
     });
     file.addOverride("exportedValue", "newValue");
 
@@ -373,12 +371,11 @@ describe("JavascriptFile", () => {
 
     const configFileName = "testFilename.mjs";
 
-    const file = new JavascriptFile(project, configFileName, {
+    const file = new ESMJavascriptFile(project, configFileName, {
       obj: {
         exportedValue: "value",
       },
       marker: true,
-      cjs: false,
     });
     const [newValueToken] = file.dependencies.addImport("fs", "fs");
     file.addOverride(
@@ -410,12 +407,11 @@ describe("JavascriptFile", () => {
 
     const configFileName = "testFilename.mjs";
 
-    const file = new JavascriptFile(project, configFileName, {
+    const file = new ESMJavascriptFile(project, configFileName, {
       obj: {
         exportedValue: "value",
       },
       marker: true,
-      cjs: false,
     });
     const [newValueToken] = file.dependencies.addImport("fs", "fs");
     let readFileName = "default.txt";

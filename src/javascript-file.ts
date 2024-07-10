@@ -421,32 +421,14 @@ export class ESMJavascriptDependencies extends JavascriptDependenciesBase {
 }
 
 /**
- * Options for the JsConfigFile class.
- */
-export interface JavascriptFileOptions extends ObjectFileOptions {
-  /**
-   * Whether to use CommonJS (require) or ESM (import/export) for the file.
-   */
-  readonly cjs: boolean;
-}
-
-/**
  * Represents a JS configuration file (e.g. .eslintrc.js).
  */
-export class JavascriptFile extends ObjectFile {
-  public readonly dependencies: JavascriptDependenciesBase;
-  public readonly cjs: boolean;
+export abstract class JavascriptFileBase extends ObjectFile {
+  public abstract readonly dependencies: JavascriptDependenciesBase;
+  protected abstract readonly defaultExportText: string;
 
-  constructor(
-    project: Project,
-    filePath: string,
-    options: JavascriptFileOptions
-  ) {
+  constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
-    this.cjs = options.cjs ?? false;
-    this.dependencies = options.cjs
-      ? CJSJavascriptDependencies.value()
-      : ESMJavascriptDependencies.value();
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
@@ -458,12 +440,37 @@ export class JavascriptFile extends ObjectFile {
 
     const markerHeader = this.marker ? `// ${this.marker}\n` : "";
 
-    const defaultExport = this.cjs ? `module.exports =` : `export default`;
     return JavascriptRaw.value(
-      `${markerHeader}${this.dependencies}
-${defaultExport} ${JavascriptDataStructure.value(data)};
+      `${markerHeader}${this.dependencies.toString()}
+${this.defaultExportText} ${JavascriptDataStructure.value(data)};
 `
     ).resolve();
+  }
+}
+
+/**
+ * Represents a Javascript file that uses CommonJS (CJS) modules and syntax.
+ */
+export class CJSJavascriptFile extends JavascriptFileBase {
+  public readonly dependencies: JavascriptDependenciesBase;
+  protected readonly defaultExportText = `module.exports =`;
+
+  constructor(project: Project, filePath: string, options: ObjectFileOptions) {
+    super(project, filePath, options);
+    this.dependencies = CJSJavascriptDependencies.value();
+  }
+}
+
+/**
+ * Represents a Javascript file that uses ECMAScript modules (ESM) and syntax.
+ */
+export class ESMJavascriptFile extends JavascriptFileBase {
+  public readonly dependencies: JavascriptDependenciesBase;
+  protected readonly defaultExportText = `export default`;
+
+  constructor(project: Project, filePath: string, options: ObjectFileOptions) {
+    super(project, filePath, options);
+    this.dependencies = ESMJavascriptDependencies.value();
   }
 }
 
