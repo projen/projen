@@ -9,6 +9,7 @@ export * from "./gitpod";
 export * from "./runner-options";
 export * from "./ignore-file";
 export * from "./ini";
+export * from "./javascript-file";
 export * from "./json";
 export * from "./json-patch";
 export * from "./logger";
