@@ -161,7 +161,7 @@ test("addPluginRepository()", () => {
     name: "Remote Repo",
     url: "https://myserver/repo",
     layout: "default",
-    policyRepository: {
+    snapshots: {
       checksumPolicy: ChecksumPolicy.FAIL,
       updatePolicy: UpdatePolicy.interval(50),
     },

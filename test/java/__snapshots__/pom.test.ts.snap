@@ -166,10 +166,10 @@ exports[`addPluginRepository() 1`] = `
             <name>Remote Repo</name>
             <url>https://myserver/repo</url>
             <layout>default</layout>
-            <policyRepository>
+            <snapshots>
                 <checksumPolicy>fail</checksumPolicy>
                 <updatePolicy>interval:50</updatePolicy>
-            </policyRepository>
+            </snapshots>
         </pluginRepositories>
     </pluginRepositories>
 </project>

@@ -152,7 +152,8 @@ export interface MavenRepository {
   /**
    * Repository Policy
    */
-  readonly policyRepository?: MavenRepositoryPolicy;
+  readonly snapshots?: MavenRepositoryPolicy;
+  readonly releases?: MavenRepositoryPolicy;
 }
 
 /**
