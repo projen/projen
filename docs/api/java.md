@@ -3965,7 +3965,8 @@ const mavenRepository: java.MavenRepository = { ... }
 | <code><a href="#projen.java.MavenRepository.property.url">url</a></code> | <code>string</code> | The url of the repository. |
 | <code><a href="#projen.java.MavenRepository.property.layout">layout</a></code> | <code>string</code> | The layout of the repository. |
 | <code><a href="#projen.java.MavenRepository.property.name">name</a></code> | <code>string</code> | The name of the repository. |
-| <code><a href="#projen.java.MavenRepository.property.policyRepository">policyRepository</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | Repository Policy. |
+| <code><a href="#projen.java.MavenRepository.property.releases">releases</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | *No description.* |
+| <code><a href="#projen.java.MavenRepository.property.snapshots">snapshots</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | Repository Policy. |
 
 ---
 
@@ -4017,10 +4018,20 @@ The name of the repository.
 
 ---
 
-##### `policyRepository`<sup>Optional</sup> <a name="policyRepository" id="projen.java.MavenRepository.property.policyRepository"></a>
+##### `releases`<sup>Optional</sup> <a name="releases" id="projen.java.MavenRepository.property.releases"></a>
 
 ```typescript
-public readonly policyRepository: MavenRepositoryPolicy;
+public readonly releases: MavenRepositoryPolicy;
+```
+
+- *Type:* <a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a>
+
+---
+
+##### `snapshots`<sup>Optional</sup> <a name="snapshots" id="projen.java.MavenRepository.property.snapshots"></a>
+
+```typescript
+public readonly snapshots: MavenRepositoryPolicy;
 ```
 
 - *Type:* <a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a>

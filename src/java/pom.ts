@@ -410,7 +410,7 @@ export class Pom extends Component {
     }
 
     return {
-      pluginRepositories: { pluginRepositories: this.pluginRepositories },
+      pluginRepositories: { pluginRepository: this.pluginRepositories },
     };
   }
 }
