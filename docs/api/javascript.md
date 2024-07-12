@@ -679,6 +679,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
 | <code><a href="#projen.javascript.Jest.addWatchIgnorePattern">addWatchIgnorePattern</a></code> | Adds a watch ignore pattern. |
+| <code><a href="#projen.javascript.Jest.discoverTestMatchPatternsForDirs">discoverTestMatchPatternsForDirs</a></code> | Build standard test match patterns for a directory. |
 
 ---
 
@@ -863,6 +864,32 @@ Adds a watch ignore pattern.
 - *Type:* string
 
 The pattern (regular expression).
+
+---
+
+##### `discoverTestMatchPatternsForDirs` <a name="discoverTestMatchPatternsForDirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs"></a>
+
+```typescript
+public discoverTestMatchPatternsForDirs(dirs: string[], options?: JestDiscoverTestMatchPatternsForDirsOptions): void
+```
+
+Build standard test match patterns for a directory.
+
+###### `dirs`<sup>Required</sup> <a name="dirs" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.dirs"></a>
+
+- *Type:* string[]
+
+The directories to add test matches for.
+
+Matches any folder if not specified or an empty array.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.Jest.discoverTestMatchPatternsForDirs.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions">JestDiscoverTestMatchPatternsForDirsOptions</a>
+
+Options for building test match patterns.
 
 ---
 
@@ -3820,7 +3847,10 @@ The .prettierIgnore file.
 
 ### Projenrc <a name="Projenrc" id="projen.javascript.Projenrc"></a>
 
-Sets up a javascript project to use TypeScript for projenrc.
+A projenrc file written in JavaScript.
+
+This component can be instantiated in any type of project
+and has no expectations around the project's main language.
 
 #### Initializers <a name="Initializers" id="projen.javascript.Projenrc.Initializer"></a>
 
@@ -5699,6 +5729,50 @@ public readonly statements: number;
 
 ---
 
+### EslintCommandOptions <a name="EslintCommandOptions" id="projen.javascript.EslintCommandOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintCommandOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintCommandOptions: javascript.EslintCommandOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintCommandOptions.property.extraArgs">extraArgs</a></code> | <code>string[]</code> | Extra flag arguments to pass to eslint command. |
+| <code><a href="#projen.javascript.EslintCommandOptions.property.fix">fix</a></code> | <code>boolean</code> | Whether to fix eslint issues when running the eslint task. |
+
+---
+
+##### `extraArgs`<sup>Optional</sup> <a name="extraArgs" id="projen.javascript.EslintCommandOptions.property.extraArgs"></a>
+
+```typescript
+public readonly extraArgs: string[];
+```
+
+- *Type:* string[]
+
+Extra flag arguments to pass to eslint command.
+
+---
+
+##### `fix`<sup>Optional</sup> <a name="fix" id="projen.javascript.EslintCommandOptions.property.fix"></a>
+
+```typescript
+public readonly fix: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to fix eslint issues when running the eslint task.
+
+---
+
 ### EslintOptions <a name="EslintOptions" id="projen.javascript.EslintOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.EslintOptions.Initializer"></a>
@@ -5716,6 +5790,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.dirs">dirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasExtensions">aliasExtensions</a></code> | <code>string[]</code> | Enable import alias for module paths. |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasMap">aliasMap</a></code> | <code>{[ key: string ]: string}</code> | Enable import alias for module paths. |
+| <code><a href="#projen.javascript.EslintOptions.property.commandOptions">commandOptions</a></code> | <code><a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a></code> | Options for eslint command executed by eslint task. |
 | <code><a href="#projen.javascript.EslintOptions.property.devdirs">devdirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files that include tests and build tools. |
 | <code><a href="#projen.javascript.EslintOptions.property.fileExtensions">fileExtensions</a></code> | <code>string[]</code> | File types that should be linted (e.g. [ ".js", ".ts" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns. |
@@ -5764,6 +5839,18 @@ public readonly aliasMap: {[ key: string ]: string};
 - *Default:* undefined
 
 Enable import alias for module paths.
+
+---
+
+##### `commandOptions`<sup>Optional</sup> <a name="commandOptions" id="projen.javascript.EslintOptions.property.commandOptions"></a>
+
+```typescript
+public readonly commandOptions: EslintCommandOptions;
+```
+
+- *Type:* <a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a>
+
+Options for eslint command executed by eslint task.
 
 ---
 
@@ -7143,6 +7230,40 @@ public readonly watchPlugins: WatchPlugin[];
 
 - *Type:* <a href="#projen.javascript.WatchPlugin">WatchPlugin</a>[]
 - *Default:* 
+
+---
+
+### JestDiscoverTestMatchPatternsForDirsOptions <a name="JestDiscoverTestMatchPatternsForDirsOptions" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions"></a>
+
+Options for discoverTestMatchPatternsForDirs.
+
+#### Initializer <a name="Initializer" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const jestDiscoverTestMatchPatternsForDirsOptions: javascript.JestDiscoverTestMatchPatternsForDirsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.property.fileExtensionPattern">fileExtensionPattern</a></code> | <code>string</code> | The file extension pattern to use. |
+
+---
+
+##### `fileExtensionPattern`<sup>Optional</sup> <a name="fileExtensionPattern" id="projen.javascript.JestDiscoverTestMatchPatternsForDirsOptions.property.fileExtensionPattern"></a>
+
+```typescript
+public readonly fileExtensionPattern: string;
+```
+
+- *Type:* string
+
+The file extension pattern to use.
+
+Defaults to "[jt]s?(x)".
 
 ---
 

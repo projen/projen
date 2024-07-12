@@ -59,7 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "all-contributors-cli": "^6.26.1",
-    "esbuild": "^0.21.5",
+    "esbuild": "^0.23.0",
     "eslint": "^8",
     "eslint-config-prettier": "^8.10.0",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -69,7 +69,7 @@
     "jest-junit": "^15",
     "jsii": "5.4.x",
     "jsii-diff": "^1.101.0",
-    "jsii-docgen": "^10.4.16",
+    "jsii-docgen": "^10.4.17",
     "jsii-pacmak": "^1.101.0",
     "jsii-rosetta": "5.4.x",
     "license-checker": "^25.0.1",
@@ -142,8 +142,10 @@
     ],
     "maxWorkers": "50%",
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-      "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)"
+      "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/@(projenrc)/**/?(*.)+(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,

@@ -7,8 +7,8 @@ export type JsiiPacmakTarget = "js" | "go" | "java" | "python" | "dotnet";
  */
 export const JSII_TOOLCHAIN: Record<JsiiPacmakTarget, Tools> = {
   js: {},
-  java: { java: { version: "11.x" } },
+  java: { java: { version: "11" } },
   python: { python: { version: "3.x" } },
-  go: { go: { version: "^1.16.0" } },
-  dotnet: { dotnet: { version: "3.x" } },
+  go: { go: { version: "^1.18.0" } },
+  dotnet: { dotnet: { version: "6.x" } },
 };

@@ -133,6 +133,9 @@ exports[`addPlugin() with multiple executions 1`] = `
                     <execution>
                         <id>default-compile</id>
                         <phase>none</phase>
+                        <configuration>
+                            <source>1.8</source>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
