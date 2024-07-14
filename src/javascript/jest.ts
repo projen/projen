@@ -858,7 +858,7 @@ export class Jest extends Component {
     return [
       `<rootDir>/@(${dirs.join(
         "|"
-      )})/**/?(*.)+(spec|test).${fileExtensionPattern}`,
+      )})/**/*(*.)@(spec|test).${fileExtensionPattern}`,
       `<rootDir>/@(${dirs.join(
         "|"
       )})/**/__tests__/**/*.${fileExtensionPattern}`,
