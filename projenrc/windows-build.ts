@@ -71,7 +71,7 @@ export class WindowsBuild extends Component {
 
       JsonPatch.add(buildJobPath("/steps/4"), {
         name: "build on windows",
-        run: "node ./projen.js build",
+        run: `${this.project.projenCommand} build`,
         shell: "cmd",
         if: "${{ matrix.runner.experimental }}",
       }),
