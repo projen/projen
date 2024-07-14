@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { Range, major } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
-import { Task } from "..";
+import { Task, TextFile } from "..";
 import { Job, Step } from "../github/workflows-model";
 import { Eslint, NodePackageManager } from "../javascript";
 import {
@@ -21,8 +21,6 @@ const EMAIL_REGEX =
 const URL_REGEX =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
 const REPO_TEMP_DIRECTORY = ".repo";
-
-export const PACKAGE_SCRIPT_PATH = "./scripts/package.js";
 
 export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   /**
@@ -267,8 +265,8 @@ export class JsiiProject extends TypeScriptProject {
       description: "Packages artifacts for all target languages",
     });
 
-    // TODO: This needs to be exposed for every JSII Project. Generate script in ./projenrc/package.js
-    this.packageTask.reset(`node ${PACKAGE_SCRIPT_PATH}`);
+    const packageScript = this.generatePackageScript();
+    this.packageTask.reset(`node ${packageScript.path}`);
 
     const targets: Record<string, any> = {};
 
@@ -567,6 +565,66 @@ export class JsiiProject extends TypeScriptProject {
       : options.workflowRunsOn
       ? { runsOn: options.workflowRunsOn }
       : {};
+  }
+
+  private generatePackageScript() {
+    return new TextFile(this, "./projenrc/package.js", {
+      executable: true,
+      marker: true,
+      lines: `
+const fs = require('fs');
+const { execSync } = require('child_process');
+const path = require('path');
+
+function copyFiles(source, destination, exclude = []) {
+  if (!fs.existsSync(destination)) {
+    fs.mkdirSync(destination, { recursive: true });
+  }
+
+  fs.readdirSync(source).forEach((p) => {
+    if (!exclude.includes(p)) {
+      const src = path.join(source, p);
+      const dest = path.join(destination, p);
+
+      if (fs.lstatSync(src).isDirectory() && !fs.existsSync(dest)) {
+        fs.mkdirSync(dest, { recursive: true });
+      }
+
+      fs.cpSync(src, dest, {
+        recursive: true,
+        overwrite: true,
+      });
+    }
+  });
+}
+
+function main() {
+  // when running inside CI we just prepare the repo for packaging, which
+  // takes place in separate tasks.
+  // outside of CI (i.e locally) we simply package all targets.
+  if (process.env.CI) {
+    const tempDir = ".repo";
+    const destDir = "${this.artifactsDirectory}";
+    const exclude = [tempDir, destDir, ".git", "node_modules"];
+    
+    // in jsii we consider the entire repo (post build) as the build artifact
+    // which is then used to create the language bindings in separate jobs.
+    console.log(\`Copying files to \${tempDir}\`);
+    copyFiles(".", tempDir, exclude);
+    
+    console.log(\`Deleting \${destDir}\`);
+    fs.rmSync(destDir, { recursive: true, force: true });
+    
+    console.log(\`Renaming \${tempDir} to \${destDir}\`);
+    fs.renameSync(tempDir, destDir);
+  } else {
+    execSync("${this.projenCommand} package-all", { stdio: "inherit" });
+  }
+}
+
+main();
+`.split("\n"),
+    });
   }
 }
 

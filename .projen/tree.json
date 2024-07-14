@@ -354,6 +354,13 @@
           "construct": "SampleDir"
         }
       },
+      "TextFile@projenrc--package.js": {
+        "metadata": {
+          "type": "file",
+          "construct": "TextFile",
+          "path": "projenrc/package.js"
+        }
+      },
       "TaskWorkflow#check-licenses": {
         "metadata": {
           "type": "component",
@@ -438,13 +445,6 @@
           "type": "file",
           "construct": "JsonFile",
           "path": ".vscode/launch.json"
-        }
-      },
-      "TextFile@scripts--package.js": {
-        "metadata": {
-          "type": "file",
-          "construct": "TextFile",
-          "path": "scripts/package.js"
         }
       },
       "WindowsBuild": {

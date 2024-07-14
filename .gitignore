@@ -50,6 +50,7 @@ junit.xml
 /lib
 /dist/
 !/.eslintrc.json
+!/projenrc/package.js
 .jsii
 tsconfig.json
 !/API.md
@@ -62,6 +63,5 @@ tsconfig.json
 **/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
-!/scripts/package.js
 !/.projen/tree.json
 !/.projenrc.ts

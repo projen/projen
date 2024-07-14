@@ -216,7 +216,7 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "node ./scripts/package.js"
+          "exec": "node projenrc/package.js"
         }
       ]
     },

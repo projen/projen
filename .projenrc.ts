@@ -14,7 +14,6 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
-  setupPackage,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -186,8 +185,6 @@ setupNpmignore(project);
 
 setupIntegTest(project);
 setupBundleTaskRunner(project);
-
-setupPackage(project);
 
 new WindowsBuild(project);
 
