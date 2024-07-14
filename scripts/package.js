@@ -26,11 +26,16 @@ function copyFiles(source, destination, exclude = []) {
 }
 
 function main() {
+  // when running inside CI we just prepare the repo for packaging, which
+  // takes place in separate tasks.
+  // outside of CI (i.e locally) we simply package all targets.
   if (process.env.CI) {
     const tempDir = ".repo";
     const destDir = "dist";
     const exclude = [tempDir, destDir, ".git", "node_modules"];
     
+    // in jsii we consider the entire repo (post build) as the build artifact
+    // which is then used to create the language bindings in separate jobs.
     console.log(`Copying files to ${tempDir}`);
     copyFiles(".", tempDir, exclude);
     

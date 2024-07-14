@@ -22,6 +22,8 @@ const URL_REGEX =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
 const REPO_TEMP_DIRECTORY = ".repo";
 
+export const PACKAGE_SCRIPT_PATH = "./scripts/package.js";
+
 export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   /**
    * @default "."
@@ -265,23 +267,8 @@ export class JsiiProject extends TypeScriptProject {
       description: "Packages artifacts for all target languages",
     });
 
-    // in jsii we consider the entire repo (post build) as the build artifact
-    // which is then used to create the language bindings in separate jobs.
-    // const prepareRepoForCI = [
-    //   `shx cp -Rp . .repo --exclude .git --exclude node_modules`,
-    //   `rm -rf ${this.artifactsDirectory}`,
-    //   `mv .repo ${this.artifactsDirectory}`,
-    // ].join(" && ");
-
-    // when running inside CI we just prepare the repo for packaging, which
-    // takes place in separate tasks.
-    // outside of CI (i.e locally) we simply package all targets.
-    // this.packageTask.reset(
-    //   `if [ ! -z \${CI} ]; then ${prepareRepoForCI}; else ${this.runTaskCommand(
-    //     this.packageAllTask
-    //   )}; fi`
-    // );
-    this.packageTask.reset("node ./scripts/package.js");
+    // TODO: This needs to be exposed for every JSII Project. Generate script in ./projenrc/package.js
+    this.packageTask.reset(`node ${PACKAGE_SCRIPT_PATH}`);
 
     const targets: Record<string, any> = {};
 
