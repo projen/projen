@@ -440,6 +440,13 @@
           "path": ".vscode/launch.json"
         }
       },
+      "TextFile@scripts--package.js": {
+        "metadata": {
+          "type": "file",
+          "construct": "TextFile",
+          "path": "scripts/package.js"
+        }
+      },
       "WindowsBuild": {
         "metadata": {
           "type": "component",
