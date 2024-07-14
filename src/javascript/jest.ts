@@ -365,7 +365,7 @@ export interface JestConfigOptions {
    * The glob patterns Jest uses to detect test files. By default it looks for .js, .jsx, .ts and .tsx
    * files inside of __tests__ folders, as well as any files with a suffix of .test or .spec
    * (e.g. Component.test.js or Component.spec.js). It will also find files called test.js or spec.js.
-   * @default ['**\/__tests__/**\/*.[jt]s?(x)', '**\/?(*.)+(spec|test).[tj]s?(x)']
+   * @default ['**\/__tests__/**\/*.[jt]s?(x)', '**\/*(*.)@(spec|test).[tj]s?(x)']
    */
   readonly testMatch?: string[];
 
@@ -764,7 +764,7 @@ export class Jest extends Component {
       testMatch: () =>
         this.testMatch.length > 0
           ? this.testMatch
-          : [`**/__tests__/**/*.[jt]s?(x)`, `**/?(*.)+(spec|test).[jt]s?(x)`], // Jest defaults
+          : [`**/__tests__/**/*.[jt]s?(x)`, `**/*(*.)@(spec|test).[jt]s?(x)`], // Jest defaults
       reporters: this.reporters,
       snapshotResolver: (() => this._snapshotResolver) as any,
     } satisfies JestConfigOptions;
