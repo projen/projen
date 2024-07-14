@@ -36,7 +36,6 @@
     "readme-macros": "node ./projen.js readme-macros",
     "release": "node ./projen.js release",
     "test": "node ./projen.js test",
-    "test:update": "node ./projen.js test:update",
     "test:watch": "node ./projen.js test:watch",
     "unbump": "node ./projen.js unbump",
     "upgrade": "node ./projen.js upgrade",
