@@ -14,7 +14,7 @@ a solid foundation to build and manage your projects efficiently with projen.
 
 
 ## Table of Contents
-1. [Introduction](#Introduction)
+1. [Introduction](#introduction)
 2. [Creating a New TypeScript Project](#creating-a-new-typescript-project)
 3. [Project Configuration](#project-configuration)
 4. [Adding Dependencies](#adding-dependencies)
