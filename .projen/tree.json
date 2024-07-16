@@ -354,13 +354,6 @@
           "construct": "SampleDir"
         }
       },
-      "TextFile@projenrc--package.js": {
-        "metadata": {
-          "type": "file",
-          "construct": "TextFile",
-          "path": "projenrc/package.js"
-        }
-      },
       "TaskWorkflow#check-licenses": {
         "metadata": {
           "type": "component",

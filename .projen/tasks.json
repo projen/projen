@@ -216,7 +216,7 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "node projenrc/package.js"
+          "exec": "if [ ! -z ${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else node ./projen.js package-all; fi"
         }
       ]
     },
