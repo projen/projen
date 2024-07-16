@@ -31,6 +31,18 @@ export class WindowsBuild extends Component {
       9,
     ];
 
+    const windowsBuildTasks = [
+      "default",
+      "pre-compile",
+      "compile",
+      "post-compile",
+      "test",
+    ];
+    const windowsBuildCommands = windowsBuildTasks.map(
+      (task) => `${this.project.projenCommand} ${task}`
+    );
+    const windowsBuild = windowsBuildCommands.join(" && ");
+
     const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
       JsonPatch.add(
         buildJobPath(`/steps/${stepIndex}/if`),
@@ -71,7 +83,7 @@ export class WindowsBuild extends Component {
 
       JsonPatch.add(buildJobPath("/steps/4"), {
         name: "build on windows",
-        run: `${this.project.projenCommand} build`,
+        run: windowsBuild,
         shell: "cmd",
         if: "${{ matrix.runner.experimental }}",
       }),
