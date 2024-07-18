@@ -994,7 +994,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
+            "builtin": "cdk/package-jsii-project",
+            "env": {
+              "ARTIFACTS_DIRECTORY": "dist",
+              "PACKAGE_ALL_TASK_NAME": "package-all",
+              "PROJEN_COMMAND": "npx projen",
+            },
           },
         ],
       },
