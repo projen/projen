@@ -18,16 +18,15 @@ function copyFiles(
   destination: string,
   exclude: string[] = []
 ) {
-  fs.readdirSync(source).forEach((file) => {
-    if (!exclude.includes(file)) {
-      const src = path.join(source, file);
-      const dest = path.join(destination, file);
+  fs.cpSync(source, destination, {
+    recursive: true,
+    force: true,
+    filter: (src) => {
+      const pathBasename = path.basename(src);
+      const shouldBeCopied = !exclude.includes(pathBasename);
 
-      fs.cpSync(src, dest, {
-        recursive: true,
-        force: true,
-      });
-    }
+      return shouldBeCopied;
+    },
   });
 }
 
@@ -45,7 +44,7 @@ function main() {
 
     // in jsii we consider the entire repo (post build) as the build artifact
     // which is then used to create the language bindings in separate jobs.
-    console.info(`Copying files from to ${tempDir}`);
+    console.info(`Copying files from the repository root to ${tempDir}`);
     copyFiles(".", tempDir, exclude);
 
     console.info(`Deleting ${destDir}`);
@@ -53,6 +52,9 @@ function main() {
 
     console.info(`Copying files from ${tempDir} to ${destDir}`);
     copyFiles(tempDir, destDir, exclude);
+
+    console.info(`Deleting ${tempDir}`);
+    fs.rmSync(tempDir, { recursive: true, force: true });
   } else {
     child.execSync(`${projenCommand} ${packageAllTaskName}`, {
       stdio: "inherit",
