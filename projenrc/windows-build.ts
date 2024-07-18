@@ -79,10 +79,21 @@ export class WindowsBuild extends Component {
       // Skip steps that shouldn't run on Windows
       ...skippedStepPatches,
 
-      // Rename workflow
+      // Install rsync on Windows
+      JsonPatch.add(buildJobPath("/steps/0"), {
+        name: "Install rsync on Windows",
+        if: `matrix.runner.os == 'windows-latest'`,
+        run: "choco install --no-progress rsync",
+        shell: "pwsh",
+      })
+    );
+
+    // Add the join target job for branch protection
+    buildWorkflowFile?.patch(
+      // Rename old workflow
       JsonPatch.move(buildJobPath(), `/jobs/${JOB_BUILD_MATRIX}`),
 
-      // Add the join target job for branch protection
+      // Insert new meta job
       JsonPatch.add(buildJobPath(), {
         "runs-on": "ubuntu-latest",
         needs: [JOB_BUILD_MATRIX],
