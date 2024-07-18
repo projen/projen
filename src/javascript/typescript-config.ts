@@ -4,6 +4,7 @@ import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
+import { normalizePersistedPath } from "../util";
 
 export interface TypescriptConfigOptions {
   /**
@@ -795,7 +796,10 @@ export class TypescriptConfig extends Component {
     const configDir = dir
       ? path.format({ dir: dir.startsWith("..") ? "" : ".", base: dir })
       : ".";
-    return path.format({ ...pathParts, dir: configDir });
+
+    const extendsPath = path.format({ ...pathParts, dir: configDir });
+
+    return normalizePersistedPath(extendsPath);
   }
 
   /**

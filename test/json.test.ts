@@ -220,7 +220,7 @@ describe("changed", () => {
     writeFile(
       join(prj.outdir, "hello.json"),
       JSON.stringify(obj, undefined, 2),
-      { readonly: true, executable: true }
+      { readonly: false, executable: true }
     );
     prj.synth();
     expect(file.changed).toBeTruthy();
