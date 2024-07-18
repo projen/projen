@@ -38,7 +38,7 @@ export class WindowsBuild extends Component {
       )
     );
 
-    // Add windows-latest runner
+    // Setup runner matrix
     buildWorkflowFile?.patch(
       JsonPatch.add(buildJobPath("/strategy"), {
         matrix: {
@@ -58,25 +58,21 @@ export class WindowsBuild extends Component {
           ],
         },
       }),
+
+      // Run job on os from matrix
       JsonPatch.add(buildJobPath("/runs-on"), "${{ matrix.runner.os }}"),
 
-      // Allow some builds to fail
+      // Allow builds to fail based on matrix
       JsonPatch.add(
         buildJobPath("/continue-on-error"),
         "${{ matrix.runner.allow_failure }}"
       ),
 
+      // Add conditions to steps that should only run on the primary build
       JsonPatch.add(
         buildJobPath("/steps/6/if"),
         "${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}"
       ),
-
-      JsonPatch.add(
-        buildJobPath("/steps/3/if"),
-        "${{ matrix.runner.primary_build }}"
-      ),
-
-      // Skip steps that shouldn't run on Windows
       ...skippedStepPatches,
 
       // Install rsync on Windows

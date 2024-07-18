@@ -201,7 +201,6 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: node ./projen.js build
-        if: ${{ matrix.runner.primary_build }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
