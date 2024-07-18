@@ -197,16 +197,16 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: node ./projen.js build
-        if: ${{ !matrix.runner.experimental }}
+        if: ${{ matrix.runner.primary_build }}
       - name: build on windows
         run: node ./projen.js default && node ./projen.js pre-compile && node ./projen.js compile && node ./projen.js post-compile && node ./projen.js test
         shell: cmd
-        if: ${{ matrix.runner.experimental }}
+        if: ${{ !matrix.runner.primary_build }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           directory: coverage
-        if: ${{ !matrix.runner.experimental }}
+        if: ${{ matrix.runner.primary_build }}
       - name: Find mutations
         id: self_mutation
         run: |-
@@ -214,7 +214,7 @@ jobs:
           git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
         working-directory: ./
       - name: Upload patch
-        if: ${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}
+        if: ${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}
         uses: actions/upload-artifact@v4
         with:
           name: .repo.patch
@@ -229,24 +229,26 @@ jobs:
       - name: Backup artifact permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
-        if: ${{ !matrix.runner.experimental }}
+        if: ${{ matrix.runner.primary_build }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: dist
           overwrite: true
-        if: ${{ !matrix.runner.experimental }}
+        if: ${{ matrix.runner.primary_build }}
     strategy:
       matrix:
         runner:
           - os: ubuntu-latest
-            experimental: false
+            primary_build: true
             shell: bash
+            allow_failure: false
           - os: windows-latest
-            experimental: true
+            primary_build: false
             shell: cmd
-    continue-on-error: ${{ matrix.runner.experimental }}
+            allow_failure: false
+    continue-on-error: ${{ matrix.runner.allow_failure }}
   build:
     runs-on: ubuntu-latest
     needs:
