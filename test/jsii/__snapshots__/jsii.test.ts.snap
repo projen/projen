@@ -994,7 +994,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "(test -n "\${CI}" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || npx projen package-all",
+            "exec": "test -n "\${CI}" && ((rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist) || exit 1) || npx projen package-all",
           },
         ],
       },
@@ -2480,7 +2480,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "(test -n "\${CI}" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || npx projen package-all",
+            "exec": "test -n "\${CI}" && ((rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist) || exit 1) || npx projen package-all",
           },
         ],
       },
@@ -3964,7 +3964,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "(test -n "\${CI}" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || npx projen package-all",
+            "exec": "test -n "\${CI}" && ((rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist) || exit 1) || npx projen package-all",
           },
         ],
       },
@@ -5445,7 +5445,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "(test -n "\${CI}" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || npx projen package-all",
+            "exec": "test -n "\${CI}" && ((rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist) || exit 1) || npx projen package-all",
           },
         ],
       },
