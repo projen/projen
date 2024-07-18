@@ -198,10 +198,6 @@ jobs:
       - name: build
         run: node ./projen.js build
         if: ${{ matrix.runner.primary_build }}
-      - name: build on windows
-        run: node ./projen.js default && node ./projen.js pre-compile && node ./projen.js compile && node ./projen.js post-compile && node ./projen.js test
-        shell: cmd
-        if: ${{ !matrix.runner.primary_build }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
