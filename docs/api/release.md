@@ -839,7 +839,7 @@ public readonly accessKeyIdSecret: string;
 ```
 
 - *Type:* string
-- *Default:* When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+- *Default:* When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
 
 GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
 
@@ -882,7 +882,7 @@ public readonly secretAccessKeySecret: string;
 ```
 
 - *Type:* string
-- *Default:* When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+- *Default:* When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
 
 GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
 
@@ -3341,7 +3341,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: <a href="#projen.release.BranchOptions">BranchOptions</a>}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -3807,7 +3807,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: <a href="#projen.release.BranchOptions">BranchOptions</a>}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 

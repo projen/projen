@@ -14855,7 +14855,7 @@ The command to execute.
 ##### `builtin` <a name="builtin" id="projen.Task.builtin"></a>
 
 ```typescript
-public builtin(name: string): void
+public builtin(builtin: string, options?: TaskStepOptions): void
 ```
 
 Execute a builtin task.
@@ -14865,11 +14865,19 @@ helpers for various components.
 
 In the future we should support built-in tasks from external modules.
 
-###### `name`<sup>Required</sup> <a name="name" id="projen.Task.builtin.parameter.name"></a>
+###### `builtin`<sup>Required</sup> <a name="builtin" id="projen.Task.builtin.parameter.builtin"></a>
 
 - *Type:* string
 
 The name of the builtin task to execute (e.g. `release/resolve-version`).
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.builtin.parameter.options"></a>
+
+- *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
+
+The options for the task step.
 
 ---
 

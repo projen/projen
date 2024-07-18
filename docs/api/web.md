@@ -7816,7 +7816,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -9851,7 +9851,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -12182,7 +12182,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -14385,7 +14385,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
