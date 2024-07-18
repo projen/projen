@@ -197,6 +197,11 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: node ./projen.js build
+        if: ${{ !matrix.runner.experimental }}
+      - name: build on windows
+        run: node ./projen.js default && node ./projen.js pre-compile && node ./projen.js compile && node ./projen.js post-compile && node ./projen.js test
+        shell: cmd
+        if: ${{ matrix.runner.experimental }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
@@ -237,8 +242,10 @@ jobs:
         runner:
           - os: ubuntu-latest
             experimental: false
+            shell: bash
           - os: windows-latest
             experimental: true
+            shell: cmd
     continue-on-error: ${{ matrix.runner.experimental }}
   build:
     runs-on: ubuntu-latest

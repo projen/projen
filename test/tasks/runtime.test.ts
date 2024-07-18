@@ -1,6 +1,6 @@
 import { spawnSync } from "child_process";
 import { mkdirSync } from "fs";
-import { EOL } from "os";
+import { tmpdir } from "os";
 import { basename, join } from "path";
 import { Project } from "../../src";
 import * as logging from "../../src/logging";
@@ -74,7 +74,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: "echo ${VALUE}!",
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
       env: {
         VALUE: "my_environment_var",
       },
@@ -92,11 +92,19 @@ describe("environment variables", () => {
     const t = p.addTask("test:env:stepwise", {
       env: { VALUE: "something" },
       steps: [
-        { exec: "echo ${VALUE}", env: { VALUE: "foo" } },
-        { exec: "echo ${VALUE}", env: { VALUE: "bar" } },
+        {
+          exec: `node -e "console.log(process.env.VALUE)"`,
+          env: { VALUE: "foo" },
+        },
+        {
+          exec: `node -e "console.log(process.env.VALUE)"`,
+          env: { VALUE: "bar" },
+        },
       ],
     });
-    t.exec("echo ${VALUE}", { env: { VALUE: "baz" } });
+    t.exec(`node -e "console.log(process.env.VALUE)"`, {
+      env: { VALUE: "baz" },
+    });
 
     // THEN
     expect(executeTask(p, "test:env:stepwise")).toEqual(["foo", "bar", "baz"]);
@@ -110,11 +118,19 @@ describe("environment variables", () => {
     const t = p.addTask("test:env:stepwise", {
       env: { VALUE: "something" },
       steps: [
-        { exec: "echo ${VALUE}", env: { VALUE: "$(echo foo)" } },
-        { exec: "echo ${VALUE}", env: { VALUE: "$(echo bar)" } },
+        {
+          exec: `node -e "console.log(process.env.VALUE)"`,
+          env: { VALUE: "$(echo foo)" },
+        },
+        {
+          exec: `node -e "console.log(process.env.VALUE)"`,
+          env: { VALUE: "$(echo bar)" },
+        },
       ],
     });
-    t.exec("echo ${VALUE}", { env: { VALUE: "$(echo baz)" } });
+    t.exec(`node -e "console.log(process.env.VALUE)"`, {
+      env: { VALUE: "$(echo baz)" },
+    });
 
     // THEN
     expect(executeTask(p, "test:env:stepwise")).toEqual(["foo", "bar", "baz"]);
@@ -126,9 +142,9 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: "echo ${VALUE}!",
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
       env: {
-        VALUE: '$(echo "dynamic_value")',
+        VALUE: `$(node -e "console.log('dynamic_value')")`,
       },
     });
 
@@ -142,9 +158,15 @@ describe("environment variables", () => {
 
     // WHEN
     const t = p.addTask("test:env");
-    t.exec("echo testing >> test.txt");
+    t.exec(
+      `node -e "const fs = require('fs'); fs.writeFileSync('test.txt', 'testing');"`
+    );
     // VALUE wouldn't return anything if evaluated up front
-    t.exec("echo ${VALUE}", { env: { VALUE: "$(cat test.txt)" } });
+    t.exec(`node -e "console.log(process.env.VALUE)"`, {
+      env: {
+        VALUE: `$(node -e "const fs = require('fs'); console.log(fs.readFileSync('test.txt', 'utf8'));")`,
+      },
+    });
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["testing"]);
@@ -158,7 +180,10 @@ describe("environment variables", () => {
     // WHEN
     p.addTask("test:env", {
       steps: [
-        { exec: "echo ${VALUE}!", env: { VALUE: 1 as unknown as string } },
+        {
+          exec: `node -e "console.log('%s!', process.env.VALUE)"`,
+          env: { VALUE: 1 as unknown as string },
+        },
       ],
     });
 
@@ -177,7 +202,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: "echo ${VALUE}!",
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
       env: {
         VALUE: 1 as unknown as string,
       },
@@ -197,7 +222,7 @@ describe("environment variables", () => {
 
     // WHEN
     p.addTask("test:env", {
-      exec: "echo ${VALUE}!",
+      exec: `node -e "console.log('%s!', process.env.VALUE)"`,
     });
     p.tasks.addEnvironment("VALUE", 1 as unknown as string);
 
@@ -211,7 +236,7 @@ describe("environment variables", () => {
 
     // WHEN
     const spawnee = p.addTask("test:env:spawn", {
-      exec: "echo ${VALUE}",
+      exec: `node -e "console.log('%s', process.env.VALUE)"`,
       env: { VALUE: "bar" },
     });
 
@@ -284,7 +309,9 @@ describe("step condition", () => {
     const t = p.addTask("foo");
 
     t.exec("echo step0");
-    t.exec("echo step1", { condition: "echo no && false" });
+    t.exec("echo step1", {
+      condition: `node -e "console.log('no')" && node -e "process.exit(1)"`,
+    });
     t.exec("echo step2");
 
     // THEN
@@ -295,7 +322,9 @@ describe("step condition", () => {
 describe("cwd", () => {
   test("default cwd is project root", () => {
     const p = new TestProject();
-    p.addTask("testme", { exec: "echo cwd is $PWD" });
+    p.addTask("testme", {
+      exec: `node -e "console.log('cwd is %s', process.cwd())"`,
+    });
     expect(
       executeTask(p, "testme")[0].includes(basename(p.outdir))
     ).toBeTruthy();
@@ -304,8 +333,8 @@ describe("cwd", () => {
   test("if a step changes cwd, it will not affect next steps", () => {
     const p = new TestProject();
     const task = p.addTask("testme");
-    task.exec("cd /tmp");
-    task.exec("echo $PWD");
+    task.exec(`cd ${tmpdir()}`);
+    task.exec(`node -e "console.log('cwd is %s', process.cwd())"`);
     expect(
       executeTask(p, "testme")[0].includes(basename(p.outdir))
     ).toBeTruthy();
@@ -318,8 +347,8 @@ describe("cwd", () => {
     const task = p.addTask("testme", {
       cwd,
     });
-    task.exec("echo step1=$PWD");
-    task.exec("echo step2=$PWD");
+    task.exec(`node -e "console.log('step1=%s', process.cwd())"`);
+    task.exec(`node -e "console.log('step2=%s', process.cwd())"`);
     for (const line of executeTask(p, "testme")) {
       expect(line.includes("mypwd")).toBeTruthy();
     }
@@ -332,8 +361,10 @@ describe("cwd", () => {
     mkdirSync(taskcwd, { recursive: true });
     mkdirSync(stepcwd, { recursive: true });
     const task = p.addTask("testme", { cwd: taskcwd });
-    task.exec("echo step1=$PWD");
-    task.exec("echo step2=$PWD", { cwd: stepcwd });
+    task.exec(`node -e "console.log('step1=%s', process.cwd())"`);
+    task.exec(`node -e "console.log('step2=%s', process.cwd())"`, {
+      cwd: stepcwd,
+    });
 
     const lines = executeTask(p, "testme");
     expect(lines[0].includes("mypwd")).toBeTruthy();
@@ -390,9 +421,11 @@ test("env is inherited from parent tasks", () => {
   const parent = p.addTask("parent", { env: { E1: "parent1", E2: "parent2" } });
   const child = p.addTask("child", {
     env: { E2: "child1", E3: "child2" },
-    exec: 'echo "child: [$E1,$E2,$E3]"',
+    exec: `node -e "console.log('child: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3)"`,
   });
-  parent.exec('echo "parent: [$E1,$E2,$E3]"');
+  parent.exec(
+    `node -e "console.log('parent: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3 ?? '')"`
+  );
   parent.spawn(child);
 
   const lines = executeTask(p, "parent");
@@ -406,7 +439,7 @@ test("requiredEnv can be used to specify required environment variables", () => 
   const p = new TestProject();
   p.addTask("my-task", {
     requiredEnv: ["ENV1", "ENV2", "ENV3"],
-    exec: 'echo "$ENV1 $ENV2 $ENV3"',
+    exec: `node -e "console.log('%s %s %s', process.env.ENV1, process.env.ENV2, process.env.ENV3)"`,
   });
 
   expect(() => executeTask(p, "my-task")).toThrow(
@@ -456,7 +489,7 @@ test("spawn can receive args", () => {
   const p = new TestProject();
   const parent = p.addTask("parent");
   const child = p.addTask("child", {
-    exec: 'echo "child: [$@]"',
+    exec: `node -e "console.log('child: [$@]')"`,
     receiveArgs: true,
   });
   parent.spawn(child, { receiveArgs: true });
@@ -470,7 +503,7 @@ test("spawn can receive fixed args", () => {
   const p = new TestProject();
   const parent = p.addTask("parent");
   const child = p.addTask("child", {
-    exec: 'echo "child: [$@]"',
+    exec: `node -e "console.log('child: [$@]')"`,
     receiveArgs: true,
   });
   parent.spawn(child, { args: ["one", "--two", "-3"] });
@@ -481,7 +514,7 @@ test("spawn can receive fixed args", () => {
 test("exec can receive fixed args", () => {
   const p = new TestProject();
   const t = p.addTask("test1");
-  t.exec('echo "child: [$@]"', {
+  t.exec(`node -e "console.log('child: [$@]')"`, {
     args: ["one", "--two", "-3"],
   });
 
@@ -514,5 +547,9 @@ function executeTask(
     throw new Error(`non-zero exit code: ${result.stderr.toString("utf-8")}`);
   }
 
-  return result.stdout.toString("utf-8").trim().split(EOL);
+  // Split by any line terminator. The line terminator would depend on the OS, the shell where the command is running and the binary which runs the command called. It could be any of \n, \r\n, or \r.
+  return result.stdout
+    .toString("utf-8")
+    .trim()
+    .split(/\r\n|\n|\r/);
 }
