@@ -176,10 +176,11 @@ export class Task {
    *
    * In the future we should support built-in tasks from external modules.
    *
-   * @param name The name of the builtin task to execute (e.g.
+   * @param builtin The name of the builtin task to execute (e.g.
    * `release/resolve-version`).
+   * @param options The options for the task step.
    */
-  public builtin(name: string) {
+  public builtin(builtin: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
@@ -187,7 +188,7 @@ export class Task {
       return;
     }
 
-    this._steps.push({ builtin: name });
+    this._steps.push({ builtin, ...options });
   }
 
   /**
