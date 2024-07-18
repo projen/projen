@@ -18,18 +18,10 @@ function copyFiles(
   destination: string,
   exclude: string[] = []
 ) {
-  if (!fs.existsSync(destination)) {
-    fs.mkdirSync(destination, { recursive: true });
-  }
-
   fs.readdirSync(source).forEach((file) => {
     if (!exclude.includes(file)) {
       const src = path.join(source, file);
       const dest = path.join(destination, file);
-
-      if (fs.lstatSync(src).isDirectory() && !fs.existsSync(dest)) {
-        fs.mkdirSync(dest, { recursive: true });
-      }
 
       fs.cpSync(src, dest, {
         recursive: true,
@@ -47,9 +39,9 @@ function main() {
   // takes place in separate tasks.
   // outside of CI (i.e locally) we simply package all targets.
   if (process.env.CI) {
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "repo"));
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "projen"));
     const destDir = artifactsDirectory;
-    const exclude = [tempDir, destDir, ".git", "node_modules"];
+    const exclude = [destDir, ".git", "node_modules"];
 
     // in jsii we consider the entire repo (post build) as the build artifact
     // which is then used to create the language bindings in separate jobs.
