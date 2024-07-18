@@ -11444,7 +11444,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -16674,7 +16674,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -19629,7 +19629,7 @@ public readonly releaseBranches: {[ key: string ]: BranchOptions};
 ```
 
 - *Type:* {[ key: string ]: projen.release.BranchOptions}
-- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
+- *Default:* no additional branches are used for release. you can use `addBranch()` to add additional branches.
 
 Defines additional release branches.
 
@@ -22049,7 +22049,7 @@ public readonly constructFile: string;
 ```
 
 - *Type:* string
-- *Default:* The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
+- *Default:* The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 
 The name of the generated TypeScript source file.
 
@@ -22065,7 +22065,7 @@ public readonly constructName: string;
 ```
 
 - *Type:* string
-- *Default:* A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
+- *Default:* A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 
 The name of the generated `lambda.Function` subclass.
 
