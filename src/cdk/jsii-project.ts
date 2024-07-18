@@ -3,6 +3,7 @@ import { Range, major } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import { Task } from "..";
+import { shxIf } from "../github/util";
 import { Job, Step } from "../github/workflows-model";
 import { Eslint, NodePackageManager } from "../javascript";
 import {
@@ -277,9 +278,11 @@ export class JsiiProject extends TypeScriptProject {
     // takes place in separate tasks.
     // outside of CI (i.e locally) we simply package all targets.
     this.packageTask.reset(
-      `(test -n "\${CI}" && (${prepareRepoForCI})) || ${this.runTaskCommand(
-        this.packageAllTask
-      )}`
+      shxIf(
+        `test -n "\${CI}"`,
+        prepareRepoForCI,
+        this.runTaskCommand(this.packageAllTask)
+      )
     );
 
     const targets: Record<string, any> = {};
