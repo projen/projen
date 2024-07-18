@@ -31,38 +31,72 @@ export class WindowsBuild extends Component {
       9,
     ];
 
+    const windowsBuildTasks = [
+      "default",
+      "pre-compile",
+      "compile",
+      "post-compile",
+      "test",
+    ];
+    const windowsBuildCommands = windowsBuildTasks.map(
+      (task) => `${this.project.projenCommand} ${task}`
+    );
+    const windowsBuild = windowsBuildCommands.join(" && ");
+
     const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
       JsonPatch.add(
         buildJobPath(`/steps/${stepIndex}/if`),
-        "${{ !matrix.runner.experimental }}"
+        "${{ matrix.runner.primary_build }}"
       )
     );
 
-    // Set windows-latest runner to experimental
+    // Add windows-latest runner
     buildWorkflowFile?.patch(
       JsonPatch.add(buildJobPath("/strategy"), {
         matrix: {
           runner: [
-            { os: "ubuntu-latest", experimental: false },
-            { os: "windows-latest", experimental: true },
+            {
+              os: "ubuntu-latest",
+              primary_build: true,
+              shell: "bash",
+              allow_failure: false,
+            },
+            {
+              os: "windows-latest",
+              primary_build: false,
+              shell: "cmd",
+              allow_failure: false,
+            },
           ],
         },
       }),
       JsonPatch.add(buildJobPath("/runs-on"), "${{ matrix.runner.os }}"),
 
-      // Allow step to fail on windows
+      // Allow some builds to fail
       JsonPatch.add(
         buildJobPath("/continue-on-error"),
-        "${{ matrix.runner.experimental }}"
+        "${{ matrix.runner.allow_failure }}"
       ),
 
       JsonPatch.add(
         buildJobPath("/steps/6/if"),
-        "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
+        "${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}"
+      ),
+
+      JsonPatch.add(
+        buildJobPath("/steps/3/if"),
+        "${{ matrix.runner.primary_build }}"
       ),
 
       // Skip steps that shouldn't run on Windows
       ...skippedStepPatches,
+
+      JsonPatch.add(buildJobPath("/steps/4"), {
+        name: "build on windows",
+        run: windowsBuild,
+        shell: "cmd",
+        if: "${{ !matrix.runner.primary_build }}",
+      }),
 
       // Rename workflow
       JsonPatch.move(buildJobPath(), `/jobs/${JOB_BUILD_MATRIX}`),

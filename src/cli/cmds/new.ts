@@ -13,6 +13,7 @@ import {
   execOrUndefined,
   getGitVersion,
   isTruthy,
+  normalizePersistedPath,
 } from "../../util";
 import { tryProcessMacro } from "../macros";
 import {
@@ -126,6 +127,8 @@ async function handler(args: any) {
     // handle --from which means we want to first install a jsii module and then
     // create a project defined within this module.
     if (args.from) {
+      args.from = normalizePersistedPath(args.from);
+
       return await initProjectFromModule(process.cwd(), args.from, args);
     }
 
