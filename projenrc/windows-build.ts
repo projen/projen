@@ -31,18 +31,6 @@ export class WindowsBuild extends Component {
       9,
     ];
 
-    const windowsBuildTasks = [
-      "default",
-      "pre-compile",
-      "compile",
-      "post-compile",
-      "test",
-    ];
-    const windowsBuildCommands = windowsBuildTasks.map(
-      (task) => `${this.project.projenCommand} ${task}`
-    );
-    const windowsBuild = windowsBuildCommands.join(" && ");
-
     const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
       JsonPatch.add(
         buildJobPath(`/steps/${stepIndex}/if`),
@@ -89,19 +77,15 @@ export class WindowsBuild extends Component {
       ),
 
       // Skip steps that shouldn't run on Windows
-      ...skippedStepPatches,
+      ...skippedStepPatches
+    );
 
-      JsonPatch.add(buildJobPath("/steps/4"), {
-        name: "build on windows",
-        run: windowsBuild,
-        shell: "cmd",
-        if: "${{ !matrix.runner.primary_build }}",
-      }),
-
-      // Rename workflow
+    // Add the join target job for branch protection
+    buildWorkflowFile?.patch(
+      // Rename old workflow
       JsonPatch.move(buildJobPath(), `/jobs/${JOB_BUILD_MATRIX}`),
 
-      // Add the join target job for branch protection
+      // Insert new meta job
       JsonPatch.add(buildJobPath(), {
         "runs-on": "ubuntu-latest",
         needs: [JOB_BUILD_MATRIX],
