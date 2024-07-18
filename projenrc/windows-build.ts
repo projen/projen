@@ -22,13 +22,13 @@ export class WindowsBuild extends Component {
 
     const skippedStepIndexes = [
       // Upload coverage to Codecov
-      4,
+      5,
 
       // Backup artifact permissions
-      8,
+      9,
 
       // Upload artifact
-      9,
+      10,
     ];
 
     const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
@@ -73,6 +73,13 @@ export class WindowsBuild extends Component {
         buildJobPath("/steps/6/if"),
         "${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}"
       ),
+
+      JsonPatch.add(buildJobPath("/steps/4"), {
+        name: "build on windows",
+        run: `${this.project.projenCommand} build`,
+        shell: "cmd",
+        if: "${{ !matrix.runner.primary_build }}",
+      }),
 
       // Skip steps that shouldn't run on Windows
       ...skippedStepPatches
