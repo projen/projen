@@ -216,7 +216,12 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "(test -n \"${CI}\" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || (test -n \"${CI}\" || (node ./projen.js package-all))"
+          "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          "condition": "! test -z ${CI}"
+        },
+        {
+          "spawn": "package-all",
+          "condition": "test -z ${CI}"
         }
       ]
     },
