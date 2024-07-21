@@ -1042,7 +1042,7 @@ tsconfig.tsbuildinfo
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "test -n \\"\${CI}\\" && ((rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist) || exit 1) || npx projen package-all"
+          "exec": "(test -n \\"\${CI}\\" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || (test -n \\"\${CI}\\" || (npx projen package-all))"
         }
       ]
     },
@@ -2127,7 +2127,7 @@ tsconfig.tsbuildinfo
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "test -n \\"\${CI}\\" && ((rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist) || exit 1) || npx projen package-all"
+          "exec": "(test -n \\"\${CI}\\" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || (test -n \\"\${CI}\\" || (npx projen package-all))"
         }
       ]
     },
