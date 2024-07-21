@@ -12,8 +12,12 @@ export function secretToString(secretName: string): string {
  */
 export function shxIf(
   condition: string,
-  when: string,
-  then: string = 'echo "OK"'
+  then: string,
+  otherwise?: string
 ): string {
-  return `${condition} && ((${when}) || exit 1) || ${then}`;
+  if (otherwise) {
+    return `(${condition} && (${then})) || (${condition} || (${otherwise}))`;
+  }
+
+  return `${condition} && (${then})`;
 }
