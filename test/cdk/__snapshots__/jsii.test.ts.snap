@@ -994,7 +994,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "(test -n "\${CI}" && (rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist)) || (test -n "\${CI}" || (npx projen package-all))",
+            "condition": "! test -z \${CI}",
+            "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          },
+          {
+            "condition": "test -z \${CI}",
+            "spawn": "package-all",
           },
         ],
       },
