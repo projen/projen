@@ -277,10 +277,12 @@ export class JsiiProject extends TypeScriptProject {
     // takes place in separate tasks.
     // outside of CI (i.e locally) we simply package all targets.
     this.packageTask.reset(prepareRepoForCI, {
-      condition: "! test -z ${CI}",
+      // Only run in CI
+      condition: `node -e "if (!process.env.CI) process.exit(1)"`,
     });
     this.packageTask.spawn(this.packageAllTask, {
-      condition: "test -z ${CI}",
+      // Don't run in CI
+      condition: `node -e "if (process.env.CI) process.exit(1)"`,
     });
 
     const targets: Record<string, any> = {};
