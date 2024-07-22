@@ -199,11 +199,11 @@ jobs:
           node-version: 18.18.0
       - name: Install dependencies
         run: yarn install --check-files
-      - name: build
+      - name: build (bash)
         run: node ./projen.js build
         if: ${{ matrix.runner.shell }} == 'bash'
         shell: bash
-      - name: build
+      - name: build (cmd)
         run: node ./projen.js build
         if: ${{ matrix.runner.shell }} == 'cmd'
         shell: cmd
