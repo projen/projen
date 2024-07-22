@@ -75,6 +75,13 @@ export class WindowsBuild extends Component {
       ),
       ...skippedStepPatches,
 
+      // Convert original build step to a bash shell matrix step
+      ...convertStepToShellMatrix(buildJobPath("/steps/3"), "bash"),
+
+      // Copy original build step as a cmd shell matrix step
+      JsonPatch.copy(buildJobPath("/steps/3"), buildJobPath("/steps/4")),
+      ...convertStepToShellMatrix(buildJobPath("/steps/4"), "cmd"),
+
       // Install rsync on Windows
       JsonPatch.add(buildJobPath("/steps/0"), {
         name: "Install rsync on Windows",
@@ -111,4 +118,18 @@ export class WindowsBuild extends Component {
       })
     );
   }
+}
+
+/**
+ * Helper function to convert an existing step to a fake shell matrix step.
+ * This is because 'shell' currently does not support expressions and thus matrix inputs.
+ */
+function convertStepToShellMatrix(pathToStep: string, shell: string) {
+  return [
+    JsonPatch.add(
+      `${pathToStep}/if`,
+      `\${{ matrix.runner.shell }} == '${shell}'`
+    ),
+    JsonPatch.add(`${pathToStep}/shell`, shell),
+  ];
 }
