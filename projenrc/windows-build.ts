@@ -131,10 +131,7 @@ function convertStepToShellMatrix(
 ) {
   return [
     JsonPatch.add(`${pathToStep}/name`, `${name} (${shell})`),
-    JsonPatch.add(
-      `${pathToStep}/if`,
-      `\${{ matrix.runner.shell }} == '${shell}'`
-    ),
     JsonPatch.add(`${pathToStep}/shell`, shell),
+    JsonPatch.add(`${pathToStep}/if`, `matrix.runner.shell == '${shell}'`),
   ];
 }
