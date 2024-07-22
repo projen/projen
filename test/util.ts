@@ -52,7 +52,7 @@ export function execProjenCLI(
   if (preInstallProjen && args.includes("new")) {
     installPackage(
       workdir,
-      `file:${path.posix.normalize(path.posix.join(__dirname, ".."))}`,
+      `file:${path.normalize(path.join(__dirname, ".."))}`,
       true
     );
   }

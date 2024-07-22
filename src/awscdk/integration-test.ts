@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "path/posix";
 import { AwsCdkDeps } from "./awscdk-deps";
 import { FEATURE_FLAGS } from "./internal";
 import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
