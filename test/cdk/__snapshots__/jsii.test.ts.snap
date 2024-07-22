@@ -994,11 +994,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "condition": "! test -z \${CI}",
+            "condition": "node -e "if (!process.env.CI) process.exit(1)"",
             "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
           },
           {
-            "condition": "test -z \${CI}",
+            "condition": "node -e "if (process.env.CI) process.exit(1)"",
             "spawn": "package-all",
           },
         ],

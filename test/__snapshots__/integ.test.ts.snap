@@ -1043,11 +1043,11 @@ tsconfig.tsbuildinfo
       "steps": [
         {
           "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
-          "condition": "! test -z \${CI}"
+          "condition": "node -e \\"if (!process.env.CI) process.exit(1)\\""
         },
         {
           "spawn": "package-all",
-          "condition": "test -z \${CI}"
+          "condition": "node -e \\"if (process.env.CI) process.exit(1)\\""
         }
       ]
     },
@@ -2133,11 +2133,11 @@ tsconfig.tsbuildinfo
       "steps": [
         {
           "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
-          "condition": "! test -z \${CI}"
+          "condition": "node -e \\"if (!process.env.CI) process.exit(1)\\""
         },
         {
           "spawn": "package-all",
-          "condition": "test -z \${CI}"
+          "condition": "node -e \\"if (process.env.CI) process.exit(1)\\""
         }
       ]
     },
