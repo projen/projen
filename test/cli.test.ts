@@ -28,7 +28,9 @@ test('running "projen" with no arguments will execute .projenrc.js', () => {
 
 test('running "projen" for projects with a "default" task will execute it', () => {
   const project = new Project({ name: "my-project" });
-  project.defaultTask?.exec('echo "foo" > bar.txt');
+  project.defaultTask?.exec(
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+  );
   project.synth();
 
   execProjenCLI(project.outdir);
@@ -37,7 +39,9 @@ test('running "projen" for projects with a "default" task will execute it', () =
 
 test('running "projen" with task in root of a project will execute task of the project', () => {
   const project = new Project({ name: "my-project" });
-  project.testTask?.exec('echo "foo" > bar.txt');
+  project.testTask?.exec(
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+  );
   project.synth();
 
   execProjenCLI(project.outdir, ["test"]);
@@ -46,7 +50,10 @@ test('running "projen" with task in root of a project will execute task of the p
 
 test('running "projen" with task in root of a project that receives args will pass through --help flag', () => {
   const project = new Project({ name: "my-project" });
-  project.testTask?.exec('echo "$@" > bar.txt', { receiveArgs: true });
+  project.testTask?.exec(
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', '$@\\n');"`,
+    { receiveArgs: true }
+  );
   project.synth();
 
   execProjenCLI(project.outdir, ["test", "something", "--help"]);
@@ -57,7 +64,9 @@ test('running "projen" with task in root of a project that receives args will pa
 
 test('running "projen" with task in subdirectory of a project will execute task of the project', () => {
   const project = new Project({ name: "my-project" });
-  project.testTask?.exec('echo "foo" > bar.txt');
+  project.testTask?.exec(
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+  );
   project.synth();
   const subdirectory = mkdtemp({ dir: project.outdir });
 
@@ -72,7 +81,9 @@ test('running "projen" with task in root of a subproject will execute task of th
     parent: project,
     outdir: "subproject",
   });
-  subProject.testTask?.exec('echo "foo" > bar.txt');
+  subProject.testTask?.exec(
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+  );
   project.synth();
 
   execProjenCLI(subProject.outdir, ["test"]);
@@ -88,7 +99,9 @@ test('running "projen" with task in subdirectory of a subproject will execute ta
     parent: project,
     outdir: "subproject",
   });
-  subProject.testTask?.exec('echo "foo" > bar.txt');
+  subProject.testTask?.exec(
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+  );
   project.synth();
   const subdirectory = mkdtemp({ dir: subProject.outdir });
 

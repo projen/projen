@@ -994,7 +994,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
+            "condition": "node -e "if (!process.env.CI) process.exit(1)"",
+            "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          },
+          {
+            "condition": "node -e "if (process.env.CI) process.exit(1)"",
+            "spawn": "package-all",
           },
         ],
       },
@@ -1393,7 +1398,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       ],
       "testMatch": [
-        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+        "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
         "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ],
       "testPathIgnorePatterns": [
@@ -2480,7 +2485,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
+            "condition": "node -e "if (!process.env.CI) process.exit(1)"",
+            "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          },
+          {
+            "condition": "node -e "if (process.env.CI) process.exit(1)"",
+            "spawn": "package-all",
           },
         ],
       },
@@ -2873,7 +2883,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       ],
       "testMatch": [
-        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+        "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
         "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ],
       "testPathIgnorePatterns": [
@@ -3964,7 +3974,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
+            "condition": "node -e "if (!process.env.CI) process.exit(1)"",
+            "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          },
+          {
+            "condition": "node -e "if (process.env.CI) process.exit(1)"",
+            "spawn": "package-all",
           },
         ],
       },
@@ -4357,7 +4372,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       ],
       "testMatch": [
-        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+        "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
         "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ],
       "testPathIgnorePatterns": [
@@ -5445,7 +5460,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": [
           {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
+            "condition": "node -e "if (!process.env.CI) process.exit(1)"",
+            "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          },
+          {
+            "condition": "node -e "if (process.env.CI) process.exit(1)"",
+            "spawn": "package-all",
           },
         ],
       },
@@ -5838,7 +5858,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       ],
       "testMatch": [
-        "<rootDir>/@(src|test)/**/?(*.)+(spec|test).ts?(x)",
+        "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
         "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ],
       "testPathIgnorePatterns": [

@@ -34,40 +34,59 @@ export class WindowsBuild extends Component {
     const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
       JsonPatch.add(
         buildJobPath(`/steps/${stepIndex}/if`),
-        "${{ !matrix.runner.experimental }}"
+        "${{ matrix.runner.primary_build }}"
       )
     );
 
-    // Set windows-latest runner to experimental
+    // Setup runner matrix
     buildWorkflowFile?.patch(
       JsonPatch.add(buildJobPath("/strategy"), {
         matrix: {
           runner: [
-            { os: "ubuntu-latest", experimental: false },
-            { os: "windows-latest", experimental: true },
+            {
+              os: "ubuntu-latest",
+              primary_build: true,
+              allow_failure: false,
+            },
+            {
+              os: "windows-latest",
+              primary_build: false,
+              allow_failure: false,
+            },
           ],
         },
       }),
+
+      // Run job on os from matrix
       JsonPatch.add(buildJobPath("/runs-on"), "${{ matrix.runner.os }}"),
 
-      // Allow step to fail on windows
+      // Allow builds to fail based on matrix
       JsonPatch.add(
         buildJobPath("/continue-on-error"),
-        "${{ matrix.runner.experimental }}"
+        "${{ matrix.runner.allow_failure }}"
       ),
 
+      // Add conditions to steps that should only run on the primary build
       JsonPatch.add(
         buildJobPath("/steps/6/if"),
-        "${{ steps.self_mutation.outputs.self_mutation_happened && !matrix.runner.experimental }}"
+        "${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}"
       ),
-
-      // Skip steps that shouldn't run on Windows
       ...skippedStepPatches,
 
-      // Rename workflow
+      // Install rsync on Windows
+      JsonPatch.add(buildJobPath("/steps/0"), {
+        name: "Install rsync on Windows",
+        if: `matrix.runner.os == 'windows-latest'`,
+        run: "choco install --no-progress rsync",
+      })
+    );
+
+    // Add the join target job for branch protection
+    buildWorkflowFile?.patch(
+      // Rename old workflow
       JsonPatch.move(buildJobPath(), `/jobs/${JOB_BUILD_MATRIX}`),
 
-      // Add the join target job for branch protection
+      // Insert new meta job
       JsonPatch.add(buildJobPath(), {
         "runs-on": "ubuntu-latest",
         needs: [JOB_BUILD_MATRIX],

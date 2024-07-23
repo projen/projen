@@ -7000,7 +7000,7 @@ public readonly testMatch: string[];
 ```
 
 - *Type:* string[]
-- *Default:* ['**\/__tests__/**\/*.[jt]s?(x)', '**\/?(*.)+(spec|test).[tj]s?(x)']
+- *Default:* ['**\/__tests__/**\/*.[jt]s?(x)', '**\/*(*.)@(spec|test).[tj]s?(x)']
 
 The glob patterns Jest uses to detect test files.
 
