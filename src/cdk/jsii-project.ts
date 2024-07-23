@@ -269,8 +269,8 @@ export class JsiiProject extends TypeScriptProject {
     // which is then used to create the language bindings in separate jobs.
     const prepareRepoForCI = [
       `rsync -a . .repo --exclude .git --exclude node_modules`,
-      `rm -rf ${this.artifactsDirectory}`,
-      `mv .repo ${this.artifactsDirectory}`,
+      `shx rm -rf ${this.artifactsDirectory}`,
+      `shx mv .repo ${this.artifactsDirectory}`,
     ].join(" && ");
 
     // when running inside CI we just prepare the repo for packaging, which
