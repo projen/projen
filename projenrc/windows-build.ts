@@ -74,11 +74,19 @@ export class WindowsBuild extends Component {
         "${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}"
       ),
 
+      // Debug npm configuration in build
+      JsonPatch.add(
+        buildJobPath("/steps/3/run"),
+        `npm config list -ls
+${this.project.projenCommand} build`
+      ),
+
       // Different build step on Windows because shell doesn't accept matrix variables and needs to be hardcoded
       // See issue https://github.com/actions/runner/issues/444
       JsonPatch.add(buildJobPath("/steps/4"), {
         name: "build on windows",
-        run: `${this.project.projenCommand} build`,
+        run: `npm config list -ls
+${this.project.projenCommand} build`,
         shell: "cmd",
         if: "${{ !matrix.runner.primary_build }}",
       }),

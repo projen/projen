@@ -196,9 +196,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
-        run: node ./projen.js build
+        run: |-
+          npm config list -ls
+          node ./projen.js build
       - name: build on windows
-        run: node ./projen.js build
+        run: |-
+          npm config list -ls
+          node ./projen.js build
         shell: cmd
         if: ${{ !matrix.runner.primary_build }}
       - name: Upload coverage to Codecov
