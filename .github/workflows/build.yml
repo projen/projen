@@ -187,7 +187,6 @@ jobs:
       - name: Install rsync on Windows
         if: matrix.runner.os == 'windows-latest'
         run: choco install --no-progress rsync
-        shell: pwsh
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -199,14 +198,8 @@ jobs:
           node-version: 18.18.0
       - name: Install dependencies
         run: yarn install --check-files
-      - name: build (bash)
+      - name: build
         run: node ./projen.js build
-        shell: bash
-        if: matrix.runner.shell == 'bash'
-      - name: build (cmd)
-        run: node ./projen.js build
-        shell: cmd
-        if: matrix.runner.shell == 'cmd'
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
@@ -247,11 +240,9 @@ jobs:
         runner:
           - os: ubuntu-latest
             primary_build: true
-            shell: bash
             allow_failure: false
           - os: windows-latest
             primary_build: false
-            shell: cmd
             allow_failure: false
     continue-on-error: ${{ matrix.runner.allow_failure }}
   build:

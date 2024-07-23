@@ -46,13 +46,11 @@ export class WindowsBuild extends Component {
             {
               os: "ubuntu-latest",
               primary_build: true,
-              shell: "bash",
               allow_failure: false,
             },
             {
               os: "windows-latest",
               primary_build: false,
-              shell: "cmd",
               allow_failure: false,
             },
           ],
@@ -75,19 +73,11 @@ export class WindowsBuild extends Component {
       ),
       ...skippedStepPatches,
 
-      // Convert original build step to a bash shell matrix step
-      ...convertStepToShellMatrix("build", buildJobPath("/steps/3"), "bash"),
-
-      // Copy original build step as a cmd shell matrix step
-      JsonPatch.copy(buildJobPath("/steps/3"), buildJobPath("/steps/4")),
-      ...convertStepToShellMatrix("build", buildJobPath("/steps/4"), "cmd"),
-
       // Install rsync on Windows
       JsonPatch.add(buildJobPath("/steps/0"), {
         name: "Install rsync on Windows",
         if: `matrix.runner.os == 'windows-latest'`,
         run: "choco install --no-progress rsync",
-        shell: "pwsh",
       })
     );
 
@@ -118,20 +108,4 @@ export class WindowsBuild extends Component {
       })
     );
   }
-}
-
-/**
- * Helper function to convert an existing step to a fake shell matrix step.
- * This is because 'shell' currently does not support expressions and thus matrix inputs.
- */
-function convertStepToShellMatrix(
-  name: string,
-  pathToStep: string,
-  shell: string
-) {
-  return [
-    JsonPatch.add(`${pathToStep}/name`, `${name} (${shell})`),
-    JsonPatch.add(`${pathToStep}/shell`, shell),
-    JsonPatch.add(`${pathToStep}/if`, `matrix.runner.shell == '${shell}'`),
-  ];
 }
