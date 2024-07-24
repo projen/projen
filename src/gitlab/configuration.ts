@@ -4,6 +4,7 @@ import {
   Artifacts,
   Cache,
   Default,
+  IDToken,
   Image,
   Include,
   Job,
@@ -112,6 +113,10 @@ export class CiConfiguration extends Component {
    */
   readonly defaultTimeout?: string;
   /**
+   * Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs.
+   */
+  readonly defaultIdTokens?: Record<string, IDToken>;
+  /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
    * content will be fetched, included and evaluated along the `.gitlab-ci.yml`.
@@ -165,6 +170,7 @@ export class CiConfiguration extends Component {
       defaults.beforeScript &&
         this.defaultBeforeScript.push(...defaults.beforeScript);
       defaults.cache && this.addDefaultCaches(defaults.cache);
+      this.defaultIdTokens = defaults.idTokens;
       this.defaultImage = defaults.image;
       this.defaultInterruptible = defaults.interruptible;
       this.defaultRetry = defaults.retry;
@@ -373,6 +379,7 @@ export class CiConfiguration extends Component {
           ? this.defaultBeforeScript
           : undefined,
       cache: this.defaultCache,
+      idTokens: this.defaultIdTokens,
       image: this.defaultImage,
       interruptible: this.defaultInterruptible,
       retry: this.defaultRetry,
