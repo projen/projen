@@ -11,6 +11,7 @@ import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
+const CHAIN_SUFFIX = "&& ";
 
 /**
  * The runtime component of the tasks engine.
@@ -170,17 +171,9 @@ class RunTask {
       }
 
       for (const exec of execs) {
-        let command = "";
         let hasError = false;
-        const cmd = exec.split(" ")[0];
-        if (
-          platform() == "win32" &&
-          ["cat", "cp", "mkdir", "mv", "rm"].includes(cmd)
-        ) {
-          command = `shx ${exec}`;
-        } else {
-          command = exec;
-        }
+
+        let command = makeCrossPlatform(exec);
 
         if (command.includes(ARGS_MARKER)) {
           command = command.replace(ARGS_MARKER, argsList.join(" "));
@@ -385,4 +378,35 @@ interface ShellOptions {
   /** @default false */
   readonly quiet?: boolean;
   readonly extraEnv?: { [name: string]: string | undefined };
+}
+
+/**
+ * Make a cross-shell command that works on both Windows and Unix-like systems.
+ *
+ * @param command
+ * @returns
+ */
+function makeCrossPlatform(command: string) {
+  let crossCommand = "";
+  const subcommands = command.split("&&");
+
+  for (const subcommand of subcommands) {
+    const cmd = subcommand.trim().split(" ")[0];
+
+    if (
+      platform() == "win32" &&
+      ["cat", "cp", "mkdir", "mv", "rm"].includes(cmd)
+    ) {
+      crossCommand += `shx ${subcommand}${CHAIN_SUFFIX}`;
+    } else {
+      crossCommand += `${subcommand}${CHAIN_SUFFIX}`;
+    }
+  }
+
+  // Remove trailing chain '&&'
+  if (crossCommand.endsWith(CHAIN_SUFFIX)) {
+    crossCommand = crossCommand.slice(0, -CHAIN_SUFFIX.length);
+  }
+
+  return crossCommand;
 }
