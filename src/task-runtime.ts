@@ -391,15 +391,16 @@ function makeCrossPlatform(command: string) {
   const subcommands = command.split("&&");
 
   for (const subcommand of subcommands) {
-    const cmd = subcommand.trim().split(" ")[0];
+    const trimmedSubcommand = subcommand.trim();
+    const cmd = trimmedSubcommand.split(" ")[0];
 
     if (
       platform() == "win32" &&
       ["cat", "cp", "mkdir", "mv", "rm"].includes(cmd)
     ) {
-      crossCommand += `shx ${subcommand}${CHAIN_SUFFIX}`;
+      crossCommand += `shx ${trimmedSubcommand}${CHAIN_SUFFIX}`;
     } else {
-      crossCommand += `${subcommand}${CHAIN_SUFFIX}`;
+      crossCommand += `${trimmedSubcommand}${CHAIN_SUFFIX}`;
     }
   }
 
