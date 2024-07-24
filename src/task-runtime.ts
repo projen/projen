@@ -11,7 +11,7 @@ import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
-const CHAIN_SUFFIX = "&& ";
+const CHAIN_SUFFIX = " && ";
 
 /**
  * The runtime component of the tasks engine.
