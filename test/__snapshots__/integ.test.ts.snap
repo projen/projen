@@ -1042,7 +1042,7 @@ tsconfig.tsbuildinfo
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "rsync -a . .repo --exclude .git --exclude node_modules && shx rm -rf dist && shx mv .repo dist",
+          "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
           "condition": "node -e \\"if (!process.env.CI) process.exit(1)\\""
         },
         {
@@ -2132,7 +2132,7 @@ tsconfig.tsbuildinfo
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "rsync -a . .repo --exclude .git --exclude node_modules && shx rm -rf dist && shx mv .repo dist",
+          "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
           "condition": "node -e \\"if (!process.env.CI) process.exit(1)\\""
         },
         {
