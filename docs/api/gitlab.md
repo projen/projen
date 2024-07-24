@@ -265,6 +265,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.gitlab.CiConfiguration.property.variables">variables</a></code> | <code>{[ key: string ]: string \| number \| <a href="#projen.gitlab.VariableConfig">VariableConfig</a>}</code> | Global variables that are passed to jobs. |
 | <code><a href="#projen.gitlab.CiConfiguration.property.defaultArtifacts">defaultArtifacts</a></code> | <code><a href="#projen.gitlab.Artifacts">Artifacts</a></code> | Default list of files and directories that should be attached to the job if it succeeds. |
 | <code><a href="#projen.gitlab.CiConfiguration.property.defaultCache">defaultCache</a></code> | <code><a href="#projen.gitlab.Cache">Cache</a>[]</code> | *No description.* |
+| <code><a href="#projen.gitlab.CiConfiguration.property.defaultIdTokens">defaultIdTokens</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}</code> | Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs. |
 | <code><a href="#projen.gitlab.CiConfiguration.property.defaultImage">defaultImage</a></code> | <code><a href="#projen.gitlab.Image">Image</a></code> | Specifies the default docker image to use globally for all jobs. |
 | <code><a href="#projen.gitlab.CiConfiguration.property.defaultInterruptible">defaultInterruptible</a></code> | <code>boolean</code> | The default behavior for whether a job should be canceled when a newer pipeline starts before the job completes (Default: false). |
 | <code><a href="#projen.gitlab.CiConfiguration.property.defaultRetry">defaultRetry</a></code> | <code><a href="#projen.gitlab.Retry">Retry</a></code> | How many times a job is retried if it fails. |
@@ -434,6 +435,18 @@ public readonly defaultCache: Cache[];
 ```
 
 - *Type:* <a href="#projen.gitlab.Cache">Cache</a>[]
+
+---
+
+##### `defaultIdTokens`<sup>Optional</sup> <a name="defaultIdTokens" id="projen.gitlab.CiConfiguration.property.defaultIdTokens"></a>
+
+```typescript
+public readonly defaultIdTokens: {[ key: string ]: IDToken};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}
+
+Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs.
 
 ---
 
@@ -790,6 +803,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.gitlab.GitlabConfiguration.property.variables">variables</a></code> | <code>{[ key: string ]: string \| number \| <a href="#projen.gitlab.VariableConfig">VariableConfig</a>}</code> | Global variables that are passed to jobs. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.property.defaultArtifacts">defaultArtifacts</a></code> | <code><a href="#projen.gitlab.Artifacts">Artifacts</a></code> | Default list of files and directories that should be attached to the job if it succeeds. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.property.defaultCache">defaultCache</a></code> | <code><a href="#projen.gitlab.Cache">Cache</a>[]</code> | *No description.* |
+| <code><a href="#projen.gitlab.GitlabConfiguration.property.defaultIdTokens">defaultIdTokens</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}</code> | Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.property.defaultImage">defaultImage</a></code> | <code><a href="#projen.gitlab.Image">Image</a></code> | Specifies the default docker image to use globally for all jobs. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.property.defaultInterruptible">defaultInterruptible</a></code> | <code>boolean</code> | The default behavior for whether a job should be canceled when a newer pipeline starts before the job completes (Default: false). |
 | <code><a href="#projen.gitlab.GitlabConfiguration.property.defaultRetry">defaultRetry</a></code> | <code><a href="#projen.gitlab.Retry">Retry</a></code> | How many times a job is retried if it fails. |
@@ -960,6 +974,18 @@ public readonly defaultCache: Cache[];
 ```
 
 - *Type:* <a href="#projen.gitlab.Cache">Cache</a>[]
+
+---
+
+##### `defaultIdTokens`<sup>Optional</sup> <a name="defaultIdTokens" id="projen.gitlab.GitlabConfiguration.property.defaultIdTokens"></a>
+
+```typescript
+public readonly defaultIdTokens: {[ key: string ]: IDToken};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}
+
+Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs.
 
 ---
 
@@ -1321,6 +1347,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.gitlab.NestedConfiguration.property.variables">variables</a></code> | <code>{[ key: string ]: string \| number \| <a href="#projen.gitlab.VariableConfig">VariableConfig</a>}</code> | Global variables that are passed to jobs. |
 | <code><a href="#projen.gitlab.NestedConfiguration.property.defaultArtifacts">defaultArtifacts</a></code> | <code><a href="#projen.gitlab.Artifacts">Artifacts</a></code> | Default list of files and directories that should be attached to the job if it succeeds. |
 | <code><a href="#projen.gitlab.NestedConfiguration.property.defaultCache">defaultCache</a></code> | <code><a href="#projen.gitlab.Cache">Cache</a>[]</code> | *No description.* |
+| <code><a href="#projen.gitlab.NestedConfiguration.property.defaultIdTokens">defaultIdTokens</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}</code> | Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs. |
 | <code><a href="#projen.gitlab.NestedConfiguration.property.defaultImage">defaultImage</a></code> | <code><a href="#projen.gitlab.Image">Image</a></code> | Specifies the default docker image to use globally for all jobs. |
 | <code><a href="#projen.gitlab.NestedConfiguration.property.defaultInterruptible">defaultInterruptible</a></code> | <code>boolean</code> | The default behavior for whether a job should be canceled when a newer pipeline starts before the job completes (Default: false). |
 | <code><a href="#projen.gitlab.NestedConfiguration.property.defaultRetry">defaultRetry</a></code> | <code><a href="#projen.gitlab.Retry">Retry</a></code> | How many times a job is retried if it fails. |
@@ -1491,6 +1518,18 @@ public readonly defaultCache: Cache[];
 ```
 
 - *Type:* <a href="#projen.gitlab.Cache">Cache</a>[]
+
+---
+
+##### `defaultIdTokens`<sup>Optional</sup> <a name="defaultIdTokens" id="projen.gitlab.NestedConfiguration.property.defaultIdTokens"></a>
+
+```typescript
+public readonly defaultIdTokens: {[ key: string ]: IDToken};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}
+
+Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs.
 
 ---
 
@@ -2113,6 +2152,7 @@ const default: gitlab.Default = { ... }
 | <code><a href="#projen.gitlab.Default.property.artifacts">artifacts</a></code> | <code><a href="#projen.gitlab.Artifacts">Artifacts</a></code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.beforeScript">beforeScript</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.cache">cache</a></code> | <code><a href="#projen.gitlab.Cache">Cache</a>[]</code> | *No description.* |
+| <code><a href="#projen.gitlab.Default.property.idTokens">idTokens</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}</code> | Specifies the default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs. |
 | <code><a href="#projen.gitlab.Default.property.image">image</a></code> | <code><a href="#projen.gitlab.Image">Image</a></code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.interruptible">interruptible</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.retry">retry</a></code> | <code><a href="#projen.gitlab.Retry">Retry</a></code> | *No description.* |
@@ -2159,6 +2199,18 @@ public readonly cache: Cache[];
 ```
 
 - *Type:* <a href="#projen.gitlab.Cache">Cache</a>[]
+
+---
+
+##### `idTokens`<sup>Optional</sup> <a name="idTokens" id="projen.gitlab.Default.property.idTokens"></a>
+
+```typescript
+public readonly idTokens: {[ key: string ]: IDToken};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}
+
+Specifies the default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs.
 
 ---
 
