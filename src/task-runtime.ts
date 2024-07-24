@@ -1,6 +1,5 @@
 import { SpawnOptions, spawnSync } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
-import { platform } from "os";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
@@ -11,7 +10,6 @@ import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
-const CHAIN_SUFFIX = " && ";
 
 /**
  * The runtime component of the tasks engine.
@@ -381,33 +379,26 @@ interface ShellOptions {
 }
 
 /**
- * Make a cross-shell command that works on both Windows and Unix-like systems.
+ * Makes a cross-shell command that works on both Windows and Unix-like systems.
  *
- * @param command
+ * @param command The command to make cross-platform.
  * @returns
  */
-function makeCrossPlatform(command: string) {
-  let crossCommand = "";
-  const subcommands = command.split("&&");
-
-  for (const subcommand of subcommands) {
-    const trimmedSubcommand = subcommand.trim();
-    const cmd = trimmedSubcommand.split(" ")[0];
-
-    if (
-      platform() == "win32" &&
-      ["cat", "cp", "mkdir", "mv", "rm"].includes(cmd)
-    ) {
-      crossCommand += `shx ${trimmedSubcommand}${CHAIN_SUFFIX}`;
-    } else {
-      crossCommand += `${trimmedSubcommand}${CHAIN_SUFFIX}`;
-    }
+export function makeCrossPlatform(command: string): string {
+  const isWindows = process.platform === "win32";
+  if (!isWindows) {
+    return command;
   }
 
-  // Remove trailing chain '&&'
-  if (crossCommand.endsWith(CHAIN_SUFFIX)) {
-    crossCommand = crossCommand.slice(0, -CHAIN_SUFFIX.length);
-  }
+  return command
+    .split("&&")
+    .map((subcommand) => {
+      const trimmedSubcommand = subcommand.trim();
+      const cmd = trimmedSubcommand.split(" ")[0];
 
-  return crossCommand;
+      const supportedByShx = ["cat", "cp", "mkdir", "mv", "rm"].includes(cmd);
+
+      return supportedByShx ? `shx ${trimmedSubcommand}` : trimmedSubcommand;
+    })
+    .join(" && ");
 }
