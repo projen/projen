@@ -324,6 +324,24 @@ test("adds correct entries for fallback-keys caching", () => {
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
 });
 
+test("add default tokens to all jobs", () => {
+  // GIVEN
+  const p = new TestProject();
+  new CiConfiguration(p, "foo", {
+    default: {
+      idTokens: { TEST_ID_TOKEN: { aud: "https://test.service.com" } },
+    },
+    jobs: {
+      build: {},
+    },
+  });
+  // THEN
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).default
+      .id_tokens
+  ).toStrictEqual({ TEST_ID_TOKEN: { aud: "https://test.service.com" } });
+});
+
 test("does not snake job names", () => {
   // GIVEN
   const p = new TestProject({
