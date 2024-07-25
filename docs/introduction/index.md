@@ -21,11 +21,11 @@ supports TypeScript, Python, Java, and Golang.
 Whether you're a solo developer or part of a large team, projen helps you manage project configurations seamlessly. As 
 your project grows, you can easily add new configuration files and workflows.
 
-Unlike traditional scaffolding tools or template generators, projen enforces changes through strongly-typed classes. The 
-generated files are never manually edited; instead, you apply changes by running the projen CLI.
+Unlike traditional scaffolding tools or template generators, projen enforces changes through strongly-typed code. The 
+generated files are never manually edited; instead, you update your code and apply changes by running the projen CLI.
 
-Projen ensures consistency across multiple repositories by allowing you to define custom project types. This enables 
-organizations to create and maintain uniform project templates across numerous codebases. 
+Projen ensures consistency across multiple repositories by allowing you to define custom project types. This enables
+organizations to create and maintain uniform project templates across a large number of codebases.
 
 Learn more from the talk, [CDK Day 2020 - Projen... a CDK for Project Generation/Configuration](https://youtu.be/SOWMPzXtTCw) 
 by projen's creator.
