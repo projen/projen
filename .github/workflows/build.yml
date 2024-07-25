@@ -184,6 +184,9 @@ jobs:
     env:
       CI: "true"
     steps:
+      - name: Install rsync on Windows
+        if: matrix.runner.os == 'windows-latest'
+        run: choco install --no-progress rsync
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -197,11 +200,6 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: node ./projen.js build
-        if: ${{ matrix.runner.primary_build }}
-      - name: build on windows
-        run: node ./projen.js default && node ./projen.js pre-compile && node ./projen.js compile && node ./projen.js post-compile && node ./projen.js test
-        shell: cmd
-        if: ${{ !matrix.runner.primary_build }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
@@ -242,11 +240,9 @@ jobs:
         runner:
           - os: ubuntu-latest
             primary_build: true
-            shell: bash
             allow_failure: false
           - os: windows-latest
             primary_build: false
-            shell: cmd
             allow_failure: false
     continue-on-error: ${{ matrix.runner.allow_failure }}
   build:

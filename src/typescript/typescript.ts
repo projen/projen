@@ -626,7 +626,7 @@ export class TypeScriptProject extends NodeProject {
     jest.discoverTestMatchPatternsForDirs([libtest], {
       fileExtensionPattern: this.tsconfig?.compilerOptions?.allowJs
         ? undefined
-        : "ts?(x)",
+        : "js?(x)",
     });
     jest.addWatchIgnorePattern(`/${this.srcdir}/`);
 
