@@ -4,14 +4,15 @@ sidebar_position: 1
 
 # Getting Started
 
-Welcome to projen! This guide will walk you through the essential steps to get up and running 
-with a TypeScript project, covering much of what you'll typically use. By the end of this guide, you'll have 
-a solid foundation to build and manage your projects efficiently with projen.
+This guide will walk you through the essential steps to get up and running with a TypeScript project, covering much of 
+what you'll typically use. By the end of this guide, you'll have a solid foundation to build and manage your projects 
+efficiently with projen.
 
-> Note: While this guide uses TypeScript as an example, projen supports a variety of project types including 
-> JavaScript, Python, Java, and more. The concepts and steps outlined here can be adapted to other languages 
-> and project types as well.
-
+:::info
+Note: While this guide uses TypeScript as an example, projen supports a variety of project types including JavaScript, 
+Python, Java, and more. The concepts and steps outlined here can be adapted to other languages and project types as 
+well.
+:::
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -42,7 +43,7 @@ npx projen new typescript
 ```
 
 Replace `typescript` with the type of project you want to create, such as `node` for a Node.js project or `python` for 
-a Python project.
+a Python project. You can get a complete list of available project types by running `npx projen new --help`.
 
 ## Project Configuration
 
@@ -257,43 +258,6 @@ Customize the `.gitignore` file to include or exclude specific files and directo
 
 ```ts
 project.gitignore.addPatterns('dist/', 'node_modules/');
-```
-
-### Pull Request Template:
-
-Add a pre-defined pull request template.
-
-```ts
-if (project.github) {
-  project.github.addPullRequestTemplate(
-    `
-    ## Description
-    
-    Please include a summary of the changes and the related issue. Please also include relevant motivation and context.
-
-    ## Type of change
-    
-    Please delete options that are not relevant.
-    
-    - [ ] Bug fix (non-breaking change which fixes an issue)
-    - [ ] New feature (non-breaking change which adds functionality)
-    - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-    - [ ] This change requires a documentation update
-
-    ## Checklist
-    
-    - [ ] My code follows the style guidelines of this project
-    - [ ] I have performed a self-review of my own code
-    - [ ] I have commented my code, particularly in hard-to-understand areas
-    - [ ] I have made corresponding changes to the documentation
-    - [ ] My changes generate no new warnings
-    - [ ] Any dependent changes have been merged and published in downstream modules
-    - [ ] I have added tests that prove my fix is effective or that my feature works
-    - [ ] New and existing unit tests pass locally with my changes
-    - [ ] Any changes to the deployment scripts have been documented in the project documentation
-    `,
-  );
-}
 ```
 
 ## Aliasing projen
