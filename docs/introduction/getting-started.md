@@ -77,7 +77,11 @@ Typically, the projen RC file will be in the same language as the project.
 
 ## Adding Dependencies
 
-You can add dependencies using projen's API. For example, to add a runtime dependency:
+You can add dependencies in two ways: by using projen's API methods or by setting properties in the constructor.
+
+### Using API Methods
+
+To add a runtime dependency:
 
 ```ts
 project.addDeps('axios');
@@ -87,6 +91,24 @@ For development dependencies:
 
 ```ts
 project.addDevDeps('typescript', 'jest');
+```
+
+### Setting Dependencies in the Constructor
+Alternatively, you can specify dependencies when you create the project:
+```ts
+import { TypeScriptProject } from 'projen';
+
+const project = new TypeScriptProject({
+  name: 'my-projen-project',
+  defaultReleaseBranch: 'main',
+  packageManager: NodePackageManager.NPM,
+  srcdir: 'src',
+  testdir: 'test',
+  deps: ['axios'], // Configure your runtime dependencies
+  devDeps: ['typescript', 'jest'], // Configure your dev dependencies
+});
+
+project.synth();
 ```
 
 ## Managing Scripts
