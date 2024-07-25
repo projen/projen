@@ -76,6 +76,8 @@ export interface Default {
   readonly beforeScript?: string[];
   /* A list of cache definitions (max. 4) with the files and directories to cache between jobs. You can only use paths that are in the local working copy. */
   readonly cache?: Cache[];
+  /** Specifies the default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs. */
+  readonly idTokens?: Record<string, IDToken>;
   /* Specifies the default docker image to use globally for all jobs. */
   readonly image?: Image;
   /* If a job should be canceled when a newer pipeline starts before the job completes (Default: false).*/

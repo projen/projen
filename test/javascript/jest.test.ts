@@ -180,7 +180,7 @@ test("jestOptions.typeScriptCompilerOptions is deprecated", () => {
   );
 });
 
-test("testdir is under src", () => {
+test("testdir is under src discovers compiled js tests", () => {
   // WHEN
   const project = new TypeScriptProject({
     defaultReleaseBranch: "master",
@@ -192,9 +192,12 @@ test("testdir is under src", () => {
   // THEN
   const files = synthSnapshot(project);
   expect(files["package.json"].jest.testMatch).toStrictEqual([
-    "<rootDir>/@(lib/boom/bam/__tests)/**/*(*.)@(spec|test).ts?(x)",
-    "<rootDir>/@(lib/boom/bam/__tests)/**/__tests__/**/*.ts?(x)",
+    "<rootDir>/@(lib/boom/bam/__tests)/**/*(*.)@(spec|test).js?(x)",
+    "<rootDir>/@(lib/boom/bam/__tests)/**/__tests__/**/*.js?(x)",
   ]);
+  files["package.json"].jest.testMatch.forEach((testMatch: string) =>
+    expect(testMatch).toContain(".js")
+  );
 });
 
 test("default testMatch patterns are added to jest config", () => {
