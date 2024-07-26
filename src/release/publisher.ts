@@ -15,6 +15,7 @@ import {
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
@@ -261,7 +262,7 @@ export class Publisher extends Component {
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? "",
         VERSION_FILE: versionFile,
       },
-      condition: '! git log --oneline -1 | grep -q "chore(release):"',
+      condition: CHANGES_SINCE_LAST_RELEASE,
     });
     if (projectChangelogFile) {
       publishTask.builtin("release/update-changelog");
