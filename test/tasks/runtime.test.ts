@@ -4,7 +4,8 @@ import { tmpdir } from "os";
 import { basename, join } from "path";
 import { Project } from "../../src";
 import * as logging from "../../src/logging";
-import { makeCrossPlatform, TaskRuntime } from "../../src/task-runtime";
+import { TaskRuntime } from "../../src/task-runtime";
+import { makeCrossPlatform } from "../../src/util/tasks";
 import { TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
