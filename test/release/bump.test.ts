@@ -511,6 +511,18 @@ describe("Releasable Commits Configurations", () => {
     });
     expect(result.version).toEqual("1.3.0");
   });
+
+  test("will not bump if last commit was a release", async () => {
+    const result = await testBump({
+      commits: [
+        { message: "first version", tag: "v1.1.0" },
+        { message: "second version", tag: "v1.2.0" },
+        { message: "docs: update Readme" },
+        { message: "chore(release): no more bugs" },
+      ],
+    });
+    expect(result.version).toEqual("1.2.1");
+  });
 });
 
 //----------------------------------------------------------------------------------------------------------------------------------
