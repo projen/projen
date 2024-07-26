@@ -1,6 +1,5 @@
 import { SpawnOptions, spawnSync } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
-import { platform } from "os";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
@@ -8,6 +7,7 @@ import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
+import { makeCrossPlatform } from "./util/tasks";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
@@ -170,17 +170,9 @@ class RunTask {
       }
 
       for (const exec of execs) {
-        let command = "";
         let hasError = false;
-        const cmd = exec.split(" ")[0];
-        if (
-          platform() == "win32" &&
-          ["cat", "cp", "mkdir", "mv", "rm"].includes(cmd)
-        ) {
-          command = `shx ${exec}`;
-        } else {
-          command = exec;
-        }
+
+        let command = makeCrossPlatform(exec);
 
         if (command.includes(ARGS_MARKER)) {
           command = command.replace(ARGS_MARKER, argsList.join(" "));
