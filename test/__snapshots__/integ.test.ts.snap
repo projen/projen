@@ -927,7 +927,7 @@ tsconfig.tsbuildinfo
           "builtin": "release/bump-version"
         }
       ],
-      "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\""
+      "condition": "(git log --oneline -1 | grep -q \\"chore(release):\\") && exit 1 || exit 0"
     },
     "clobber": {
       "name": "clobber",
@@ -4324,7 +4324,7 @@ resolution-mode=highest
           "builtin": "release/bump-version"
         }
       ],
-      "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\""
+      "condition": "(git log --oneline -1 | grep -q \\"chore(release):\\") && exit 1 || exit 0"
     },
     "clobber": {
       "name": "clobber",
