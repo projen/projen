@@ -3,6 +3,12 @@ import { Component } from "./component";
 import { Project } from "./project";
 import { Task } from "./task";
 
+// this command determines if there were any changes since the last release
+// (the top-most commit is not a bump). it is used as a condition for both
+// the `bump` and the `release` tasks.
+export const CHANGES_SINCE_LAST_RELEASE =
+  '(git log --oneline -1 | grep -q "chore(release):") && exit 1 || exit 0';
+
 /**
  * Options for `Version`.
  */
@@ -69,12 +75,6 @@ export class Version extends Component {
 
     const versionInputFile = options.versionInputFile;
 
-    // this command determines if there were any changes since the last release
-    // (the top-most commit is not a bump). it is used as a condition for both
-    // the `bump` and the `release` tasks.
-    const changesSinceLastRelease =
-      '! git log --oneline -1 | grep -q "chore(release):"';
-
     const changelogFile = posix.join(
       options.artifactsDirectory,
       this.changelogFileName
@@ -105,7 +105,7 @@ export class Version extends Component {
     this.bumpTask = project.addTask("bump", {
       description:
         "Bumps version based on latest git tag and generates a changelog entry",
-      condition: changesSinceLastRelease,
+      condition: CHANGES_SINCE_LAST_RELEASE,
       env: { ...commonEnv },
     });
 
