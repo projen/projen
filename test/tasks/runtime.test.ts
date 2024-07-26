@@ -5,6 +5,7 @@ import { basename, join } from "path";
 import { Project } from "../../src";
 import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
+import { makeCrossPlatform } from "../../src/util/tasks";
 import { TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
@@ -519,6 +520,63 @@ test("exec can receive fixed args", () => {
   });
 
   expect(executeTask(p, "test1")).toStrictEqual(["child: [one --two -3]"]);
+});
+
+describe("makeCrossPlatform", () => {
+  const originalPlatform = process.platform;
+
+  beforeEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    // Restore the original platform
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+  });
+
+  test("does not modify the command on linux", () => {
+    // Mock the platform to be "linux"
+    Object.defineProperty(process, "platform", { value: "linux" });
+
+    expect(makeCrossPlatform("ls -l")).toBe("ls -l");
+  });
+
+  test("does not modify a command not supported by shx on windows", () => {
+    // Mock the platform to be "win32"
+    Object.defineProperty(process, "platform", { value: "win32" });
+
+    expect(makeCrossPlatform('echo "Hello World"')).toBe('echo "Hello World"');
+  });
+
+  test("prefixes supported commands with shx on windows", () => {
+    // Mock the platform to be "win32"
+    Object.defineProperty(process, "platform", { value: "win32" });
+
+    expect(makeCrossPlatform("cat file.txt")).toBe("shx cat file.txt");
+  });
+
+  test("processes multiple commands correctly on windows", () => {
+    // Mock the platform to be "win32"
+    Object.defineProperty(process, "platform", { value: "win32" });
+
+    expect(makeCrossPlatform("mkdir newdir && rm olddir")).toBe(
+      "shx mkdir newdir && shx rm olddir"
+    );
+  });
+
+  test("trims commands with leading and trailing spaces", () => {
+    // Mock the platform to be "win32"
+    Object.defineProperty(process, "platform", { value: "win32" });
+
+    expect(makeCrossPlatform("  cp file1.txt file2.txt  ")).toBe(
+      "shx cp file1.txt file2.txt"
+    );
+  });
+
+  test("Empty command returns an empty string", () => {
+    expect(makeCrossPlatform("")).toBe("");
+  });
 });
 
 function executeTask(
