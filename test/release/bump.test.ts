@@ -515,10 +515,18 @@ describe("Releasable Commits Configurations", () => {
   test("will not bump if last commit was a release", async () => {
     const result = await testBump({
       commits: [
-        { message: "first version", tag: "v1.1.0" },
-        { message: "second version", tag: "v1.2.0" },
         { message: "docs: update Readme" },
-        { message: "chore(release): no more bugs" },
+        { message: "chore(release): 1.2.0", tag: "v1.2.0" },
+      ],
+    });
+    expect(result.version).toEqual("1.2.0");
+  });
+
+  test("will bump if last commit was not a release", async () => {
+    const result = await testBump({
+      commits: [
+        { message: "chore(release): 1.2.0", tag: "v1.2.0" },
+        { message: "docs: update Readme" },
       ],
     });
     expect(result.version).toEqual("1.2.1");
