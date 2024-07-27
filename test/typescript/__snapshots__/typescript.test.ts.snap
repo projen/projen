@@ -1234,6 +1234,7 @@ tsconfig.tsbuildinfo
         "^.+\\.[t]sx?$": [
           "ts-jest",
           {
+            "isolatedModules": true,
             "tsconfig": "tsconfig.dev.json",
           },
         ],
