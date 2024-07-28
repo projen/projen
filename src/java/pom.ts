@@ -162,7 +162,7 @@ export interface MavenRepository {
  */
 export interface MavenRepositoryPolicy {
   /*
-   * Is enabled
+   * Whether this repository is enabled  for the respective type (`releases` or `snapshots`).
    */
   readonly enabled?: boolean;
 
