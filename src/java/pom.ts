@@ -173,6 +173,7 @@ export interface MavenRepositoryPolicy {
 
   /**
    * Checksum Policy
+   * When Maven deploys files to the repository, it also deploys corresponding checksum files.
    */
   readonly checksumPolicy?: ChecksumPolicy;
 }
