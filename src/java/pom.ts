@@ -150,7 +150,7 @@ export interface MavenRepository {
    */
   readonly layout?: string;
   /**
-   * Repository Policy
+   * Repository Policy for Snapshots
    */
   readonly snapshots?: MavenRepositoryPolicy;
   readonly releases?: MavenRepositoryPolicy;
