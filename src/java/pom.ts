@@ -168,6 +168,8 @@ export interface MavenRepositoryPolicy {
 
   /**
    * Update Policy
+   * This element specifies how often updates should attempt to occur. Maven will compare the local POM's timestamp (stored in a repository's maven-metadata file) to the remote.
+   * @default UpdatePolicy.DAILY
    */
   readonly updatePolicy?: UpdatePolicy;
 
