@@ -193,7 +193,10 @@ export class UpdatePolicy {
     return "never";
   }
 
-  static interval(num: number) {
+  /**
+   * Updates at an interval of X minutes.
+   */
+  static interval(minutes: number) {
     return `interval:${num}`;
   }
 }
