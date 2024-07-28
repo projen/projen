@@ -182,8 +182,8 @@ export class UpdatePolicy {
     return "always";
   }
 
-  static get update() {
-    return "update";
+  static get DAILY() {
+    return "daily";
   }
 
   static get NEVER() {
