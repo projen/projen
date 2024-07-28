@@ -3965,8 +3965,8 @@ const mavenRepository: java.MavenRepository = { ... }
 | <code><a href="#projen.java.MavenRepository.property.url">url</a></code> | <code>string</code> | The url of the repository. |
 | <code><a href="#projen.java.MavenRepository.property.layout">layout</a></code> | <code>string</code> | The layout of the repository. |
 | <code><a href="#projen.java.MavenRepository.property.name">name</a></code> | <code>string</code> | The name of the repository. |
-| <code><a href="#projen.java.MavenRepository.property.releases">releases</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | *No description.* |
-| <code><a href="#projen.java.MavenRepository.property.snapshots">snapshots</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | Repository Policy. |
+| <code><a href="#projen.java.MavenRepository.property.releases">releases</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | Repository Policy for Releases. |
+| <code><a href="#projen.java.MavenRepository.property.snapshots">snapshots</a></code> | <code><a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a></code> | Repository Policy for Snapshots. |
 
 ---
 
@@ -4026,6 +4026,8 @@ public readonly releases: MavenRepositoryPolicy;
 
 - *Type:* <a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a>
 
+Repository Policy for Releases.
+
 ---
 
 ##### `snapshots`<sup>Optional</sup> <a name="snapshots" id="projen.java.MavenRepository.property.snapshots"></a>
@@ -4036,7 +4038,7 @@ public readonly snapshots: MavenRepositoryPolicy;
 
 - *Type:* <a href="#projen.java.MavenRepositoryPolicy">MavenRepositoryPolicy</a>
 
-Repository Policy.
+Repository Policy for Snapshots.
 
 ---
 
@@ -4058,9 +4060,9 @@ const mavenRepositoryPolicy: java.MavenRepositoryPolicy = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.java.MavenRepositoryPolicy.property.checksumPolicy">checksumPolicy</a></code> | <code><a href="#projen.java.ChecksumPolicy">ChecksumPolicy</a></code> | Checksum Policy. |
+| <code><a href="#projen.java.MavenRepositoryPolicy.property.checksumPolicy">checksumPolicy</a></code> | <code><a href="#projen.java.ChecksumPolicy">ChecksumPolicy</a></code> | Checksum Policy When Maven deploys files to the repository, it also deploys corresponding checksum files. |
 | <code><a href="#projen.java.MavenRepositoryPolicy.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.java.MavenRepositoryPolicy.property.updatePolicy">updatePolicy</a></code> | <code><a href="#projen.java.UpdatePolicy">UpdatePolicy</a></code> | Update Policy. |
+| <code><a href="#projen.java.MavenRepositoryPolicy.property.updatePolicy">updatePolicy</a></code> | <code><a href="#projen.java.UpdatePolicy">UpdatePolicy</a></code> | Update Policy This element specifies how often updates should attempt to occur. |
 
 ---
 
@@ -4072,7 +4074,7 @@ public readonly checksumPolicy: ChecksumPolicy;
 
 - *Type:* <a href="#projen.java.ChecksumPolicy">ChecksumPolicy</a>
 
-Checksum Policy.
+Checksum Policy When Maven deploys files to the repository, it also deploys corresponding checksum files.
 
 ---
 
@@ -4093,8 +4095,11 @@ public readonly updatePolicy: UpdatePolicy;
 ```
 
 - *Type:* <a href="#projen.java.UpdatePolicy">UpdatePolicy</a>
+- *Default:* UpdatePolicy.DAILY
 
-Update Policy.
+Update Policy This element specifies how often updates should attempt to occur.
+
+Maven will compare the local POM's timestamp (stored in a repository's maven-metadata file) to the remote.
 
 ---
 
@@ -4578,7 +4583,7 @@ new java.UpdatePolicy()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.java.UpdatePolicy.interval">interval</a></code> | *No description.* |
+| <code><a href="#projen.java.UpdatePolicy.interval">interval</a></code> | Updates at an interval of X minutes. |
 
 ---
 
@@ -4587,55 +4592,57 @@ new java.UpdatePolicy()
 ```typescript
 import { java } from 'projen'
 
-java.UpdatePolicy.interval(num: number)
+java.UpdatePolicy.interval(minutes: number)
 ```
 
-###### `num`<sup>Required</sup> <a name="num" id="projen.java.UpdatePolicy.interval.parameter.num"></a>
+Updates at an interval of X minutes.
+
+###### `minutes`<sup>Required</sup> <a name="minutes" id="projen.java.UpdatePolicy.interval.parameter.minutes"></a>
 
 - *Type:* number
 
 ---
 
-#### Properties <a name="Properties" id="Properties"></a>
+
+#### Constants <a name="Constants" id="Constants"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.java.UpdatePolicy.property.always">always</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.java.UpdatePolicy.property.never">never</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.java.UpdatePolicy.property.update">update</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.java.UpdatePolicy.property.ALWAYS">ALWAYS</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.java.UpdatePolicy.property.DAILY">DAILY</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.java.UpdatePolicy.property.NEVER">NEVER</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `always`<sup>Required</sup> <a name="always" id="projen.java.UpdatePolicy.property.always"></a>
+##### `ALWAYS`<sup>Required</sup> <a name="ALWAYS" id="projen.java.UpdatePolicy.property.ALWAYS"></a>
 
 ```typescript
-public readonly always: string;
+public readonly ALWAYS: string;
 ```
 
 - *Type:* string
 
 ---
 
-##### `never`<sup>Required</sup> <a name="never" id="projen.java.UpdatePolicy.property.never"></a>
+##### `DAILY`<sup>Required</sup> <a name="DAILY" id="projen.java.UpdatePolicy.property.DAILY"></a>
 
 ```typescript
-public readonly never: string;
+public readonly DAILY: string;
 ```
 
 - *Type:* string
 
 ---
 
-##### `update`<sup>Required</sup> <a name="update" id="projen.java.UpdatePolicy.property.update"></a>
+##### `NEVER`<sup>Required</sup> <a name="NEVER" id="projen.java.UpdatePolicy.property.NEVER"></a>
 
 ```typescript
-public readonly update: string;
+public readonly NEVER: string;
 ```
 
 - *Type:* string
 
 ---
-
 
 
 ## Enums <a name="Enums" id="Enums"></a>

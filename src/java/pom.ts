@@ -153,6 +153,9 @@ export interface MavenRepository {
    * Repository Policy for Snapshots
    */
   readonly snapshots?: MavenRepositoryPolicy;
+  /**
+   * Repository Policy for Releases
+   */
   readonly releases?: MavenRepositoryPolicy;
 }
 
@@ -181,23 +184,15 @@ export interface MavenRepositoryPolicy {
 }
 
 export class UpdatePolicy {
-  static get always() {
-    return "always";
-  }
-
-  static get DAILY() {
-    return "daily";
-  }
-
-  static get NEVER() {
-    return "never";
-  }
+  static readonly ALWAYS = "always";
+  static readonly DAILY = "daily";
+  static readonly NEVER = "never";
 
   /**
    * Updates at an interval of X minutes.
    */
   static interval(minutes: number) {
-    return `interval:${num}`;
+    return `interval:${minutes}`;
   }
 }
 
@@ -330,6 +325,10 @@ export class Pom extends Component {
     this.repositories.push(repository);
   }
 
+  /*
+   * Adds a repository for plugins to the pom
+   * @param repository the repository to add
+   */
   public addPluginRepository(repository: MavenRepository) {
     this.pluginRepositories.push(repository);
   }
