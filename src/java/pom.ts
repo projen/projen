@@ -186,7 +186,7 @@ export class UpdatePolicy {
     return "update";
   }
 
-  static get never() {
+  static get NEVER() {
     return "never";
   }
 
