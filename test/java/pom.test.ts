@@ -1,5 +1,5 @@
 import { DependencyType } from "../../src/dependencies";
-import { Pom, PomOptions } from "../../src/java";
+import { ChecksumPolicy, Pom, PomOptions, UpdatePolicy } from "../../src/java";
 import { synthSnapshot, TestProject } from "../util";
 
 test("group/artifact/version", () => {
@@ -149,6 +149,26 @@ test("addRepository()", () => {
     layout: "default",
   });
 
+  expect(actualPom(pom)).toMatchSnapshot();
+});
+
+test("addPluginRepository()", () => {
+  const pom = new TestPom();
+
+  pom.addPluginRepository({
+    id: "my-local-repository",
+    url: "file://my/local/repository",
+  });
+  pom.addPluginRepository({
+    id: "my-remote-repository",
+    name: "Remote Repo",
+    url: "https://myserver/repo",
+    layout: "default",
+    snapshots: {
+      checksumPolicy: ChecksumPolicy.FAIL,
+      updatePolicy: UpdatePolicy.interval(50),
+    },
+  });
   expect(actualPom(pom)).toMatchSnapshot();
 });
 

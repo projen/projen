@@ -127,6 +127,7 @@ export interface ParentPom {
    */
   readonly relativePath?: string;
 }
+
 /**
  * Represents a Maven repository
  * @see https://maven.apache.org/guides/introduction/introduction-to-repositories.html
@@ -148,6 +149,57 @@ export interface MavenRepository {
    * The layout of the repository
    */
   readonly layout?: string;
+  /**
+   * Repository Policy for Snapshots
+   */
+  readonly snapshots?: MavenRepositoryPolicy;
+  /**
+   * Repository Policy for Releases
+   */
+  readonly releases?: MavenRepositoryPolicy;
+}
+
+/**
+ * Represents a Maven Repository Policy
+ * @see https://maven.apache.org/settings.html#repositories
+ */
+export interface MavenRepositoryPolicy {
+  /*
+   * Whether this repository is enabled  for the respective type (`releases` or `snapshots`).
+   */
+  readonly enabled?: boolean;
+
+  /**
+   * Update Policy
+   * This element specifies how often updates should attempt to occur. Maven will compare the local POM's timestamp (stored in a repository's maven-metadata file) to the remote.
+   * @default UpdatePolicy.DAILY
+   */
+  readonly updatePolicy?: UpdatePolicy;
+
+  /**
+   * Checksum Policy
+   * When Maven deploys files to the repository, it also deploys corresponding checksum files.
+   */
+  readonly checksumPolicy?: ChecksumPolicy;
+}
+
+export class UpdatePolicy {
+  static readonly ALWAYS = "always";
+  static readonly DAILY = "daily";
+  static readonly NEVER = "never";
+
+  /**
+   * Updates at an interval of X minutes.
+   */
+  static interval(minutes: number) {
+    return `interval:${minutes}`;
+  }
+}
+
+export enum ChecksumPolicy {
+  IGNORE = "ignore",
+  FAIL = "fail",
+  WARN = "warn",
 }
 
 /**
@@ -204,6 +256,8 @@ export class Pom extends Component {
   private readonly properties: Record<string, any> = {};
 
   private readonly repositories: MavenRepository[] = [];
+
+  private readonly pluginRepositories: MavenRepository[] = [];
 
   constructor(project: Project, options: PomOptions) {
     super(project);
@@ -271,6 +325,14 @@ export class Pom extends Component {
     this.repositories.push(repository);
   }
 
+  /*
+   * Adds a repository for plugins to the pom
+   * @param repository the repository to add
+   */
+  public addPluginRepository(repository: MavenRepository) {
+    this.pluginRepositories.push(repository);
+  }
+
   private synthPom() {
     return resolve(
       {
@@ -288,6 +350,7 @@ export class Pom extends Component {
           parent: this.parentPom,
           ...this.synthRepositories(),
           ...this.synthDependencies(),
+          ...this.synthPluginRepositories(),
         },
       },
       { omitEmpty: true }
@@ -343,6 +406,16 @@ export class Pom extends Component {
 
     return {
       repositories: { repository: this.repositories },
+    };
+  }
+
+  private synthPluginRepositories() {
+    if (this.pluginRepositories.length === 0) {
+      return;
+    }
+
+    return {
+      pluginRepositories: { pluginRepository: this.pluginRepositories },
     };
   }
 }
