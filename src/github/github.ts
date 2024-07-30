@@ -1,6 +1,7 @@
 import { GitHubActionsProvider } from "./actions-provider";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
+import { MergeQueue, MergeQueueOptions } from "./merge-queue";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import {
@@ -26,6 +27,21 @@ export interface GitHubOptions {
    * @default - default options
    */
   readonly mergifyOptions?: MergifyOptions;
+
+  /**
+   * Whether a merge queue should be used on this repository to merge pull requests.
+   * Requires additional configuration of the repositories branch protection rules.
+   *
+   * @default true
+   */
+  readonly mergeQueue?: boolean;
+
+  /**
+   * Options for MergeQueue.
+   *
+   * @default - default options
+   */
+  readonly mergeQueueOptions?: MergeQueueOptions;
 
   /**
    * Enables GitHub workflows. If this is set to `false`, workflows will not be created.
@@ -103,10 +119,16 @@ export class GitHub extends Component {
   }
 
   /**
-   * The `Mergify` configured on this repository. This is `undefined` if Mergify
-   * was not enabled when creating the repository.
+   * The `Mergify` component configured on this repository
+   * This is `undefined` if Mergify is not enabled for this repository.
    */
   public readonly mergify?: Mergify;
+
+  /**
+   * The `MergeQueue` component configured on this repository
+   * This is `undefined` if merge queues are not enabled for this repository.
+   */
+  public readonly mergeQueue?: MergeQueue;
 
   /**
    * Are workflows enabled?
@@ -119,7 +141,7 @@ export class GitHub extends Component {
   public readonly projenCredentials: GithubCredentials;
 
   /**
-   *
+   * The GitHub Actions provider used to manage the versions of actions used in steps
    */
   public readonly actions: GitHubActionsProvider;
 
@@ -154,6 +176,10 @@ export class GitHub extends Component {
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
+    }
+
+    if (options.mergeQueue ?? false) {
+      new MergeQueue(this, options.mergeQueueOptions);
     }
 
     if (options.pullRequestLint ?? true) {
