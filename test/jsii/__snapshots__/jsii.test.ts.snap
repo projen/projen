@@ -863,7 +863,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": {
-        "condition": "(git log --oneline -1 | grep -q "chore(release):") && exit 1 || exit 0",
+        "condition": "git log HEAD --exit-code --oneline --grep "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -2354,7 +2354,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": {
-        "condition": "(git log --oneline -1 | grep -q "chore(release):") && exit 1 || exit 0",
+        "condition": "git log HEAD --exit-code --oneline --grep "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -3852,7 +3852,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": {
-        "condition": "(git log --oneline -1 | grep -q "chore(release):") && exit 1 || exit 0",
+        "condition": "git log HEAD --exit-code --oneline --grep "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -5329,7 +5329,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": {
-        "condition": "(git log --oneline -1 | grep -q "chore(release):") && exit 1 || exit 0",
+        "condition": "git log HEAD --exit-code --oneline --grep "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
