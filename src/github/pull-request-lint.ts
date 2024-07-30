@@ -119,6 +119,9 @@ export class PullRequestLint extends Component {
           "edited",
         ],
       },
+      // run on merge group, but use a condition later to always succeed
+      // needed so the workflow can be a required status check
+      mergeGroup: {},
     });
 
     if (checkSemanticTitle) {
@@ -127,6 +130,7 @@ export class PullRequestLint extends Component {
 
       const validateJob: Job = {
         name: "Validate PR title",
+        if: "github.event_name == 'pull_request' || github.event_name == 'pull_request_target'",
         ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
         permissions: {
           pullRequests: JobPermission.WRITE,
