@@ -3,11 +3,19 @@ import { Component } from "./component";
 import { Project } from "./project";
 import { Task } from "./task";
 
-// this command determines if there were any changes since the last release
-// (the top-most commit is not a bump). it is used as a condition for both
-// the `bump` and the `release` tasks.
+/**
+ * This command determines if there were any changes since the last release in a cross-platform compatible way.
+ * It is used as a condition for both the `bump` and the `release` tasks.
+ *
+ * Explanation:
+ *  - log commits                                               | git log
+ *  - looks only at the most recent commit                      | HEAD
+ *  - returns exit code 1 if any commits are found, 0 otherwise | --exit-code
+ *  - limit log output to a single line per commit              | --oneline
+ *  - filter commits using simple grep using our search string  | --grep "chore(release):"
+ */
 export const CHANGES_SINCE_LAST_RELEASE =
-  '(git log --oneline -1 | grep -q "chore(release):") && exit 1 || exit 0';
+  'git log HEAD --exit-code --oneline --grep "chore(release):"';
 
 /**
  * Options for `Version`.
