@@ -24,15 +24,24 @@ on:
   pull_request_target:
     types:
       - labeled
+      - unlabeled
       - closed
 jobs:
   backport:
     name: Backport PR
     runs-on: ubuntu-latest
     permissions: {}
+    if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
     steps:
+      - name: Check for backport labels
+        id: check_labels
+        run: |-
+          labels='\${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          matched=$(echo $labels | jq '.|map(select(startswith("backport-to-"))) | length')
+          echo "matched=$matched"
+          echo "matched=$matched" >> $GITHUB_OUTPUT
       - name: Backport Action
-        if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
+        if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v9.5.1
         with:
           github_token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
@@ -48,15 +57,24 @@ on:
   pull_request_target:
     types:
       - labeled
+      - unlabeled
       - closed
 jobs:
   backport:
     name: Backport PR
     runs-on: ubuntu-latest
     permissions: {}
+    if: github.event.pull_request.merged == true && !startsWith(github.head_ref, 'backport/'))
     steps:
+      - name: Check for backport labels
+        id: check_labels
+        run: |-
+          labels='\${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          matched=$(echo $labels | jq '.|map(select(startswith("backport-to-"))) | length')
+          echo "matched=$matched"
+          echo "matched=$matched" >> $GITHUB_OUTPUT
       - name: Backport Action
-        if: github.event.pull_request.merged == true && !startsWith(github.head_ref, 'backport/'))
+        if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v9.5.1
         with:
           github_token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
@@ -88,15 +106,24 @@ on:
   pull_request_target:
     types:
       - labeled
+      - unlabeled
       - closed
 jobs:
   backport:
     name: Backport PR
     runs-on: ubuntu-latest
     permissions: {}
+    if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'magic'))
     steps:
+      - name: Check for backport labels
+        id: check_labels
+        run: |-
+          labels='\${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          matched=$(echo $labels | jq '.|map(select(startswith("copy-to-"))) | length')
+          echo "matched=$matched"
+          echo "matched=$matched" >> $GITHUB_OUTPUT
       - name: Backport Action
-        if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'magic'))
+        if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v9.5.1
         with:
           github_token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
