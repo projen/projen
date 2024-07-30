@@ -40,7 +40,7 @@
           "builtin": "release/bump-version"
         }
       ],
-      "condition": "(git log --oneline -1 | grep -q \"chore(release):\") && exit 1 || exit 0"
+      "condition": "git log HEAD --exit-code --oneline --grep \"chore(release):\""
     },
     "bundle:task-runner": {
       "name": "bundle:task-runner",
