@@ -863,7 +863,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": {
-        "condition": "git log HEAD --exit-code --oneline --grep "chore(release):"",
+        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
