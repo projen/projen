@@ -9,9 +9,11 @@ import { Task } from "./task";
  *
  * Explanation:
  *  - log commits                                               | git log
- *  - looks only at the most recent commit                      | -1
  *  - limit log output to a single line per commit              | --oneline
- *  - filter commits using simple grep using our search string  | --grep "chore(release):"
+ *  - looks only at the most recent commit                      | -1
+ *  - silent grep output                                        | grep -q
+ *  - exits with code 0 if a match is found                     | grep -q "chore(release):"
+ *  - exits with code 1 if a match is found (reverse-match)     | grep -qv "chore(release):"
  */
 export const CHANGES_SINCE_LAST_RELEASE =
   'git log --oneline -1 | grep -qv "chore(release):"';
