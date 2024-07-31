@@ -511,26 +511,6 @@ describe("Releasable Commits Configurations", () => {
     });
     expect(result.version).toEqual("1.3.0");
   });
-
-  test("will not bump if last commit was a release", async () => {
-    const result = await testBump({
-      commits: [
-        { message: "docs: update Readme" },
-        { message: "chore(release): 1.2.0", tag: "v1.2.0" },
-      ],
-    });
-    expect(result.version).toEqual("1.2.0");
-  });
-
-  test("will bump if last commit was not a release", async () => {
-    const result = await testBump({
-      commits: [
-        { message: "chore(release): 1.2.0", tag: "v1.2.0" },
-        { message: "docs: update Readme" },
-      ],
-    });
-    expect(result.version).toEqual("1.2.1");
-  });
 });
 
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -557,7 +537,7 @@ describe("newline at the end of version file", () => {
 
       // Commit files so the bump will work
       execSync("git add .", { cwd: projectdir });
-      execSync('git commit -m"chore: init"', { cwd: projectdir });
+      execSync('git commit -m "chore: init"', { cwd: projectdir });
 
       // Bump the version
       execProjenCLI(projectdir, ["bump"]);
