@@ -2247,7 +2247,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.GithubWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.github.GithubWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
-| <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
+| <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
 | <code><a href="#projen.github.GithubWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 
@@ -2302,13 +2302,14 @@ GitHub API authentication method used by projen workflows.
 ##### `concurrency`<sup>Optional</sup> <a name="concurrency" id="projen.github.GithubWorkflow.property.concurrency"></a>
 
 ```typescript
-public readonly concurrency: string;
+public readonly concurrency: ConcurrencyOptions;
 ```
 
-- *Type:* string
-- *Default:* disabled
+- *Type:* <a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a>
 
-Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
+The concurrency configuration of the workflow.
+
+undefined means no concurrency limitations.
 
 ---
 
@@ -3622,7 +3623,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
-| <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
+| <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
 | <code><a href="#projen.github.TaskWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.jobId">jobId</a></code> | <code>string</code> | *No description.* |
@@ -3679,13 +3680,14 @@ GitHub API authentication method used by projen workflows.
 ##### `concurrency`<sup>Optional</sup> <a name="concurrency" id="projen.github.TaskWorkflow.property.concurrency"></a>
 
 ```typescript
-public readonly concurrency: string;
+public readonly concurrency: ConcurrencyOptions;
 ```
 
-- *Type:* string
-- *Default:* disabled
+- *Type:* <a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a>
 
-Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
+The concurrency configuration of the workflow.
+
+undefined means no concurrency limitations.
 
 ---
 
@@ -4626,6 +4628,58 @@ public readonly patchFile: string;
 - *Default:* ".repo.patch"
 
 The name of the artifact the patch is stored as.
+
+---
+
+### ConcurrencyOptions <a name="ConcurrencyOptions" id="projen.github.ConcurrencyOptions"></a>
+
+Options for `concurrency`.
+
+#### Initializer <a name="Initializer" id="projen.github.ConcurrencyOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const concurrencyOptions: github.ConcurrencyOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.ConcurrencyOptions.property.cancelInProgress">cancelInProgress</a></code> | <code>boolean</code> | When a workflow is triggered while another one (in the same group) is running, should GitHub cancel the running workflow? |
+| <code><a href="#projen.github.ConcurrencyOptions.property.group">group</a></code> | <code>string</code> | Concurrency group controls which workflow runs will share the same concurrency limit. |
+
+---
+
+##### `cancelInProgress`<sup>Optional</sup> <a name="cancelInProgress" id="projen.github.ConcurrencyOptions.property.cancelInProgress"></a>
+
+```typescript
+public readonly cancelInProgress: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+When a workflow is triggered while another one (in the same group) is running, should GitHub cancel the running workflow?
+
+---
+
+##### `group`<sup>Optional</sup> <a name="group" id="projen.github.ConcurrencyOptions.property.group"></a>
+
+```typescript
+public readonly group: string;
+```
+
+- *Type:* string
+- *Default:* undefined. All runs belonging to this workflow have the same limited concurrency.
+
+Concurrency group controls which workflow runs will share the same concurrency limit.
+
+For example, if you specify `${{ github.workflow }}-${{ github.ref }}`, workflow runs triggered
+on the same branch cannot run concurrenty, but workflows runs triggered on different branches can.
+
+> [https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups)
 
 ---
 
@@ -6312,19 +6366,20 @@ const githubWorkflowOptions: github.GithubWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.GithubWorkflowOptions.property.concurrency">concurrency</a></code> | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
+| <code><a href="#projen.github.GithubWorkflowOptions.property.concurrencyOptions">concurrencyOptions</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.force">force</a></code> | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`. |
+| <code><a href="#projen.github.GithubWorkflowOptions.property.limitConcurrency">limitConcurrency</a></code> | <code>boolean</code> | Enable concurrency limitations. |
 
 ---
 
-##### `concurrency`<sup>Optional</sup> <a name="concurrency" id="projen.github.GithubWorkflowOptions.property.concurrency"></a>
+##### `concurrencyOptions`<sup>Optional</sup> <a name="concurrencyOptions" id="projen.github.GithubWorkflowOptions.property.concurrencyOptions"></a>
 
 ```typescript
-public readonly concurrency: string;
+public readonly concurrencyOptions: ConcurrencyOptions;
 ```
 
-- *Type:* string
-- *Default:* disabled
+- *Type:* <a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a>
+- *Default:* { group: undefined, cancelInProgress: false }
 
 Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
 
@@ -6344,6 +6399,21 @@ public readonly force: boolean;
 - *Default:* false
 
 Force the creation of the workflow even if `workflows` is disabled in `GitHub`.
+
+---
+
+##### `limitConcurrency`<sup>Optional</sup> <a name="limitConcurrency" id="projen.github.GithubWorkflowOptions.property.limitConcurrency"></a>
+
+```typescript
+public readonly limitConcurrency: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable concurrency limitations.
+
+Use `concurrencyOptions` to configure specific non default values.
 
 ---
 
