@@ -13,7 +13,11 @@ describe("github-workflow", () => {
 
     const snapshot = synthSnapshot(project);
 
-    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    expect(workflow.concurrency).toBeUndefined();
   });
 
   test("concurrency defaults", () => {
@@ -25,7 +29,11 @@ describe("github-workflow", () => {
 
     const snapshot = synthSnapshot(project);
 
-    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    expect(workflow.concurrency).toEqual({ "cancel-in-progress": false });
   });
 
   test("can override concurrency defaults", () => {
@@ -41,7 +49,14 @@ describe("github-workflow", () => {
 
     const snapshot = synthSnapshot(project);
 
-    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    expect(workflow.concurrency).toEqual({
+      "cancel-in-progress": true,
+      group: "custom-group",
+    });
   });
 
   test("workflow job calling a reusable workflow", () => {
