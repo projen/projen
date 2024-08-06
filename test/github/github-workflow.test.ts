@@ -6,31 +6,57 @@ import { synthSnapshot, TestProject } from "../util";
 describe("github-workflow", () => {
   const workflowName = "test-workflow";
 
-  test("Default concurrency allowed", () => {
+  test("conccurency is not set by default", () => {
     const project = new TestProject();
 
     new GithubWorkflow(project.github!, workflowName);
 
     const snapshot = synthSnapshot(project);
 
-    expect(snapshot[`.github/workflows/${workflowName}.yml`]).not.toContain(
-      "concurrency"
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
     );
+
+    expect(workflow.concurrency).toBeUndefined();
   });
 
-  test("concurrency set", () => {
-    const concurrencyName = "my-concurrency";
+  test("concurrency defaults", () => {
     const project = new TestProject();
 
     new GithubWorkflow(project.github!, workflowName, {
-      concurrency: concurrencyName,
+      limitConcurrency: true,
     });
 
     const snapshot = synthSnapshot(project);
 
-    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toContain(
-      `concurrency: ${concurrencyName}`
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
     );
+
+    expect(workflow.concurrency).toEqual({ "cancel-in-progress": false });
+  });
+
+  test("can override concurrency defaults", () => {
+    const project = new TestProject();
+
+    new GithubWorkflow(project.github!, workflowName, {
+      limitConcurrency: true,
+      concurrencyOptions: {
+        group: "custom-group",
+        cancelInProgress: true,
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    expect(workflow.concurrency).toEqual({
+      "cancel-in-progress": true,
+      group: "custom-group",
+    });
   });
 
   test("workflow job calling a reusable workflow", () => {

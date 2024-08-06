@@ -5,8 +5,32 @@ import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
-import { kebabCaseKeys } from "../util";
+import { deepMerge, kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
+
+/**
+ * Options for `concurrency`.
+ */
+export interface ConcurrencyOptions {
+  /**
+   * Concurrency group controls which workflow runs will share the same concurrency limit.
+   * For example, if you specify `${{ github.workflow }}-${{ github.ref }}`, workflow runs triggered
+   * on the same branch cannot run concurrenty, but workflows runs triggered on different branches can.
+   *
+   * @default - undefined. All runs belonging to this workflow have the same limited concurrency.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups
+   */
+  readonly group?: string;
+
+  /**
+   * When a workflow is triggered while another one (in the same group) is running, should GitHub cancel
+   * the running workflow?
+   *
+   * @default false
+   */
+  readonly cancelInProgress?: boolean;
+}
 
 /**
  * Options for `GithubWorkflow`.
@@ -18,13 +42,21 @@ export interface GithubWorkflowOptions {
    * @default false
    */
   readonly force?: boolean;
+
+  /**
+   * Enable concurrency limitations. Use `concurrencyOptions` to configure specific non default values.
+   *
+   * @default false
+   */
+  readonly limitConcurrency?: boolean;
   /**
    * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. Currently in beta.
    *
-   * @default - disabled
+   * @default - { group: undefined, cancelInProgress: false }
+   *
    * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
-  readonly concurrency?: string;
+  readonly concurrencyOptions?: ConcurrencyOptions;
 }
 
 /**
@@ -41,12 +73,9 @@ export class GithubWorkflow extends Component {
   public readonly name: string;
 
   /**
-   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
-   *
-   * @default disabled
-   * @experimental
+   * The concurrency configuration of the workflow. undefined means no concurrency limitations.
    */
-  public readonly concurrency?: string;
+  public readonly concurrency?: ConcurrencyOptions;
 
   /**
    * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
@@ -85,8 +114,17 @@ export class GithubWorkflow extends Component {
   ) {
     super(github.project, `${new.target.name}#${name}`);
 
+    const defaultConcurrency: ConcurrencyOptions = {
+      cancelInProgress: false,
+    };
+
     this.name = name;
-    this.concurrency = options.concurrency;
+    this.concurrency = options.limitConcurrency
+      ? (deepMerge([
+          defaultConcurrency,
+          options.concurrencyOptions,
+        ]) as ConcurrencyOptions)
+      : undefined;
     this.projenCredentials = github.projenCredentials;
     this.actions = github.actions;
 
@@ -207,7 +245,12 @@ export class GithubWorkflow extends Component {
       name: this.name,
       "run-name": this.runName,
       on: snakeCaseKeys(this.events),
-      concurrency: this.concurrency,
+      concurrency: this.concurrency
+        ? {
+            group: this.concurrency?.group,
+            "cancel-in-progress": this.concurrency.cancelInProgress,
+          }
+        : undefined,
       jobs: renderJobs(this.jobs, this.actions),
     };
   }
