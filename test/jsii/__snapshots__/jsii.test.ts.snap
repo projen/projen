@@ -403,6 +403,8 @@ on:
     branches:
       - main
   workflow_dispatch: {}
+concurrency:
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -1909,6 +1911,8 @@ on:
     branches:
       - main
   workflow_dispatch: {}
+concurrency:
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -3397,6 +3401,8 @@ on:
     branches:
       - main
   workflow_dispatch: {}
+concurrency:
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -4882,6 +4888,8 @@ on:
     branches:
       - main
   workflow_dispatch: {}
+concurrency:
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
