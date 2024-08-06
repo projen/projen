@@ -50,6 +50,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -435,6 +436,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -820,6 +822,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -1208,6 +1211,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -1546,6 +1550,7 @@ on:
       - 10.x
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -1625,6 +1630,7 @@ on:
       - 2.x
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -1704,6 +1710,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -2051,6 +2058,7 @@ on:
       - foo
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -2193,6 +2201,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -2590,6 +2599,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -2839,6 +2849,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -3017,6 +3028,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -3409,6 +3421,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -3817,6 +3830,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -4063,6 +4077,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -4333,6 +4348,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -4827,6 +4843,7 @@ on:
       - firefox
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -4906,6 +4923,7 @@ on:
       - safari
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -5241,6 +5259,7 @@ on:
       - 3.x
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -5320,6 +5339,7 @@ on:
       - next
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -5399,6 +5419,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -5775,6 +5796,7 @@ on:
       - 10.x
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -6062,6 +6084,7 @@ on:
       - 10.x
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
@@ -6310,6 +6333,7 @@ on:
       - main
   workflow_dispatch: {}
 concurrency:
+  group: \${{ github.workflow }}
   cancel-in-progress: false
 jobs:
   release:
