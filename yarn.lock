@@ -964,9 +964,9 @@
     "@types/yargs-parser" "*"
 
 "@types/yargs@^17.0.8":
-  version "17.0.32"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.32.tgz#030774723a2f7faafebf645f4e5a48371dca6229"
-  integrity sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==
+  version "17.0.33"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.33.tgz#8c32303da83eec050a84b3c7ae7b9f922d13e32d"
+  integrity sha512-WpxBCKWPLr4xSsHgz511rFJAM+wS28w2zEO1QDNY5zM/S8ok70NNfztH0xwhqKyaK0OHCbN98LDAZuy1ctxDkA==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -2044,9 +2044,9 @@ ejs@^3.1.10:
     jake "^10.8.5"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.4.tgz#cd477c830dd6fca41fbd5465c1ff6ce08ac22343"
-  integrity sha512-orzA81VqLyIGUEA77YkVA1D+N+nNfl2isJVjjmOyrlxuooZ19ynb+dOlaDTqd/idKRS9lDCSBmtzM+kyCsMnkA==
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.5.tgz#03bfdf422bdd2c05ee2657efedde21264a1a566b"
+  integrity sha512-QR7/A7ZkMS8tZuoftC/jfqNkZLQO779SSW3YuZHP4eXpj3EffGLFcB/Xu9AAZQzLccTiCV+EmUo3ha4mQ9wnlA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5341,9 +5341,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.6.0-dev.20240805"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240805.tgz#a34529078a24e992a6cf81f5596da8cff654de25"
-  integrity sha512-M+pWeLKA2huCTB2GLE0/0U/ezJh51Wdmm6J3BS1UxieKcnx1Kz2/NivXOnmCZY40gY6ItpMlLjnJIMXprNG9UQ==
+  version "5.6.0-dev.20240806"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240806.tgz#f8f4701cb4a8f2ef6c71e314292f5c1b1f3973ad"
+  integrity sha512-Z1wBRhFTpBIiu3jcsAkMBdefugM+kECHRO22B9Ai6D1CiHZjdvE+QLDThIoPbGFHvsEyR4gP8/0pv93QKPtcJQ==
 
 uglify-js@^3.1.4:
   version "3.19.1"
