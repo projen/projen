@@ -4,6 +4,21 @@ import { Project } from "./project";
 import { Task } from "./task";
 
 /**
+ * This command determines if there were any changes since the last release in a cross-platform compatible way.
+ * It is used as a condition for both the `bump` and the `release` tasks.
+ *
+ * Explanation:
+ *  - log commits                                               | git log
+ *  - limit log output to a single line per commit              | --oneline
+ *  - looks only at the most recent commit                      | -1
+ *  - silent grep output                                        | grep -q
+ *  - exits with code 0 if a match is found                     | grep -q "chore(release):"
+ *  - exits with code 1 if a match is found (reverse-match)     | grep -qv "chore(release):"
+ */
+export const CHANGES_SINCE_LAST_RELEASE =
+  'git log --oneline -1 | grep -qv "chore(release):"';
+
+/**
  * Options for `Version`.
  */
 export interface VersionOptions {
@@ -69,12 +84,6 @@ export class Version extends Component {
 
     const versionInputFile = options.versionInputFile;
 
-    // this command determines if there were any changes since the last release
-    // (the top-most commit is not a bump). it is used as a condition for both
-    // the `bump` and the `release` tasks.
-    const changesSinceLastRelease =
-      '! git log --oneline -1 | grep -q "chore(release):"';
-
     const changelogFile = posix.join(
       options.artifactsDirectory,
       this.changelogFileName
@@ -105,7 +114,7 @@ export class Version extends Component {
     this.bumpTask = project.addTask("bump", {
       description:
         "Bumps version based on latest git tag and generates a changelog entry",
-      condition: changesSinceLastRelease,
+      condition: CHANGES_SINCE_LAST_RELEASE,
       env: { ...commonEnv },
     });
 
