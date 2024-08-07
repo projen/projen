@@ -189,6 +189,7 @@ exports[`projen new --from using registry existing package 1`] = `
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
+          "isolatedModules": true,
           "tsconfig": "tsconfig.dev.json",
         },
       ],
@@ -320,6 +321,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
+          "isolatedModules": true,
           "tsconfig": "tsconfig.dev.json",
         },
       ],
@@ -451,6 +453,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
+          "isolatedModules": true,
           "tsconfig": "tsconfig.dev.json",
         },
       ],
@@ -582,6 +585,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
+          "isolatedModules": true,
           "tsconfig": "tsconfig.dev.json",
         },
       ],
