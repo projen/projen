@@ -227,7 +227,7 @@ The parent project.
 | <code><a href="#projen.Dependencies.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.Dependencies.addDependency">addDependency</a></code> | Adds a dependency to this project. |
 | <code><a href="#projen.Dependencies.getDependency">getDependency</a></code> | Returns a dependency by name. |
-| <code><a href="#projen.Dependencies.isDependencySatisfied">isDependencySatisfied</a></code> | Checks if a dependency requirement is already satisfied by an existing dependency. |
+| <code><a href="#projen.Dependencies.isDependencySatisfied">isDependencySatisfied</a></code> | Checks if an existing dependency satisfies a dependency requirement. |
 | <code><a href="#projen.Dependencies.removeDependency">removeDependency</a></code> | Removes a dependency. |
 | <code><a href="#projen.Dependencies.tryGetDependency">tryGetDependency</a></code> | Returns a dependency by name. |
 
@@ -333,7 +333,7 @@ single type, this argument can be omitted.
 public isDependencySatisfied(name: string, type: DependencyType, expectedRange: string): boolean
 ```
 
-Checks if a dependency requirement is already satisfied by an existing dependency.
+Checks if an existing dependency satisfies a dependency requirement.
 
 ###### `name`<sup>Required</sup> <a name="name" id="projen.Dependencies.isDependencySatisfied.parameter.name"></a>
 
