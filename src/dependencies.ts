@@ -177,7 +177,7 @@ export class Dependencies extends Component {
   /**
    * Checks if a dependency requirement is already satisfied by an existing dependency.
    * @param name The name of the dependency to check (without the version).
-   * @param type The dependency type. This is only required if there the dependency is defined for multiple types.
+   * @param type The dependency type.
    * @param expectedRange The version constraint to check (e.g. `^3.4.0`).
    * The constraint of the dependency must be a subset of the expected range to satisfy the requirements.
    * @returns `true` if the dependency exists and its version satisfies the provided constraint. `false` otherwise.
@@ -185,7 +185,7 @@ export class Dependencies extends Component {
    */
   public isDependencySatisfied(
     name: string,
-    type: DependencyType | undefined,
+    type: DependencyType,
     expectedRange: string
   ): boolean {
     const dep = this.tryGetDependency(name, type);
