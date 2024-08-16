@@ -175,7 +175,7 @@ export class Dependencies extends Component {
   }
 
   /**
-   * Checks if a dependency requirement is already satisfied by an existing dependency.
+   * Checks if an existing dependency satisfies a dependency requirement.
    * @param name The name of the dependency to check (without the version).
    * @param type The dependency type.
    * @param expectedRange The version constraint to check (e.g. `^3.4.0`).
