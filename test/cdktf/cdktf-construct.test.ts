@@ -5,7 +5,7 @@ import {
 import { NpmAccess } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
-describe("constructs dependency selection", () => {
+describe("cdktf dependency selection", () => {
   test("user-selected", () => {
     // GIVEN
     const project = new TestProject({ cdktfVersion: "0.99" });
@@ -18,7 +18,9 @@ describe("constructs dependency selection", () => {
     expect(snapshot["package.json"]?.devDependencies?.cdktf).toBe("0.99.0");
     expect(snapshot["package.json"]?.dependencies?.cdktf).toBeUndefined();
   });
+});
 
+describe("constructs dependency selection", () => {
   test("user-selected constructs version", () => {
     // GIVEN
     const project = new TestProject({
@@ -37,6 +39,27 @@ describe("constructs dependency selection", () => {
       "10.0.1"
     );
     expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
+  });
+
+  test("user-selected constructs version and installed as dependency", () => {
+    // GIVEN
+    const project = new TestProject({
+      cdktfVersion: "0.99",
+      constructsVersion: "10.3.0",
+      deps: ["constructs@10.3.0"],
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
+      "10.3.0"
+    );
+    expect(snapshot["package.json"]?.devDependencies?.constructs).toBe(
+      "10.3.0"
+    );
+    expect(snapshot["package.json"]?.dependencies?.constructs).toBe("10.3.0");
   });
 });
 

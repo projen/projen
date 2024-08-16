@@ -197,6 +197,17 @@ describe("deps", () => {
     });
     expect(pkgjson.bundledDependencies).toStrictEqual(["bar", "foo", "hey"]);
   });
+
+  test("can override projen devDep on constructs", () => {
+    // GIVEN
+    const project = new TestNodeProject({
+      devDeps: ["constructs@^10.3.0"],
+    });
+
+    // THEN
+    const pkgjson = packageJson(project);
+    expect(pkgjson.devDependencies.constructs).toStrictEqual("^10.3.0");
+  });
 });
 
 describe("deps upgrade", () => {
