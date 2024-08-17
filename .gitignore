@@ -62,6 +62,5 @@ tsconfig.json
 **/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
-.swc
 !/.projen/tree.json
 !/.projenrc.ts

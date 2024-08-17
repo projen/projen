@@ -1,14 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "@swc/core",
-      "type": "build"
-    },
-    {
-      "name": "@swc/jest",
-      "type": "build"
-    },
-    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
@@ -122,10 +114,6 @@
     {
       "name": "standard-version",
       "version": "^9",
-      "type": "build"
-    },
-    {
-      "name": "swc_mut_cjs_exports",
       "type": "build"
     },
     {

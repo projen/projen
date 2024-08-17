@@ -49,8 +49,6 @@
     "organization": true
   },
   "devDependencies": {
-    "@swc/core": "^1.7.11",
-    "@swc/jest": "^0.2.36",
     "@types/conventional-changelog-config-spec": "^2.1.5",
     "@types/glob": "^7.2.0",
     "@types/ini": "^1.3.34",
@@ -78,7 +76,6 @@
     "markmac": "^0.1.146",
     "prettier": "^2.8.8",
     "standard-version": "^9",
-    "swc_mut_cjs_exports": "^0.99.0",
     "ts-jest": "^29",
     "ts-node": "^10.9.2",
     "typescript": "5.4.x"
@@ -144,23 +141,6 @@
       "text-summary"
     ],
     "maxWorkers": "50%",
-    "transform": {
-      "^.+\\.[t]sx?$": [
-        "@swc/jest",
-        {
-          "jsc": {
-            "experimental": {
-              "plugins": [
-                [
-                  "swc_mut_cjs_exports",
-                  {}
-                ]
-              ]
-            }
-          }
-        }
-      ]
-    },
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
@@ -187,7 +167,15 @@
           "outputDirectory": "test-reports"
         }
       ]
-    ]
+    ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json"
+        }
+      ]
+    }
   },
   "types": "lib/index.d.ts",
   "stability": "experimental",

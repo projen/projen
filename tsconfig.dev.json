@@ -23,8 +23,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2019",
-    "skipLibCheck": true
+    "target": "ES2019"
   },
   "include": [
     "src/**/*.ts",
