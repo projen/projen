@@ -16,8 +16,10 @@ import {
   WindowsBuild,
   setupGitattributes,
 } from "./projenrc";
+import { setupJest } from "./projenrc/jest";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
+import { Transform } from "./src/javascript";
 
 const bootstrapScriptFile = "projen.js";
 
@@ -104,6 +106,7 @@ const project = new JsiiProject({
   tsconfigDev: {
     compilerOptions: {
       esModuleInterop: false,
+      skipLibCheck: true,
     },
     exclude: ["docusaurus/**/*"],
   },
@@ -126,6 +129,9 @@ const project = new JsiiProject({
       // starved of CPU time and sometimes hang or timeout. This should
       // help mitigate that.
       maxWorkers: "50%",
+      transform: {
+        "^.+\\.[t]sx?$": new Transform("@swc/jest"),
+      },
     },
   },
 
@@ -188,6 +194,8 @@ setupIntegTest(project);
 setupBundleTaskRunner(project);
 
 setupGitattributes(project);
+
+setupJest(project);
 
 new WindowsBuild(project);
 

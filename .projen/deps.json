@@ -1,6 +1,14 @@
 {
   "dependencies": [
     {
+      "name": "@swc/core",
+      "type": "build"
+    },
+    {
+      "name": "@swc/jest",
+      "type": "build"
+    },
+    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },

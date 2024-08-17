@@ -49,6 +49,8 @@
     "organization": true
   },
   "devDependencies": {
+    "@swc/core": "^1.7.11",
+    "@swc/jest": "^0.2.36",
     "@types/conventional-changelog-config-spec": "^2.1.5",
     "@types/glob": "^7.2.0",
     "@types/ini": "^1.3.34",
@@ -141,6 +143,9 @@
       "text-summary"
     ],
     "maxWorkers": "50%",
+    "transform": {
+      "^.+\\.[t]sx?$": "@swc/jest"
+    },
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
@@ -167,15 +172,7 @@
           "outputDirectory": "test-reports"
         }
       ]
-    ],
-    "transform": {
-      "^.+\\.[t]sx?$": [
-        "ts-jest",
-        {
-          "tsconfig": "tsconfig.dev.json"
-        }
-      ]
-    }
+    ]
   },
   "types": "lib/index.d.ts",
   "stability": "experimental",
