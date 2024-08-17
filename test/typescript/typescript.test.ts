@@ -301,7 +301,6 @@ describe("jestConfig", () => {
       expect(transformConfig).toBeDefined();
       expect(transformConfig[0]).toStrictEqual("ts-jest");
       expect(transformConfig[1]).toStrictEqual({
-        isolatedModules: true,
         tsconfig: "tsconfig.dev.json",
       });
     });
@@ -369,7 +368,6 @@ describe("jestConfig", () => {
           expect(transformConfig).toBeDefined();
           expect(transformConfig[0]).toStrictEqual("ts-jest");
           expect(transformConfig[1]).toStrictEqual({
-            isolatedModules: true,
             tsconfig: "tsconfig.dev.json",
           });
         },
