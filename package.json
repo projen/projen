@@ -78,6 +78,7 @@
     "markmac": "^0.1.146",
     "prettier": "^2.8.8",
     "standard-version": "^9",
+    "swc_mut_cjs_exports": "^0.99.0",
     "ts-jest": "^29",
     "ts-node": "^10.9.2",
     "typescript": "5.4.x"
@@ -144,7 +145,21 @@
     ],
     "maxWorkers": "50%",
     "transform": {
-      "^.+\\.[t]sx?$": "@swc/jest"
+      "^.+\\.[t]sx?$": [
+        "@swc/jest",
+        {
+          "jsc": {
+            "experimental": {
+              "plugins": [
+                [
+                  "swc_mut_cjs_exports",
+                  {}
+                ]
+              ]
+            }
+          }
+        }
+      ]
     },
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",

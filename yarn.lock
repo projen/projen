@@ -5243,6 +5243,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+swc_mut_cjs_exports@^0.99.0:
+  version "0.99.0"
+  resolved "https://registry.yarnpkg.com/swc_mut_cjs_exports/-/swc_mut_cjs_exports-0.99.0.tgz#0588cf47ccb21b115b13c573ab3513c5e2b08cd1"
+  integrity sha512-v3/AiUXrM/6ELCUo7zDHszpYYK0iFmGsnFSAUTsqGFkLH6rFq055L14Wg95agAhwDxO1M7e3nQbxsIUbFv4Khg==
+
 test-exclude@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/test-exclude/-/test-exclude-6.0.0.tgz#04a8698661d805ea6fa293b6cb9e63ac044ef15e"

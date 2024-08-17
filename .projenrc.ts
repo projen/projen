@@ -130,7 +130,13 @@ const project = new JsiiProject({
       // help mitigate that.
       maxWorkers: "50%",
       transform: {
-        "^.+\\.[t]sx?$": new Transform("@swc/jest"),
+        "^.+\\.[t]sx?$": new Transform("@swc/jest", {
+          jsc: {
+            experimental: {
+              plugins: [["swc_mut_cjs_exports", {}]],
+            },
+          },
+        }),
       },
     },
   },

@@ -125,6 +125,10 @@
       "type": "build"
     },
     {
+      "name": "swc_mut_cjs_exports",
+      "type": "build"
+    },
+    {
       "name": "ts-jest",
       "type": "build"
     },
