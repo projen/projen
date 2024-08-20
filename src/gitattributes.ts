@@ -56,9 +56,9 @@ export class GitAttributesFile extends FileBase {
 
     this.endOfLine = options?.endOfLine ?? EndOfLine.LF;
 
-    let endOfLineAttributes = [`text`, `eol=${this.endOfLine}`];
-    if (this.endOfLine == EndOfLine.AUTO) {
-      endOfLineAttributes = [`text=auto`];
+    let endOfLineAttributes = [`text=auto`];
+    if (this.endOfLine != EndOfLine.AUTO) {
+      endOfLineAttributes.push(`eol=${this.endOfLine}`);
     }
 
     this.addAttributes("*", ...endOfLineAttributes);
