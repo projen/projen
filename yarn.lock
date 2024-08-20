@@ -946,9 +946,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "22.4.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.4.0.tgz#c295fe1d6f5f58916cc61dbef8cf65b5b9b71de9"
-  integrity sha512-49AbMDwYUz7EXxKU/r7mXOsxwFr4BYbvB7tWYxVuLdb2ibd30ijjXINSMAHiEEZk5PCRBmW1gUeisn2VMKt3cQ==
+  version "22.4.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.4.1.tgz#9b595d292c65b94c20923159e2ce947731b6fdce"
+  integrity sha512-1tbpb9325+gPnKK0dMm+/LMriX0vKxf6RnB0SZUqfyVkQ4fMgUSySqhxE/y8Jvs4NyF1yHzTfG9KlnkIODxPKg==
   dependencies:
     undici-types "~6.19.2"
 
@@ -1308,9 +1308,9 @@ asap@^2.0.0:
   integrity sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==
 
 async@^3.1.0, async@^3.2.3:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/async/-/async-3.2.5.tgz#ebd52a8fdaf7a2289a24df399f8d8485c8a46b66"
-  integrity sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.6.tgz#1b0728e14929d51b85b449b7f06e27c1145e38ce"
+  integrity sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==
 
 available-typed-arrays@^1.0.7:
   version "1.0.7"
@@ -3694,9 +3694,9 @@ jsii-reflect@^1.102.0:
     yargs "^16.2.0"
 
 jsii-rosetta@5.4.x:
-  version "5.4.30"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.4.30.tgz#9f891a5116937b030f3859ff3074f6b1162e0328"
-  integrity sha512-DyJlVO1L7p37poEtja3ktr3zGv15kvnkVrJ+uPuv5+QOvSs2XTTzi2qsgt/l7N/6yXelQ2LDvSDzXfEY08UZjg==
+  version "5.4.31"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.4.31.tgz#8f2d248f867d5edc137e88c94982442c7d26eeff"
+  integrity sha512-k3NIqwgs6f8kjb7xmQvblqv3y0yEM6IHhsDRBGF+1N7jpjgKJ2pxC/fVsCz8sUsmHr30JIzW1w+dNXHqzlLnLg==
   dependencies:
     "@jsii/check-node" "1.102.0"
     "@jsii/spec" "^1.102.0"
@@ -5365,9 +5365,9 @@ typescript@5.4.x, typescript@~5.4:
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 typescript@next:
-  version "5.6.0-dev.20240818"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240818.tgz#21f262c6f9fe42635e61a9be32b643a0869b1333"
-  integrity sha512-37tFqLMcNttFSQJzA42xR61P+cEh8q4lJ+OyF1emk7M79J4Vzxuz3ZXjTOeNtSekaVVelfcKE4mEubac3yytTg==
+  version "5.6.0-dev.20240819"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.0-dev.20240819.tgz#6caff5ed8cd97cd01b5778833700e182c6fd5540"
+  integrity sha512-uNOMaNm8jBELjhuXZG5tSS6Pa6O/Wf89hawKkWaZcZvbkgkY2ykvNTNrkCP7QCQTSS3jwEVvd+pRhxJPxUeG4g==
 
 uglify-js@^3.1.4:
   version "3.19.2"
@@ -5385,9 +5385,9 @@ unbox-primitive@^1.0.2:
     which-boxed-primitive "^1.0.2"
 
 undici-types@~6.19.2:
-  version "6.19.6"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.6.tgz#e218c3df0987f4c0e0008ca00d6b6472d9b89b36"
-  integrity sha512-e/vggGopEfTKSvj4ihnOLTsqhrKRN3LeO6qSN/GxohhuRv8qH9bNQ4B8W7e/vFL+0XTnmHPB4/kegunZGA4Org==
+  version "6.19.8"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.8.tgz#35111c9d1437ab83a7cdc0abae2f26d88eda0a02"
+  integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
 
 universalify@^0.1.0:
   version "0.1.2"
