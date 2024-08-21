@@ -20,6 +20,26 @@ describe("GitAttributesFile", () => {
     });
   });
 
+  test("does not at the endOfLine configuration when disabled", () => {
+    withProjectDir((outdir) => {
+      // The TestProject already contains a .gitattributes file
+      const project = new TestProject({
+        outdir,
+        gitOptions: {
+          endOfLine: EndOfLine.NONE,
+        },
+      });
+
+      const snap = synthSnapshot(project);
+
+      const lines: string[] = snap[".gitattributes"]
+        .split("\n")
+        .map((line: string) => line.trim());
+
+      expect(lines).not.toContain("* text=auto eol=lf");
+    });
+  });
+
   test("applies the endOfLine option when defined", () => {
     withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file

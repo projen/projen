@@ -10442,7 +10442,7 @@ public readonly endOfLine: EndOfLine;
 
 The default end of line character for text files.
 
-It's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it will avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority. It can be overriden in a later line.
+endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line. Can be disabled by setting explicitly: `{ endOfLine: EndOfLine.NONE }`.
 
 ---
 
@@ -10477,6 +10477,8 @@ public readonly endOfLine: EndOfLine;
 - *Default:* EndOfLine.LF
 
 The default end of line character for text files.
+
+endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line. Can be disabled by setting explicitly: `{ endOfLine: EndOfLine.NONE }`.
 
 ---
 
@@ -15970,6 +15972,7 @@ The end of line characters supported by git.
 | <code><a href="#projen.EndOfLine.AUTO">AUTO</a></code> | Maintain existing (mixed values within one file are normalised by looking at what's used after the first line). |
 | <code><a href="#projen.EndOfLine.CRLF">CRLF</a></code> | Carriage Return + Line Feed characters (\r\n), common on Windows. |
 | <code><a href="#projen.EndOfLine.LF">LF</a></code> | Line Feed only (\n), common on Linux and macOS as well as inside git repos. |
+| <code><a href="#projen.EndOfLine.NONE">NONE</a></code> | Disable and do not configure the end of line character. |
 
 ---
 
@@ -15990,6 +15993,13 @@ Carriage Return + Line Feed characters (\r\n), common on Windows.
 ##### `LF` <a name="LF" id="projen.EndOfLine.LF"></a>
 
 Line Feed only (\n), common on Linux and macOS as well as inside git repos.
+
+---
+
+
+##### `NONE` <a name="NONE" id="projen.EndOfLine.NONE"></a>
+
+Disable and do not configure the end of line character.
 
 ---
 

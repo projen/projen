@@ -20,6 +20,11 @@ export enum EndOfLine {
    * Line Feed only (\n), common on Linux and macOS as well as inside git repos
    */
   LF = "lf",
+
+  /**
+   * Disable and do not configure the end of line character
+   */
+  NONE = "none",
 }
 
 /**
@@ -29,7 +34,7 @@ export interface GitAttributesFileOptions {
   /**
    * The default end of line character for text files.
    *
-   * It's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it will avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority. It can be overriden in a later line.
+   * endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line. Can be disabled by setting explicitly: `{ endOfLine: EndOfLine.NONE }`.
    *
    * @default EndOfLine.LF
    */
@@ -56,12 +61,15 @@ export class GitAttributesFile extends FileBase {
 
     this.endOfLine = options?.endOfLine ?? EndOfLine.LF;
 
-    let endOfLineAttributes = [`text=auto`];
-    if (this.endOfLine != EndOfLine.AUTO) {
-      endOfLineAttributes.push(`eol=${this.endOfLine}`);
-    }
+    if (this.endOfLine != EndOfLine.NONE) {
+      let endOfLineAttributes = [`text=auto`];
+      if (this.endOfLine != EndOfLine.AUTO) {
+        endOfLineAttributes.push(`eol=${this.endOfLine}`);
+      }
 
-    this.addAttributes("*", ...endOfLineAttributes);
+      // We are setting a default end of line for all text files in the repository
+      this.addAttributes("*", ...endOfLineAttributes);
+    }
   }
 
   /**
