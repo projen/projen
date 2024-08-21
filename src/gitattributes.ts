@@ -63,11 +63,13 @@ export class GitAttributesFile extends FileBase {
 
     if (this.endOfLine != EndOfLine.NONE) {
       let endOfLineAttributes = [`text=auto`];
+
       if (this.endOfLine != EndOfLine.AUTO) {
         endOfLineAttributes.push(`eol=${this.endOfLine}`);
       }
 
-      // We are setting a default end of line for all text files in the repository
+      // Setting a default end of line for all text files in the repository
+      // This line should be the first one in order to use it as a default for text files and allow for overriding in later lines
       this.addAttributes("*", ...endOfLineAttributes);
     }
   }
