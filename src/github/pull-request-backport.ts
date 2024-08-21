@@ -104,6 +104,7 @@ export class PullRequestBackport extends Component {
 
     const backportBranchNamePrefix =
       options.backportBranchNamePrefix ?? "backport/";
+    const labelPrefix = options.labelPrefix ?? "backport-to-";
 
     // Configuration
     this.file = new JsonFile(this, ".backportrc.json", {
@@ -127,7 +128,7 @@ export class PullRequestBackport extends Component {
     );
     this.workflow.on({
       pullRequestTarget: {
-        types: ["labeled", "closed"],
+        types: ["labeled", "unlabeled", "closed"],
       },
     });
 
@@ -141,21 +142,40 @@ export class PullRequestBackport extends Component {
       ? `(${labelConditions.join(" && ")})`
       : `${branchCondition})`;
 
+    const checkStep = "check_labels";
+    const checkOutput = "matched";
+    const labelPrefixEscaped = labelPrefix.replace(/"/g, '\\"');
+
     this.workflow.addJob("backport", {
       name: "Backport PR",
       runsOn: ["ubuntu-latest"],
       permissions: {},
+      // Only ever run this job if the PR is merged and not a backport PR itself
+      if: `github.event.pull_request.merged == true && !${isBackportPr}`,
       steps: [
         ...workflowEngine.projenCredentials.setupSteps,
+        // We need a custom step to check if the PR has any of the labels that indicate that the PR should be backported.
+        // This is not currently possible with GH Actions expression by itself, so we use a bash script.
+        {
+          id: checkStep,
+          name: "Check for backport labels",
+          run: [
+            "labels='${{ toJSON(github.event.pull_request.labels.*.name) }}'",
+            `matched=$(echo $labels | jq '.|map(select(startswith("${labelPrefixEscaped}"))) | length')`,
+            `echo "${checkOutput}=$matched"`,
+            `echo "${checkOutput}=$matched" >> $GITHUB_OUTPUT`,
+          ].join("\n"),
+        },
         {
           name: "Backport Action",
           uses: "sqren/backport-github-action@v9.5.1",
-          // only run when the PR is merged successfully and not on the backport branches itself
-          // this is to prevent workflow failures when labeling a still open PR
-          if: `github.event.pull_request.merged == true && !${isBackportPr}`,
+          // only run this step if we have found matching labels in the previous step
+          // this is to prevent workflow failures because the action fails when pre-conditions are not met
+          // and causes any PR to be marked with a red X, leading to error blindness.
+          if: `fromJSON(steps.${checkStep}.outputs.${checkOutput}) > 0`,
           with: {
             github_token: workflowEngine.projenCredentials.tokenRef,
-            auto_backport_label_prefix: options.labelPrefix ?? "backport-to-",
+            auto_backport_label_prefix: labelPrefix,
           },
         },
       ],
