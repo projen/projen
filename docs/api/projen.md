@@ -10462,7 +10462,21 @@ const gitOptions: GitOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.GitOptions.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
 | <code><a href="#projen.GitOptions.property.lfsPatterns">lfsPatterns</a></code> | <code>string[]</code> | File patterns to mark as stored in Git LFS. |
+
+---
+
+##### `endOfLine`<sup>Optional</sup> <a name="endOfLine" id="projen.GitOptions.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+- *Default:* EndOfLine.LF
+
+The default end of line character for text files.
 
 ---
 
