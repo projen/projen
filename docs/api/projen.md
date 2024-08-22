@@ -1177,18 +1177,25 @@ Assign attributes to file names in a git repository.
 ```typescript
 import { GitAttributesFile } from 'projen'
 
-new GitAttributesFile(scope: IConstruct)
+new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.GitAttributesFile.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.GitAttributesFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.GitAttributesFileOptions">GitAttributesFileOptions</a></code> | *No description.* |
 
 ---
 
 ##### `scope`<sup>Required</sup> <a name="scope" id="projen.GitAttributesFile.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.GitAttributesFile.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.GitAttributesFileOptions">GitAttributesFileOptions</a>
 
 ---
 
@@ -1346,6 +1353,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.GitAttributesFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
 | <code><a href="#projen.GitAttributesFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
 | <code><a href="#projen.GitAttributesFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.GitAttributesFile.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
 | <code><a href="#projen.GitAttributesFile.property.hasLfsPatterns">hasLfsPatterns</a></code> | <code>boolean</code> | Whether the current gitattributes file has any LFS patterns. |
 
 ---
@@ -1447,6 +1455,18 @@ public readonly readonly: boolean;
 - *Type:* boolean
 
 Indicates if the file should be read-only or read-write.
+
+---
+
+##### `endOfLine`<sup>Required</sup> <a name="endOfLine" id="projen.GitAttributesFile.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+
+The default end of line character for text files.
 
 ---
 
@@ -10391,6 +10411,41 @@ Whether the generated file should be readonly.
 
 ---
 
+### GitAttributesFileOptions <a name="GitAttributesFileOptions" id="projen.GitAttributesFileOptions"></a>
+
+Options for `GitAttributesFile`.
+
+#### Initializer <a name="Initializer" id="projen.GitAttributesFileOptions.Initializer"></a>
+
+```typescript
+import { GitAttributesFileOptions } from 'projen'
+
+const gitAttributesFileOptions: GitAttributesFileOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.GitAttributesFileOptions.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
+
+---
+
+##### `endOfLine`<sup>Optional</sup> <a name="endOfLine" id="projen.GitAttributesFileOptions.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+- *Default:* EndOfLine.LF
+
+The default end of line character for text files.
+
+endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line. Can be disabled by setting explicitly: `{ endOfLine: EndOfLine.NONE }`.
+
+---
+
 ### GitOptions <a name="GitOptions" id="projen.GitOptions"></a>
 
 Git configuration options.
@@ -10407,7 +10462,26 @@ const gitOptions: GitOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.GitOptions.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
 | <code><a href="#projen.GitOptions.property.lfsPatterns">lfsPatterns</a></code> | <code>string[]</code> | File patterns to mark as stored in Git LFS. |
+
+---
+
+##### `endOfLine`<sup>Optional</sup> <a name="endOfLine" id="projen.GitOptions.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+- *Default:* EndOfLine.LF
+
+The default end of line character for text files.
+
+endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations.
+Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters.
+It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line.
+Can be disabled by setting: `endOfLine: EndOfLine.NONE`.
 
 ---
 
@@ -15886,6 +15960,49 @@ TCP protocol.
 ##### `UDP` <a name="UDP" id="projen.DockerComposeProtocol.UDP"></a>
 
 UDP protocol.
+
+---
+
+
+### EndOfLine <a name="EndOfLine" id="projen.EndOfLine"></a>
+
+The end of line characters supported by git.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.EndOfLine.AUTO">AUTO</a></code> | Maintain existing (mixed values within one file are normalised by looking at what's used after the first line). |
+| <code><a href="#projen.EndOfLine.CRLF">CRLF</a></code> | Carriage Return + Line Feed characters (\r\n), common on Windows. |
+| <code><a href="#projen.EndOfLine.LF">LF</a></code> | Line Feed only (\n), common on Linux and macOS as well as inside git repos. |
+| <code><a href="#projen.EndOfLine.NONE">NONE</a></code> | Disable and do not configure the end of line character. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.EndOfLine.AUTO"></a>
+
+Maintain existing (mixed values within one file are normalised by looking at what's used after the first line).
+
+---
+
+
+##### `CRLF` <a name="CRLF" id="projen.EndOfLine.CRLF"></a>
+
+Carriage Return + Line Feed characters (\r\n), common on Windows.
+
+---
+
+
+##### `LF` <a name="LF" id="projen.EndOfLine.LF"></a>
+
+Line Feed only (\n), common on Linux and macOS as well as inside git repos.
+
+---
+
+
+##### `NONE` <a name="NONE" id="projen.EndOfLine.NONE"></a>
+
+Disable and do not configure the end of line character.
 
 ---
 
