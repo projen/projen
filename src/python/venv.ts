@@ -45,13 +45,17 @@ export class Venv extends Component implements IPythonEnv {
 
     this.project.addGitIgnore(`/${this.envdir}`);
 
+    const pythonDir = process.platform === "win32" ? "Scripts" : "bin";
+    const venvPathExpression = `\${process.cwd()}/${this.envdir}`;
+    const pythonDirExpression = `${venvPathExpression}/${pythonDir}`;
+
     this.project.tasks.addEnvironment(
       "VIRTUAL_ENV",
-      `$(node -p "\`\${process.cwd()}/${this.envdir}\`")`
+      `$(node -p "\`${venvPathExpression}\`")`
     );
     this.project.tasks.addEnvironment(
       "PATH",
-      `$(node -p "\`\${process.cwd()}/.env/Scripts;\${process.env.PATH}\`")`
+      `$(node -p "\`${pythonDirExpression}}${path.delimiter}\${process.env.PATH}\`")`
     );
   }
 
