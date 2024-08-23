@@ -162,19 +162,31 @@ export interface JsiiDotNetTarget extends NugetPublishOptions {
  */
 export interface JsiiGoTarget extends GoPublishOptions {
   /**
-   * The name of the target go module.
+   * The name of the target repository in which this module will be published (e.g. github.com/owner/repo).
+   *
+   * The module itself will always be published under a subdirectory named according
+   * to the `packageName` of the module (e.g. github.com/foo/bar/pkg).
    *
    * @example github.com/owner/repo
-   * @example github.com/owner/repo/subdir
    */
   readonly moduleName: string;
 
   /**
-   * The name of the go package.
+   * The name of the Go package name.
    *
-   * @default - derived from the module name
+   * If not specified, package name will be derived from the JavaScript module name
+   * by removing non-alphanumeric characters (e.g. @projen/foo-bar will be projenfoobar).
+   *
+   * @default - derived from the JavaScript module name
    */
   readonly packageName?: string;
+
+  /**
+   * A suffix appended at the end of the module version (e.g `"-devprefix"`).
+   *
+   * @default - the prerelease string if used, otherwise nothing
+   */
+  readonly versionSuffix?: string;
 }
 
 /**
@@ -393,9 +405,15 @@ export class JsiiProject extends TypeScriptProject {
 
     const golang = options.publishToGo;
     if (golang) {
+      const defaultSuffix = options.prerelease
+        ? `-${options.prerelease}`
+        : undefined;
+      const versionSuffix = golang.versionSuffix ?? defaultSuffix;
+
       targets.go = {
         moduleName: golang.moduleName,
         packageName: golang.packageName,
+        versionSuffix,
       };
 
       const task = this.addPackagingTask("go");

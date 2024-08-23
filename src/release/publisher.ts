@@ -616,7 +616,6 @@ export class Publisher extends Component {
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
-          GITHUB_REPO: options.githubRepo,
           GIT_BRANCH: options.gitBranch,
           GIT_USER_NAME:
             options.gitUserName ?? DEFAULT_GITHUB_ACTIONS_USER.name,
@@ -1194,13 +1193,6 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * @default false
    */
   readonly githubUseSsh?: boolean;
-
-  /**
-   * GitHub repository to push to.
-   *
-   * @default - derived from `moduleName`
-   */
-  readonly githubRepo?: string;
 
   /**
    * Branch to push to.

@@ -328,12 +328,12 @@ describe("publish to go", () => {
       name: "testproject",
       publishToGo: {
         moduleName: "github.com/foo/bar",
-
+        packageName: "baz",
+        versionSuffix: "-dev",
         gitBranch: "custom-branch",
         gitCommitMessage: "custom commit message",
         gitUserEmail: "custom@email.com",
         gitUserName: "custom user",
-        githubRepo: "github.com/foo/bar",
         githubTokenSecret: "CUSTOM_SECRET",
       },
       defaultReleaseBranch: "master",
@@ -343,12 +343,41 @@ describe("publish to go", () => {
     const output = synthSnapshot(project);
     expect(output["package.json"].jsii.targets.go).toStrictEqual({
       moduleName: "github.com/foo/bar",
+      packageName: "baz",
+      versionSuffix: "-dev",
     });
     expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
     expect(output["package.json"].jsii.excludeTypescript).toStrictEqual([
       "src/**/test/*.ts",
       "src/**/__tests__/*.ts",
     ]);
+  });
+
+  test("prerelease", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      prerelease: "alpha",
+      publishToGo: {
+        moduleName: "github.com/foo/bar",
+      },
+      defaultReleaseBranch: "master",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    const targets = output["package.json"].jsii.targets;
+    expect(targets).toStrictEqual({
+      go: {
+        moduleName: "github.com/foo/bar",
+        versionSuffix: "-alpha",
+      },
+    });
+
+    expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
   });
 });
 

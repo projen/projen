@@ -1263,7 +1263,6 @@ const goPublishOptions: release.GoPublishOptions = { ... }
 | <code><a href="#projen.release.GoPublishOptions.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.release.GoPublishOptions.property.gitCommitMessage">gitCommitMessage</a></code> | <code>string</code> | The commit message. |
 | <code><a href="#projen.release.GoPublishOptions.property.githubDeployKeySecret">githubDeployKeySecret</a></code> | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository. |
-| <code><a href="#projen.release.GoPublishOptions.property.githubRepo">githubRepo</a></code> | <code>string</code> | GitHub repository to push to. |
 | <code><a href="#projen.release.GoPublishOptions.property.githubTokenSecret">githubTokenSecret</a></code> | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. |
 | <code><a href="#projen.release.GoPublishOptions.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
 | <code><a href="#projen.release.GoPublishOptions.property.gitUserEmail">gitUserEmail</a></code> | <code>string</code> | The email to use in the release git commit. |
@@ -1360,19 +1359,6 @@ Ignored if `githubUseSsh` is `false`.
 
 ---
 
-##### `githubRepo`<sup>Optional</sup> <a name="githubRepo" id="projen.release.GoPublishOptions.property.githubRepo"></a>
-
-```typescript
-public readonly githubRepo: string;
-```
-
-- *Type:* string
-- *Default:* derived from `moduleName`
-
-GitHub repository to push to.
-
----
-
 ##### `githubTokenSecret`<sup>Optional</sup> <a name="githubTokenSecret" id="projen.release.GoPublishOptions.property.githubTokenSecret"></a>
 
 ```typescript
@@ -1447,7 +1433,6 @@ const jsiiReleaseGo: release.JsiiReleaseGo = { ... }
 | <code><a href="#projen.release.JsiiReleaseGo.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.gitCommitMessage">gitCommitMessage</a></code> | <code>string</code> | The commit message. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.githubDeployKeySecret">githubDeployKeySecret</a></code> | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository. |
-| <code><a href="#projen.release.JsiiReleaseGo.property.githubRepo">githubRepo</a></code> | <code>string</code> | GitHub repository to push to. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.githubTokenSecret">githubTokenSecret</a></code> | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.gitUserEmail">gitUserEmail</a></code> | <code>string</code> | The email to use in the release git commit. |
@@ -1553,21 +1538,6 @@ public readonly githubDeployKeySecret: string;
 The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.
 
 Ignored if `githubUseSsh` is `false`.
-
----
-
-##### ~~`githubRepo`~~<sup>Optional</sup> <a name="githubRepo" id="projen.release.JsiiReleaseGo.property.githubRepo"></a>
-
-- *Deprecated:* Use `GoPublishOptions` instead.
-
-```typescript
-public readonly githubRepo: string;
-```
-
-- *Type:* string
-- *Default:* derived from `moduleName`
-
-GitHub repository to push to.
 
 ---
 
