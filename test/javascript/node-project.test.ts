@@ -145,7 +145,7 @@ describe("deps", () => {
       "jest-junit",
       "projen",
       "constructs",
-      "standard-version",
+      "commit-and-tag-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.devDependencies).toStrictEqual({});
@@ -170,7 +170,7 @@ describe("deps", () => {
       "jest-junit",
       "projen",
       "constructs",
-      "standard-version",
+      "commit-and-tag-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.peerDependencies).toStrictEqual({ ccc: "^2" });
@@ -934,7 +934,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "constructs",
     "jest-junit",
-    "standard-version",
+    "commit-and-tag-version",
     "projen",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
@@ -960,7 +960,7 @@ test("renovatebot ignored dependency overrides", () => {
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "constructs",
     "jest-junit",
-    "standard-version",
+    "commit-and-tag-version",
     "axios",
     "some-overriden-package",
     "projen",

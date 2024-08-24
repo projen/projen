@@ -6627,7 +6627,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.web.NextJsProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -7952,7 +7952,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 
@@ -8646,7 +8646,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -9987,7 +9987,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 
@@ -11020,7 +11020,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.web.ReactProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.web.ReactProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -12318,7 +12318,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 
@@ -13207,7 +13207,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -14521,7 +14521,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 

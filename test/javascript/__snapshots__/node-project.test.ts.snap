@@ -235,7 +235,6 @@ exports[`node project can be ejected 1`] = `
   "devDependencies": {
     "jest": "*",
     "jest-junit": "^15",
-    "standard-version": "^9",
     "test": "*",
   },
   "jest": {

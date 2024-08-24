@@ -235,6 +235,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -366,6 +367,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -619,6 +621,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -750,6 +753,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -1010,6 +1014,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -1137,6 +1142,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -1358,6 +1364,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -1472,6 +1479,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -1824,6 +1832,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -2002,6 +2011,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -2342,6 +2352,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -2510,6 +2521,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -2705,6 +2717,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -2798,6 +2811,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -3215,6 +3229,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -3365,6 +3380,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -3496,6 +3512,7 @@ exports[`Single Project majorVersion can be 0 2`] = `
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -3590,6 +3607,7 @@ exports[`Single Project majorVersion can be 0 2`] = `
       "description": "Restores version to 0.0.0",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -3639,6 +3657,7 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -3733,6 +3752,7 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
       "description": "Restores version to 0.0.0",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -3923,6 +3943,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -4016,6 +4037,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -4149,6 +4171,7 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -4286,6 +4309,7 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
       "description": "Restores version to 0.0.0",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -4557,6 +4581,7 @@ exports[`Single Project publisher (defaults) 2`] = `
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "version.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -4737,6 +4762,7 @@ exports[`Single Project publisher (defaults) 2`] = `
       "description": "Restores version to 0.0.0",
       "env": {
         "BUMPFILE": "dist/version.txt",
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "version.json",
         "RELEASETAG": "dist/releasetag.txt",
@@ -5007,6 +5033,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -5145,6 +5172,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -5497,6 +5525,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -5676,6 +5705,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -5868,6 +5898,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -5962,6 +5993,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -6154,6 +6186,7 @@ node_modules/
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -6249,6 +6282,7 @@ node_modules/
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",

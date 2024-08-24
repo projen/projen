@@ -8034,19 +8034,19 @@ Indicates if empty objects and arrays are omitted from the output object.
 ```typescript
 import { Version } from 'projen'
 
-new Version(project: Project, options: VersionOptions)
+new Version(scope: IConstruct, options: VersionOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.Version.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.Version.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.Version.Initializer.parameter.options">options</a></code> | <code><a href="#projen.VersionOptions">VersionOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.Version.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.Version.Initializer.parameter.scope"></a>
 
-- *Type:* <a href="#projen.Project">Project</a>
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -8164,6 +8164,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.Version.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.Version.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.Version.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The package used to bump package versions, as a dependency string. |
 | <code><a href="#projen.Version.property.bumpTask">bumpTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Version.property.changelogFileName">changelogFileName</a></code> | <code>string</code> | The name of the changelog file (under `artifactsDirectory`). |
 | <code><a href="#projen.Version.property.releaseTagFileName">releaseTagFileName</a></code> | <code>string</code> | The name of the file that contains the release tag (under `artifactsDirectory`). |
@@ -8191,6 +8192,20 @@ public readonly project: Project;
 ```
 
 - *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `bumpPackage`<sup>Required</sup> <a name="bumpPackage" id="projen.Version.property.bumpPackage"></a>
+
+```typescript
+public readonly bumpPackage: string;
+```
+
+- *Type:* string
+
+The package used to bump package versions, as a dependency string.
+
+This is a `commit-and-tag-version` compatible package.
 
 ---
 
@@ -8258,7 +8273,9 @@ The name of the file that contains the version (under `artifactsDirectory`).
 
 ---
 
-##### `STANDARD_VERSION`<sup>Required</sup> <a name="STANDARD_VERSION" id="projen.Version.property.STANDARD_VERSION"></a>
+##### ~~`STANDARD_VERSION`~~<sup>Required</sup> <a name="STANDARD_VERSION" id="projen.Version.property.STANDARD_VERSION"></a>
+
+- *Deprecated:* use `Version.package` on the component instance instead
 
 ```typescript
 public readonly STANDARD_VERSION: string;
@@ -13499,6 +13516,7 @@ const versionOptions: VersionOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.VersionOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted. |
 | <code><a href="#projen.VersionOptions.property.versionInputFile">versionInputFile</a></code> | <code>string</code> | A name of a .json file to set the `version` field in after a bump. |
+| <code><a href="#projen.VersionOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
 | <code><a href="#projen.VersionOptions.property.releasableCommits">releasableCommits</a></code> | <code><a href="#projen.ReleasableCommits">ReleasableCommits</a></code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.VersionOptions.property.tagPrefix">tagPrefix</a></code> | <code>string</code> | The tag prefix corresponding to this version. |
 | <code><a href="#projen.VersionOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration for versionrc file used by standard-release. |
@@ -13535,6 +13553,21 @@ A name of a .json file to set the `version` field in after a bump.
 "package.json"
 ```
 
+
+##### `bumpPackage`<sup>Optional</sup> <a name="bumpPackage" id="projen.VersionOptions.property.bumpPackage"></a>
+
+```typescript
+public readonly bumpPackage: string;
+```
+
+- *Type:* string
+- *Default:* "commit-and-tag-version@12"
+
+The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+
+This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
 
 ##### `releasableCommits`<sup>Optional</sup> <a name="releasableCommits" id="projen.VersionOptions.property.releasableCommits"></a>
 

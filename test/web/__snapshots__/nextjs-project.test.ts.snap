@@ -403,11 +403,6 @@ permissions-backup.acl
         "type": "build",
       },
       {
-        "name": "standard-version",
-        "type": "build",
-        "version": "^9",
-      },
-      {
         "name": "autoprefixer",
         "type": "runtime",
       },
@@ -488,6 +483,7 @@ permissions-backup.acl
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -640,6 +636,7 @@ permissions-backup.acl
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -666,7 +663,7 @@ permissions-backup.acl
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade constructs projen standard-version autoprefixer next postcss react react-dom tailwindcss",
+            "exec": "yarn upgrade constructs projen autoprefixer next postcss react react-dom tailwindcss",
           },
           {
             "exec": "npx projen",
@@ -901,7 +898,6 @@ permissions-backup.acl
     "devDependencies": {
       "constructs": "^10.0.0",
       "projen": "*",
-      "standard-version": "^9",
     },
     "engines": {
       "node": ">= 16.14.0",
