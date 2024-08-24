@@ -2063,6 +2063,171 @@ Just update snapshot (without deployment).
 ---
 
 
+### JsiiDocgen <a name="JsiiDocgen" id="projen.cdk.JsiiDocgen"></a>
+
+Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
+
+#### Initializers <a name="Initializers" id="projen.cdk.JsiiDocgen.Initializer"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+new cdk.JsiiDocgen(scope: IConstruct, options?: JsiiDocgenOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.options">options</a></code> | <code><a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.cdk.JsiiDocgen.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.cdk.JsiiDocgen.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk.JsiiDocgen.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.cdk.JsiiDocgen.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk.JsiiDocgen.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.cdk.JsiiDocgen.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.cdk.JsiiDocgen.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.cdk.JsiiDocgen.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.cdk.JsiiDocgen.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.cdk.JsiiDocgen.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.cdk.JsiiDocgen.isConstruct"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiDocgen.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.cdk.JsiiDocgen.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.cdk.JsiiDocgen.isComponent"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiDocgen.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.cdk.JsiiDocgen.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.cdk.JsiiDocgen.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.cdk.JsiiDocgen.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.cdk.JsiiDocgen.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+
 ### JsiiProject <a name="JsiiProject" id="projen.cdk.JsiiProject"></a>
 
 Multi-language jsii library project.
@@ -6267,6 +6432,7 @@ const jsiiDocgenOptions: cdk.JsiiDocgenOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiDocgenOptions.property.filePath">filePath</a></code> | <code>string</code> | File path for generated docs. |
+| <code><a href="#projen.cdk.JsiiDocgenOptions.property.version">version</a></code> | <code>string</code> | A semver versions string to install a specific version of jsii-docgen. |
 
 ---
 
@@ -6280,6 +6446,19 @@ public readonly filePath: string;
 - *Default:* "API.md"
 
 File path for generated docs.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.cdk.JsiiDocgenOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* '*'
+
+A semver versions string to install a specific version of jsii-docgen.
 
 ---
 
@@ -9470,42 +9649,6 @@ public readonly module: string;
 - *Type:* string
 
 ---
-
-## Classes <a name="Classes" id="Classes"></a>
-
-### JsiiDocgen <a name="JsiiDocgen" id="projen.cdk.JsiiDocgen"></a>
-
-Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
-
-#### Initializers <a name="Initializers" id="projen.cdk.JsiiDocgen.Initializer"></a>
-
-```typescript
-import { cdk } from 'projen'
-
-new cdk.JsiiDocgen(project: JsiiProject, options?: JsiiDocgenOptions)
-```
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.project">project</a></code> | <code><a href="#projen.cdk.JsiiProject">JsiiProject</a></code> | *No description.* |
-| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.options">options</a></code> | <code><a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a></code> | *No description.* |
-
----
-
-##### `project`<sup>Required</sup> <a name="project" id="projen.cdk.JsiiDocgen.Initializer.parameter.project"></a>
-
-- *Type:* <a href="#projen.cdk.JsiiProject">JsiiProject</a>
-
----
-
-##### `options`<sup>Optional</sup> <a name="options" id="projen.cdk.JsiiDocgen.Initializer.parameter.options"></a>
-
-- *Type:* <a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a>
-
----
-
-
-
 
 
 

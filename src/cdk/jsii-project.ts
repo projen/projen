@@ -437,7 +437,13 @@ export class JsiiProject extends TypeScriptProject {
     this.npmignore?.include(".jsii");
 
     if (options.docgen ?? true) {
-      new JsiiDocgen(this, { filePath: options.docgenFilePath });
+      // If jsiiVersion is "*", don't specify anything so the user can manage.
+      // Otherwise use a version that is compatible with all supported jsii releases.
+      const docgenVersion = options.jsiiVersion === "*" ? "*" : "^10.5.0";
+      new JsiiDocgen(this, {
+        version: docgenVersion,
+        filePath: options.docgenFilePath,
+      });
     }
 
     // jsii updates .npmignore, so we make it writable
