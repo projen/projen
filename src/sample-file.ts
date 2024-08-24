@@ -22,7 +22,7 @@ export interface SampleFileOptions {
    * subdirectory of `src`, sample files should outside of the `src` directory,
    * otherwise they may not be copied. For example:
    * ```
-   * new SampleFile(this, 'assets/icon.png', { source: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
+   * new SampleFile(this, 'assets/icon.png', { sourcePath: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
    * ```
    */
   readonly sourcePath?: string;
