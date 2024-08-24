@@ -932,9 +932,9 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "commit-and-tag-version",
     "constructs",
     "jest-junit",
-    "commit-and-tag-version",
     "projen",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
@@ -958,9 +958,9 @@ test("renovatebot ignored dependency overrides", () => {
   //       as JSON object path delimiters.
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "commit-and-tag-version",
     "constructs",
     "jest-junit",
-    "commit-and-tag-version",
     "axios",
     "some-overriden-package",
     "projen",

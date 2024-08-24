@@ -122,9 +122,9 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
     "group:monorepos",
   ],
   "ignoreDeps": [
+    "commit-and-tag-version",
     "constructs",
     "jest-junit",
-    "standard-version",
     "projen",
   ],
   "packageRules": [
@@ -385,9 +385,9 @@ exports[`renovatebot ignored dependency overrides 1`] = `
     "group:monorepos",
   ],
   "ignoreDeps": [
+    "commit-and-tag-version",
     "constructs",
     "jest-junit",
-    "standard-version",
     "axios",
     "some-overriden-package",
     "projen",
