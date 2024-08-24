@@ -388,6 +388,11 @@ permissions-backup.acl
         "type": "build",
       },
       {
+        "name": "commit-and-tag-version",
+        "type": "build",
+        "version": "^12",
+      },
+      {
         "name": "constructs",
         "type": "build",
         "version": "^10.0.0",
@@ -626,7 +631,7 @@ permissions-backup.acl
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event constructs projen react-scripts react react-dom web-vitals",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event commit-and-tag-version constructs projen react-scripts react react-dom web-vitals",
           },
           {
             "exec": "npx projen",
@@ -865,6 +870,7 @@ permissions-backup.acl
       "@testing-library/jest-dom": "*",
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
+      "commit-and-tag-version": "^12",
       "constructs": "^10.0.0",
       "projen": "*",
       "react-scripts": "^5",
