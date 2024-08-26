@@ -6432,7 +6432,7 @@ const jsiiDocgenOptions: cdk.JsiiDocgenOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiDocgenOptions.property.filePath">filePath</a></code> | <code>string</code> | File path for generated docs. |
-| <code><a href="#projen.cdk.JsiiDocgenOptions.property.version">version</a></code> | <code>string</code> | A semver versions string to install a specific version of jsii-docgen. |
+| <code><a href="#projen.cdk.JsiiDocgenOptions.property.version">version</a></code> | <code>string</code> | A semver version string to install a specific version of jsii-docgen. |
 
 ---
 
@@ -6458,7 +6458,7 @@ public readonly version: string;
 - *Type:* string
 - *Default:* '*'
 
-A semver versions string to install a specific version of jsii-docgen.
+A semver version string to install a specific version of jsii-docgen.
 
 ---
 

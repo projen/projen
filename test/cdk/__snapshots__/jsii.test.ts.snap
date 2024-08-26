@@ -774,7 +774,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jsii-docgen",
         "type": "build",
-        "version": "^10.4.0",
+        "version": "^10.5.0",
       },
       {
         "name": "jsii-pacmak",
@@ -1364,7 +1364,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jest-junit": "^15",
       "jsii": "1.x",
       "jsii-diff": "*",
-      "jsii-docgen": "^10.4.0",
+      "jsii-docgen": "^10.5.0",
       "jsii-pacmak": "*",
       "jsii-rosetta": "1.x",
       "projen": "*",
