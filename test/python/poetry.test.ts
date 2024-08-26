@@ -1,6 +1,5 @@
 import * as TOML from "@iarna/toml";
 import { TestPythonProject } from "./util";
-import { python } from "../../src";
 import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
 
