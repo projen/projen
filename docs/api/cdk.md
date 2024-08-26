@@ -6631,7 +6631,7 @@ public readonly versionSuffix: string;
 ```
 
 - *Type:* string
-- *Default:* the prerelease string if used, otherwise nothing
+- *Default:* none
 
 A suffix appended at the end of the module version (e.g `"-devprefix"`).
 
