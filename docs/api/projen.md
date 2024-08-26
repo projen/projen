@@ -8275,7 +8275,7 @@ The name of the file that contains the version (under `artifactsDirectory`).
 
 ##### ~~`STANDARD_VERSION`~~<sup>Required</sup> <a name="STANDARD_VERSION" id="projen.Version.property.STANDARD_VERSION"></a>
 
-- *Deprecated:* use `Version.bumPackage` on the component instance instead
+- *Deprecated:* use `version.bumpPackage` on the component instance instead
 
 ```typescript
 public readonly STANDARD_VERSION: string;
