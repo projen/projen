@@ -53,7 +53,6 @@ import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
-import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -667,7 +666,6 @@ export class NodeProject extends GitHubProject {
       options.releaseWorkflow ??
       (this.parent ? false : true);
     if (release) {
-      this.addDevDeps(Version.STANDARD_VERSION);
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,

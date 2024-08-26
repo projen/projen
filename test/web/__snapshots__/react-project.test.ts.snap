@@ -388,6 +388,11 @@ permissions-backup.acl
         "type": "build",
       },
       {
+        "name": "commit-and-tag-version",
+        "type": "build",
+        "version": "^12",
+      },
+      {
         "name": "constructs",
         "type": "build",
         "version": "^10.0.0",
@@ -400,11 +405,6 @@ permissions-backup.acl
         "name": "react-scripts",
         "type": "build",
         "version": "^5",
-      },
-      {
-        "name": "standard-version",
-        "type": "build",
-        "version": "^9",
       },
       {
         "name": "react",
@@ -473,6 +473,7 @@ permissions-backup.acl
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -603,6 +604,7 @@ permissions-backup.acl
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
+          "BUMP_PACKAGE": "commit-and-tag-version@^12",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -629,7 +631,7 @@ permissions-backup.acl
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event constructs projen react-scripts standard-version react react-dom web-vitals",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event commit-and-tag-version constructs projen react-scripts react react-dom web-vitals",
           },
           {
             "exec": "npx projen",
@@ -868,10 +870,10 @@ permissions-backup.acl
       "@testing-library/jest-dom": "*",
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
+      "commit-and-tag-version": "^12",
       "constructs": "^10.0.0",
       "projen": "*",
       "react-scripts": "^5",
-      "standard-version": "^9",
     },
     "eslintConfig": {
       "extends": [
