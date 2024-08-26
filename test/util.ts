@@ -171,6 +171,35 @@ export function sanitizeOutput(dir: string) {
   fs.writeFileSync(depsPath, JSON.stringify(deps));
 }
 
+/**
+ * Runs a test function with the specified platforms mocked.
+ *
+ * @param platforms The platforms to run the test on.
+ * @param testSuite The test function to run.
+ */
+export function withPlatforms(
+  platforms: NodeJS.Platform[],
+  testSuite: () => void
+) {
+  const originalPlatform = process.platform;
+
+  platforms.forEach((platform) => {
+    describe(`On ${platform}:`, () => {
+      beforeAll(() => {
+        // Mock the platform
+        Object.defineProperty(process, "platform", { value: platform });
+      });
+
+      afterAll(() => {
+        // Restore the original platform
+        Object.defineProperty(process, "platform", { value: originalPlatform });
+      });
+
+      testSuite();
+    });
+  });
+}
+
 export {
   synthSnapshot,
   directorySnapshot,

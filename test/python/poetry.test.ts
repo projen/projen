@@ -1,4 +1,5 @@
 import * as TOML from "@iarna/toml";
+import { TestPythonProject } from "./util";
 import { python } from "../../src";
 import * as logging from "../../src/logging";
 import { synthSnapshot } from "../util";
@@ -223,20 +224,6 @@ test("poetry environment is setup with pythonExec", () => {
   // AFTER
   debug.mockRestore();
 });
-
-class TestPythonProject extends python.PythonProject {
-  constructor(options: Partial<python.PythonProjectOptions> = {}) {
-    super({
-      ...options,
-      clobber: false,
-      name: "test-python-project",
-      moduleName: "test_python_project",
-      authorName: "First Last",
-      authorEmail: "email@example.com",
-      version: "0.1.0",
-    });
-  }
-}
 
 test("generates correct pyproject.toml content", () => {
   const project = new TestPythonProject({
