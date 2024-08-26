@@ -774,6 +774,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jsii-docgen",
         "type": "build",
+        "version": "^10.5.0",
       },
       {
         "name": "jsii-pacmak",
@@ -1111,7 +1112,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-docgen,jsii-pacmak,projen,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-pacmak,projen,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -1363,7 +1364,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jest-junit": "^15",
       "jsii": "1.x",
       "jsii-diff": "*",
-      "jsii-docgen": "*",
+      "jsii-docgen": "^10.5.0",
       "jsii-pacmak": "*",
       "jsii-rosetta": "1.x",
       "projen": "*",
@@ -2285,6 +2286,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jsii-docgen",
         "type": "build",
+        "version": "*",
       },
       {
         "name": "jsii-pacmak",
@@ -5260,6 +5262,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jsii-docgen",
         "type": "build",
+        "version": "^10.5.0",
       },
       {
         "name": "jsii-pacmak",
@@ -5586,7 +5589,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-docgen,jsii-pacmak,projen,ts-jest,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -5838,7 +5841,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jest-junit": "^15",
       "jsii": "~5.0.0",
       "jsii-diff": "*",
-      "jsii-docgen": "*",
+      "jsii-docgen": "^10.5.0",
       "jsii-pacmak": "*",
       "jsii-rosetta": "~5.0.0",
       "projen": "*",

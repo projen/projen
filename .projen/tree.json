@@ -354,6 +354,12 @@
           "construct": "SampleDir"
         }
       },
+      "JsiiDocgen#AutoId28": {
+        "metadata": {
+          "type": "component",
+          "construct": "JsiiDocgen"
+        }
+      },
       "TaskWorkflow#check-licenses": {
         "metadata": {
           "type": "component",
@@ -375,7 +381,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId28": {
+      "UpgradeDependencies#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -394,7 +400,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId29": {
+      "UpgradeDependencies#AutoId30": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -427,7 +433,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId30": {
+      "VsCodeLaunchConfig#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
