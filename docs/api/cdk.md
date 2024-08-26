@@ -6433,13 +6433,13 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitCommitMessage">gitCommitMessage</a></code> | <code>string</code> | The commit message. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.githubDeployKeySecret">githubDeployKeySecret</a></code> | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.githubRepo">githubRepo</a></code> | <code>string</code> | GitHub repository to push to. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.githubTokenSecret">githubTokenSecret</a></code> | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitUserEmail">gitUserEmail</a></code> | <code>string</code> | The email to use in the release git commit. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitUserName">gitUserName</a></code> | <code>string</code> | The user name to use for the release git commit. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target go module. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the go package. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target repository in which this module will be published (e.g. github.com/owner/repo). |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the Go package name. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.versionSuffix">versionSuffix</a></code> | <code>string</code> | A suffix appended at the end of the module version (e.g `"-devprefix"`). |
 
 ---
 
@@ -6532,19 +6532,6 @@ Ignored if `githubUseSsh` is `false`.
 
 ---
 
-##### `githubRepo`<sup>Optional</sup> <a name="githubRepo" id="projen.cdk.JsiiGoTarget.property.githubRepo"></a>
-
-```typescript
-public readonly githubRepo: string;
-```
-
-- *Type:* string
-- *Default:* derived from `moduleName`
-
-GitHub repository to push to.
-
----
-
 ##### `githubTokenSecret`<sup>Optional</sup> <a name="githubTokenSecret" id="projen.cdk.JsiiGoTarget.property.githubTokenSecret"></a>
 
 ```typescript
@@ -6607,14 +6594,17 @@ public readonly moduleName: string;
 
 - *Type:* string
 
-The name of the target go module.
+The name of the target repository in which this module will be published (e.g. github.com/owner/repo).
+
+The module itself will always be published under a subdirectory named according
+to the `packageName` of the module (e.g. github.com/foo/bar/pkg).
 
 ---
 
 *Example*
 
 ```typescript
-github.com/owner/repo/subdir
+github.com/owner/repo
 ```
 
 
@@ -6625,9 +6615,25 @@ public readonly packageName: string;
 ```
 
 - *Type:* string
-- *Default:* derived from the module name
+- *Default:* derived from the JavaScript module name
 
-The name of the go package.
+The name of the Go package name.
+
+If not specified, package name will be derived from the JavaScript module name
+by removing non-alphanumeric characters (e.g.
+
+---
+
+##### `versionSuffix`<sup>Optional</sup> <a name="versionSuffix" id="projen.cdk.JsiiGoTarget.property.versionSuffix"></a>
+
+```typescript
+public readonly versionSuffix: string;
+```
+
+- *Type:* string
+- *Default:* none
+
+A suffix appended at the end of the module version (e.g `"-devprefix"`).
 
 ---
 
