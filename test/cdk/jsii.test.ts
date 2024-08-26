@@ -352,33 +352,6 @@ describe("publish to go", () => {
       "src/**/__tests__/*.ts",
     ]);
   });
-
-  test("prerelease", () => {
-    const project = new JsiiProject({
-      authorAddress: "https://foo.bar",
-      authorUrl: "https://foo.bar",
-      repositoryUrl: "https://github.com/foo/bar.git",
-      author: "My Name",
-      name: "testproject",
-      prerelease: "alpha",
-      publishToGo: {
-        moduleName: "github.com/foo/bar",
-      },
-      defaultReleaseBranch: "master",
-      publishTasks: true,
-    });
-
-    const output = synthSnapshot(project);
-    const targets = output["package.json"].jsii.targets;
-    expect(targets).toStrictEqual({
-      go: {
-        moduleName: "github.com/foo/bar",
-        versionSuffix: "-alpha",
-      },
-    });
-
-    expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
-  });
 });
 
 describe("publish to nuget", () => {

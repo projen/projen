@@ -184,7 +184,7 @@ export interface JsiiGoTarget extends GoPublishOptions {
   /**
    * A suffix appended at the end of the module version (e.g `"-devprefix"`).
    *
-   * @default - the prerelease string if used, otherwise nothing
+   * @default - none
    */
   readonly versionSuffix?: string;
 }
@@ -405,15 +405,10 @@ export class JsiiProject extends TypeScriptProject {
 
     const golang = options.publishToGo;
     if (golang) {
-      const defaultSuffix = options.prerelease
-        ? `-${options.prerelease}`
-        : undefined;
-      const versionSuffix = golang.versionSuffix ?? defaultSuffix;
-
       targets.go = {
         moduleName: golang.moduleName,
         packageName: golang.packageName,
-        versionSuffix,
+        versionSuffix: golang.versionSuffix,
       };
 
       const task = this.addPackagingTask("go");
