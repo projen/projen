@@ -14,6 +14,10 @@ import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
+const PATH_DELIMITER = {
+  win32: path.win32.delimiter,
+  linux: path.posix.delimiter,
+} as Record<NodeJS.Platform, string>;
 
 logging.disable(); // no logging during tests
 
@@ -182,17 +186,24 @@ export function withPlatforms(
   testSuite: () => void
 ) {
   const originalPlatform = process.platform;
+  const originalDelimiter = path.delimiter;
 
   platforms.forEach((platform) => {
     describe(`On ${platform}:`, () => {
       beforeAll(() => {
-        // Mock the platform
+        // Mock the platform values
         Object.defineProperty(process, "platform", { value: platform });
+        Object.defineProperty(path, "delimiter", {
+          value: PATH_DELIMITER[platform],
+        });
       });
 
       afterAll(() => {
-        // Restore the original platform
+        // Restore the original platform values
         Object.defineProperty(process, "platform", { value: originalPlatform });
+        Object.defineProperty(path, "delimiter", {
+          value: originalDelimiter,
+        });
       });
 
       testSuite();
@@ -201,8 +212,8 @@ export function withPlatforms(
 }
 
 export {
-  synthSnapshot,
-  directorySnapshot,
-  SynthOutput,
   DirectorySnapshotOptions,
+  SynthOutput,
+  directorySnapshot,
+  synthSnapshot,
 } from "../src/util/synth";
