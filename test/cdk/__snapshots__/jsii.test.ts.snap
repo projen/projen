@@ -2315,7 +2315,6 @@ jobs:
         run: mv .repo/dist dist
       - name: Release
         env:
-          GITHUB_REPO: github.com/foo/bar
           GIT_BRANCH: custom-branch
           GIT_USER_NAME: custom user
           GIT_USER_EMAIL: custom@email.com

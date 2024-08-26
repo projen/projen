@@ -328,12 +328,12 @@ describe("publish to go", () => {
       name: "testproject",
       publishToGo: {
         moduleName: "github.com/foo/bar",
-
+        packageName: "baz",
+        versionSuffix: "-dev",
         gitBranch: "custom-branch",
         gitCommitMessage: "custom commit message",
         gitUserEmail: "custom@email.com",
         gitUserName: "custom user",
-        githubRepo: "github.com/foo/bar",
         githubTokenSecret: "CUSTOM_SECRET",
       },
       defaultReleaseBranch: "master",
@@ -343,6 +343,8 @@ describe("publish to go", () => {
     const output = synthSnapshot(project);
     expect(output["package.json"].jsii.targets.go).toStrictEqual({
       moduleName: "github.com/foo/bar",
+      packageName: "baz",
+      versionSuffix: "-dev",
     });
     expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
     expect(output["package.json"].jsii.excludeTypescript).toStrictEqual([
