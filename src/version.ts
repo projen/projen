@@ -2,6 +2,7 @@ import { posix } from "path";
 import { IConstruct } from "constructs";
 import { Component } from "./component";
 import { Dependencies, DependencyType } from "./dependencies";
+import { NodePackage } from "./javascript/node-package";
 import { Task } from "./task";
 
 /**
@@ -107,16 +108,21 @@ export class Version extends Component {
     this.releaseTagFileName = "releasetag.txt";
     this.bumpPackage = options.bumpPackage ?? COMMIT_AND_TAG_VERSION_DEFAULT;
 
-    const { name: bumpName, version: bumpVersion } =
-      Dependencies.parseDependency(this.bumpPackage);
-    if (
-      !this.project.deps.isDependencySatisfied(
-        bumpName,
-        DependencyType.BUILD,
-        bumpVersion ?? "*"
-      )
-    ) {
-      this.project.deps.addDependency(this.bumpPackage, DependencyType.BUILD);
+    // This component is language independent.
+    // However, when in the Node.js ecosystem, we can improve the experience by adding a dev dependency on the bump package.
+    const node = NodePackage.of(this.project);
+    if (node) {
+      const { name: bumpName, version: bumpVersion } =
+        Dependencies.parseDependency(this.bumpPackage);
+      if (
+        !node.project.deps.isDependencySatisfied(
+          bumpName,
+          DependencyType.BUILD,
+          bumpVersion ?? "*"
+        )
+      ) {
+        node.project.deps.addDependency(this.bumpPackage, DependencyType.BUILD);
+      }
     }
 
     const versionInputFile = options.versionInputFile;
