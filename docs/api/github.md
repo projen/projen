@@ -6369,6 +6369,7 @@ const githubWorkflowOptions: github.GithubWorkflowOptions = { ... }
 | <code><a href="#projen.github.GithubWorkflowOptions.property.concurrencyOptions">concurrencyOptions</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.force">force</a></code> | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.limitConcurrency">limitConcurrency</a></code> | <code>boolean</code> | Enable concurrency limitations. |
+| <code><a href="#projen.github.GithubWorkflowOptions.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 
 ---
 
@@ -6414,6 +6415,24 @@ public readonly limitConcurrency: boolean;
 Enable concurrency limitations.
 
 Use `concurrencyOptions` to configure specific non default values.
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.github.GithubWorkflowOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the workflow.
+
+GitHub displays the names of your workflows under your repository's
+"Actions" tab. If you omit `name`, GitHub displays the workflow file path relative to the
+root of the repository.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name)
 
 ---
 
