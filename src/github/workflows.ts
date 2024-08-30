@@ -57,6 +57,13 @@ export interface GithubWorkflowOptions {
    * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
   readonly concurrencyOptions?: ConcurrencyOptions;
+  /**
+   * The name of the workflow. GitHub displays the names of your workflows under your repository's
+   * "Actions" tab. If you omit `name`, GitHub displays the workflow file path relative to the
+   * root of the repository.
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name
+   */
+  readonly name?: string;
 }
 
 /**
@@ -118,7 +125,7 @@ export class GithubWorkflow extends Component {
       cancelInProgress: false,
     };
 
-    this.name = name;
+    this.name = options.name ?? name;
     this.concurrency = options.limitConcurrency
       ? (deepMerge([
           defaultConcurrency,
