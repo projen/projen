@@ -861,7 +861,7 @@ interface PublishJobOptions {
 export interface CommonPublishOptions {
   /**
    * Steps to execute before executing the publishing command. These can be used
-   * to prepare the artifact for publishing if neede.
+   * to prepare the artifact for publishing if needed.
    *
    * These steps are executed after `dist/` has been populated with the build
    * output.

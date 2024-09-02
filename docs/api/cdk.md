@@ -6477,7 +6477,7 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiDotNetTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiDotNetTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
@@ -6513,7 +6513,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -6607,7 +6607,7 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitCommitMessage">gitCommitMessage</a></code> | <code>string</code> | The commit message. |
@@ -6648,7 +6648,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -6831,7 +6831,7 @@ const jsiiJavaTarget: cdk.JsiiJavaTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiJavaTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiJavaTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenEndpoint">mavenEndpoint</a></code> | <code>string</code> | URL of Nexus repository. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenGpgPrivateKeyPassphrase">mavenGpgPrivateKeyPassphrase</a></code> | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it. |
@@ -6873,7 +6873,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -9519,7 +9519,7 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.release.CodeArtifactOptions</code> | Options for publishing to AWS CodeArtifact. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
@@ -9556,7 +9556,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.

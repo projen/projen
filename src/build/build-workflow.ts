@@ -25,19 +25,17 @@ import {
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import {
+  BUILD_JOBID,
+  NOT_FORK,
+  PULL_REQUEST_REF,
+  PULL_REQUEST_REPOSITORY,
+  SELF_MUTATION_CONDITION,
+  SELF_MUTATION_HAPPENED_OUTPUT,
+  SELF_MUTATION_STEP,
+} from "./private/consts";
 import { workflowNameForProject } from "../util/name";
 import { ensureRelativePathStartsWithDot } from "../util/path";
-
-const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
-const PULL_REQUEST_REPOSITORY =
-  "${{ github.event.pull_request.head.repo.full_name }}";
-const BUILD_JOBID = "build";
-const SELF_MUTATION_STEP = "self_mutation";
-const SELF_MUTATION_HAPPENED_OUTPUT = "self_mutation_happened";
-const IS_FORK =
-  "github.event.pull_request.head.repo.full_name != github.repository";
-const NOT_FORK = `!(${IS_FORK})`;
-const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 
 export interface BuildWorkflowCommonOptions {
   /**
@@ -280,7 +278,7 @@ export class BuildWorkflow extends Component {
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],
       // only run if build did not self-mutate
-      if: `! ${SELF_MUTATION_CONDITION}`,
+      if: `\${{ !${SELF_MUTATION_CONDITION} }}`,
       ...job,
       steps: steps,
     });
