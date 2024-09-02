@@ -107,7 +107,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Upload artifact",
       }),
-      uses: "actions/upload-artifact@v4",
+      uses: "actions/upload-artifact@v4.3.6",
       with: uploadArtifactWith,
     };
   }
