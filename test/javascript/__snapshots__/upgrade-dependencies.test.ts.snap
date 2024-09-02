@@ -38,6 +38,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -130,6 +131,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -222,6 +224,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -314,6 +317,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -406,6 +410,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -498,6 +503,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -590,6 +596,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -682,6 +689,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -774,6 +782,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -866,6 +875,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -958,6 +968,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -1048,6 +1059,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -1140,6 +1152,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -1238,6 +1251,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
   pr:
     name: Create Pull Request
     needs: upgrade

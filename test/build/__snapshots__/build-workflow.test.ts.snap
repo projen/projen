@@ -37,6 +37,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
@@ -114,6 +115,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
@@ -194,6 +196,7 @@ jobs:
           name: .repo.patch
           path: .repo.patch
           overwrite: true
+          include-hidden-files: true
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
