@@ -7,6 +7,11 @@ function context(value: string) {
   return `\${{ ${value} }}`;
 }
 
+// Checks if part of the file path is hidden
+function isHiddenPath(path: string) {
+  return /(^|\/)\.[^\/\.]/g.test(path);
+}
+
 const REPO = context("github.repository");
 const RUN_ID = context("github.run_id");
 const SERVER_URL = context("github.server_url");
@@ -49,6 +54,7 @@ export class WorkflowActions {
         with: {
           name: GIT_PATCH_FILE,
           path: GIT_PATCH_FILE,
+          includeHiddenFiles: isHiddenPath(GIT_PATCH_FILE) ? true : undefined,
         },
       }),
     ];

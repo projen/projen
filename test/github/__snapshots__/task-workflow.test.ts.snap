@@ -43,7 +43,7 @@ jobs:
         run: projen gh-workflow-test
       - name: Upload artifact
         if: always()
-        uses: actions/upload-artifact@v4.3.6
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: ./artifacts/
           path: ./artifacts/

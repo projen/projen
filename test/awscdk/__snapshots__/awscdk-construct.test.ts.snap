@@ -46,7 +46,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4.3.6",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "repo.patch",
         "overwrite": true,
@@ -67,7 +67,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4.3.6",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
@@ -124,7 +124,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4.3.6",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "repo.patch",
         "overwrite": true,
@@ -145,7 +145,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4.3.6",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
@@ -202,7 +202,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4.3.6",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "repo.patch",
         "overwrite": true,
@@ -223,7 +223,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4.3.6",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
