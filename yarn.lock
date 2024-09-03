@@ -3818,9 +3818,9 @@ jsii-reflect@^1.103.0, jsii-reflect@^1.103.1:
     yargs "^16.2.0"
 
 jsii-rosetta@5.5.x:
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.5.3.tgz#1aea3d2d47f8c055fb38ff0ab206250e47b24685"
-  integrity sha512-8WfBc3tMae/fY3n9jofApFA7UUT/y0XQd/ybSbqX+URsLQhOiain+uaJPkvA1dbDAwW2Gc7PaHxyKBD6TstJjQ==
+  version "5.5.4"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.5.4.tgz#8825f62fb3a38860d7834740fe2d4d9cc5251268"
+  integrity sha512-hTIjmP9KmOptBm881r1aFq7CLi4agNvy4GOgbupF/K4pAFBH1hTJ4xL9NBxQxhEuWi3rRFQA72Z6aYz1AHcuIg==
   dependencies:
     "@jsii/check-node" "1.103.0"
     "@jsii/spec" "^1.103.0"
@@ -4539,9 +4539,9 @@ pegjs@^0.10.0:
   integrity sha512-qI5+oFNEGi3L5HAxDwN2LA4Gg7irF70Zs25edhjld9QemOgp0CbvMtbFcMvFtEo1OityPrcCzkQFB8JP/hxgow==
 
 picocolors@^1.0.0, picocolors@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.1.tgz#a8ad579b571952f0e5d25892de5445bcfe25aaa1"
-  integrity sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.1.0.tgz#5358b76a78cde483ba5cef6a9dc9671440b27d59"
+  integrity sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==
 
 picomatch@^2.0.4, picomatch@^2.2.3, picomatch@^2.3.1:
   version "2.3.1"
@@ -5530,9 +5530,9 @@ typescript@5.5.x, typescript@~5.5:
   integrity sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==
 
 typescript@next:
-  version "5.7.0-dev.20240901"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240901.tgz#9acfce421060120c668b3a9d639f26d751c7d927"
-  integrity sha512-Ixq+8fl0lsSFrIDfNi5/57wietIBnDY4Pp7JbPRJGtlGi5W9Sha/nky1ImNWteiOj3op6dMSHX5zrxCA4WlqCw==
+  version "5.7.0-dev.20240902"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240902.tgz#7972ff7e6b46fe601db5094bc3fa8aa4c2b5e605"
+  integrity sha512-IXcRYw/MfjNJlBlU1pnOWK4oM3MkpUPXy8MVe0I0F4nhv/sRAPBAvCWDAc1687B3rUZ1RUlFUhRbQhypb15IoA==
 
 uglify-js@^3.1.4:
   version "3.19.3"
