@@ -1,6 +1,6 @@
+import { Component, DependencyType, YamlFile, SampleFile } from "..";
 import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
 import { Cdk8sDepsPy } from "./cdk8s-deps-py";
-import { Component, DependencyType, YamlFile, SampleFile } from "..";
 import { PythonProject, PythonProjectOptions } from "../python/python-project";
 
 /**
