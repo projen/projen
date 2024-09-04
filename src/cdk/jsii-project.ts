@@ -1,8 +1,8 @@
 import * as path from "node:path";
 import { Range, major } from "semver";
+import { Task } from "..";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
-import { Task } from "..";
 import { Job, Step } from "../github/workflows-model";
 import { Eslint, NodePackageManager } from "../javascript";
 import {

@@ -5,9 +5,9 @@ import {
   CdkConfigCommonOptions,
   CdkTasks,
 } from ".";
+import { Component, DependencyType, SampleDir, SampleFile } from "..";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
-import { Component, DependencyType, SampleDir, SampleFile } from "..";
 import { Pytest } from "../python/pytest";
 import { PythonProject, PythonProjectOptions } from "../python/python-project";
 
