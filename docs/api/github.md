@@ -8362,7 +8362,6 @@ const uploadArtifactWith: github.UploadArtifactWith = { ... }
 | <code><a href="#projen.github.UploadArtifactWith.property.path">path</a></code> | <code>string</code> | A file, directory or wildcard pattern that describes what to upload. |
 | <code><a href="#projen.github.UploadArtifactWith.property.compressionLevel">compressionLevel</a></code> | <code>number</code> | The level of compression for Zlib to be applied to the artifact archive. |
 | <code><a href="#projen.github.UploadArtifactWith.property.ifNoFilesFound">ifNoFilesFound</a></code> | <code>string</code> | The desired behavior if no files are found using the provided path. |
-| <code><a href="#projen.github.UploadArtifactWith.property.includeHiddenFiles">includeHiddenFiles</a></code> | <code>boolean</code> | Whether to include hidden files in the provided path in the artifact. |
 | <code><a href="#projen.github.UploadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to upload. |
 | <code><a href="#projen.github.UploadArtifactWith.property.overwrite">overwrite</a></code> | <code>boolean</code> | Whether action should overwrite an existing artifact with the same name (should one exist). |
 | <code><a href="#projen.github.UploadArtifactWith.property.retentionDays">retentionDays</a></code> | <code>number</code> | Duration after which artifact will expire in days. 0 means using default repository retention. |
@@ -8412,21 +8411,6 @@ Available Options:
   warn: Output a warning but do not fail the action
   error: Fail the action with an error message
   ignore: Do not output any warnings or errors, the action does not fail
-
----
-
-##### `includeHiddenFiles`<sup>Optional</sup> <a name="includeHiddenFiles" id="projen.github.UploadArtifactWith.property.includeHiddenFiles"></a>
-
-```typescript
-public readonly includeHiddenFiles: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Whether to include hidden files in the provided path in the artifact.
-
-The file contents of any hidden files in the path should be validated before enabled this to avoid uploading sensitive information.
 
 ---
 

@@ -40,7 +40,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
       "working-directory": "./",
     },
     {
@@ -48,17 +48,16 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v4.3.6",
       "with": {
-        "include-hidden-files": true,
-        "name": ".repo.patch",
+        "name": "repo.patch",
         "overwrite": true,
-        "path": ".repo.patch",
+        "path": "repo.patch",
       },
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-cat .repo.patch
+cat repo.patch
 exit 1",
     },
     {
@@ -119,7 +118,7 @@ exports[`node version in workflow does setup default version 1`] = `
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
       "working-directory": "./",
     },
     {
@@ -127,17 +126,16 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v4.3.6",
       "with": {
-        "include-hidden-files": true,
-        "name": ".repo.patch",
+        "name": "repo.patch",
         "overwrite": true,
-        "path": ".repo.patch",
+        "path": "repo.patch",
       },
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-cat .repo.patch
+cat repo.patch
 exit 1",
     },
     {
@@ -198,7 +196,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
       "working-directory": "./",
     },
     {
@@ -206,17 +204,16 @@ git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happe
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v4.3.6",
       "with": {
-        "include-hidden-files": true,
-        "name": ".repo.patch",
+        "name": "repo.patch",
         "overwrite": true,
-        "path": ".repo.patch",
+        "path": "repo.patch",
       },
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-cat .repo.patch
+cat repo.patch
 exit 1",
     },
     {
