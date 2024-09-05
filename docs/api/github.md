@@ -4447,6 +4447,7 @@ const checkoutWith: github.CheckoutWith = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.CheckoutWith.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.CheckoutWith.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
+| <code><a href="#projen.github.CheckoutWith.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWith.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWith.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.CheckoutWith.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
@@ -4478,6 +4479,19 @@ public readonly lfs: boolean;
 - *Default:* false
 
 Whether LFS is enabled for the GitHub repository.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.CheckoutWith.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+Relative path under $GITHUB_WORKSPACE to place the repository.
 
 ---
 
@@ -4541,6 +4555,7 @@ const checkoutWithPatchOptions: github.CheckoutWithPatchOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
+| <code><a href="#projen.github.CheckoutWithPatchOptions.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
@@ -4573,6 +4588,19 @@ public readonly lfs: boolean;
 - *Default:* false
 
 Whether LFS is enabled for the GitHub repository.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.CheckoutWithPatchOptions.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+Relative path under $GITHUB_WORKSPACE to place the repository.
 
 ---
 
@@ -7178,6 +7206,7 @@ const pullRequestPatchSource: github.PullRequestPatchSource = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.PullRequestPatchSource.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
+| <code><a href="#projen.github.PullRequestPatchSource.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
@@ -7212,6 +7241,19 @@ public readonly lfs: boolean;
 - *Default:* false
 
 Whether LFS is enabled for the GitHub repository.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.PullRequestPatchSource.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+Relative path under $GITHUB_WORKSPACE to place the repository.
 
 ---
 

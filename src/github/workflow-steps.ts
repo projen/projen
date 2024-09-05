@@ -18,6 +18,7 @@ export class WorkflowSteps {
       token: options?.with?.token,
       ref: options?.with?.ref,
       repository: options?.with?.repository,
+      path: options?.with?.path,
       ...(options?.with?.lfs ? { lfs: true } : {}),
     });
 
@@ -202,6 +203,12 @@ export interface CheckoutWith {
    * @default - the default GITHUB_TOKEN is implicitly used
    */
   readonly token?: string;
+
+  /**
+   * Relative path under $GITHUB_WORKSPACE to place the repository
+   * @default - $GITHUB_WORKSPACE
+   */
+  readonly path?: string;
 }
 
 export interface SetupGitIdentityOptions extends JobStepConfiguration {

@@ -534,9 +534,9 @@ describe("language bindings", () => {
     }
   );
 
-  test("package-all creates all bindings", () => {
-    expect(tasks["package-all"]).toBeDefined();
-    expect(tasks["package-all"]).toMatchSnapshot();
+  test("package creates all bindings", () => {
+    expect(tasks.package).toBeDefined();
+    expect(tasks.package).toMatchSnapshot();
   });
 
   test.each(["pypi", "nuget", "npm", "maven", "golang"])(

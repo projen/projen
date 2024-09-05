@@ -40,7 +40,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: "! needs.build.outputs.self_mutation_happened"
+    if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -53,19 +53,27 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: .repo
       - name: Install Dependencies
         run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Extract build artifact
+        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
+      - name: Move build artifact out of the way
+        run: mv dist dist.old
       - name: Create js artifact
-        run: cd .repo && npx projen package:js
-      - name: Collect js Artifact
+        run: cd .repo && node ./projen.js package:js
+      - name: Collect js artifact
         run: mv .repo/dist dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: "! needs.build.outputs.self_mutation_happened"
+    if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-java@v4
         with:
@@ -82,19 +90,27 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: .repo
       - name: Install Dependencies
         run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Extract build artifact
+        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
+      - name: Move build artifact out of the way
+        run: mv dist dist.old
       - name: Create java artifact
-        run: cd .repo && npx projen package:java
-      - name: Collect java Artifact
+        run: cd .repo && node ./projen.js package:java
+      - name: Collect java artifact
         run: mv .repo/dist dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: "! needs.build.outputs.self_mutation_happened"
+    if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -110,19 +126,27 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: .repo
       - name: Install Dependencies
         run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Extract build artifact
+        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
+      - name: Move build artifact out of the way
+        run: mv dist dist.old
       - name: Create python artifact
-        run: cd .repo && npx projen package:python
-      - name: Collect python Artifact
+        run: cd .repo && node ./projen.js package:python
+      - name: Collect python artifact
         run: mv .repo/dist dist
   package-go:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: "! needs.build.outputs.self_mutation_happened"
+    if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -138,20 +162,28 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
-      - name: Prepare Repository
-        run: mv dist .repo
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: .repo
       - name: Install Dependencies
         run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Extract build artifact
+        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
+      - name: Move build artifact out of the way
+        run: mv dist dist.old
       - name: Create go artifact
-        run: cd .repo && npx projen package:go
-      - name: Collect go Artifact
+        run: cd .repo && node ./projen.js package:go
+      - name: Collect go artifact
         run: mv .repo/dist dist
   post-build-integ:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    if: "! needs.build.outputs.self_mutation_happened"
+    if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-python@v5
         with:
@@ -204,7 +236,7 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           directory: coverage
-        if: ${{ matrix.runner.primary_build }}
+        if: matrix.runner.primary_build
       - name: Find mutations
         id: self_mutation
         run: |-
@@ -212,7 +244,7 @@ jobs:
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
         working-directory: ./
       - name: Upload patch
-        if: ${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}
+        if: steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build
         uses: actions/upload-artifact@v4.3.6
         with:
           name: repo.patch
@@ -227,14 +259,14 @@ jobs:
       - name: Backup artifact permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
-        if: ${{ matrix.runner.primary_build }}
+        if: matrix.runner.primary_build
       - name: Upload artifact
         uses: actions/upload-artifact@v4.3.6
         with:
           name: build-artifact
           path: dist
           overwrite: true
-        if: ${{ matrix.runner.primary_build }}
+        if: matrix.runner.primary_build
     strategy:
       matrix:
         runner:
@@ -254,7 +286,7 @@ jobs:
       self_mutation_happened: ${{ needs.build_matrix.outputs.self_mutation_happened }}
     steps:
       - name: Build result
-        run: echo ${{needs.build_matrix.result}}
+        run: echo ${{ needs.build_matrix.result }}
       - if: ${{ needs.build_matrix.result != 'success' }}
         name: Set status based on matrix build
         run: exit 1

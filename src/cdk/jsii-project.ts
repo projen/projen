@@ -1,15 +1,21 @@
-import * as path from "node:path";
 import { Range, major } from "semver";
 import { Task } from "..";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
-import { Job, Step } from "../github/workflows-model";
-import { Eslint, NodePackageManager } from "../javascript";
+import {
+  PULL_REQUEST_REF,
+  PULL_REQUEST_REPOSITORY,
+} from "../build/private/consts";
+import { WorkflowSteps } from "../github/workflow-steps";
+import { Job, Step, Tools } from "../github/workflows-model";
+import { NodePackageManager } from "../javascript";
 import {
   CommonPublishOptions,
   GoPublishOptions,
   MavenPublishOptions,
+  NpmPublishOptions,
   NugetPublishOptions,
+  Publisher,
   PyPiPublishOptions,
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
@@ -20,7 +26,9 @@ const EMAIL_REGEX =
   /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const URL_REGEX =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+
 const REPO_TEMP_DIRECTORY = ".repo";
+const BUILD_ARTIFACT_OLD_DIR = "dist.old";
 
 export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   /**
@@ -195,19 +203,8 @@ export interface JsiiGoTarget extends GoPublishOptions {
  * @pjid jsii
  */
 export class JsiiProject extends TypeScriptProject {
-  public readonly eslint?: Eslint;
-
   private readonly packageAllTask: Task;
-
-  // This project copies to whole repo into the artifactsDirectory.
-  // Which causes the release tag file to be in a path like ./dist/dist/releasetag.txt
-  // Use a TS hack to allow the release component to get the correct path from the project
-  // @ts-ignore
-  private get releaseTagFilePath(): string {
-    return path.posix.normalize(
-      path.posix.join(this.artifactsDirectory, this.artifactsDirectory)
-    );
-  }
+  private readonly packageJsTask: Task;
 
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
@@ -273,22 +270,21 @@ export class JsiiProject extends TypeScriptProject {
 
     this.compileTask.reset(["jsii", ...jsiiFlags].join(" "));
     this.watchTask.reset(["jsii", "-w", ...jsiiFlags].join(" "));
+
+    // Create a new package:all task, it will be filled with language targets later
     this.packageAllTask = this.addTask("package-all", {
       description: "Packages artifacts for all target languages",
     });
 
     // in jsii we consider the entire repo (post build) as the build artifact
     // which is then used to create the language bindings in separate jobs.
-    const prepareRepoForCI = [
-      `rsync -a . .repo --exclude .git --exclude node_modules`,
-      `rm -rf ${this.artifactsDirectory}`,
-      `mv .repo ${this.artifactsDirectory}`,
-    ].join(" && ");
+    // we achieve this by doing a checkout and overwrite with the files from the js package.
+    this.packageJsTask = this.addPackagingTask("js");
 
-    // when running inside CI we just prepare the repo for packaging, which
-    // takes place in separate tasks.
-    // outside of CI (i.e locally) we simply package all targets.
-    this.packageTask.reset(prepareRepoForCI, {
+    // When running inside CI we initially only package js. Other targets are packaged in separate jobs.
+    // Outside of CI (i.e locally) we simply package all targets.
+    this.packageTask.reset();
+    this.packageTask.spawn(this.packageJsTask, {
       // Only run in CI
       condition: `node -e "if (!process.env.CI) process.exit(1)"`,
     });
@@ -314,17 +310,6 @@ export class JsiiProject extends TypeScriptProject {
 
     this.addFields({ jsii });
 
-    this.release?.publisher.addGitHubPrePublishingSteps(
-      {
-        name: "Prepare Repository",
-        run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
-      },
-      {
-        name: "Collect GitHub Metadata",
-        run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
-      }
-    );
-
     const extraJobOptions: Partial<Job> = {
       ...this.getJobRunsOnConfig(options),
       ...(options.workflowContainerImage
@@ -333,15 +318,14 @@ export class JsiiProject extends TypeScriptProject {
     };
 
     if (options.releaseToNpm != false) {
-      const task = this.addPackagingTask("js");
-      this.release?.publisher.publishToNpm({
-        ...this.pacmakForLanguage("js", task),
+      const npmjs: NpmPublishOptions = {
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
         npmProvenance: this.package.npmProvenance,
         codeArtifactOptions: options.codeArtifactOptions,
-      });
-      this.addPackagingTarget("js", task, extraJobOptions);
+      };
+      this.addTargetToBuild("js", this.packageJsTask, extraJobOptions);
+      this.addTargetToRelease("js", this.packageJsTask, npmjs);
     }
 
     // we cannot call an option `java` because the java code generated by jsii
@@ -351,23 +335,19 @@ export class JsiiProject extends TypeScriptProject {
       throw new Error('the "java" option is now called "publishToMaven"');
     }
 
-    if (options.publishToMaven) {
+    const maven = options.publishToMaven;
+    if (maven) {
       targets.java = {
-        package: options.publishToMaven.javaPackage,
+        package: maven.javaPackage,
         maven: {
-          groupId: options.publishToMaven.mavenGroupId,
-          artifactId: options.publishToMaven.mavenArtifactId,
+          groupId: maven.mavenGroupId,
+          artifactId: maven.mavenArtifactId,
         },
       };
 
       const task = this.addPackagingTask("java");
-
-      this.release?.publisher.publishToMaven({
-        ...this.pacmakForLanguage("java", task),
-        ...options.publishToMaven,
-      });
-
-      this.addPackagingTarget("java", task, extraJobOptions);
+      this.addTargetToBuild("java", task, extraJobOptions);
+      this.addTargetToRelease("java", task, maven);
     }
 
     const pypi = options.publishToPypi ?? options.python;
@@ -378,12 +358,8 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       const task = this.addPackagingTask("python");
-      this.release?.publisher.publishToPyPi({
-        ...this.pacmakForLanguage("python", task),
-        ...pypi,
-      });
-
-      this.addPackagingTarget("python", task, extraJobOptions);
+      this.addTargetToBuild("python", task, extraJobOptions);
+      this.addTargetToRelease("python", task, pypi);
     }
 
     const nuget = options.publishToNuget ?? options.dotnet;
@@ -395,12 +371,8 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       const task = this.addPackagingTask("dotnet");
-      this.release?.publisher.publishToNuget({
-        ...this.pacmakForLanguage("dotnet", task),
-        ...nuget,
-      });
-
-      this.addPackagingTarget("dotnet", task, extraJobOptions);
+      this.addTargetToBuild("dotnet", task, extraJobOptions);
+      this.addTargetToRelease("dotnet", task, nuget);
     }
 
     const golang = options.publishToGo;
@@ -412,12 +384,8 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       const task = this.addPackagingTask("go");
-      this.release?.publisher.publishToGo({
-        ...this.pacmakForLanguage("go", task),
-        ...golang,
-      });
-
-      this.addPackagingTarget("go", task, extraJobOptions);
+      this.addTargetToBuild("go", task, extraJobOptions);
+      this.addTargetToRelease("go", task, golang);
     }
 
     const jsiiSuffix =
@@ -494,11 +462,53 @@ export class JsiiProject extends TypeScriptProject {
   }
 
   /**
-   * Adds a target language to the build workflow and creates a package task.
+   * Adds a target language to the release workflow.
    * @param language
    * @returns
    */
-  private addPackagingTarget(
+  private addTargetToRelease(
+    language: JsiiPacmakTarget,
+    packTask: Task,
+    target:
+      | JsiiPythonTarget
+      | JsiiDotNetTarget
+      | JsiiGoTarget
+      | JsiiJavaTarget
+      | NpmPublishOptions
+  ) {
+    if (!this.release) {
+      return;
+    }
+
+    const pacmak = this.pacmakForLanguage(language, packTask);
+    const prePublishSteps = [
+      ...pacmak.bootstrapSteps,
+      WorkflowSteps.checkout({
+        with: {
+          path: REPO_TEMP_DIRECTORY,
+          ...(this.github?.downloadLfs ? { lfs: true } : {}),
+        },
+      }),
+      ...pacmak.packagingSteps,
+    ];
+    const commonPublishOptions: CommonPublishOptions = {
+      publishTools: pacmak.publishTools,
+      prePublishSteps,
+    };
+
+    const handler: PublishTo = publishTo[language];
+    this.release?.publisher[handler]({
+      ...commonPublishOptions,
+      ...target,
+    });
+  }
+
+  /**
+   * Adds a target language to the build workflow
+   * @param language
+   * @returns
+   */
+  private addTargetToBuild(
     language: JsiiPacmakTarget,
     packTask: Task,
     extraJobOptions: Partial<Job>
@@ -518,13 +528,24 @@ export class JsiiProject extends TypeScriptProject {
         node: { version: this.nodeVersion ?? "18.x" },
         ...pacmak.publishTools,
       },
-      steps: pacmak.prePublishSteps ?? [],
+      steps: [
+        ...pacmak.bootstrapSteps,
+        WorkflowSteps.checkout({
+          with: {
+            path: REPO_TEMP_DIRECTORY,
+            ref: PULL_REQUEST_REF,
+            repository: PULL_REQUEST_REPOSITORY,
+            ...(this.github?.downloadLfs ? { lfs: true } : {}),
+          },
+        }),
+        ...pacmak.packagingSteps,
+      ],
       ...extraJobOptions,
     });
   }
 
   private addPackagingTask(language: JsiiPacmakTarget): Task {
-    const packageTask = this.tasks.addTask(`package:${language}`, {
+    const packageTargetTask = this.tasks.addTask(`package:${language}`, {
       description: `Create ${language} language bindings`,
     });
     const commandParts = ["jsii-pacmak", "-v"];
@@ -535,57 +556,66 @@ export class JsiiProject extends TypeScriptProject {
 
     commandParts.push(`--target ${language}`);
 
-    packageTask.exec(commandParts.join(" "));
+    packageTargetTask.exec(commandParts.join(" "));
 
-    this.packageAllTask.spawn(packageTask);
-    return packageTask;
+    this.packageAllTask.spawn(packageTargetTask);
+    return packageTargetTask;
   }
 
   private pacmakForLanguage(
     target: JsiiPacmakTarget,
     packTask: Task
-  ): CommonPublishOptions {
-    // at this stage, `artifactsDirectory` contains the prebuilt repository.
-    // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
-    // so we move the repo, create the artifact, and put it in the expected place.
-    const prePublishSteps: Array<Step> = [];
+  ): {
+    publishTools: Tools;
+    bootstrapSteps: Array<Step>;
+    packagingSteps: Array<Step>;
+  } {
+    const bootstrapSteps: Array<Step> = [];
+    const packagingSteps: Array<Step> = [];
 
-    prePublishSteps.push(...this.workflowBootstrapSteps);
-
+    // Generic bootstrapping for all target languages
+    bootstrapSteps.push(...this.workflowBootstrapSteps);
     if (this.package.packageManager === NodePackageManager.PNPM) {
-      prePublishSteps.push({
+      bootstrapSteps.push({
         name: "Setup pnpm",
         uses: "pnpm/action-setup@v3",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
-      prePublishSteps.push({
+      bootstrapSteps.push({
         name: "Setup bun",
         uses: "oven-sh/setup-bun@v1",
       });
     }
 
-    prePublishSteps.push(
-      {
-        name: "Prepare Repository",
-        run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
-      },
+    // Installation steps before packaging, but after checkout
+    packagingSteps.push(
       {
         name: "Install Dependencies",
         run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
       },
       {
-        name: `Create ${target} artifact`,
-        run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
+        name: "Extract build artifact",
+        run: `tar --strip-components=1 -xzvf ${this.artifactsDirectory}/js/*.tgz -C ${REPO_TEMP_DIRECTORY}`,
       },
       {
-        name: `Collect ${target} Artifact`,
+        name: `Move build artifact out of the way`,
+        run: `mv ${this.artifactsDirectory} ${BUILD_ARTIFACT_OLD_DIR}`,
+      },
+      {
+        name: `Create ${target} artifact`,
+        run: `cd ${REPO_TEMP_DIRECTORY} && ${this.runTaskCommand(packTask)}`,
+      },
+      {
+        name: `Collect ${target} artifact`,
         run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
       }
     );
+
     return {
       publishTools: JSII_TOOLCHAIN[target],
-      prePublishSteps,
+      bootstrapSteps,
+      packagingSteps,
     };
   }
 
@@ -603,6 +633,24 @@ export class JsiiProject extends TypeScriptProject {
       : {};
   }
 }
+
+type PublishTo = keyof Publisher &
+  (
+    | "publishToNpm"
+    | "publishToMaven"
+    | "publishToPyPi"
+    | "publishToNuget"
+    | "publishToGo"
+  );
+
+type PublishToTarget = { [K in JsiiPacmakTarget]: PublishTo };
+const publishTo: PublishToTarget = {
+  js: "publishToNpm",
+  java: "publishToMaven",
+  python: "publishToPyPi",
+  dotnet: "publishToNuget",
+  go: "publishToGo",
+};
 
 function parseAuthorAddress(options: JsiiProjectOptions) {
   let authorEmail = options.authorEmail;

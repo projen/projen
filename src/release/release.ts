@@ -401,13 +401,7 @@ export class Release extends Component {
     });
 
     this.releaseTagFilePath = path.posix.normalize(
-      path.posix.join(
-        // temporary hack to allow JsiiProject setting a different path to the release tag file
-        // see JsiiProject.releaseTagFilePath for more details
-        //@ts-ignore
-        this.project.releaseTagFilePath ?? this.artifactsDirectory,
-        this.version.releaseTagFileName
-      )
+      path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName)
     );
 
     this.publisher = new Publisher(this.project, {
