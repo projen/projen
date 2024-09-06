@@ -11,6 +11,7 @@ import {
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
+import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
 import { DependencyType } from "../dependencies";
 import {
@@ -22,7 +23,7 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
-import { secretToString } from "../github/util";
+import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
   JobPermission,
   JobPermissions,
@@ -510,7 +511,9 @@ export class NodeProject extends GitHubProject {
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.workflowPackageCache = options.workflowPackageCache ?? false;
-    this.artifactsDirectory = options.artifactsDirectory ?? "dist";
+    this.artifactsDirectory =
+      options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
+    ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     const normalizedArtifactsDirectory = normalizePersistedPath(
       this.artifactsDirectory
     );

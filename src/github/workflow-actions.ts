@@ -1,11 +1,8 @@
 import { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
+import { context, isHiddenPath } from "./private/util";
 import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { JobStep } from "./workflows-model";
-
-function context(value: string) {
-  return `\${{ ${value} }}`;
-}
 
 const REPO = context("github.repository");
 const RUN_ID = context("github.run_id");
@@ -49,6 +46,7 @@ export class WorkflowActions {
         with: {
           name: GIT_PATCH_FILE,
           path: GIT_PATCH_FILE,
+          includeHiddenFiles: isHiddenPath(GIT_PATCH_FILE) ? true : undefined,
         },
       }),
     ];

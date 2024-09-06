@@ -101,6 +101,7 @@ export class WorkflowSteps {
         "if-no-files-found": options?.with?.ifNoFilesFound,
         "retention-days": options?.with?.retentionDays,
         "compression-level": options?.with?.compressionLevel,
+        "include-hidden-files": options?.with?.includeHiddenFiles,
       });
 
     return {
@@ -108,7 +109,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Upload artifact",
       }),
-      uses: "actions/upload-artifact@v4.3.6",
+      uses: "actions/upload-artifact@v4.4.0",
       with: uploadArtifactWith,
     };
   }
@@ -271,6 +272,15 @@ export interface UploadArtifactWith {
    * @default true
    */
   readonly overwrite?: boolean;
+
+  /**
+   * Whether to include hidden files in the provided path in the artifact
+   *
+   * The file contents of any hidden files in the path should be validated before enabled this to avoid uploading sensitive information.
+   *
+   * @default false
+   */
+  readonly includeHiddenFiles?: boolean;
 }
 
 export interface UploadArtifactOptions extends JobStepConfiguration {

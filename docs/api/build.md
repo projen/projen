@@ -541,8 +541,8 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.buildTask">buildTask</a></code> | <code>projen.Task</code> | The task to execute in order to build the project. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
@@ -605,18 +605,6 @@ Build workflow triggers.
 
 ---
 
-##### `artifactsDirectory`<sup>Required</sup> <a name="artifactsDirectory" id="projen.build.BuildWorkflowOptions.property.artifactsDirectory"></a>
-
-```typescript
-public readonly artifactsDirectory: string;
-```
-
-- *Type:* string
-
-A name of a directory that includes build artifacts.
-
----
-
 ##### `buildTask`<sup>Required</sup> <a name="buildTask" id="projen.build.BuildWorkflowOptions.property.buildTask"></a>
 
 ```typescript
@@ -626,6 +614,19 @@ public readonly buildTask: Task;
 - *Type:* projen.Task
 
 The task to execute in order to build the project.
+
+---
+
+##### `artifactsDirectory`<sup>Optional</sup> <a name="artifactsDirectory" id="projen.build.BuildWorkflowOptions.property.artifactsDirectory"></a>
+
+```typescript
+public readonly artifactsDirectory: string;
+```
+
+- *Type:* string
+- *Default:* "dist"
+
+A name of a directory that includes build artifacts.
 
 ---
 
