@@ -2,6 +2,7 @@ import * as path from "path";
 import { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
+import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { Component } from "../component";
 import {
   GitHub,
@@ -13,6 +14,7 @@ import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
+import { ensureNotHiddenPath } from "../github/private/util";
 import {
   Job,
   JobPermission,
@@ -358,7 +360,9 @@ export class Release extends Component {
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
-    this.artifactsDirectory = options.artifactsDirectory ?? "dist";
+    this.artifactsDirectory =
+      options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
+    ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;

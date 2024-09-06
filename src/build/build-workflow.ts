@@ -13,6 +13,7 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
+import { ensureNotHiddenPath } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
 import {
   Job,
@@ -27,6 +28,7 @@ import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import {
   BUILD_JOBID,
+  DEFAULT_ARTIFACTS_DIRECTORY,
   NOT_FORK,
   PULL_REQUEST_REF,
   PULL_REQUEST_REPOSITORY,
@@ -73,8 +75,9 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
 
   /**
    * A name of a directory that includes build artifacts.
+   * @default "dist"
    */
-  readonly artifactsDirectory: string;
+  readonly artifactsDirectory?: string;
 
   /**
    * The container image to use for builds.
@@ -162,7 +165,9 @@ export class BuildWorkflow extends Component {
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
-    this.artifactsDirectory = options.artifactsDirectory;
+    this.artifactsDirectory =
+      options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
+    ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     this.name = options.name ?? workflowNameForProject("build", this.project);
     const mutableBuilds = options.mutableBuild ?? true;
 
@@ -253,25 +258,23 @@ export class BuildWorkflow extends Component {
   public addPostBuildJob(id: string, job: Job) {
     const steps = [];
 
-    if (this.artifactsDirectory) {
-      steps.push(
-        {
-          name: "Download build artifacts",
-          uses: "actions/download-artifact@v4",
-          with: {
-            name: BUILD_ARTIFACT_NAME,
-            path: this.artifactsDirectory,
-          },
+    steps.push(
+      {
+        name: "Download build artifacts",
+        uses: "actions/download-artifact@v4",
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
         },
-        {
-          name: "Restore build artifact permissions",
-          continueOnError: true,
-          run: [
-            `cd ${this.artifactsDirectory} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
-          ].join("\n"),
-        }
-      );
-    }
+      },
+      {
+        name: "Restore build artifact permissions",
+        continueOnError: true,
+        run: [
+          `cd ${this.artifactsDirectory} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
+        ].join("\n"),
+      }
+    );
 
     steps.push(...(job.steps ?? []));
 

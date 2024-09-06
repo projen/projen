@@ -1,16 +1,8 @@
 import { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
+import { context, isHiddenPath } from "./private/util";
 import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
 import { JobStep } from "./workflows-model";
-
-function context(value: string) {
-  return `\${{ ${value} }}`;
-}
-
-// Checks if part of the file path is hidden
-function isHiddenPath(path: string) {
-  return /(^|\/)\.[^\/\.]/g.test(path);
-}
 
 const REPO = context("github.repository");
 const RUN_ID = context("github.run_id");

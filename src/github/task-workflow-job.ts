@@ -15,6 +15,7 @@ import {
 import { Component } from "../component";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
+import { ensureNotHiddenPath } from "./private/util";
 
 /**
  * Options to create the Job associated with a TaskWorkflow.
@@ -164,6 +165,7 @@ export class TaskWorkflowJob extends Component {
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     if (options.artifactsDirectory) {
+      ensureNotHiddenPath(options.artifactsDirectory, "artifactsDirectory");
       postBuildSteps.push(
         WorkflowSteps.uploadArtifact({
           // Setting to always will ensure that this step will run even if
