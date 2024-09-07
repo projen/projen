@@ -14,10 +14,6 @@ import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
-const PATH_DELIMITER = {
-  win32: path.win32.delimiter,
-  linux: path.posix.delimiter,
-} as Record<NodeJS.Platform, string>;
 
 logging.disable(); // no logging during tests
 
@@ -173,42 +169,6 @@ export function sanitizeOutput(dir: string) {
   }
   fs.chmodSync(depsPath, "777");
   fs.writeFileSync(depsPath, JSON.stringify(deps));
-}
-
-/**
- * Runs a test function with the specified platforms mocked.
- *
- * @param platforms The platforms to run the test on.
- * @param testSuite The test function to run.
- */
-export function withPlatforms(
-  platforms: NodeJS.Platform[],
-  testSuite: () => void
-) {
-  const originalPlatform = process.platform;
-  const originalDelimiter = path.delimiter;
-
-  platforms.forEach((platform) => {
-    describe(`On ${platform}:`, () => {
-      beforeAll(() => {
-        // Mock the platform values
-        Object.defineProperty(process, "platform", { value: platform });
-        Object.defineProperty(path, "delimiter", {
-          value: PATH_DELIMITER[platform],
-        });
-      });
-
-      afterAll(() => {
-        // Restore the original platform values
-        Object.defineProperty(process, "platform", { value: originalPlatform });
-        Object.defineProperty(path, "delimiter", {
-          value: originalDelimiter,
-        });
-      });
-
-      testSuite();
-    });
-  });
 }
 
 export {

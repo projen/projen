@@ -45,32 +45,16 @@ export class Venv extends Component implements IPythonEnv {
 
     this.project.addGitIgnore(`/${this.envdir}`);
 
-    const pythonDirExpression = `python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'`;
-
-    const isWindows = process.platform === "win32";
-
-    // In Windows CMD the PATH double quote needs to be escaped with another double quotes.
-    const quote = isWindows ? '""' : '\\"';
-
-    // For example: /my/path/.env
-    const envdirPathExpression = `{os.getcwd()}/${this.envdir}`;
-
-    // For example: /my/path/.env/bin
-    const pythonDirPathExpression = `${envdirPathExpression}/{python_dir}`;
-
-    // For example: /my/path/.env/bin:{os.environ["PATH"]}
-    const pathEnvironmentExpression = `${pythonDirPathExpression}{os.pathsep}{os.environ[${quote}PATH${quote}]}`;
-
     // VIRTUAL_ENV is set to the path of the virtual environment, which is what venv does when a virtual environment is activated.
     this.project.tasks.addEnvironment(
       "VIRTUAL_ENV",
-      `$(python -c "import os; print(f'${envdirPathExpression}')")`
+      `$(python -c "import os; print('{0}/${this.envdir}'.format(os.getcwd()))")`
     );
 
     // The python executable needs to be first in the PATH environment variable to make calls to the local scoped python instead of the system python.
     this.project.tasks.addEnvironment(
       "PATH",
-      `$(python -c "import os, sys; ${pythonDirExpression}; print(f'${pathEnvironmentExpression}')")`
+      `$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/${this.envdir}/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")`
     );
   }
 
