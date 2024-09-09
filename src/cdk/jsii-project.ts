@@ -7,7 +7,7 @@ import {
   PULL_REQUEST_REPOSITORY,
 } from "../build/private/consts";
 import { WorkflowSteps } from "../github/workflow-steps";
-import { Job, Step, Tools } from "../github/workflows-model";
+import { Job, JobPermission, Step, Tools } from "../github/workflows-model";
 import { NodePackageManager } from "../javascript";
 import {
   CommonPublishOptions,
@@ -523,7 +523,9 @@ export class JsiiProject extends TypeScriptProject {
         extraJobOptions.runsOn,
         extraJobOptions.runsOnGroup
       ),
-      permissions: {},
+      permissions: {
+        contents: JobPermission.READ,
+      },
       tools: {
         node: { version: this.nodeVersion ?? "18.x" },
         ...pacmak.publishTools,

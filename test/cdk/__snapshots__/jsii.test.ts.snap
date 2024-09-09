@@ -344,7 +344,8 @@ jobs:
   package-js:
     needs: build
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v4
@@ -1972,7 +1973,9 @@ exports[`language bindings snapshot dotnet 1`] = `
 {
   "if": "\${{ !needs.build.outputs.self_mutation_happened }}",
   "needs": "build",
-  "permissions": {},
+  "permissions": {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": [
     {
@@ -2037,7 +2040,9 @@ exports[`language bindings snapshot go 1`] = `
 {
   "if": "\${{ !needs.build.outputs.self_mutation_happened }}",
   "needs": "build",
-  "permissions": {},
+  "permissions": {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": [
     {
@@ -2102,7 +2107,9 @@ exports[`language bindings snapshot java 1`] = `
 {
   "if": "\${{ !needs.build.outputs.self_mutation_happened }}",
   "needs": "build",
-  "permissions": {},
+  "permissions": {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": [
     {
@@ -2168,7 +2175,9 @@ exports[`language bindings snapshot js 1`] = `
 {
   "if": "\${{ !needs.build.outputs.self_mutation_happened }}",
   "needs": "build",
-  "permissions": {},
+  "permissions": {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": [
     {
@@ -2227,7 +2236,9 @@ exports[`language bindings snapshot python 1`] = `
 {
   "if": "\${{ !needs.build.outputs.self_mutation_happened }}",
   "needs": "build",
-  "permissions": {},
+  "permissions": {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": [
     {
