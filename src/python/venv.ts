@@ -44,13 +44,17 @@ export class Venv extends Component implements IPythonEnv {
     this.pythonExec = options.pythonExec ?? "python";
 
     this.project.addGitIgnore(`/${this.envdir}`);
+
+    // VIRTUAL_ENV is set to the path of the virtual environment, which is what venv does when a virtual environment is activated.
     this.project.tasks.addEnvironment(
       "VIRTUAL_ENV",
-      `$(echo $PWD/${this.envdir})`
+      `$(python -c "import os; print('{0}/${this.envdir}'.format(os.getcwd()))")`
     );
+
+    // The python executable needs to be first in the PATH environment variable to make calls to the local scoped python instead of the system python.
     this.project.tasks.addEnvironment(
       "PATH",
-      `$(echo $PWD/${this.envdir}/bin:$PATH)`
+      `$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/${this.envdir}/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")`
     );
   }
 

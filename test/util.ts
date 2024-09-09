@@ -172,8 +172,8 @@ export function sanitizeOutput(dir: string) {
 }
 
 export {
-  synthSnapshot,
-  directorySnapshot,
-  SynthOutput,
   DirectorySnapshotOptions,
+  SynthOutput,
+  directorySnapshot,
+  synthSnapshot,
 } from "../src/util/synth";
