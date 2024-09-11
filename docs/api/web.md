@@ -237,7 +237,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.web.NextJsProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -247,7 +247,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.web.NextJsProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -503,7 +503,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.web.NextJsProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -513,7 +513,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -528,28 +528,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.web.NextJsProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.NextJsProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.web.NextJsProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -564,14 +564,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.web.NextJsProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -602,14 +602,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.web.NextJsProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.web.NextJsProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -618,7 +618,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.web.NextJsProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -629,7 +629,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -660,14 +660,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.web.NextJsProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.NextJsProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -1650,7 +1650,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.web.NextJsTypeScriptProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -1660,7 +1660,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.web.NextJsTypeScriptProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -1916,7 +1916,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.web.NextJsTypeScriptProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -1926,7 +1926,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsTypeScriptProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1941,28 +1941,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.web.NextJsTypeScriptProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.NextJsTypeScriptProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.web.NextJsTypeScriptProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsTypeScriptProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1977,14 +1977,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.web.NextJsTypeScriptProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsTypeScriptProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2015,14 +2015,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.web.NextJsTypeScriptProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.web.NextJsTypeScriptProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -2031,7 +2031,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.web.NextJsTypeScriptProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -2042,7 +2042,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.NextJsTypeScriptProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2073,14 +2073,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.web.NextJsTypeScriptProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.NextJsTypeScriptProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -3344,7 +3344,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.web.ReactProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -3354,7 +3354,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.web.ReactProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -3610,7 +3610,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.web.ReactProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -3620,7 +3620,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -3635,28 +3635,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.web.ReactProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.ReactProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.web.ReactProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -3671,14 +3671,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.web.ReactProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -3709,14 +3709,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.web.ReactProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.web.ReactProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -3725,7 +3725,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.web.ReactProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -3736,7 +3736,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -3767,14 +3767,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.web.ReactProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.ReactProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -5000,7 +5000,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.web.ReactTypeScriptProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -5010,7 +5010,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.web.ReactTypeScriptProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -5266,7 +5266,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.web.ReactTypeScriptProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -5276,7 +5276,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactTypeScriptProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5291,28 +5291,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.web.ReactTypeScriptProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.ReactTypeScriptProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.web.ReactTypeScriptProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactTypeScriptProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5327,14 +5327,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.web.ReactTypeScriptProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactTypeScriptProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5365,14 +5365,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.web.ReactTypeScriptProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.web.ReactTypeScriptProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -5381,7 +5381,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.web.ReactTypeScriptProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -5392,7 +5392,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.web.ReactTypeScriptProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5423,14 +5423,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.web.ReactTypeScriptProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.web.ReactTypeScriptProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 

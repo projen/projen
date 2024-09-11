@@ -130,14 +130,14 @@ The variables to add.
 ##### `addIncludes` <a name="addIncludes" id="projen.gitlab.CiConfiguration.addIncludes"></a>
 
 ```typescript
-public addIncludes(includes: Include): void
+public addIncludes(includes: ...Include[]): void
 ```
 
 Add additional yml/yaml files to the CI includes.
 
 ###### `includes`<sup>Required</sup> <a name="includes" id="projen.gitlab.CiConfiguration.addIncludes.parameter.includes"></a>
 
-- *Type:* <a href="#projen.gitlab.Include">Include</a>
+- *Type:* ...<a href="#projen.gitlab.Include">Include</a>[]
 
 The includes to add.
 
@@ -162,14 +162,14 @@ Jobs to add.
 ##### `addServices` <a name="addServices" id="projen.gitlab.CiConfiguration.addServices"></a>
 
 ```typescript
-public addServices(services: Service): void
+public addServices(services: ...Service[]): void
 ```
 
 Add additional services.
 
 ###### `services`<sup>Required</sup> <a name="services" id="projen.gitlab.CiConfiguration.addServices.parameter.services"></a>
 
-- *Type:* <a href="#projen.gitlab.Service">Service</a>
+- *Type:* ...<a href="#projen.gitlab.Service">Service</a>[]
 
 The services to add.
 
@@ -178,14 +178,14 @@ The services to add.
 ##### `addStages` <a name="addStages" id="projen.gitlab.CiConfiguration.addStages"></a>
 
 ```typescript
-public addStages(stages: string): void
+public addStages(stages: ...string[]): void
 ```
 
 Add stages to the CI configuration if not already present.
 
 ###### `stages`<sup>Required</sup> <a name="stages" id="projen.gitlab.CiConfiguration.addStages.parameter.stages"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 stages to add.
 
@@ -648,14 +648,14 @@ The variables to add.
 ##### `addIncludes` <a name="addIncludes" id="projen.gitlab.GitlabConfiguration.addIncludes"></a>
 
 ```typescript
-public addIncludes(includes: Include): void
+public addIncludes(includes: ...Include[]): void
 ```
 
 Add additional yml/yaml files to the CI includes.
 
 ###### `includes`<sup>Required</sup> <a name="includes" id="projen.gitlab.GitlabConfiguration.addIncludes.parameter.includes"></a>
 
-- *Type:* <a href="#projen.gitlab.Include">Include</a>
+- *Type:* ...<a href="#projen.gitlab.Include">Include</a>[]
 
 The includes to add.
 
@@ -680,14 +680,14 @@ Jobs to add.
 ##### `addServices` <a name="addServices" id="projen.gitlab.GitlabConfiguration.addServices"></a>
 
 ```typescript
-public addServices(services: Service): void
+public addServices(services: ...Service[]): void
 ```
 
 Add additional services.
 
 ###### `services`<sup>Required</sup> <a name="services" id="projen.gitlab.GitlabConfiguration.addServices.parameter.services"></a>
 
-- *Type:* <a href="#projen.gitlab.Service">Service</a>
+- *Type:* ...<a href="#projen.gitlab.Service">Service</a>[]
 
 The services to add.
 
@@ -696,14 +696,14 @@ The services to add.
 ##### `addStages` <a name="addStages" id="projen.gitlab.GitlabConfiguration.addStages"></a>
 
 ```typescript
-public addStages(stages: string): void
+public addStages(stages: ...string[]): void
 ```
 
 Add stages to the CI configuration if not already present.
 
 ###### `stages`<sup>Required</sup> <a name="stages" id="projen.gitlab.GitlabConfiguration.addStages.parameter.stages"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 stages to add.
 
@@ -1212,14 +1212,14 @@ The variables to add.
 ##### `addIncludes` <a name="addIncludes" id="projen.gitlab.NestedConfiguration.addIncludes"></a>
 
 ```typescript
-public addIncludes(includes: Include): void
+public addIncludes(includes: ...Include[]): void
 ```
 
 Add additional yml/yaml files to the CI includes.
 
 ###### `includes`<sup>Required</sup> <a name="includes" id="projen.gitlab.NestedConfiguration.addIncludes.parameter.includes"></a>
 
-- *Type:* <a href="#projen.gitlab.Include">Include</a>
+- *Type:* ...<a href="#projen.gitlab.Include">Include</a>[]
 
 The includes to add.
 
@@ -1244,14 +1244,14 @@ Jobs to add.
 ##### `addServices` <a name="addServices" id="projen.gitlab.NestedConfiguration.addServices"></a>
 
 ```typescript
-public addServices(services: Service): void
+public addServices(services: ...Service[]): void
 ```
 
 Add additional services.
 
 ###### `services`<sup>Required</sup> <a name="services" id="projen.gitlab.NestedConfiguration.addServices.parameter.services"></a>
 
-- *Type:* <a href="#projen.gitlab.Service">Service</a>
+- *Type:* ...<a href="#projen.gitlab.Service">Service</a>[]
 
 The services to add.
 
@@ -1260,14 +1260,14 @@ The services to add.
 ##### `addStages` <a name="addStages" id="projen.gitlab.NestedConfiguration.addStages"></a>
 
 ```typescript
-public addStages(stages: string): void
+public addStages(stages: ...string[]): void
 ```
 
 Add stages to the CI configuration if not already present.
 
 ###### `stages`<sup>Required</sup> <a name="stages" id="projen.gitlab.NestedConfiguration.addStages.parameter.stages"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 stages to add.
 

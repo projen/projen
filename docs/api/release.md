@@ -92,14 +92,14 @@ Synthesizes files to the project output directory.
 ##### `addGitHubPostPublishingSteps` <a name="addGitHubPostPublishingSteps" id="projen.release.Publisher.addGitHubPostPublishingSteps"></a>
 
 ```typescript
-public addGitHubPostPublishingSteps(steps: JobStep): void
+public addGitHubPostPublishingSteps(steps: ...JobStep[]): void
 ```
 
 Adds post publishing steps for the GitHub release job.
 
 ###### `steps`<sup>Required</sup> <a name="steps" id="projen.release.Publisher.addGitHubPostPublishingSteps.parameter.steps"></a>
 
-- *Type:* projen.github.workflows.JobStep
+- *Type:* ...projen.github.workflows.JobStep[]
 
 The steps.
 
@@ -108,14 +108,14 @@ The steps.
 ##### `addGitHubPrePublishingSteps` <a name="addGitHubPrePublishingSteps" id="projen.release.Publisher.addGitHubPrePublishingSteps"></a>
 
 ```typescript
-public addGitHubPrePublishingSteps(steps: JobStep): void
+public addGitHubPrePublishingSteps(steps: ...JobStep[]): void
 ```
 
 Adds pre publishing steps for the GitHub release job.
 
 ###### `steps`<sup>Required</sup> <a name="steps" id="projen.release.Publisher.addGitHubPrePublishingSteps.parameter.steps"></a>
 
-- *Type:* projen.github.workflows.JobStep
+- *Type:* ...projen.github.workflows.JobStep[]
 
 The steps.
 

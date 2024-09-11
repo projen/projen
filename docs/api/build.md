@@ -172,14 +172,14 @@ Specify tools and other options.
 ##### `addPostBuildSteps` <a name="addPostBuildSteps" id="projen.build.BuildWorkflow.addPostBuildSteps"></a>
 
 ```typescript
-public addPostBuildSteps(steps: JobStep): void
+public addPostBuildSteps(steps: ...JobStep[]): void
 ```
 
 Adds steps that are executed after the build.
 
 ###### `steps`<sup>Required</sup> <a name="steps" id="projen.build.BuildWorkflow.addPostBuildSteps.parameter.steps"></a>
 
-- *Type:* projen.github.workflows.JobStep
+- *Type:* ...projen.github.workflows.JobStep[]
 
 The job steps.
 

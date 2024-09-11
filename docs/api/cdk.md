@@ -252,7 +252,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk.ConstructLibrary.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -262,7 +262,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.cdk.ConstructLibrary.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -518,7 +518,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.cdk.ConstructLibrary.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -528,7 +528,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -543,28 +543,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.cdk.ConstructLibrary.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.ConstructLibrary.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.cdk.ConstructLibrary.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -579,14 +579,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.cdk.ConstructLibrary.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -617,14 +617,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.cdk.ConstructLibrary.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.cdk.ConstructLibrary.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -633,7 +633,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.cdk.ConstructLibrary.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -644,7 +644,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -675,14 +675,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.cdk.ConstructLibrary.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.ConstructLibrary.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -2300,7 +2300,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk.JsiiProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -2310,7 +2310,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.cdk.JsiiProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -2566,7 +2566,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.cdk.JsiiProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -2576,7 +2576,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2591,28 +2591,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.cdk.JsiiProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.JsiiProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.cdk.JsiiProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2627,14 +2627,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.cdk.JsiiProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2665,14 +2665,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.cdk.JsiiProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.cdk.JsiiProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -2681,7 +2681,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.cdk.JsiiProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -2692,7 +2692,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2723,14 +2723,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.cdk.JsiiProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.JsiiProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 

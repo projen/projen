@@ -1286,7 +1286,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.python.PythonProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -1296,7 +1296,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.python.PythonProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -2417,7 +2417,7 @@ Writes the file to the project's output directory.
 ##### `addPackages` <a name="addPackages" id="projen.python.RequirementsFile.addPackages"></a>
 
 ```typescript
-public addPackages(packages: string): void
+public addPackages(packages: ...string[]): void
 ```
 
 Adds the specified packages provided in semver format.
@@ -2426,7 +2426,7 @@ Comment lines (start with `#`) are ignored.
 
 ###### `packages`<sup>Required</sup> <a name="packages" id="projen.python.RequirementsFile.addPackages.parameter.packages"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Package version in format `<module>@<semver>`.
 
