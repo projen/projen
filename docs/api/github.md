@@ -265,14 +265,14 @@ Synthesizes files to the project output directory.
 ##### `addConditions` <a name="addConditions" id="projen.github.AutoMerge.addConditions"></a>
 
 ```typescript
-public addConditions(conditions: string): void
+public addConditions(conditions: ...string[]): void
 ```
 
 Adds conditions to the auto merge rule.
 
 ###### `conditions`<sup>Required</sup> <a name="conditions" id="projen.github.AutoMerge.addConditions.parameter.conditions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The conditions to add (mergify syntax).
 
@@ -484,7 +484,7 @@ Use to allow updates for dependencies with matching names, optionally using `*` 
 ##### `addIgnore` <a name="addIgnore" id="projen.github.Dependabot.addIgnore"></a>
 
 ```typescript
-public addIgnore(dependencyName: string, versions: string): void
+public addIgnore(dependencyName: string, versions: ...string[]): void
 ```
 
 Ignores a dependency from automatic updates.
@@ -499,7 +499,7 @@ Use to ignore updates for dependencies with matching names, optionally using `*`
 
 ###### `versions`<sup>Required</sup> <a name="versions" id="projen.github.Dependabot.addIgnore.parameter.versions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Use to ignore specific versions or ranges of versions.
 
@@ -719,12 +719,12 @@ public addDependabot(options?: DependabotOptions): Dependabot
 ##### `addPullRequestTemplate` <a name="addPullRequestTemplate" id="projen.github.GitHub.addPullRequestTemplate"></a>
 
 ```typescript
-public addPullRequestTemplate(content: string): PullRequestTemplate
+public addPullRequestTemplate(content: ...string[]): PullRequestTemplate
 ```
 
 ###### `content`<sup>Required</sup> <a name="content" id="projen.github.GitHub.addPullRequestTemplate.parameter.content"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -1005,7 +1005,7 @@ Returns a string representation of this construct.
 ##### ~~`addExcludeFromCleanup`~~ <a name="addExcludeFromCleanup" id="projen.github.GitHubProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -1015,7 +1015,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.github.GitHubProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 

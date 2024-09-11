@@ -245,7 +245,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.awscdk.AwsCdkConstructLibrary.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -255,7 +255,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.awscdk.AwsCdkConstructLibrary.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -511,7 +511,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.awscdk.AwsCdkConstructLibrary.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -521,7 +521,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkConstructLibrary.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -536,28 +536,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.awscdk.AwsCdkConstructLibrary.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.awscdk.AwsCdkConstructLibrary.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.awscdk.AwsCdkConstructLibrary.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkConstructLibrary.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -572,14 +572,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.awscdk.AwsCdkConstructLibrary.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkConstructLibrary.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -610,14 +610,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.awscdk.AwsCdkConstructLibrary.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.awscdk.AwsCdkConstructLibrary.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -626,7 +626,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.awscdk.AwsCdkConstructLibrary.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -637,7 +637,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkConstructLibrary.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -668,14 +668,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.awscdk.AwsCdkConstructLibrary.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.awscdk.AwsCdkConstructLibrary.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -754,7 +754,7 @@ The command to execute.
 ##### ~~`addCdkDependencies`~~ <a name="addCdkDependencies" id="projen.awscdk.AwsCdkConstructLibrary.addCdkDependencies"></a>
 
 ```typescript
-public addCdkDependencies(deps: string): void
+public addCdkDependencies(deps: ...string[]): void
 ```
 
 Adds dependencies to AWS CDK modules.
@@ -763,7 +763,7 @@ Since this is a library project, dependencies will be added as peer dependencies
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkConstructLibrary.addCdkDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -772,14 +772,14 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 ##### ~~`addCdkTestDependencies`~~ <a name="addCdkTestDependencies" id="projen.awscdk.AwsCdkConstructLibrary.addCdkTestDependencies"></a>
 
 ```typescript
-public addCdkTestDependencies(deps: string): void
+public addCdkTestDependencies(deps: ...string[]): void
 ```
 
 Adds AWS CDK modules as dev dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkConstructLibrary.addCdkTestDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -1828,7 +1828,7 @@ Synthesizes files to the project output directory.
 ##### `addV1Dependencies` <a name="addV1Dependencies" id="projen.awscdk.AwsCdkDeps.addV1Dependencies"></a>
 
 ```typescript
-public addV1Dependencies(deps: string): void
+public addV1Dependencies(deps: ...string[]): void
 ```
 
 Adds dependencies to AWS CDK modules.
@@ -1840,7 +1840,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDeps.addV1Dependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -1849,7 +1849,7 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 ##### `addV1DevDependencies` <a name="addV1DevDependencies" id="projen.awscdk.AwsCdkDeps.addV1DevDependencies"></a>
 
 ```typescript
-public addV1DevDependencies(deps: string): void
+public addV1DevDependencies(deps: ...string[]): void
 ```
 
 Adds AWS CDK modules as dev dependencies.
@@ -1859,7 +1859,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDeps.addV1DevDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 fully qualified names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2089,7 +2089,7 @@ Synthesizes files to the project output directory.
 ##### `addV1Dependencies` <a name="addV1Dependencies" id="projen.awscdk.AwsCdkDepsJava.addV1Dependencies"></a>
 
 ```typescript
-public addV1Dependencies(deps: string): void
+public addV1Dependencies(deps: ...string[]): void
 ```
 
 Adds dependencies to AWS CDK modules.
@@ -2101,7 +2101,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDepsJava.addV1Dependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2110,7 +2110,7 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 ##### `addV1DevDependencies` <a name="addV1DevDependencies" id="projen.awscdk.AwsCdkDepsJava.addV1DevDependencies"></a>
 
 ```typescript
-public addV1DevDependencies(deps: string): void
+public addV1DevDependencies(deps: ...string[]): void
 ```
 
 Adds AWS CDK modules as dev dependencies.
@@ -2120,7 +2120,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDepsJava.addV1DevDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 fully qualified names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2350,7 +2350,7 @@ Synthesizes files to the project output directory.
 ##### `addV1Dependencies` <a name="addV1Dependencies" id="projen.awscdk.AwsCdkDepsJs.addV1Dependencies"></a>
 
 ```typescript
-public addV1Dependencies(deps: string): void
+public addV1Dependencies(deps: ...string[]): void
 ```
 
 Adds dependencies to AWS CDK modules.
@@ -2362,7 +2362,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDepsJs.addV1Dependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2371,7 +2371,7 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 ##### `addV1DevDependencies` <a name="addV1DevDependencies" id="projen.awscdk.AwsCdkDepsJs.addV1DevDependencies"></a>
 
 ```typescript
-public addV1DevDependencies(deps: string): void
+public addV1DevDependencies(deps: ...string[]): void
 ```
 
 Adds AWS CDK modules as dev dependencies.
@@ -2381,7 +2381,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDepsJs.addV1DevDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 fully qualified names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2611,7 +2611,7 @@ Synthesizes files to the project output directory.
 ##### `addV1Dependencies` <a name="addV1Dependencies" id="projen.awscdk.AwsCdkDepsPy.addV1Dependencies"></a>
 
 ```typescript
-public addV1Dependencies(deps: string): void
+public addV1Dependencies(deps: ...string[]): void
 ```
 
 Adds dependencies to AWS CDK modules.
@@ -2623,7 +2623,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDepsPy.addV1Dependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2632,7 +2632,7 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 ##### `addV1DevDependencies` <a name="addV1DevDependencies" id="projen.awscdk.AwsCdkDepsPy.addV1DevDependencies"></a>
 
 ```typescript
-public addV1DevDependencies(deps: string): void
+public addV1DevDependencies(deps: ...string[]): void
 ```
 
 Adds AWS CDK modules as dev dependencies.
@@ -2642,7 +2642,7 @@ This method is not supported in CDK v2. Use `project.addPeerDeps()` or
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkDepsPy.addV1DevDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 fully qualified names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -2853,7 +2853,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.awscdk.AwsCdkJavaApp.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -2863,7 +2863,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.awscdk.AwsCdkJavaApp.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -3167,14 +3167,14 @@ Format `<groupId>/<artifactId>@<semver>`.
 ##### ~~`addCdkDependency`~~ <a name="addCdkDependency" id="projen.awscdk.AwsCdkJavaApp.addCdkDependency"></a>
 
 ```typescript
-public addCdkDependency(modules: string): void
+public addCdkDependency(modules: ...string[]): void
 ```
 
 Adds an AWS CDK module dependencies.
 
 ###### `modules`<sup>Required</sup> <a name="modules" id="projen.awscdk.AwsCdkJavaApp.addCdkDependency.parameter.modules"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The list of modules to depend on (e.g. "software.amazon.awscdk/aws-lambda", "software.amazon.awscdk/aws-iam", etc).
 
@@ -3908,7 +3908,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.awscdk.AwsCdkPythonApp.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -3918,7 +3918,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.awscdk.AwsCdkPythonApp.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -4934,7 +4934,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.awscdk.AwsCdkTypeScriptApp.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -4944,7 +4944,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.awscdk.AwsCdkTypeScriptApp.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -5200,7 +5200,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.awscdk.AwsCdkTypeScriptApp.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -5210,7 +5210,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkTypeScriptApp.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5225,28 +5225,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.awscdk.AwsCdkTypeScriptApp.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.awscdk.AwsCdkTypeScriptApp.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.awscdk.AwsCdkTypeScriptApp.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkTypeScriptApp.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5261,14 +5261,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.awscdk.AwsCdkTypeScriptApp.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkTypeScriptApp.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5299,14 +5299,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.awscdk.AwsCdkTypeScriptApp.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.awscdk.AwsCdkTypeScriptApp.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -5315,7 +5315,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.awscdk.AwsCdkTypeScriptApp.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -5326,7 +5326,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.AwsCdkTypeScriptApp.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -5357,14 +5357,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.awscdk.AwsCdkTypeScriptApp.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.awscdk.AwsCdkTypeScriptApp.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -5443,14 +5443,14 @@ The command to execute.
 ##### `addCdkDependency` <a name="addCdkDependency" id="projen.awscdk.AwsCdkTypeScriptApp.addCdkDependency"></a>
 
 ```typescript
-public addCdkDependency(modules: string): void
+public addCdkDependency(modules: ...string[]): void
 ```
 
 Adds an AWS CDK module dependencies.
 
 ###### `modules`<sup>Required</sup> <a name="modules" id="projen.awscdk.AwsCdkTypeScriptApp.addCdkDependency.parameter.modules"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The list of modules to depend on.
 
@@ -6525,14 +6525,14 @@ Synthesizes files to the project output directory.
 ##### `addExcludes` <a name="addExcludes" id="projen.awscdk.CdkConfig.addExcludes"></a>
 
 ```typescript
-public addExcludes(patterns: string): void
+public addExcludes(patterns: ...string[]): void
 ```
 
 Add excludes to `cdk.json`.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.awscdk.CdkConfig.addExcludes.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The excludes to add.
 
@@ -6541,14 +6541,14 @@ The excludes to add.
 ##### `addIncludes` <a name="addIncludes" id="projen.awscdk.CdkConfig.addIncludes"></a>
 
 ```typescript
-public addIncludes(patterns: string): void
+public addIncludes(patterns: ...string[]): void
 ```
 
 Add includes to `cdk.json`.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.awscdk.CdkConfig.addIncludes.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The includes to add.
 
@@ -7003,7 +7003,7 @@ Returns a string representation of this construct.
 ##### ~~`addExcludeFromCleanup`~~ <a name="addExcludeFromCleanup" id="projen.awscdk.ConstructLibraryAws.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -7013,7 +7013,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.awscdk.ConstructLibraryAws.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -7269,7 +7269,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### ~~`addBundledDeps`~~ <a name="addBundledDeps" id="projen.awscdk.ConstructLibraryAws.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -7279,7 +7279,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.ConstructLibraryAws.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -7294,28 +7294,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.awscdk.ConstructLibraryAws.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.awscdk.ConstructLibraryAws.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### ~~`addDeps`~~ <a name="addDeps" id="projen.awscdk.ConstructLibraryAws.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.ConstructLibraryAws.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -7330,14 +7330,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addDevDeps`~~ <a name="addDevDeps" id="projen.awscdk.ConstructLibraryAws.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.ConstructLibraryAws.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -7368,14 +7368,14 @@ The fields to set.
 ##### ~~`addKeywords`~~ <a name="addKeywords" id="projen.awscdk.ConstructLibraryAws.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.awscdk.ConstructLibraryAws.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -7384,7 +7384,7 @@ The keywords to add.
 ##### ~~`addPeerDeps`~~ <a name="addPeerDeps" id="projen.awscdk.ConstructLibraryAws.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -7395,7 +7395,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.ConstructLibraryAws.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -7426,14 +7426,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.awscdk.ConstructLibraryAws.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.awscdk.ConstructLibraryAws.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -7512,7 +7512,7 @@ The command to execute.
 ##### ~~`addCdkDependencies`~~ <a name="addCdkDependencies" id="projen.awscdk.ConstructLibraryAws.addCdkDependencies"></a>
 
 ```typescript
-public addCdkDependencies(deps: string): void
+public addCdkDependencies(deps: ...string[]): void
 ```
 
 Adds dependencies to AWS CDK modules.
@@ -7521,7 +7521,7 @@ Since this is a library project, dependencies will be added as peer dependencies
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.ConstructLibraryAws.addCdkDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
@@ -7530,14 +7530,14 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 ##### ~~`addCdkTestDependencies`~~ <a name="addCdkTestDependencies" id="projen.awscdk.ConstructLibraryAws.addCdkTestDependencies"></a>
 
 ```typescript
-public addCdkTestDependencies(deps: string): void
+public addCdkTestDependencies(deps: ...string[]): void
 ```
 
 Adds AWS CDK modules as dev dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.awscdk.ConstructLibraryAws.addCdkTestDependencies.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 

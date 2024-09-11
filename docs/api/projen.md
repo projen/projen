@@ -1249,7 +1249,7 @@ Writes the file to the project's output directory.
 ##### `addAttributes` <a name="addAttributes" id="projen.GitAttributesFile.addAttributes"></a>
 
 ```typescript
-public addAttributes(glob: string, attributes: string): void
+public addAttributes(glob: string, attributes: ...string[]): void
 ```
 
 Maps a set of attributes to a set of files.
@@ -1264,7 +1264,7 @@ Glob pattern to match files in the repo.
 
 ###### `attributes`<sup>Required</sup> <a name="attributes" id="projen.GitAttributesFile.addAttributes.parameter.attributes"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Attributes to assign to these files.
 
@@ -1605,14 +1605,14 @@ The Docker image.
 ##### `addPorts` <a name="addPorts" id="projen.Gitpod.addPorts"></a>
 
 ```typescript
-public addPorts(ports: string): void
+public addPorts(ports: ...string[]): void
 ```
 
 Add ports that should be exposed (forwarded) from the container.
 
 ###### `ports`<sup>Required</sup> <a name="ports" id="projen.Gitpod.addPorts.parameter.ports"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The new ports.
 
@@ -1637,7 +1637,7 @@ The configuration.
 ##### `addTasks` <a name="addTasks" id="projen.Gitpod.addTasks"></a>
 
 ```typescript
-public addTasks(tasks: Task): void
+public addTasks(tasks: ...Task[]): void
 ```
 
 Add tasks to run when gitpod starts.
@@ -1647,7 +1647,7 @@ create a new `Task` and specify the other tasks as subtasks.
 
 ###### `tasks`<sup>Required</sup> <a name="tasks" id="projen.Gitpod.addTasks.parameter.tasks"></a>
 
-- *Type:* <a href="#projen.Task">Task</a>
+- *Type:* ...<a href="#projen.Task">Task</a>[]
 
 The new tasks.
 
@@ -1656,7 +1656,7 @@ The new tasks.
 ##### `addVscodeExtensions` <a name="addVscodeExtensions" id="projen.Gitpod.addVscodeExtensions"></a>
 
 ```typescript
-public addVscodeExtensions(extensions: string): void
+public addVscodeExtensions(extensions: ...string[]): void
 ```
 
 Add a list of VSCode extensions that should be automatically installed in the container.
@@ -1674,7 +1674,7 @@ These must be in the format defined in the Open VSX registry.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.Gitpod.addVscodeExtensions.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 
@@ -1874,7 +1874,7 @@ Writes the file to the project's output directory.
 ##### `addPatterns` <a name="addPatterns" id="projen.IgnoreFile.addPatterns"></a>
 
 ```typescript
-public addPatterns(patterns: string): void
+public addPatterns(patterns: ...string[]): void
 ```
 
 Add ignore patterns.
@@ -1888,7 +1888,7 @@ but can be included using options specified when instantiating the component.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.addPatterns.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Ignore patterns.
 
@@ -1897,14 +1897,14 @@ Ignore patterns.
 ##### `exclude` <a name="exclude" id="projen.IgnoreFile.exclude"></a>
 
 ```typescript
-public exclude(patterns: string): void
+public exclude(patterns: ...string[]): void
 ```
 
 Ignore the files that match these patterns.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.exclude.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The patterns to match.
 
@@ -1913,14 +1913,14 @@ The patterns to match.
 ##### `include` <a name="include" id="projen.IgnoreFile.include"></a>
 
 ```typescript
-public include(patterns: string): void
+public include(patterns: ...string[]): void
 ```
 
 Always include the specified file patterns.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.include.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Patterns to include in git commits.
 
@@ -1929,7 +1929,7 @@ Patterns to include in git commits.
 ##### `removePatterns` <a name="removePatterns" id="projen.IgnoreFile.removePatterns"></a>
 
 ```typescript
-public removePatterns(patterns: string): void
+public removePatterns(patterns: ...string[]): void
 ```
 
 Removes patterns previously added from the ignore file.
@@ -1938,7 +1938,7 @@ If `addPattern()` is called after this, the pattern will be added again.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.removePatterns.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 patters to remove.
 
@@ -2300,7 +2300,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.IniFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -2349,7 +2349,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.IniFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -2360,7 +2360,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.IniFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -2391,7 +2391,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.IniFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -2744,7 +2744,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.JsonFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -2793,7 +2793,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.JsonFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -2804,7 +2804,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.JsonFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -2835,7 +2835,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.JsonFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -3370,14 +3370,14 @@ Synthesizes files to the project output directory.
 ##### `debug` <a name="debug" id="projen.Logger.debug"></a>
 
 ```typescript
-public debug(text: any): void
+public debug(text: ...any[]): void
 ```
 
 Log a message to stderr with DEBUG severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.debug.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -3386,14 +3386,14 @@ strings or objects to print.
 ##### `error` <a name="error" id="projen.Logger.error"></a>
 
 ```typescript
-public error(text: any): void
+public error(text: ...any[]): void
 ```
 
 Log a message to stderr with ERROR severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.error.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -3402,14 +3402,14 @@ strings or objects to print.
 ##### `info` <a name="info" id="projen.Logger.info"></a>
 
 ```typescript
-public info(text: any): void
+public info(text: ...any[]): void
 ```
 
 Log a message to stderr with INFO severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.info.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -3418,7 +3418,7 @@ strings or objects to print.
 ##### `log` <a name="log" id="projen.Logger.log"></a>
 
 ```typescript
-public log(level: LogLevel, text: any): void
+public log(level: LogLevel, text: ...any[]): void
 ```
 
 Log a message to stderr with a given logging level.
@@ -3436,7 +3436,7 @@ Logging verbosity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.log.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -3445,14 +3445,14 @@ strings or objects to print.
 ##### `verbose` <a name="verbose" id="projen.Logger.verbose"></a>
 
 ```typescript
-public verbose(text: any): void
+public verbose(text: ...any[]): void
 ```
 
 Log a message to stderr with VERBOSE severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.verbose.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -3461,14 +3461,14 @@ strings or objects to print.
 ##### `warn` <a name="warn" id="projen.Logger.warn"></a>
 
 ```typescript
-public warn(text: any): void
+public warn(text: ...any[]): void
 ```
 
 Log a message to stderr with WARN severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.warn.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -3667,14 +3667,14 @@ Add a target to all.
 ##### `addAlls` <a name="addAlls" id="projen.Makefile.addAlls"></a>
 
 ```typescript
-public addAlls(targets: string): Makefile
+public addAlls(targets: ...string[]): Makefile
 ```
 
 Add multiple targets to all.
 
 ###### `targets`<sup>Required</sup> <a name="targets" id="projen.Makefile.addAlls.parameter.targets"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -3695,14 +3695,14 @@ Add a rule to the Makefile.
 ##### `addRules` <a name="addRules" id="projen.Makefile.addRules"></a>
 
 ```typescript
-public addRules(rules: Rule): Makefile
+public addRules(rules: ...Rule[]): Makefile
 ```
 
 Add multiple rules to the Makefile.
 
 ###### `rules`<sup>Required</sup> <a name="rules" id="projen.Makefile.addRules.parameter.rules"></a>
 
-- *Type:* <a href="#projen.Rule">Rule</a>
+- *Type:* ...<a href="#projen.Rule">Rule</a>[]
 
 ---
 
@@ -4053,7 +4053,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.ObjectFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -4102,7 +4102,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.ObjectFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -4113,7 +4113,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.ObjectFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -4144,7 +4144,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.ObjectFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -4394,7 +4394,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.Project.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -4404,7 +4404,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.Project.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -7744,7 +7744,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.TomlFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -7793,7 +7793,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.TomlFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -7804,7 +7804,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.TomlFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -7835,7 +7835,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.TomlFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -8450,7 +8450,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.XmlFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -8499,7 +8499,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.XmlFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -8510,7 +8510,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.XmlFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -8541,7 +8541,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.XmlFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -8894,7 +8894,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.YamlFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -8943,7 +8943,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.YamlFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -8954,7 +8954,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.YamlFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -8985,7 +8985,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.YamlFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -14396,7 +14396,7 @@ JsonPatch.add('/biscuits/1', { "name": "Ginger Nut" })
 ```typescript
 import { JsonPatch } from 'projen'
 
-JsonPatch.apply(document: any, ops: JsonPatch)
+JsonPatch.apply(document: any, ops: ...JsonPatch[])
 ```
 
 Applies a set of JSON-Patch (RFC-6902) operations to `document` and returns the result.
@@ -14411,7 +14411,7 @@ The document to patch.
 
 ###### `ops`<sup>Required</sup> <a name="ops" id="projen.JsonPatch.apply.parameter.ops"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The operations to apply.
 
@@ -14975,7 +14975,7 @@ new Task(name: string, props?: TaskOptions)
 ##### `addCondition` <a name="addCondition" id="projen.Task.addCondition"></a>
 
 ```typescript
-public addCondition(condition: string): void
+public addCondition(condition: ...string[]): void
 ```
 
 Add a command to execute which determines if the task should be skipped.
@@ -14986,7 +14986,7 @@ If a condition already exists, the new condition will be appended with ` && ` de
 
 ###### `condition`<sup>Required</sup> <a name="condition" id="projen.Task.addCondition.parameter.condition"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The command to execute.
 
@@ -15626,14 +15626,14 @@ The Docker image.
 ##### `addPorts` <a name="addPorts" id="projen.IDevEnvironment.addPorts"></a>
 
 ```typescript
-public addPorts(ports: string): void
+public addPorts(ports: ...string[]): void
 ```
 
 Adds ports that should be exposed (forwarded) from the container.
 
 ###### `ports`<sup>Required</sup> <a name="ports" id="projen.IDevEnvironment.addPorts.parameter.ports"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The new ports.
 
@@ -15642,14 +15642,14 @@ The new ports.
 ##### `addTasks` <a name="addTasks" id="projen.IDevEnvironment.addTasks"></a>
 
 ```typescript
-public addTasks(tasks: Task): void
+public addTasks(tasks: ...Task[]): void
 ```
 
 Adds tasks to run when the container starts.
 
 ###### `tasks`<sup>Required</sup> <a name="tasks" id="projen.IDevEnvironment.addTasks.parameter.tasks"></a>
 
-- *Type:* <a href="#projen.Task">Task</a>
+- *Type:* ...<a href="#projen.Task">Task</a>[]
 
 The new tasks.
 
@@ -15658,14 +15658,14 @@ The new tasks.
 ##### `addVscodeExtensions` <a name="addVscodeExtensions" id="projen.IDevEnvironment.addVscodeExtensions"></a>
 
 ```typescript
-public addVscodeExtensions(extensions: string): void
+public addVscodeExtensions(extensions: ...string[]): void
 ```
 
 Adds a list of VSCode extensions that should be automatically installed in the container.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.IDevEnvironment.addVscodeExtensions.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 

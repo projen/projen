@@ -1499,9 +1499,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001646:
-  version "1.0.30001659"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001659.tgz#f370c311ffbc19c4965d8ec0064a3625c8aaa7af"
-  integrity sha512-Qxxyfv3RdHAfJcXelgf0hU4DFUVXBGTjqrBUZLUh8AtlGnsDo+CnncYtTd95+ZKfnANUOzxyIQCuU/UeBZBYoA==
+  version "1.0.30001660"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001660.tgz#31218de3463fabb44d0b7607b652e56edf2e2355"
+  integrity sha512-GacvNTTuATm26qC74pt+ad1fW15mlQ/zuTzzY1ZoIzECTP8HURDfF43kNxPgf7H1jmelCBQTTbBNxdSXOA7Bqg==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2123,9 +2123,9 @@ ejs@^3.1.10:
     jake "^10.8.5"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.18"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.18.tgz#5fe62b9d21efbcfa26571066502d94f3ed97e495"
-  integrity sha512-1OfuVACu+zKlmjsNdcJuVQuVE61sZOLbNM4JAQ1Rvh6EOj0/EUKhMJjRH73InPlXSh8HIJk1cVZ8pyOV/FMdUQ==
+  version "1.5.19"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.19.tgz#aeaa0a076f3f0f0e8db2c57fd10158508f00725a"
+  integrity sha512-kpLJJi3zxTR1U828P+LIUDZ5ohixyo68/IcYOHLqnbTPr/wdgn4i1ECvmALN9E16JPA6cvCG5UG79gVwVdEK5w==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -3780,9 +3780,9 @@ jsii-diff@^1.103.1:
     yargs "^16.2.0"
 
 jsii-docgen@^10.5.0:
-  version "10.5.2"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.5.2.tgz#09ebc7525cc8c09ccd59a2a73ddbd2dbbeb7e75e"
-  integrity sha512-1qDMCvd22f5WnQRYqfexvyA/60KLPdPl2YqY1P5kqzfU3ImyPRNKKe2/KZxGZb2h78SEkXyvdaJvIdDto2Z+IQ==
+  version "10.5.3"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.5.3.tgz#f5bfa35f9737914cafc4f57752766831d685a6db"
+  integrity sha512-H6QAaaoRG5/AnnuQWZcl8RKO09ButL8VYCuabbMr2lZBb2q9j15jnBhiQljtNVw/TvFikNn4aJ12p3Dra8DKbw==
   dependencies:
     "@jsii/spec" "^1.103.0"
     case "^1.6.3"
