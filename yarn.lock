@@ -2123,9 +2123,9 @@ ejs@^3.1.10:
     jake "^10.8.5"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.21"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.21.tgz#f331794ee99045f2b2d73bc1d2dc654a13c462ee"
-  integrity sha512-+rBAerCpQvFSPyAO677i5gJuWGO2WFsoujENdcMzsrpP7Ebcc3pmpERgU8CV4fFF10a5haP4ivnFQ/AmLICBVg==
+  version "1.5.22"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.22.tgz#5ae58990a35391bad7605742e52855a0f281ef82"
+  integrity sha512-tKYm5YHPU1djz0O+CGJ+oJIvimtsCcwR2Z9w7Skh08lUdyzXY5djods3q+z2JkWdb7tCcmM//eVavSRAiaPRNg==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5526,9 +5526,9 @@ typescript@5.5.x, typescript@~5.5:
   integrity sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==
 
 typescript@next:
-  version "5.7.0-dev.20240912"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240912.tgz#18c62679bece831289c7dfc23cb9f170f011eb5d"
-  integrity sha512-mDTEqq6tLag5w75BeGd1g9t64z7dlhTl/3x0CP1bG/638MXiBbvCoI5sbkcEY0UoYUxP7EeIi7ZI6HBd9lDPFw==
+  version "5.7.0-dev.20240913"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20240913.tgz#e2a0e3be0b9e5e4f80f307174bf75c7ca13f5408"
+  integrity sha512-cnMtLIMpmtz4XXNNvXJ8A8Mi8E1Q74cka3qcGnYVRWPqe9GmUvFI6vfcupvr9IjKBMVjpHgG5SuR5Da0Hv6CJA==
 
 uglify-js@^3.1.4:
   version "3.19.3"
