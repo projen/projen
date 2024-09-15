@@ -341,14 +341,14 @@ Synthesizes files to the project output directory.
 ##### `addExtends` <a name="addExtends" id="projen.javascript.Eslint.addExtends"></a>
 
 ```typescript
-public addExtends(extendList: string): void
+public addExtends(extendList: ...string[]): void
 ```
 
 Adds an `extends` item to the eslint configuration.
 
 ###### `extendList`<sup>Required</sup> <a name="extendList" id="projen.javascript.Eslint.addExtends.parameter.extendList"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The list of "extends" to add.
 
@@ -399,14 +399,14 @@ Add an eslint override.
 ##### `addPlugins` <a name="addPlugins" id="projen.javascript.Eslint.addPlugins"></a>
 
 ```typescript
-public addPlugins(plugins: string): void
+public addPlugins(plugins: ...string[]): void
 ```
 
 Adds an eslint plugin.
 
 ###### `plugins`<sup>Required</sup> <a name="plugins" id="projen.javascript.Eslint.addPlugins.parameter.plugins"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The names of plugins to add.
 
@@ -750,14 +750,14 @@ A map from regular expressions to module names or to arrays of module names that
 ##### `addModulePaths` <a name="addModulePaths" id="projen.javascript.Jest.addModulePaths"></a>
 
 ```typescript
-public addModulePaths(modulePaths: string): void
+public addModulePaths(modulePaths: ...string[]): void
 ```
 
 Adds one or more modulePaths to Jest's configuration.
 
 ###### `modulePaths`<sup>Required</sup> <a name="modulePaths" id="projen.javascript.Jest.addModulePaths.parameter.modulePaths"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 An array of absolute paths to additional locations to search when resolving modules   *.
 
@@ -778,14 +778,14 @@ public addReporter(reporter: JestReporter): void
 ##### `addRoots` <a name="addRoots" id="projen.javascript.Jest.addRoots"></a>
 
 ```typescript
-public addRoots(roots: string): void
+public addRoots(roots: ...string[]): void
 ```
 
 Adds one or more roots to Jest's configuration.
 
 ###### `roots`<sup>Required</sup> <a name="roots" id="projen.javascript.Jest.addRoots.parameter.roots"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 A list of paths to directories that Jest should use to search for files in.
 
@@ -1321,7 +1321,7 @@ public addBin(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.javascript.NodePackage.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -1331,7 +1331,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1346,14 +1346,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDeps` <a name="addDeps" id="projen.javascript.NodePackage.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1368,14 +1368,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.javascript.NodePackage.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1438,14 +1438,14 @@ field value.
 ##### `addKeywords` <a name="addKeywords" id="projen.javascript.NodePackage.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.javascript.NodePackage.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -1454,14 +1454,14 @@ The keywords to add.
 ##### `addPackageResolutions` <a name="addPackageResolutions" id="projen.javascript.NodePackage.addPackageResolutions"></a>
 
 ```typescript
-public addPackageResolutions(resolutions: string): void
+public addPackageResolutions(resolutions: ...string[]): void
 ```
 
 Defines resolutions for dependencies to change the normally resolved version of a dependency to something else.
 
 ###### `resolutions`<sup>Required</sup> <a name="resolutions" id="projen.javascript.NodePackage.addPackageResolutions.parameter.resolutions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names resolutions to be added.
 
@@ -1474,7 +1474,7 @@ range with this syntax:
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.javascript.NodePackage.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -1485,7 +1485,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2075,7 +2075,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.javascript.NodeProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -2085,7 +2085,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.javascript.NodeProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -2341,7 +2341,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.javascript.NodeProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -2351,7 +2351,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2366,28 +2366,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.javascript.NodeProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.javascript.NodeProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.javascript.NodeProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2402,14 +2402,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.javascript.NodeProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2440,14 +2440,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.javascript.NodeProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.javascript.NodeProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -2456,7 +2456,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.javascript.NodeProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -2467,7 +2467,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2498,14 +2498,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.javascript.NodeProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.javascript.NodeProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -4466,14 +4466,14 @@ Synthesizes files to the project output directory.
 ##### `addPostBuildSteps` <a name="addPostBuildSteps" id="projen.javascript.UpgradeDependencies.addPostBuildSteps"></a>
 
 ```typescript
-public addPostBuildSteps(steps: JobStep): void
+public addPostBuildSteps(steps: ...JobStep[]): void
 ```
 
 Add steps to execute a successful build.
 
 ###### `steps`<sup>Required</sup> <a name="steps" id="projen.javascript.UpgradeDependencies.addPostBuildSteps.parameter.steps"></a>
 
-- *Type:* projen.github.workflows.JobStep
+- *Type:* ...projen.github.workflows.JobStep[]
 
 workflow steps.
 
@@ -8242,7 +8242,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -9537,7 +9537,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 
@@ -14984,6 +14984,7 @@ Determines how modules get resolved.
 | --- | --- |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.CLASSIC">CLASSIC</a></code> | TypeScript's former default resolution strategy. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE">NODE</a></code> | Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime. |
+| <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE10">NODE10</a></code> | `--moduleResolution node` was renamed to `node10` (keeping `node` as an alias for backward compatibility) in TypeScript 5.0. It reflects the CommonJS module resolution algorithm as it existed in Node.js versions earlier than v12. It should no longer be used. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE16">NODE16</a></code> | Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE_NEXT">NODE_NEXT</a></code> | Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.BUNDLER">BUNDLER</a></code> | Resolution strategy which attempts to mimic resolution patterns of modern bundlers; |
@@ -15004,6 +15005,15 @@ TypeScript's former default resolution strategy.
 Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 
 > [https://www.typescriptlang.org/docs/handbook/module-resolution.html#node](https://www.typescriptlang.org/docs/handbook/module-resolution.html#node)
+
+---
+
+
+##### `NODE10` <a name="NODE10" id="projen.javascript.TypeScriptModuleResolution.NODE10"></a>
+
+`--moduleResolution node` was renamed to `node10` (keeping `node` as an alias for backward compatibility) in TypeScript 5.0. It reflects the CommonJS module resolution algorithm as it existed in Node.js versions earlier than v12. It should no longer be used.
+
+> [https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node](https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node)
 
 ---
 

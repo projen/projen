@@ -11,7 +11,9 @@ import {
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
+import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
+import { DependencyType } from "../dependencies";
 import {
   AutoMerge,
   DependabotOptions,
@@ -21,7 +23,7 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
-import { secretToString } from "../github/util";
+import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
   JobPermission,
   JobPermissions,
@@ -52,7 +54,6 @@ import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
-import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -510,7 +511,9 @@ export class NodeProject extends GitHubProject {
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.workflowPackageCache = options.workflowPackageCache ?? false;
-    this.artifactsDirectory = options.artifactsDirectory ?? "dist";
+    this.artifactsDirectory =
+      options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
+    ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     const normalizedArtifactsDirectory = normalizePersistedPath(
       this.artifactsDirectory
     );
@@ -594,7 +597,16 @@ export class NodeProject extends GitHubProject {
     if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
-      this.addDevDeps(`constructs@^10.0.0`);
+
+      if (
+        !this.deps.isDependencySatisfied(
+          "constructs",
+          DependencyType.BUILD,
+          "^10.0.0"
+        )
+      ) {
+        this.addDevDeps(`constructs@^10.0.0`);
+      }
     }
 
     if (!options.defaultReleaseBranch) {
@@ -640,7 +652,7 @@ export class NodeProject extends GitHubProject {
           mutable:
             buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
-        postBuildSteps: options.postBuildSteps,
+        postBuildSteps: [...(options.postBuildSteps ?? [])],
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
           options.workflowRunsOnGroup
@@ -657,7 +669,6 @@ export class NodeProject extends GitHubProject {
       options.releaseWorkflow ??
       (this.parent ? false : true);
     if (release) {
-      this.addDevDeps(Version.STANDARD_VERSION);
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,

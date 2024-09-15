@@ -15,6 +15,7 @@ import {
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
@@ -261,7 +262,7 @@ export class Publisher extends Component {
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? "",
         VERSION_FILE: versionFile,
       },
-      condition: '! git log --oneline -1 | grep -q "chore(release):"',
+      condition: CHANGES_SINCE_LAST_RELEASE,
     });
     if (projectChangelogFile) {
       publishTask.builtin("release/update-changelog");
@@ -615,7 +616,6 @@ export class Publisher extends Component {
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
-          GITHUB_REPO: options.githubRepo,
           GIT_BRANCH: options.gitBranch,
           GIT_USER_NAME:
             options.gitUserName ?? DEFAULT_GITHUB_ACTIONS_USER.name,
@@ -861,7 +861,7 @@ interface PublishJobOptions {
 export interface CommonPublishOptions {
   /**
    * Steps to execute before executing the publishing command. These can be used
-   * to prepare the artifact for publishing if neede.
+   * to prepare the artifact for publishing if needed.
    *
    * These steps are executed after `dist/` has been populated with the build
    * output.
@@ -1193,13 +1193,6 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * @default false
    */
   readonly githubUseSsh?: boolean;
-
-  /**
-   * GitHub repository to push to.
-   *
-   * @default - derived from `moduleName`
-   */
-  readonly githubRepo?: string;
 
   /**
    * Branch to push to.

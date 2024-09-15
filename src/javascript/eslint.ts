@@ -1,5 +1,5 @@
-import { Prettier } from "./prettier";
 import { Project, TaskStepOptions } from "..";
+import { Prettier } from "./prettier";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { ICompareString } from "../compare";
 import { Component } from "../component";

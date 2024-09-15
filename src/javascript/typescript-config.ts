@@ -64,6 +64,16 @@ export enum TypeScriptModuleResolution {
   NODE = "node",
 
   /**
+   * `--moduleResolution node` was renamed to `node10`
+   * (keeping `node` as an alias for backward compatibility) in TypeScript 5.0.
+   * It reflects the CommonJS module resolution algorithm as it existed in Node.js versions
+   * earlier than v12. It should no longer be used.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node
+   */
+  NODE10 = "node10",
+
+  /**
    * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
    *
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution

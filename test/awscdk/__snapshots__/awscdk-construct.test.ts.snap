@@ -40,24 +40,24 @@ exports[`node version in workflow does setup a custom version 1`] = `
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
       "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
-        "name": ".repo.patch",
+        "name": "repo.patch",
         "overwrite": true,
-        "path": ".repo.patch",
+        "path": "repo.patch",
       },
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-cat .repo.patch
+cat repo.patch
 exit 1",
     },
     {
@@ -67,7 +67,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
@@ -118,24 +118,24 @@ exports[`node version in workflow does setup default version 1`] = `
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
       "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
-        "name": ".repo.patch",
+        "name": "repo.patch",
         "overwrite": true,
-        "path": ".repo.patch",
+        "path": "repo.patch",
       },
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-cat .repo.patch
+cat repo.patch
 exit 1",
     },
     {
@@ -145,7 +145,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
@@ -196,24 +196,24 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
       "id": "self_mutation",
       "name": "Find mutations",
       "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
       "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
-        "name": ".repo.patch",
+        "name": "repo.patch",
         "overwrite": true,
-        "path": ".repo.patch",
+        "path": "repo.patch",
       },
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-cat .repo.patch
+cat repo.patch
 exit 1",
     },
     {
@@ -223,7 +223,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4",
+      "uses": "actions/upload-artifact@v4.4.0",
       "with": {
         "name": "build-artifact",
         "overwrite": true,

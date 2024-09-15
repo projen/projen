@@ -252,7 +252,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk.ConstructLibrary.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -262,7 +262,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.cdk.ConstructLibrary.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -518,7 +518,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.cdk.ConstructLibrary.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -528,7 +528,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -543,28 +543,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.cdk.ConstructLibrary.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.ConstructLibrary.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.cdk.ConstructLibrary.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -579,14 +579,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.cdk.ConstructLibrary.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -617,14 +617,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.cdk.ConstructLibrary.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.cdk.ConstructLibrary.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -633,7 +633,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.cdk.ConstructLibrary.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -644,7 +644,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.ConstructLibrary.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -675,14 +675,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.cdk.ConstructLibrary.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.ConstructLibrary.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -2063,6 +2063,171 @@ Just update snapshot (without deployment).
 ---
 
 
+### JsiiDocgen <a name="JsiiDocgen" id="projen.cdk.JsiiDocgen"></a>
+
+Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
+
+#### Initializers <a name="Initializers" id="projen.cdk.JsiiDocgen.Initializer"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+new cdk.JsiiDocgen(scope: IConstruct, options?: JsiiDocgenOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.options">options</a></code> | <code><a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.cdk.JsiiDocgen.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.cdk.JsiiDocgen.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk.JsiiDocgen.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.cdk.JsiiDocgen.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk.JsiiDocgen.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.cdk.JsiiDocgen.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.cdk.JsiiDocgen.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.cdk.JsiiDocgen.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.cdk.JsiiDocgen.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.cdk.JsiiDocgen.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.cdk.JsiiDocgen.isConstruct"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiDocgen.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.cdk.JsiiDocgen.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.cdk.JsiiDocgen.isComponent"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiDocgen.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.cdk.JsiiDocgen.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiDocgen.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.cdk.JsiiDocgen.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.cdk.JsiiDocgen.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.cdk.JsiiDocgen.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+
 ### JsiiProject <a name="JsiiProject" id="projen.cdk.JsiiProject"></a>
 
 Multi-language jsii library project.
@@ -2135,7 +2300,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk.JsiiProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -2145,7 +2310,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.cdk.JsiiProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -2401,7 +2566,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.cdk.JsiiProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -2411,7 +2576,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2426,28 +2591,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.cdk.JsiiProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.JsiiProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.cdk.JsiiProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2462,14 +2627,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.cdk.JsiiProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2500,14 +2665,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.cdk.JsiiProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.cdk.JsiiProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -2516,7 +2681,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.cdk.JsiiProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -2527,7 +2692,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.cdk.JsiiProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2558,14 +2723,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.cdk.JsiiProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.cdk.JsiiProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -3769,7 +3934,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.cdk.ConstructLibraryOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -5099,7 +5264,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 
@@ -6267,6 +6432,7 @@ const jsiiDocgenOptions: cdk.JsiiDocgenOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiDocgenOptions.property.filePath">filePath</a></code> | <code>string</code> | File path for generated docs. |
+| <code><a href="#projen.cdk.JsiiDocgenOptions.property.version">version</a></code> | <code>string</code> | A semver version string to install a specific version of jsii-docgen. |
 
 ---
 
@@ -6280,6 +6446,19 @@ public readonly filePath: string;
 - *Default:* "API.md"
 
 File path for generated docs.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.cdk.JsiiDocgenOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* '*'
+
+A semver version string to install a specific version of jsii-docgen.
 
 ---
 
@@ -6298,7 +6477,7 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiDotNetTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiDotNetTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
@@ -6334,7 +6513,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -6428,18 +6607,18 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitCommitMessage">gitCommitMessage</a></code> | <code>string</code> | The commit message. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.githubDeployKeySecret">githubDeployKeySecret</a></code> | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.githubRepo">githubRepo</a></code> | <code>string</code> | GitHub repository to push to. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.githubTokenSecret">githubTokenSecret</a></code> | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitUserEmail">gitUserEmail</a></code> | <code>string</code> | The email to use in the release git commit. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitUserName">gitUserName</a></code> | <code>string</code> | The user name to use for the release git commit. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target go module. |
-| <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the go package. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target repository in which this module will be published (e.g. github.com/owner/repo). |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the Go package name. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.versionSuffix">versionSuffix</a></code> | <code>string</code> | A suffix appended at the end of the module version (e.g `"-devprefix"`). |
 
 ---
 
@@ -6469,7 +6648,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -6529,19 +6708,6 @@ public readonly githubDeployKeySecret: string;
 The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.
 
 Ignored if `githubUseSsh` is `false`.
-
----
-
-##### `githubRepo`<sup>Optional</sup> <a name="githubRepo" id="projen.cdk.JsiiGoTarget.property.githubRepo"></a>
-
-```typescript
-public readonly githubRepo: string;
-```
-
-- *Type:* string
-- *Default:* derived from `moduleName`
-
-GitHub repository to push to.
 
 ---
 
@@ -6607,14 +6773,17 @@ public readonly moduleName: string;
 
 - *Type:* string
 
-The name of the target go module.
+The name of the target repository in which this module will be published (e.g. github.com/owner/repo).
+
+The module itself will always be published under a subdirectory named according
+to the `packageName` of the module (e.g. github.com/foo/bar/pkg).
 
 ---
 
 *Example*
 
 ```typescript
-github.com/owner/repo/subdir
+github.com/owner/repo
 ```
 
 
@@ -6625,9 +6794,25 @@ public readonly packageName: string;
 ```
 
 - *Type:* string
-- *Default:* derived from the module name
+- *Default:* derived from the JavaScript module name
 
-The name of the go package.
+The name of the Go package name.
+
+If not specified, package name will be derived from the JavaScript module name
+by removing non-alphanumeric characters (e.g.
+
+---
+
+##### `versionSuffix`<sup>Optional</sup> <a name="versionSuffix" id="projen.cdk.JsiiGoTarget.property.versionSuffix"></a>
+
+```typescript
+public readonly versionSuffix: string;
+```
+
+- *Type:* string
+- *Default:* none
+
+A suffix appended at the end of the module version (e.g `"-devprefix"`).
 
 ---
 
@@ -6646,7 +6831,7 @@ const jsiiJavaTarget: cdk.JsiiJavaTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiJavaTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiJavaTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenEndpoint">mavenEndpoint</a></code> | <code>string</code> | URL of Nexus repository. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenGpgPrivateKeyPassphrase">mavenGpgPrivateKeyPassphrase</a></code> | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it. |
@@ -6688,7 +6873,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -6963,7 +7148,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
-| <code><a href="#projen.cdk.JsiiProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with standard-version package. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.workflowContainerImage">workflowContainerImage</a></code> | <code>string</code> | Container image to use for GitHub workflows. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -8292,7 +8477,7 @@ public readonly versionrcOptions: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 - *Default:* standard configuration applicable for GitHub repositories
 
-Custom configuration used when creating changelog with standard-version package.
+Custom configuration used when creating changelog with commit-and-tag-version package.
 
 Given values either append to default configuration or overwrite values in it.
 
@@ -9334,7 +9519,7 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
-| <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. |
+| <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.release.CodeArtifactOptions</code> | Options for publishing to AWS CodeArtifact. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
@@ -9371,7 +9556,7 @@ public readonly prePublishSteps: JobStep[];
 
 - *Type:* projen.github.workflows.JobStep[]
 
-Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.
+Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed.
 
 These steps are executed after `dist/` has been populated with the build
 output.
@@ -9464,42 +9649,6 @@ public readonly module: string;
 - *Type:* string
 
 ---
-
-## Classes <a name="Classes" id="Classes"></a>
-
-### JsiiDocgen <a name="JsiiDocgen" id="projen.cdk.JsiiDocgen"></a>
-
-Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
-
-#### Initializers <a name="Initializers" id="projen.cdk.JsiiDocgen.Initializer"></a>
-
-```typescript
-import { cdk } from 'projen'
-
-new cdk.JsiiDocgen(project: JsiiProject, options?: JsiiDocgenOptions)
-```
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.project">project</a></code> | <code><a href="#projen.cdk.JsiiProject">JsiiProject</a></code> | *No description.* |
-| <code><a href="#projen.cdk.JsiiDocgen.Initializer.parameter.options">options</a></code> | <code><a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a></code> | *No description.* |
-
----
-
-##### `project`<sup>Required</sup> <a name="project" id="projen.cdk.JsiiDocgen.Initializer.parameter.project"></a>
-
-- *Type:* <a href="#projen.cdk.JsiiProject">JsiiProject</a>
-
----
-
-##### `options`<sup>Optional</sup> <a name="options" id="projen.cdk.JsiiDocgen.Initializer.parameter.options"></a>
-
-- *Type:* <a href="#projen.cdk.JsiiDocgenOptions">JsiiDocgenOptions</a>
-
----
-
-
-
 
 
 

@@ -42,7 +42,7 @@ test("allows configuring specific dependency types", () => {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade some-dep constructs jest jest-junit projen standard-version",
+        "exec": "yarn upgrade some-dep commit-and-tag-version constructs jest jest-junit projen",
       },
       {
         "exec": "npx projen",
@@ -65,7 +65,7 @@ test("upgrade command includes only dependencies of configured types", () => {
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(
-    `yarn upgrade constructs jest jest-junit projen some-dev-dep standard-version`
+    `yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dev-dep`
   );
 });
 
@@ -84,7 +84,7 @@ test("upgrades command includes all dependencies", () => {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dep",
       },
       {
         "exec": "npx projen",
@@ -114,7 +114,7 @@ test("ncu upgrade command does not include dependencies with any version constra
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version other-dep some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen other-dep some-dep",
       },
       {
         "exec": "npx projen",
@@ -144,7 +144,7 @@ test("ncu upgrade command should include dependencies with * versions, along wit
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dep",
       },
       {
         "exec": "npx projen",
@@ -165,7 +165,7 @@ test("ncu upgrade command is not added if no ncu upgrades are needed", () => {
         "jest",
         "jest-junit",
         "projen",
-        "standard-version",
+        "commit-and-tag-version",
       ],
     },
   });
@@ -206,7 +206,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dep",
       },
       {
         "exec": "npx projen",
@@ -236,7 +236,7 @@ test("upgrades command doesn't include ignored packages", () => {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version dep1",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen dep1",
       },
       {
         "exec": "npx projen",
@@ -490,7 +490,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version axios markdownlint npm",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen axios markdownlint npm",
       },
       {
         "exec": "npx projen",
@@ -511,7 +511,7 @@ test("empty upgrade list", () => {
         "jest-junit",
         "npm-check-updates",
         "projen",
-        "standard-version",
+        "commit-and-tag-version",
       ],
     },
   });
@@ -536,7 +536,7 @@ test("uses the proper yarn berry upgrade command", () => {
         "exec": "yarn install",
       },
       {
-        "exec": "yarn up constructs jest jest-junit projen standard-version",
+        "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
       },
       {
         "exec": "npx projen",

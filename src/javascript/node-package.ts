@@ -1177,9 +1177,14 @@ export class NodePackage extends Component {
       )) {
         let req = dep.name;
 
-        // skip if we already have a runtime dependency on this peer
+        // Skip if we already have a runtime dependency on this peer and no build dependency yet.
+        // If there is a build dep already, we need to override its version.
         if (
-          this.project.deps.tryGetDependency(dep.name, DependencyType.RUNTIME)
+          this.project.deps.tryGetDependency(
+            dep.name,
+            DependencyType.RUNTIME
+          ) &&
+          !this.project.deps.tryGetDependency(dep.name, DependencyType.BUILD)
         ) {
           continue;
         }

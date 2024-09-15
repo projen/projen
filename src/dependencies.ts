@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as semver from "semver";
 import { PROJEN_DIR } from "./common";
 import { Component } from "./component";
 import { JsonFile } from "./json";
@@ -171,6 +172,24 @@ export class Dependencies extends Component {
     }
 
     this._deps.splice(removeIndex, 1);
+  }
+
+  /**
+   * Checks if an existing dependency satisfies a dependency requirement.
+   * @param name The name of the dependency to check (without the version).
+   * @param type The dependency type.
+   * @param expectedRange The version constraint to check (e.g. `^3.4.0`).
+   * The constraint of the dependency must be a subset of the expected range to satisfy the requirements.
+   * @returns `true` if the dependency exists and its version satisfies the provided constraint. `false` otherwise.
+   * Notably returns `false` if a dependency exists, but has no version.
+   */
+  public isDependencySatisfied(
+    name: string,
+    type: DependencyType,
+    expectedRange: string
+  ): boolean {
+    const dep = this.tryGetDependency(name, type);
+    return dep?.version != null && semver.subset(dep.version, expectedRange);
   }
 
   private tryGetDependencyIndex(name: string, type?: DependencyType): number {

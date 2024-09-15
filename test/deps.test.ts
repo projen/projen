@@ -304,6 +304,63 @@ test("it is possible to have local file dependencies", () => {
   ]);
 });
 
+describe("isDependencySatisfied", () => {
+  test.each([
+    // Failure cases
+    ["projen", "^1.0.0", false],
+    ["projen@2", "^1.0.0", false],
+    ["projen@*", "^10.0.0", false],
+    // Positive cases
+    ["projen@^1.2.3", "^1.0.0", true],
+    ["projen@^10.3.0", "^10.0.0", true],
+    ["projen@^10.3.0", "*", true],
+  ])(
+    "'%s' should satisfy '%s': %s",
+    (dep: string, range: string, expected: boolean) => {
+      // GIVEN
+      const p = new TestProject();
+
+      // WHEN
+      const d = p.deps.addDependency(dep, DependencyType.RUNTIME);
+
+      // THEN
+      expect(
+        p.deps.isDependencySatisfied(d.name, DependencyType.RUNTIME, range)
+      ).toBe(expected);
+    }
+  );
+
+  test("non existing dependency does not satisfy", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // THEN
+    expect(
+      p.deps.isDependencySatisfied(
+        "@projen/does-not-exist",
+        DependencyType.RUNTIME,
+        "*"
+      )
+    ).toBe(false);
+  });
+
+  test("dependency with no version does not satisfy", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    const d = p.deps.addDependency(
+      "@projen/does-not-exist",
+      DependencyType.RUNTIME
+    );
+
+    // THEN
+    expect(
+      p.deps.isDependencySatisfied(d.name, DependencyType.RUNTIME, "*")
+    ).toBe(false);
+  });
+});
+
 function depsManifest(p: Project) {
   p.synth();
   const filepath = join(p.outdir, Dependencies.MANIFEST_FILE);

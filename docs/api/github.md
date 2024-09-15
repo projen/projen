@@ -265,14 +265,14 @@ Synthesizes files to the project output directory.
 ##### `addConditions` <a name="addConditions" id="projen.github.AutoMerge.addConditions"></a>
 
 ```typescript
-public addConditions(conditions: string): void
+public addConditions(conditions: ...string[]): void
 ```
 
 Adds conditions to the auto merge rule.
 
 ###### `conditions`<sup>Required</sup> <a name="conditions" id="projen.github.AutoMerge.addConditions.parameter.conditions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The conditions to add (mergify syntax).
 
@@ -484,7 +484,7 @@ Use to allow updates for dependencies with matching names, optionally using `*` 
 ##### `addIgnore` <a name="addIgnore" id="projen.github.Dependabot.addIgnore"></a>
 
 ```typescript
-public addIgnore(dependencyName: string, versions: string): void
+public addIgnore(dependencyName: string, versions: ...string[]): void
 ```
 
 Ignores a dependency from automatic updates.
@@ -499,7 +499,7 @@ Use to ignore updates for dependencies with matching names, optionally using `*`
 
 ###### `versions`<sup>Required</sup> <a name="versions" id="projen.github.Dependabot.addIgnore.parameter.versions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Use to ignore specific versions or ranges of versions.
 
@@ -719,12 +719,12 @@ public addDependabot(options?: DependabotOptions): Dependabot
 ##### `addPullRequestTemplate` <a name="addPullRequestTemplate" id="projen.github.GitHub.addPullRequestTemplate"></a>
 
 ```typescript
-public addPullRequestTemplate(content: string): PullRequestTemplate
+public addPullRequestTemplate(content: ...string[]): PullRequestTemplate
 ```
 
 ###### `content`<sup>Required</sup> <a name="content" id="projen.github.GitHub.addPullRequestTemplate.parameter.content"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -1005,7 +1005,7 @@ Returns a string representation of this construct.
 ##### ~~`addExcludeFromCleanup`~~ <a name="addExcludeFromCleanup" id="projen.github.GitHubProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -1015,7 +1015,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.github.GitHubProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -4447,6 +4447,7 @@ const checkoutWith: github.CheckoutWith = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.CheckoutWith.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.CheckoutWith.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
+| <code><a href="#projen.github.CheckoutWith.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWith.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWith.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.CheckoutWith.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
@@ -4478,6 +4479,19 @@ public readonly lfs: boolean;
 - *Default:* false
 
 Whether LFS is enabled for the GitHub repository.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.CheckoutWith.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+Relative path under $GITHUB_WORKSPACE to place the repository.
 
 ---
 
@@ -4541,6 +4555,7 @@ const checkoutWithPatchOptions: github.CheckoutWithPatchOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
+| <code><a href="#projen.github.CheckoutWithPatchOptions.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
@@ -4573,6 +4588,19 @@ public readonly lfs: boolean;
 - *Default:* false
 
 Whether LFS is enabled for the GitHub repository.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.CheckoutWithPatchOptions.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+Relative path under $GITHUB_WORKSPACE to place the repository.
 
 ---
 
@@ -7178,6 +7206,7 @@ const pullRequestPatchSource: github.PullRequestPatchSource = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.PullRequestPatchSource.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
+| <code><a href="#projen.github.PullRequestPatchSource.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
@@ -7212,6 +7241,19 @@ public readonly lfs: boolean;
 - *Default:* false
 
 Whether LFS is enabled for the GitHub repository.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.github.PullRequestPatchSource.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+- *Default:* $GITHUB_WORKSPACE
+
+Relative path under $GITHUB_WORKSPACE to place the repository.
 
 ---
 
@@ -8362,6 +8404,7 @@ const uploadArtifactWith: github.UploadArtifactWith = { ... }
 | <code><a href="#projen.github.UploadArtifactWith.property.path">path</a></code> | <code>string</code> | A file, directory or wildcard pattern that describes what to upload. |
 | <code><a href="#projen.github.UploadArtifactWith.property.compressionLevel">compressionLevel</a></code> | <code>number</code> | The level of compression for Zlib to be applied to the artifact archive. |
 | <code><a href="#projen.github.UploadArtifactWith.property.ifNoFilesFound">ifNoFilesFound</a></code> | <code>string</code> | The desired behavior if no files are found using the provided path. |
+| <code><a href="#projen.github.UploadArtifactWith.property.includeHiddenFiles">includeHiddenFiles</a></code> | <code>boolean</code> | Whether to include hidden files in the provided path in the artifact. |
 | <code><a href="#projen.github.UploadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to upload. |
 | <code><a href="#projen.github.UploadArtifactWith.property.overwrite">overwrite</a></code> | <code>boolean</code> | Whether action should overwrite an existing artifact with the same name (should one exist). |
 | <code><a href="#projen.github.UploadArtifactWith.property.retentionDays">retentionDays</a></code> | <code>number</code> | Duration after which artifact will expire in days. 0 means using default repository retention. |
@@ -8411,6 +8454,21 @@ Available Options:
   warn: Output a warning but do not fail the action
   error: Fail the action with an error message
   ignore: Do not output any warnings or errors, the action does not fail
+
+---
+
+##### `includeHiddenFiles`<sup>Optional</sup> <a name="includeHiddenFiles" id="projen.github.UploadArtifactWith.property.includeHiddenFiles"></a>
+
+```typescript
+public readonly includeHiddenFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to include hidden files in the provided path in the artifact.
+
+The file contents of any hidden files in the path should be validated before enabled this to avoid uploading sensitive information.
 
 ---
 

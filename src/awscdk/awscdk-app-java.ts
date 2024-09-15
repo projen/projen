@@ -1,9 +1,9 @@
 import { join } from "path";
+import { DependencyType, SampleDir } from "..";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJava } from "./awscdk-deps-java";
 import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
-import { DependencyType, SampleDir } from "..";
 import { JavaProject, JavaProjectOptions } from "../java";
 
 export interface AwsCdkJavaAppOptions

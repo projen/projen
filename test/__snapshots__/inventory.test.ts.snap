@@ -5302,7 +5302,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -6867,7 +6867,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -8527,7 +8527,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -12653,7 +12653,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -14077,7 +14077,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -15684,7 +15684,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -17040,7 +17040,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -18647,7 +18647,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -20805,7 +20805,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -22412,7 +22412,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -24789,7 +24789,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -27447,7 +27447,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -29756,7 +29756,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -33377,7 +33377,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -36023,7 +36023,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -38647,7 +38647,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -41271,7 +41271,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {

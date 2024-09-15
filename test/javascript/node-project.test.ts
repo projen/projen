@@ -3,7 +3,7 @@ import { Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
-import { secretToString } from "../../src/github/util";
+import { secretToString } from "../../src/github/private/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   CodeArtifactAuthProvider,
@@ -145,7 +145,7 @@ describe("deps", () => {
       "jest-junit",
       "projen",
       "constructs",
-      "standard-version",
+      "commit-and-tag-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.devDependencies).toStrictEqual({});
@@ -170,7 +170,7 @@ describe("deps", () => {
       "jest-junit",
       "projen",
       "constructs",
-      "standard-version",
+      "commit-and-tag-version",
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.peerDependencies).toStrictEqual({ ccc: "^2" });
@@ -196,6 +196,17 @@ describe("deps", () => {
       bar: "~1.0.0",
     });
     expect(pkgjson.bundledDependencies).toStrictEqual(["bar", "foo", "hey"]);
+  });
+
+  test("can override projen devDep on constructs", () => {
+    // GIVEN
+    const project = new TestNodeProject({
+      devDeps: ["constructs@^10.3.0"],
+    });
+
+    // THEN
+    const pkgjson = packageJson(project);
+    expect(pkgjson.devDependencies.constructs).toStrictEqual("^10.3.0");
   });
 });
 
@@ -921,9 +932,9 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "commit-and-tag-version",
     "constructs",
     "jest-junit",
-    "standard-version",
     "projen",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
@@ -947,9 +958,9 @@ test("renovatebot ignored dependency overrides", () => {
   //       as JSON object path delimiters.
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "commit-and-tag-version",
     "constructs",
     "jest-junit",
-    "standard-version",
     "axios",
     "some-overriden-package",
     "projen",
