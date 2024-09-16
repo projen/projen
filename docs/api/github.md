@@ -4700,7 +4700,7 @@ public readonly group: string;
 ```
 
 - *Type:* string
-- *Default:* undefined. All runs belonging to this workflow have the same limited concurrency.
+- *Default:* ${{ github.workflow }}
 
 Concurrency group controls which workflow runs will share the same concurrency limit.
 
@@ -6407,7 +6407,7 @@ public readonly concurrencyOptions: ConcurrencyOptions;
 ```
 
 - *Type:* <a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a>
-- *Default:* { group: undefined, cancelInProgress: false }
+- *Default:* { group: ${{ github.workflow }}, cancelInProgress: false }
 
 Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
 

@@ -33,7 +33,10 @@ describe("github-workflow", () => {
       snapshot[`.github/workflows/${workflowName}.yml`]
     );
 
-    expect(workflow.concurrency).toEqual({ "cancel-in-progress": false });
+    expect(workflow.concurrency).toEqual({
+      "cancel-in-progress": false,
+      group: "${{ github.workflow }}",
+    });
   });
 
   test("can override concurrency defaults", () => {

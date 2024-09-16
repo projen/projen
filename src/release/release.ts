@@ -704,7 +704,10 @@ export class Release extends Component {
 
     if (this.github && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
-      const workflow = new GithubWorkflow(this.github, workflowName);
+      const workflow = new GithubWorkflow(this.github, workflowName, {
+        // see https://github.com/projen/projen/issues/3761
+        limitConcurrency: true,
+      });
       workflow.on({
         schedule: this.releaseTrigger.schedule
           ? [{ cron: this.releaseTrigger.schedule }]
