@@ -178,7 +178,7 @@ test("upgrade task ignores pinned versions", () => {
     cdk8sVersionPinning: true,
     cdk8sCliVersionPinning: true,
     cdk8sPlusVersionPinning: true,
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;

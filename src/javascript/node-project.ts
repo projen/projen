@@ -834,7 +834,13 @@ export class NodeProject extends GitHubProject {
     // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
     this.bundler = new Bundler(this, options.bundlerOptions);
 
-    if (options.package ?? true) {
+    const shouldPackage = options.package ?? true;
+    if (release && !shouldPackage) {
+      this.logger.warn(
+        "When `release` is enabled, `package` must also be enabled as it is required by release. Force enabling `package`."
+      );
+    }
+    if (release || shouldPackage) {
       this.packageTask.exec(`mkdir -p ${this.artifactsJavascriptDirectory}`);
 
       const pkgMgr =
