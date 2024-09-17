@@ -794,11 +794,14 @@ class SampleCode extends Component {
  */
 export class TypeScriptAppProject extends TypeScriptProject {
   constructor(options: TypeScriptProjectOptions) {
+    // Releasing and packaging are coupled. If one is disabled, disable the other by default.
+    const shouldRelease = options.release ?? options.releaseWorkflow ?? false;
+
     super({
+      release: shouldRelease,
+      package: shouldRelease,
       allowLibraryDependencies: false,
-      releaseWorkflow: false,
       entrypoint: "", // "main" is not needed in typescript apps
-      package: false,
       ...options,
     });
   }
