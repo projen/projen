@@ -22288,7 +22288,7 @@ The Node.js runtime to use.
 
 ##### ~~`NODEJS_10_X`~~<sup>Required</sup> <a name="NODEJS_10_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_10_X"></a>
 
-- *Deprecated:* NodeJS10 has been deprecated on February 14, 2022
+- *Deprecated:* Node.js 10 runtime has been deprecated on Jul 30, 2021
 
 ```typescript
 public readonly NODEJS_10_X: LambdaRuntime;
@@ -22302,7 +22302,7 @@ Node.js 10.x.
 
 ##### ~~`NODEJS_12_X`~~<sup>Required</sup> <a name="NODEJS_12_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_12_X"></a>
 
-- *Deprecated:* NodeJS12 has been deprecated on April 30, 2023
+- *Deprecated:* Node.js 12 runtime has been deprecated on Mar 31, 2023
 
 ```typescript
 public readonly NODEJS_12_X: LambdaRuntime;
@@ -22316,7 +22316,7 @@ Node.js 12.x.
 
 ##### ~~`NODEJS_14_X`~~<sup>Required</sup> <a name="NODEJS_14_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_14_X"></a>
 
-- *Deprecated:* NodeJS14 will be deprecated on November 27, 2023
+- *Deprecated:* Node.js 14 runtime has been deprecated on Dec 4, 2023
 
 ```typescript
 public readonly NODEJS_14_X: LambdaRuntime;
@@ -22330,7 +22330,7 @@ Node.js 14.x.
 
 ##### ~~`NODEJS_16_X`~~<sup>Required</sup> <a name="NODEJS_16_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_16_X"></a>
 
-- *Deprecated:* NodeJS16 will be deprecated on March 11, 2024
+- *Deprecated:* Node.js 16 runtime has been deprecated on Jun 12, 2024
 
 ```typescript
 public readonly NODEJS_16_X: LambdaRuntime;
@@ -22351,6 +22351,8 @@ public readonly NODEJS_18_X: LambdaRuntime;
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
 Node.js 18.x.
+
+Advanced notice: Node.js 18 runtime will be deprecated on Jul 31, 2025
 
 ---
 
