@@ -227,7 +227,7 @@ describe("node version in workflow", () => {
         expect.objectContaining({
           uses: expect.stringContaining("actions/setup-node"),
           with: {
-            "node-version": "18.x",
+            "node-version": "lts/*",
           },
         }),
       ])
@@ -258,7 +258,7 @@ describe("node version in workflow", () => {
     const project = new TestProject({
       cdkVersion: "2.12.0",
       minNodeVersion: "16.0.0",
-      workflowNodeVersion: "18.x",
+      workflowNodeVersion: "20.17.0",
     });
     const snapshot = synthSnapshot(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
@@ -268,7 +268,7 @@ describe("node version in workflow", () => {
         expect.objectContaining({
           uses: expect.stringContaining("actions/setup-node"),
           with: {
-            "node-version": "18.x",
+            "node-version": "20.17.0",
           },
         }),
       ])

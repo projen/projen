@@ -1685,8 +1685,8 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command which executes "projen". |
 | <code><a href="#projen.javascript.NodePackage.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
 | <code><a href="#projen.javascript.NodePackage.property.license">license</a></code> | <code>string</code> | The SPDX license of this module. |
-| <code><a href="#projen.javascript.NodePackage.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version required by this package. |
-| <code><a href="#projen.javascript.NodePackage.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum node.js version required by this package. |
+| <code><a href="#projen.javascript.NodePackage.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
+| <code><a href="#projen.javascript.NodePackage.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
 | <code><a href="#projen.javascript.NodePackage.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackage.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.javascript.NodePackage.property.scopedPackagesOptions">scopedPackagesOptions</a></code> | <code><a href="#projen.javascript.ScopedPackagesOptions">ScopedPackagesOptions</a>[]</code> | Options for privately hosted scoped packages. |
@@ -1945,9 +1945,10 @@ public readonly maxNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no maximum.
 
-Maximum node version required by this package.
+Maximum node version supported by this package.
+
+The value indicates the package is incompatible with newer versions.
 
 ---
 
@@ -1958,9 +1959,10 @@ public readonly minNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no minimum
 
-Minimum node.js version required by this package.
+The minimum node version required by this package to function.
+
+This value indicates the package is incompatible with older versions.
 
 ---
 
@@ -2706,8 +2708,8 @@ When given a project, this it the project itself.
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The Jest configuration (if enabled). |
-| <code><a href="#projen.javascript.NodeProject.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version required by this package. |
-| <code><a href="#projen.javascript.NodeProject.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum node.js version required by this package. |
+| <code><a href="#projen.javascript.NodeProject.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
+| <code><a href="#projen.javascript.NodeProject.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
 | <code><a href="#projen.javascript.NodeProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.javascript.NodeProject.property.prettier">prettier</a></code> | <code><a href="#projen.javascript.Prettier">Prettier</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeProject.property.publisher">publisher</a></code> | <code>projen.release.Publisher</code> | Package publisher. |
@@ -3273,7 +3275,9 @@ public readonly maxNodeVersion: string;
 
 - *Type:* string
 
-Maximum node version required by this package.
+Maximum node version supported by this package.
+
+The value indicates the package is incompatible with newer versions.
 
 ---
 
@@ -3285,7 +3289,9 @@ public readonly minNodeVersion: string;
 
 - *Type:* string
 
-Minimum node.js version required by this package.
+The minimum node version required by this package to function.
+
+This value indicates the package is incompatible with older versions.
 
 ---
 
@@ -7562,8 +7568,8 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.license">license</a></code> | <code>string</code> | License's SPDX identifier. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.licensed">licensed</a></code> | <code>boolean</code> | Indicates if a license should be added. |
-| <code><a href="#projen.javascript.NodePackageOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
-| <code><a href="#projen.javascript.NodePackageOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
+| <code><a href="#projen.javascript.NodePackageOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | The maximum node version supported by this package. Most projects should not use this option. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. Most projects should not use this option. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | Access level of the npm package. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when the package is published. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
@@ -7886,9 +7892,15 @@ public readonly maxNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no max
+- *Default:* no maximum version is enforced
 
-Minimum node.js version to require via `engines` (inclusive).
+The maximum node version supported by this package. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any newer versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option.
+Consider this option only if your package is known to not function with newer versions of node.
 
 ---
 
@@ -7899,9 +7911,19 @@ public readonly minNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no "engines" specified
+- *Default:* no minimum version is enforced
 
-Minimum Node.js version to require via package.json `engines` (inclusive).
+The minimum node version required by this package to function. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any older versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option, even if your package is incompatible with EOL versions of node.
+Consider this option only if your package depends on a specific feature, that is not available in other LTS versions.
+Setting this option has very high impact on the consumers of your package,
+as package managers will actively prevent usage with node versions you have marked as incompatible.
+
+To change the node version of your CI/CD workflows, use `workflowNodeVersion`.
 
 ---
 
@@ -8206,8 +8228,8 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.license">license</a></code> | <code>string</code> | License's SPDX identifier. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.licensed">licensed</a></code> | <code>boolean</code> | Indicates if a license should be added. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | The maximum node version supported by this package. Most projects should not use this option. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. Most projects should not use this option. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | Access level of the npm package. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when the package is published. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
@@ -8283,7 +8305,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflow">releaseWorkflow</a></code> | <code>boolean</code> | DEPRECATED: renamed to `release`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version to use in GitHub workflows. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowPackageCache">workflowPackageCache</a></code> | <code>boolean</code> | Enable Node.js package cache in GitHub workflows. |
 
 ---
@@ -9005,9 +9027,15 @@ public readonly maxNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no max
+- *Default:* no maximum version is enforced
 
-Minimum node.js version to require via `engines` (inclusive).
+The maximum node version supported by this package. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any newer versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option.
+Consider this option only if your package is known to not function with newer versions of node.
 
 ---
 
@@ -9018,9 +9046,19 @@ public readonly minNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no "engines" specified
+- *Default:* no minimum version is enforced
 
-Minimum Node.js version to require via package.json `engines` (inclusive).
+The minimum node version required by this package to function. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any older versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option, even if your package is incompatible with EOL versions of node.
+Consider this option only if your package depends on a specific feature, that is not available in other LTS versions.
+Setting this option has very high impact on the consumers of your package,
+as package managers will actively prevent usage with node versions you have marked as incompatible.
+
+To change the node version of your CI/CD workflows, use `workflowNodeVersion`.
 
 ---
 
@@ -10086,9 +10124,11 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* same as `minNodeVersion`
+- *Default:* `lts/*` or `minNodeVersion` if set
 
-The node version to use in GitHub workflows.
+The node version used in GitHub Actions workflows.
+
+Always use this option if your GitHub Actions workflows require a specific to run.
 
 ---
 

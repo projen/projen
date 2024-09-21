@@ -527,7 +527,7 @@ export class JsiiProject extends TypeScriptProject {
         contents: JobPermission.READ,
       },
       tools: {
-        node: { version: this.nodeVersion ?? "18.x" },
+        node: { version: this.nodeVersion ?? "lts/*" },
         ...pacmak.publishTools,
       },
       steps: [

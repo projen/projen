@@ -350,7 +350,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -473,7 +473,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -499,7 +499,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -1614,7 +1614,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -1696,7 +1696,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -1768,7 +1768,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -1838,7 +1838,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -1911,7 +1911,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -1984,7 +1984,7 @@ exports[`language bindings snapshot dotnet 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -2051,7 +2051,7 @@ exports[`language bindings snapshot go 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -2125,7 +2125,7 @@ exports[`language bindings snapshot java 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -2186,7 +2186,7 @@ exports[`language bindings snapshot js 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -2247,7 +2247,7 @@ exports[`language bindings snapshot python 1`] = `
     {
       "uses": "actions/setup-node@v4",
       "with": {
-        "node-version": "18.x",
+        "node-version": "lts/*",
       },
     },
     {
@@ -2372,7 +2372,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2398,7 +2398,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2438,7 +2438,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - uses: actions/setup-go@v5
         with:
           go-version: ^1.18.0
@@ -2545,7 +2545,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2571,7 +2571,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2611,7 +2611,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - uses: actions/setup-go@v5
         with:
           go-version: ^1.18.0
@@ -2716,7 +2716,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2742,7 +2742,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2782,7 +2782,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.x
@@ -2885,7 +2885,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2911,7 +2911,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2951,7 +2951,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.x

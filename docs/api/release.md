@@ -2965,7 +2965,7 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* 18.x
+- *Default:* lts/*
 
 Node version to setup in GitHub workflows if any node-based CLI utilities are needed.
 
@@ -3576,7 +3576,7 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* 18.x
+- *Default:* "lts/*""
 
 Node version to setup in GitHub workflows if any node-based CLI utilities are needed.
 
