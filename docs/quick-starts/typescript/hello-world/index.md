@@ -98,7 +98,7 @@ repository:
 const { typescript } = require('projen');
 const project = new typescript.TypeScriptProject({
   ...
-  tsConfig: {
+  tsconfig: {
     compilerOptions: {
       rootDir: '.',
       outDir: '.',
