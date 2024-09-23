@@ -287,7 +287,7 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * are needed. For example `publib`, the CLI projen uses to publish releases,
    * is an npm library.
    *
-   * @default 18.x
+   * @default "lts/*""
    */
   readonly workflowNodeVersion?: string;
 

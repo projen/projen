@@ -621,4 +621,29 @@ describe("tsconfigDev", () => {
       expect.stringMatching("Force enabling `package`")
     );
   });
+
+  test("@types/node version will match the typescriptVersion", () => {
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      typescriptVersion: "~5.4.0",
+    });
+
+    const packageJson = synthSnapshot(project)["package.json"];
+    expect(packageJson.devDependencies["@types/node"]).toBe("ts5.4");
+  });
+
+  test("can define a custom version of @types/node", () => {
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      typescriptVersion: "5.6",
+      devDeps: ["@types/node@ts4.8"],
+    });
+
+    const packageJson = synthSnapshot(project)["package.json"];
+    expect(packageJson.devDependencies["@types/node"]).toBe("ts4.8");
+  });
 });

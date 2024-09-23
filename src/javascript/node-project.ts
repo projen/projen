@@ -170,9 +170,11 @@ export interface NodeProjectOptions
   readonly releaseToNpm?: boolean;
 
   /**
-   * The node version to use in GitHub workflows.
+   * The node version used in GitHub Actions workflows.
    *
-   * @default - same as `minNodeVersion`
+   * Always use this option if your GitHub Actions workflows require a specific to run.
+   *
+   * @default - `minNodeVersion` if set, otherwise `lts/*`.
    */
   readonly workflowNodeVersion?: string;
 
@@ -434,14 +436,18 @@ export class NodeProject extends GitHubProject {
   public readonly release?: Release;
 
   /**
-   * Minimum node.js version required by this package.
+   * The minimum node version required by this package to function.
+   *
+   * This value indicates the package is incompatible with older versions.
    */
   public get minNodeVersion(): string | undefined {
     return this.package.minNodeVersion;
   }
 
   /**
-   * Maximum node version required by this package.
+   * Maximum node version supported by this package.
+   *
+   * The value indicates the package is incompatible with newer versions.
    */
   public get maxNodeVersion(): string | undefined {
     return this.package.maxNodeVersion;

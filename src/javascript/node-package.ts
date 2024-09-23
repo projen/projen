@@ -216,16 +216,35 @@ export interface NodePackageOptions {
   readonly stability?: string;
 
   /**
-   * Minimum Node.js version to require via package.json `engines` (inclusive).
+   * The minimum node version required by this package to function.
+   * Most projects should not use this option.
    *
-   * @default - no "engines" specified
+   * The value indicates that the package is incompatible with any older versions of node.
+   * This requirement is enforced via the engines field.
+   *
+   * You will normally not need to set this option, even if your package is incompatible with EOL versions of node.
+   * Consider this option only if your package depends on a specific feature, that is not available in other LTS versions.
+   * Setting this option has very high impact on the consumers of your package,
+   * as package managers will actively prevent usage with node versions you have marked as incompatible.
+   *
+   * To change the node version of your CI/CD workflows, use `workflowNodeVersion`.
+   *
+   * @default - no minimum version is enforced
+
    */
   readonly minNodeVersion?: string;
 
   /**
-   * Minimum node.js version to require via `engines` (inclusive).
+   * The maximum node version supported by this package.
+   * Most projects should not use this option.
    *
-   * @default - no max
+   * The value indicates that the package is incompatible with any newer versions of node.
+   * This requirement is enforced via the engines field.
+   *
+   * You will normally not need to set this option.
+   * Consider this option only if your package is known to not function with newer versions of node.
+   *
+   * @default - no maximum version is enforced
    */
   readonly maxNodeVersion?: string;
 
@@ -450,14 +469,16 @@ export class NodePackage extends Component {
   public readonly manifest: any;
 
   /**
-   * Minimum node.js version required by this package.
-   * @default - no minimum
+   * The minimum node version required by this package to function.
+   *
+   * This value indicates the package is incompatible with older versions.
    */
   public readonly minNodeVersion?: string;
 
   /**
-   * Maximum node version required by this package.
-   * @default - no maximum.
+   * Maximum node version supported by this package.
+   *
+   * The value indicates the package is incompatible with newer versions.
    */
   public readonly maxNodeVersion?: string;
 

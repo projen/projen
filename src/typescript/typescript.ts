@@ -2,6 +2,7 @@ import * as path from "path";
 import * as semver from "semver";
 import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
+import { DependencyType } from "../dependencies";
 import {
   Eslint,
   EslintOptions,
@@ -583,23 +584,12 @@ export class TypeScriptProject extends NodeProject {
       }
     }
 
-    const tsver = options.typescriptVersion
-      ? `@${options.typescriptVersion}`
-      : "";
+    const tsDep = options.typescriptVersion
+      ? `typescript@${options.typescriptVersion}`
+      : "typescript";
+    this.addDevDeps(tsDep);
 
-    this.addDevDeps(
-      `typescript${tsver}`,
-      // @types/node versions numbers match the node runtime versions' major.minor, however, new
-      // releases are only created when API changes are included in a node release... We might for
-      // example have dependencies that require `node >= 12.22`, but as 12.21 and 12.22 did not
-      // include API changes, `@types/node@12.20.x` is the "correct" version to use. As it is not
-      // possible to easily determine the correct version to use, we pick up the latest version.
-      //
-      // Additionally, we default to tracking the 18.x line, as the current earliest LTS release of
-      // node is 18.x, so this is what corresponds to the broadest compatibility with supported node
-      // runtimes.
-      `@types/node@^${semver.major(this.package.minNodeVersion ?? "18.0.0")}`
-    );
+    this.addNodeTypesVersion(options.typescriptVersion, options.minNodeVersion);
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
@@ -609,6 +599,35 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+  }
+
+  /**
+   * Add `@types/node` to this project.
+   *
+   * If the user has already added this dependency, do nothing.
+   * Otherwise use the major version of `minNodeVersion`.
+   * If that's not available, match the version to the used typescript version.
+   * And if that is also not available, we use latest and let the user manage the version.
+   */
+  private addNodeTypesVersion(tsVersion?: string, minNodeVersion?: string) {
+    const name = "@types/node";
+
+    if (this.deps.tryGetDependency(name, DependencyType.BUILD)) {
+      return;
+    }
+
+    const minNodeParsed = semver.parse(minNodeVersion);
+    if (minNodeParsed) {
+      return this.addDevDeps(`${name}@^${minNodeParsed.major}`);
+    }
+
+    // coerce version, since the ts version likely something like ~5.3.0
+    const tsParsed = semver.coerce(tsVersion);
+    if (tsParsed) {
+      return this.addDevDeps(`${name}@ts${tsParsed.major}.${tsParsed.minor}`);
+    }
+
+    this.addDevDeps(name);
   }
 
   /**

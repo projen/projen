@@ -79,7 +79,7 @@ export class NextJsProject extends NodeProject {
     super({
       jest: false,
       minNodeVersion: MINIMUM_NEXT_JS_NODE_VERSION,
-      workflowNodeVersion: "18.x",
+      workflowNodeVersion: "lts/*",
       ...options,
     });
 
@@ -130,7 +130,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
       eslint: false,
       minNodeVersion: MINIMUM_NEXT_JS_NODE_VERSION,
       jest: false,
-      workflowNodeVersion: "18.x",
+      workflowNodeVersion: "lts/*",
       tsconfig: {
         include: [
           "**/*.ts",

@@ -87,7 +87,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
               pinnedDevDependency: false,
             }
           : undefined,
-      workflowNodeVersion: options.minNodeVersion ?? "18.x",
+      workflowNodeVersion: options.minNodeVersion ?? "lts/*",
       ...options,
     });
 

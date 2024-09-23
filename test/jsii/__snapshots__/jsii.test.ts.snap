@@ -350,7 +350,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -473,7 +473,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -499,7 +499,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -1874,7 +1874,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -1997,7 +1997,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2023,7 +2023,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -2259,7 +2259,6 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -2635,7 +2634,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,projen,ts-jest,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii,jsii-diff,jsii-docgen,jsii-pacmak,jsii-rosetta,projen,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -2875,7 +2874,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "*",
-      "@types/node": "^18",
+      "@types/node": "*",
       "@typescript-eslint/eslint-plugin": "^7",
       "@typescript-eslint/parser": "^7",
       "commit-and-tag-version": "^12",
@@ -3380,7 +3379,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -3503,7 +3502,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -3529,7 +3528,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -3765,7 +3764,6 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -4136,7 +4134,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-pacmak,projen,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jsii-diff,jsii-pacmak,projen,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -4376,7 +4374,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "^27",
-      "@types/node": "^18",
+      "@types/node": "*",
       "@typescript-eslint/eslint-plugin": "^7",
       "@typescript-eslint/parser": "^7",
       "commit-and-tag-version": "^12",
@@ -4882,7 +4880,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -5005,7 +5003,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -5031,7 +5029,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -5267,7 +5265,6 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -5645,7 +5642,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -5885,7 +5882,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": {
       "@types/jest": "*",
-      "@types/node": "^18",
+      "@types/node": "*",
       "@typescript-eslint/eslint-plugin": "^7",
       "@typescript-eslint/parser": "^7",
       "commit-and-tag-version": "^12",
