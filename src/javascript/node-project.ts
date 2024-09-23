@@ -174,7 +174,7 @@ export interface NodeProjectOptions
    *
    * Always use this option if your GitHub Actions workflows require a specific to run.
    *
-   * @default - `lts/*` or `minNodeVersion` if set
+   * @default - `minNodeVersion` if set, otherwise `lts/*`.
    */
   readonly workflowNodeVersion?: string;
 
