@@ -8533,7 +8533,7 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* `lts/*` or `minNodeVersion` if set
+- *Default:* `minNodeVersion` if set, otherwise `lts/*`.
 
 The node version used in GitHub Actions workflows.
 
@@ -10586,7 +10586,7 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* `lts/*` or `minNodeVersion` if set
+- *Default:* `minNodeVersion` if set, otherwise `lts/*`.
 
 The node version used in GitHub Actions workflows.
 
@@ -12935,7 +12935,7 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* `lts/*` or `minNodeVersion` if set
+- *Default:* `minNodeVersion` if set, otherwise `lts/*`.
 
 The node version used in GitHub Actions workflows.
 
@@ -15156,7 +15156,7 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* `lts/*` or `minNodeVersion` if set
+- *Default:* `minNodeVersion` if set, otherwise `lts/*`.
 
 The node version used in GitHub Actions workflows.
 

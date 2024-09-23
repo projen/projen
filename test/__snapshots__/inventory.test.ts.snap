@@ -5442,7 +5442,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -8623,7 +8623,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -12749,7 +12749,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -15780,7 +15780,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -18743,7 +18743,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -22508,7 +22508,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -24885,7 +24885,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -27543,7 +27543,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -29852,7 +29852,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -33473,7 +33473,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -36119,7 +36119,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -38743,7 +38743,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
@@ -41367,7 +41367,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- \`lts/*\` or \`minNodeVersion\` if set",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
         "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
