@@ -71,7 +71,6 @@ const project = new JsiiProject({
   ],
 
   devDeps: [
-    "@types/node@^16", // keep in sync with minNodeVersion
     "@types/conventional-changelog-config-spec",
     "@types/yargs",
     "@types/glob",

@@ -605,9 +605,9 @@ export class TypeScriptProject extends NodeProject {
    * Add `@types/node` to this project.
    *
    * If the user has already added this dependency, do nothing.
-   * Otherwise match the version to the used typescript version.
-   * If not available, fall back to the major version of `minNodeVersion`.
-   * If not available, we use latest and let the user manage the version.
+   * Otherwise use the major version of `minNodeVersion`.
+   * If that's not available, match the version to the used typescript version.
+   * And if that is also not available, we use latest and let the user manage the version.
    */
   private addNodeTypesVersion(tsVersion?: string, minNodeVersion?: string) {
     const name = "@types/node";
@@ -616,15 +616,15 @@ export class TypeScriptProject extends NodeProject {
       return;
     }
 
+    const minNodeParsed = semver.parse(minNodeVersion);
+    if (minNodeParsed) {
+      return this.addDevDeps(`${name}@^${minNodeParsed.major}`);
+    }
+
     // coerce version, since the ts version likely something like ~5.3.0
     const tsParsed = semver.coerce(tsVersion);
     if (tsParsed) {
       return this.addDevDeps(`${name}@ts${tsParsed.major}.${tsParsed.minor}`);
-    }
-
-    const minNodeParsed = semver.parse(minNodeVersion);
-    if (minNodeParsed) {
-      return this.addDevDeps(`${name}@^${minNodeParsed.major}`);
     }
 
     this.addDevDeps(name);
