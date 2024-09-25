@@ -1,6 +1,8 @@
+import * as path from "path";
 import * as semver from "semver";
 import { Component } from "../component";
 import { Project } from "../project";
+import { normalizePersistedPath } from "../util";
 import { YamlFile } from "../yaml";
 
 /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */
@@ -356,6 +358,30 @@ export interface YarnrcOptions {
 }
 
 export class Yarnrc extends Component {
+  /**
+   * Resets the project configuration mutated by the Yarnrc component.
+   * Useful when the component is being dynamically unmounted from the project.
+   *
+   * @param project - The project instance to reset.
+   */
+  public static resetProject(project: Project) {
+    this.resetGitAttributes(project);
+    this.resetYamlFile(project);
+  }
+
+  private static resetGitAttributes({ gitattributes }: Project) {
+    gitattributes.removeAttributes("/.yarn/**", "linguist-vendored");
+    gitattributes.removeAttributes("/.yarn/releases/*", "binary");
+    gitattributes.removeAttributes("/.yarn/plugins/**/*", "binary");
+    gitattributes.removeAttributes("/.pnp.*", "binary", "linguist-vendored");
+  }
+
+  private static resetYamlFile({ node }: Project) {
+    const normalizedPath = path.normalize(".yarnrc.yml");
+    const projectPath = normalizePersistedPath(normalizedPath);
+    node.tryRemoveChild(`YamlFile@${projectPath}`);
+  }
+
   constructor(project: Project, version: string, options: YarnrcOptions = {}) {
     super(project);
 

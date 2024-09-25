@@ -102,6 +102,9 @@ export class GitAttributesFile extends FileBase {
     for (const attribute of attributes) {
       set.delete(attribute);
     }
+    if (set.size === 0) {
+      this.attributes.delete(glob);
+    }
   }
 
   /**

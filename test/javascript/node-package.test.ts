@@ -747,6 +747,31 @@ describe("yarn berry", () => {
     expect(yarnrcLines).toContain("nodeLinker: node-modules");
   });
 
+  test("resets the packageManager", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+
+    pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+    pkg.setPackageManager(NodePackageManager.YARN_BERRY, {
+      version: "3.6.4",
+      yarnRcOptions: {
+        nodeLinker: YarnNodeLinker.NODE_MODULES,
+      },
+      zeroInstalls: true,
+    });
+
+    const snps = synthSnapshot(project);
+    const yarnrcLines = snps[".yarnrc.yml"].split("\n");
+    const gitignoreLines = snps[".gitignore"].split("\n");
+
+    expect(yarnrcLines).toMatchSnapshot();
+    expect(gitignoreLines).toMatchSnapshot();
+    expect(snps["package.json"]).toMatchSnapshot();
+    expect(snps[".gitattributes"]).toMatchSnapshot();
+  });
+
   describe("gitignore", () => {
     test("produces the expected gitignore for zero-installs", () => {
       const project = new TestProject();

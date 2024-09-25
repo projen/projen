@@ -102,7 +102,7 @@ describe("GitAttributesFile", () => {
         .map((line: string) => line.trim());
 
       expect(lines).toContain("*.md markdown");
-      expect(lines).not.toContain("*.txt text");
+      expect(lines).not.toContain("*.txt");
     });
   });
 

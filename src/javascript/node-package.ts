@@ -6,6 +6,7 @@ import {
   readFileSync,
 } from "fs";
 import { join, resolve } from "path";
+import { Node } from "constructs";
 import * as semver from "semver";
 import {
   extractCodeArtifactDetails,
@@ -461,7 +462,7 @@ export class NodePackage extends Component {
   /**
    * The package manager to use.
    */
-  public readonly packageManager: NodePackageManager;
+  public packageManager: NodePackageManager;
 
   /**
    * @deprecated use `addField(x, y)`
@@ -537,7 +538,7 @@ export class NodePackage extends Component {
   /**
    * The name of the lock file.
    */
-  public readonly lockFile: string;
+  public lockFile: string;
 
   /**
    * The task for installing project dependencies (non-frozen)
@@ -562,6 +563,7 @@ export class NodePackage extends Component {
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly _prev?: Record<string, any>;
   private _renderedDeps?: NpmDependencies;
+  private yarnrcNode?: Node;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
@@ -572,8 +574,7 @@ export class NodePackage extends Component {
       ...options.peerDependencyOptions,
     };
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
-    this.packageManager =
-      options.packageManager ?? NodePackageManager.YARN_CLASSIC;
+    this.packageManager = NodePackageManager.YARN_CLASSIC;
     this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
 
@@ -618,7 +619,6 @@ export class NodePackage extends Component {
       peerDependencies: {},
       dependencies: {},
       bundledDependencies: [],
-      ...this.renderPackageResolutions(),
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
@@ -639,12 +639,10 @@ export class NodePackage extends Component {
           : undefined,
     };
 
-    // Configure Yarn Berry if using
-    if (
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2
-    ) {
-      this.configureYarnBerry(project, options);
+    this.renderPackageResolutions();
+
+    if (options.packageManager) {
+      this.setPackageManager(options.packageManager, options.yarnBerryOptions);
     }
 
     // add tasks for scripts from options (if specified)
@@ -807,6 +805,33 @@ export class NodePackage extends Component {
    */
   public setScript(name: string, command: string) {
     this.scripts[name] = command;
+  }
+
+  /**
+   * Sets the package manager for the project and configures it accordingly.
+   *
+   * @param packageManager - The Node Package Manager used to execute scripts.
+   * @param yarnBerryOptions - Optional configuration options for Yarn Berry.
+   */
+  public setPackageManager(
+    packageManager: NodePackageManager,
+    yarnBerryOptions?: YarnBerryOptions
+  ) {
+    this.packageManager = packageManager;
+    this.project.unannotateGenerated(`/${this.lockFile}`);
+    this.lockFile = determineLockfile(this.packageManager);
+    this.project.annotateGenerated(`/${this.lockFile}`);
+
+    this.renderPackageResolutions();
+
+    // Configure Yarn Berry if using
+    this.resetYarnBerryConfiguration(this.project);
+    if (
+      this.packageManager === NodePackageManager.YARN_BERRY ||
+      this.packageManager === NodePackageManager.YARN2
+    ) {
+      this.configureYarnBerry(this.project, { yarnBerryOptions });
+    }
   }
 
   /**
@@ -1427,6 +1452,10 @@ export class NodePackage extends Component {
   }
 
   private renderPackageResolutions() {
+    delete this.manifest.overrides;
+    delete this.manifest.pnpm;
+    delete this.manifest.resolutions;
+
     const render = () => {
       const overridingDependencies = this.project.deps.all.filter(
         (dep) => dep.type === DependencyType.OVERRIDE
@@ -1442,18 +1471,16 @@ export class NodePackage extends Component {
 
     switch (this.packageManager) {
       case NodePackageManager.NPM:
-        return { overrides: render };
+        this.manifest.overrides = render;
+        return;
       case NodePackageManager.PNPM:
-        return this.project.parent
-          ? undefined
-          : { pnpm: { overrides: render } };
-      case NodePackageManager.YARN:
-      case NodePackageManager.YARN2:
-      case NodePackageManager.YARN_CLASSIC:
-      case NodePackageManager.YARN_BERRY:
-      case NodePackageManager.BUN:
+        if (!this.project.parent) {
+          this.manifest.pnpm = { overrides: render };
+        }
+        return;
       default:
-        return { resolutions: render };
+        this.manifest.resolutions = render;
+        return;
     }
   }
 
@@ -1590,7 +1617,21 @@ export class NodePackage extends Component {
     this.addField("packageManager", `yarn@${version}`);
     this.configureYarnBerryGitignore(zeroInstalls);
 
-    new Yarnrc(project, version, yarnRcOptions);
+    const { node } = new Yarnrc(project, version, yarnRcOptions);
+
+    this.yarnrcNode = node;
+  }
+
+  private resetYarnBerryConfiguration(project: Project) {
+    delete this.manifest.packageManager;
+
+    this.resetYarnBerryGitignoreConfiguration();
+
+    if (this.yarnrcNode) {
+      project.node.tryRemoveChild(this.yarnrcNode.id);
+
+      Yarnrc.resetProject(project);
+    }
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
@@ -1634,6 +1675,21 @@ export class NodePackage extends Component {
     } else {
       gitignore.exclude(".pnp.*");
     }
+  }
+
+  private resetYarnBerryGitignoreConfiguration() {
+    const { gitignore } = this.project;
+
+    gitignore.removePatterns(
+      ".yarn/*",
+      "!.yarn/patches",
+      "!.yarn/plugins",
+      "!.yarn/releases",
+      "!.yarn/sdks",
+      "!.yarn/versions",
+      "!.yarn/cache",
+      ".pnp.*"
+    );
   }
 }
 
