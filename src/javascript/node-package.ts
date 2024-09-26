@@ -1248,7 +1248,7 @@ export class NodePackage extends Component {
           const depDecls = this.project.deps.all.filter((d) => d.name === name);
           if (depDecls.some((d) => d.type === DependencyType.PEER)) {
             throw new Error(
-              `unable to bundle "${name}". it cannot appear as a peer dependency (bundled would always take precedence over peer)`
+              `unable to bundle "${name}": it cannot appear as a peer dependency (bundled would always take precedence over peer)`
             );
           }
 

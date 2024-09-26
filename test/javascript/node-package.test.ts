@@ -389,6 +389,18 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
   expect(pkgFile.devDependencies).toBeUndefined();
 });
 
+test("bundled dependencies may not occur as peerDependencies", () => {
+  const project = new Project({ name: "test" });
+  new NodePackage(project, {
+    peerDeps: ["my-package"],
+    bundledDeps: ["my-package"],
+  });
+
+  expect(() => project.synth()).toThrow(
+    /unable to bundle "my-package": it cannot appear as a peer dependency/
+  );
+});
+
 test("bundled dependencies may not occur as devDependencies", () => {
   const project = new Project({ name: "test" });
   new NodePackage(project, {
