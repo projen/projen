@@ -1,8 +1,6 @@
-import * as path from "path";
 import * as semver from "semver";
 import { Component } from "../component";
 import { Project } from "../project";
-import { normalizePersistedPath } from "../util";
 import { YamlFile } from "../yaml";
 
 /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */
@@ -359,14 +357,15 @@ export interface YarnrcOptions {
 
 export class Yarnrc extends Component {
   /**
-   * Resets the project configuration mutated by the Yarnrc component.
+   * Removes component node and resets the project configuration mutated by the Yarnrc component.
    * Useful when the component is being dynamically unmounted from the project.
    *
-   * @param project - The project instance to reset.
+   * @param nodeId - the id of the component node
+   * @param project - the project to remove the component from
    */
-  public static resetProject(project: Project) {
+  public static removeNode(nodeId: string, project: Project) {
+    project.node.tryRemoveChild(nodeId);
     this.resetGitAttributes(project);
-    this.resetYamlFile(project);
   }
 
   private static resetGitAttributes({ gitattributes }: Project) {
@@ -376,21 +375,13 @@ export class Yarnrc extends Component {
     gitattributes.removeAttributes("/.pnp.*", "binary", "linguist-vendored");
   }
 
-  private static resetYamlFile({ node }: Project) {
-    const normalizedPath = path.normalize(".yarnrc.yml");
-    const projectPath = normalizePersistedPath(normalizedPath);
-    node.tryRemoveChild(`YamlFile@${projectPath}`);
-  }
-
   constructor(project: Project, version: string, options: YarnrcOptions = {}) {
     super(project);
 
     this.validateOptionsForVersion(semver.major(version), options);
     this.updateGitAttributes();
 
-    new YamlFile(project, ".yarnrc.yml", {
-      obj: options,
-    });
+    new YamlFile(this, ".yarnrc.yml", { obj: options });
   }
 
   private updateGitAttributes() {

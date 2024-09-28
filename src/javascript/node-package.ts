@@ -865,6 +865,15 @@ export class NodePackage extends Component {
   }
 
   /**
+   * Directly remove a field from `package.json`.
+   * @escape
+   * @param name field name
+   */
+  public removeField(name: string) {
+    delete this.manifest[name];
+  }
+
+  /**
    * Sets the package version.
    * @param version Package version.
    */
@@ -1618,20 +1627,14 @@ export class NodePackage extends Component {
     this.configureYarnBerryGitignore(zeroInstalls);
 
     const { node } = new Yarnrc(project, version, yarnRcOptions);
-
     this.yarnrcNode = node;
   }
 
   private resetYarnBerryConfiguration(project: Project) {
-    delete this.manifest.packageManager;
-
+    this.removeField("packageManager");
     this.resetYarnBerryGitignoreConfiguration();
 
-    if (this.yarnrcNode) {
-      project.node.tryRemoveChild(this.yarnrcNode.id);
-
-      Yarnrc.resetProject(project);
-    }
+    this.yarnrcNode && Yarnrc.removeNode(this.yarnrcNode.id, project);
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {

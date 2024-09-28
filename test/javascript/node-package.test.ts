@@ -820,6 +820,19 @@ describe("yarn berry", () => {
         ])
       );
     });
+
+    test("resets the packageManager", () => {
+      const project = new TestProject();
+      const pkg = new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+      });
+
+      pkg.setPackageManager(NodePackageManager.PNPM);
+
+      const snps = synthSnapshot(project);
+
+      expect(snps).toMatchSnapshot();
+    });
   });
 
   describe("conflicting options", () => {
