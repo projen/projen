@@ -1257,7 +1257,7 @@ export class NodePackage extends Component {
           // `dependencies` and `dependencies` only.
           if (depDecls.some((d) => d.type === DependencyType.BUILD)) {
             throw new Error(
-              `unable to bundle "${name}": it cannot appear as a devDependency (certain versions of NPM will silently fail to bundle it if it is)`
+              `unable to bundle "${name}": it cannot appear as a devDependency (only prod dependencies are bundled, and any dependency appearing as a devDependency is considered to be not a prod dependency)`
             );
           }
 
