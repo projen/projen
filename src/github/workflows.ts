@@ -57,6 +57,13 @@ export interface GithubWorkflowOptions {
    * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
   readonly concurrencyOptions?: ConcurrencyOptions;
+  /**
+   * The name of the workflow. GitHub displays the names of your workflows under your repository's
+   * "Actions" tab. If you omit `name`, GitHub displays the workflow file path relative to the
+   * root of the repository.
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name
+   */
+  readonly name?: string;
 }
 
 /**
@@ -68,7 +75,10 @@ export interface GithubWorkflowOptions {
  */
 export class GithubWorkflow extends Component {
   /**
-   * The name of the workflow.
+   * The name of the workflow. GitHub displays the names of your workflows under your repository's
+   * "Actions" tab. If you omit `name`, GitHub displays the workflow file path relative to the
+   * root of the repository.
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name
    */
   public readonly name: string;
 
@@ -109,17 +119,17 @@ export class GithubWorkflow extends Component {
 
   constructor(
     github: GitHub,
-    name: string,
+    filePath: string,
     options: GithubWorkflowOptions = {}
   ) {
-    super(github.project, `${new.target.name}#${name}`);
+    super(github.project, `${new.target.name}#${filePath}`);
 
     const defaultConcurrency: ConcurrencyOptions = {
       cancelInProgress: false,
       group: "${{ github.workflow }}",
     };
 
-    this.name = name;
+    this.name = options.name ?? filePath;
     this.concurrency = options.limitConcurrency
       ? (deepMerge([
           defaultConcurrency,
@@ -134,7 +144,7 @@ export class GithubWorkflow extends Component {
     if (workflowsEnabled) {
       this.file = new YamlFile(
         this.project,
-        `.github/workflows/${name.toLocaleLowerCase()}.yml`,
+        `.github/workflows/${filePath.toLocaleLowerCase()}.yml`,
         {
           obj: () => this.renderWorkflow(),
           // GitHub needs to read the file from the repository in order to work.
