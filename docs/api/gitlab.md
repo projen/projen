@@ -4353,7 +4353,20 @@ const workflow: gitlab.Workflow = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.gitlab.Workflow.property.name">name</a></code> | <code>string</code> | You can use name to define a name for pipelines. |
 | <code><a href="#projen.gitlab.Workflow.property.rules">rules</a></code> | <code><a href="#projen.gitlab.WorkflowRule">WorkflowRule</a>[]</code> | Used to control whether or not a whole pipeline is created. |
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.gitlab.Workflow.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+You can use name to define a name for pipelines.
 
 ---
 
