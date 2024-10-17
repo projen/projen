@@ -72,6 +72,11 @@ export interface MergifyQueue {
    * @see https://docs.mergify.com/conditions/#conditions
    */
   readonly conditions: MergifyCondition[];
+
+  /**
+   * Template to use as the commit message when using the merge or squash merge method.
+   */
+  readonly commitMessageTemplate: string;
 }
 
 export interface MergifyOptions {
