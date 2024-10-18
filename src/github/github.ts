@@ -179,7 +179,7 @@ export class GitHub extends Component {
     }
 
     if (options.mergeQueue ?? false) {
-      new MergeQueue(this, options.mergeQueueOptions);
+      this.mergeQueue = new MergeQueue(this, options.mergeQueueOptions);
     }
 
     if (options.pullRequestLint ?? true) {

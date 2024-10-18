@@ -9,6 +9,7 @@ import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions, ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
+import { MergeGroupOptions } from "./workflows-model";
 
 /**
  * Options for `GitHubProject`.
@@ -193,8 +194,13 @@ export class GitHubProject extends Project {
    */
   public readonly autoApprove?: AutoApprove;
 
+  private targetBranches?: string[];
+
   constructor(options: GitHubProjectOptions) {
     super(options);
+
+    this.targetBranches =
+      options.githubOptions?.mergeQueueOptions?.targetBranches;
 
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;
     // we only allow these global services to be used in root projects
@@ -247,5 +253,18 @@ export class GitHubProject extends Project {
    */
   public annotateGenerated(glob: string): void {
     this.gitattributes.addAttributes(glob, "linguist-generated");
+  }
+
+  preSynthesize() {
+    const mergeGroup: MergeGroupOptions = this.targetBranches
+      ? {
+          branches: this.targetBranches,
+        }
+      : {};
+
+    const workflowEngine = GitHub.of(this);
+    workflowEngine?.tryFindWorkflow("build")?.on({
+      mergeGroup,
+    });
   }
 }

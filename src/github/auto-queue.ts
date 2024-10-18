@@ -1,6 +1,6 @@
 import { IConstruct } from "constructs";
-import { github as gh } from "..";
 import { Component } from "../component";
+import * as gh from "../github";
 
 /**
  * The merge method used to add the PR to the merge queue

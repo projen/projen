@@ -1,8 +1,7 @@
 import { IConstruct } from "constructs";
 import { AutoQueue, AutoQueueOptions } from "./auto-queue";
-import { MergeGroupOptions } from "./workflows-model";
-import { github as gh } from "..";
 import { Component } from "../component";
+import * as gh from "../github";
 
 /**
  * Options for 'MergeQueue'
@@ -48,15 +47,5 @@ export class MergeQueue extends Component {
     if (autoMerge) {
       new AutoQueue(this, options.autoQueueOptions);
     }
-
-    const mergeGroup: MergeGroupOptions = options.targetBranches
-      ? {
-          branches: options.targetBranches,
-        }
-      : {};
-
-    workflowEngine.tryFindWorkflow("build")?.on({
-      mergeGroup,
-    });
   }
 }

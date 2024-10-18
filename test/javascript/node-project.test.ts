@@ -1296,6 +1296,7 @@ describe("buildWorkflowTriggers", () => {
     expect(buildWorkflow.on).toEqual({
       pull_request: {},
       workflow_dispatch: {},
+      merge_group: {},
     });
   });
 
@@ -1315,6 +1316,7 @@ describe("buildWorkflowTriggers", () => {
     const output = synthSnapshot(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.on).toEqual({
+      merge_group: {},
       push: {
         branches: ["feature/*"],
       },
