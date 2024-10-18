@@ -265,7 +265,6 @@ name: build
 on:
   pull_request: {}
   workflow_dispatch: {}
-  merge_group: {}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -3954,7 +3953,6 @@ name: build
 on:
   pull_request: {}
   workflow_dispatch: {}
-  merge_group: {}
 jobs:
   build:
     runs-on: ubuntu-latest

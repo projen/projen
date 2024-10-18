@@ -9,7 +9,6 @@ import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions, ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
-import { MergeGroupOptions } from "./workflows-model";
 
 /**
  * Options for `GitHubProject`.
@@ -194,17 +193,12 @@ export class GitHubProject extends Project {
    */
   public readonly autoApprove?: AutoApprove;
 
-  private targetBranches?: string[];
-
   constructor(options: GitHubProjectOptions) {
     super(options);
 
-    this.targetBranches =
-      options.githubOptions?.mergeQueueOptions?.targetBranches;
-
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;
     // we only allow these global services to be used in root projects
-    const github = options.github ?? (this.parent ? false : true);
+    const github = options.github ?? !this.parent;
     this.github = github
       ? new GitHub(this, {
           projenTokenSecret: options.projenTokenSecret,
@@ -215,7 +209,7 @@ export class GitHubProject extends Project {
         })
       : undefined;
 
-    const vscode = options.vscode ?? (this.parent ? false : true);
+    const vscode = options.vscode ?? !this.parent;
     this.vscode = vscode ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
@@ -253,18 +247,5 @@ export class GitHubProject extends Project {
    */
   public annotateGenerated(glob: string): void {
     this.gitattributes.addAttributes(glob, "linguist-generated");
-  }
-
-  preSynthesize() {
-    const mergeGroup: MergeGroupOptions = this.targetBranches
-      ? {
-          branches: this.targetBranches,
-        }
-      : {};
-
-    const workflowEngine = GitHub.of(this);
-    workflowEngine?.tryFindWorkflow("build")?.on({
-      mergeGroup,
-    });
   }
 }

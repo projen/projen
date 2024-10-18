@@ -1,7 +1,9 @@
 import { IConstruct } from "constructs";
 import { AutoQueue, AutoQueueOptions } from "./auto-queue";
 import { Component } from "../component";
+import { MergeGroupOptions } from "./workflows-model";
 import * as gh from "../github";
+import { GitHub } from "../github";
 
 /**
  * Options for 'MergeQueue'
@@ -31,7 +33,10 @@ export interface MergeQueueOptions {
  * Merge pull requests using a merge queue
  */
 export class MergeQueue extends Component {
-  constructor(scope: IConstruct, options: MergeQueueOptions = {}) {
+  constructor(
+    scope: IConstruct,
+    private readonly options: MergeQueueOptions = {}
+  ) {
     super(scope);
 
     const workflowEngine = gh.GitHub.of(this.project);
@@ -47,5 +52,19 @@ export class MergeQueue extends Component {
     if (autoMerge) {
       new AutoQueue(this, options.autoQueueOptions);
     }
+  }
+
+  preSynthesize() {
+    const targetBranches = this.options.targetBranches;
+    const mergeGroup: MergeGroupOptions = targetBranches
+      ? {
+          branches: targetBranches,
+        }
+      : {};
+
+    const workflowEngine = GitHub.of(this.project);
+    workflowEngine?.tryFindWorkflow("build")?.on({
+      mergeGroup,
+    });
   }
 }
