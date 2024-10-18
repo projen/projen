@@ -1997,6 +1997,7 @@ const ciConfigurationOptions: gitlab.CiConfigurationOptions = { ... }
 | <code><a href="#projen.gitlab.CiConfigurationOptions.property.default">default</a></code> | <code><a href="#projen.gitlab.Default">Default</a></code> | Default settings for the CI Configuration. |
 | <code><a href="#projen.gitlab.CiConfigurationOptions.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.Job">Job</a>}</code> | An initial set of jobs to add to the configuration. |
 | <code><a href="#projen.gitlab.CiConfigurationOptions.property.pages">pages</a></code> | <code><a href="#projen.gitlab.Job">Job</a></code> | A special job used to upload static sites to Gitlab pages. |
+| <code><a href="#projen.gitlab.CiConfigurationOptions.property.path">path</a></code> | <code>string</code> | The path of the file to generate. |
 | <code><a href="#projen.gitlab.CiConfigurationOptions.property.stages">stages</a></code> | <code>string[]</code> | Groups jobs into stages. |
 | <code><a href="#projen.gitlab.CiConfigurationOptions.property.variables">variables</a></code> | <code>{[ key: string ]: any}</code> | Global variables that are passed to jobs. |
 | <code><a href="#projen.gitlab.CiConfigurationOptions.property.workflow">workflow</a></code> | <code><a href="#projen.gitlab.Workflow">Workflow</a></code> | Used to control pipeline behavior. |
@@ -2041,6 +2042,18 @@ A special job used to upload static sites to Gitlab pages.
 
 Requires a `public/` directory
 with `artifacts.path` pointing to it.
+
+---
+
+##### `path`<sup>Optional</sup> <a name="path" id="projen.gitlab.CiConfigurationOptions.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The path of the file to generate.
 
 ---
 
@@ -4340,7 +4353,20 @@ const workflow: gitlab.Workflow = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.gitlab.Workflow.property.name">name</a></code> | <code>string</code> | You can use name to define a name for pipelines. |
 | <code><a href="#projen.gitlab.Workflow.property.rules">rules</a></code> | <code><a href="#projen.gitlab.WorkflowRule">WorkflowRule</a>[]</code> | Used to control whether or not a whole pipeline is created. |
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.gitlab.Workflow.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+You can use name to define a name for pipelines.
 
 ---
 

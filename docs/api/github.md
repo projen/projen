@@ -7112,10 +7112,23 @@ const mergifyQueue: github.MergifyQueue = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
 | <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue. |
 | <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
 | <code><a href="#projen.github.MergifyQueue.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
+
+---
+
+##### `commitMessageTemplate`<sup>Required</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueue.property.commitMessageTemplate"></a>
+
+```typescript
+public readonly commitMessageTemplate: string;
+```
+
+- *Type:* string
+
+Template to use as the commit message when using the merge or squash merge method.
 
 ---
 

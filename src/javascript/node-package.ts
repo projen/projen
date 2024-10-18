@@ -1245,13 +1245,19 @@ export class NodePackage extends Component {
         case DependencyType.BUNDLED:
           bundledDependencies.push(name);
 
-          if (
-            this.project.deps.all.find(
-              (d) => d.name === name && d.type === DependencyType.PEER
-            )
-          ) {
+          const depDecls = this.project.deps.all.filter((d) => d.name === name);
+          if (depDecls.some((d) => d.type === DependencyType.PEER)) {
             throw new Error(
-              `unable to bundle "${name}". it cannot appear as a peer dependency`
+              `unable to bundle "${name}": it cannot appear as a peer dependency (bundled would always take precedence over peer)`
+            );
+          }
+
+          // I've observed that at least npm 10.8.2 will silently fail to bundle
+          // a dependency if it is [also] part of `devDependencies`. It must exist in
+          // `dependencies` and `dependencies` only.
+          if (depDecls.some((d) => d.type === DependencyType.BUILD)) {
+            throw new Error(
+              `unable to bundle "${name}": it cannot appear as a devDependency (only prod dependencies are bundled, and any dependency appearing as a devDependency is considered to be not a prod dependency)`
             );
           }
 
