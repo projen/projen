@@ -383,6 +383,171 @@ public readonly project: Project;
 ---
 
 
+### AutoQueue <a name="AutoQueue" id="projen.github.AutoQueue"></a>
+
+Automatically add pull requests to the merge queue PRs will be merged once they pass required checks.
+
+#### Initializers <a name="Initializers" id="projen.github.AutoQueue.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.AutoQueue(scope: IConstruct, options?: AutoQueueOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.AutoQueue.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.github.AutoQueue.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.AutoQueueOptions">AutoQueueOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.github.AutoQueue.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.AutoQueue.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.AutoQueueOptions">AutoQueueOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.AutoQueue.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.AutoQueue.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.AutoQueue.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.AutoQueue.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.AutoQueue.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.AutoQueue.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.AutoQueue.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.github.AutoQueue.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.AutoQueue.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.AutoQueue.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.AutoQueue.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.AutoQueue.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.AutoQueue.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.AutoQueue.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.AutoQueue.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.AutoQueue.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.AutoQueue.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.AutoQueue.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.AutoQueue.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.AutoQueue.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+
 ### Dependabot <a name="Dependabot" id="projen.github.Dependabot"></a>
 
 Defines dependabot configuration for node projects.
@@ -842,12 +1007,13 @@ Returns the `GitHub` component of a project or `undefined` if the project does n
 | --- | --- | --- |
 | <code><a href="#projen.github.GitHub.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.GitHub.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.github.GitHub.property.actions">actions</a></code> | <code><a href="#projen.github.GitHubActionsProvider">GitHubActionsProvider</a></code> | *No description.* |
+| <code><a href="#projen.github.GitHub.property.actions">actions</a></code> | <code><a href="#projen.github.GitHubActionsProvider">GitHubActionsProvider</a></code> | The GitHub Actions provider used to manage the versions of actions used in steps. |
 | <code><a href="#projen.github.GitHub.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether downloading from LFS is enabled for this GitHub project. |
 | <code><a href="#projen.github.GitHub.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GitHub.property.workflows">workflows</a></code> | <code><a href="#projen.github.GithubWorkflow">GithubWorkflow</a>[]</code> | All workflows. |
 | <code><a href="#projen.github.GitHub.property.workflowsEnabled">workflowsEnabled</a></code> | <code>boolean</code> | Are workflows enabled? |
-| <code><a href="#projen.github.GitHub.property.mergify">mergify</a></code> | <code><a href="#projen.github.Mergify">Mergify</a></code> | The `Mergify` configured on this repository. |
+| <code><a href="#projen.github.GitHub.property.mergeQueue">mergeQueue</a></code> | <code><a href="#projen.github.MergeQueue">MergeQueue</a></code> | The `MergeQueue` component configured on this repository This is `undefined` if merge queues are not enabled for this repository. |
+| <code><a href="#projen.github.GitHub.property.mergify">mergify</a></code> | <code><a href="#projen.github.Mergify">Mergify</a></code> | The `Mergify` component configured on this repository This is `undefined` if Mergify is not enabled for this repository. |
 
 ---
 
@@ -880,6 +1046,8 @@ public readonly actions: GitHubActionsProvider;
 ```
 
 - *Type:* <a href="#projen.github.GitHubActionsProvider">GitHubActionsProvider</a>
+
+The GitHub Actions provider used to manage the versions of actions used in steps.
 
 ---
 
@@ -931,6 +1099,18 @@ Are workflows enabled?
 
 ---
 
+##### `mergeQueue`<sup>Optional</sup> <a name="mergeQueue" id="projen.github.GitHub.property.mergeQueue"></a>
+
+```typescript
+public readonly mergeQueue: MergeQueue;
+```
+
+- *Type:* <a href="#projen.github.MergeQueue">MergeQueue</a>
+
+The `MergeQueue` component configured on this repository This is `undefined` if merge queues are not enabled for this repository.
+
+---
+
 ##### `mergify`<sup>Optional</sup> <a name="mergify" id="projen.github.GitHub.property.mergify"></a>
 
 ```typescript
@@ -939,10 +1119,7 @@ public readonly mergify: Mergify;
 
 - *Type:* <a href="#projen.github.Mergify">Mergify</a>
 
-The `Mergify` configured on this repository.
-
-This is `undefined` if Mergify
-was not enabled when creating the repository.
+The `Mergify` component configured on this repository This is `undefined` if Mergify is not enabled for this repository.
 
 ---
 
@@ -2346,6 +2523,171 @@ is set as the commit message.
 
 This value can include expressions and can reference `github` and `inputs`
 contexts.
+
+---
+
+
+### MergeQueue <a name="MergeQueue" id="projen.github.MergeQueue"></a>
+
+Merge pull requests using a merge queue.
+
+#### Initializers <a name="Initializers" id="projen.github.MergeQueue.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.MergeQueue(scope: IConstruct, options?: MergeQueueOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergeQueue.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.github.MergeQueue.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.github.MergeQueue.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.MergeQueue.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.MergeQueue.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.MergeQueue.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.MergeQueue.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.MergeQueue.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.MergeQueue.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.MergeQueue.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.MergeQueue.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.github.MergeQueue.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.MergeQueue.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.MergeQueue.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.MergeQueue.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.MergeQueue.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.MergeQueue.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.MergeQueue.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.MergeQueue.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.MergeQueue.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergeQueue.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.MergeQueue.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.MergeQueue.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.MergeQueue.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
 
 ---
 
@@ -4295,6 +4637,97 @@ Name of the mergify rule.
 
 ---
 
+### AutoQueueOptions <a name="AutoQueueOptions" id="projen.github.AutoQueueOptions"></a>
+
+Options for 'AutoQueue'.
+
+#### Initializer <a name="Initializer" id="projen.github.AutoQueueOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const autoQueueOptions: github.AutoQueueOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.AutoQueueOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will have auto-queue enabled. |
+| <code><a href="#projen.github.AutoQueueOptions.property.labels">labels</a></code> | <code>string[]</code> | Only pull requests with one of this labels will have auto-queue enabled. |
+| <code><a href="#projen.github.AutoQueueOptions.property.mergeMethod">mergeMethod</a></code> | <code><a href="#projen.github.MergeMethod">MergeMethod</a></code> | The method used to add the PR to the merge queue Any branch protection rules must allow this merge method. |
+| <code><a href="#projen.github.AutoQueueOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.AutoQueueOptions.property.secret">secret</a></code> | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. |
+
+---
+
+##### `allowedUsernames`<sup>Optional</sup> <a name="allowedUsernames" id="projen.github.AutoQueueOptions.property.allowedUsernames"></a>
+
+```typescript
+public readonly allowedUsernames: string[];
+```
+
+- *Type:* string[]
+- *Default:* pull requests from all users are eligible for auto-queuing
+
+Only pull requests authored by these Github usernames will have auto-queue enabled.
+
+---
+
+##### `labels`<sup>Optional</sup> <a name="labels" id="projen.github.AutoQueueOptions.property.labels"></a>
+
+```typescript
+public readonly labels: string[];
+```
+
+- *Type:* string[]
+- *Default:* all pull requests are eligible for auto-queueing
+
+Only pull requests with one of this labels will have auto-queue enabled.
+
+---
+
+##### `mergeMethod`<sup>Optional</sup> <a name="mergeMethod" id="projen.github.AutoQueueOptions.property.mergeMethod"></a>
+
+```typescript
+public readonly mergeMethod: MergeMethod;
+```
+
+- *Type:* <a href="#projen.github.MergeMethod">MergeMethod</a>
+- *Default:* MergeMethod.SQUASH
+
+The method used to add the PR to the merge queue Any branch protection rules must allow this merge method.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoQueueOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `secret`<sup>Optional</sup> <a name="secret" id="projen.github.AutoQueueOptions.property.secret"></a>
+
+```typescript
+public readonly secret: string;
+```
+
+- *Type:* string
+- *Default:* "GITHUB_TOKEN"
+
+A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.
+
+This token is used to enable auto-queue on pull requests.
+
+---
+
 ### CheckoutOptions <a name="CheckoutOptions" id="projen.github.CheckoutOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.github.CheckoutOptions.Initializer"></a>
@@ -5762,6 +6195,8 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.GitHubOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Download files in LFS in workflows. |
+| <code><a href="#projen.github.GitHubOptions.property.mergeQueue">mergeQueue</a></code> | <code>boolean</code> | Whether a merge queue should be used on this repository to merge pull requests. |
+| <code><a href="#projen.github.GitHubOptions.property.mergeQueueOptions">mergeQueueOptions</a></code> | <code><a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a></code> | Options for MergeQueue. |
 | <code><a href="#projen.github.GitHubOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
 | <code><a href="#projen.github.GitHubOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for Mergify. |
 | <code><a href="#projen.github.GitHubOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
@@ -5784,6 +6219,34 @@ public readonly downloadLfs: boolean;
 - *Default:* true if the associated project has `lfsPatterns`, `false` otherwise
 
 Download files in LFS in workflows.
+
+---
+
+##### `mergeQueue`<sup>Optional</sup> <a name="mergeQueue" id="projen.github.GitHubOptions.property.mergeQueue"></a>
+
+```typescript
+public readonly mergeQueue: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether a merge queue should be used on this repository to merge pull requests.
+
+Requires additional configuration of the repositories branch protection rules.
+
+---
+
+##### `mergeQueueOptions`<sup>Optional</sup> <a name="mergeQueueOptions" id="projen.github.GitHubOptions.property.mergeQueueOptions"></a>
+
+```typescript
+public readonly mergeQueueOptions: MergeQueueOptions;
+```
+
+- *Type:* <a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a>
+- *Default:* default options
+
+Options for MergeQueue.
 
 ---
 
@@ -6487,6 +6950,67 @@ public readonly name: string;
 - *Type:* string
 
 The name of the user.
+
+---
+
+### MergeQueueOptions <a name="MergeQueueOptions" id="projen.github.MergeQueueOptions"></a>
+
+Options for 'MergeQueue'.
+
+#### Initializer <a name="Initializer" id="projen.github.MergeQueueOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const mergeQueueOptions: github.MergeQueueOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergeQueueOptions.property.autoQueue">autoQueue</a></code> | <code>boolean</code> | Should pull requests be queued automatically to be merged once they pass required checks. |
+| <code><a href="#projen.github.MergeQueueOptions.property.autoQueueOptions">autoQueueOptions</a></code> | <code><a href="#projen.github.AutoQueueOptions">AutoQueueOptions</a></code> | Configure auto-queue pull requests. |
+| <code><a href="#projen.github.MergeQueueOptions.property.targetBranches">targetBranches</a></code> | <code>string[]</code> | The branches that can be merged into using MergeQueue. |
+
+---
+
+##### `autoQueue`<sup>Optional</sup> <a name="autoQueue" id="projen.github.MergeQueueOptions.property.autoQueue"></a>
+
+```typescript
+public readonly autoQueue: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Should pull requests be queued automatically to be merged once they pass required checks.
+
+---
+
+##### `autoQueueOptions`<sup>Optional</sup> <a name="autoQueueOptions" id="projen.github.MergeQueueOptions.property.autoQueueOptions"></a>
+
+```typescript
+public readonly autoQueueOptions: AutoQueueOptions;
+```
+
+- *Type:* <a href="#projen.github.AutoQueueOptions">AutoQueueOptions</a>
+- *Default:* see AutoQueueOptions
+
+Configure auto-queue pull requests.
+
+---
+
+##### `targetBranches`<sup>Optional</sup> <a name="targetBranches" id="projen.github.MergeQueueOptions.property.targetBranches"></a>
+
+```typescript
+public readonly targetBranches: string[];
+```
+
+- *Type:* string[]
+- *Default:* all branches
+
+The branches that can be merged into using MergeQueue.
 
 ---
 
@@ -9256,6 +9780,37 @@ By default, this is on Monday.
 Runs once each month.
 
 This is on the first day of the month.
+
+---
+
+
+### MergeMethod <a name="MergeMethod" id="projen.github.MergeMethod"></a>
+
+The merge method used to add the PR to the merge queue.
+
+Behavior can be further configured in repository settings.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.MergeMethod.SQUASH">SQUASH</a></code> | *No description.* |
+| <code><a href="#projen.github.MergeMethod.MERGE">MERGE</a></code> | *No description.* |
+| <code><a href="#projen.github.MergeMethod.REBASE">REBASE</a></code> | *No description.* |
+
+---
+
+##### `SQUASH` <a name="SQUASH" id="projen.github.MergeMethod.SQUASH"></a>
+
+---
+
+
+##### `MERGE` <a name="MERGE" id="projen.github.MergeMethod.MERGE"></a>
+
+---
+
+
+##### `REBASE` <a name="REBASE" id="projen.github.MergeMethod.REBASE"></a>
 
 ---
 
