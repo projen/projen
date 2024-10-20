@@ -9,6 +9,14 @@ import { deepMerge, kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 
 /**
+ * File extension for the workflow file.
+ */
+export enum WorkflowYamlExtension {
+  YML = 'yml',
+  YAML = 'yaml',
+}
+
+/**
  * Options for `concurrency`.
  */
 export interface ConcurrencyOptions {
@@ -49,6 +57,7 @@ export interface GithubWorkflowOptions {
    * @default false
    */
   readonly limitConcurrency?: boolean;
+  
   /**
    * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. Currently in beta.
    *
@@ -57,6 +66,13 @@ export interface GithubWorkflowOptions {
    * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
   readonly concurrencyOptions?: ConcurrencyOptions;
+
+  /**
+   * File extension for the workflow file. Options are WorkflowYamlExtension.YAML or WorkflowYamlExtension.YML.
+   *
+   * @default WorkflowYamlExtension.YML
+   */
+  readonly fileExtension?: WorkflowYamlExtension;
 }
 
 /**
@@ -81,6 +97,11 @@ export class GithubWorkflow extends Component {
    * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
    */
   public readonly file: YamlFile | undefined;
+
+  /**
+   * File extension for the workflow file. Options are `.yml` or `.yaml`.
+   */
+  public readonly fileExtension: WorkflowYamlExtension;
 
   /**
    * GitHub API authentication method used by projen workflows.
@@ -128,13 +149,14 @@ export class GithubWorkflow extends Component {
       : undefined;
     this.projenCredentials = github.projenCredentials;
     this.actions = github.actions;
+    this.fileExtension = options.fileExtension ?? WorkflowYamlExtension.YML;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
     if (workflowsEnabled) {
       this.file = new YamlFile(
         this.project,
-        `.github/workflows/${name.toLocaleLowerCase()}.yml`,
+        `.github/workflows/${name.toLocaleLowerCase()}.${options.fileExtension === WorkflowYamlExtension.YAML ? 'yaml' : 'yml'}`,
         {
           obj: () => this.renderWorkflow(),
           // GitHub needs to read the file from the repository in order to work.
