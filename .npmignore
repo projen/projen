@@ -6,7 +6,6 @@ junit.xml
 permissions-backup.acl
 /dist/changelog.md
 /dist/version.txt
-/.mergify.yml
 /.prettierignore
 /.prettierrc.json
 /test/
