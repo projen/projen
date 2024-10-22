@@ -69,15 +69,38 @@
         "metadata": {
           "type": "component",
           "construct": "GitHub"
+        },
+        "nodes": {
+          "MergeQueue#AutoId1": {
+            "metadata": {
+              "type": "component",
+              "construct": "MergeQueue"
+            },
+            "nodes": {
+              "AutoQueue#AutoId1": {
+                "metadata": {
+                  "type": "component",
+                  "construct": "AutoQueue"
+                }
+              }
+            }
+          }
         }
       },
-      "Mergify#AutoId5": {
+      "GithubWorkflow#auto-queue": {
         "metadata": {
           "type": "component",
-          "construct": "Mergify"
+          "construct": "GithubWorkflow"
         }
       },
-      "PullRequestLint#AutoId6": {
+      "YamlFile@.github--workflows--auto-queue.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/auto-queue.yml"
+        }
+      },
+      "PullRequestLint#AutoId5": {
         "metadata": {
           "type": "component",
           "construct": "PullRequestLint"
@@ -96,13 +119,13 @@
           "path": ".github/workflows/pull-request-lint.yml"
         }
       },
-      "VsCode#AutoId7": {
+      "VsCode#AutoId6": {
         "metadata": {
           "type": "component",
           "construct": "VsCode"
         }
       },
-      "Gitpod#AutoId8": {
+      "Gitpod#AutoId7": {
         "metadata": {
           "type": "component",
           "construct": "Gitpod"
@@ -115,7 +138,7 @@
           "path": ".gitpod.yml"
         }
       },
-      "DevContainer#AutoId9": {
+      "DevContainer#AutoId8": {
         "metadata": {
           "type": "component",
           "construct": "DevContainer"
@@ -128,19 +151,19 @@
           "path": ".devcontainer.json"
         }
       },
-      "Clobber#AutoId10": {
+      "Clobber#AutoId9": {
         "metadata": {
           "type": "component",
           "construct": "Clobber"
         }
       },
-      "SampleReadme#AutoId11": {
+      "SampleReadme#AutoId10": {
         "metadata": {
           "type": "component",
           "construct": "SampleReadme"
         }
       },
-      "AutoApprove#AutoId12": {
+      "AutoApprove#AutoId11": {
         "metadata": {
           "type": "component",
           "construct": "AutoApprove"
@@ -159,7 +182,7 @@
           "path": ".github/workflows/auto-approve.yml"
         }
       },
-      "NodePackage#AutoId13": {
+      "NodePackage#AutoId12": {
         "metadata": {
           "type": "component",
           "construct": "NodePackage"
@@ -188,13 +211,13 @@
           "path": ".npmignore"
         }
       },
-      "Jest#AutoId14": {
+      "Jest#AutoId13": {
         "metadata": {
           "type": "component",
           "construct": "Jest"
         }
       },
-      "BuildWorkflow#AutoId15": {
+      "BuildWorkflow#AutoId14": {
         "metadata": {
           "type": "component",
           "construct": "BuildWorkflow"
@@ -213,7 +236,7 @@
           "path": ".github/workflows/build.yml"
         }
       },
-      "Release#AutoId16": {
+      "Release#AutoId15": {
         "metadata": {
           "type": "component",
           "construct": "Release"
@@ -227,13 +250,13 @@
           }
         }
       },
-      "Version#AutoId17": {
+      "Version#AutoId16": {
         "metadata": {
           "type": "component",
           "construct": "Version"
         }
       },
-      "Publisher#AutoId18": {
+      "Publisher#AutoId17": {
         "metadata": {
           "type": "component",
           "construct": "Publisher"
@@ -252,19 +275,6 @@
           "path": ".github/workflows/release.yml"
         }
       },
-      "AutoMerge#AutoId19": {
-        "metadata": {
-          "type": "component",
-          "construct": "AutoMerge"
-        }
-      },
-      "YamlFile@.mergify.yml": {
-        "metadata": {
-          "type": "file",
-          "construct": "YamlFile",
-          "path": ".mergify.yml"
-        }
-      },
       "PullRequestTemplate@.github--pull_request_template.md": {
         "metadata": {
           "type": "file",
@@ -272,13 +282,13 @@
           "path": ".github/pull_request_template.md"
         }
       },
-      "Bundler#AutoId20": {
+      "Bundler#AutoId18": {
         "metadata": {
           "type": "component",
           "construct": "Bundler"
         }
       },
-      "Prettier#AutoId21": {
+      "Prettier#AutoId19": {
         "metadata": {
           "type": "component",
           "construct": "Prettier"
@@ -304,7 +314,7 @@
           "construct": "LicenseChecker"
         }
       },
-      "TypescriptConfig#AutoId22": {
+      "TypescriptConfig#AutoId20": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -317,7 +327,7 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId23": {
+      "Eslint#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -330,31 +340,31 @@
           "path": ".eslintrc.json"
         }
       },
-      "Projenrc#AutoId24": {
+      "Projenrc#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "SampleCode#AutoId25": {
+      "SampleCode#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
         }
       },
-      "SampleDir#AutoId26": {
+      "SampleDir#AutoId24": {
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
         }
       },
-      "SampleDir#AutoId27": {
+      "SampleDir#AutoId25": {
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
         }
       },
-      "JsiiDocgen#AutoId28": {
+      "JsiiDocgen#AutoId26": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
@@ -381,7 +391,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId29": {
+      "UpgradeDependencies#AutoId27": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -400,7 +410,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId30": {
+      "UpgradeDependencies#AutoId28": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -433,7 +443,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId31": {
+      "VsCodeLaunchConfig#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"

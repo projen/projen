@@ -3,6 +3,7 @@
 !/.projen/tasks.json
 !/.projen/deps.json
 !/.projen/files.json
+!/.github/workflows/auto-queue.yml
 !/.github/workflows/pull-request-lint.yml
 !/.gitpod.yml
 !/.devcontainer.json
@@ -40,7 +41,6 @@ junit.xml
 /dist/changelog.md
 /dist/version.txt
 !/.github/workflows/release.yml
-!/.mergify.yml
 !/.github/pull_request_template.md
 !/.prettierignore
 !/.prettierrc.json
