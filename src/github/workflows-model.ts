@@ -92,7 +92,7 @@ export interface Job extends CommonJobDefinition {
    *
    * @example ["ubuntu-latest"]
    */
-  readonly runsOn?: string[];
+  readonly runsOn?: string[] | string;
 
   /**
    * Github Runner Group selection options
