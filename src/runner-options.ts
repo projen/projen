@@ -4,9 +4,9 @@ export interface GroupRunnerOptions {
 }
 
 export function filteredRunsOnOptions(
-  runsOn?: string[],
+  runsOn?: string | string[],
   runsOnGroup?: GroupRunnerOptions
-): { runsOnGroup: GroupRunnerOptions } | { runsOn: string[] } {
+): { runsOnGroup: GroupRunnerOptions } | { runsOn: string | string[] } {
   verifyJobConstraints(runsOn, runsOnGroup);
 
   return runsOnGroup
@@ -17,11 +17,11 @@ export function filteredRunsOnOptions(
 }
 
 export function filteredWorkflowRunsOnOptions(
-  workflowRunsOn?: string[],
+  workflowRunsOn?: string | string[],
   workflowRunsOnGroup?: GroupRunnerOptions
 ):
   | { workflowRunsOnGroup: GroupRunnerOptions }
-  | { workflowRunsOn: string[] }
+  | { workflowRunsOn: string | string[] }
   | string[] {
   verifyJobConstraints(workflowRunsOn, workflowRunsOnGroup);
 
@@ -33,7 +33,7 @@ export function filteredWorkflowRunsOnOptions(
 }
 
 function verifyJobConstraints(
-  runsOn?: string[],
+  runsOn?: string | string[],
   runsOnGroup?: GroupRunnerOptions
 ): void {
   if (runsOn && runsOnGroup) {
