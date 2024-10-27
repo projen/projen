@@ -606,6 +606,12 @@ export interface JestOptions {
    * @default - no extra options
    */
   readonly extraCliOptions?: string[];
+
+  /**
+   * Pass with no tests
+   * @default - true
+   */
+  readonly passWithNoTests?: boolean;
 }
 
 export interface CoverageThreshold {
@@ -694,6 +700,7 @@ export class Jest extends Component {
     [key: string]: unknown;
   };
   private readonly extraCliOptions: string[];
+  private readonly passWithNoTests: boolean;
   private _snapshotResolver: string | undefined;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
@@ -722,6 +729,7 @@ export class Jest extends Component {
       ...options.jestConfig?.additionalOptions,
     };
     this.extraCliOptions = options.extraCliOptions ?? [];
+    this.passWithNoTests = options.passWithNoTests ?? true;
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
       options.ignorePatterns ?? ["/node_modules/"];
@@ -948,12 +956,15 @@ export class Jest extends Component {
   }
 
   private configureTestCommand(updateSnapshot: UpdateSnapshot) {
-    const jestOpts = ["--passWithNoTests", ...this.extraCliOptions];
+    const jestOpts = this.extraCliOptions;
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
         ? ` -c ${this.file.path}`
         : "";
 
+    if (this.passWithNoTests === true) {
+      jestOpts.push("--passWithNoTests");
+    }
     if (updateSnapshot === UpdateSnapshot.ALWAYS) {
       jestOpts.push("--updateSnapshot");
     } else {
