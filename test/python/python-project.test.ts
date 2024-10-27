@@ -48,6 +48,20 @@ test("pytest without sample code", () => {
     sample: false,
   });
   expect(synthSnapshot(p)).not.toHaveProperty("tests/__init__.py");
+  expect(
+    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec
+  ).toContain("tests");
+});
+
+test("pytest with custom testPaths", () => {
+  const p = new TestPythonProject({
+    pytestOptions: {
+      testPaths: ["tests/foo", "tests/bar"],
+    },
+  });
+  expect(
+    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec
+  ).toContain("tests/foo tests/bar");
 });
 
 test("cannot specify multiple projenrc types", () => {

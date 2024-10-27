@@ -11,7 +11,8 @@ export interface PytestOptions {
   readonly version?: string;
 
   /**
-   * Directory with tests
+   * Location of sample tests.
+   * Typically the same directory where project tests will be located.
    *
    * @default 'tests'
    */
@@ -21,6 +22,17 @@ export interface PytestOptions {
    * Stop the testing process after the first N failures
    */
   readonly maxFailures?: number;
+
+  /**
+   * List of paths to test files or directories.
+   * Useful when all project tests are in a known location to speed up
+   * test collection and to avoid picking up undesired tests by accident.
+   *
+   * The array will be concatenated and passed as a single argument to pytest.
+   * @example ["tests/unit", "tests/qa"]
+   * @default ["tests"]
+   */
+  readonly testPaths?: string[];
 }
 
 export class Pytest extends Component {
@@ -39,6 +51,7 @@ export class Pytest extends Component {
       [
         "pytest",
         ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
+        ...(options.testPaths ?? [this.testdir]),
       ].join(" ")
     );
   }

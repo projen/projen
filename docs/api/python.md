@@ -4120,7 +4120,8 @@ const pytestOptions: python.PytestOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.PytestOptions.property.maxFailures">maxFailures</a></code> | <code>number</code> | Stop the testing process after the first N failures. |
-| <code><a href="#projen.python.PytestOptions.property.testdir">testdir</a></code> | <code>string</code> | Directory with tests. |
+| <code><a href="#projen.python.PytestOptions.property.testdir">testdir</a></code> | <code>string</code> | Location of sample tests. |
+| <code><a href="#projen.python.PytestOptions.property.testPaths">testPaths</a></code> | <code>string[]</code> | List of paths to test files or directories. |
 | <code><a href="#projen.python.PytestOptions.property.version">version</a></code> | <code>string</code> | Pytest version. |
 
 ---
@@ -4146,9 +4147,36 @@ public readonly testdir: string;
 - *Type:* string
 - *Default:* 'tests'
 
-Directory with tests.
+Location of sample tests.
+
+Typically the same directory where project tests will be located.
 
 ---
+
+##### `testPaths`<sup>Optional</sup> <a name="testPaths" id="projen.python.PytestOptions.property.testPaths"></a>
+
+```typescript
+public readonly testPaths: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["tests"]
+
+List of paths to test files or directories.
+
+Useful when all project tests are in a known location to speed up
+test collection and to avoid picking up undesired tests by accident.
+
+The array will be concatenated and passed as a single argument to pytest.
+
+---
+
+*Example*
+
+```typescript
+["tests/unit", "tests/qa"]
+```
+
 
 ##### `version`<sup>Optional</sup> <a name="version" id="projen.python.PytestOptions.property.version"></a>
 
