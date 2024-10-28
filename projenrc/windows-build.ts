@@ -78,14 +78,7 @@ export class WindowsBuild extends Component {
 
       // Add conditions to steps that should only run on the primary build
       ...onlyMutationAndPrimaryStepPatches,
-      ...onlyPrimaryStepsPatches,
-
-      // Install rsync on Windows
-      JsonPatch.add(buildJobPath("/steps/0"), {
-        name: "Install rsync on Windows",
-        if: `matrix.runner.os == 'windows-latest'`,
-        run: "choco install --no-progress rsync",
-      })
+      ...onlyPrimaryStepsPatches
     );
 
     // Add the join target job for branch protection
