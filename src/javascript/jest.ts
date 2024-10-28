@@ -962,7 +962,7 @@ export class Jest extends Component {
         ? ` -c ${this.file.path}`
         : "";
 
-    if (this.passWithNoTests === true) {
+    if (this.passWithNoTests) {
       jestOpts.push("--passWithNoTests");
     }
     if (updateSnapshot === UpdateSnapshot.ALWAYS) {
