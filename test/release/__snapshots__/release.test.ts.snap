@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -423,7 +423,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -814,7 +814,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -1208,7 +1208,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -1552,7 +1552,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -2208,7 +2208,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -2611,7 +2611,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -3045,7 +3045,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -3856,7 +3856,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -4878,7 +4878,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -5299,7 +5299,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -5841,7 +5841,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -6134,7 +6134,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
