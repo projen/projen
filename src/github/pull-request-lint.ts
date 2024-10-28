@@ -124,13 +124,18 @@ export class PullRequestLint extends Component {
       mergeGroup: {},
     });
 
+    // All checks are run against the PR and can only be evaluated within a PR context
+    // Needed so jobs can be set as required and will run successfully on merge group checks.
+    const prCheck =
+      "(github.event_name == 'pull_request' || github.event_name == 'pull_request_target')";
+
     if (checkSemanticTitle) {
       const opts = options.semanticTitleOptions ?? {};
       const types = opts.types ?? ["feat", "fix", "chore"];
 
       const validateJob: Job = {
         name: "Validate PR title",
-        if: "github.event_name == 'pull_request' || github.event_name == 'pull_request_target'",
+        if: prCheck,
         ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
         permissions: {
           pullRequests: JobPermission.WRITE,
@@ -157,12 +162,18 @@ export class PullRequestLint extends Component {
       const users = opts.exemptUsers ?? [];
       const labels = opts.exemptLabels ?? [];
 
-      const conditions: string[] = [
+      const conditions = [prCheck];
+
+      const exclusions: string[] = [
         ...labels.map(
           (l) => `contains(github.event.pull_request.labels.*.name, '${l}')`
         ),
         ...users.map((u) => `github.event.pull_request.user.login == '${u}'`),
       ];
+
+      if (exclusions.length) {
+        conditions.push(`!(${exclusions.join(" || ")})`);
+      }
 
       const script = (core: any) => {
         const actual = process.env.PR_BODY!.replace(/\r?\n/g, "\n");
@@ -182,7 +193,7 @@ export class PullRequestLint extends Component {
         permissions: {
           pullRequests: JobPermission.READ,
         },
-        if: conditions.length ? `!(${conditions.join(" || ")})` : undefined,
+        if: conditions.join(" && "),
         env: {
           PR_BODY: "${{ github.event.pull_request.body }}",
           EXPECTED: options.contributorStatement,

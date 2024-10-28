@@ -139,6 +139,7 @@ export function setupCheckLicenses(project: NodeProject) {
         triggers: {
           pullRequest: {},
           workflowDispatch: {},
+          mergeGroup: {},
           push: { branches: ["main"] },
         },
         permissions: {},

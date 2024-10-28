@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -48,7 +48,7 @@ jobs:
       PR_BODY: \${{ github.event.pull_request.body }}
       EXPECTED: Lorem ipsum dolor sit amet
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
-    if: "!(contains(github.event.pull_request.labels.*.name, 'automation') || github.event.pull_request.user.login == 'github-bot[bot]')"
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && !(contains(github.event.pull_request.labels.*.name, 'automation') || github.event.pull_request.user.login == 'github-bot[bot]')
     steps:
       - uses: actions/github-script@v6
         with:
@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -111,6 +111,7 @@ jobs:
       PR_BODY: \${{ github.event.pull_request.body }}
       EXPECTED: Lorem ipsum dolor sit amet
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: actions/github-script@v6
         with:
@@ -145,7 +146,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -179,7 +180,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -212,7 +213,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
