@@ -7295,6 +7295,7 @@ const jestOptions: javascript.JestOptions = { ... }
 | <code><a href="#projen.javascript.JestOptions.property.jestConfig">jestConfig</a></code> | <code><a href="#projen.javascript.JestConfigOptions">JestConfigOptions</a></code> | Jest configuration. |
 | <code><a href="#projen.javascript.JestOptions.property.jestVersion">jestVersion</a></code> | <code>string</code> | The version of jest to use. |
 | <code><a href="#projen.javascript.JestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with jest-junit. |
+| <code><a href="#projen.javascript.JestOptions.property.passWithNoTests">passWithNoTests</a></code> | <code>boolean</code> | Pass with no tests. |
 | <code><a href="#projen.javascript.JestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added. |
 | <code><a href="#projen.javascript.JestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 
@@ -7411,6 +7412,19 @@ public readonly junitReporting: boolean;
 Result processing with jest-junit.
 
 Output directory is `test-reports/`.
+
+---
+
+##### `passWithNoTests`<sup>Optional</sup> <a name="passWithNoTests" id="projen.javascript.JestOptions.property.passWithNoTests"></a>
+
+```typescript
+public readonly passWithNoTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Pass with no tests.
 
 ---
 
