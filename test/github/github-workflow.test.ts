@@ -6,7 +6,7 @@ import { synthSnapshot, TestProject } from "../util";
 describe("github-workflow", () => {
   const workflowName = "test-workflow";
 
-  test("conccurency is not set by default", () => {
+  test("concurrency is not set by default", () => {
     const project = new TestProject();
 
     new GithubWorkflow(project.github!, workflowName);
@@ -60,6 +60,31 @@ describe("github-workflow", () => {
       "cancel-in-progress": true,
       group: "custom-group",
     });
+  });
+
+  test("can set custom file name", () => {
+    const project = new TestProject();
+
+    const fileName = "FoObAr%.yaml";
+    new GithubWorkflow(project.github!, workflowName, {
+      fileName,
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[`.github/workflows/${fileName}`]).not.toBeUndefined();
+  });
+
+  test("custom file name must use a YAML extension", () => {
+    expect(() => {
+      const project = new TestProject();
+
+      const fileName = "foobar.txt";
+      new GithubWorkflow(project.github!, workflowName, {
+        fileName,
+      });
+    }).toThrowError(
+      "GitHub Workflow files must have either a .yml or .yaml file extension, got: foobar.txt"
+    );
   });
 
   test("workflow job calling a reusable workflow", () => {
