@@ -28,15 +28,18 @@ export interface PytestOptions {
    * Useful when all project tests are in a known location to speed up
    * test collection and to avoid picking up undesired tests by accident.
    *
+   * Leave empty to discover all test_*.py or *_test.py files, per Pytest default.
+   *
    * The array will be concatenated and passed as a single argument to pytest.
    * @example ["tests/unit", "tests/qa"]
-   * @default ["tests"]
+   * @default [""]
    */
   readonly testPaths?: string[];
 }
 
 export class Pytest extends Component {
   readonly testdir: string;
+  readonly testPaths: string[];
 
   constructor(project: Project, options: PytestOptions = {}) {
     super(project);
@@ -45,13 +48,15 @@ export class Pytest extends Component {
 
     this.testdir = options.testdir ?? "tests";
 
+    this.testPaths = options.testPaths ?? [""];
+
     project.deps.addDependency(`pytest@${version}`, DependencyType.TEST);
 
     project.testTask.exec(
       [
         "pytest",
         ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
-        ...(options.testPaths ?? [this.testdir]),
+        ...this.testPaths,
       ].join(" ")
     );
   }

@@ -1025,6 +1025,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.Pytest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.Pytest.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.Pytest.property.testdir">testdir</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.python.Pytest.property.testPaths">testPaths</a></code> | <code>string[]</code> | *No description.* |
 
 ---
 
@@ -1057,6 +1058,16 @@ public readonly testdir: string;
 ```
 
 - *Type:* string
+
+---
+
+##### `testPaths`<sup>Required</sup> <a name="testPaths" id="projen.python.Pytest.property.testPaths"></a>
+
+```typescript
+public readonly testPaths: string[];
+```
+
+- *Type:* string[]
 
 ---
 
@@ -4160,12 +4171,14 @@ public readonly testPaths: string[];
 ```
 
 - *Type:* string[]
-- *Default:* ["tests"]
+- *Default:* [""]
 
 List of paths to test files or directories.
 
 Useful when all project tests are in a known location to speed up
 test collection and to avoid picking up undesired tests by accident.
+
+Leave empty to discover all test_*.py or *_test.py files, per Pytest default.
 
 The array will be concatenated and passed as a single argument to pytest.
 
