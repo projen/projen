@@ -631,6 +631,8 @@ export interface VariableConfig {
  * @see https://docs.gitlab.com/ee/ci/yaml/#workflow
  */
 export interface Workflow {
+  /** You can use name to define a name for pipelines. */
+  readonly name?: string;
   /** Used to control whether or not a whole pipeline is created. */
   readonly rules?: WorkflowRule[];
 }

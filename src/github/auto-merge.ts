@@ -56,16 +56,7 @@ export class AutoMerge extends Component {
       delete_head_branch: {},
 
       queue: {
-        // squash all commits into a single commit when merging
-        // method: "squash",
-        method: "squash",
         name: "default",
-        // use PR title+body as the commit message
-        commit_message_template: [
-          "{{ title }} (#{{ number }})",
-          "",
-          "{{ body }}",
-        ].join("\n"),
       },
     };
 
@@ -89,6 +80,14 @@ export class AutoMerge extends Component {
       name: queueName,
       updateMethod: "merge",
       conditions: (() => this.renderConditions()) as any,
+      // squash all commits into a single commit when merging
+      mergeMethod: "squash",
+      // use PR title+body as the commit message
+      commitMessageTemplate: [
+        "{{ title }} (#{{ number }})",
+        "",
+        "{{ body }}",
+      ].join("\n"),
     });
 
     this.project.addPackageIgnore("/.mergify.yml");

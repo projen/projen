@@ -286,20 +286,20 @@ jobs:
         id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.0
         with:
-          name: .repo.patch
-          path: .repo.patch
+          name: repo.patch
+          path: repo.patch
           overwrite: true
       - name: Fail build on mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-          cat .repo.patch
+          cat repo.patch
           exit 1
   self-mutation:
     needs: build
@@ -317,10 +317,10 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v4
         with:
-          name: .repo.patch
+          name: repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
+        run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
           git config user.name "github-actions"
@@ -345,12 +345,14 @@ on:
       - reopened
       - ready_for_review
       - edited
+  merge_group: {}
 jobs:
   validate:
     name: Validate PR title
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -370,6 +372,9 @@ on:
     branches:
       - main
   workflow_dispatch: {}
+concurrency:
+  group: \${{ github.workflow }}
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -410,7 +415,7 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: build-artifact
           path: dist
@@ -425,7 +430,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: lts/*
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -469,14 +474,14 @@ jobs:
         id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+          git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.0
         with:
-          name: .repo.patch
-          path: .repo.patch
+          name: repo.patch
+          path: repo.patch
           overwrite: true
   pr:
     name: Create Pull Request
@@ -493,10 +498,10 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v4
         with:
-          name: .repo.patch
+          name: repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
+        run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
           git config user.name "github-actions"
@@ -590,17 +595,17 @@ queue_rules:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
+    merge_method: squash
+    commit_message_template: |-
+      {{ title }} (#{{ number }})
+
+      {{ body }}
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
       delete_head_branch: {}
       queue:
-        method: squash
         name: default
-        commit_message_template: |-
-          {{ title }} (#{{ number }})
-
-          {{ body }}
     conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
@@ -641,7 +646,6 @@ tsconfig.tsbuildinfo
       {
         "name": "@types/node",
         "type": "build",
-        "version": "^18",
       },
       {
         "name": "@typescript-eslint/eslint-plugin",
@@ -953,7 +957,7 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -1188,7 +1192,7 @@ tsconfig.tsbuildinfo
     "//": "~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".",
     "devDependencies": {
       "@types/jest": "*",
-      "@types/node": "^18",
+      "@types/node": "*",
       "@typescript-eslint/eslint-plugin": "^7",
       "@typescript-eslint/parser": "^7",
       "commit-and-tag-version": "^12",

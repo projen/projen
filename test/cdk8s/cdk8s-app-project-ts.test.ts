@@ -178,7 +178,7 @@ test("upgrade task ignores pinned versions", () => {
     cdk8sVersionPinning: true,
     cdk8sCliVersionPinning: true,
     cdk8sPlusVersionPinning: true,
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
@@ -186,7 +186,7 @@ test("upgrade task ignores pinned versions", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
       },
       {
         "exec": "yarn install --check-files",

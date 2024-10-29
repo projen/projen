@@ -17,7 +17,7 @@ export interface ConcurrencyOptions {
    * For example, if you specify `${{ github.workflow }}-${{ github.ref }}`, workflow runs triggered
    * on the same branch cannot run concurrenty, but workflows runs triggered on different branches can.
    *
-   * @default - undefined. All runs belonging to this workflow have the same limited concurrency.
+   * @default - ${{ github.workflow }}
    *
    * @see https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups
    */
@@ -52,7 +52,7 @@ export interface GithubWorkflowOptions {
   /**
    * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. Currently in beta.
    *
-   * @default - { group: undefined, cancelInProgress: false }
+   * @default - { group: ${{ github.workflow }}, cancelInProgress: false }
    *
    * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
@@ -126,6 +126,7 @@ export class GithubWorkflow extends Component {
 
     const defaultConcurrency: ConcurrencyOptions = {
       cancelInProgress: false,
+      group: "${{ github.workflow }}",
     };
 
     this.name = options.name ?? filePath;

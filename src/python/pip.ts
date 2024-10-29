@@ -30,7 +30,7 @@ export class Pip extends Component implements IPythonDeps {
     this.installCiTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
     });
-    this.installCiTask.exec("pip install --upgrade pip");
+    this.installCiTask.exec("python -m pip install --upgrade pip");
     this.installCiTask.exec("pip install -r requirements.txt");
     this.installCiTask.exec("pip install -r requirements-dev.txt");
   }

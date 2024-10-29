@@ -1,4 +1,4 @@
-import { python } from "../../src";
+import { TestPythonProject } from "./util";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {
@@ -62,16 +62,20 @@ test("cannot specify multiple projenrc types", () => {
   );
 });
 
-class TestPythonProject extends python.PythonProject {
-  constructor(options: Partial<python.PythonProjectOptions> = {}) {
-    super({
-      ...options,
-      clobber: false,
-      name: "test-python-project",
-      moduleName: "test_python_project",
-      authorName: "First Last",
-      authorEmail: "email@example.com",
-      version: "0.1.0",
-    });
-  }
-}
+test("extras render properly", () => {
+  const p = new TestPythonProject({
+    deps: ["aws-lambda-powertools[tracer]"],
+  });
+  expect(synthSnapshot(p)["requirements.txt"]).toContain(
+    "aws-lambda-powertools[tracer]"
+  );
+});
+
+test("extras render properly with explicit version", () => {
+  const p = new TestPythonProject({
+    deps: ["aws-lambda-powertools[tracer]@1.0.0"],
+  });
+  expect(synthSnapshot(p)["requirements.txt"]).toContain(
+    "aws-lambda-powertools[tracer]==1.0.0"
+  );
+});

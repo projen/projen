@@ -3,7 +3,7 @@ import { Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
-import { secretToString } from "../../src/github/util";
+import { secretToString } from "../../src/github/private/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   CodeArtifactAuthProvider,

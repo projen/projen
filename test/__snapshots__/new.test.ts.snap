@@ -132,7 +132,7 @@ exports[`projen new --from using registry existing package 1`] = `
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "0.0.333",
     "@types/jest": "*",
-    "@types/node": "^18",
+    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "aws-cdk": "^2.1.0",
@@ -263,7 +263,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
     "@types/jest": "*",
-    "@types/node": "^18",
+    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "aws-cdk": "^2.1.0",
@@ -394,7 +394,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
   "devDependencies": {
     "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "@types/jest": "*",
-    "@types/node": "^18",
+    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "aws-cdk": "^2.1.0",
@@ -524,7 +524,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
   },
   "devDependencies": {
     "@types/jest": "*",
-    "@types/node": "^18",
+    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "aws-cdk": "^2.1.0",

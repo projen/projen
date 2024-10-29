@@ -341,14 +341,14 @@ Synthesizes files to the project output directory.
 ##### `addExtends` <a name="addExtends" id="projen.javascript.Eslint.addExtends"></a>
 
 ```typescript
-public addExtends(extendList: string): void
+public addExtends(extendList: ...string[]): void
 ```
 
 Adds an `extends` item to the eslint configuration.
 
 ###### `extendList`<sup>Required</sup> <a name="extendList" id="projen.javascript.Eslint.addExtends.parameter.extendList"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The list of "extends" to add.
 
@@ -399,14 +399,14 @@ Add an eslint override.
 ##### `addPlugins` <a name="addPlugins" id="projen.javascript.Eslint.addPlugins"></a>
 
 ```typescript
-public addPlugins(plugins: string): void
+public addPlugins(plugins: ...string[]): void
 ```
 
 Adds an eslint plugin.
 
 ###### `plugins`<sup>Required</sup> <a name="plugins" id="projen.javascript.Eslint.addPlugins.parameter.plugins"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The names of plugins to add.
 
@@ -750,14 +750,14 @@ A map from regular expressions to module names or to arrays of module names that
 ##### `addModulePaths` <a name="addModulePaths" id="projen.javascript.Jest.addModulePaths"></a>
 
 ```typescript
-public addModulePaths(modulePaths: string): void
+public addModulePaths(modulePaths: ...string[]): void
 ```
 
 Adds one or more modulePaths to Jest's configuration.
 
 ###### `modulePaths`<sup>Required</sup> <a name="modulePaths" id="projen.javascript.Jest.addModulePaths.parameter.modulePaths"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 An array of absolute paths to additional locations to search when resolving modules   *.
 
@@ -778,14 +778,14 @@ public addReporter(reporter: JestReporter): void
 ##### `addRoots` <a name="addRoots" id="projen.javascript.Jest.addRoots"></a>
 
 ```typescript
-public addRoots(roots: string): void
+public addRoots(roots: ...string[]): void
 ```
 
 Adds one or more roots to Jest's configuration.
 
 ###### `roots`<sup>Required</sup> <a name="roots" id="projen.javascript.Jest.addRoots.parameter.roots"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 A list of paths to directories that Jest should use to search for files in.
 
@@ -1321,7 +1321,7 @@ public addBin(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.javascript.NodePackage.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -1331,7 +1331,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1346,14 +1346,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDeps` <a name="addDeps" id="projen.javascript.NodePackage.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1368,14 +1368,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.javascript.NodePackage.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1438,14 +1438,14 @@ field value.
 ##### `addKeywords` <a name="addKeywords" id="projen.javascript.NodePackage.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.javascript.NodePackage.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -1454,14 +1454,14 @@ The keywords to add.
 ##### `addPackageResolutions` <a name="addPackageResolutions" id="projen.javascript.NodePackage.addPackageResolutions"></a>
 
 ```typescript
-public addPackageResolutions(resolutions: string): void
+public addPackageResolutions(resolutions: ...string[]): void
 ```
 
 Defines resolutions for dependencies to change the normally resolved version of a dependency to something else.
 
 ###### `resolutions`<sup>Required</sup> <a name="resolutions" id="projen.javascript.NodePackage.addPackageResolutions.parameter.resolutions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names resolutions to be added.
 
@@ -1474,7 +1474,7 @@ range with this syntax:
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.javascript.NodePackage.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -1485,7 +1485,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodePackage.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -1685,8 +1685,8 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command which executes "projen". |
 | <code><a href="#projen.javascript.NodePackage.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
 | <code><a href="#projen.javascript.NodePackage.property.license">license</a></code> | <code>string</code> | The SPDX license of this module. |
-| <code><a href="#projen.javascript.NodePackage.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version required by this package. |
-| <code><a href="#projen.javascript.NodePackage.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum node.js version required by this package. |
+| <code><a href="#projen.javascript.NodePackage.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
+| <code><a href="#projen.javascript.NodePackage.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
 | <code><a href="#projen.javascript.NodePackage.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackage.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.javascript.NodePackage.property.scopedPackagesOptions">scopedPackagesOptions</a></code> | <code><a href="#projen.javascript.ScopedPackagesOptions">ScopedPackagesOptions</a>[]</code> | Options for privately hosted scoped packages. |
@@ -1945,9 +1945,10 @@ public readonly maxNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no maximum.
 
-Maximum node version required by this package.
+Maximum node version supported by this package.
+
+The value indicates the package is incompatible with newer versions.
 
 ---
 
@@ -1958,9 +1959,10 @@ public readonly minNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no minimum
 
-Minimum node.js version required by this package.
+The minimum node version required by this package to function.
+
+This value indicates the package is incompatible with older versions.
 
 ---
 
@@ -2075,7 +2077,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.javascript.NodeProject.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -2085,7 +2087,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.javascript.NodeProject.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -2341,7 +2343,7 @@ public addBins(bins: {[ key: string ]: string}): void
 ##### `addBundledDeps` <a name="addBundledDeps" id="projen.javascript.NodeProject.addBundledDeps"></a>
 
 ```typescript
-public addBundledDeps(deps: string): void
+public addBundledDeps(deps: ...string[]): void
 ```
 
 Defines bundled dependencies.
@@ -2351,7 +2353,7 @@ Bundled dependencies will be added as normal dependencies as well as to the
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addBundledDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2366,28 +2368,28 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### ~~`addCompileCommand`~~ <a name="addCompileCommand" id="projen.javascript.NodeProject.addCompileCommand"></a>
 
 ```typescript
-public addCompileCommand(commands: string): void
+public addCompileCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.javascript.NodeProject.addCompileCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
 ##### `addDeps` <a name="addDeps" id="projen.javascript.NodeProject.addDeps"></a>
 
 ```typescript
-public addDeps(deps: string): void
+public addDeps(deps: ...string[]): void
 ```
 
 Defines normal dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2402,14 +2404,14 @@ add/upgrade`. If you wish to specify a version range use this syntax:
 ##### `addDevDeps` <a name="addDevDeps" id="projen.javascript.NodeProject.addDevDeps"></a>
 
 ```typescript
-public addDevDeps(deps: string): void
+public addDevDeps(deps: ...string[]): void
 ```
 
 Defines development/test dependencies.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addDevDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2440,14 +2442,14 @@ The fields to set.
 ##### `addKeywords` <a name="addKeywords" id="projen.javascript.NodeProject.addKeywords"></a>
 
 ```typescript
-public addKeywords(keywords: string): void
+public addKeywords(keywords: ...string[]): void
 ```
 
 Adds keywords to package.json (deduplicated).
 
 ###### `keywords`<sup>Required</sup> <a name="keywords" id="projen.javascript.NodeProject.addKeywords.parameter.keywords"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The keywords to add.
 
@@ -2456,7 +2458,7 @@ The keywords to add.
 ##### `addPeerDeps` <a name="addPeerDeps" id="projen.javascript.NodeProject.addPeerDeps"></a>
 
 ```typescript
-public addPeerDeps(deps: string): void
+public addPeerDeps(deps: ...string[]): void
 ```
 
 Defines peer dependencies.
@@ -2467,7 +2469,7 @@ your code against the minimum version required from your consumers.
 
 ###### `deps`<sup>Required</sup> <a name="deps" id="projen.javascript.NodeProject.addPeerDeps.parameter.deps"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Names modules to install.
 
@@ -2498,14 +2500,14 @@ The scripts to set.
 ##### ~~`addTestCommand`~~ <a name="addTestCommand" id="projen.javascript.NodeProject.addTestCommand"></a>
 
 ```typescript
-public addTestCommand(commands: string): void
+public addTestCommand(commands: ...string[]): void
 ```
 
 DEPRECATED.
 
 ###### `commands`<sup>Required</sup> <a name="commands" id="projen.javascript.NodeProject.addTestCommand.parameter.commands"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -2706,8 +2708,8 @@ When given a project, this it the project itself.
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The Jest configuration (if enabled). |
-| <code><a href="#projen.javascript.NodeProject.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version required by this package. |
-| <code><a href="#projen.javascript.NodeProject.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum node.js version required by this package. |
+| <code><a href="#projen.javascript.NodeProject.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
+| <code><a href="#projen.javascript.NodeProject.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
 | <code><a href="#projen.javascript.NodeProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.javascript.NodeProject.property.prettier">prettier</a></code> | <code><a href="#projen.javascript.Prettier">Prettier</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeProject.property.publisher">publisher</a></code> | <code>projen.release.Publisher</code> | Package publisher. |
@@ -3273,7 +3275,9 @@ public readonly maxNodeVersion: string;
 
 - *Type:* string
 
-Maximum node version required by this package.
+Maximum node version supported by this package.
+
+The value indicates the package is incompatible with newer versions.
 
 ---
 
@@ -3285,7 +3289,9 @@ public readonly minNodeVersion: string;
 
 - *Type:* string
 
-Minimum node.js version required by this package.
+The minimum node version required by this package to function.
+
+This value indicates the package is incompatible with older versions.
 
 ---
 
@@ -4466,14 +4472,14 @@ Synthesizes files to the project output directory.
 ##### `addPostBuildSteps` <a name="addPostBuildSteps" id="projen.javascript.UpgradeDependencies.addPostBuildSteps"></a>
 
 ```typescript
-public addPostBuildSteps(steps: JobStep): void
+public addPostBuildSteps(steps: ...JobStep[]): void
 ```
 
 Add steps to execute a successful build.
 
 ###### `steps`<sup>Required</sup> <a name="steps" id="projen.javascript.UpgradeDependencies.addPostBuildSteps.parameter.steps"></a>
 
-- *Type:* projen.github.workflows.JobStep
+- *Type:* ...projen.github.workflows.JobStep[]
 
 workflow steps.
 
@@ -7289,6 +7295,7 @@ const jestOptions: javascript.JestOptions = { ... }
 | <code><a href="#projen.javascript.JestOptions.property.jestConfig">jestConfig</a></code> | <code><a href="#projen.javascript.JestConfigOptions">JestConfigOptions</a></code> | Jest configuration. |
 | <code><a href="#projen.javascript.JestOptions.property.jestVersion">jestVersion</a></code> | <code>string</code> | The version of jest to use. |
 | <code><a href="#projen.javascript.JestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with jest-junit. |
+| <code><a href="#projen.javascript.JestOptions.property.passWithNoTests">passWithNoTests</a></code> | <code>boolean</code> | Pass with no tests. |
 | <code><a href="#projen.javascript.JestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added. |
 | <code><a href="#projen.javascript.JestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 
@@ -7405,6 +7412,19 @@ public readonly junitReporting: boolean;
 Result processing with jest-junit.
 
 Output directory is `test-reports/`.
+
+---
+
+##### `passWithNoTests`<sup>Optional</sup> <a name="passWithNoTests" id="projen.javascript.JestOptions.property.passWithNoTests"></a>
+
+```typescript
+public readonly passWithNoTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Pass with no tests.
 
 ---
 
@@ -7562,8 +7582,8 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.license">license</a></code> | <code>string</code> | License's SPDX identifier. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.licensed">licensed</a></code> | <code>boolean</code> | Indicates if a license should be added. |
-| <code><a href="#projen.javascript.NodePackageOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
-| <code><a href="#projen.javascript.NodePackageOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
+| <code><a href="#projen.javascript.NodePackageOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | The maximum node version supported by this package. Most projects should not use this option. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. Most projects should not use this option. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | Access level of the npm package. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when the package is published. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
@@ -7886,9 +7906,15 @@ public readonly maxNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no max
+- *Default:* no maximum version is enforced
 
-Minimum node.js version to require via `engines` (inclusive).
+The maximum node version supported by this package. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any newer versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option.
+Consider this option only if your package is known to not function with newer versions of node.
 
 ---
 
@@ -7899,9 +7925,19 @@ public readonly minNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no "engines" specified
+- *Default:* no minimum version is enforced
 
-Minimum Node.js version to require via package.json `engines` (inclusive).
+The minimum node version required by this package to function. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any older versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option, even if your package is incompatible with EOL versions of node.
+Consider this option only if your package depends on a specific feature, that is not available in other LTS versions.
+Setting this option has very high impact on the consumers of your package,
+as package managers will actively prevent usage with node versions you have marked as incompatible.
+
+To change the node version of your CI/CD workflows, use `workflowNodeVersion`.
 
 ---
 
@@ -8206,8 +8242,8 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.license">license</a></code> | <code>string</code> | License's SPDX identifier. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.licensed">licensed</a></code> | <code>boolean</code> | Indicates if a license should be added. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Minimum node.js version to require via `engines` (inclusive). |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | The maximum node version supported by this package. Most projects should not use this option. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. Most projects should not use this option. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmAccess">npmAccess</a></code> | <code><a href="#projen.javascript.NpmAccess">NpmAccess</a></code> | Access level of the npm package. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when the package is published. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
@@ -8283,7 +8319,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflow">releaseWorkflow</a></code> | <code>boolean</code> | DEPRECATED: renamed to `release`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version to use in GitHub workflows. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowPackageCache">workflowPackageCache</a></code> | <code>boolean</code> | Enable Node.js package cache in GitHub workflows. |
 
 ---
@@ -9005,9 +9041,15 @@ public readonly maxNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no max
+- *Default:* no maximum version is enforced
 
-Minimum node.js version to require via `engines` (inclusive).
+The maximum node version supported by this package. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any newer versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option.
+Consider this option only if your package is known to not function with newer versions of node.
 
 ---
 
@@ -9018,9 +9060,19 @@ public readonly minNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* no "engines" specified
+- *Default:* no minimum version is enforced
 
-Minimum Node.js version to require via package.json `engines` (inclusive).
+The minimum node version required by this package to function. Most projects should not use this option.
+
+The value indicates that the package is incompatible with any older versions of node.
+This requirement is enforced via the engines field.
+
+You will normally not need to set this option, even if your package is incompatible with EOL versions of node.
+Consider this option only if your package depends on a specific feature, that is not available in other LTS versions.
+Setting this option has very high impact on the consumers of your package,
+as package managers will actively prevent usage with node versions you have marked as incompatible.
+
+To change the node version of your CI/CD workflows, use `workflowNodeVersion`.
 
 ---
 
@@ -10086,9 +10138,11 @@ public readonly workflowNodeVersion: string;
 ```
 
 - *Type:* string
-- *Default:* same as `minNodeVersion`
+- *Default:* `minNodeVersion` if set, otherwise `lts/*`.
 
-The node version to use in GitHub workflows.
+The node version used in GitHub Actions workflows.
+
+Always use this option if your GitHub Actions workflows require a specific to run.
 
 ---
 
@@ -14984,6 +15038,7 @@ Determines how modules get resolved.
 | --- | --- |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.CLASSIC">CLASSIC</a></code> | TypeScript's former default resolution strategy. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE">NODE</a></code> | Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime. |
+| <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE10">NODE10</a></code> | `--moduleResolution node` was renamed to `node10` (keeping `node` as an alias for backward compatibility) in TypeScript 5.0. It reflects the CommonJS module resolution algorithm as it existed in Node.js versions earlier than v12. It should no longer be used. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE16">NODE16</a></code> | Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.NODE_NEXT">NODE_NEXT</a></code> | Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards. |
 | <code><a href="#projen.javascript.TypeScriptModuleResolution.BUNDLER">BUNDLER</a></code> | Resolution strategy which attempts to mimic resolution patterns of modern bundlers; |
@@ -15004,6 +15059,15 @@ TypeScript's former default resolution strategy.
 Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 
 > [https://www.typescriptlang.org/docs/handbook/module-resolution.html#node](https://www.typescriptlang.org/docs/handbook/module-resolution.html#node)
+
+---
+
+
+##### `NODE10` <a name="NODE10" id="projen.javascript.TypeScriptModuleResolution.NODE10"></a>
+
+`--moduleResolution node` was renamed to `node10` (keeping `node` as an alias for backward compatibility) in TypeScript 5.0. It reflects the CommonJS module resolution algorithm as it existed in Node.js versions earlier than v12. It should no longer be used.
+
+> [https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node](https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node)
 
 ---
 

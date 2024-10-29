@@ -89,7 +89,7 @@ time to fully migrate to the expected project structure so that you can take ful
 advantage of Projen management on your repository.
 
 However, you can also configure your `.projenrc.js` file to reflect your current
-project structure. A `TypeScriptProject` exposes all options in a `tsConfig` file
+project structure. A `TypeScriptProject` exposes all options in a `tsconfig` file
 so you can manually set the structure you want. Here is an example for specifying a
 structure where the TypeScript compiler finds all TypeScript files recursively in your
 repository:
@@ -98,7 +98,7 @@ repository:
 const { typescript } = require('projen');
 const project = new typescript.TypeScriptProject({
   ...
-  tsConfig: {
+  tsconfig: {
     compilerOptions: {
       rootDir: '.',
       outDir: '.',
