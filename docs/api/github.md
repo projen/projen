@@ -4672,8 +4672,8 @@ const autoQueueOptions: github.AutoQueueOptions = { ... }
 | <code><a href="#projen.github.AutoQueueOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will have auto-queue enabled. |
 | <code><a href="#projen.github.AutoQueueOptions.property.labels">labels</a></code> | <code>string[]</code> | Only pull requests with one of this labels will have auto-queue enabled. |
 | <code><a href="#projen.github.AutoQueueOptions.property.mergeMethod">mergeMethod</a></code> | <code><a href="#projen.github.MergeMethod">MergeMethod</a></code> | The method used to add the PR to the merge queue Any branch protection rules must allow this merge method. |
+| <code><a href="#projen.github.AutoQueueOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method for authenticating with GitHub to enable auto-queue on pull requests. |
 | <code><a href="#projen.github.AutoQueueOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
-| <code><a href="#projen.github.AutoQueueOptions.property.secret">secret</a></code> | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. |
 
 ---
 
@@ -4716,6 +4716,25 @@ The method used to add the PR to the merge queue Any branch protection rules mus
 
 ---
 
+##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.github.AutoQueueOptions.property.projenCredentials"></a>
+
+```typescript
+public readonly projenCredentials: GithubCredentials;
+```
+
+- *Type:* <a href="#projen.github.GithubCredentials">GithubCredentials</a>
+- *Default:* uses credentials from the GitHub component
+
+Choose a method for authenticating with GitHub to enable auto-queue on pull requests.
+
+The workflow cannot use a default github token. Queuing a PR
+with the default token will not trigger any merge queue workflows,
+which results in the PR just not getting merged at all.
+
+> [https://projen.io/docs/integrations/github/](https://projen.io/docs/integrations/github/)
+
+---
+
 ##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoQueueOptions.property.runsOn"></a>
 
 ```typescript
@@ -4726,21 +4745,6 @@ public readonly runsOn: string[];
 - *Default:* ["ubuntu-latest"]
 
 Github Runner selection labels.
-
----
-
-##### `secret`<sup>Optional</sup> <a name="secret" id="projen.github.AutoQueueOptions.property.secret"></a>
-
-```typescript
-public readonly secret: string;
-```
-
-- *Type:* string
-- *Default:* "GITHUB_TOKEN"
-
-A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.
-
-This token is used to enable auto-queue on pull requests.
 
 ---
 
