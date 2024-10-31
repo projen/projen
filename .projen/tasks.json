@@ -397,7 +397,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/semver,@types/yargs,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,license-checker,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/semver,@types/yargs,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,license-checker,prettier,ts-jest,ts-node"
         },
         {
           "exec": "yarn install --check-files"
@@ -421,7 +421,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-json-patch,ini,semver,shx,xmlbuilder2,yargs"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-json-patch,ini,semver,shx,xmlbuilder2,yargs"
         },
         {
           "exec": "yarn install --check-files"
