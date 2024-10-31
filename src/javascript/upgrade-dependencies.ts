@@ -66,6 +66,17 @@ export interface UpgradeDependenciesOptions {
   readonly satisfyPeerDependencies?: boolean;
 
   /**
+   * Include deprecated packages.
+   *
+   * By default, deprecated versions will be excluded from upgrades.
+   *
+   * @see https://github.com/raineorshine/npm-check-updates?tab=readme-ov-file#options
+   *
+   * @default false
+   */
+  readonly includeDeprecatedVersions?: boolean;
+
+  /**
    * Include a github workflow for creating PR's that upgrades the
    * required dependencies, either by manual dispatch, or by a schedule.
    *
@@ -154,6 +165,7 @@ export class UpgradeDependencies extends Component {
   private readonly depTypes: DependencyType[];
   private readonly upgradeTarget: string;
   private readonly satisfyPeerDependencies: boolean;
+  private readonly includeDeprecatedVersions: boolean;
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
@@ -171,6 +183,8 @@ export class UpgradeDependencies extends Component {
     ];
     this.upgradeTarget = this.options.target ?? "minor";
     this.satisfyPeerDependencies = this.options.satisfyPeerDependencies ?? true;
+    this.includeDeprecatedVersions =
+      this.options.includeDeprecatedVersions ?? false;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -264,6 +278,7 @@ export class UpgradeDependencies extends Component {
       "--upgrade",
       `--target=${this.upgradeTarget}`,
       `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
+      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`,
       `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
       `--filter=${includeForNcu.join(",")}`,
     ];
