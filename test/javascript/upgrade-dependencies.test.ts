@@ -274,7 +274,7 @@ test("upgrades command includes only included packages", () => {
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(
-    `npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=dep1`
+    `npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1`
   );
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade dep1`);
 });
