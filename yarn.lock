@@ -1481,9 +1481,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001669:
-  version "1.0.30001676"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001676.tgz#fe133d41fe74af8f7cc93b8a714c3e86a86e6f04"
-  integrity sha512-Qz6zwGCiPghQXGJvgQAem79esjitvJ+CxSbSQkW9H/UX5hg8XM88d4lp2W+MEQ81j+Hip58Il+jGVdazk1z9cw==
+  version "1.0.30001677"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001677.tgz#27c2e2c637e007cfa864a16f7dfe7cde66b38b5f"
+  integrity sha512-fmfjsOlJUpMWu+mAAtZZZHz7UEwsUxIIvu1TJfO1HqFQvB/B+ii0xr9B5HpbZY/mC4XZ8SvjHJqtAY6pDPQEog==
 
 case@^1.6.3:
   version "1.6.3"
@@ -5292,17 +5292,17 @@ through@2, "through@>=2.2.7 <3", through@^2.3.6:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
-tldts-core@^6.1.57:
-  version "6.1.57"
-  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.57.tgz#2cc6e6af3d0807ad616900300083930efa81b57d"
-  integrity sha512-lXnRhuQpx3zU9EONF9F7HfcRLvN1uRYUBIiKL+C/gehC/77XTU+Jye6ui86GA3rU6FjlJ0triD1Tkjt2F/2lEg==
+tldts-core@^6.1.58:
+  version "6.1.58"
+  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.58.tgz#f0b5c1fcb2e214f558c7cb380fb1e6f4b2459d8b"
+  integrity sha512-dR936xmhBm7AeqHIhCWwK765gZ7dFyL+IqLSFAjJbFlUXGMLCb8i2PzlzaOuWBuplBTaBYseSb565nk/ZEM0Bg==
 
 tldts@^6.1.32:
-  version "6.1.57"
-  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.57.tgz#5d91d257ac945837358fe3954343fc01122fbad7"
-  integrity sha512-Oy7yDXK8meJl8vPMOldzA+MtueAJ5BrH4l4HXwZuj2AtfoQbLjmTJmjNWPUcAo+E/ibHn7QlqMS0BOcXJFJyHQ==
+  version "6.1.58"
+  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.58.tgz#63d211f46f2c17d69d4cedf0c4c19423a608874f"
+  integrity sha512-MQJrJhjHOYGYb8DobR6Y4AdDbd4TYkyQ+KBDVc5ODzs1cbrvPpfN1IemYi9jfipJ/vR1YWvrDli0hg1y19VRoA==
   dependencies:
-    tldts-core "^6.1.57"
+    tldts-core "^6.1.58"
 
 tmp@^0.0.33:
   version "0.0.33"
@@ -5498,9 +5498,9 @@ typescript@5.5.x, typescript@~5.5:
   integrity sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==
 
 typescript@next:
-  version "5.7.0-dev.20241101"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20241101.tgz#00b4d39e93424a30f44a4cb09cc8356dd9e5c140"
-  integrity sha512-nwq/uxhhQwhRqmjC7n4OOEf97fp8cXLinCtywgOm4YFzF2ZKchSWxfl8RpkXOFQdE9Bw1yHfySy2wJOm9H8ekw==
+  version "5.7.0-dev.20241102"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.0-dev.20241102.tgz#ac66bafd20557a00b5d0bb0871f4ab3450343625"
+  integrity sha512-LnGndSZH+ssQTXmJh5R+4lu7a5WXqnOEsSG/VStm45xb10Mgf8R4h/uycBl/PdIfXkSOoAXsmPvZxd66IvD5CQ==
 
 uglify-js@^3.1.4:
   version "3.19.3"
