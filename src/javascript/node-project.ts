@@ -11,6 +11,7 @@ import {
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
+import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
 import { DependencyType } from "../dependencies";
 import {
@@ -22,7 +23,7 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
-import { secretToString } from "../github/util";
+import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
   JobPermission,
   JobPermissions,
@@ -53,7 +54,6 @@ import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { deepMerge, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
-import { Version } from "../version";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -170,9 +170,11 @@ export interface NodeProjectOptions
   readonly releaseToNpm?: boolean;
 
   /**
-   * The node version to use in GitHub workflows.
+   * The node version used in GitHub Actions workflows.
    *
-   * @default - same as `minNodeVersion`
+   * Always use this option if your GitHub Actions workflows require a specific to run.
+   *
+   * @default - `minNodeVersion` if set, otherwise `lts/*`.
    */
   readonly workflowNodeVersion?: string;
 
@@ -434,14 +436,18 @@ export class NodeProject extends GitHubProject {
   public readonly release?: Release;
 
   /**
-   * Minimum node.js version required by this package.
+   * The minimum node version required by this package to function.
+   *
+   * This value indicates the package is incompatible with older versions.
    */
   public get minNodeVersion(): string | undefined {
     return this.package.minNodeVersion;
   }
 
   /**
-   * Maximum node version required by this package.
+   * Maximum node version supported by this package.
+   *
+   * The value indicates the package is incompatible with newer versions.
    */
   public get maxNodeVersion(): string | undefined {
     return this.package.maxNodeVersion;
@@ -511,7 +517,9 @@ export class NodeProject extends GitHubProject {
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.workflowPackageCache = options.workflowPackageCache ?? false;
-    this.artifactsDirectory = options.artifactsDirectory ?? "dist";
+    this.artifactsDirectory =
+      options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
+    ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     const normalizedArtifactsDirectory = normalizePersistedPath(
       this.artifactsDirectory
     );
@@ -650,7 +658,7 @@ export class NodeProject extends GitHubProject {
           mutable:
             buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
-        postBuildSteps: options.postBuildSteps,
+        postBuildSteps: [...(options.postBuildSteps ?? [])],
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
           options.workflowRunsOnGroup
@@ -667,7 +675,6 @@ export class NodeProject extends GitHubProject {
       options.releaseWorkflow ??
       (this.parent ? false : true);
     if (release) {
-      this.addDevDeps(Version.STANDARD_VERSION);
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,
@@ -833,7 +840,13 @@ export class NodeProject extends GitHubProject {
     // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
     this.bundler = new Bundler(this, options.bundlerOptions);
 
-    if (options.package ?? true) {
+    const shouldPackage = options.package ?? true;
+    if (release && !shouldPackage) {
+      this.logger.warn(
+        "When `release` is enabled, `package` must also be enabled as it is required by release. Force enabling `package`."
+      );
+    }
+    if (release || shouldPackage) {
       this.packageTask.exec(`mkdir -p ${this.artifactsJavascriptDirectory}`);
 
       const pkgMgr =

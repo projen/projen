@@ -1,8 +1,8 @@
 /**
- * Resolves the latest version from git tags and uses `standard-version` to bump
+ * Resolves the latest version from git tags and uses `commit-and-tag-version` to bump
  * to the next version based on commits.
  *
- * This expects `standard-version` to be installed in the path.
+ * This expects `commit-and-tag-version` to be installed in the path.
  *
  * Environment variables:
  *
@@ -29,6 +29,7 @@ const releaseTagFile = process.env.RELEASETAG;
 const prefix = process.env.RELEASE_TAG_PREFIX;
 const versionrcOptions = process.env.VERSIONRCOPTIONS;
 const releasableCommits = process.env.RELEASABLE_COMMITS;
+const bumpPackage = process.env.BUMP_PACKAGE;
 
 if (!versionFile) {
   throw new Error("OUTFILE is required");
@@ -70,6 +71,7 @@ const opts: BumpOptions = {
   // doesn't work with long customization
   versionrcOptions: JSON.parse(versionrcOptions ?? "{}"),
   releasableCommits,
+  bumpPackage,
 };
 logging.debug(opts);
 

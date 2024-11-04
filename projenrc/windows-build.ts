@@ -20,23 +20,33 @@ export class WindowsBuild extends Component {
       return `/jobs/${JOB_BUILD}${path ?? ""}`;
     };
 
-    const skippedStepIndexes = [
+    const onlyPrimaryBuildSteps: number[] = [
       // Upload coverage to Codecov
       4,
-
       // Backup artifact permissions
       8,
-
       // Upload artifact
       9,
     ];
 
-    const skippedStepPatches = skippedStepIndexes.map((stepIndex) =>
+    const onlyMutationAndPrimaryBuildSteps: number[] = [
+      // Upload self mutation patch
+      6,
+    ];
+
+    const onlyPrimaryStepsPatches = onlyPrimaryBuildSteps.map((stepIndex) =>
       JsonPatch.add(
         buildJobPath(`/steps/${stepIndex}/if`),
-        "${{ matrix.runner.primary_build }}"
+        "matrix.runner.primary_build"
       )
     );
+    const onlyMutationAndPrimaryStepPatches =
+      onlyMutationAndPrimaryBuildSteps.map((stepIndex) =>
+        JsonPatch.add(
+          buildJobPath(`/steps/${stepIndex}/if`),
+          "steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build"
+        )
+      );
 
     // Setup runner matrix
     buildWorkflowFile?.patch(
@@ -67,18 +77,8 @@ export class WindowsBuild extends Component {
       ),
 
       // Add conditions to steps that should only run on the primary build
-      JsonPatch.add(
-        buildJobPath("/steps/6/if"),
-        "${{ steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build }}"
-      ),
-      ...skippedStepPatches,
-
-      // Install rsync on Windows
-      JsonPatch.add(buildJobPath("/steps/0"), {
-        name: "Install rsync on Windows",
-        if: `matrix.runner.os == 'windows-latest'`,
-        run: "choco install --no-progress rsync",
-      })
+      ...onlyMutationAndPrimaryStepPatches,
+      ...onlyPrimaryStepsPatches
     );
 
     // Add the join target job for branch protection
@@ -97,7 +97,7 @@ export class WindowsBuild extends Component {
         steps: [
           {
             name: "Build result",
-            run: `echo \${{needs.${JOB_BUILD_MATRIX}.result}}`,
+            run: `echo \${{ needs.${JOB_BUILD_MATRIX}.result }}`,
           },
           {
             if: `\${{ needs.${JOB_BUILD_MATRIX}.result != 'success' }}`,

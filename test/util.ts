@@ -4,7 +4,10 @@ import * as os from "os";
 import * as path from "path";
 import { Project } from "../src";
 import { installPackage } from "../src/cli/util";
-import { GitHubProject, GitHubProjectOptions } from "../src/github";
+import {
+  GitHubProject,
+  GitHubProjectOptions,
+} from "../src/github/github-project";
 import * as logging from "../src/logging";
 import { Task } from "../src/task";
 import { exec } from "../src/util";
@@ -169,8 +172,8 @@ export function sanitizeOutput(dir: string) {
 }
 
 export {
-  synthSnapshot,
-  directorySnapshot,
-  SynthOutput,
   DirectorySnapshotOptions,
+  SynthOutput,
+  directorySnapshot,
+  synthSnapshot,
 } from "../src/util/synth";

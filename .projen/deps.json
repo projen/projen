@@ -44,6 +44,11 @@
       "type": "build"
     },
     {
+      "name": "commit-and-tag-version",
+      "version": "^12",
+      "type": "build"
+    },
+    {
       "name": "esbuild",
       "type": "build"
     },
@@ -83,6 +88,7 @@
     },
     {
       "name": "jsii-docgen",
+      "version": "^10.5.0",
       "type": "build"
     },
     {
@@ -91,12 +97,12 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.4.x",
+      "version": "5.5.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.4.x",
+      "version": "5.5.x",
       "type": "build"
     },
     {
@@ -112,11 +118,6 @@
       "type": "build"
     },
     {
-      "name": "standard-version",
-      "version": "^9",
-      "type": "build"
-    },
-    {
       "name": "ts-jest",
       "type": "build"
     },
@@ -126,7 +127,7 @@
     },
     {
       "name": "typescript",
-      "version": "5.4.x",
+      "version": "5.5.x",
       "type": "build"
     },
     {

@@ -2,7 +2,13 @@ import { execSync } from "child_process";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
-import { execProjenCLI, TestProject, withProjectDir } from "./util";
+import {
+  execProjenCLI,
+  synthSnapshot,
+  TestProject,
+  withProjectDir,
+} from "./util";
+import { JavaProject } from "../src/java";
 import { Version } from "../src/version";
 
 describe("Version", () => {
@@ -21,6 +27,41 @@ describe("Version", () => {
     // THEN
     expect(version.bumpTask.envVars.STEP_NAME).toEqual("bump");
     expect(version.unbumpTask.envVars.STEP_NAME).toEqual("unbump");
+  });
+});
+
+describe("with JavaProject", () => {
+  test("version component can be used", () => {
+    const p = new JavaProject({
+      name: "test-project",
+      version: "1.0.0",
+      groupId: "io.github.cdklabs",
+      artifactId: "projen",
+    });
+
+    new Version(p, {
+      versionInputFile: "pom.xml",
+      artifactsDirectory: "dist",
+      bumpPackage: "foobar-bump",
+    });
+
+    const snap = synthSnapshot(p);
+    const pom = snap["pom.xml"];
+    const tasks = snap[".projen/tasks.json"];
+
+    // should not be in the pom file
+    expect(pom).not.toContain("foobar-bump");
+
+    // but should be in the task environment
+    expect(tasks).toMatchObject({
+      tasks: {
+        bump: {
+          env: {
+            BUMP_PACKAGE: "foobar-bump",
+          },
+        },
+      },
+    });
   });
 });
 

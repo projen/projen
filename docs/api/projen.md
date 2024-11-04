@@ -2087,18 +2087,25 @@ Assign attributes to file names in a git repository.
 ```typescript
 import { GitAttributesFile } from 'projen'
 
-new GitAttributesFile(scope: IConstruct)
+new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.GitAttributesFile.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.GitAttributesFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.GitAttributesFileOptions">GitAttributesFileOptions</a></code> | *No description.* |
 
 ---
 
 ##### `scope`<sup>Required</sup> <a name="scope" id="projen.GitAttributesFile.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.GitAttributesFile.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.GitAttributesFileOptions">GitAttributesFileOptions</a>
 
 ---
 
@@ -2152,7 +2159,7 @@ Writes the file to the project's output directory.
 ##### `addAttributes` <a name="addAttributes" id="projen.GitAttributesFile.addAttributes"></a>
 
 ```typescript
-public addAttributes(glob: string, attributes: string): void
+public addAttributes(glob: string, attributes: ...string[]): void
 ```
 
 Maps a set of attributes to a set of files.
@@ -2167,7 +2174,7 @@ Glob pattern to match files in the repo.
 
 ###### `attributes`<sup>Required</sup> <a name="attributes" id="projen.GitAttributesFile.addAttributes.parameter.attributes"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Attributes to assign to these files.
 
@@ -2256,6 +2263,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.GitAttributesFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
 | <code><a href="#projen.GitAttributesFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
 | <code><a href="#projen.GitAttributesFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.GitAttributesFile.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
 | <code><a href="#projen.GitAttributesFile.property.hasLfsPatterns">hasLfsPatterns</a></code> | <code>boolean</code> | Whether the current gitattributes file has any LFS patterns. |
 
 ---
@@ -2357,6 +2365,18 @@ public readonly readonly: boolean;
 - *Type:* boolean
 
 Indicates if the file should be read-only or read-write.
+
+---
+
+##### `endOfLine`<sup>Required</sup> <a name="endOfLine" id="projen.GitAttributesFile.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+
+The default end of line character for text files.
 
 ---
 
@@ -2495,14 +2515,14 @@ The Docker image.
 ##### `addPorts` <a name="addPorts" id="projen.Gitpod.addPorts"></a>
 
 ```typescript
-public addPorts(ports: string): void
+public addPorts(ports: ...string[]): void
 ```
 
 Add ports that should be exposed (forwarded) from the container.
 
 ###### `ports`<sup>Required</sup> <a name="ports" id="projen.Gitpod.addPorts.parameter.ports"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The new ports.
 
@@ -2527,7 +2547,7 @@ The configuration.
 ##### `addTasks` <a name="addTasks" id="projen.Gitpod.addTasks"></a>
 
 ```typescript
-public addTasks(tasks: Task): void
+public addTasks(tasks: ...Task[]): void
 ```
 
 Add tasks to run when gitpod starts.
@@ -2537,7 +2557,7 @@ create a new `Task` and specify the other tasks as subtasks.
 
 ###### `tasks`<sup>Required</sup> <a name="tasks" id="projen.Gitpod.addTasks.parameter.tasks"></a>
 
-- *Type:* <a href="#projen.Task">Task</a>
+- *Type:* ...<a href="#projen.Task">Task</a>[]
 
 The new tasks.
 
@@ -2546,7 +2566,7 @@ The new tasks.
 ##### `addVscodeExtensions` <a name="addVscodeExtensions" id="projen.Gitpod.addVscodeExtensions"></a>
 
 ```typescript
-public addVscodeExtensions(extensions: string): void
+public addVscodeExtensions(extensions: ...string[]): void
 ```
 
 Add a list of VSCode extensions that should be automatically installed in the container.
@@ -2564,7 +2584,7 @@ These must be in the format defined in the Open VSX registry.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.Gitpod.addVscodeExtensions.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 
@@ -2764,7 +2784,7 @@ Writes the file to the project's output directory.
 ##### `addPatterns` <a name="addPatterns" id="projen.IgnoreFile.addPatterns"></a>
 
 ```typescript
-public addPatterns(patterns: string): void
+public addPatterns(patterns: ...string[]): void
 ```
 
 Add ignore patterns.
@@ -2778,7 +2798,7 @@ but can be included using options specified when instantiating the component.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.addPatterns.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Ignore patterns.
 
@@ -2787,14 +2807,14 @@ Ignore patterns.
 ##### `exclude` <a name="exclude" id="projen.IgnoreFile.exclude"></a>
 
 ```typescript
-public exclude(patterns: string): void
+public exclude(patterns: ...string[]): void
 ```
 
 Ignore the files that match these patterns.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.exclude.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The patterns to match.
 
@@ -2803,14 +2823,14 @@ The patterns to match.
 ##### `include` <a name="include" id="projen.IgnoreFile.include"></a>
 
 ```typescript
-public include(patterns: string): void
+public include(patterns: ...string[]): void
 ```
 
 Always include the specified file patterns.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.include.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 Patterns to include in git commits.
 
@@ -2819,7 +2839,7 @@ Patterns to include in git commits.
 ##### `removePatterns` <a name="removePatterns" id="projen.IgnoreFile.removePatterns"></a>
 
 ```typescript
-public removePatterns(patterns: string): void
+public removePatterns(patterns: ...string[]): void
 ```
 
 Removes patterns previously added from the ignore file.
@@ -2828,7 +2848,7 @@ If `addPattern()` is called after this, the pattern will be added again.
 
 ###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.removePatterns.parameter.patterns"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 patters to remove.
 
@@ -3190,7 +3210,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.IniFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -3239,7 +3259,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.IniFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -3250,7 +3270,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.IniFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -3281,7 +3301,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.IniFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -4089,7 +4109,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.JsonFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -4138,7 +4158,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.JsonFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -4149,7 +4169,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.JsonFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -4180,7 +4200,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.JsonFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -4715,14 +4735,14 @@ Synthesizes files to the project output directory.
 ##### `debug` <a name="debug" id="projen.Logger.debug"></a>
 
 ```typescript
-public debug(text: any): void
+public debug(text: ...any[]): void
 ```
 
 Log a message to stderr with DEBUG severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.debug.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -4731,14 +4751,14 @@ strings or objects to print.
 ##### `error` <a name="error" id="projen.Logger.error"></a>
 
 ```typescript
-public error(text: any): void
+public error(text: ...any[]): void
 ```
 
 Log a message to stderr with ERROR severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.error.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -4747,14 +4767,14 @@ strings or objects to print.
 ##### `info` <a name="info" id="projen.Logger.info"></a>
 
 ```typescript
-public info(text: any): void
+public info(text: ...any[]): void
 ```
 
 Log a message to stderr with INFO severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.info.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -4763,7 +4783,7 @@ strings or objects to print.
 ##### `log` <a name="log" id="projen.Logger.log"></a>
 
 ```typescript
-public log(level: LogLevel, text: any): void
+public log(level: LogLevel, text: ...any[]): void
 ```
 
 Log a message to stderr with a given logging level.
@@ -4781,7 +4801,7 @@ Logging verbosity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.log.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -4790,14 +4810,14 @@ strings or objects to print.
 ##### `verbose` <a name="verbose" id="projen.Logger.verbose"></a>
 
 ```typescript
-public verbose(text: any): void
+public verbose(text: ...any[]): void
 ```
 
 Log a message to stderr with VERBOSE severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.verbose.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -4806,14 +4826,14 @@ strings or objects to print.
 ##### `warn` <a name="warn" id="projen.Logger.warn"></a>
 
 ```typescript
-public warn(text: any): void
+public warn(text: ...any[]): void
 ```
 
 Log a message to stderr with WARN severity.
 
 ###### `text`<sup>Required</sup> <a name="text" id="projen.Logger.warn.parameter.text"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 strings or objects to print.
 
@@ -5012,14 +5032,14 @@ Add a target to all.
 ##### `addAlls` <a name="addAlls" id="projen.Makefile.addAlls"></a>
 
 ```typescript
-public addAlls(targets: string): Makefile
+public addAlls(targets: ...string[]): Makefile
 ```
 
 Add multiple targets to all.
 
 ###### `targets`<sup>Required</sup> <a name="targets" id="projen.Makefile.addAlls.parameter.targets"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 ---
 
@@ -5040,14 +5060,14 @@ Add a rule to the Makefile.
 ##### `addRules` <a name="addRules" id="projen.Makefile.addRules"></a>
 
 ```typescript
-public addRules(rules: Rule): Makefile
+public addRules(rules: ...Rule[]): Makefile
 ```
 
 Add multiple rules to the Makefile.
 
 ###### `rules`<sup>Required</sup> <a name="rules" id="projen.Makefile.addRules.parameter.rules"></a>
 
-- *Type:* <a href="#projen.Rule">Rule</a>
+- *Type:* ...<a href="#projen.Rule">Rule</a>[]
 
 ---
 
@@ -5398,7 +5418,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.ObjectFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -5447,7 +5467,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.ObjectFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -5458,7 +5478,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.ObjectFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -5489,7 +5509,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.ObjectFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -5739,7 +5759,7 @@ Returns a string representation of this construct.
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.Project.addExcludeFromCleanup"></a>
 
 ```typescript
-public addExcludeFromCleanup(globs: string): void
+public addExcludeFromCleanup(globs: ...string[]): void
 ```
 
 Exclude the matching files from pre-synth cleanup.
@@ -5749,7 +5769,7 @@ source files include the projen marker and we don't want them to be erased durin
 
 ###### `globs`<sup>Required</sup> <a name="globs" id="projen.Project.addExcludeFromCleanup.parameter.globs"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The glob patterns to match.
 
@@ -9089,7 +9109,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.TomlFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -9138,7 +9158,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.TomlFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -9149,7 +9169,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.TomlFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -9180,7 +9200,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.TomlFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -9379,19 +9399,19 @@ Indicates if empty objects and arrays are omitted from the output object.
 ```typescript
 import { Version } from 'projen'
 
-new Version(project: Project, options: VersionOptions)
+new Version(scope: IConstruct, options: VersionOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.Version.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.Version.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.Version.Initializer.parameter.options">options</a></code> | <code><a href="#projen.VersionOptions">VersionOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.Version.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.Version.Initializer.parameter.scope"></a>
 
-- *Type:* <a href="#projen.Project">Project</a>
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -9509,6 +9529,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.Version.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.Version.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.Version.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The package used to bump package versions, as a dependency string. |
 | <code><a href="#projen.Version.property.bumpTask">bumpTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Version.property.changelogFileName">changelogFileName</a></code> | <code>string</code> | The name of the changelog file (under `artifactsDirectory`). |
 | <code><a href="#projen.Version.property.releaseTagFileName">releaseTagFileName</a></code> | <code>string</code> | The name of the file that contains the release tag (under `artifactsDirectory`). |
@@ -9536,6 +9557,20 @@ public readonly project: Project;
 ```
 
 - *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `bumpPackage`<sup>Required</sup> <a name="bumpPackage" id="projen.Version.property.bumpPackage"></a>
+
+```typescript
+public readonly bumpPackage: string;
+```
+
+- *Type:* string
+
+The package used to bump package versions, as a dependency string.
+
+This is a `commit-and-tag-version` compatible package.
 
 ---
 
@@ -9603,7 +9638,9 @@ The name of the file that contains the version (under `artifactsDirectory`).
 
 ---
 
-##### `STANDARD_VERSION`<sup>Required</sup> <a name="STANDARD_VERSION" id="projen.Version.property.STANDARD_VERSION"></a>
+##### ~~`STANDARD_VERSION`~~<sup>Required</sup> <a name="STANDARD_VERSION" id="projen.Version.property.STANDARD_VERSION"></a>
+
+- *Deprecated:* use `version.bumpPackage` on the component instance instead
 
 ```typescript
 public readonly STANDARD_VERSION: string;
@@ -9778,7 +9815,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.XmlFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -9827,7 +9864,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.XmlFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -9838,7 +9875,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.XmlFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -9869,7 +9906,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.XmlFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -10222,7 +10259,7 @@ Could be primitive or complex.
 ##### `addToArray` <a name="addToArray" id="projen.YamlFile.addToArray"></a>
 
 ```typescript
-public addToArray(path: string, values: any): void
+public addToArray(path: string, values: ...any[]): void
 ```
 
 Adds to an array in the synthesized object file.
@@ -10271,7 +10308,7 @@ will be created as needed.
 
 ###### `values`<sup>Required</sup> <a name="values" id="projen.YamlFile.addToArray.parameter.values"></a>
 
-- *Type:* any
+- *Type:* ...any[]
 
 The values to add.
 
@@ -10282,7 +10319,7 @@ Could be primitive or complex.
 ##### `patch` <a name="patch" id="projen.YamlFile.patch"></a>
 
 ```typescript
-public patch(patches: JsonPatch): void
+public patch(patches: ...JsonPatch[]): void
 ```
 
 Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
@@ -10313,7 +10350,7 @@ would result in the following object file
 
 ###### `patches`<sup>Required</sup> <a name="patches" id="projen.YamlFile.patch.parameter.patches"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The patch operations to apply.
 
@@ -11756,6 +11793,41 @@ Whether the generated file should be readonly.
 
 ---
 
+### GitAttributesFileOptions <a name="GitAttributesFileOptions" id="projen.GitAttributesFileOptions"></a>
+
+Options for `GitAttributesFile`.
+
+#### Initializer <a name="Initializer" id="projen.GitAttributesFileOptions.Initializer"></a>
+
+```typescript
+import { GitAttributesFileOptions } from 'projen'
+
+const gitAttributesFileOptions: GitAttributesFileOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.GitAttributesFileOptions.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
+
+---
+
+##### `endOfLine`<sup>Optional</sup> <a name="endOfLine" id="projen.GitAttributesFileOptions.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+- *Default:* EndOfLine.LF
+
+The default end of line character for text files.
+
+endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations. Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters. It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line. Can be disabled by setting explicitly: `{ endOfLine: EndOfLine.NONE }`.
+
+---
+
 ### GitOptions <a name="GitOptions" id="projen.GitOptions"></a>
 
 Git configuration options.
@@ -11772,7 +11844,26 @@ const gitOptions: GitOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.GitOptions.property.endOfLine">endOfLine</a></code> | <code><a href="#projen.EndOfLine">EndOfLine</a></code> | The default end of line character for text files. |
 | <code><a href="#projen.GitOptions.property.lfsPatterns">lfsPatterns</a></code> | <code>string[]</code> | File patterns to mark as stored in Git LFS. |
+
+---
+
+##### `endOfLine`<sup>Optional</sup> <a name="endOfLine" id="projen.GitOptions.property.endOfLine"></a>
+
+```typescript
+public readonly endOfLine: EndOfLine;
+```
+
+- *Type:* <a href="#projen.EndOfLine">EndOfLine</a>
+- *Default:* EndOfLine.LF
+
+The default end of line character for text files.
+
+endOfLine it's useful to keep the same end of line between Windows and Unix operative systems for git checking/checkout operations.
+Hence, it can avoid simple repository mutations consisting only of changes in the end of line characters.
+It will be set in the first line of the .gitattributes file to make it the first match with high priority but it can be overriden in a later line.
+Can be disabled by setting: `endOfLine: EndOfLine.NONE`.
 
 ---
 
@@ -13624,7 +13715,7 @@ If your project is Typescript-based and has configured `testdir` to be a
 subdirectory of `src`, sample files should outside of the `src` directory,
 otherwise they may not be copied. For example:
 ```
-new SampleFile(this, 'assets/icon.png', { source: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
+new SampleFile(this, 'assets/icon.png', { sourcePath: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
 ```
 
 ---
@@ -14790,6 +14881,7 @@ const versionOptions: VersionOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.VersionOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted. |
 | <code><a href="#projen.VersionOptions.property.versionInputFile">versionInputFile</a></code> | <code>string</code> | A name of a .json file to set the `version` field in after a bump. |
+| <code><a href="#projen.VersionOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
 | <code><a href="#projen.VersionOptions.property.releasableCommits">releasableCommits</a></code> | <code><a href="#projen.ReleasableCommits">ReleasableCommits</a></code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.VersionOptions.property.tagPrefix">tagPrefix</a></code> | <code>string</code> | The tag prefix corresponding to this version. |
 | <code><a href="#projen.VersionOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration for versionrc file used by standard-release. |
@@ -14826,6 +14918,21 @@ A name of a .json file to set the `version` field in after a bump.
 "package.json"
 ```
 
+
+##### `bumpPackage`<sup>Optional</sup> <a name="bumpPackage" id="projen.VersionOptions.property.bumpPackage"></a>
+
+```typescript
+public readonly bumpPackage: string;
+```
+
+- *Type:* string
+- *Default:* "commit-and-tag-version@12"
+
+The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+
+This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
 
 ##### `releasableCommits`<sup>Optional</sup> <a name="releasableCommits" id="projen.VersionOptions.property.releasableCommits"></a>
 
@@ -16676,7 +16783,7 @@ JsonPatch.add('/biscuits/1', { "name": "Ginger Nut" })
 ```typescript
 import { JsonPatch } from 'projen'
 
-JsonPatch.apply(document: any, ops: JsonPatch)
+JsonPatch.apply(document: any, ops: ...JsonPatch[])
 ```
 
 Applies a set of JSON-Patch (RFC-6902) operations to `document` and returns the result.
@@ -16691,7 +16798,7 @@ The document to patch.
 
 ###### `ops`<sup>Required</sup> <a name="ops" id="projen.JsonPatch.apply.parameter.ops"></a>
 
-- *Type:* <a href="#projen.JsonPatch">JsonPatch</a>
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
 
 The operations to apply.
 
@@ -17255,7 +17362,7 @@ new Task(name: string, props?: TaskOptions)
 ##### `addCondition` <a name="addCondition" id="projen.Task.addCondition"></a>
 
 ```typescript
-public addCondition(condition: string): void
+public addCondition(condition: ...string[]): void
 ```
 
 Add a command to execute which determines if the task should be skipped.
@@ -17266,7 +17373,7 @@ If a condition already exists, the new condition will be appended with ` && ` de
 
 ###### `condition`<sup>Required</sup> <a name="condition" id="projen.Task.addCondition.parameter.condition"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The command to execute.
 
@@ -18031,14 +18138,14 @@ The Docker image.
 ##### `addPorts` <a name="addPorts" id="projen.IDevEnvironment.addPorts"></a>
 
 ```typescript
-public addPorts(ports: string): void
+public addPorts(ports: ...string[]): void
 ```
 
 Adds ports that should be exposed (forwarded) from the container.
 
 ###### `ports`<sup>Required</sup> <a name="ports" id="projen.IDevEnvironment.addPorts.parameter.ports"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The new ports.
 
@@ -18047,14 +18154,14 @@ The new ports.
 ##### `addTasks` <a name="addTasks" id="projen.IDevEnvironment.addTasks"></a>
 
 ```typescript
-public addTasks(tasks: Task): void
+public addTasks(tasks: ...Task[]): void
 ```
 
 Adds tasks to run when the container starts.
 
 ###### `tasks`<sup>Required</sup> <a name="tasks" id="projen.IDevEnvironment.addTasks.parameter.tasks"></a>
 
-- *Type:* <a href="#projen.Task">Task</a>
+- *Type:* ...<a href="#projen.Task">Task</a>[]
 
 The new tasks.
 
@@ -18063,14 +18170,14 @@ The new tasks.
 ##### `addVscodeExtensions` <a name="addVscodeExtensions" id="projen.IDevEnvironment.addVscodeExtensions"></a>
 
 ```typescript
-public addVscodeExtensions(extensions: string): void
+public addVscodeExtensions(extensions: ...string[]): void
 ```
 
 Adds a list of VSCode extensions that should be automatically installed in the container.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.IDevEnvironment.addVscodeExtensions.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 
@@ -18398,6 +18505,49 @@ TCP protocol.
 ##### `UDP` <a name="UDP" id="projen.DockerComposeProtocol.UDP"></a>
 
 UDP protocol.
+
+---
+
+
+### EndOfLine <a name="EndOfLine" id="projen.EndOfLine"></a>
+
+The end of line characters supported by git.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.EndOfLine.AUTO">AUTO</a></code> | Maintain existing (mixed values within one file are normalised by looking at what's used after the first line). |
+| <code><a href="#projen.EndOfLine.CRLF">CRLF</a></code> | Carriage Return + Line Feed characters (\r\n), common on Windows. |
+| <code><a href="#projen.EndOfLine.LF">LF</a></code> | Line Feed only (\n), common on Linux and macOS as well as inside git repos. |
+| <code><a href="#projen.EndOfLine.NONE">NONE</a></code> | Disable and do not configure the end of line character. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.EndOfLine.AUTO"></a>
+
+Maintain existing (mixed values within one file are normalised by looking at what's used after the first line).
+
+---
+
+
+##### `CRLF` <a name="CRLF" id="projen.EndOfLine.CRLF"></a>
+
+Carriage Return + Line Feed characters (\r\n), common on Windows.
+
+---
+
+
+##### `LF` <a name="LF" id="projen.EndOfLine.LF"></a>
+
+Line Feed only (\n), common on Linux and macOS as well as inside git repos.
+
+---
+
+
+##### `NONE` <a name="NONE" id="projen.EndOfLine.NONE"></a>
+
+Disable and do not configure the end of line character.
 
 ---
 

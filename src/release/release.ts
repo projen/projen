@@ -2,6 +2,7 @@ import * as path from "path";
 import { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
+import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { Component } from "../component";
 import {
   GitHub,
@@ -13,6 +14,7 @@ import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
+import { ensureNotHiddenPath } from "../github/private/util";
 import {
   Job,
   JobPermission,
@@ -190,7 +192,7 @@ export interface ReleaseProjectOptions {
   readonly releaseTagPrefix?: string;
 
   /**
-   * Custom configuration used when creating changelog with standard-version package.
+   * Custom configuration used when creating changelog with commit-and-tag-version package.
    * Given values either append to default configuration or overwrite values in it.
    *
    * @default - standard configuration applicable for GitHub repositories
@@ -285,7 +287,7 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * are needed. For example `publib`, the CLI projen uses to publish releases,
    * is an npm library.
    *
-   * @default 18.x
+   * @default "lts/*""
    */
   readonly workflowNodeVersion?: string;
 
@@ -358,7 +360,9 @@ export class Release extends Component {
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
-    this.artifactsDirectory = options.artifactsDirectory ?? "dist";
+    this.artifactsDirectory =
+      options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
+    ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
@@ -401,13 +405,7 @@ export class Release extends Component {
     });
 
     this.releaseTagFilePath = path.posix.normalize(
-      path.posix.join(
-        // temporary hack to allow JsiiProject setting a different path to the release tag file
-        // see JsiiProject.releaseTagFilePath for more details
-        //@ts-ignore
-        this.project.releaseTagFilePath ?? this.artifactsDirectory,
-        this.version.releaseTagFileName
-      )
+      path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName)
     );
 
     this.publisher = new Publisher(this.project, {
@@ -706,7 +704,10 @@ export class Release extends Component {
 
     if (this.github && !this.releaseTrigger.isManual) {
       // Use target (possible parent) GitHub to create the workflow
-      const workflow = new GithubWorkflow(this.github, workflowName);
+      const workflow = new GithubWorkflow(this.github, workflowName, {
+        // see https://github.com/projen/projen/issues/3761
+        limitConcurrency: true,
+      });
       workflow.on({
         schedule: this.releaseTrigger.schedule
           ? [{ cron: this.releaseTrigger.schedule }]

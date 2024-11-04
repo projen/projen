@@ -1,3 +1,4 @@
+import { extname } from "node:path";
 import { snake } from "case";
 import { GitHubActionsProvider } from "./actions-provider";
 import { GitHub } from "./github";
@@ -17,7 +18,7 @@ export interface ConcurrencyOptions {
    * For example, if you specify `${{ github.workflow }}-${{ github.ref }}`, workflow runs triggered
    * on the same branch cannot run concurrenty, but workflows runs triggered on different branches can.
    *
-   * @default - undefined. All runs belonging to this workflow have the same limited concurrency.
+   * @default - ${{ github.workflow }}
    *
    * @see https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups
    */
@@ -49,14 +50,27 @@ export interface GithubWorkflowOptions {
    * @default false
    */
   readonly limitConcurrency?: boolean;
+
   /**
    * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. Currently in beta.
    *
-   * @default - { group: undefined, cancelInProgress: false }
+   * @default - { group: ${{ github.workflow }}, cancelInProgress: false }
    *
    * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
   readonly concurrencyOptions?: ConcurrencyOptions;
+
+  /**
+   * Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension.
+   *
+   * Use this option to set a file name for the workflow file, that is different than the display name.
+   *
+   * @example "build-new.yml"
+   * @example "my-workflow.yaml"
+   *
+   * @default - a path-safe version of the workflow name plus the .yml file ending, e.g. build.yml
+   */
+  readonly fileName?: string;
 }
 
 /**
@@ -68,7 +82,9 @@ export interface GithubWorkflowOptions {
  */
 export class GithubWorkflow extends Component {
   /**
-   * The name of the workflow.
+   * The name of the workflow. GitHub displays the names of your workflows under your repository's
+   * "Actions" tab.
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name
    */
   public readonly name: string;
 
@@ -107,6 +123,11 @@ export class GithubWorkflow extends Component {
     workflows.Job | workflows.JobCallingReusableWorkflow
   > = {};
 
+  /**
+   * @param github The GitHub component of the project this workflow belongs to.
+   * @param name The name of the workflow, displayed under the repository's "Actions" tab.
+   * @param options Additional options to configure the workflow.
+   */
   constructor(
     github: GitHub,
     name: string,
@@ -116,6 +137,7 @@ export class GithubWorkflow extends Component {
 
     const defaultConcurrency: ConcurrencyOptions = {
       cancelInProgress: false,
+      group: "${{ github.workflow }}",
     };
 
     this.name = name;
@@ -131,15 +153,20 @@ export class GithubWorkflow extends Component {
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
     if (workflowsEnabled) {
-      this.file = new YamlFile(
-        this.project,
-        `.github/workflows/${name.toLocaleLowerCase()}.yml`,
-        {
-          obj: () => this.renderWorkflow(),
-          // GitHub needs to read the file from the repository in order to work.
-          committed: true,
-        }
-      );
+      const fileName = options.fileName ?? `${name.toLocaleLowerCase()}.yml`;
+      const extension = extname(fileName).toLowerCase();
+
+      if (![".yml", ".yaml"].includes(extension)) {
+        throw new Error(
+          `GitHub Workflow files must have either a .yml or .yaml file extension, got: ${fileName}`
+        );
+      }
+
+      this.file = new YamlFile(this.project, `.github/workflows/${fileName}`, {
+        obj: () => this.renderWorkflow(),
+        // GitHub needs to read the file from the repository in order to work.
+        committed: true,
+      });
     }
   }
 

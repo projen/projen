@@ -3923,8 +3923,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -3995,8 +3995,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -5302,7 +5302,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -5442,8 +5442,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -6867,7 +6867,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -7040,8 +7040,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -7112,8 +7112,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -8527,7 +8527,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -8623,8 +8623,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -11293,8 +11293,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -11365,8 +11365,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -12653,7 +12653,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -12749,8 +12749,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -14077,7 +14077,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -14197,8 +14197,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -14269,8 +14269,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -15684,7 +15684,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -15780,8 +15780,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -17040,7 +17040,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -17160,8 +17160,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -17232,8 +17232,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -18647,7 +18647,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -18743,8 +18743,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -20805,7 +20805,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.4.0"",
+        "initialValue": ""~5.5.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -20925,8 +20925,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -20997,8 +20997,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -22412,7 +22412,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -22508,8 +22508,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -23555,8 +23555,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -23627,8 +23627,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -24789,7 +24789,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -24885,8 +24885,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -26070,8 +26070,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -26142,8 +26142,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -27447,7 +27447,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -27543,8 +27543,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -28573,8 +28573,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -28645,8 +28645,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -29756,7 +29756,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -29852,8 +29852,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -32138,8 +32138,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -32210,8 +32210,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -33377,7 +33377,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -33473,8 +33473,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -34641,8 +34641,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -34713,8 +34713,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -36023,7 +36023,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -36119,8 +36119,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -37287,8 +37287,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -37359,8 +37359,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -38647,7 +38647,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -38743,8 +38743,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -39911,8 +39911,8 @@ exports[`inventory 1`] = `
         "switch": "major-version",
       },
       {
-        "default": "- no max",
-        "docs": "Minimum node.js version to require via \`engines\` (inclusive).",
+        "default": "- no maximum version is enforced",
+        "docs": "The maximum node version supported by this package. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -39983,8 +39983,8 @@ exports[`inventory 1`] = `
         "switch": "min-major-version",
       },
       {
-        "default": "- no "engines" specified",
-        "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
+        "default": "- no minimum version is enforced",
+        "docs": "The minimum node version required by this package to function. Most projects should not use this option.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -41271,7 +41271,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
-        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "docs": "Custom configuration used when creating changelog with commit-and-tag-version package.",
         "featured": false,
         "fullType": {
           "collection": {
@@ -41367,8 +41367,8 @@ exports[`inventory 1`] = `
         "switch": "workflow-git-identity",
       },
       {
-        "default": "- same as \`minNodeVersion\`",
-        "docs": "The node version to use in GitHub workflows.",
+        "default": "- \`minNodeVersion\` if set, otherwise \`lts/*\`.",
+        "docs": "The node version used in GitHub Actions workflows.",
         "featured": false,
         "fullType": {
           "primitive": "string",

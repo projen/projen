@@ -105,14 +105,14 @@ Add a custom Docker image or Dockerfile for the container.
 ##### `addFeatures` <a name="addFeatures" id="projen.vscode.DevContainer.addFeatures"></a>
 
 ```typescript
-public addFeatures(features: DevContainerFeature): void
+public addFeatures(features: ...DevContainerFeature[]): void
 ```
 
 Adds a list of VSCode features that should be automatically installed in the container.
 
 ###### `features`<sup>Required</sup> <a name="features" id="projen.vscode.DevContainer.addFeatures.parameter.features"></a>
 
-- *Type:* <a href="#projen.vscode.DevContainerFeature">DevContainerFeature</a>
+- *Type:* ...<a href="#projen.vscode.DevContainerFeature">DevContainerFeature</a>[]
 
 featureName and version(optional default: latest).
 
@@ -121,14 +121,14 @@ featureName and version(optional default: latest).
 ##### `addPorts` <a name="addPorts" id="projen.vscode.DevContainer.addPorts"></a>
 
 ```typescript
-public addPorts(ports: string): void
+public addPorts(ports: ...string[]): void
 ```
 
 Adds ports that should be exposed (forwarded) from the container.
 
 ###### `ports`<sup>Required</sup> <a name="ports" id="projen.vscode.DevContainer.addPorts.parameter.ports"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The new ports.
 
@@ -137,7 +137,7 @@ The new ports.
 ##### `addTasks` <a name="addTasks" id="projen.vscode.DevContainer.addTasks"></a>
 
 ```typescript
-public addTasks(tasks: Task): void
+public addTasks(tasks: ...Task[]): void
 ```
 
 Adds tasks to run when the container starts.
@@ -146,7 +146,7 @@ Tasks will be run in sequence.
 
 ###### `tasks`<sup>Required</sup> <a name="tasks" id="projen.vscode.DevContainer.addTasks.parameter.tasks"></a>
 
-- *Type:* projen.Task
+- *Type:* ...projen.Task[]
 
 The new tasks.
 
@@ -155,14 +155,14 @@ The new tasks.
 ##### `addVscodeExtensions` <a name="addVscodeExtensions" id="projen.vscode.DevContainer.addVscodeExtensions"></a>
 
 ```typescript
-public addVscodeExtensions(extensions: string): void
+public addVscodeExtensions(extensions: ...string[]): void
 ```
 
 Adds a list of VSCode extensions that should be automatically installed in the container.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.vscode.DevContainer.addVscodeExtensions.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 
@@ -776,14 +776,14 @@ Synthesizes files to the project output directory.
 ##### `addRecommendations` <a name="addRecommendations" id="projen.vscode.VsCodeRecommendedExtensions.addRecommendations"></a>
 
 ```typescript
-public addRecommendations(extensions: string): void
+public addRecommendations(extensions: ...string[]): void
 ```
 
 Adds a list of VS Code extensions as recommendations for this workspace.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.vscode.VsCodeRecommendedExtensions.addRecommendations.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 
@@ -792,7 +792,7 @@ The extension IDs.
 ##### `addUnwantedRecommendations` <a name="addUnwantedRecommendations" id="projen.vscode.VsCodeRecommendedExtensions.addUnwantedRecommendations"></a>
 
 ```typescript
-public addUnwantedRecommendations(extensions: string): void
+public addUnwantedRecommendations(extensions: ...string[]): void
 ```
 
 Marks a list of VS Code extensions as unwanted recommendations for this workspace.
@@ -801,7 +801,7 @@ VS Code should not be recommend these extensions for users of this workspace.
 
 ###### `extensions`<sup>Required</sup> <a name="extensions" id="projen.vscode.VsCodeRecommendedExtensions.addUnwantedRecommendations.parameter.extensions"></a>
 
-- *Type:* string
+- *Type:* ...string[]
 
 The extension IDs.
 
@@ -1876,14 +1876,14 @@ public readonly password: boolean;
 ##### `addFeatures` <a name="addFeatures" id="projen.vscode.IDevContainerEnvironment.addFeatures"></a>
 
 ```typescript
-public addFeatures(features: DevContainerFeature): void
+public addFeatures(features: ...DevContainerFeature[]): void
 ```
 
 Adds a list of VSCode features that should be automatically installed in the container.
 
 ###### `features`<sup>Required</sup> <a name="features" id="projen.vscode.IDevContainerEnvironment.addFeatures.parameter.features"></a>
 
-- *Type:* <a href="#projen.vscode.DevContainerFeature">DevContainerFeature</a>
+- *Type:* ...<a href="#projen.vscode.DevContainerFeature">DevContainerFeature</a>[]
 
 featureName and version(optional default: latest).
 

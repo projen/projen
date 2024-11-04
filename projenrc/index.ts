@@ -139,6 +139,7 @@ export function setupCheckLicenses(project: NodeProject) {
         triggers: {
           pullRequest: {},
           workflowDispatch: {},
+          mergeGroup: {},
           push: { branches: ["main"] },
         },
         permissions: {},
@@ -334,14 +335,4 @@ export function setupNpmignore(project: NodeProject) {
   project.npmignore?.exclude("/VISION.md");
   project.npmignore?.exclude("/SECURITY.md");
   project.npmignore?.exclude("/.gitpod.yml");
-}
-
-/**
- * Add the gitattributes rules that are not related to other tools
- *
- * @param project The project to add the rules to
- */
-export function setupGitattributes(project: Project) {
-  // Autodetect text files and normalize line endings
-  project.gitattributes.addAttributes("*", "text=auto", "eol=lf");
 }

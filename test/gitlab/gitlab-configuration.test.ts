@@ -33,3 +33,15 @@ test("main configuration inherits child configuration stages", () => {
   // THEN
   expect(c.stages).toContain("baz");
 });
+
+test("main configuration inherits child configuration services", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+
+  const c = new GitlabConfiguration(p, { path: "foo" });
+
+  // THEN
+  expect(c.path).toBe("foo");
+});

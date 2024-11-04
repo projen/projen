@@ -69,7 +69,7 @@ export interface PublisherOptions {
    * are needed. For example `publib`, the CLI projen uses to publish releases,
    * is an npm library.
    *
-   * @default 18.x
+   * @default lts/*
    */
   readonly workflowNodeVersion?: string;
 
@@ -182,7 +182,7 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
-    this.workflowNodeVersion = options.workflowNodeVersion ?? "18.x";
+    this.workflowNodeVersion = options.workflowNodeVersion ?? "lts/*";
     this.workflowContainerImage = options.workflowContainerImage;
 
     this.failureIssue = options.failureIssue ?? false;
@@ -616,7 +616,6 @@ export class Publisher extends Component {
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
-          GITHUB_REPO: options.githubRepo,
           GIT_BRANCH: options.gitBranch,
           GIT_USER_NAME:
             options.gitUserName ?? DEFAULT_GITHUB_ACTIONS_USER.name,
@@ -862,7 +861,7 @@ interface PublishJobOptions {
 export interface CommonPublishOptions {
   /**
    * Steps to execute before executing the publishing command. These can be used
-   * to prepare the artifact for publishing if neede.
+   * to prepare the artifact for publishing if needed.
    *
    * These steps are executed after `dist/` has been populated with the build
    * output.
@@ -1194,13 +1193,6 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * @default false
    */
   readonly githubUseSsh?: boolean;
-
-  /**
-   * GitHub repository to push to.
-   *
-   * @default - derived from `moduleName`
-   */
-  readonly githubRepo?: string;
 
   /**
    * Branch to push to.

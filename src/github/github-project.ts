@@ -198,7 +198,7 @@ export class GitHubProject extends Project {
 
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;
     // we only allow these global services to be used in root projects
-    const github = options.github ?? (this.parent ? false : true);
+    const github = options.github ?? !this.parent;
     this.github = github
       ? new GitHub(this, {
           projenTokenSecret: options.projenTokenSecret,
@@ -209,7 +209,7 @@ export class GitHubProject extends Project {
         })
       : undefined;
 
-    const vscode = options.vscode ?? (this.parent ? false : true);
+    const vscode = options.vscode ?? !this.parent;
     this.vscode = vscode ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;

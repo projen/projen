@@ -1,6 +1,8 @@
 import { posix } from "path";
+import { IConstruct } from "constructs";
 import { Component } from "./component";
-import { Project } from "./project";
+import { Dependencies, DependencyType } from "./dependencies";
+import { NodePackage } from "./javascript/node-package";
 import { Task } from "./task";
 
 /**
@@ -17,6 +19,11 @@ import { Task } from "./task";
  */
 export const CHANGES_SINCE_LAST_RELEASE =
   'git log --oneline -1 | grep -qv "chore(release):"';
+
+/**
+ * The default package to be used for commit-and-tag-version
+ */
+const COMMIT_AND_TAG_VERSION_DEFAULT = "commit-and-tag-version@^12";
 
 /**
  * Options for `Version`.
@@ -52,10 +59,22 @@ export interface VersionOptions {
    * @default ReleasableCommits.everyCommit()
    */
   readonly releasableCommits?: ReleasableCommits;
+
+  /**
+   * The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+   *
+   * This can be any compatible package version, including the deprecated `standard-version@9`.
+   *
+   * @default "commit-and-tag-version@12"
+   */
+  readonly bumpPackage?: string;
 }
 
 export class Version extends Component {
-  public static readonly STANDARD_VERSION = "standard-version@^9";
+  /**
+   * @deprecated use `version.bumpPackage` on the component instance instead
+   */
+  public static readonly STANDARD_VERSION = COMMIT_AND_TAG_VERSION_DEFAULT;
 
   public readonly bumpTask: Task;
   public readonly unbumpTask: Task;
@@ -75,12 +94,36 @@ export class Version extends Component {
    */
   public readonly releaseTagFileName: string;
 
-  constructor(project: Project, options: VersionOptions) {
-    super(project);
+  /**
+   * The package used to bump package versions, as a dependency string.
+   * This is a `commit-and-tag-version` compatible package.
+   */
+  public readonly bumpPackage: string;
+
+  constructor(scope: IConstruct, options: VersionOptions) {
+    super(scope);
 
     this.changelogFileName = "changelog.md";
     this.versionFileName = "version.txt";
     this.releaseTagFileName = "releasetag.txt";
+    this.bumpPackage = options.bumpPackage ?? COMMIT_AND_TAG_VERSION_DEFAULT;
+
+    // This component is language independent.
+    // However, when in the Node.js ecosystem, we can improve the experience by adding a dev dependency on the bump package.
+    const node = NodePackage.of(this.project);
+    if (node) {
+      const { name: bumpName, version: bumpVersion } =
+        Dependencies.parseDependency(this.bumpPackage);
+      if (
+        !node.project.deps.isDependencySatisfied(
+          bumpName,
+          DependencyType.BUILD,
+          bumpVersion ?? "*"
+        )
+      ) {
+        node.project.deps.addDependency(this.bumpPackage, DependencyType.BUILD);
+      }
+    }
 
     const versionInputFile = options.versionInputFile;
 
@@ -105,13 +148,14 @@ export class Version extends Component {
       RELEASE_TAG_PREFIX: options.tagPrefix ?? "",
       // doesn't work if custom configuration is long
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
+      BUMP_PACKAGE: this.bumpPackage,
     };
 
     if (options.releasableCommits) {
       commonEnv.RELEASABLE_COMMITS = options.releasableCommits.cmd;
     }
 
-    this.bumpTask = project.addTask("bump", {
+    this.bumpTask = this.project.addTask("bump", {
       description:
         "Bumps version based on latest git tag and generates a changelog entry",
       condition: CHANGES_SINCE_LAST_RELEASE,
@@ -120,17 +164,17 @@ export class Version extends Component {
 
     this.bumpTask.builtin("release/bump-version");
 
-    this.unbumpTask = project.addTask("unbump", {
+    this.unbumpTask = this.project.addTask("unbump", {
       description: "Restores version to 0.0.0",
       env: { ...commonEnv },
     });
 
     this.unbumpTask.builtin("release/reset-version");
 
-    project.addGitIgnore(`/${changelogFile}`);
-    project.addGitIgnore(`/${bumpFile}`);
-    project.addPackageIgnore(`/${changelogFile}`);
-    project.addPackageIgnore(`/${bumpFile}`);
+    this.project.addGitIgnore(`/${changelogFile}`);
+    this.project.addGitIgnore(`/${bumpFile}`);
+    this.project.addPackageIgnore(`/${changelogFile}`);
+    this.project.addPackageIgnore(`/${bumpFile}`);
   }
 }
 

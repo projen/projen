@@ -93,13 +93,22 @@ export interface BumpOptions {
    * @default "git log --oneline $LATEST_TAG..HEAD"
    */
   readonly releasableCommits?: string;
+
+  /**
+   * The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+   *
+   * This can be any compatible package version, including the deprecated `standard-version@9`.
+   *
+   * @default "commit-and-tag-version@12"
+   */
+  readonly bumpPackage?: string;
 }
 
 /**
- * Resolves the latest version from git tags and uses `standard-version` to bump
+ * Resolves the latest version from git tags and uses `commit-and-tag-version` to bump
  * to the next version based on commits.
  *
- * This expects `standard-version` to be installed in the path.
+ * This expects `commit-and-tag-version` to be installed in the path.
  *
  * @param cwd working directory (git repository)
  * @param options options
@@ -114,6 +123,8 @@ export async function bump(cwd: string, options: BumpOptions) {
   const bumpFile = join(cwd, options.bumpFile);
   const changelogFile = join(cwd, options.changelog);
   const releaseTagFile = join(cwd, options.releaseTagFile);
+  const bumpPackage = options.bumpPackage ?? "commit-and-tag-version@^12";
+
   if (major && minMajorVersion) {
     throw new Error(
       `minMajorVersion and majorVersion cannot be used together.`
@@ -170,12 +181,12 @@ export async function bump(cwd: string, options: BumpOptions) {
       skipBump = true;
 
       // delete the existing tag (locally)
-      // if we don't do this, standard-version generates an empty changelog
+      // if we don't do this, commit-and-tag-version generates an empty changelog
       exec(`git tag --delete ${latestTag}`, { cwd });
     }
   }
 
-  // create a standard-version configuration file
+  // create a commit-and-tag-version configuration file
   const rcfile = join(cwd, ".versionrc.json");
   await generateVersionrcFile(
     rcfile,
@@ -186,7 +197,7 @@ export async function bump(cwd: string, options: BumpOptions) {
     options.versionrcOptions
   );
 
-  const cmd = ["npx", "standard-version@^9"];
+  const cmd = ["npx", bumpPackage];
   if (isFirstRelease && !minMajorVersion) {
     cmd.push("--first-release");
   }

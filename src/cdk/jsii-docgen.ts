@@ -1,4 +1,6 @@
-import { JsiiProject } from "./jsii-project";
+import { IConstruct } from "constructs";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
 
 /**
  * Options for `JsiiDocgen`
@@ -9,6 +11,13 @@ export interface JsiiDocgenOptions {
    * @default "API.md"
    */
   readonly filePath?: string;
+
+  /**
+   * A semver version string to install a specific version of jsii-docgen.
+   *
+   * @default '*'
+   */
+  readonly version?: string;
 }
 
 /**
@@ -17,20 +26,34 @@ export interface JsiiDocgenOptions {
  * - Runs `jsii-docgen` after compilation
  * - Enforces that markdown file is checked in
  */
-export class JsiiDocgen {
-  constructor(project: JsiiProject, options: JsiiDocgenOptions = {}) {
-    project.addDevDeps("jsii-docgen");
+export class JsiiDocgen extends Component {
+  constructor(scope: IConstruct, options: JsiiDocgenOptions = {}) {
+    super(scope);
+
+    const version = options.version ?? "*";
+    if (
+      !this.project.deps.isDependencySatisfied(
+        "jsii-docgen",
+        DependencyType.BUILD,
+        version
+      )
+    ) {
+      this.project.deps.addDependency(
+        `jsii-docgen@${version}`,
+        DependencyType.BUILD
+      );
+    }
 
     const filePath = options.filePath ?? "API.md";
 
-    const docgen = project.addTask("docgen", {
+    const docgen = this.project.addTask("docgen", {
       description: "Generate API.md from .jsii manifest",
       exec: `jsii-docgen -o ${filePath}`,
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).
-    project.postCompileTask.spawn(docgen);
-    project.gitignore.include(`/${filePath}`);
-    project.annotateGenerated(`/${filePath}`);
+    this.project.postCompileTask.spawn(docgen);
+    this.project.gitignore.include(`/${filePath}`);
+    this.project.annotateGenerated(`/${filePath}`);
   }
 }

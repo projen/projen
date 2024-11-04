@@ -14,7 +14,6 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
-  setupGitattributes,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -41,6 +40,8 @@ const project = new JsiiProject({
   ],
 
   githubOptions: {
+    mergify: false,
+    mergeQueue: true,
     pullRequestLintOptions: {
       contributorStatement:
         "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
@@ -50,8 +51,8 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.4.x",
-  typescriptVersion: "5.4.x",
+  jsiiVersion: "5.5.x",
+  typescriptVersion: "5.5.x",
 
   deps: ["constructs@^10.0.0"],
 
@@ -186,8 +187,6 @@ setupNpmignore(project);
 
 setupIntegTest(project);
 setupBundleTaskRunner(project);
-
-setupGitattributes(project);
 
 new WindowsBuild(project);
 

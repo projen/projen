@@ -6,6 +6,7 @@ import { Transform } from "../../src/javascript";
 import {
   mergeTsconfigOptions,
   TsJestTsconfig,
+  TypeScriptAppProject,
   TypeScriptProject,
 } from "../../src/typescript";
 import { execProjenCLI, synthSnapshot, withProjectDir } from "../util";
@@ -259,13 +260,13 @@ test("upgrade task ignores pinned versions", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen standard-version ts-jest typescript npm",
+        "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript npm",
       },
       {
         "exec": "npx projen",
@@ -590,5 +591,59 @@ describe("tsconfigDev", () => {
     ).toThrow(
       "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
     );
+  });
+
+  test("TypeScriptAppProject enables packaging when release is enabled", () => {
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      release: true,
+    });
+    project.synth();
+
+    expect(project.packageTask.steps.length).not.toBe(0);
+  });
+
+  test("TypeScriptProject force enables packaging when release is enabled", () => {
+    const loggerWarnSpy = jest.spyOn(Logger.prototype, "warn");
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      release: true,
+      package: false,
+    });
+    project.synth();
+
+    expect(project.packageTask.steps.length).not.toBe(0);
+    expect(loggerWarnSpy).toHaveBeenCalledWith(
+      expect.stringMatching("Force enabling `package`")
+    );
+  });
+
+  test("@types/node version will match the typescriptVersion", () => {
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      typescriptVersion: "~5.4.0",
+    });
+
+    const packageJson = synthSnapshot(project)["package.json"];
+    expect(packageJson.devDependencies["@types/node"]).toBe("ts5.4");
+  });
+
+  test("can define a custom version of @types/node", () => {
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      typescriptVersion: "5.6",
+      devDeps: ["@types/node@ts4.8"],
+    });
+
+    const packageJson = synthSnapshot(project)["package.json"];
+    expect(packageJson.devDependencies["@types/node"]).toBe("ts4.8");
   });
 });

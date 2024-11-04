@@ -10,6 +10,22 @@ import {
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot } from "../util";
 
+test("allows including deprecated versions", () => {
+  const project = createProject({
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      includeDeprecatedVersions: true,
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0]).toMatchInlineSnapshot(`
+    {
+      "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+    }
+  `);
+});
+
 test("allows configuring semantic commit type", () => {
   const project = createProject({
     deps: ["some-dep"],
@@ -36,13 +52,13 @@ test("allows configuring specific dependency types", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=prod,dev --filter=some-dep,jest,projen",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=prod,dev --filter=some-dep,jest,projen",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade some-dep constructs jest jest-junit projen standard-version",
+        "exec": "yarn upgrade some-dep commit-and-tag-version constructs jest jest-junit projen",
       },
       {
         "exec": "npx projen",
@@ -65,7 +81,7 @@ test("upgrade command includes only dependencies of configured types", () => {
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(
-    `yarn upgrade constructs jest jest-junit projen some-dev-dep standard-version`
+    `yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dev-dep`
   );
 });
 
@@ -78,13 +94,13 @@ test("upgrades command includes all dependencies", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dep",
       },
       {
         "exec": "npx projen",
@@ -108,13 +124,13 @@ test("ncu upgrade command does not include dependencies with any version constra
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version other-dep some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen other-dep some-dep",
       },
       {
         "exec": "npx projen",
@@ -138,13 +154,13 @@ test("ncu upgrade command should include dependencies with * versions, along wit
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dep",
       },
       {
         "exec": "npx projen",
@@ -165,7 +181,7 @@ test("ncu upgrade command is not added if no ncu upgrades are needed", () => {
         "jest",
         "jest-junit",
         "projen",
-        "standard-version",
+        "commit-and-tag-version",
       ],
     },
   });
@@ -200,13 +216,13 @@ test("upgrades command includes dependencies added post instantiation", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version some-dep",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dep",
       },
       {
         "exec": "npx projen",
@@ -230,13 +246,13 @@ test("upgrades command doesn't include ignored packages", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen,dep1",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,dep1",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version dep1",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen dep1",
       },
       {
         "exec": "npx projen",
@@ -258,7 +274,7 @@ test("upgrades command includes only included packages", () => {
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(
-    `npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=dep1`
+    `npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1`
   );
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade dep1`);
 });
@@ -484,13 +500,13 @@ test("upgrade task created without projen defined versions at NodeProject", () =
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade constructs jest jest-junit projen standard-version axios markdownlint npm",
+        "exec": "yarn upgrade commit-and-tag-version constructs jest jest-junit projen axios markdownlint npm",
       },
       {
         "exec": "npx projen",
@@ -511,7 +527,7 @@ test("empty upgrade list", () => {
         "jest-junit",
         "npm-check-updates",
         "projen",
-        "standard-version",
+        "commit-and-tag-version",
       ],
     },
   });
@@ -530,13 +546,13 @@ test("uses the proper yarn berry upgrade command", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "yarn dlx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "yarn dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install",
       },
       {
-        "exec": "yarn up constructs jest jest-junit projen standard-version",
+        "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
       },
       {
         "exec": "npx projen",
