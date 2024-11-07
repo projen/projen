@@ -203,9 +203,9 @@ export class Eslint extends Component {
     this.nodeProject = project;
 
     project.addDevDeps(
-      "eslint@^8",
-      "@typescript-eslint/eslint-plugin@^7",
-      "@typescript-eslint/parser@^7",
+      "eslint@^9",
+      "@typescript-eslint/eslint-plugin@^8",
+      "@typescript-eslint/parser@^8",
       "eslint-import-resolver-typescript",
       "eslint-plugin-import"
     );
@@ -560,7 +560,7 @@ export class Eslint extends Component {
    * Update the task with the current list of lint patterns and file extensions
    */
   private updateTask() {
-    const taskExecCommand = "eslint";
+    const taskExecCommand = "ESLINT_USE_FLAT_CONFIG=false eslint";
     const argsSet = new Set<string>();
     if (this._fileExtensions.size > 0) {
       argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
