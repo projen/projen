@@ -3087,7 +3087,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6118,7 +6118,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -10533,7 +10533,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -13346,7 +13346,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -16343,7 +16343,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -20125,7 +20125,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -23018,7 +23018,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -25395,7 +25395,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -28036,7 +28036,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -31601,7 +31601,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -33966,7 +33966,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36612,7 +36612,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39236,7 +39236,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action A secret is required for private repos. Configured with \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
