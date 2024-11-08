@@ -222,6 +222,9 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
   const snapshot = synthSnapshot(prj);
   expect(snapshot[".projen/tasks.json"].tasks.eslint).toStrictEqual({
     description: "Runs eslint against the codebase",
+    env: {
+      ESLINT_USE_FLAT_CONFIG: "false",
+    },
     name: "eslint",
     steps: [
       {

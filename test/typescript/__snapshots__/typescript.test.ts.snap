@@ -650,12 +650,12 @@ tsconfig.tsbuildinfo
       {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^7",
+        "version": "^8",
       },
       {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^7",
+        "version": "^8",
       },
       {
         "name": "commit-and-tag-version",
@@ -678,7 +678,7 @@ tsconfig.tsbuildinfo
       {
         "name": "eslint",
         "type": "build",
-        "version": "^8",
+        "version": "^9",
       },
       {
         "name": "jest",
@@ -836,6 +836,9 @@ tsconfig.tsbuildinfo
       },
       "eslint": {
         "description": "Runs eslint against the codebase",
+        "env": {
+          "ESLINT_USE_FLAT_CONFIG": "false",
+        },
         "name": "eslint",
         "steps": [
           {
@@ -1193,11 +1196,11 @@ tsconfig.tsbuildinfo
     "devDependencies": {
       "@types/jest": "*",
       "@types/node": "*",
-      "@typescript-eslint/eslint-plugin": "^7",
-      "@typescript-eslint/parser": "^7",
+      "@typescript-eslint/eslint-plugin": "^8",
+      "@typescript-eslint/parser": "^8",
       "commit-and-tag-version": "^12",
       "constructs": "^10.0.0",
-      "eslint": "^8",
+      "eslint": "^9",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",

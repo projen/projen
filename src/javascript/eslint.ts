@@ -203,9 +203,9 @@ export class Eslint extends Component {
     this.nodeProject = project;
 
     project.addDevDeps(
-      "eslint@^8",
-      "@typescript-eslint/eslint-plugin@^7",
-      "@typescript-eslint/parser@^7",
+      "eslint@^9",
+      "@typescript-eslint/eslint-plugin@^8",
+      "@typescript-eslint/parser@^8",
       "eslint-import-resolver-typescript",
       "eslint-plugin-import"
     );
@@ -241,6 +241,9 @@ export class Eslint extends Component {
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
+      env: {
+        ESLINT_USE_FLAT_CONFIG: "false",
+      },
     });
     this.updateTask();
 
