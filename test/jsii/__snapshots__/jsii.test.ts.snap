@@ -982,10 +982,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
       "eslint": {
         "description": "Runs eslint against the codebase",
+        "env": {
+          "ESLINT_USE_FLAT_CONFIG": "false",
+        },
         "name": "eslint",
         "steps": [
           {
-            "exec": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
             "receiveArgs": true,
           },
         ],
@@ -2492,10 +2495,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
       "eslint": {
         "description": "Runs eslint against the codebase",
+        "env": {
+          "ESLINT_USE_FLAT_CONFIG": "false",
+        },
         "name": "eslint",
         "steps": [
           {
-            "exec": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
             "receiveArgs": true,
           },
         ],
@@ -3999,10 +4005,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
       "eslint": {
         "description": "Runs eslint against the codebase",
+        "env": {
+          "ESLINT_USE_FLAT_CONFIG": "false",
+        },
         "name": "eslint",
         "steps": [
           {
-            "exec": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
             "receiveArgs": true,
           },
         ],
@@ -5504,10 +5513,13 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
       "eslint": {
         "description": "Runs eslint against the codebase",
+        "env": {
+          "ESLINT_USE_FLAT_CONFIG": "false",
+        },
         "name": "eslint",
         "steps": [
           {
-            "exec": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools .projenrc.js",
             "receiveArgs": true,
           },
         ],

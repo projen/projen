@@ -241,6 +241,9 @@ export class Eslint extends Component {
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
+      env: {
+        ESLINT_USE_FLAT_CONFIG: "false",
+      },
     });
     this.updateTask();
 
@@ -560,10 +563,7 @@ export class Eslint extends Component {
    * Update the task with the current list of lint patterns and file extensions
    */
   private updateTask() {
-    const isWindows = process.platform === "win32";
-    const taskExecCommand = isWindows
-      ? "set ESLINT_USE_FLAT_CONFIG=false; eslint"
-      : "ESLINT_USE_FLAT_CONFIG=false eslint";
+    const taskExecCommand = "eslint";
     const argsSet = new Set<string>();
     if (this._fileExtensions.size > 0) {
       argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
