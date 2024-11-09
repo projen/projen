@@ -1,23 +1,22 @@
 import { TaskRuntime } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
-import { synthSnapshot } from "../util";
+import { TypeScriptProject } from "../../src/typescript";
+import { execProjenCLI, synthSnapshot } from "../util";
 
-test("devdirs", () => {
-  // GIVEN
-  const project = new NodeProject({
+test.each([
+  ["prettier is off", false],
+  ["prettier is on", true],
+])("eslint task passes with default config: %s", (_, prettier) => {
+  const project = new TypeScriptProject({
     name: "test",
     defaultReleaseBranch: "master",
+    eslint: true,
+    prettier,
   });
-
-  // WHEN
-  new Eslint(project, {
-    devdirs: ["foo", "bar"],
-    dirs: ["mysrc"],
-    lintProjenRc: false,
-  });
+  project.synth();
 
   // THEN
-  expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
+  execProjenCLI(project.outdir, ["eslint"]);
 });
 
 describe("prettier", () => {
@@ -74,321 +73,347 @@ describe("alias", () => {
   });
 });
 
-test("tsAlwaysTryTypes", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
+describe("eslint settings", () => {
+  test("devdirs", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    new Eslint(project, {
+      devdirs: ["foo", "bar"],
+      dirs: ["mysrc"],
+      lintProjenRc: false,
+    });
+
+    // THEN
+    expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
   });
 
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["mysrc"],
-    tsAlwaysTryTypes: true,
-    lintProjenRc: false,
+  test("tsAlwaysTryTypes", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["mysrc"],
+      tsAlwaysTryTypes: true,
+      lintProjenRc: false,
+    });
+
+    // THEN
+    expect(eslint.config.settings["import/resolver"].typescript).toHaveProperty(
+      "alwaysTryTypes",
+      true
+    );
   });
 
-  // THEN
-  expect(eslint.config.settings["import/resolver"].typescript).toHaveProperty(
-    "alwaysTryTypes",
-    true
-  );
-});
+  test("if the prettier is configured, eslint is configured accordingly", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
 
-test("if the prettier is configured, eslint is configured accordingly", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+    });
+
+    eslint.addExtends("plugin:some-plugin/recommended");
+
+    // THEN
+    const output = synthSnapshot(project);
+
+    // Prettier should be last in the extends array
+    const extendsArray = output[".eslintrc.json"].extends;
+    expect(extendsArray).toEqual([
+      "plugin:import/typescript",
+      "plugin:some-plugin/recommended",
+      "plugin:prettier/recommended",
+    ]);
   });
 
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
+  test("not setting sortExtends should correctly produce the default order", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+    });
+
+    // Add the prettier plugins in the incorrect order
+    eslint.addExtends("prettier");
+    eslint.addExtends("plugin:prettier/recommended");
+
+    // Add some other plugins
+    eslint.addExtends("plugin:some-plugin/recommended");
+    eslint.addExtends("plugin:a-second-plugin/recommended");
+
+    // THEN
+    const output = synthSnapshot(project);
+    const extendsArray = output[".eslintrc.json"].extends;
+
+    expect(extendsArray).toEqual([
+      "plugin:import/typescript", // always added
+
+      // Should stay in order they were added into
+      "plugin:some-plugin/recommended",
+      "plugin:a-second-plugin/recommended",
+
+      // ordered according to best practices
+      "plugin:prettier/recommended",
+      "prettier",
+    ]);
   });
 
-  eslint.addExtends("plugin:some-plugin/recommended");
+  test("setting sortExtends to a meaningless comparer should leave the extends array order alone", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
 
-  // THEN
-  const output = synthSnapshot(project);
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+      sortExtends: {
+        compare: () => 0,
+      },
+    });
 
-  // Prettier should be last in the extends array
-  const extendsArray = output[".eslintrc.json"].extends;
-  expect(extendsArray).toEqual([
-    "plugin:import/typescript",
-    "plugin:some-plugin/recommended",
-    "plugin:prettier/recommended",
-  ]);
-});
+    eslint.addExtends("plugin:some-plugin/recommended");
 
-test("not setting sortExtends should correctly produce the default order", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
+    // THEN
+    const output = synthSnapshot(project);
+
+    const extendsArray = output[".eslintrc.json"].extends;
+
+    expect(extendsArray).toEqual([
+      "plugin:import/typescript",
+      "plugin:prettier/recommended",
+      "plugin:some-plugin/recommended",
+    ]);
   });
 
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
+  test("setting sortExtends to a comparer should use that to sort the extends array", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+      sortExtends: {
+        // Backwards alphanumeric
+        compare: (a, b) => b.localeCompare(a),
+      },
+    });
+
+    eslint.addExtends("plugin:some-plugin/recommended");
+
+    // THEN
+    const output = synthSnapshot(project);
+
+    const extendsArray = output[".eslintrc.json"].extends;
+
+    expect(extendsArray).toEqual([
+      "plugin:some-plugin/recommended",
+      "plugin:prettier/recommended",
+      "plugin:import/typescript",
+    ]);
   });
 
-  // Add the prettier plugins in the incorrect order
-  eslint.addExtends("prettier");
-  eslint.addExtends("plugin:prettier/recommended");
+  test("can output yml instead of json", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      prettier: true,
+    });
 
-  // Add some other plugins
-  eslint.addExtends("plugin:some-plugin/recommended");
-  eslint.addExtends("plugin:a-second-plugin/recommended");
+    // WHEN
+    new Eslint(project, {
+      dirs: ["src"],
+      yaml: true,
+      lintProjenRc: false,
+    });
 
-  // THEN
-  const output = synthSnapshot(project);
-  const extendsArray = output[".eslintrc.json"].extends;
-
-  expect(extendsArray).toEqual([
-    "plugin:import/typescript", // always added
-
-    // Should stay in order they were added into
-    "plugin:some-plugin/recommended",
-    "plugin:a-second-plugin/recommended",
-
-    // ordered according to best practices
-    "plugin:prettier/recommended",
-    "prettier",
-  ]);
-});
-
-test("setting sortExtends to a meaningless comparer should leave the extends array order alone", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
+    // THEN
+    const output = synthSnapshot(project);
+    expect(output[".eslintrc.yml"]).toBeDefined();
+    expect(output[".eslintrc.json"]).toBeUndefined();
   });
 
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
-    sortExtends: {
-      compare: () => 0,
-    },
+  test("can override the parser", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+    });
+    eslint.addOverride({
+      files: ["*.json", "*.json5", "*.jsonc"],
+      parser: "jsonc-eslint-parser",
+    });
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".eslintrc.json"].overrides).toContainEqual({
+      files: ["*.json", "*.json5", "*.jsonc"],
+      parser: "jsonc-eslint-parser",
+    });
   });
 
-  eslint.addExtends("plugin:some-plugin/recommended");
+  test("creates a eslint task", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
 
-  // THEN
-  const output = synthSnapshot(project);
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+    });
 
-  const extendsArray = output[".eslintrc.json"].extends;
-
-  expect(extendsArray).toEqual([
-    "plugin:import/typescript",
-    "plugin:prettier/recommended",
-    "plugin:some-plugin/recommended",
-  ]);
-});
-
-test("setting sortExtends to a comparer should use that to sort the extends array", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
+    // THEN
+    const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
+    expect(eslint.eslintTask._renderSpec()).toMatchObject(
+      manifest.tasks.eslint
+    );
   });
 
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
-    sortExtends: {
-      // Backwards alphanumeric
-      compare: (a, b) => b.localeCompare(a),
-    },
+  test("excludes --fix flag when fix is disabled", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      commandOptions: { fix: false },
+    });
+
+    // THEN
+    const taskStep = eslint.eslintTask.steps[0];
+    expect(taskStep.exec).not.toContain("--fix");
+    expect(taskStep?.args ?? []).not.toContain(
+      expect.stringContaining("--fix")
+    );
   });
 
-  eslint.addExtends("plugin:some-plugin/recommended");
+  test("omit --ext when no extensions are specified", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
 
-  // THEN
-  const output = synthSnapshot(project);
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+      fileExtensions: [],
+    });
 
-  const extendsArray = output[".eslintrc.json"].extends;
-
-  expect(extendsArray).toEqual([
-    "plugin:some-plugin/recommended",
-    "plugin:prettier/recommended",
-    "plugin:import/typescript",
-  ]);
-});
-
-test("can output yml instead of json", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-    prettier: true,
+    // THEN
+    const taskStep = eslint.eslintTask.steps[0];
+    expect(taskStep.exec).not.toContain("--ext");
+    expect(taskStep?.args ?? []).not.toContain(
+      expect.stringContaining("--ext")
+    );
   });
 
-  // WHEN
-  new Eslint(project, {
-    dirs: ["src"],
-    yaml: true,
-    lintProjenRc: false,
+  test("add --ext when extensions are specified", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+    });
+
+    // THEN
+    const taskStep = eslint.eslintTask.steps[0];
+    expect(taskStep.exec).toContain("--ext");
   });
 
-  // THEN
-  const output = synthSnapshot(project);
-  expect(output[".eslintrc.yml"]).toBeDefined();
-  expect(output[".eslintrc.json"]).toBeUndefined();
-});
+  test("supports specifying extra task args", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
 
-test("can override the parser", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      commandOptions: { extraArgs: ["--cache"] },
+    });
+
+    // THEN
+    const taskStep = eslint.eslintTask.steps[0];
+    expect(taskStep.exec).toContain("--cache");
   });
 
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
+  test("allow modification of the eslint task", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ["src"],
+      lintProjenRc: false,
+    });
+
+    const taskStep = eslint.eslintTask.steps[0];
+    const newTestArg = "--foo";
+    eslint.eslintTask.reset(taskStep.exec, { args: [newTestArg] });
+
+    eslint.addLintPattern("bar");
+
+    // THEN
+    expect(eslint.eslintTask.steps[0].args).toContain(newTestArg);
   });
-  eslint.addOverride({
-    files: ["*.json", "*.json5", "*.jsonc"],
-    parser: "jsonc-eslint-parser",
-  });
-  const output = synthSnapshot(project);
-
-  // THEN
-  expect(output[".eslintrc.json"].overrides).toContainEqual({
-    files: ["*.json", "*.json5", "*.jsonc"],
-    parser: "jsonc-eslint-parser",
-  });
-});
-
-test("creates a eslint task", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
-  });
-
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
-  });
-
-  // THEN
-  const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
-  expect(eslint.eslintTask._renderSpec()).toMatchObject(manifest.tasks.eslint);
-});
-
-test("excludes --fix flag when fix is disabled", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
-  });
-
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    commandOptions: { fix: false },
-  });
-
-  // THEN
-  const taskStep = eslint.eslintTask.steps[0];
-  expect(taskStep.exec).not.toContain("--fix");
-  expect(taskStep?.args ?? []).not.toContain(expect.stringContaining("--fix"));
-});
-
-test("omit --ext when no extensions are specified", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
-  });
-
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
-    fileExtensions: [],
-  });
-
-  // THEN
-  const taskStep = eslint.eslintTask.steps[0];
-  expect(taskStep.exec).not.toContain("--ext");
-  expect(taskStep?.args ?? []).not.toContain(expect.stringContaining("--ext"));
-});
-
-test("add --ext when extensions are specified", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
-  });
-
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
-  });
-
-  // THEN
-  const taskStep = eslint.eslintTask.steps[0];
-  expect(taskStep.exec).toContain("--ext");
-});
-
-test("supports specifying extra task args", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
-  });
-
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    commandOptions: { extraArgs: ["--cache"] },
-  });
-
-  // THEN
-  const taskStep = eslint.eslintTask.steps[0];
-  expect(taskStep.exec).toContain("--cache");
-});
-
-test("allow modification of the eslint task", () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: "test",
-    defaultReleaseBranch: "master",
-    prettier: true,
-  });
-
-  // WHEN
-  const eslint = new Eslint(project, {
-    dirs: ["src"],
-    lintProjenRc: false,
-  });
-
-  const taskStep = eslint.eslintTask.steps[0];
-  const newTestArg = "--foo";
-  eslint.eslintTask.reset(taskStep.exec, { args: [newTestArg] });
-
-  eslint.addLintPattern("bar");
-
-  // THEN
-  expect(eslint.eslintTask.steps[0].args).toContain(newTestArg);
 });

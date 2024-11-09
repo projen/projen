@@ -253,9 +253,9 @@ export class Eslint extends Component {
     project.npmignore?.exclude("/.eslintrc.json");
 
     this._formattingRules = {
-      // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
+      // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
       indent: ["off"],
-      "@typescript-eslint/indent": ["error", 2],
+      "@stylistic/indent": ["error", 2],
 
       // Style
       quotes: ["error", "single", { avoidEscape: true }],
@@ -274,7 +274,8 @@ export class Eslint extends Component {
       "brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
       "space-before-blocks": ["error"], // require space before blocks
       curly: ["error", "multi-line", "consistent"], // require curly braces for multiline control statements
-      "@typescript-eslint/member-delimiter-style": ["error"],
+      // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
+      "@stylistic/member-delimiter-style": ["error"],
 
       // Require semicolons
       semi: ["error", "always"],
@@ -467,6 +468,9 @@ export class Eslint extends Component {
     // `Prettier` component, we shall tweak our configuration accordingly.
     if (options.prettier || Prettier.of(project)) {
       this.enablePrettier();
+    } else {
+      this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
+      this.addPlugins("@stylistic");
     }
   }
 

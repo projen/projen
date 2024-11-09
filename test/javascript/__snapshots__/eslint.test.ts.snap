@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`devdirs 1`] = `
+exports[`eslint settings devdirs 1`] = `
 {
   "env": {
     "jest": true,
@@ -37,14 +37,15 @@ exports[`devdirs 1`] = `
   "plugins": [
     "@typescript-eslint",
     "import",
+    "@stylistic",
   ],
   "root": true,
   "rules": {
-    "@typescript-eslint/indent": [
+    "@stylistic/indent": [
       "error",
       2,
     ],
-    "@typescript-eslint/member-delimiter-style": [
+    "@stylistic/member-delimiter-style": [
       "error",
     ],
     "@typescript-eslint/member-ordering": [
