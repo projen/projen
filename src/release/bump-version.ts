@@ -223,8 +223,7 @@ export async function bump(cwd: string, options: BumpOptions) {
     if (majorVersionNumber < minMajorVersion) {
       releaseAs = `${minMajorVersion}.0.0`;
     }
-  }
-  if (!releaseAs && options.nextVersionCommand) {
+  } else if (options.nextVersionCommand) {
     const nextVersion = execCapture(options.nextVersionCommand, {
       cwd,
       modEnv: {
