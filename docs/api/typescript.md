@@ -6715,8 +6715,8 @@ it determines what version to release. It will be executed in the following
 environment:
 
 - Working directory: the project directory.
-- `$VERSION`: the current version.
-- `$LATEST_TAG`: the most recent tag, if any.
+- `$VERSION`: the current version. Looks like `1.2.3`.
+- `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
 
 The command should print one of the following to `stdout`:
 
@@ -9140,8 +9140,8 @@ it determines what version to release. It will be executed in the following
 environment:
 
 - Working directory: the project directory.
-- `$VERSION`: the current version.
-- `$LATEST_TAG`: the most recent tag, if any.
+- `$VERSION`: the current version. Looks like `1.2.3`.
+- `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
 
 The command should print one of the following to `stdout`:
 
