@@ -71,6 +71,65 @@ describe("Single Project", () => {
     expect(outdir).toMatchSnapshot();
   });
 
+  test("with bumpPackage", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "10.x",
+      artifactsDirectory: "dist",
+      bumpPackage: "MY-BUMP",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    expect(outdir[".projen/tasks.json"].tasks.bump.env.BUMP_PACKAGE).toEqual(
+      "MY-BUMP"
+    );
+  });
+
+  test("with nextVersionCommand", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "10.x",
+      artifactsDirectory: "dist",
+      nextVersionCommand: "NEXT-VERSION-COMMAND",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    expect(
+      outdir[".projen/tasks.json"].tasks.bump.env.NEXT_VERSION_COMMAND
+    ).toEqual("NEXT-VERSION-COMMAND");
+  });
+
+  test("nextVersionCommand and minMajorVersion do not go together", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    expect(() => {
+      new Release(project, {
+        task: project.buildTask,
+        versionFile: "version.json",
+        branch: "10.x",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "NEXT-VERSION-COMMAND",
+        minMajorVersion: 10,
+      });
+    }).toThrow(
+      /minMajorVersion and nextVersionCommand cannot be used together/
+    );
+  });
+
   test("addBranch() can be used for additional release branches", () => {
     // GIVEN
     const project = new TestProject();

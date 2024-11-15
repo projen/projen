@@ -8064,6 +8064,7 @@ new Version(scope: IConstruct, options: VersionOptions)
 | <code><a href="#projen.Version.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Version.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Version.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.Version.envForBranch">envForBranch</a></code> | Return the environment variables to modify the bump command for release branches. |
 
 ---
 
@@ -8100,6 +8101,26 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `envForBranch` <a name="envForBranch" id="projen.Version.envForBranch"></a>
+
+```typescript
+public envForBranch(branchOptions: VersionBranchOptions): {[ key: string ]: string}
+```
+
+Return the environment variables to modify the bump command for release branches.
+
+These options are used to modify the behavior of the version bumping script
+for additional branches, by setting environment variables.
+
+No settings are inherited from the base `Version` object (but any parameters that
+control versions do conflict with the use of a `nextVersionCommand`).
+
+###### `branchOptions`<sup>Required</sup> <a name="branchOptions" id="projen.Version.envForBranch.parameter.branchOptions"></a>
+
+- *Type:* <a href="#projen.VersionBranchOptions">VersionBranchOptions</a>
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -13498,6 +13519,97 @@ Omits empty objects and arrays.
 
 ---
 
+### VersionBranchOptions <a name="VersionBranchOptions" id="projen.VersionBranchOptions"></a>
+
+Options to pass to `modifyBranchEnvironment`.
+
+#### Initializer <a name="Initializer" id="projen.VersionBranchOptions.Initializer"></a>
+
+```typescript
+import { VersionBranchOptions } from 'projen'
+
+const versionBranchOptions: VersionBranchOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.VersionBranchOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | The major versions released from this branch. |
+| <code><a href="#projen.VersionBranchOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | The minimum major version to release. |
+| <code><a href="#projen.VersionBranchOptions.property.minorVersion">minorVersion</a></code> | <code>number</code> | The minor versions released from this branch. |
+| <code><a href="#projen.VersionBranchOptions.property.prerelease">prerelease</a></code> | <code>string</code> | Bump the version as a pre-release tag. |
+| <code><a href="#projen.VersionBranchOptions.property.tagPrefix">tagPrefix</a></code> | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. |
+
+---
+
+##### `majorVersion`<sup>Optional</sup> <a name="majorVersion" id="projen.VersionBranchOptions.property.majorVersion"></a>
+
+```typescript
+public readonly majorVersion: number;
+```
+
+- *Type:* number
+
+The major versions released from this branch.
+
+---
+
+##### `minMajorVersion`<sup>Optional</sup> <a name="minMajorVersion" id="projen.VersionBranchOptions.property.minMajorVersion"></a>
+
+```typescript
+public readonly minMajorVersion: number;
+```
+
+- *Type:* number
+
+The minimum major version to release.
+
+---
+
+##### `minorVersion`<sup>Optional</sup> <a name="minorVersion" id="projen.VersionBranchOptions.property.minorVersion"></a>
+
+```typescript
+public readonly minorVersion: number;
+```
+
+- *Type:* number
+
+The minor versions released from this branch.
+
+---
+
+##### `prerelease`<sup>Optional</sup> <a name="prerelease" id="projen.VersionBranchOptions.property.prerelease"></a>
+
+```typescript
+public readonly prerelease: string;
+```
+
+- *Type:* string
+- *Default:* normal releases
+
+Bump the version as a pre-release tag.
+
+---
+
+##### `tagPrefix`<sup>Optional</sup> <a name="tagPrefix" id="projen.VersionBranchOptions.property.tagPrefix"></a>
+
+```typescript
+public readonly tagPrefix: string;
+```
+
+- *Type:* string
+- *Default:* no prefix
+
+Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.
+
+Note: this prefix is used to detect the latest tagged version
+when bumping, so if you change this on a project with an existing version
+history, you may need to manually tag your latest release
+with the new prefix.
+
+---
+
 ### VersionOptions <a name="VersionOptions" id="projen.VersionOptions"></a>
 
 Options for `Version`.
@@ -13517,6 +13629,7 @@ const versionOptions: VersionOptions = { ... }
 | <code><a href="#projen.VersionOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted. |
 | <code><a href="#projen.VersionOptions.property.versionInputFile">versionInputFile</a></code> | <code>string</code> | A name of a .json file to set the `version` field in after a bump. |
 | <code><a href="#projen.VersionOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.VersionOptions.property.nextVersionCommand">nextVersionCommand</a></code> | <code>string</code> | A shell command to control the next version to release. |
 | <code><a href="#projen.VersionOptions.property.releasableCommits">releasableCommits</a></code> | <code><a href="#projen.ReleasableCommits">ReleasableCommits</a></code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.VersionOptions.property.tagPrefix">tagPrefix</a></code> | <code>string</code> | The tag prefix corresponding to this version. |
 | <code><a href="#projen.VersionOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration for versionrc file used by standard-release. |
@@ -13566,6 +13679,34 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `nextVersionCommand`<sup>Optional</sup> <a name="nextVersionCommand" id="projen.VersionOptions.property.nextVersionCommand"></a>
+
+```typescript
+public readonly nextVersionCommand: string;
+```
+
+- *Type:* string
+- *Default:* The next version will be determined based on the commit history and project settings.
+
+A shell command to control the next version to release.
+
+If present, this shell command will be run before the bump is executed, and
+it determines what version to release. It will be executed in the following
+environment:
+
+- Working directory: the project directory.
+- `$VERSION`: the current version. Looks like `1.2.3`.
+- `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+
+The command should print one of the following to `stdout`:
+
+- Nothing: the next version number will be determined based on commit history.
+- `x.y.z`: the next version number will be `x.y.z`.
+- `major|minor|patch`: the next version number will be the current version number
+  with the indicated component bumped.
 
 ---
 
