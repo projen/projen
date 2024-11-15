@@ -7799,9 +7799,6 @@ The command should print one of the following to `stdout`:
 - `major|minor|patch`: the next version number will be the current version number
   with the indicated component bumped.
 
-This setting cannot be specified together with `minMajorVersion`; the invoked
-script can be used to achieve the effects of `minMajorVersion`.
-
 ---
 
 ##### `npmDistTag`<sup>Optional</sup> <a name="npmDistTag" id="projen.web.NextJsProjectOptions.property.npmDistTag"></a>
@@ -9898,9 +9895,6 @@ The command should print one of the following to `stdout`:
 - `x.y.z`: the next version number will be `x.y.z`.
 - `major|minor|patch`: the next version number will be the current version number
   with the indicated component bumped.
-
-This setting cannot be specified together with `minMajorVersion`; the invoked
-script can be used to achieve the effects of `minMajorVersion`.
 
 ---
 
@@ -12295,9 +12289,6 @@ The command should print one of the following to `stdout`:
 - `major|minor|patch`: the next version number will be the current version number
   with the indicated component bumped.
 
-This setting cannot be specified together with `minMajorVersion`; the invoked
-script can be used to achieve the effects of `minMajorVersion`.
-
 ---
 
 ##### `npmDistTag`<sup>Optional</sup> <a name="npmDistTag" id="projen.web.ReactProjectOptions.property.npmDistTag"></a>
@@ -14562,9 +14553,6 @@ The command should print one of the following to `stdout`:
 - `x.y.z`: the next version number will be `x.y.z`.
 - `major|minor|patch`: the next version number will be the current version number
   with the indicated component bumped.
-
-This setting cannot be specified together with `minMajorVersion`; the invoked
-script can be used to achieve the effects of `minMajorVersion`.
 
 ---
 
