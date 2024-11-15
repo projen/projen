@@ -619,7 +619,7 @@ export class Release extends Component {
 
     const env: Record<string, string> = {
       RELEASE: "true",
-      ...this.version.releaseBranchParameters({
+      ...this.version.envForBranch({
         majorVersion: branch.majorVersion,
         minorVersion: branch.minorVersion,
         minMajorVersion: branch.minMajorVersion,

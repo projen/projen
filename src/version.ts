@@ -213,7 +213,7 @@ export class Version extends Component {
    * No settings are inherited from the base `Version` object (but any parameters that
    * control versions do conflict with the use of a `nextVersionCommand`).
    */
-  public releaseBranchParameters(
+  public envForBranch(
     branchOptions: VersionBranchOptions
   ): Record<string, string> {
     if (this.nextVersionCommand && branchOptions.minMajorVersion) {
