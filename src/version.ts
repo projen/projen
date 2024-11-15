@@ -205,7 +205,7 @@ export class Version extends Component {
   }
 
   /**
-   * Return the environment variables to set modify the bump command for release branches.
+   * Return the environment variables to modify the bump command for release branches.
    *
    * These options are used to modify the behavior of the version bumping script
    * for additional branches, by setting environment variables.
