@@ -111,6 +111,25 @@ describe("Single Project", () => {
     ).toEqual("NEXT-VERSION-COMMAND");
   });
 
+  test("nextVersionCommand and minMajorVersion do not go together", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    expect(() => {
+      new Release(project, {
+        task: project.buildTask,
+        versionFile: "version.json",
+        branch: "10.x",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "NEXT-VERSION-COMMAND",
+        minMajorVersion: 10,
+      });
+    }).toThrow(
+      /minMajorVersion and nextVersionCommand cannot be used together/
+    );
+  });
+
   test("addBranch() can be used for additional release branches", () => {
     // GIVEN
     const project = new TestProject();
