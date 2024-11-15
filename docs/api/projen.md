@@ -8064,7 +8064,7 @@ new Version(scope: IConstruct, options: VersionOptions)
 | <code><a href="#projen.Version.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Version.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Version.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.Version.releaseBranchParameters">releaseBranchParameters</a></code> | Return the environment variables to set modify the bump command for release branches. |
+| <code><a href="#projen.Version.envForBranch">envForBranch</a></code> | Return the environment variables to modify the bump command for release branches. |
 
 ---
 
@@ -8102,13 +8102,13 @@ public synthesize(): void
 
 Synthesizes files to the project output directory.
 
-##### `releaseBranchParameters` <a name="releaseBranchParameters" id="projen.Version.releaseBranchParameters"></a>
+##### `envForBranch` <a name="envForBranch" id="projen.Version.envForBranch"></a>
 
 ```typescript
-public releaseBranchParameters(branchOptions: VersionBranchOptions): {[ key: string ]: string}
+public envForBranch(branchOptions: VersionBranchOptions): {[ key: string ]: string}
 ```
 
-Return the environment variables to set modify the bump command for release branches.
+Return the environment variables to modify the bump command for release branches.
 
 These options are used to modify the behavior of the version bumping script
 for additional branches, by setting environment variables.
@@ -8116,7 +8116,7 @@ for additional branches, by setting environment variables.
 No settings are inherited from the base `Version` object (but any parameters that
 control versions do conflict with the use of a `nextVersionCommand`).
 
-###### `branchOptions`<sup>Required</sup> <a name="branchOptions" id="projen.Version.releaseBranchParameters.parameter.branchOptions"></a>
+###### `branchOptions`<sup>Required</sup> <a name="branchOptions" id="projen.Version.envForBranch.parameter.branchOptions"></a>
 
 - *Type:* <a href="#projen.VersionBranchOptions">VersionBranchOptions</a>
 
