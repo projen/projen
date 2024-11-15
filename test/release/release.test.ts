@@ -86,7 +86,9 @@ describe("Single Project", () => {
 
     // THEN
     const outdir = synthSnapshot(project);
-    expect(outdir).toMatchSnapshot();
+    expect(outdir[".projen/tasks.json"].tasks.bump.env.BUMP_PACKAGE).toEqual(
+      "MY-BUMP"
+    );
   });
 
   test("with nextVersionCommand", () => {
@@ -104,7 +106,9 @@ describe("Single Project", () => {
 
     // THEN
     const outdir = synthSnapshot(project);
-    expect(outdir).toMatchSnapshot();
+    expect(
+      outdir[".projen/tasks.json"].tasks.bump.env.NEXT_VERSION_COMMAND
+    ).toEqual("NEXT-VERSION-COMMAND");
   });
 
   test("addBranch() can be used for additional release branches", () => {

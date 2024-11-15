@@ -5432,9 +5432,11 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | npm scripts to include. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.nextVersionCommand">nextVersionCommand</a></code> | <code>string</code> | A shell command to control the next version to release. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.npmDistTag">npmDistTag</a></code> | <code>string</code> | The npmDistTag to use when publishing from the default branch. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build as part of the release workflow. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.prerelease">prerelease</a></code> | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). |
@@ -6625,6 +6627,23 @@ Options for Yarn Berry.
 
 ---
 
+##### ~~`bumpPackage`~~<sup>Optional</sup> <a name="bumpPackage" id="projen.typescript.TypeScriptLibraryProjectOptions.property.bumpPackage"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly bumpPackage: string;
+```
+
+- *Type:* string
+- *Default:* A recent version of "commit-and-tag-version"
+
+The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+
+This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
 ##### ~~`jsiiReleaseVersion`~~<sup>Optional</sup> <a name="jsiiReleaseVersion" id="projen.typescript.TypeScriptLibraryProjectOptions.property.jsiiReleaseVersion"></a>
 
 - *Deprecated:* use TypeScriptProjectOptions
@@ -6675,6 +6694,38 @@ This can be useful to set to 1, as breaking changes before the 1.x major
 release are not incrementing the major version number.
 
 Can not be set together with `majorVersion`.
+
+---
+
+##### ~~`nextVersionCommand`~~<sup>Optional</sup> <a name="nextVersionCommand" id="projen.typescript.TypeScriptLibraryProjectOptions.property.nextVersionCommand"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly nextVersionCommand: string;
+```
+
+- *Type:* string
+- *Default:* The next version will be determined based on the commit history.
+
+A shell command to control the next version to release.
+
+If present, this shell command will be run before the bump is executed, and
+it determines what version to release. It will be executed in the following
+environment:
+
+- Working directory: the project directory.
+- `$VERSION`: the current version.
+
+The command should print one of the following to `stdout`:
+
+- Nothing: the next version number will be determined based on commit history.
+- `x.y.z`: the next version number will be `x.y.z`.
+- `major|minor|patch`: the next version number will be the current version number
+  with the indicated component bumped.
+
+This setting cannot be specified together with `minMajorVersion`; the invoked
+script can be used to achieve the effects of `minMajorVersion`.
 
 ---
 
@@ -7935,9 +7986,11 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | npm scripts to include. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.nextVersionCommand">nextVersionCommand</a></code> | <code>string</code> | A shell command to control the next version to release. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.npmDistTag">npmDistTag</a></code> | <code>string</code> | The npmDistTag to use when publishing from the default branch. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build as part of the release workflow. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.prerelease">prerelease</a></code> | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). |
@@ -9008,6 +9061,21 @@ Options for Yarn Berry.
 
 ---
 
+##### `bumpPackage`<sup>Optional</sup> <a name="bumpPackage" id="projen.typescript.TypeScriptProjectOptions.property.bumpPackage"></a>
+
+```typescript
+public readonly bumpPackage: string;
+```
+
+- *Type:* string
+- *Default:* A recent version of "commit-and-tag-version"
+
+The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+
+This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
 ##### `jsiiReleaseVersion`<sup>Optional</sup> <a name="jsiiReleaseVersion" id="projen.typescript.TypeScriptProjectOptions.property.jsiiReleaseVersion"></a>
 
 ```typescript
@@ -9052,6 +9120,36 @@ This can be useful to set to 1, as breaking changes before the 1.x major
 release are not incrementing the major version number.
 
 Can not be set together with `majorVersion`.
+
+---
+
+##### `nextVersionCommand`<sup>Optional</sup> <a name="nextVersionCommand" id="projen.typescript.TypeScriptProjectOptions.property.nextVersionCommand"></a>
+
+```typescript
+public readonly nextVersionCommand: string;
+```
+
+- *Type:* string
+- *Default:* The next version will be determined based on the commit history.
+
+A shell command to control the next version to release.
+
+If present, this shell command will be run before the bump is executed, and
+it determines what version to release. It will be executed in the following
+environment:
+
+- Working directory: the project directory.
+- `$VERSION`: the current version.
+
+The command should print one of the following to `stdout`:
+
+- Nothing: the next version number will be determined based on commit history.
+- `x.y.z`: the next version number will be `x.y.z`.
+- `major|minor|patch`: the next version number will be the current version number
+  with the indicated component bumped.
+
+This setting cannot be specified together with `minMajorVersion`; the invoked
+script can be used to achieve the effects of `minMajorVersion`.
 
 ---
 

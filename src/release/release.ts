@@ -265,7 +265,10 @@ export interface ReleaseProjectOptions {
    * - `major|minor|patch`: the next version number will be the current version number
    *   with the indicated component bumped.
    *
-   * @default - The next version will be determined based on the commit history.
+   * This setting cannot be specified together with `minMajorVersion`; the invoked
+   * script can be used to achieve the effects of `minMajorVersion`.
+   *
+   * @default - The next version will be determined based on the commit history and project settings.
    */
   readonly nextVersionCommand?: string;
 }
@@ -615,29 +618,14 @@ export class Release extends Component {
 
     const env: Record<string, string> = {
       RELEASE: "true",
+      ...this.version.releaseBranchParameters({
+        majorVersion: branch.majorVersion,
+        minorVersion: branch.minorVersion,
+        minMajorVersion: branch.minMajorVersion,
+        prerelease: branch.prerelease,
+        tagPrefix: branch.tagPrefix,
+      }),
     };
-
-    if (branch.majorVersion !== undefined) {
-      env.MAJOR = branch.majorVersion.toString();
-    }
-
-    if (branch.minMajorVersion !== undefined) {
-      if (branch.majorVersion !== undefined) {
-        throw new Error(
-          `minMajorVersion and majorVersion cannot be used together.`
-        );
-      }
-
-      env.MIN_MAJOR = branch.minMajorVersion.toString();
-    }
-
-    if (branch.prerelease) {
-      env.PRERELEASE = branch.prerelease;
-    }
-
-    if (branch.tagPrefix) {
-      env.RELEASE_TAG_PREFIX = branch.tagPrefix;
-    }
 
     // the "release" task prepares a release but does not publish anything. the
     // output of the release task is: `dist`, `.version.txt`, and

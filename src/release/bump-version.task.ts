@@ -14,7 +14,8 @@
  * - MIN_MAJOR: minimum major version number to use
  * - CHANGELOG: name of changelog file to create
  * - RELEASE_TAG_PREFIX: (optional) a prefix to apply to the release tag
- *
+ * - BUMP_PACKAGE: (optional) the bump package to use
+ * - NEXT_VERSION_COMMAND: (optional) a command to decide the version to release
  */
 import { bump, BumpOptions } from "./bump-version";
 import * as logging from "../logging";

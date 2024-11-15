@@ -1,7 +1,7 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import { compare } from "semver";
+import { compare, inc, ReleaseType } from "semver";
 import * as logging from "../logging";
 import { exec, execCapture, execOrUndefined } from "../util";
 import { ReleasableCommits } from "../version";
@@ -120,7 +120,10 @@ export interface BumpOptions {
    * - `major|minor|patch`: the next version number will be the current version number
    *   with the indicated component bumped.
    *
-   * @default - The next version will be determined based on the commit history.
+   * This setting cannot be specified together with `minMajorVersion`; the invoked
+   * script can be used to achieve the effects of `minMajorVersion`.
+   *
+   * @default - The next version will be determined based on the commit history and project settings.
    */
   readonly nextVersionCommand?: string;
 }
@@ -149,6 +152,11 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (major && minMajorVersion) {
     throw new Error(
       `minMajorVersion and majorVersion cannot be used together.`
+    );
+  }
+  if (options.nextVersionCommand && minMajorVersion) {
+    throw new Error(
+      `minMajorVersion and nextVersionCommand cannot be used together.`
     );
   }
   if (minor && !major) {
@@ -227,19 +235,19 @@ export async function bump(cwd: string, options: BumpOptions) {
       .trim();
 
     if (nextVersion) {
-      if (!validNextVersion(nextVersion)) {
+      // Calculate the next version
+      if (isReleaseType(nextVersion)) {
+        releaseAs = inc(latestVersion, nextVersion)?.toString();
+      } else if (isFullVersionString(nextVersion)) {
+        releaseAs = nextVersion;
+      } else {
         throw new Error(
           `nextVersionCommand "${options.nextVersionCommand}" returned invalid version: ${nextVersion}`
         );
       }
 
-      // `commit-and-tag-version` accepts major/minor/patch as valid
-      // `--release-as` arguments, and will do the appropriate increment itself,
-      // which is sufficient for now.
-      //
-      // If we ever want to provide a hook point for implementors to replace
-      // that package with a custom command, we should do a `semver.inc()` here.
-      releaseAs = nextVersion;
+      // Don't need to validate if the final version is within the expected declared major.minor range,
+      // if given. That is done below after bumping.
     }
   }
 
@@ -474,6 +482,11 @@ function determineLatestTag(options: LatestTagOptions): {
   return { latestVersion, latestTag, isFirstRelease };
 }
 
-function validNextVersion(nextVersion: string) {
-  return nextVersion.match(/^(major|minor|patch|\d+\.\d+\.\d+(-[^\s]+)?)$/);
+function isReleaseType(nextVersion: string): nextVersion is ReleaseType {
+  // We are not recognizing all of them yet. That's fine for now.
+  return !!nextVersion.match(/^(major|minor|patch)$/);
+}
+
+function isFullVersionString(nextVersion: string) {
+  return nextVersion.match(/^\d+\.\d+\.\d+(-[^\s]+)?$/);
 }
