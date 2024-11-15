@@ -238,6 +238,36 @@ export interface ReleaseProjectOptions {
    * @default ReleasableCommits.everyCommit()
    */
   readonly releasableCommits?: ReleasableCommits;
+
+  /**
+   * The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
+   *
+   * This can be any compatible package version, including the deprecated `standard-version@9`.
+   *
+   * @default - A recent version of "commit-and-tag-version"
+   */
+  readonly bumpPackage?: string;
+
+  /**
+   * A shell command to control the next version to release.
+   *
+   * If present, this shell command will be run before the bump is executed, and
+   * it determines what version to release. It will be executed in the following
+   * environment:
+   *
+   * - Working directory: the project directory.
+   * - `$VERSION`: the current version.
+   *
+   * The command should print one of the following to `stdout`:
+   *
+   * - Nothing: the next version number will be determined based on commit history.
+   * - `x.y.z`: the next version number will be `x.y.z`.
+   * - `major|minor|patch`: the next version number will be the current version number
+   *   with the indicated component bumped.
+   *
+   * @default - The next version will be determined based on the commit history.
+   */
+  readonly nextVersionCommand?: string;
 }
 
 /**
@@ -402,6 +432,8 @@ export class Release extends Component {
       versionrcOptions: options.versionrcOptions,
       tagPrefix: options.releaseTagPrefix,
       releasableCommits: options.releasableCommits,
+      bumpPackage: options.bumpPackage,
+      nextVersionCommand: options.nextVersionCommand,
     });
 
     this.releaseTagFilePath = path.posix.normalize(

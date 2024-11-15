@@ -968,7 +968,8 @@ tsconfig.tsbuildinfo
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
+        "NEXT_VERSION_COMMAND": ""
       },
       "steps": [
         {
@@ -1213,7 +1214,8 @@ tsconfig.tsbuildinfo
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
+        "NEXT_VERSION_COMMAND": ""
       },
       "steps": [
         {
@@ -4379,7 +4381,8 @@ resolution-mode=highest
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
+        "NEXT_VERSION_COMMAND": ""
       },
       "steps": [
         {
@@ -4539,7 +4542,8 @@ resolution-mode=highest
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^12",
+        "NEXT_VERSION_COMMAND": ""
       },
       "steps": [
         {

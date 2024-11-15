@@ -102,6 +102,27 @@ export interface BumpOptions {
    * @default "commit-and-tag-version@12"
    */
   readonly bumpPackage?: string;
+
+  /**
+   * A shell command to control the next version to release.
+   *
+   * If present, this shell command will be run before the bump is executed, and
+   * it determines what version to release. It will be executed in the following
+   * environment:
+   *
+   * - Working directory: the project directory.
+   * - `$VERSION`: the current version.
+   *
+   * The command should print one of the following to `stdout`:
+   *
+   * - Nothing: the next version number will be determined based on commit history.
+   * - `x.y.z`: the next version number will be `x.y.z`.
+   * - `major|minor|patch`: the next version number will be the current version number
+   *   with the indicated component bumped.
+   *
+   * @default - The next version will be determined based on the commit history.
+   */
+  readonly nextVersionCommand?: string;
 }
 
 /**
@@ -186,6 +207,42 @@ export async function bump(cwd: string, options: BumpOptions) {
     }
   }
 
+  // Determine what version to release as
+  let releaseAs: string | undefined;
+  if (minMajorVersion) {
+    const [majorVersion] = latestVersion.split(".");
+    const majorVersionNumber = parseInt(majorVersion, 10);
+    if (majorVersionNumber < minMajorVersion) {
+      releaseAs = `${minMajorVersion}.0.0`;
+    }
+  }
+  if (!releaseAs && options.nextVersionCommand) {
+    const nextVersion = execCapture(options.nextVersionCommand, {
+      cwd,
+      modEnv: {
+        VERSION: latestVersion,
+      },
+    })
+      .toString()
+      .trim();
+
+    if (nextVersion) {
+      if (!validNextVersion(nextVersion)) {
+        throw new Error(
+          `nextVersionCommand "${options.nextVersionCommand}" returned invalid version: ${nextVersion}`
+        );
+      }
+
+      // `commit-and-tag-version` accepts major/minor/patch as valid
+      // `--release-as` arguments, and will do the appropriate increment itself,
+      // which is sufficient for now.
+      //
+      // If we ever want to provide a hook point for implementors to replace
+      // that package with a custom command, we should do a `semver.inc()` here.
+      releaseAs = nextVersion;
+    }
+  }
+
   // create a commit-and-tag-version configuration file
   const rcfile = join(cwd, ".versionrc.json");
   await generateVersionrcFile(
@@ -204,12 +261,8 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (prefix) {
     cmd.push(`--tag-prefix ${prefix}v`);
   }
-  if (minMajorVersion) {
-    const [majorVersion] = latestVersion.split(".");
-    const majorVersionNumber = parseInt(majorVersion, 10);
-    if (majorVersionNumber < minMajorVersion) {
-      cmd.push(`--release-as ${minMajorVersion}.0.0`);
-    }
+  if (releaseAs) {
+    cmd.push(`--release-as ${releaseAs}`);
   }
 
   exec(cmd.join(" "), { cwd });
@@ -419,4 +472,8 @@ function determineLatestTag(options: LatestTagOptions): {
   }
 
   return { latestVersion, latestTag, isFirstRelease };
+}
+
+function validNextVersion(nextVersion: string) {
+  return nextVersion.match(/^(major|minor|patch|\d+\.\d+\.\d+(-[^\s]+)?)$/);
 }

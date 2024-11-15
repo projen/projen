@@ -68,6 +68,27 @@ export interface VersionOptions {
    * @default "commit-and-tag-version@12"
    */
   readonly bumpPackage?: string;
+
+  /**
+   * A shell command to control the next version to release.
+   *
+   * If present, this shell command will be run before the bump is executed, and
+   * it determines what version to release. It will be executed in the following
+   * environment:
+   *
+   * - Working directory: the project directory.
+   * - `$VERSION`: the current version.
+   *
+   * The command should print one of the following to `stdout`:
+   *
+   * - Nothing: the next version number will be determined based on commit history.
+   * - `x.y.z`: the next version number will be `x.y.z`.
+   * - `major|minor|patch`: the next version number will be the current version number
+   *   with the indicated component bumped.
+   *
+   * @default - The next version will be determined based on the commit history.
+   */
+  readonly nextVersionCommand?: string;
 }
 
 export class Version extends Component {
@@ -150,6 +171,9 @@ export class Version extends Component {
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
       BUMP_PACKAGE: this.bumpPackage,
     };
+    if (options.nextVersionCommand) {
+      commonEnv.NEXT_VERSION_COMMAND = options.nextVersionCommand;
+    }
 
     if (options.releasableCommits) {
       commonEnv.RELEASABLE_COMMITS = options.releasableCommits.cmd;

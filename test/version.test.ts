@@ -119,6 +119,56 @@ describe("bump task", () => {
       expect(result.version).toEqual("0.1.1");
     });
   });
+
+  test("can invoke a shell command to come up with the next version", async () => {
+    withProjectDir((projectdir) => {
+      const project = new TestProject({
+        outdir: projectdir,
+      });
+      new Version(project, {
+        versionInputFile: "package.json",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "echo major",
+      });
+
+      project.synth();
+
+      const result = testBumpTask({
+        workdir: project.outdir,
+        commits: [
+          { message: "chore(release): v0.1.0", tag: "v0.1.0" },
+          { message: "new change" },
+        ],
+      });
+
+      expect(result.version).toEqual("1.0.0");
+    });
+  });
+
+  test("throws an error if the bump command output is not valid", async () => {
+    withProjectDir((projectdir) => {
+      const project = new TestProject({
+        outdir: projectdir,
+      });
+      new Version(project, {
+        versionInputFile: "package.json",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "echo major",
+      });
+
+      project.synth();
+
+      const result = testBumpTask({
+        workdir: project.outdir,
+        commits: [
+          { message: "chore(release): v0.1.0", tag: "v0.1.0" },
+          { message: "new change" },
+        ],
+      });
+
+      expect(result.version).toEqual("1.0.0");
+    });
+  });
 });
 
 function testBumpTask(

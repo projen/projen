@@ -71,6 +71,42 @@ describe("Single Project", () => {
     expect(outdir).toMatchSnapshot();
   });
 
+  test("with bumpPackage", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "10.x",
+      artifactsDirectory: "dist",
+      bumpPackage: "MY-BUMP",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    expect(outdir).toMatchSnapshot();
+  });
+
+  test("with nextVersionCommand", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "10.x",
+      artifactsDirectory: "dist",
+      nextVersionCommand: "NEXT-VERSION-COMMAND",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    expect(outdir).toMatchSnapshot();
+  });
+
   test("addBranch() can be used for additional release branches", () => {
     // GIVEN
     const project = new TestProject();

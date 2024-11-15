@@ -30,6 +30,7 @@ const prefix = process.env.RELEASE_TAG_PREFIX;
 const versionrcOptions = process.env.VERSIONRCOPTIONS;
 const releasableCommits = process.env.RELEASABLE_COMMITS;
 const bumpPackage = process.env.BUMP_PACKAGE;
+const nextVersionCommand = process.env.NEXT_VERSION_COMMAND;
 
 if (!versionFile) {
   throw new Error("OUTFILE is required");
@@ -72,6 +73,7 @@ const opts: BumpOptions = {
   versionrcOptions: JSON.parse(versionrcOptions ?? "{}"),
   releasableCommits,
   bumpPackage,
+  nextVersionCommand: nextVersionCommand ? nextVersionCommand : undefined,
 };
 logging.debug(opts);
 
