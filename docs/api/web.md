@@ -7791,6 +7791,7 @@ environment:
 
 - Working directory: the project directory.
 - `$VERSION`: the current version.
+- `$LATEST_TAG`: the most recent tag, if any.
 
 The command should print one of the following to `stdout`:
 
@@ -9891,6 +9892,7 @@ environment:
 
 - Working directory: the project directory.
 - `$VERSION`: the current version.
+- `$LATEST_TAG`: the most recent tag, if any.
 
 The command should print one of the following to `stdout`:
 
@@ -12287,6 +12289,7 @@ environment:
 
 - Working directory: the project directory.
 - `$VERSION`: the current version.
+- `$LATEST_TAG`: the most recent tag, if any.
 
 The command should print one of the following to `stdout`:
 
@@ -14555,6 +14558,7 @@ environment:
 
 - Working directory: the project directory.
 - `$VERSION`: the current version.
+- `$LATEST_TAG`: the most recent tag, if any.
 
 The command should print one of the following to `stdout`:
 
