@@ -4064,7 +4064,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -7215,7 +7215,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -11502,7 +11502,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -14440,7 +14440,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -17437,7 +17437,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -21236,7 +21236,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -23900,7 +23900,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -26449,7 +26449,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -28986,7 +28986,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -32585,7 +32585,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -35122,7 +35122,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -37802,7 +37802,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {
@@ -40460,7 +40460,7 @@ exports[`inventory 1`] = `
         "switch": "name",
       },
       {
-        "default": "- The next version will be determined based on the commit history.",
+        "default": "- The next version will be determined based on the commit history and project settings.",
         "docs": "A shell command to control the next version to release.",
         "featured": false,
         "fullType": {

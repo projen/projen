@@ -13689,7 +13689,7 @@ public readonly nextVersionCommand: string;
 ```
 
 - *Type:* string
-- *Default:* The next version will be determined based on the commit history.
+- *Default:* The next version will be determined based on the commit history and project settings.
 
 A shell command to control the next version to release.
 
