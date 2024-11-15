@@ -153,20 +153,22 @@ describe("bump task", () => {
       new Version(project, {
         versionInputFile: "package.json",
         artifactsDirectory: "dist",
-        nextVersionCommand: "echo major",
+        nextVersionCommand: "echo banana",
       });
 
       project.synth();
 
-      const result = testBumpTask({
-        workdir: project.outdir,
-        commits: [
-          { message: "chore(release): v0.1.0", tag: "v0.1.0" },
-          { message: "new change" },
-        ],
-      });
-
-      expect(result.version).toEqual("1.0.0");
+      // The exception tested here does not contain the error message, that
+      // gets printed to stderr. We can't assert on it, but users will see it.
+      expect(() =>
+        testBumpTask({
+          workdir: project.outdir,
+          commits: [
+            { message: "chore(release): v0.1.0", tag: "v0.1.0" },
+            { message: "new change" },
+          ],
+        })
+      ).toThrow(/Command failed/);
     });
   });
 });
