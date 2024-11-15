@@ -13517,6 +13517,7 @@ const versionOptions: VersionOptions = { ... }
 | <code><a href="#projen.VersionOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted. |
 | <code><a href="#projen.VersionOptions.property.versionInputFile">versionInputFile</a></code> | <code>string</code> | A name of a .json file to set the `version` field in after a bump. |
 | <code><a href="#projen.VersionOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.VersionOptions.property.nextVersionCommand">nextVersionCommand</a></code> | <code>string</code> | A shell command to control the next version to release. |
 | <code><a href="#projen.VersionOptions.property.releasableCommits">releasableCommits</a></code> | <code><a href="#projen.ReleasableCommits">ReleasableCommits</a></code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.VersionOptions.property.tagPrefix">tagPrefix</a></code> | <code>string</code> | The tag prefix corresponding to this version. |
 | <code><a href="#projen.VersionOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration for versionrc file used by standard-release. |
@@ -13566,6 +13567,33 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `nextVersionCommand`<sup>Optional</sup> <a name="nextVersionCommand" id="projen.VersionOptions.property.nextVersionCommand"></a>
+
+```typescript
+public readonly nextVersionCommand: string;
+```
+
+- *Type:* string
+- *Default:* The next version will be determined based on the commit history.
+
+A shell command to control the next version to release.
+
+If present, this shell command will be run before the bump is executed, and
+it determines what version to release. It will be executed in the following
+environment:
+
+- Working directory: the project directory.
+- `$VERSION`: the current version.
+
+The command should print one of the following to `stdout`:
+
+- Nothing: the next version number will be determined based on commit history.
+- `x.y.z`: the next version number will be `x.y.z`.
+- `major|minor|patch`: the next version number will be the current version number
+  with the indicated component bumped.
 
 ---
 
