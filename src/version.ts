@@ -68,6 +68,28 @@ export interface VersionOptions {
    * @default "commit-and-tag-version@12"
    */
   readonly bumpPackage?: string;
+
+  /**
+   * A shell command to control the next version to release.
+   *
+   * If present, this shell command will be run before the bump is executed, and
+   * it determines what version to release. It will be executed in the following
+   * environment:
+   *
+   * - Working directory: the project directory.
+   * - `$VERSION`: the current version. Looks like `1.2.3`.
+   * - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+   *
+   * The command should print one of the following to `stdout`:
+   *
+   * - Nothing: the next version number will be determined based on commit history.
+   * - `x.y.z`: the next version number will be `x.y.z`.
+   * - `major|minor|patch`: the next version number will be the current version number
+   *   with the indicated component bumped.
+   *
+   * @default - The next version will be determined based on the commit history and project settings.
+   */
+  readonly nextVersionCommand?: string;
 }
 
 export class Version extends Component {
@@ -100,6 +122,8 @@ export class Version extends Component {
    */
   public readonly bumpPackage: string;
 
+  private readonly nextVersionCommand?: string;
+
   constructor(scope: IConstruct, options: VersionOptions) {
     super(scope);
 
@@ -107,6 +131,7 @@ export class Version extends Component {
     this.versionFileName = "version.txt";
     this.releaseTagFileName = "releasetag.txt";
     this.bumpPackage = options.bumpPackage ?? COMMIT_AND_TAG_VERSION_DEFAULT;
+    this.nextVersionCommand = options.nextVersionCommand;
 
     // This component is language independent.
     // However, when in the Node.js ecosystem, we can improve the experience by adding a dev dependency on the bump package.
@@ -150,7 +175,9 @@ export class Version extends Component {
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
       BUMP_PACKAGE: this.bumpPackage,
     };
-
+    if (options.nextVersionCommand) {
+      commonEnv.NEXT_VERSION_COMMAND = options.nextVersionCommand;
+    }
     if (options.releasableCommits) {
       commonEnv.RELEASABLE_COMMITS = options.releasableCommits.cmd;
     }
@@ -176,6 +203,91 @@ export class Version extends Component {
     this.project.addPackageIgnore(`/${changelogFile}`);
     this.project.addPackageIgnore(`/${bumpFile}`);
   }
+
+  /**
+   * Return the environment variables to modify the bump command for release branches.
+   *
+   * These options are used to modify the behavior of the version bumping script
+   * for additional branches, by setting environment variables.
+   *
+   * No settings are inherited from the base `Version` object (but any parameters that
+   * control versions do conflict with the use of a `nextVersionCommand`).
+   */
+  public envForBranch(
+    branchOptions: VersionBranchOptions
+  ): Record<string, string> {
+    if (this.nextVersionCommand && branchOptions.minMajorVersion) {
+      throw new Error(
+        "minMajorVersion and nextVersionCommand cannot be used together."
+      );
+    }
+
+    const env: Record<string, string> = {};
+    if (branchOptions.majorVersion !== undefined) {
+      env.MAJOR = branchOptions.majorVersion.toString();
+    }
+
+    if (branchOptions.minMajorVersion !== undefined) {
+      if (branchOptions.majorVersion !== undefined) {
+        throw new Error(
+          `minMajorVersion and majorVersion cannot be used together.`
+        );
+      }
+
+      env.MIN_MAJOR = branchOptions.minMajorVersion.toString();
+    }
+
+    if (branchOptions.prerelease) {
+      env.PRERELEASE = branchOptions.prerelease;
+    }
+
+    if (branchOptions.tagPrefix) {
+      env.RELEASE_TAG_PREFIX = branchOptions.tagPrefix;
+    }
+
+    return env;
+  }
+}
+
+/**
+ * Options to pass to `modifyBranchEnvironment`
+ */
+export interface VersionBranchOptions {
+  /**
+   * The major versions released from this branch.
+   */
+  readonly majorVersion?: number;
+
+  /**
+   * The minimum major version to release.
+   */
+  readonly minMajorVersion?: number;
+
+  /**
+   * The minor versions released from this branch.
+   */
+  readonly minorVersion?: number;
+
+  /**
+   * Bump the version as a pre-release tag.
+   *
+   * @default - normal releases
+   */
+  readonly prerelease?: string;
+
+  /**
+   * Automatically add the given prefix to release tags.
+   * Useful if you are releasing on multiple branches with overlapping
+   * version numbers.
+   *
+   * Note: this prefix is used to detect the latest tagged version
+   * when bumping, so if you change this on a project with an existing version
+   * history, you may need to manually tag your latest release
+   * with the new prefix.
+   *
+   * @default - no prefix
+   */
+  readonly tagPrefix?: string;
 }
 
 /**

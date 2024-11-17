@@ -2845,6 +2845,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -4045,6 +4062,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -5874,6 +5908,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -7162,6 +7213,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -10297,6 +10365,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -11415,6 +11500,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -13181,6 +13283,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -14319,6 +14438,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -16212,6 +16348,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -17282,6 +17435,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -20030,6 +20200,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -21047,6 +21234,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -22923,6 +23127,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -23677,6 +23898,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -25300,6 +25538,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -26192,6 +26447,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -27941,6 +28213,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -28695,6 +28984,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -31506,6 +31812,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -32260,6 +32583,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -33871,6 +34211,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -34763,6 +35120,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -36517,6 +36891,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -37409,6 +37800,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
@@ -39141,6 +39549,23 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-triggers",
       },
       {
+        "default": "- A recent version of "commit-and-tag-version"",
+        "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bumpPackage",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "bumpPackage",
+        ],
+        "simpleType": "string",
+        "switch": "bump-package",
+      },
+      {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": {
@@ -40033,6 +40458,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "name",
+      },
+      {
+        "default": "- The next version will be determined based on the commit history and project settings.",
+        "docs": "A shell command to control the next version to release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "nextVersionCommand",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "nextVersionCommand",
+        ],
+        "simpleType": "string",
+        "switch": "next-version-command",
       },
       {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is

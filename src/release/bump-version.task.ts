@@ -14,7 +14,8 @@
  * - MIN_MAJOR: minimum major version number to use
  * - CHANGELOG: name of changelog file to create
  * - RELEASE_TAG_PREFIX: (optional) a prefix to apply to the release tag
- *
+ * - BUMP_PACKAGE: (optional) the bump package to use
+ * - NEXT_VERSION_COMMAND: (optional) a command to decide the version to release
  */
 import { bump, BumpOptions } from "./bump-version";
 import * as logging from "../logging";
@@ -30,6 +31,7 @@ const prefix = process.env.RELEASE_TAG_PREFIX;
 const versionrcOptions = process.env.VERSIONRCOPTIONS;
 const releasableCommits = process.env.RELEASABLE_COMMITS;
 const bumpPackage = process.env.BUMP_PACKAGE;
+const nextVersionCommand = process.env.NEXT_VERSION_COMMAND;
 
 if (!versionFile) {
   throw new Error("OUTFILE is required");
@@ -72,6 +74,7 @@ const opts: BumpOptions = {
   versionrcOptions: JSON.parse(versionrcOptions ?? "{}"),
   releasableCommits,
   bumpPackage,
+  nextVersionCommand: nextVersionCommand ? nextVersionCommand : undefined,
 };
 logging.debug(opts);
 
