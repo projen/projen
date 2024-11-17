@@ -38,12 +38,19 @@ export function exec(
 /**
  * Executes command and returns STDOUT. If the command fails (non-zero), throws an error.
  */
-export function execCapture(command: string, options: { cwd: string }) {
+export function execCapture(
+  command: string,
+  options: { cwd: string; modEnv?: Record<string, string> }
+) {
   logging.debug(command);
   return child_process.execSync(command, {
     stdio: ["inherit", "pipe", "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
+    env: {
+      ...process.env,
+      ...options.modEnv,
+    },
   });
 }
 

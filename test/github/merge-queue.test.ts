@@ -1,3 +1,4 @@
+import { GithubCredentials } from "../../src/github";
 import { MergeMethod } from "../../src/github/auto-queue";
 import { NodeProject } from "../../src/javascript";
 import { synthSnapshot, TestProject } from "../util";
@@ -54,7 +55,9 @@ describe("merge-queue", () => {
             labels: ["abc"],
             mergeMethod: MergeMethod.MERGE,
             runsOn: ["gpu"],
-            secret: "shh",
+            projenCredentials: GithubCredentials.fromPersonalAccessToken({
+              secret: "shh",
+            }),
           },
         },
       },

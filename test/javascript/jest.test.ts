@@ -390,6 +390,22 @@ test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:u
   expect(testUpdateTask).toBeUndefined();
 });
 
+test("Jest can be configured to fail without tests", () => {
+  // WHEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+    jestOptions: {
+      passWithNoTests: false,
+    },
+  });
+
+  // THEN
+  const testTask = project.testTask;
+  expect(testTask.steps[0].exec).not.toContain("--passWithNoTests");
+});
+
 describe("UpdateSnapshotOptions.NEVER", () => {
   const project = new NodeProject({
     outdir: mkdtemp(),

@@ -221,9 +221,6 @@ jobs:
     env:
       CI: "true"
     steps:
-      - name: Install rsync on Windows
-        if: matrix.runner.os == 'windows-latest'
-        run: choco install --no-progress rsync
       - name: Checkout
         uses: actions/checkout@v4
         with:

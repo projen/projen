@@ -117,7 +117,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
@@ -630,7 +630,7 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,projen,react,react-dom,web-vitals",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,projen,react,react-dom,web-vitals",
           },
           {
             "exec": "yarn install --check-files",

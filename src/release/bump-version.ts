@@ -1,7 +1,7 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import { compare } from "semver";
+import { compare, inc, ReleaseType } from "semver";
 import * as logging from "../logging";
 import { exec, execCapture, execOrUndefined } from "../util";
 import { ReleasableCommits } from "../version";
@@ -102,6 +102,31 @@ export interface BumpOptions {
    * @default "commit-and-tag-version@12"
    */
   readonly bumpPackage?: string;
+
+  /**
+   * A shell command to control the next version to release.
+   *
+   * If present, this shell command will be run before the bump is executed, and
+   * it determines what version to release. It will be executed in the following
+   * environment:
+   *
+   * - Working directory: the project directory.
+   * - `$VERSION`: the current version. Looks like `1.2.3`.
+   * - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+   *
+   * The command should print one of the following to `stdout`:
+   *
+   * - Nothing: the next version number will be determined based on commit history.
+   * - `x.y.z`: the next version number will be `x.y.z`.
+   * - `major|minor|patch`: the next version number will be the current version number
+   *   with the indicated component bumped.
+   *
+   * This setting cannot be specified together with `minMajorVersion`; the invoked
+   * script can be used to achieve the effects of `minMajorVersion`.
+   *
+   * @default - The next version will be determined based on the commit history and project settings.
+   */
+  readonly nextVersionCommand?: string;
 }
 
 /**
@@ -128,6 +153,11 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (major && minMajorVersion) {
     throw new Error(
       `minMajorVersion and majorVersion cannot be used together.`
+    );
+  }
+  if (options.nextVersionCommand && minMajorVersion) {
+    throw new Error(
+      `minMajorVersion and nextVersionCommand cannot be used together.`
     );
   }
   if (minor && !major) {
@@ -186,6 +216,42 @@ export async function bump(cwd: string, options: BumpOptions) {
     }
   }
 
+  // Determine what version to release as
+  let releaseAs: string | undefined;
+  if (minMajorVersion) {
+    const [majorVersion] = latestVersion.split(".");
+    const majorVersionNumber = parseInt(majorVersion, 10);
+    if (majorVersionNumber < minMajorVersion) {
+      releaseAs = `${minMajorVersion}.0.0`;
+    }
+  } else if (options.nextVersionCommand) {
+    const nextVersion = execCapture(options.nextVersionCommand, {
+      cwd,
+      modEnv: {
+        VERSION: latestVersion,
+        ...(latestTag ? { LATEST_TAG: latestTag } : {}),
+      },
+    })
+      .toString()
+      .trim();
+
+    if (nextVersion) {
+      // Calculate the next version
+      if (isReleaseType(nextVersion)) {
+        releaseAs = inc(latestVersion, nextVersion)?.toString();
+      } else if (isFullVersionString(nextVersion)) {
+        releaseAs = nextVersion;
+      } else {
+        throw new Error(
+          `nextVersionCommand "${options.nextVersionCommand}" returned invalid version: ${nextVersion}`
+        );
+      }
+
+      // Don't need to validate if the final version is within the expected declared major.minor range,
+      // if given. That is done below after bumping.
+    }
+  }
+
   // create a commit-and-tag-version configuration file
   const rcfile = join(cwd, ".versionrc.json");
   await generateVersionrcFile(
@@ -204,12 +270,8 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (prefix) {
     cmd.push(`--tag-prefix ${prefix}v`);
   }
-  if (minMajorVersion) {
-    const [majorVersion] = latestVersion.split(".");
-    const majorVersionNumber = parseInt(majorVersion, 10);
-    if (majorVersionNumber < minMajorVersion) {
-      cmd.push(`--release-as ${minMajorVersion}.0.0`);
-    }
+  if (releaseAs) {
+    cmd.push(`--release-as ${releaseAs}`);
   }
 
   exec(cmd.join(" "), { cwd });
@@ -419,4 +481,13 @@ function determineLatestTag(options: LatestTagOptions): {
   }
 
   return { latestVersion, latestTag, isFirstRelease };
+}
+
+function isReleaseType(nextVersion: string): nextVersion is ReleaseType {
+  // We are not recognizing all of them yet. That's fine for now.
+  return !!nextVersion.match(/^(major|minor|patch)$/);
+}
+
+function isFullVersionString(nextVersion: string) {
+  return nextVersion.match(/^\d+\.\d+\.\d+(-[^\s]+)?$/);
 }

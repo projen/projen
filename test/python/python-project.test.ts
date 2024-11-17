@@ -75,3 +75,21 @@ test("cannot specify multiple projenrc types", () => {
     /Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected./
   );
 });
+
+test("extras render properly", () => {
+  const p = new TestPythonProject({
+    deps: ["aws-lambda-powertools[tracer]"],
+  });
+  expect(synthSnapshot(p)["requirements.txt"]).toContain(
+    "aws-lambda-powertools[tracer]"
+  );
+});
+
+test("extras render properly with explicit version", () => {
+  const p = new TestPythonProject({
+    deps: ["aws-lambda-powertools[tracer]@1.0.0"],
+  });
+  expect(synthSnapshot(p)["requirements.txt"]).toContain(
+    "aws-lambda-powertools[tracer]==1.0.0"
+  );
+});

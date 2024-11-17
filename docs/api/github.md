@@ -2157,9 +2157,9 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.GithubWorkflow.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
-| <code><a href="#projen.github.GithubWorkflow.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.github.GithubWorkflow.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.GithubWorkflowOptions">GithubWorkflowOptions</a></code> | *No description.* |
+| <code><a href="#projen.github.GithubWorkflow.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | The GitHub component of the project this workflow belongs to. |
+| <code><a href="#projen.github.GithubWorkflow.Initializer.parameter.name">name</a></code> | <code>string</code> | The name of the workflow, displayed under the repository's "Actions" tab. |
+| <code><a href="#projen.github.GithubWorkflow.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.GithubWorkflowOptions">GithubWorkflowOptions</a></code> | Additional options to configure the workflow. |
 
 ---
 
@@ -2167,17 +2167,23 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 
 - *Type:* <a href="#projen.github.GitHub">GitHub</a>
 
+The GitHub component of the project this workflow belongs to.
+
 ---
 
 ##### `name`<sup>Required</sup> <a name="name" id="projen.github.GithubWorkflow.Initializer.parameter.name"></a>
 
 - *Type:* string
 
+The name of the workflow, displayed under the repository's "Actions" tab.
+
 ---
 
 ##### `options`<sup>Optional</sup> <a name="options" id="projen.github.GithubWorkflow.Initializer.parameter.options"></a>
 
 - *Type:* <a href="#projen.github.GithubWorkflowOptions">GithubWorkflowOptions</a>
+
+Additional options to configure the workflow.
 
 ---
 
@@ -2461,6 +2467,11 @@ public readonly name: string;
 - *Type:* string
 
 The name of the workflow.
+
+GitHub displays the names of your workflows under your repository's
+"Actions" tab.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name)
 
 ---
 
@@ -4005,6 +4016,11 @@ public readonly name: string;
 
 The name of the workflow.
 
+GitHub displays the names of your workflows under your repository's
+"Actions" tab.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#name)
+
 ---
 
 ##### `projenCredentials`<sup>Required</sup> <a name="projenCredentials" id="projen.github.TaskWorkflow.property.projenCredentials"></a>
@@ -4656,8 +4672,8 @@ const autoQueueOptions: github.AutoQueueOptions = { ... }
 | <code><a href="#projen.github.AutoQueueOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will have auto-queue enabled. |
 | <code><a href="#projen.github.AutoQueueOptions.property.labels">labels</a></code> | <code>string[]</code> | Only pull requests with one of this labels will have auto-queue enabled. |
 | <code><a href="#projen.github.AutoQueueOptions.property.mergeMethod">mergeMethod</a></code> | <code><a href="#projen.github.MergeMethod">MergeMethod</a></code> | The method used to add the PR to the merge queue Any branch protection rules must allow this merge method. |
+| <code><a href="#projen.github.AutoQueueOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method for authenticating with GitHub to enable auto-queue on pull requests. |
 | <code><a href="#projen.github.AutoQueueOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
-| <code><a href="#projen.github.AutoQueueOptions.property.secret">secret</a></code> | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. |
 
 ---
 
@@ -4700,6 +4716,25 @@ The method used to add the PR to the merge queue Any branch protection rules mus
 
 ---
 
+##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.github.AutoQueueOptions.property.projenCredentials"></a>
+
+```typescript
+public readonly projenCredentials: GithubCredentials;
+```
+
+- *Type:* <a href="#projen.github.GithubCredentials">GithubCredentials</a>
+- *Default:* uses credentials from the GitHub component
+
+Choose a method for authenticating with GitHub to enable auto-queue on pull requests.
+
+The workflow cannot use a default github token. Queuing a PR
+with the default token will not trigger any merge queue workflows,
+which results in the PR just not getting merged at all.
+
+> [https://projen.io/docs/integrations/github/](https://projen.io/docs/integrations/github/)
+
+---
+
 ##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoQueueOptions.property.runsOn"></a>
 
 ```typescript
@@ -4710,21 +4745,6 @@ public readonly runsOn: string[];
 - *Default:* ["ubuntu-latest"]
 
 Github Runner selection labels.
-
----
-
-##### `secret`<sup>Optional</sup> <a name="secret" id="projen.github.AutoQueueOptions.property.secret"></a>
-
-```typescript
-public readonly secret: string;
-```
-
-- *Type:* string
-- *Default:* "GITHUB_TOKEN"
-
-A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.
-
-This token is used to enable auto-queue on pull requests.
 
 ---
 
@@ -6858,6 +6878,7 @@ const githubWorkflowOptions: github.GithubWorkflowOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.concurrencyOptions">concurrencyOptions</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
+| <code><a href="#projen.github.GithubWorkflowOptions.property.fileName">fileName</a></code> | <code>string</code> | Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.force">force</a></code> | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.limitConcurrency">limitConcurrency</a></code> | <code>boolean</code> | Enable concurrency limitations. |
 
@@ -6879,6 +6900,28 @@ Currently in beta.
 > [https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency)
 
 ---
+
+##### `fileName`<sup>Optional</sup> <a name="fileName" id="projen.github.GithubWorkflowOptions.property.fileName"></a>
+
+```typescript
+public readonly fileName: string;
+```
+
+- *Type:* string
+- *Default:* a path-safe version of the workflow name plus the .yml file ending, e.g. build.yml
+
+Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension.
+
+Use this option to set a file name for the workflow file, that is different than the display name.
+
+---
+
+*Example*
+
+```typescript
+"my-workflow.yaml"
+```
+
 
 ##### `force`<sup>Optional</sup> <a name="force" id="projen.github.GithubWorkflowOptions.property.force"></a>
 

@@ -30,14 +30,16 @@ export interface AutoQueueOptions {
   readonly labels?: string[];
 
   /**
-   * A GitHub secret name which contains a GitHub Access Token
-   * with write permissions for the `pull_request` scope.
+   * Choose a method for authenticating with GitHub to enable auto-queue on pull requests.
    *
-   * This token is used to enable auto-queue on pull requests.
+   * The workflow cannot use a default github token. Queuing a PR
+   * with the default token will not trigger any merge queue workflows,
+   * which results in the PR just not getting merged at all.
    *
-   * @default "GITHUB_TOKEN"
+   * @see https://projen.io/docs/integrations/github/
+   * @default - uses credentials from the GitHub component
    */
-  readonly secret?: string;
+  readonly projenCredentials?: gh.GithubCredentials;
 
   /**
    * The method used to add the PR to the merge queue
@@ -95,7 +97,8 @@ export class AutoQueue extends Component {
       );
     }
 
-    const secret = options.secret ?? "GITHUB_TOKEN";
+    const credentials =
+      options.projenCredentials ?? workflowEngine.projenCredentials;
     const mergeMethod = options.mergeMethod ?? MergeMethod.SQUASH;
 
     const autoQueueJob: gh.workflows.Job = {
@@ -107,10 +110,11 @@ export class AutoQueue extends Component {
       },
       if: conditions.length ? conditions.join(" && ") : undefined,
       steps: [
+        ...credentials.setupSteps,
         {
           uses: "peter-evans/enable-pull-request-automerge@v3",
           with: {
-            token: `\${{ secrets.${secret} }}`,
+            token: credentials.tokenRef,
             "pull-request-number": "${{ github.event.number }}",
             "merge-method": mergeMethod,
           },

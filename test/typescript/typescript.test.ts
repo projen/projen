@@ -222,6 +222,9 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
   const snapshot = synthSnapshot(prj);
   expect(snapshot[".projen/tasks.json"].tasks.eslint).toStrictEqual({
     description: "Runs eslint against the codebase",
+    env: {
+      ESLINT_USE_FLAT_CONFIG: "false",
+    },
     name: "eslint",
     steps: [
       {
@@ -260,13 +263,13 @@ test("upgrade task ignores pinned versions", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
+        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
       },
       {
         "exec": "yarn install --check-files",
       },
       {
-        "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript npm",
+        "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript npm",
       },
       {
         "exec": "npx projen",
