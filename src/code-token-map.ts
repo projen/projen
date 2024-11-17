@@ -12,7 +12,7 @@ import {
 
 const glob = global as unknown & { __ProjenCodeTokenMap?: CodeTokenMap };
 
-const STRING_SYMBOL = Symbol.for("@aws-cdk/core.TokenMap.STRING");
+const STRING_SYMBOL = Symbol.for("projen.TokenMap.STRING");
 /**
  * Central place where we keep a mapping from Tokens to their String representation
  *
