@@ -142,6 +142,13 @@ export interface PythonProjectOptions
   readonly sample?: boolean;
 
   /**
+   * Location of sample tests.
+   * Typically the same directory where project tests will be located.
+   * @default 'tests'
+   */
+  readonly testdir?: string;
+
+  /**
    * Use projenrc in Python.
    *
    * This will install `projen` as a Python dependency and add a `synth`
@@ -227,6 +234,12 @@ export class PythonProject extends GitHubProject {
    */
   public pytest?: Pytest;
 
+  /**
+   * Directory where sample tests are stored.
+   * @default "tests"
+   */
+  public readonly testdir: string;
+
   constructor(options: PythonProjectOptions) {
     super(options);
 
@@ -238,6 +251,7 @@ export class PythonProject extends GitHubProject {
 
     this.moduleName = options.moduleName;
     this.version = options.version;
+    this.testdir = options.testdir ?? "tests";
 
     const rcFileTypeOptions = [
       options.projenrcPython,
@@ -368,7 +382,7 @@ export class PythonProject extends GitHubProject {
       if (options.sample ?? true) {
         new PytestSample(this, {
           moduleName: this.moduleName,
-          testdir: this.pytest.testdir,
+          testdir: this.testdir,
         });
       }
     }

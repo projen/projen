@@ -1025,7 +1025,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.Pytest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.Pytest.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.Pytest.property.testdir">testdir</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.Pytest.property.testPaths">testPaths</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.python.Pytest.property.testMatch">testMatch</a></code> | <code>string[]</code> | *No description.* |
 
 ---
 
@@ -1051,7 +1051,9 @@ public readonly project: Project;
 
 ---
 
-##### `testdir`<sup>Required</sup> <a name="testdir" id="projen.python.Pytest.property.testdir"></a>
+##### ~~`testdir`~~<sup>Required</sup> <a name="testdir" id="projen.python.Pytest.property.testdir"></a>
+
+- *Deprecated:* Use `testdir` on the project instead.
 
 ```typescript
 public readonly testdir: string;
@@ -1061,10 +1063,10 @@ public readonly testdir: string;
 
 ---
 
-##### `testPaths`<sup>Required</sup> <a name="testPaths" id="projen.python.Pytest.property.testPaths"></a>
+##### `testMatch`<sup>Required</sup> <a name="testMatch" id="projen.python.Pytest.property.testMatch"></a>
 
 ```typescript
-public readonly testPaths: string[];
+public readonly testMatch: string[];
 ```
 
 - *Type:* string[]
@@ -1696,6 +1698,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.python.PythonProject.property.depsManager">depsManager</a></code> | <code><a href="#projen.python.IPythonDeps">IPythonDeps</a></code> | API for managing dependencies. |
 | <code><a href="#projen.python.PythonProject.property.envManager">envManager</a></code> | <code><a href="#projen.python.IPythonEnv">IPythonEnv</a></code> | API for mangaging the Python runtime environment. |
 | <code><a href="#projen.python.PythonProject.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
+| <code><a href="#projen.python.PythonProject.property.testdir">testdir</a></code> | <code>string</code> | Directory where sample tests are stored. |
 | <code><a href="#projen.python.PythonProject.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
 | <code><a href="#projen.python.PythonProject.property.packagingManager">packagingManager</a></code> | <code><a href="#projen.python.IPythonPackaging">IPythonPackaging</a></code> | API for managing packaging the project as a library. |
 | <code><a href="#projen.python.PythonProject.property.pytest">pytest</a></code> | <code><a href="#projen.python.Pytest">Pytest</a></code> | Pytest component. |
@@ -2110,6 +2113,19 @@ public readonly moduleName: string;
 - *Type:* string
 
 Python module name (the project name, with any hyphens or periods replaced with underscores).
+
+---
+
+##### `testdir`<sup>Required</sup> <a name="testdir" id="projen.python.PythonProject.property.testdir"></a>
+
+```typescript
+public readonly testdir: string;
+```
+
+- *Type:* string
+- *Default:* "tests"
+
+Directory where sample tests are stored.
 
 ---
 
@@ -4132,7 +4148,7 @@ const pytestOptions: python.PytestOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.PytestOptions.property.maxFailures">maxFailures</a></code> | <code>number</code> | Stop the testing process after the first N failures. |
 | <code><a href="#projen.python.PytestOptions.property.testdir">testdir</a></code> | <code>string</code> | Location of sample tests. |
-| <code><a href="#projen.python.PytestOptions.property.testPaths">testPaths</a></code> | <code>string[]</code> | List of paths to test files or directories. |
+| <code><a href="#projen.python.PytestOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | List of paths to test files or directories. |
 | <code><a href="#projen.python.PytestOptions.property.version">version</a></code> | <code>string</code> | Pytest version. |
 
 ---
@@ -4149,7 +4165,9 @@ Stop the testing process after the first N failures.
 
 ---
 
-##### `testdir`<sup>Optional</sup> <a name="testdir" id="projen.python.PytestOptions.property.testdir"></a>
+##### ~~`testdir`~~<sup>Optional</sup> <a name="testdir" id="projen.python.PytestOptions.property.testdir"></a>
+
+- *Deprecated:* Reference `testdir` on the project instead.
 
 ```typescript
 public readonly testdir: string;
@@ -4164,10 +4182,10 @@ Typically the same directory where project tests will be located.
 
 ---
 
-##### `testPaths`<sup>Optional</sup> <a name="testPaths" id="projen.python.PytestOptions.property.testPaths"></a>
+##### `testMatch`<sup>Optional</sup> <a name="testMatch" id="projen.python.PytestOptions.property.testMatch"></a>
 
 ```typescript
-public readonly testPaths: string[];
+public readonly testMatch: string[];
 ```
 
 - *Type:* string[]
@@ -4503,6 +4521,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.pytestOptions">pytestOptions</a></code> | <code><a href="#projen.python.PytestOptions">PytestOptions</a></code> | pytest options. |
 | <code><a href="#projen.python.PythonProjectOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
+| <code><a href="#projen.python.PythonProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venvOptions">venvOptions</a></code> | <code><a href="#projen.python.VenvOptions">VenvOptions</a></code> | Venv options. |
 
@@ -5274,6 +5293,21 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
+
+---
+
+##### `testdir`<sup>Optional</sup> <a name="testdir" id="projen.python.PythonProjectOptions.property.testdir"></a>
+
+```typescript
+public readonly testdir: string;
+```
+
+- *Type:* string
+- *Default:* 'tests'
+
+Location of sample tests.
+
+Typically the same directory where project tests will be located.
 
 ---
 

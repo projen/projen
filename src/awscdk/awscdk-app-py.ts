@@ -25,12 +25,6 @@ export interface AwsCdkPythonAppOptions
    * @default "app.py"
    */
   readonly appEntrypoint?: string;
-  /**
-   * Python sources directory.
-   *
-   * @default "tests"
-   */
-  readonly testdir?: string;
 }
 
 /**
@@ -104,7 +98,7 @@ export class AwsCdkPythonApp extends PythonProject {
 
     if (options.pytest ?? true) {
       this.pytest = new Pytest(this, options.pytestOptions);
-      new AwsCdkPytestSample(this, this.pytest.testdir);
+      new AwsCdkPytestSample(this, this.testdir);
     }
   }
 }

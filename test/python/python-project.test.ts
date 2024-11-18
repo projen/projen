@@ -56,7 +56,7 @@ test("pytest without sample code", () => {
 test("pytest with custom testPaths", () => {
   const p = new TestPythonProject({
     pytestOptions: {
-      testPaths: ["tests/foo", "tests/bar"],
+      testMatch: ["tests/foo", "tests/bar"],
     },
   });
   expect(

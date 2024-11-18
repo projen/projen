@@ -15,6 +15,7 @@ export interface PytestOptions {
    * Typically the same directory where project tests will be located.
    *
    * @default 'tests'
+   * @deprecated Reference `testdir` on the project instead.
    */
   readonly testdir?: string;
 
@@ -34,12 +35,15 @@ export interface PytestOptions {
    * @example ["tests/unit", "tests/qa"]
    * @default [""]
    */
-  readonly testPaths?: string[];
+  readonly testMatch?: string[];
 }
 
 export class Pytest extends Component {
+  /**
+   * @deprecated Use `testdir` on the project instead.
+   */
   readonly testdir: string;
-  readonly testPaths: string[];
+  readonly testMatch: string[];
 
   constructor(project: Project, options: PytestOptions = {}) {
     super(project);
@@ -48,7 +52,7 @@ export class Pytest extends Component {
 
     this.testdir = options.testdir ?? "tests";
 
-    this.testPaths = options.testPaths ?? [""];
+    this.testMatch = options.testMatch ?? [""];
 
     project.deps.addDependency(`pytest@${version}`, DependencyType.TEST);
 
@@ -56,8 +60,10 @@ export class Pytest extends Component {
       [
         "pytest",
         ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
-        ...this.testPaths,
-      ].join(" ")
+        ...this.testMatch,
+      ]
+        .join(" ")
+        .trimEnd()
     );
   }
 }

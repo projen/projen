@@ -2375,8 +2375,8 @@ exports[`inventory 1`] = `
         "switch": "stale-options",
       },
       {
-        "default": ""tests"",
-        "docs": "Python sources directory.",
+        "default": "'tests'",
+        "docs": "Location of sample tests.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -2384,7 +2384,7 @@ exports[`inventory 1`] = `
         "jsonLike": true,
         "name": "testdir",
         "optional": true,
-        "parent": "AwsCdkPythonAppOptions",
+        "parent": "PythonProjectOptions",
         "path": [
           "testdir",
         ],
@@ -9971,6 +9971,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "StaleOptions",
         "switch": "stale-options",
+      },
+      {
+        "default": "'tests'",
+        "docs": "Location of sample tests.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "testdir",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "testdir",
+        ],
+        "simpleType": "string",
+        "switch": "testdir",
       },
       {
         "default": "- true, unless poetry is true, then false",
@@ -31435,6 +31452,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "StaleOptions",
         "switch": "stale-options",
+      },
+      {
+        "default": "'tests'",
+        "docs": "Location of sample tests.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "testdir",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "testdir",
+        ],
+        "simpleType": "string",
+        "switch": "testdir",
       },
       {
         "default": "- true, unless poetry is true, then false",
