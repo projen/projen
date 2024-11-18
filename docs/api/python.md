@@ -1698,7 +1698,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.python.PythonProject.property.depsManager">depsManager</a></code> | <code><a href="#projen.python.IPythonDeps">IPythonDeps</a></code> | API for managing dependencies. |
 | <code><a href="#projen.python.PythonProject.property.envManager">envManager</a></code> | <code><a href="#projen.python.IPythonEnv">IPythonEnv</a></code> | API for mangaging the Python runtime environment. |
 | <code><a href="#projen.python.PythonProject.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
-| <code><a href="#projen.python.PythonProject.property.testdir">testdir</a></code> | <code>string</code> | Directory where sample tests are stored. |
+| <code><a href="#projen.python.PythonProject.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Directory where sample tests are located. |
 | <code><a href="#projen.python.PythonProject.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
 | <code><a href="#projen.python.PythonProject.property.packagingManager">packagingManager</a></code> | <code><a href="#projen.python.IPythonPackaging">IPythonPackaging</a></code> | API for managing packaging the project as a library. |
 | <code><a href="#projen.python.PythonProject.property.pytest">pytest</a></code> | <code><a href="#projen.python.Pytest">Pytest</a></code> | Pytest component. |
@@ -2116,16 +2116,16 @@ Python module name (the project name, with any hyphens or periods replaced with 
 
 ---
 
-##### `testdir`<sup>Required</sup> <a name="testdir" id="projen.python.PythonProject.property.testdir"></a>
+##### `sampleTestdir`<sup>Required</sup> <a name="sampleTestdir" id="projen.python.PythonProject.property.sampleTestdir"></a>
 
 ```typescript
-public readonly testdir: string;
+public readonly sampleTestdir: string;
 ```
 
 - *Type:* string
-- *Default:* "tests"
+- *Default:* tests
 
-Directory where sample tests are stored.
+Directory where sample tests are located.
 
 ---
 
@@ -4167,14 +4167,14 @@ Stop the testing process after the first N failures.
 
 ##### ~~`testdir`~~<sup>Optional</sup> <a name="testdir" id="projen.python.PytestOptions.property.testdir"></a>
 
-- *Deprecated:* Reference `testdir` on the project instead.
+- *Deprecated:* Reference `testdir` on the project instead. To change the directory where tests are discovered from, use `testMatch`.
 
 ```typescript
 public readonly testdir: string;
 ```
 
 - *Type:* string
-- *Default:* 'tests'
+- *Default:* tests
 
 Location of sample tests.
 
@@ -4189,7 +4189,7 @@ public readonly testMatch: string[];
 ```
 
 - *Type:* string[]
-- *Default:* [""]
+- *Default:* []
 
 List of paths to test files or directories.
 
@@ -4520,8 +4520,8 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.pytest">pytest</a></code> | <code>boolean</code> | Include pytest tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pytestOptions">pytestOptions</a></code> | <code><a href="#projen.python.PytestOptions">PytestOptions</a></code> | pytest options. |
 | <code><a href="#projen.python.PythonProjectOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
+| <code><a href="#projen.python.PythonProjectOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
-| <code><a href="#projen.python.PythonProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venvOptions">venvOptions</a></code> | <code><a href="#projen.python.VenvOptions">VenvOptions</a></code> | Venv options. |
 
@@ -5283,6 +5283,21 @@ Include sample code and test if the relevant directories don't exist.
 
 ---
 
+##### `sampleTestdir`<sup>Optional</sup> <a name="sampleTestdir" id="projen.python.PythonProjectOptions.property.sampleTestdir"></a>
+
+```typescript
+public readonly sampleTestdir: string;
+```
+
+- *Type:* string
+- *Default:* tests
+
+Location of sample tests.
+
+Typically the same directory where project tests will be located.
+
+---
+
 ##### `setuptools`<sup>Optional</sup> <a name="setuptools" id="projen.python.PythonProjectOptions.property.setuptools"></a>
 
 ```typescript
@@ -5293,21 +5308,6 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
-
----
-
-##### `testdir`<sup>Optional</sup> <a name="testdir" id="projen.python.PythonProjectOptions.property.testdir"></a>
-
-```typescript
-public readonly testdir: string;
-```
-
-- *Type:* string
-- *Default:* 'tests'
-
-Location of sample tests.
-
-Typically the same directory where project tests will be located.
 
 ---
 

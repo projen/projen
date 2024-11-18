@@ -14,7 +14,7 @@ export interface PytestOptions {
    * Location of sample tests.
    * Typically the same directory where project tests will be located.
    *
-   * @default 'tests'
+   * @default tests
    * @deprecated Reference `testdir` on the project instead. To change the directory where tests are discovered from, use `testMatch`.
    */
   readonly testdir?: string;
@@ -33,7 +33,7 @@ export interface PytestOptions {
    *
    * The array will be concatenated and passed as a single argument to pytest.
    * @example ["tests/unit", "tests/qa"]
-   * @default [""]
+   * @default []
    */
   readonly testMatch?: string[];
 }
@@ -52,7 +52,7 @@ export class Pytest extends Component {
 
     this.testdir = options.testdir ?? "tests";
 
-    this.testMatch = options.testMatch ?? [""];
+    this.testMatch = options.testMatch ?? [];
 
     project.deps.addDependency(`pytest@${version}`, DependencyType.TEST);
 

@@ -144,7 +144,7 @@ export interface PythonProjectOptions
   /**
    * Location of sample tests.
    * Typically the same directory where project tests will be located.
-   * @default 'tests'
+   * @default tests
    */
   readonly sampleTestdir?: string;
 
@@ -236,7 +236,7 @@ export class PythonProject extends GitHubProject {
 
   /**
    * Directory where sample tests are located.
-   * @default "tests"
+   * @default tests
    */
   public readonly sampleTestdir: string;
 
@@ -251,7 +251,7 @@ export class PythonProject extends GitHubProject {
 
     this.moduleName = options.moduleName;
     this.version = options.version;
-    this.testdir = options.testdir ?? "tests";
+    this.sampleTestdir = options.sampleTestdir ?? "tests";
 
     const rcFileTypeOptions = [
       options.projenrcPython,
@@ -382,7 +382,7 @@ export class PythonProject extends GitHubProject {
       if (options.sample ?? true) {
         new PytestSample(this, {
           moduleName: this.moduleName,
-          testdir: this.testdir,
+          testdir: this.sampleTestdir,
         });
       }
     }

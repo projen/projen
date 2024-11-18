@@ -52,8 +52,14 @@ export class AwsCdkPythonApp extends PythonProject {
 
   /**
    * The directory in which the python tests reside.
+   * @deprecated Use `sampleTestdir` instead.
    */
   public readonly testdir: string;
+
+  /**
+   * The directory in which the python sample tests reside.
+   */
+  public readonly sampleTestdir: string;
 
   /**
    * The CDK version this app is using.
@@ -70,7 +76,7 @@ export class AwsCdkPythonApp extends PythonProject {
       ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "app.py";
-    this.testdir = options.testdir ?? "tests";
+    this.testdir = this.sampleTestdir = options.sampleTestdir ?? "tests";
 
     this.cdkTasks = new CdkTasks(this);
     this.postCompileTask.spawn(this.cdkTasks.synthSilent);

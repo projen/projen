@@ -4311,7 +4311,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.depsManager">depsManager</a></code> | <code>projen.python.IPythonDeps</code> | API for managing dependencies. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for mangaging the Python runtime environment. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
-| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.testdir">testdir</a></code> | <code>string</code> | The directory in which the python tests reside. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | The directory in which the python sample tests reside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.packagingManager">packagingManager</a></code> | <code>projen.python.IPythonPackaging</code> | API for managing packaging the project as a library. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.pytest">pytest</a></code> | <code>projen.python.Pytest</code> | Pytest component. |
@@ -4320,6 +4320,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.cdkDeps">cdkDeps</a></code> | <code><a href="#projen.awscdk.AwsCdkDeps">AwsCdkDeps</a></code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.cdkTasks">cdkTasks</a></code> | <code><a href="#projen.awscdk.CdkTasks">CdkTasks</a></code> | Common CDK tasks. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | The CDK version this app is using. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.testdir">testdir</a></code> | <code>string</code> | The directory in which the python tests reside. |
 
 ---
 
@@ -4734,15 +4735,15 @@ Python module name (the project name, with any hyphens or periods replaced with 
 
 ---
 
-##### `testdir`<sup>Required</sup> <a name="testdir" id="projen.awscdk.AwsCdkPythonApp.property.testdir"></a>
+##### `sampleTestdir`<sup>Required</sup> <a name="sampleTestdir" id="projen.awscdk.AwsCdkPythonApp.property.sampleTestdir"></a>
 
 ```typescript
-public readonly testdir: string;
+public readonly sampleTestdir: string;
 ```
 
 - *Type:* string
 
-The directory in which the python tests reside.
+The directory in which the python sample tests reside.
 
 ---
 
@@ -4839,6 +4840,20 @@ public readonly cdkVersion: string;
 - *Type:* string
 
 The CDK version this app is using.
+
+---
+
+##### ~~`testdir`~~<sup>Required</sup> <a name="testdir" id="projen.awscdk.AwsCdkPythonApp.property.testdir"></a>
+
+- *Deprecated:* Use `sampleTestdir` instead.
+
+```typescript
+public readonly testdir: string;
+```
+
+- *Type:* string
+
+The directory in which the python tests reside.
 
 ---
 
@@ -14392,8 +14407,8 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pytest">pytest</a></code> | <code>boolean</code> | Include pytest tests. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pytestOptions">pytestOptions</a></code> | <code>projen.python.PytestOptions</code> | pytest options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.testdir">testdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
@@ -15171,6 +15186,21 @@ Include sample code and test if the relevant directories don't exist.
 
 ---
 
+##### `sampleTestdir`<sup>Optional</sup> <a name="sampleTestdir" id="projen.awscdk.AwsCdkPythonAppOptions.property.sampleTestdir"></a>
+
+```typescript
+public readonly sampleTestdir: string;
+```
+
+- *Type:* string
+- *Default:* tests
+
+Location of sample tests.
+
+Typically the same directory where project tests will be located.
+
+---
+
 ##### `setuptools`<sup>Optional</sup> <a name="setuptools" id="projen.awscdk.AwsCdkPythonAppOptions.property.setuptools"></a>
 
 ```typescript
@@ -15181,21 +15211,6 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
-
----
-
-##### `testdir`<sup>Optional</sup> <a name="testdir" id="projen.awscdk.AwsCdkPythonAppOptions.property.testdir"></a>
-
-```typescript
-public readonly testdir: string;
-```
-
-- *Type:* string
-- *Default:* 'tests'
-
-Location of sample tests.
-
-Typically the same directory where project tests will be located.
 
 ---
 

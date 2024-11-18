@@ -47,10 +47,11 @@ test("pytest without sample code", () => {
     pytest: true,
     sample: false,
   });
-  expect(synthSnapshot(p)).not.toHaveProperty("tests/__init__.py");
-  expect(
-    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec
-  ).toContain("tests");
+  const synth = synthSnapshot(p);
+  expect(synth).not.toHaveProperty("tests/__init__.py");
+  expect(synth[".projen/tasks.json"].tasks.test.steps[0].exec).toEqual(
+    "pytest"
+  );
 });
 
 test("pytest with custom testPaths", () => {
