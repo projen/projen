@@ -235,7 +235,7 @@ export class PythonProject extends GitHubProject {
   public pytest?: Pytest;
 
   /**
-   * Directory where sample tests are stored.
+   * Directory where sample tests are located.
    * @default "tests"
    */
   public readonly sampleTestdir: string;
