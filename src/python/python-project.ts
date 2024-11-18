@@ -144,7 +144,7 @@ export interface PythonProjectOptions
   /**
    * Location of sample tests.
    * Typically the same directory where project tests will be located.
-   * @default tests
+   * @default "tests"
    */
   readonly sampleTestdir?: string;
 
