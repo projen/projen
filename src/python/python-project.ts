@@ -238,7 +238,7 @@ export class PythonProject extends GitHubProject {
    * Directory where sample tests are stored.
    * @default "tests"
    */
-  public readonly testdir: string;
+  public readonly sampleTestdir: string;
 
   constructor(options: PythonProjectOptions) {
     super(options);
