@@ -14427,6 +14427,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkVersionPinning">cdkVersionPinning</a></code> | <code>boolean</code> | Use pinned version instead of caret version for CDK. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.constructsVersion">constructsVersion</a></code> | <code>string</code> | Minimum version of the `constructs` library to depend on. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.appEntrypoint">appEntrypoint</a></code> | <code>string</code> | The CDK app's entrypoint (relative to the source directory, which is "src" by default). |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.testdir">testdir</a></code> | <code>string</code> | Python sources directory. |
 
 ---
 
@@ -15193,7 +15194,7 @@ public readonly sampleTestdir: string;
 ```
 
 - *Type:* string
-- *Default:* tests
+- *Default:* "tests"
 
 Location of sample tests.
 
@@ -15469,6 +15470,21 @@ public readonly appEntrypoint: string;
 - *Default:* "app.py"
 
 The CDK app's entrypoint (relative to the source directory, which is "src" by default).
+
+---
+
+##### ~~`testdir`~~<sup>Optional</sup> <a name="testdir" id="projen.awscdk.AwsCdkPythonAppOptions.property.testdir"></a>
+
+- *Deprecated:* Use `sampleTestdir` instead.
+
+```typescript
+public readonly testdir: string;
+```
+
+- *Type:* string
+- *Default:* "tests"
+
+Python sources directory.
 
 ---
 

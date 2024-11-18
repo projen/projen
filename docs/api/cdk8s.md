@@ -1459,7 +1459,7 @@ public readonly sampleTestdir: string;
 ```
 
 - *Type:* string
-- *Default:* tests
+- *Default:* "tests"
 
 Directory where sample tests are located.
 
@@ -6352,7 +6352,7 @@ public readonly sampleTestdir: string;
 ```
 
 - *Type:* string
-- *Default:* tests
+- *Default:* "tests"
 
 Location of sample tests.
 

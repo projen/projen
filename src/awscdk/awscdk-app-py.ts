@@ -25,6 +25,13 @@ export interface AwsCdkPythonAppOptions
    * @default "app.py"
    */
   readonly appEntrypoint?: string;
+  /**
+   * Python sources directory.
+   *
+   * @default "tests"
+   * @deprecated Use `sampleTestdir` instead.
+   */
+  readonly testdir?: string;
 }
 
 /**

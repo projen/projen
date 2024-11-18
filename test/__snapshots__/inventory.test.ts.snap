@@ -2301,7 +2301,7 @@ exports[`inventory 1`] = `
         "switch": "sample",
       },
       {
-        "default": "tests",
+        "default": ""tests"",
         "docs": "Location of sample tests.",
         "featured": false,
         "fullType": {
@@ -2390,6 +2390,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "StaleOptions",
         "switch": "stale-options",
+      },
+      {
+        "default": ""tests"",
+        "deprecated": true,
+        "docs": "Python sources directory.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "testdir",
+        "optional": true,
+        "parent": "AwsCdkPythonAppOptions",
+        "path": [
+          "testdir",
+        ],
+        "simpleType": "string",
+        "switch": "testdir",
       },
       {
         "default": "- true, unless poetry is true, then false",
@@ -9899,7 +9917,7 @@ exports[`inventory 1`] = `
         "switch": "sample",
       },
       {
-        "default": "tests",
+        "default": ""tests"",
         "docs": "Location of sample tests.",
         "featured": false,
         "fullType": {
@@ -31380,7 +31398,7 @@ exports[`inventory 1`] = `
         "switch": "sample",
       },
       {
-        "default": "tests",
+        "default": ""tests"",
         "docs": "Location of sample tests.",
         "featured": false,
         "fullType": {
