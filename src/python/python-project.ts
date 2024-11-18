@@ -146,7 +146,7 @@ export interface PythonProjectOptions
    * Typically the same directory where project tests will be located.
    * @default 'tests'
    */
-  readonly testdir?: string;
+  readonly sampleTestdir?: string;
 
   /**
    * Use projenrc in Python.
