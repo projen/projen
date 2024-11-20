@@ -83,7 +83,7 @@ export class AwsCdkPythonApp extends PythonProject {
       ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "app.py";
-    this.testdir = this.sampleTestdir = options.sampleTestdir ?? "tests";
+    this.testdir = this.sampleTestdir = options.sampleTestdir ?? options.testdir ?? "tests";
 
     this.cdkTasks = new CdkTasks(this);
     this.postCompileTask.spawn(this.cdkTasks.synthSilent);
@@ -111,7 +111,7 @@ export class AwsCdkPythonApp extends PythonProject {
 
     if (options.pytest ?? true) {
       this.pytest = new Pytest(this, options.pytestOptions);
-      new AwsCdkPytestSample(this, this.testdir);
+      new AwsCdkPytestSample(this, this.sampleTestdir);
     }
   }
 }
