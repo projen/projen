@@ -1032,6 +1032,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.depsManager">depsManager</a></code> | <code>projen.python.IPythonDeps</code> | API for managing dependencies. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for mangaging the Python runtime environment. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Directory where sample tests are located. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.packagingManager">packagingManager</a></code> | <code>projen.python.IPythonPackaging</code> | API for managing packaging the project as a library. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.pytest">pytest</a></code> | <code>projen.python.Pytest</code> | Pytest component. |
@@ -1448,6 +1449,19 @@ public readonly moduleName: string;
 - *Type:* string
 
 Python module name (the project name, with any hyphens or periods replaced with underscores).
+
+---
+
+##### `sampleTestdir`<sup>Required</sup> <a name="sampleTestdir" id="projen.cdk8s.Cdk8sPythonApp.property.sampleTestdir"></a>
+
+```typescript
+public readonly sampleTestdir: string;
+```
+
+- *Type:* string
+- *Default:* "tests"
+
+Directory where sample tests are located.
 
 ---
 
@@ -5555,6 +5569,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pytest">pytest</a></code> | <code>boolean</code> | Include pytest tests. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pytestOptions">pytestOptions</a></code> | <code>projen.python.PytestOptions</code> | pytest options. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
@@ -6327,6 +6342,21 @@ public readonly sample: boolean;
 - *Default:* true
 
 Include sample code and test if the relevant directories don't exist.
+
+---
+
+##### `sampleTestdir`<sup>Optional</sup> <a name="sampleTestdir" id="projen.cdk8s.Cdk8sPythonOptions.property.sampleTestdir"></a>
+
+```typescript
+public readonly sampleTestdir: string;
+```
+
+- *Type:* string
+- *Default:* "tests"
+
+Location of sample tests.
+
+Typically the same directory where project tests will be located.
 
 ---
 

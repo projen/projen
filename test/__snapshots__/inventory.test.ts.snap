@@ -2301,6 +2301,23 @@ exports[`inventory 1`] = `
         "switch": "sample",
       },
       {
+        "default": ""tests"",
+        "docs": "Location of sample tests.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "sampleTestdir",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "sampleTestdir",
+        ],
+        "simpleType": "string",
+        "switch": "sample-testdir",
+      },
+      {
         "docs": "Additional fields to pass in the setup() function if using setuptools.",
         "featured": false,
         "fullType": {
@@ -2376,6 +2393,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": ""tests"",
+        "deprecated": true,
         "docs": "Python sources directory.",
         "featured": false,
         "fullType": {
@@ -9897,6 +9915,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "sample",
+      },
+      {
+        "default": ""tests"",
+        "docs": "Location of sample tests.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "sampleTestdir",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "sampleTestdir",
+        ],
+        "simpleType": "string",
+        "switch": "sample-testdir",
       },
       {
         "docs": "Additional fields to pass in the setup() function if using setuptools.",
@@ -31361,6 +31396,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "sample",
+      },
+      {
+        "default": ""tests"",
+        "docs": "Location of sample tests.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "sampleTestdir",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "sampleTestdir",
+        ],
+        "simpleType": "string",
+        "switch": "sample-testdir",
       },
       {
         "docs": "Additional fields to pass in the setup() function if using setuptools.",
