@@ -15,7 +15,7 @@ export interface PytestOptions {
    * Typically the same directory where project tests will be located.
    *
    * @default "tests"
-   * @deprecated Reference `sampleTestdir` on the project instead. To change the directory where tests are discovered from, use `testMatch`.
+   * @deprecated Reference `sampleTestdir` on the project instead; to change the directory where tests are discovered from, use `testMatch`.
    */
   readonly testdir?: string;
 

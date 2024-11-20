@@ -1053,7 +1053,7 @@ public readonly project: Project;
 
 ##### ~~`testdir`~~<sup>Required</sup> <a name="testdir" id="projen.python.Pytest.property.testdir"></a>
 
-- *Deprecated:* Use `testdir` on the project instead.
+- *Deprecated:* Use `sampleTestdir` on the project instead.
 
 ```typescript
 public readonly testdir: string;
@@ -4167,7 +4167,7 @@ Stop the testing process after the first N failures.
 
 ##### ~~`testdir`~~<sup>Optional</sup> <a name="testdir" id="projen.python.PytestOptions.property.testdir"></a>
 
-- *Deprecated:* Reference `testdir` on the project instead. To change the directory where tests are discovered from, use `testMatch`.
+- *Deprecated:* Reference `sampleTestdir` on the project instead; to change the directory where tests are discovered from, use `testMatch`.
 
 ```typescript
 public readonly testdir: string;
