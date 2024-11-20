@@ -83,7 +83,8 @@ export class AwsCdkPythonApp extends PythonProject {
       ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "app.py";
-    this.testdir = this.sampleTestdir = options.sampleTestdir ?? options.testdir ?? "tests";
+    this.testdir = this.sampleTestdir =
+      options.sampleTestdir ?? options.testdir ?? "tests";
 
     this.cdkTasks = new CdkTasks(this);
     this.postCompileTask.spawn(this.cdkTasks.synthSilent);
