@@ -616,7 +616,7 @@ export class TypeScriptProject extends NodeProject {
       return;
     }
 
-    const minNodeParsed = semver.parse(minNodeVersion);
+    const minNodeParsed = semver.min(minNodeVersion);
     if (minNodeParsed) {
       return this.addDevDeps(`${name}@^${minNodeParsed.major}`);
     }
