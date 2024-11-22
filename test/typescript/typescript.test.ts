@@ -625,6 +625,25 @@ describe("tsconfigDev", () => {
     );
   });
 
+  test.each([
+    ["20", "^20"],
+    ["18.3", "^18"],
+    ["20.13.1", "^20"],
+    ["22.0.0", "^22"],
+    ["16.0.0", "^16"],
+  ])("minNodeVersion %s sets @types/node version to %s", (minNodeVersion: string, typesVersion: string) => {
+    const project = new TypeScriptAppProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      typescriptVersion: "~5.4.0",
+      minNodeVersion
+    });
+
+    const packageJson = synthSnapshot(project)["package.json"];
+    expect(packageJson.devDependencies["@types/node"]).toBe(typesVersion);
+  });
+
   test("@types/node version will match the typescriptVersion", () => {
     const project = new TypeScriptAppProject({
       name: "test",
