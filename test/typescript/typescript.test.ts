@@ -631,7 +631,7 @@ describe("tsconfigDev", () => {
     ["20.13.1", "^20"],
     ["22.0.0", "^22"],
     ["16.0.0", "^16"],
-  ])("minNodeVersion %s sets @types/node version to %s", (minNodeVersion: string, typesVersion: string) => {
+  ])("minNodeVersion: %s sets @types/node version to %s", (minNodeVersion: string, typesVersion: string) => {
     const project = new TypeScriptAppProject({
       name: "test",
       projenrcTs: true,
