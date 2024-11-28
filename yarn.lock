@@ -2113,9 +2113,9 @@ ejs@^3.1.10:
     jake "^10.8.5"
 
 electron-to-chromium@^1.5.41:
-  version "1.5.65"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.65.tgz#e2b9d84d31e187a847e3ccdcfb415ddd4a3d1ea7"
-  integrity sha512-PWVzBjghx7/wop6n22vS2MLU8tKGd4Q91aCEGhG/TYmW6PP5OcSXcdnxTe1NNt0T66N8D6jxh4kC8UsdzOGaIw==
+  version "1.5.66"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.66.tgz#1e9b4bc7638ac02d3551eea1dbaeb0101ec5823f"
+  integrity sha512-pI2QF6+i+zjPbqRzJwkMvtvkdI7MjVbSh2g8dlMguDJIXEPw+kwasS1Jl+YGPEBfGVxsVgGUratAKymPdPo2vQ==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5523,9 +5523,9 @@ typescript@5.5.x, typescript@~5.5:
   integrity sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==
 
 typescript@next:
-  version "5.8.0-dev.20241126"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.0-dev.20241126.tgz#ff143e23360a1ccf9da82b8692347dba7753a1e7"
-  integrity sha512-DdPYP/1aTjosrrC6/DW8ED50oXBknS93D7TihD1iMmRuheri/HpW0BubYtq7JpNjsS+4wA+n5IgF66wC+5C3Lw==
+  version "5.8.0-dev.20241127"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.0-dev.20241127.tgz#e0f2381855ac9cc6ccdd1444b84a6330c5b8e924"
+  integrity sha512-TGb4/mmMCY5GOBuEry4xaOcDonyPwnxPc2zaR/8jgA6twK+iGEPsB6EeT+lSSrpOP906WPlFAn3XVQfQm4d7TQ==
 
 uglify-js@^3.1.4:
   version "3.19.3"
@@ -5707,9 +5707,9 @@ which-module@^2.0.0:
   integrity sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==
 
 which-typed-array@^1.1.14, which-typed-array@^1.1.15:
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.15.tgz#264859e9b11a649b388bfaaf4f767df1f779b38d"
-  integrity sha512-oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.16.tgz#db4db429c4706feca2f01677a144278e4a8c216b"
+  integrity sha512-g+N+GAWiRj66DngFwHvISJd+ITsyphZvD1vChfVg6cEdnzy53GzB3oy0fUNlvhz7H7+MiqhYr26qxQShCpKTTQ==
   dependencies:
     available-typed-arrays "^1.0.7"
     call-bind "^1.0.7"
