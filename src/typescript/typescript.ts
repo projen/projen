@@ -616,9 +616,11 @@ export class TypeScriptProject extends NodeProject {
       return;
     }
 
-    const minNodeParsed = semver.parse(minNodeVersion);
-    if (minNodeParsed) {
-      return this.addDevDeps(`${name}@^${minNodeParsed.major}`);
+    if (minNodeVersion) {
+      const minNodeParsed = semver.minVersion(minNodeVersion);
+      if (minNodeParsed) {
+        return this.addDevDeps(`${name}@^${minNodeParsed.major}`);
+      }
     }
 
     // coerce version, since the ts version likely something like ~5.3.0
