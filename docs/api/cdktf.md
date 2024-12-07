@@ -1586,6 +1586,7 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -2551,6 +2552,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.cdktf.ConstructLibraryCdktfOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 

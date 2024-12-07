@@ -1,6 +1,6 @@
 import * as path from "path";
 import { Component } from "../component";
-import { NodeProject } from "../javascript";
+import { NodePackageType, NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { normalizePersistedPath } from "../util";
@@ -983,6 +983,25 @@ export class Jest extends Component {
     this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`, {
       receiveArgs: true,
     });
+
+    // Add --experimental-vm-modules to NODE_OPTIONS if using ESM
+    // See https://jestjs.io/docs/next/ecmascript-modules
+    if (
+      this.project instanceof NodeProject &&
+      this.project.package.type === NodePackageType.ESM
+    ) {
+      // Note we ADD to NODE_OPTIONS, not replace it
+      // That way we don't disturb other things that might be in NODE_OPTIONS
+      // such as debug flags
+
+      // We use $( ... ) which is shell evaluated in RunTask.evalEnvironment()
+      // Otherwise we cannot include the existing NODE_OPTIONS
+      // TODO: Windows Support
+      this.project.testTask.env(
+        "NODE_OPTIONS",
+        "$(echo $NODE_OPTIONS --experimental-vm-modules)"
+      );
+    }
 
     const testWatch = this.project.tasks.tryFind("test:watch");
     if (!testWatch) {
