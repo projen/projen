@@ -4390,7 +4390,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -7541,7 +7541,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -11845,7 +11845,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -14783,7 +14783,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -17780,7 +17780,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -21579,7 +21579,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -24243,7 +24243,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -26792,7 +26792,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -29329,7 +29329,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -32945,7 +32945,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -35482,7 +35482,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -38162,7 +38162,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
@@ -40820,7 +40820,7 @@ exports[`inventory 1`] = `
         "switch": "peer-deps",
       },
       {
-        "default": ""7"",
+        "default": ""9"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
         "fullType": {
