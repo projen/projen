@@ -1141,10 +1141,10 @@ add-stream@^1.0.0:
   resolved "https://registry.yarnpkg.com/add-stream/-/add-stream-1.0.0.tgz#6a7990437ca736d5e1288db92bd3266d5f5cb2aa"
   integrity sha512-qQLMr+8o0WC4FZGQTcJiKBVC59JylcPSrTtk6usvmIDFUOCKegapy1VHQwRbFMOFyb/inzUVqHs+eMYKDM1YeQ==
 
-agent-base@^7.0.2, agent-base@^7.1.0:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-7.1.1.tgz#bdbded7dfb096b751a2a087eeeb9664725b2e317"
-  integrity sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA==
+agent-base@^7.1.0, agent-base@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-7.1.2.tgz#c83b029791b07a5301dce3ef825e6a328b5391cd"
+  integrity sha512-JVzqkCNRT+VfqzzgPWDPnwvDheSAUdiMUn3NoLXpDJF5lRqeJqyC9iGsAxIOAW+mzIdq+uP1TvcX6bMtrH0agg==
   dependencies:
     debug "^4.3.4"
 
@@ -2959,11 +2959,11 @@ http-proxy-agent@^7.0.2:
     debug "^4.3.4"
 
 https-proxy-agent@^7.0.5:
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.5.tgz#9e8b5013873299e11fab6fd548405da2d6c602b2"
-  integrity sha512-1e4Wqeblerz+tMKPIq2EMGiiWW1dIjZOksyHWSUm1rmuvw/how9hBHZ38lAGj5ID4Ik6EdkOw7NmWPy6LAwalw==
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.6.tgz#da8dfeac7da130b05c2ba4b59c9b6cd66611a6b9"
+  integrity sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==
   dependencies:
-    agent-base "^7.0.2"
+    agent-base "^7.1.2"
     debug "4"
 
 human-signals@^2.1.0:
@@ -5347,17 +5347,17 @@ through@2, "through@>=2.2.7 <3", through@^2.3.6:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
-tldts-core@^6.1.65:
-  version "6.1.65"
-  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.65.tgz#4b238e9658469f82a61787ee9135a3f083de68fa"
-  integrity sha512-Uq5t0N0Oj4nQSbU8wFN1YYENvMthvwU13MQrMJRspYCGLSAZjAfoBOJki5IQpnBM/WFskxxC/gIOTwaedmHaSg==
+tldts-core@^6.1.66:
+  version "6.1.66"
+  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.1.66.tgz#78f823137876f80bf8986028e8839473c2d114af"
+  integrity sha512-s07jJruSwndD2X8bVjwioPfqpIc1pDTzszPe9pL1Skbh4bjytL85KNQ3tolqLbCvpQHawIsGfFi9dgerWjqW4g==
 
 tldts@^6.1.32:
-  version "6.1.65"
-  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.65.tgz#a3b8ad62292c7465d79addba3ff4bdc5fa92e4f5"
-  integrity sha512-xU9gLTfAGsADQ2PcWee6Hg8RFAv0DnjMGVJmDnUmI8a9+nYmapMQix4afwrdaCtT+AqP4MaxEzu7cCrYmBPbzQ==
+  version "6.1.66"
+  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.1.66.tgz#34cb048acf51964c8f66139284a4c863d8150bb2"
+  integrity sha512-l3ciXsYFel/jSRfESbyKYud1nOw7WfhrBEF9I3UiarYk/qEaOOwu3qXNECHw4fHGHGTEOuhf/VdKgoDX5M/dhQ==
   dependencies:
-    tldts-core "^6.1.65"
+    tldts-core "^6.1.66"
 
 tmp@^0.0.33:
   version "0.0.33"
@@ -5549,9 +5549,9 @@ typescript@5.5.x, typescript@~5.5:
   integrity sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==
 
 typescript@next:
-  version "5.8.0-dev.20241206"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.0-dev.20241206.tgz#b673984118648da49fbd7febde1bb5c15bc0a253"
-  integrity sha512-0tcNBmbE6ML4usuL2ksFZpxWVrTQT1kIkvIOCzpA29NrG9AlgU0/5SyNlKKiPlkzhSuP97G9E5dPULBYlWE8eA==
+  version "5.8.0-dev.20241207"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.0-dev.20241207.tgz#b6144fdd5090da5fd9c9b7205bd96b438188dac5"
+  integrity sha512-yQ6n2+6pOnqMt7ycrcA5EQXaOxxOkoKirCdQJEF79Hjke53Y+zs9XIwBbA99Hf2CWT7lhAuv2MFifLwTLQQ1BA==
 
 uglify-js@^3.1.4:
   version "3.19.3"
