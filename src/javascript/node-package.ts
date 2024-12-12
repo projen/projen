@@ -484,8 +484,6 @@ export class NodePackage extends Component {
 
   /**
    * The version of PNPM to use if using PNPM as a package manager.
-   *
-   * @default "9"
    */
   public readonly pnpmVersion?: string;
 
