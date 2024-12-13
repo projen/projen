@@ -251,7 +251,7 @@ export interface NodePackageOptions {
   /**
    * The version of PNPM to use if using PNPM as a package manager.
    *
-   * @default "7"
+   * @default "9"
    */
   readonly pnpmVersion?: string;
 
@@ -484,8 +484,6 @@ export class NodePackage extends Component {
 
   /**
    * The version of PNPM to use if using PNPM as a package manager.
-   *
-   * @default "7"
    */
   public readonly pnpmVersion?: string;
 
@@ -671,7 +669,7 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
-    this.pnpmVersion = options.pnpmVersion ?? "7";
+    this.pnpmVersion = options.pnpmVersion ?? "9";
     this.addNodeEngine();
 
     this.addCodeArtifactLoginScript();

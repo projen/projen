@@ -3983,7 +3983,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "7"
+          version: "9"
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
       - name: build
@@ -4103,7 +4103,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "7"
+          version: "9"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
@@ -4179,7 +4179,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "7"
+          version: "9"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
