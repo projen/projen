@@ -16,12 +16,7 @@ describe("JsiiProject with default settings", () => {
     expect(output).toMatchSnapshot({
       "package.json": {
         devDependencies: {
-          jest: "^27",
-          jsii: "1.x",
-        },
-        resolutions: {
-          "@types/babel__traverse": "7.18.2",
-          "@types/prettier": "2.6.0",
+          jsii: "~5.6.0",
         },
       },
     });
@@ -42,66 +37,7 @@ describe("JsiiProject with default settings", () => {
   });
 });
 
-describe("JsiiProject with jsiiVersion: '^1.78.1'", () => {
-  it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-      jsiiVersion: "^1.78.1",
-      docgen: false,
-    });
-
-    const output = synthSnapshot(project);
-    expect(output).toMatchSnapshot({
-      "package.json": {
-        devDependencies: {
-          jest: "^27",
-          jsii: "^1.78.1",
-        },
-        resolutions: {
-          "@types/babel__traverse": "7.18.2",
-          "@types/prettier": "2.6.0",
-        },
-      },
-    });
-  });
-
-  describe.each([
-    ["16", undefined], // this is the default
-    ["18", "18.0.0"],
-    ["20", "20.0.0"],
-  ])("with node version %s", (_, minNodeVersion) => {
-    const originalCI = process.env.CI;
-    beforeAll(() => {
-      process.env.CI = "false";
-    });
-    afterAll(() => {
-      process.env.CI = originalCI;
-    });
-
-    it("compiles", () => {
-      const project = new JsiiProject({
-        defaultReleaseBranch: "main",
-        name: "test",
-        repositoryUrl: "github.com/projen/projen.dummy",
-        author: "Test",
-        authorAddress: "test@projen",
-        minNodeVersion,
-        packageManager: NodePackageManager.NPM,
-        docgen: false,
-      });
-
-      project.synth();
-
-      execProjenCLI(project.outdir, ["compile"]);
-    });
-  });
-});
-
-describe("JsiiProject with jsiiVersion: '~5.0.0'", () => {
+describe("JsiiProject with modern jsiiVersion", () => {
   it("synthesizes", () => {
     const project = new JsiiProject({
       defaultReleaseBranch: "main",
@@ -178,3 +114,41 @@ describe("JsiiProject with jsiiVersion: '*'", () => {
     execProjenCLI(project.outdir, ["compile"]);
   });
 });
+
+// matrix test
+describe.each([["~5.4.0"], ["~5.5.0"], ["~5.6.0"]])(
+  "JsiiProject with jsiiVersion: '%s'",
+  (jsiiVersion) => {
+    describe.each([
+      ["18", "18.0.0"],
+      ["20", "20.0.0"],
+      ["22", "22.0.0"],
+    ])("with node version %s", (_, minNodeVersion) => {
+      const originalCI = process.env.CI;
+      beforeAll(() => {
+        process.env.CI = "false";
+      });
+      afterAll(() => {
+        process.env.CI = originalCI;
+      });
+
+      it("compiles", () => {
+        const project = new JsiiProject({
+          defaultReleaseBranch: "main",
+          name: "test",
+          repositoryUrl: "github.com/projen/projen.dummy",
+          author: "Test",
+          authorAddress: "test@projen",
+          minNodeVersion,
+          packageManager: NodePackageManager.NPM,
+          docgen: false,
+          jsiiVersion,
+        });
+
+        project.synth();
+
+        execProjenCLI(project.outdir, ["compile"]);
+      });
+    });
+  }
+);
