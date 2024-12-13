@@ -22546,7 +22546,7 @@ public readonly NODEJS_20_X: LambdaRuntime;
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
-Node.js 22.x.
+Node.js 20.x.
 
 ---
 
@@ -22558,7 +22558,7 @@ public readonly NODEJS_22_X: LambdaRuntime;
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
-Node.js 20.x.
+Node.js 22.x.
 
 ---
 
