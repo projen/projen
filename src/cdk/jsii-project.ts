@@ -1,4 +1,3 @@
-import { Range, major } from "semver";
 import { Task } from "..";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
@@ -136,8 +135,8 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * and should remain on the same minor, so we recommend using a `~` dependency
    * (e.g. `~5.0.0`).
    *
-   * @default "1.x"
-   * @pjnew "~5.5.0"
+   * @default "~5.6.0"
+   * @pjnew "~5.6.0"
    */
   readonly jsiiVersion?: string;
 }
@@ -209,18 +208,13 @@ export class JsiiProject extends TypeScriptProject {
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
 
-    // True if jsii version 1.x is compatible with the requested version range.
-    const usesLegacyJsii =
-      options.jsiiVersion == null ||
-      (options.jsiiVersion !== "*" &&
-        new Range(options.jsiiVersion).intersects(new Range("1.x")));
+    const jsiiVersion = options.jsiiVersion ?? "~5.6.0";
 
     const defaultOptions: Partial<TypeScriptProjectOptions> = {
       repository: options.repositoryUrl,
       authorName: options.author,
       authorEmail,
       authorUrl,
-      jestOptions: usesLegacyJsii ? { jestVersion: "^27" } : undefined,
     };
 
     const forcedOptions = {
@@ -388,12 +382,9 @@ export class JsiiProject extends TypeScriptProject {
       this.addTargetToRelease("go", task, golang);
     }
 
-    const jsiiSuffix =
-      options.jsiiVersion === "*"
-        ? // If jsiiVersion is "*", don't specify anything so the user can manage.
-          ""
-        : // Otherwise, use `jsiiVersion` or fall back to `1.x`.
-          `@${options.jsiiVersion ?? "1.x"}`;
+    // If jsiiVersion is "*", don't specify anything so the user can manage.
+    // Otherwise, use `jsiiVersion`
+    const jsiiSuffix = jsiiVersion === "*" ? "" : `@${jsiiVersion}`;
     this.addDevDeps(
       `jsii${jsiiSuffix}`,
       `jsii-rosetta${jsiiSuffix}`,
@@ -417,47 +408,6 @@ export class JsiiProject extends TypeScriptProject {
     // jsii updates .npmignore, so we make it writable
     if (this.npmignore) {
       this.npmignore.readonly = false;
-    }
-
-    // When using jsii@1.x, we need to add some resolutions to avoid including
-    // TypeScript-3.9-incompatible dependencies that break the compiler.
-    if (usesLegacyJsii) {
-      // https://github.com/projen/projen/issues/2165
-      this.package.addPackageResolutions("@types/prettier@2.6.0");
-
-      // https://github.com/projen/projen/issues/2264
-      this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
-
-      const jsiiVersion = options.jsiiVersion ?? "1.x";
-      if (jsiiVersion.startsWith("1.")) {
-        const majorNodeVersion = major(this.package.minNodeVersion ?? "16.0.0");
-
-        // see https://github.com/projen/projen/issues/3324
-        const nodeTypesVersionRange = (majorVersion: number): string => {
-          switch (majorVersion) {
-            case 16:
-              return `^16 <= 16.18.78`;
-            case 18:
-              return `^18 <= 18.11.19`;
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-              this.logger.warn(
-                `jsii@${jsiiVersion} and @types/node@^${majorVersion} are incompatible. Falling back to @types/node@^18.`,
-                "Please upgrade to a modern version of jsii."
-              );
-              return `^18 <= 18.11.19`;
-            default:
-              return `^${majorVersion}`;
-          }
-        };
-
-        this.addDevDeps(
-          // https://github.com/projen/projen/pull/3076
-          `@types/node@${nodeTypesVersionRange(majorNodeVersion)}`
-        );
-      }
     }
   }
 
