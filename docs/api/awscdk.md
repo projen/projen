@@ -22464,6 +22464,7 @@ The Node.js runtime to use.
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_16_X">NODEJS_16_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 16.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_18_X">NODEJS_18_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 18.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_20_X">NODEJS_20_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 20.x. |
+| <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_22_X">NODEJS_22_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 22.x. |
 
 ---
 
@@ -22541,6 +22542,18 @@ Advanced notice: Node.js 18 runtime will be deprecated on Jul 31, 2025
 
 ```typescript
 public readonly NODEJS_20_X: LambdaRuntime;
+```
+
+- *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
+
+Node.js 22.x.
+
+---
+
+##### `NODEJS_22_X`<sup>Required</sup> <a name="NODEJS_22_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_22_X"></a>
+
+```typescript
+public readonly NODEJS_22_X: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>

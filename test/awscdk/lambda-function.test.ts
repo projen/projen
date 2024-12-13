@@ -160,7 +160,12 @@ test("runtime can be used to customize the lambda runtime Node 16.x and esbuild 
   });
 });
 
-test("runtime can be used to customize the lambda runtime Node 18.x and esbuild target", () => {
+
+test.each([
+  awscdk.LambdaRuntime.NODEJS_18_X,
+  awscdk.LambdaRuntime.NODEJS_20_X,
+  awscdk.LambdaRuntime.NODEJS_22_X,
+])("runtime can be used to customize the lambda runtime $functionRuntime and esbuild target", (runtime) => {
   const project = new TypeScriptProject({
     name: "hello",
     defaultReleaseBranch: "main",
@@ -168,7 +173,7 @@ test("runtime can be used to customize the lambda runtime Node 18.x and esbuild 
 
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "hello.lambda.ts"),
-    runtime: awscdk.LambdaRuntime.NODEJS_18_X,
+    runtime,
     cdkDeps: cdkDepsForProject(project),
   });
 
@@ -176,43 +181,14 @@ test("runtime can be used to customize the lambda runtime Node 18.x and esbuild 
   const generatedSource = snapshot["src/hello-function.ts"];
   const tasks = snapshot[".projen/tasks.json"].tasks;
   expect(generatedSource).toContain(
-    "runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),"
+    `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
   );
   expect(tasks["bundle:hello.lambda"]).toEqual({
     description: "Create a JavaScript bundle from src/hello.lambda.ts",
     name: "bundle:hello.lambda",
     steps: [
       {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
-      },
-    ],
-  });
-});
-
-test("runtime can be used to customize the lambda runtime Node 20.x and esbuild target", () => {
-  const project = new TypeScriptProject({
-    name: "hello",
-    defaultReleaseBranch: "main",
-  });
-
-  new awscdk.LambdaFunction(project, {
-    entrypoint: join("src", "hello.lambda.ts"),
-    runtime: awscdk.LambdaRuntime.NODEJS_20_X,
-    cdkDeps: cdkDepsForProject(project),
-  });
-
-  const snapshot = Testing.synth(project);
-  const generatedSource = snapshot["src/hello-function.ts"];
-  const tasks = snapshot[".projen/tasks.json"].tasks;
-  expect(generatedSource).toContain(
-    "runtime: new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS),"
-  );
-  expect(tasks["bundle:hello.lambda"]).toEqual({
-    description: "Create a JavaScript bundle from src/hello.lambda.ts",
-    name: "bundle:hello.lambda",
-    steps: [
-      {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node20" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
+        exec: `esbuild --bundle src/hello.lambda.ts --target="${runtime.esbuildTarget}" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*`,
       },
     ],
   });
