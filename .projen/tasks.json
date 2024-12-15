@@ -45,10 +45,10 @@
     },
     "bundle:task-runner": {
       "name": "bundle:task-runner",
-      "description": "Bundle the run-task script needed for \"projen eject\"",
+      "description": "Bundle the run-task.cjs script needed for \"projen eject\"",
       "steps": [
         {
-          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\" --banner:js=\"#!/usr/bin/env node\" --footer:js=\"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\""
+          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.cjs --bundle --platform=node --format=cjs --external:\"*/package.json\" --banner:js=\"#!/usr/bin/env node\" --footer:js=\"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\""
         }
       ]
     },

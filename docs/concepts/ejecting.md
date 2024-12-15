@@ -26,7 +26,7 @@ customization provided by projen are no longer suitable your project.
 ## Tasks
 
 A script will be added to your project so that you can continue using existing
-tasks by running `scripts/run-task <task>` in your command line (or running `npm
+tasks by running `scripts/run-task.cjs <task>` in your command line (or running `npm
 run <task>` in node-based projects) if you so choose. You must retain the
 `tasks.json` file found in the `.projen/` folder to use the task runner.
 

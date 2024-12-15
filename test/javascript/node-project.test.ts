@@ -1355,7 +1355,7 @@ test("node project can be ejected", () => {
   expect(outdir["package.json"].scripts.eject).toBeUndefined();
   expect(outdir["package.json"].scripts.default).toBeUndefined();
   expect(outdir["package.json"].devDependencies.projen).toBeUndefined();
-  expect(outdir["scripts/run-task"]).toBeDefined();
+  expect(outdir["scripts/run-task.cjs"]).toBeDefined();
   expect(outdir["foo/bar.json"]).not.toContain(PROJEN_MARKER);
   expect(outdir["sample.txt"]).not.toContain(PROJEN_MARKER);
   expect(outdir[".projenrc.js"]).toBeUndefined();
