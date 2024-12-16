@@ -1,8 +1,30 @@
 import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
+import {
+  NodePackageType,
+  TypescriptConfig,
+  TypescriptConfigExtends,
+} from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import { TypeScriptProject } from "../typescript";
+
+export enum ProjenRcRunner {
+  /**
+   * Use the default ts-node runner.
+   */
+  TS_NODE = "ts-node",
+
+  /**
+   * Use the ts-node runner with SWC.
+   */
+  TS_NODE_SWC = "ts-node-swc",
+
+  /**
+   * Use the tsx runner with esbuild.
+   */
+  TSX = "tsx",
+}
 
 export interface ProjenrcOptions {
   /**
@@ -23,8 +45,24 @@ export interface ProjenrcOptions {
    * Whether to use `SWC` for ts-node.
    *
    * @default false
+   * @deprecated use `runner: ProjenRcRunner.TS_NODE_SWC` instead
    */
   readonly swc?: boolean;
+
+  /**
+   * The runner to use for the projenrc file.
+   *
+   * **Warning**: `ts-node` will fail with `ERR_UNKNOWN_FILE_EXTENSION` if the
+   * package is set to ESM and the current node version is 18.19.x or newer.
+   *
+   * For this reason, `tsx` is forced if the package is set to ESM and node
+   * version is 18.19.x or newer, or you won't be able to run `projen` commands.
+   *
+   * @see https://github.com/TypeStrong/ts-node/issues/2094
+   *
+   * @default ProjenRcRunner.TS_NODE
+   */
+  readonly runner?: ProjenRcRunner;
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
@@ -34,9 +72,14 @@ const DEFAULT_FILENAME = ".projenrc.ts";
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
+  /**
+   * The tsconfig file JUST for the projenrc file. Inherits all settings except `includes` from `tsconfig.dev.json`
+   */
+  public readonly projenTsconfig?: TypescriptConfig;
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
-  private readonly _swc: boolean;
+  private readonly _runner: ProjenRcRunner;
+  // private readonly _swc: boolean;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
@@ -44,16 +87,81 @@ export class Projenrc extends ProjenrcFile {
 
     this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
-    this._swc = options.swc ?? false;
+    this._runner =
+      options.runner ?? options.swc
+        ? ProjenRcRunner.TS_NODE_SWC
+        : ProjenRcRunner.TS_NODE;
 
-    this.addDefaultTask();
+    const nodeVersionSplit = process.versions.node
+      .split(".")
+      .map((v) => parseInt(v, 10));
+    const node18_19_or_newer =
+      nodeVersionSplit[0] > 18 ||
+      (nodeVersionSplit[0] === 18 && nodeVersionSplit[1] >= 19);
+
+    if (
+      node18_19_or_newer &&
+      this._runner === ProjenRcRunner.TS_NODE &&
+      this._tsProject.package.type === NodePackageType.ESM
+    ) {
+      this.project.logger.warn(
+        "⚠️ Using ts-node with ESM in node 18.19.x or newer is broken. Using tsx instead. ⚠️"
+      );
+      this._runner = ProjenRcRunner.TSX;
+    }
+
+    if (this._runner === ProjenRcRunner.TSX) {
+      // construct a "tsconfig.projenrc.json" that's based on tsconfigDev, but only includes the projenrc file and
+      // files under "projenrc" directory, so we can call tsc and tsx on JUST the projenrc file
+      const PROJEN_TSCONFIG_FILENAME = "tsconfig.projenrc.json";
+      this.projenTsconfig = new TypescriptConfig(this._tsProject, {
+        fileName: PROJEN_TSCONFIG_FILENAME,
+        include: [
+          this.filePath,
+          "projenrc/**/*.ts", // gives a place for projenrc included files
+        ],
+        extends: TypescriptConfigExtends.fromTypescriptConfigs([
+          this._tsProject.tsconfigDev,
+        ]),
+        compilerOptions: {
+          noEmit: true,
+          emitDeclarationOnly: false,
+        },
+      });
+
+      this.addDefaultTsxTask();
+    } else {
+      this.addDefaultTsNodeTask();
+    }
 
     this.generateProjenrc();
   }
 
-  private addDefaultTask() {
+  private addDefaultTsxTask() {
+    const deps = ["tsx"];
+
+    if (!this.projenTsconfig) {
+      throw new Error("projenTsconfig is not defined");
+    }
+
+    // this is the task projen executes when running `projen` without a
+    // specific task (if this task is not defined, projen falls back to
+    // running "node .projenrc.js").
+    this._tsProject.addDevDeps(...deps);
+
+    // anywhere in the project tree.
+    this._tsProject.defaultTask?.exec(
+      `tsc --project ${this.projenTsconfig.fileName}`
+    );
+    this._tsProject.defaultTask?.exec(
+      `tsx --tsconfig ${this.projenTsconfig.fileName} ${this.filePath}`
+    );
+  }
+
+  private addDefaultTsNodeTask() {
     const deps = ["ts-node"];
-    if (this._swc) {
+    const swc = this._runner === ProjenRcRunner.TS_NODE_SWC;
+    if (swc) {
       deps.push("@swc/core");
     }
 
@@ -62,7 +170,7 @@ export class Projenrc extends ProjenrcFile {
     // running "node .projenrc.js").
     this._tsProject.addDevDeps(...deps);
 
-    const tsNode = this._swc ? "ts-node --swc" : "ts-node";
+    const tsNode = swc ? "ts-node --swc" : "ts-node";
 
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.

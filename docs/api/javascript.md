@@ -1683,6 +1683,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The package manager to use. |
 | <code><a href="#projen.javascript.NodePackage.property.packageName">packageName</a></code> | <code>string</code> | The name of the npm package. |
 | <code><a href="#projen.javascript.NodePackage.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command which executes "projen". |
+| <code><a href="#projen.javascript.NodePackage.property.type">type</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | The type of the package - ESM or CJS. |
 | <code><a href="#projen.javascript.NodePackage.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
 | <code><a href="#projen.javascript.NodePackage.property.license">license</a></code> | <code>string</code> | The SPDX license of this module. |
 | <code><a href="#projen.javascript.NodePackage.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
@@ -1906,6 +1907,20 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command which executes "projen".
+
+---
+
+##### `type`<sup>Required</sup> <a name="type" id="projen.javascript.NodePackage.property.type"></a>
+
+```typescript
+public readonly type: NodePackageType;
+```
+
+- *Type:* <a href="#projen.javascript.NodePackageType">NodePackageType</a>
+
+The type of the package - ESM or CJS.
+
+> [https://nodejs.org/api/packages.html#type](https://nodejs.org/api/packages.html#type)
 
 ---
 
@@ -7590,6 +7605,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.packageType">packageType</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -8044,6 +8060,19 @@ The "name" in package.json.
 
 ---
 
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.javascript.NodePackageOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* <a href="#projen.javascript.NodePackageType">NodePackageType</a>
+- *Default:* NodePackageType.CJS
+
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
+
+---
+
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.javascript.NodePackageOptions.property.peerDependencyOptions"></a>
 
 ```typescript
@@ -8250,6 +8279,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.packageType">packageType</a></code> | <code><a href="#projen.javascript.NodePackageType">NodePackageType</a></code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -9178,6 +9208,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.javascript.NodeProjectOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* <a href="#projen.javascript.NodePackageType">NodePackageType</a>
+- *Default:* NodePackageType.CJS
+
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 
@@ -14709,6 +14752,35 @@ Use `pnpm` as the package manager.
 ##### `BUN` <a name="BUN" id="projen.javascript.NodePackageManager.BUN"></a>
 
 Use `bun` as the package manager.
+
+---
+
+
+### NodePackageType <a name="NodePackageType" id="projen.javascript.NodePackageType"></a>
+
+Used to set the `type` field in `package.json`.
+
+> [https://nodejs.org/api/packages.html#type](https://nodejs.org/api/packages.html#type)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodePackageType.ESM">ESM</a></code> | ESM Set `type` to `module` to enable ESM. |
+| <code><a href="#projen.javascript.NodePackageType.CJS">CJS</a></code> | CJS Unsets `type` to be interpreted as `commonjs` to enable CJS. |
+
+---
+
+##### `ESM` <a name="ESM" id="projen.javascript.NodePackageType.ESM"></a>
+
+ESM Set `type` to `module` to enable ESM.
+
+---
+
+
+##### `CJS` <a name="CJS" id="projen.javascript.NodePackageType.CJS"></a>
+
+CJS Unsets `type` to be interpreted as `commonjs` to enable CJS.
 
 ---
 

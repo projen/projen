@@ -161,6 +161,7 @@ The project.
 | <code><a href="#projen.typescript.Projenrc.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.typescript.Projenrc.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.typescript.Projenrc.property.filePath">filePath</a></code> | <code>string</code> | The path of the projenrc file. |
+| <code><a href="#projen.typescript.Projenrc.property.projenTsconfig">projenTsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | The tsconfig file JUST for the projenrc file. |
 
 ---
 
@@ -195,6 +196,20 @@ public readonly filePath: string;
 - *Type:* string
 
 The path of the projenrc file.
+
+---
+
+##### `projenTsconfig`<sup>Optional</sup> <a name="projenTsconfig" id="projen.typescript.Projenrc.property.projenTsconfig"></a>
+
+```typescript
+public readonly projenTsconfig: TypescriptConfig;
+```
+
+- *Type:* projen.javascript.TypescriptConfig
+
+The tsconfig file JUST for the projenrc file.
+
+Inherits all settings except `includes` from `tsconfig.dev.json`
 
 ---
 
@@ -5069,6 +5084,7 @@ const projenrcOptions: typescript.ProjenrcOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.typescript.ProjenrcOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
 | <code><a href="#projen.typescript.ProjenrcOptions.property.projenCodeDir">projenCodeDir</a></code> | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. |
+| <code><a href="#projen.typescript.ProjenrcOptions.property.runner">runner</a></code> | <code><a href="#projen.typescript.ProjenRcRunner">ProjenRcRunner</a></code> | The runner to use for the projenrc file. |
 | <code><a href="#projen.typescript.ProjenrcOptions.property.swc">swc</a></code> | <code>boolean</code> | Whether to use `SWC` for ts-node. |
 
 ---
@@ -5099,7 +5115,30 @@ A directory tree that may contain *.ts files that can be referenced from your pr
 
 ---
 
-##### `swc`<sup>Optional</sup> <a name="swc" id="projen.typescript.ProjenrcOptions.property.swc"></a>
+##### `runner`<sup>Optional</sup> <a name="runner" id="projen.typescript.ProjenrcOptions.property.runner"></a>
+
+```typescript
+public readonly runner: ProjenRcRunner;
+```
+
+- *Type:* <a href="#projen.typescript.ProjenRcRunner">ProjenRcRunner</a>
+- *Default:* ProjenRcRunner.TS_NODE
+
+The runner to use for the projenrc file.
+
+**Warning**: `ts-node` will fail with `ERR_UNKNOWN_FILE_EXTENSION` if the
+package is set to ESM and the current node version is 18.19.x or newer.
+
+For this reason, `tsx` is forced if the package is set to ESM and node
+version is 18.19.x or newer, or you won't be able to run `projen` commands.
+
+> [https://github.com/TypeStrong/ts-node/issues/2094](https://github.com/TypeStrong/ts-node/issues/2094)
+
+---
+
+##### ~~`swc`~~<sup>Optional</sup> <a name="swc" id="projen.typescript.ProjenrcOptions.property.swc"></a>
+
+- *Deprecated:* use `runner` instead
 
 ```typescript
 public readonly swc: boolean;
@@ -5128,7 +5167,7 @@ const projenrcTsOptions: typescript.ProjenrcTsOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.typescript.ProjenrcTsOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
 | <code><a href="#projen.typescript.ProjenrcTsOptions.property.projenCodeDir">projenCodeDir</a></code> | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. |
-| <code><a href="#projen.typescript.ProjenrcTsOptions.property.tsconfigFileName">tsconfigFileName</a></code> | <code>string</code> | The name of the tsconfig file that will be used by ts-node when compiling projen source files. |
+| <code><a href="#projen.typescript.ProjenrcTsOptions.property.tsconfigFileName">tsconfigFileName</a></code> | <code>string</code> | The name of the tsconfig file that will be used by tsx when compiling projen source files. |
 
 ---
 
@@ -5167,7 +5206,7 @@ public readonly tsconfigFileName: string;
 - *Type:* string
 - *Default:* "tsconfig.projen.json"
 
-The name of the tsconfig file that will be used by ts-node when compiling projen source files.
+The name of the tsconfig file that will be used by tsx when compiling projen source files.
 
 ---
 
@@ -5423,6 +5462,7 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -6473,6 +6513,21 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### ~~`packageType`~~<sup>Optional</sup> <a name="packageType" id="projen.typescript.TypeScriptLibraryProjectOptions.property.packageType"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 
@@ -7978,6 +8033,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.packageType">packageType</a></code> | <code>projen.javascript.NodePackageType</code> | Package's type (NodePackageType.ESM or NodePackageType.CJS). |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
@@ -8924,6 +8980,19 @@ public readonly packageName: string;
 - *Default:* defaults to project name
 
 The "name" in package.json.
+
+---
+
+##### `packageType`<sup>Optional</sup> <a name="packageType" id="projen.typescript.TypeScriptProjectOptions.property.packageType"></a>
+
+```typescript
+public readonly packageType: NodePackageType;
+```
+
+- *Type:* projen.javascript.NodePackageType
+- *Default:* NodePackageType.CJS
+
+Package's type (NodePackageType.ESM or NodePackageType.CJS).
 
 ---
 
@@ -10427,4 +10496,38 @@ new typescript.TypedocDocgen(project: TypeScriptProject)
 
 
 
+
+## Enums <a name="Enums" id="Enums"></a>
+
+### ProjenRcRunner <a name="ProjenRcRunner" id="projen.typescript.ProjenRcRunner"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.ProjenRcRunner.TS_NODE">TS_NODE</a></code> | Use the default ts-node runner. |
+| <code><a href="#projen.typescript.ProjenRcRunner.TS_NODE_SWC">TS_NODE_SWC</a></code> | Use the ts-node runner with SWC. |
+| <code><a href="#projen.typescript.ProjenRcRunner.TSX">TSX</a></code> | Use the tsx runner with esbuild. |
+
+---
+
+##### `TS_NODE` <a name="TS_NODE" id="projen.typescript.ProjenRcRunner.TS_NODE"></a>
+
+Use the default ts-node runner.
+
+---
+
+
+##### `TS_NODE_SWC` <a name="TS_NODE_SWC" id="projen.typescript.ProjenRcRunner.TS_NODE_SWC"></a>
+
+Use the ts-node runner with SWC.
+
+---
+
+
+##### `TSX` <a name="TSX" id="projen.typescript.ProjenRcRunner.TSX"></a>
+
+Use the tsx runner with esbuild.
+
+---
 
