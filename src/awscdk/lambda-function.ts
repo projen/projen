@@ -358,6 +358,14 @@ export class LambdaRuntime {
     "node20"
   );
 
+  /**
+   * Node.js 22.x
+   */
+  public static readonly NODEJS_22_X = new LambdaRuntime(
+    "nodejs22.x",
+    "node22"
+  );
+
   public readonly esbuildPlatform = "node";
 
   public readonly defaultExternals: string[];

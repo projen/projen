@@ -97,6 +97,8 @@ export class LambdaExtension extends Component {
     }
 
     const compatibleRuntimes = options.compatibleRuntimes ?? [
+      LambdaRuntime.NODEJS_22_X,
+      LambdaRuntime.NODEJS_20_X,
       LambdaRuntime.NODEJS_18_X,
       LambdaRuntime.NODEJS_16_X,
       LambdaRuntime.NODEJS_14_X,

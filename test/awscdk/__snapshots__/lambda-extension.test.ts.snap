@@ -25,6 +25,8 @@ export class ExampleLayerVersion extends lambda.LayerVersion {
         new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),
         new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
         new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+        new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS),
+        new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       ],
       code: lambda.Code.fromAsset(path.join(__dirname,
         '../assets/example.lambda-extension')),
