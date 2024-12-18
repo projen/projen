@@ -44,14 +44,15 @@ export function setupIntegTest(project: NodeProject) {
 export function setupBundleTaskRunner(project: Project) {
   // build `run-task` script needed for "projen eject" functionality
   // TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
-  const taskRunnerPath = "lib/run-task.js";
+  const taskRunnerPath = "lib/run-task.cjs";
   const task = project.addTask("bundle:task-runner", {
-    description: 'Bundle the run-task script needed for "projen eject"',
+    description: 'Bundle the run-task.cjs script needed for "projen eject"',
     exec:
       `esbuild src/task-runtime.ts ` +
       `--outfile=${taskRunnerPath} ` +
       `--bundle ` +
       `--platform=node ` +
+      `--format=cjs ` +
       `--external:"*/package.json" ` +
       `--banner:js="#!/usr/bin/env node" ` +
       `--footer:js="const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);"`,

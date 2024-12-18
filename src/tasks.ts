@@ -116,11 +116,11 @@ export class Tasks extends Component {
         recursive: true,
       });
       fs.copyFileSync(
-        path.join(__dirname, "..", "lib", "run-task.js"),
-        path.join(this.project.outdir, "scripts", "run-task")
+        path.join(__dirname, "..", "lib", "run-task.cjs"),
+        path.join(this.project.outdir, "scripts", "run-task.cjs")
       );
       fs.chmodSync(
-        path.join(this.project.outdir, "scripts", "run-task"),
+        path.join(this.project.outdir, "scripts", "run-task.cjs"),
         "755"
       );
     }

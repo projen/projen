@@ -283,7 +283,7 @@ export class Project extends Construct {
 
     this._projenCommand = options.projenCommand;
     if (this.ejected) {
-      this._projenCommand = "scripts/run-task";
+      this._projenCommand = "scripts/run-task.cjs";
     }
 
     this.outdir = outdir;
