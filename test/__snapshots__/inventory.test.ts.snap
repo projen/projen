@@ -6936,7 +6936,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.6.0"",
+        "initialValue": ""~5.7.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -14231,7 +14231,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.6.0"",
+        "initialValue": ""~5.7.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -17228,7 +17228,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.6.0"",
+        "initialValue": ""~5.7.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -21027,7 +21027,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.6.0"",
+        "initialValue": ""~5.7.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
