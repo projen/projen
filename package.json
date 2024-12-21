@@ -60,7 +60,7 @@
     "@typescript-eslint/parser": "^8",
     "all-contributors-cli": "^6.26.1",
     "commit-and-tag-version": "^12",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.24.2",
     "eslint": "^9",
     "eslint-config-prettier": "^8.10.0",
     "eslint-import-resolver-typescript": "^2.7.1",
