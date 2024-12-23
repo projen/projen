@@ -11,6 +11,7 @@ import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
+import { Uv } from "./uv";
 import { Venv, VenvOptions } from "./venv";
 import { GitHubProject, GitHubProjectOptions } from "../github";
 import {
@@ -119,6 +120,15 @@ export interface PythonProjectOptions
    * @featured
    */
   readonly poetry?: boolean;
+
+  /**
+   * Use uv to manage your project dependencies, virtual environment, and
+   * (optional) packaging/publishing.
+   *
+   * @default false
+   * @featured
+   */
+  readonly uv?: boolean;
 
   // -- optional components --
 
@@ -267,14 +277,22 @@ export class PythonProject extends GitHubProject {
     }
 
     const poetry = options.poetry ?? false;
-    const pip = options.pip ?? !poetry;
-    const venv = options.venv ?? !poetry;
+    const uv = options.uv ?? false;
+    const pip = options.pip ?? (!poetry && !uv);
+    const venv = options.venv ?? (!poetry && !uv);
     const setuptools =
-      options.setuptools ?? (!poetry && this.projectType === ProjectType.LIB);
+      options.setuptools ??
+      (!poetry && !uv && this.projectType === ProjectType.LIB);
 
-    if (poetry && (pip || venv || setuptools)) {
+    if (poetry && (pip || venv || setuptools || uv)) {
       throw new Error(
-        "poetry is true - pip, venv, and setuptools must be undefined or false"
+        "poetry is true - pip, venv, setuptools, and uv must be undefined or false"
+      );
+    }
+
+    if (uv && (poetry || pip || venv || setuptools)) {
+      throw new Error(
+        "uv is true - poetry, pip, venv, and setuptools must be undefined or false"
       );
     }
 
@@ -319,6 +337,23 @@ export class PythonProject extends GitHubProject {
         setupConfig: options.setupConfig,
         pythonExec: options.pythonExec,
       });
+    }
+
+    if (uv) {
+      const uvProject = new Uv(this, {
+        version: options.version,
+        description: options.description,
+        authorName: options.authorName,
+        authorEmail: options.authorEmail,
+        license: options.license,
+        homepage: options.homepage,
+        classifiers: options.classifiers,
+        deps: options.deps,
+        devDeps: options.devDeps,
+      });
+      this.depsManager = uvProject;
+      this.envManager = uvProject;
+      this.packagingManager = uvProject;
     }
 
     if (poetry) {
