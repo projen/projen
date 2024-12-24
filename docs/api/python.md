@@ -5035,6 +5035,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
 | <code><a href="#projen.python.PythonProjectOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
+| <code><a href="#projen.python.PythonProjectOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Options related to uv. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venvOptions">venvOptions</a></code> | <code><a href="#projen.python.VenvOptions">VenvOptions</a></code> | Venv options. |
 
@@ -5846,6 +5847,19 @@ public readonly uv: boolean;
 - *Default:* false
 
 Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
+
+---
+
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PythonProjectOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+- *Default:* default options
+
+Options related to uv.
 
 ---
 
@@ -9728,7 +9742,7 @@ An array of packages (may be dynamically generated).
 
 ### IPythonDeps <a name="IPythonDeps" id="projen.python.IPythonDeps"></a>
 
-- *Implemented By:* <a href="#projen.python.Pip">Pip</a>, <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.IPythonDeps">IPythonDeps</a>
+- *Implemented By:* <a href="#projen.python.Pip">Pip</a>, <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Uv">Uv</a>, <a href="#projen.python.IPythonDeps">IPythonDeps</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 
@@ -9802,7 +9816,7 @@ A task that installs and updates dependencies.
 
 ### IPythonEnv <a name="IPythonEnv" id="projen.python.IPythonEnv"></a>
 
-- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Venv">Venv</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>
+- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Uv">Uv</a>, <a href="#projen.python.Venv">Venv</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 
@@ -9823,7 +9837,7 @@ Initializes the virtual environment if it doesn't exist (called during post-synt
 
 ### IPythonPackaging <a name="IPythonPackaging" id="projen.python.IPythonPackaging"></a>
 
-- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Setuptools">Setuptools</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
+- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Setuptools">Setuptools</a>, <a href="#projen.python.Uv">Uv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
 
 
 #### Properties <a name="Properties" id="Properties"></a>
