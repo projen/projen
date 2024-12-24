@@ -1,7 +1,6 @@
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonExecutableOptions } from "./python-project";
+import { IPythonPackaging } from "./python-packaging";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -22,6 +21,7 @@ interface UvTomlStructure {
     classifiers?: string[];
     keywords?: string[];
     urls?: { [key: string]: string };
+    license?: string;
   };
   "dependency-groups"?: {
     [key: string]: string[];
@@ -29,7 +29,7 @@ interface UvTomlStructure {
   tool: {
     uv: {
       "default-groups": string[];
-      index: {
+      index?: {
         name: string;
         "publish-url": string;
         url: string;
@@ -39,38 +39,88 @@ interface UvTomlStructure {
 }
 
 /**
- * uv-specific options.
- * @see https://github.com/astral-sh/uv
+ * Base options for UV project configuration
  */
-export interface UvPyprojectOptionsWithoutDeps {
+export interface UvBaseOptions {
+  /**
+   * Name of the package
+   */
   readonly name?: string;
+
+  /**
+   * Version of the package
+   */
   readonly version?: string;
+
+  /**
+   * Description of the package
+   */
   readonly description?: string;
+
+  /**
+   * License of the package
+   */
   readonly license?: string;
-  readonly maintainers?: string[];
-  readonly readme?: string;
+
+  /**
+   * Name of the package author
+   */
+  readonly authorName?: string;
+
+  /**
+   * Email of the package author
+   */
+  readonly authorEmail?: string;
+
+  /**
+   * Homepage URL of the package
+   */
   readonly homepage?: string;
+
+  /**
+   * Repository URL of the package
+   */
   readonly repository?: string;
+
+  /**
+   * Documentation URL of the package
+   */
   readonly documentation?: string;
+
+  /**
+   * Keywords for the package
+   */
   readonly keywords?: string[];
+
+  /**
+   * Python package classifiers
+   * @see https://pypi.org/classifiers/
+   */
   readonly classifiers?: string[];
-  readonly packages?: string[];
-  readonly include?: string[];
-  readonly exclude?: string[];
-  readonly scripts?: { [key: string]: string };
-  readonly extras?: { [key: string]: string[] };
+
+  /**
+   * Additional URLs associated with the package
+   */
   readonly urls?: { [key: string]: string };
+
+  /**
+   * Python version requirement string
+   */
   readonly requiresPython?: string;
-  readonly authorName: string;
-  readonly authorEmail: string;
+
+  /**
+   * Path to the readme file
+   */
+  readonly readme?: string;
 }
 
-export interface UvOptions
-  extends PythonPackagingOptions,
-    PythonExecutableOptions {
+/**
+ * Options for UV project
+ */
+export interface UvOptions {
   /**
    * Python version to use for the project.
-   * @default "3.8"
+   * @default "3.12"
    */
   readonly pythonVersion?: string;
 
@@ -87,6 +137,33 @@ export interface UvOptions
    * @default []
    */
   readonly devDeps?: string[];
+
+  /**
+   * Package metadata
+   */
+  readonly metadata?: UvBaseOptions;
+}
+
+/**
+ * Options for UV pyproject.toml configuration
+ */
+export interface UvPyprojectOptions extends UvBaseOptions {
+  /**
+   * Python version to use
+   */
+  readonly pythonVersion?: string;
+
+  /**
+   * A list of dependencies for the project.
+   * Each entry should be in the format: `<module>@<semver>`
+   */
+  readonly dependencies?: string[];
+
+  /**
+   * A list of development dependencies for the project.
+   * Each entry should be in the format: `<module>@<semver>`
+   */
+  readonly devDependencies?: string[];
 }
 
 /**
@@ -105,11 +182,11 @@ export class Uv
 
   constructor(project: Project, options: UvOptions) {
     super(project);
-    this.pythonVersion = options.pythonVersion ?? "3.8";
+    this.pythonVersion = options.pythonVersion ?? "3.12";
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
-      exec: "uv lock",
+      exec: "uv sync && uv lock",
     });
 
     this.installCiTask = project.addTask("install:ci", {
@@ -147,40 +224,29 @@ export class Uv
 
     this.pyProject = new UvPyproject(project, {
       name: project.name,
-      version: options.version,
-      description: options.description ?? "",
-      license: options.license,
-      authorName: options.authorName,
-      authorEmail: options.authorEmail,
-      homepage: options.homepage,
-      classifiers: options.classifiers,
       dependencies: this.synthDependencies(),
       devDependencies: this.synthDevDependencies(),
       pythonVersion: this.pythonVersion,
+      ...options.metadata,
     });
   }
 
-  private synthDependencies(): { [key: string]: string } {
-    const dependencies: { [key: string]: string } = {};
-    for (const pkg of this.project.deps.all) {
-      if (pkg.type === DependencyType.RUNTIME && pkg.name !== "python") {
-        dependencies[pkg.name] = pkg.version ?? "*";
-      }
-    }
-    return dependencies;
+  private synthDependencies(): string[] {
+    return this.project.deps.all
+      .filter(
+        (pkg) => pkg.type === DependencyType.RUNTIME && pkg.name !== "python"
+      )
+      .map((pkg) => (pkg.version ? `${pkg.name}==${pkg.version}` : pkg.name));
   }
 
-  private synthDevDependencies(): { [key: string]: string } {
-    const dependencies: { [key: string]: string } = {};
-    for (const pkg of this.project.deps.all) {
-      if (
-        [DependencyType.DEVENV, DependencyType.TEST].includes(pkg.type) &&
-        pkg.name !== "python"
-      ) {
-        dependencies[pkg.name] = pkg.version ?? "*";
-      }
-    }
-    return dependencies;
+  private synthDevDependencies(): string[] {
+    return this.project.deps.all
+      .filter(
+        (pkg) =>
+          [DependencyType.DEVENV, DependencyType.TEST].includes(pkg.type) &&
+          pkg.name !== "python"
+      )
+      .map((pkg) => (pkg.version ? `${pkg.name}==${pkg.version}` : pkg.name));
   }
 
   public addDependency(spec: string): void {
@@ -227,26 +293,6 @@ export class Uv
   }
 }
 
-export interface UvPyprojectOptions extends UvPyprojectOptionsWithoutDeps {
-  /**
-   * A list of dependencies for the project.
-   *
-   * The python version for which your package is compatible is also required.
-   *
-   * @example { requests: "^2.13.0" }
-   */
-  readonly dependencies?: { [key: string]: any };
-
-  /**
-   * A list of development dependencies for the project.
-   *
-   * @example { requests: "^2.13.0" }
-   */
-  readonly devDependencies?: { [key: string]: any };
-
-  readonly pythonVersion?: string;
-}
-
 /**
  * Represents configuration of a pyproject.toml file for a uv project.
  */
@@ -258,63 +304,58 @@ export class UvPyproject extends Component {
     super(project);
     this.pythonVersion = options.pythonVersion ?? "3.12";
 
-    const { dependencies, devDependencies, ...otherOptions } = options;
-
-    // If no authors provided, add a default one from project options
-    const authors: { name: string; email?: string }[] = [
-      { name: otherOptions.authorName, email: otherOptions.authorEmail },
-    ];
-
     // Format dependencies in UV style
-    const formattedDependencies = dependencies
-      ? Object.entries(dependencies).map(([name, version]) => {
-          // Handle exact version case (no prefix)
-          if (!version.startsWith("^") && !version.startsWith("~")) {
-            if (version === "*") {
-              return name; // Just the package name means any version
-            }
-            return `${name}==${version}`;
-          }
-          // Handle ^x.y.z or ~x.y.z case
-          const cleanVersion = version.replace(/[\^~]/, "");
-          const majorVersion = Number.parseInt(cleanVersion.split(".")[0]);
-          return `${name}>=${cleanVersion}, <${majorVersion + 1}.0.0`;
-        })
-      : [];
+    const formattedDependencies =
+      options.dependencies?.map((dep) => {
+        const [name, version] = dep.split("@");
+        if (!version || version === "*") {
+          return name;
+        }
+        if (!version.startsWith("^") && !version.startsWith("~")) {
+          return `${name}==${version}`;
+        }
+        const cleanVersion = version.replace(/[\^~]/, "");
+        const majorVersion = Number.parseInt(cleanVersion.split(".")[0]);
+        return `${name}>=${cleanVersion}, <${majorVersion + 1}.0.0`;
+      }) ?? [];
 
     // Format dev dependencies in UV style
-    const formattedDevDependencies = devDependencies
-      ? Object.entries(devDependencies).map(([name, version]) => {
-          // Handle exact version case (no prefix)
-          if (!version.startsWith("^") && !version.startsWith("~")) {
-            if (version === "*") {
-              return name; // Just the package name means any version
-            }
-            return `${name}==${version}`;
-          }
-          // Handle ^x.y.z or ~x.y.z case
-          const cleanVersion = version.replace(/[\^~]/, "");
-          const majorVersion = Number.parseInt(cleanVersion.split(".")[0]);
-          return `${name}>=${cleanVersion}, <${majorVersion + 1}.0.0`;
-        })
+    const formattedDevDependencies =
+      options.devDependencies?.map((dep) => {
+        const [name, version] = dep.split("@");
+        if (!version || version === "*") {
+          return name;
+        }
+        if (!version.startsWith("^") && !version.startsWith("~")) {
+          return `${name}==${version}`;
+        }
+        const cleanVersion = version.replace(/[\^~]/, "");
+        const majorVersion = Number.parseInt(cleanVersion.split(".")[0]);
+        return `${name}>=${cleanVersion}, <${majorVersion + 1}.0.0`;
+      }) ?? [];
+
+    // If no authors provided, use empty array
+    const authors: { name: string; email?: string }[] = options.authorName
+      ? [{ name: options.authorName, email: options.authorEmail }]
       : [];
 
     const tomlStructure: UvTomlStructure = {
       project: {
-        name: otherOptions.name,
-        version: otherOptions.version,
-        description: otherOptions.description || "",
-        readme: otherOptions.readme || "README.md",
-        authors: authors,
+        name: options.name,
+        version: options.version,
+        description: options.description || "",
+        readme: options.readme || "README.md",
+        authors,
         "requires-python":
-          otherOptions.requiresPython ||
+          options.requiresPython ||
           `>=${this.pythonVersion},<${
             Number(this.pythonVersion.split(".")[0]) + 1
           }.0`,
         dependencies: formattedDependencies,
-        classifiers: otherOptions.classifiers,
-        keywords: otherOptions.keywords,
-        urls: otherOptions.urls,
+        classifiers: options.classifiers,
+        keywords: options.keywords,
+        urls: options.urls,
+        license: options.license,
       },
       "dependency-groups":
         formattedDevDependencies.length > 0
@@ -325,13 +366,6 @@ export class UvPyproject extends Component {
       tool: {
         uv: {
           "default-groups": [],
-          index: [
-            {
-              name: "testpypi",
-              "publish-url": "https://test.pypi.org/legacy/",
-              url: "https://test.pypi.org/simple",
-            },
-          ],
         },
       },
     };

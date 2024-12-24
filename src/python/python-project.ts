@@ -11,7 +11,7 @@ import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
-import { Uv } from "./uv";
+import { Uv, UvOptions } from "./uv";
 import { Venv, VenvOptions } from "./venv";
 import { GitHubProject, GitHubProjectOptions } from "../github";
 import {
@@ -205,6 +205,12 @@ export interface PythonProjectOptions
    * @default - default options
    */
   readonly projenrcTsOptions?: ProjenrcTsOptions;
+
+  /**
+   * Options related to uv.
+   * @default - default options
+   */
+  readonly uvOptions?: UvOptions;
 }
 
 /**
@@ -341,15 +347,19 @@ export class PythonProject extends GitHubProject {
 
     if (uv) {
       const uvProject = new Uv(this, {
-        version: options.version,
-        description: options.description,
-        authorName: options.authorName,
-        authorEmail: options.authorEmail,
-        license: options.license,
-        homepage: options.homepage,
-        classifiers: options.classifiers,
+        pythonVersion: options.uvOptions?.pythonVersion,
         deps: options.deps,
         devDeps: options.devDeps,
+        metadata: {
+          version: options.version,
+          description: options.description,
+          authorName: options.authorName,
+          authorEmail: options.authorEmail,
+          license: options.license,
+          homepage: options.homepage,
+          classifiers: options.classifiers,
+        },
+        ...options.uvOptions,
       });
       this.depsManager = uvProject;
       this.envManager = uvProject;
