@@ -14703,6 +14703,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.uvOptions">uvOptions</a></code> | <code>projen.python.UvOptions</code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -14720,6 +14721,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
@@ -15282,6 +15284,18 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.awscdk.AwsCdkPythonAppOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* projen.python.UvOptions
+
+Additional options to set for uv if using uv.
+
+---
+
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec"></a>
 
 ```typescript
@@ -15524,6 +15538,19 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.awscdk.AwsCdkPythonAppOptions.property.uv"></a>
+
+```typescript
+public readonly uv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
 
 ---
 
