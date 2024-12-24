@@ -2427,6 +2427,25 @@ exports[`inventory 1`] = `
         "switch": "uv",
       },
       {
+        "default": "- default options",
+        "docs": "Options related to uv.",
+        "featured": false,
+        "fqn": "projen.python.UvOptions",
+        "fullType": {
+          "fqn": "projen.python.UvOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "uvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "uvOptions",
+        ],
+        "simpleType": "UvOptions",
+        "switch": "uv-options",
+      },
+      {
         "default": "- true, unless poetry is true, then false",
         "docs": "Use venv to manage a virtual environment for installing dependencies inside.",
         "featured": true,
@@ -10040,6 +10059,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "uv",
+      },
+      {
+        "default": "- default options",
+        "docs": "Options related to uv.",
+        "featured": false,
+        "fqn": "projen.python.UvOptions",
+        "fullType": {
+          "fqn": "projen.python.UvOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "uvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "uvOptions",
+        ],
+        "simpleType": "UvOptions",
+        "switch": "uv-options",
       },
       {
         "default": "- true, unless poetry is true, then false",
@@ -31538,6 +31576,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "uv",
+      },
+      {
+        "default": "- default options",
+        "docs": "Options related to uv.",
+        "featured": false,
+        "fqn": "projen.python.UvOptions",
+        "fullType": {
+          "fqn": "projen.python.UvOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "uvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": [
+          "uvOptions",
+        ],
+        "simpleType": "UvOptions",
+        "switch": "uv-options",
       },
       {
         "default": "- true, unless poetry is true, then false",
