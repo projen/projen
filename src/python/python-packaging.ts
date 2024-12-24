@@ -1,5 +1,6 @@
 import { PoetryPyprojectOptionsWithoutDeps } from "./poetry";
 import { Task } from "../task";
+import { UvOptions } from "./uv";
 
 export interface IPythonPackaging {
   /**
@@ -68,4 +69,9 @@ export interface PythonPackagingOptions {
    * Additional options to set for poetry if using poetry
    */
   readonly poetryOptions?: PoetryPyprojectOptionsWithoutDeps;
+
+  /**
+   * Additional options to set for uv if using uv
+   */
+  readonly uvOptions?: UvOptions;
 }
