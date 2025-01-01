@@ -693,7 +693,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jest-junit",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       {
         "name": "projen",
@@ -1211,7 +1211,7 @@ tsconfig.tsbuildinfo
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^15",
+      "jest-junit": "^16",
       "projen": "*",
       "ts-jest": "*",
       "typescript": "*",

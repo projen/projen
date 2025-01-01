@@ -235,7 +235,7 @@ exports[`node project can be ejected 1`] = `
   "devDependencies": {
     "commit-and-tag-version": "^12",
     "jest": "*",
-    "jest-junit": "^15",
+    "jest-junit": "^16",
     "test": "*",
   },
   "jest": {
