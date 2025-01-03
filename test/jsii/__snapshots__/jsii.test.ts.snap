@@ -784,7 +784,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jest-junit",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       {
         "name": "jsii-diff",
@@ -1373,7 +1373,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^15",
+      "jest-junit": "^16",
       "jsii": "~5.6.0",
       "jsii-diff": "*",
       "jsii-docgen": "^10.5.0",
@@ -2304,7 +2304,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jest-junit",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       {
         "name": "jsii",
@@ -2891,7 +2891,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^15",
+      "jest-junit": "^16",
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
@@ -3822,7 +3822,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jest-junit",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       {
         "name": "jsii-diff",
@@ -4411,7 +4411,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^15",
+      "jest-junit": "^16",
       "jsii": "~5.0.0",
       "jsii-diff": "*",
       "jsii-docgen": "^10.5.0",
