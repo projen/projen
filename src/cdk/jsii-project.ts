@@ -536,7 +536,8 @@ export class JsiiProject extends TypeScriptProject {
     } else if (this.package.packageManager === NodePackageManager.BUN) {
       bootstrapSteps.push({
         name: "Setup bun",
-        uses: "oven-sh/setup-bun@v1",
+        uses: "oven-sh/setup-bun@v2",
+        with: { "bun-version": this.package.bunVersion },
       });
     }
 

@@ -1990,4 +1990,20 @@ describe("npmignore", () => {
     expect(output[".npmignore"]).toMatchSnapshot();
     expect(output[".npmignore"]).toContain("/SECURITY.md");
   });
+
+  test("should set bun version accordingly (via bunVersion)", () => {
+    // GIVEN
+    const project = new TestNodeProject({
+      packageManager: NodePackageManager.BUN,
+      bunVersion: "1.1.38",
+    });
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".github/workflows/build.yml"]).toContain("bun-version: 1.1.38");
+    expect(output[".github/workflows/release.yml"]).toContain("bun-version: 1.1.38");
+    expect(output[".github/workflows/upgrade-main.yml"]).toContain("bun-version: 1.1.38");
+  });
 });

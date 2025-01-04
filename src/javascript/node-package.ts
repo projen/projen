@@ -256,6 +256,13 @@ export interface NodePackageOptions {
   readonly pnpmVersion?: string;
 
   /**
+   * The version of Bun to use if using Bun as a package manager.
+   *
+   * @default "latest"
+   */
+  readonly bunVersion?: string;
+
+  /**
    * License's SPDX identifier.
    * See https://github.com/projen/projen/tree/main/license-text for a list of supported licenses.
    * Use the `licensed` option if you want to no license to be specified.
@@ -488,6 +495,11 @@ export class NodePackage extends Component {
   public readonly pnpmVersion?: string;
 
   /**
+   * The version of Bun to use if using Bun as a package manager.
+   */
+  public readonly bunVersion?: string;
+
+  /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
    */
   public readonly license?: string;
@@ -670,6 +682,7 @@ export class NodePackage extends Component {
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
     this.pnpmVersion = options.pnpmVersion ?? "9";
+    this.bunVersion = options.bunVersion ?? "latest";
     this.addNodeEngine();
 
     this.addCodeArtifactLoginScript();
