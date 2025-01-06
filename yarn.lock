@@ -2525,15 +2525,15 @@ fast-diff@^1.1.2:
   integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
 fast-glob@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.2.tgz#a904501e57cfdd2ffcded45e99a54fef55e46129"
-  integrity sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.3.tgz#d06d585ce8dba90a16b0505c543c3ccfb3aeb818"
+  integrity sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
     "@nodelib/fs.walk" "^1.2.3"
     glob-parent "^5.1.2"
     merge2 "^1.3.0"
-    micromatch "^4.0.4"
+    micromatch "^4.0.8"
 
 fast-json-patch@^3.1.1:
   version "3.1.1"
@@ -2551,9 +2551,9 @@ fast-levenshtein@^2.0.6:
   integrity sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==
 
 fast-uri@^3.0.1:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.3.tgz#892a1c91802d5d7860de728f18608a0573142241"
-  integrity sha512-aLrHthzCjH5He4Z2H9YZ+v6Ujb9ocRuW6ZzkJQOrTxleEijANq4v1TsaPaVG1PZcuurEzrLcWRyYBYXD5cEiaw==
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.4.tgz#bf2973f18465da231ef4b1e43a188c3bf580cf98"
+  integrity sha512-G3iTQw1DizJQ5eEqj1CbFCWhq+pzum7qepkxU7rS1FGZDqjYKcrguo9XDRbV7EgPnn8CgaPigTq+NEjyioeYZQ==
 
 fastq@^1.6.0:
   version "1.18.0"
@@ -3846,9 +3846,9 @@ jsii-diff@^1.106.0:
     yargs "^16.2.0"
 
 jsii-docgen@^10.5.0:
-  version "10.6.1"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.6.1.tgz#5cff3ae39fb85722e1bf77100fed0e39e8ca94c1"
-  integrity sha512-YzuFpdKnETdkljGXv7mn9DCRK6JIK09XrwJ9UDhdJEy3DpRUGn7uD5RH8vm2rIsQrad9L8pKV4xfSii5Pzoy9g==
+  version "10.6.2"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-10.6.2.tgz#41cdc7e8bf8f181a5d217fbdc3b34ba2c42dc015"
+  integrity sha512-FVXgJJ1xcX92yDgoZeWaV9ibrAlh1Q1A0xHZNtyEoJOlzzLmdM3Nv8Ul4uA0hIfmS+Y7nfB4STy9lM+NbnCuUQ==
   dependencies:
     "@jsii/spec" "^1.106.0"
     case "^1.6.3"
@@ -4210,7 +4210,7 @@ merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-micromatch@^4.0.4:
+micromatch@^4.0.4, micromatch@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.8.tgz#d66fa18f3a47076789320b9b1af32bd86d9fa202"
   integrity sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==
