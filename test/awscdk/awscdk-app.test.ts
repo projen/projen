@@ -208,3 +208,36 @@ test("CDK v1 usage", () => {
     constructs: "^3.2.27",
   });
 });
+
+describe("CDK CLI version", () => {
+  test("can be specified", () => {
+    const project = new AwsCdkTypeScriptApp({
+      cdkVersion: "2.126.0",
+      cdkCliVersion: "3.0.0",
+      defaultReleaseBranch: "main",
+      name: "test",
+    });
+
+    const snap = synthSnapshot(project);
+    expect(snap["package.json"].devDependencies).toEqual(
+      expect.objectContaining({
+        "aws-cdk": "3.0.0",
+      })
+    );
+  });
+
+  test("defaults to latest if not specified", () => {
+    const project = new AwsCdkTypeScriptApp({
+      cdkVersion: "2.126.0",
+      defaultReleaseBranch: "main",
+      name: "test",
+    });
+
+    const snap = synthSnapshot(project);
+    expect(snap["package.json"].devDependencies).toEqual(
+      expect.objectContaining({
+        "aws-cdk": "latest",
+      })
+    );
+  });
+});
