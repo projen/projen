@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MIT with owner 1`] = `
-"Copyright (c) 2024 John Doe
+"Copyright (c) 2025 John Doe
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ SOFTWARE.
 `;
 
 exports[`MIT-0 with owner 1`] = `
-"Copyright 2024 John Doe
+"Copyright 2025 John Doe
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

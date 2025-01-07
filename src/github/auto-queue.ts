@@ -139,7 +139,7 @@ export class AutoQueue extends Component {
       // That way a user can always disable auto-queue if they want to and the workflow will
       // not automatically re-enable it, unless one of the events occurs.
       pullRequestTarget: {
-        types: ["opened", "reopened", "ready_for_review"],
+        types: ["opened", "reopened", "ready_for_review", "synchronize"],
       },
     });
     workflow.addJobs({ enableAutoQueue: autoQueueJob });

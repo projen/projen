@@ -10,6 +10,7 @@ on:
       - opened
       - reopened
       - ready_for_review
+      - synchronize
 jobs:
   enableAutoQueue:
     name: "Set AutoQueue on PR #\${{ github.event.number }}"
@@ -36,6 +37,7 @@ on:
       - opened
       - reopened
       - ready_for_review
+      - synchronize
 jobs:
   enableAutoQueue:
     name: "Set AutoQueue on PR #\${{ github.event.number }}"
