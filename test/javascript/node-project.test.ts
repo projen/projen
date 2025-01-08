@@ -2002,8 +2002,14 @@ describe("npmignore", () => {
     const output = synthSnapshot(project);
 
     // THEN
-    expect(output[".github/workflows/build.yml"]).toContain("bun-version: 1.1.38");
-    expect(output[".github/workflows/release.yml"]).toContain("bun-version: 1.1.38");
-    expect(output[".github/workflows/upgrade-main.yml"]).toContain("bun-version: 1.1.38");
+    expect(output[".github/workflows/build.yml"]).toContain(
+      "bun-version: 1.1.38"
+    );
+    expect(output[".github/workflows/release.yml"]).toContain(
+      "bun-version: 1.1.38"
+    );
+    expect(output[".github/workflows/upgrade-main.yml"]).toContain(
+      "bun-version: 1.1.38"
+    );
   });
 });
