@@ -1932,11 +1932,11 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDeps.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.awscdk.AwsCdkDeps.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkDeps.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4'). |
 | <code><a href="#projen.awscdk.AwsCdkDeps.property.cdkDependenciesAsDeps">cdkDependenciesAsDeps</a></code> | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies). |
 | <code><a href="#projen.awscdk.AwsCdkDeps.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkDeps.property.cdkMinimumVersion">cdkMinimumVersion</a></code> | <code>string</code> | The minimum version of the AWS CDK (e.g. `2.0.0`). |
 | <code><a href="#projen.awscdk.AwsCdkDeps.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | The dependency requirement for AWS CDK (e.g. `^2.0.0`). |
-| <code><a href="#projen.awscdk.AwsCdkDeps.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined). |
 
 ---
 
@@ -1959,6 +1959,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `cdkCliVersion`<sup>Required</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDeps.property.cdkCliVersion"></a>
+
+```typescript
+public readonly cdkCliVersion: string;
+```
+
+- *Type:* string
+
+The dependency requirement for the CDK CLI (e.g. '^2.3.4').
+
+Will return `^2` if the version was unspecified by the user.
 
 ---
 
@@ -2009,18 +2023,6 @@ public readonly cdkVersion: string;
 - *Type:* string
 
 The dependency requirement for AWS CDK (e.g. `^2.0.0`).
-
----
-
-##### `cdkCliVersion`<sup>Optional</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDeps.property.cdkCliVersion"></a>
-
-```typescript
-public readonly cdkCliVersion: string;
-```
-
-- *Type:* string
-
-The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined).
 
 ---
 
@@ -2206,11 +2208,11 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkDepsJava.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4'). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.property.cdkDependenciesAsDeps">cdkDependenciesAsDeps</a></code> | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.property.cdkMinimumVersion">cdkMinimumVersion</a></code> | <code>string</code> | The minimum version of the AWS CDK (e.g. `2.0.0`). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | The dependency requirement for AWS CDK (e.g. `^2.0.0`). |
-| <code><a href="#projen.awscdk.AwsCdkDepsJava.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined). |
 
 ---
 
@@ -2233,6 +2235,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `cdkCliVersion`<sup>Required</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDepsJava.property.cdkCliVersion"></a>
+
+```typescript
+public readonly cdkCliVersion: string;
+```
+
+- *Type:* string
+
+The dependency requirement for the CDK CLI (e.g. '^2.3.4').
+
+Will return `^2` if the version was unspecified by the user.
 
 ---
 
@@ -2283,18 +2299,6 @@ public readonly cdkVersion: string;
 - *Type:* string
 
 The dependency requirement for AWS CDK (e.g. `^2.0.0`).
-
----
-
-##### `cdkCliVersion`<sup>Optional</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDepsJava.property.cdkCliVersion"></a>
-
-```typescript
-public readonly cdkCliVersion: string;
-```
-
-- *Type:* string
-
-The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined).
 
 ---
 
@@ -2480,11 +2484,11 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkDepsJs.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4'). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.property.cdkDependenciesAsDeps">cdkDependenciesAsDeps</a></code> | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.property.cdkMinimumVersion">cdkMinimumVersion</a></code> | <code>string</code> | The minimum version of the AWS CDK (e.g. `2.0.0`). |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | The dependency requirement for AWS CDK (e.g. `^2.0.0`). |
-| <code><a href="#projen.awscdk.AwsCdkDepsJs.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined). |
 
 ---
 
@@ -2507,6 +2511,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `cdkCliVersion`<sup>Required</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDepsJs.property.cdkCliVersion"></a>
+
+```typescript
+public readonly cdkCliVersion: string;
+```
+
+- *Type:* string
+
+The dependency requirement for the CDK CLI (e.g. '^2.3.4').
+
+Will return `^2` if the version was unspecified by the user.
 
 ---
 
@@ -2557,18 +2575,6 @@ public readonly cdkVersion: string;
 - *Type:* string
 
 The dependency requirement for AWS CDK (e.g. `^2.0.0`).
-
----
-
-##### `cdkCliVersion`<sup>Optional</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDepsJs.property.cdkCliVersion"></a>
-
-```typescript
-public readonly cdkCliVersion: string;
-```
-
-- *Type:* string
-
-The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined).
 
 ---
 
@@ -2754,11 +2760,11 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkDepsPy.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4'). |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.property.cdkDependenciesAsDeps">cdkDependenciesAsDeps</a></code> | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies). |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.property.cdkMinimumVersion">cdkMinimumVersion</a></code> | <code>string</code> | The minimum version of the AWS CDK (e.g. `2.0.0`). |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | The dependency requirement for AWS CDK (e.g. `^2.0.0`). |
-| <code><a href="#projen.awscdk.AwsCdkDepsPy.property.cdkCliVersion">cdkCliVersion</a></code> | <code>string</code> | The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined). |
 
 ---
 
@@ -2781,6 +2787,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `cdkCliVersion`<sup>Required</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDepsPy.property.cdkCliVersion"></a>
+
+```typescript
+public readonly cdkCliVersion: string;
+```
+
+- *Type:* string
+
+The dependency requirement for the CDK CLI (e.g. '^2.3.4').
+
+Will return `^2` if the version was unspecified by the user.
 
 ---
 
@@ -2831,18 +2851,6 @@ public readonly cdkVersion: string;
 - *Type:* string
 
 The dependency requirement for AWS CDK (e.g. `^2.0.0`).
-
----
-
-##### `cdkCliVersion`<sup>Optional</sup> <a name="cdkCliVersion" id="projen.awscdk.AwsCdkDepsPy.property.cdkCliVersion"></a>
-
-```typescript
-public readonly cdkCliVersion: string;
-```
-
-- *Type:* string
-
-The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined).
 
 ---
 
@@ -12830,14 +12838,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 
@@ -13078,14 +13086,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 
@@ -13247,14 +13255,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 
@@ -14276,14 +14284,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 
@@ -15518,14 +15526,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 
@@ -18091,14 +18099,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 
@@ -21445,14 +21453,14 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* The latest CDK CLI version
+- *Default:* '^2'
 
 Version range of the AWS CDK CLI to depend on.
 
 Can be either a specific version, or an NPM version range.
 
-By default, the latest version will be installed; you can use this option to restrict
-it to a specific version or version range.
+By default, the latest 2.x version will be installed; you can use this
+option to restrict it to a specific version or version range.
 
 ---
 

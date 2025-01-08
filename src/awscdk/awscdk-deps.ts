@@ -22,7 +22,7 @@ export interface AwsCdkDepsCommonOptions {
    * By default, the latest 2.x version will be installed; you can use this
    * option to restrict it to a specific version or version range.
    *
-   * @default '^2'
+   * @default "^2"
    */
   readonly cdkCliVersion?: string;
 
