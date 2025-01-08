@@ -175,7 +175,7 @@ export abstract class AwsCdkDeps extends Component {
 
     const framework = determineFrameworkVersion(options);
 
-    this.cdkCliVersion = options.cdkCliVersion ?? '^2';
+    this.cdkCliVersion = options.cdkCliVersion ?? "^2";
     this.cdkVersion = framework.range;
     this.cdkMajorVersion = framework.major;
     this.cdkMinimumVersion = framework.minimum;

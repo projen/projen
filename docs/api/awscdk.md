@@ -12838,7 +12838,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 
@@ -13086,7 +13086,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 
@@ -13255,7 +13255,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 
@@ -14284,7 +14284,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 
@@ -15526,7 +15526,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 
@@ -18099,7 +18099,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 
@@ -21453,7 +21453,7 @@ public readonly cdkCliVersion: string;
 ```
 
 - *Type:* string
-- *Default:* '^2'
+- *Default:* "^2"
 
 Version range of the AWS CDK CLI to depend on.
 

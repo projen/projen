@@ -133,7 +133,7 @@ exports[`inventory 1`] = `
         "switch": "cdk-assertions",
       },
       {
-        "default": "'^2'",
+        "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
         "fullType": {
@@ -1340,7 +1340,7 @@ exports[`inventory 1`] = `
         "switch": "cdk-assertions",
       },
       {
-        "default": "'^2'",
+        "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
         "fullType": {
@@ -2988,7 +2988,7 @@ exports[`inventory 1`] = `
         "switch": "cdk-assertions",
       },
       {
-        "default": "'^2'",
+        "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
         "fullType": {
@@ -6087,7 +6087,7 @@ exports[`inventory 1`] = `
         "switch": "cdk-assertions",
       },
       {
-        "default": "'^2'",
+        "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
         "fullType": {
