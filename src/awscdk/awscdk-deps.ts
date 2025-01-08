@@ -19,10 +19,10 @@ export interface AwsCdkDepsCommonOptions {
    *
    * Can be either a specific version, or an NPM version range.
    *
-   * By default, the latest version will be installed; you can use this option to restrict
-   * it to a specific version or version range.
+   * By default, the latest 2.x version will be installed; you can use this
+   * option to restrict it to a specific version or version range.
    *
-   * @default - The latest CDK CLI version
+   * @default '^2'
    */
   readonly cdkCliVersion?: string;
 
@@ -139,9 +139,11 @@ export abstract class AwsCdkDeps extends Component {
   public readonly cdkVersion: string;
 
   /**
-   * The dependency requirement for the CDK CLI (e.g. '^2.3.4' or undefined).
+   * The dependency requirement for the CDK CLI (e.g. '^2.3.4').
+   *
+   * Will return `^2` if the version was unspecified by the user.
    */
-  public readonly cdkCliVersion?: string;
+  public readonly cdkCliVersion: string;
 
   /**
    * The minimum version of the AWS CDK (e.g. `2.0.0`).
@@ -173,7 +175,7 @@ export abstract class AwsCdkDeps extends Component {
 
     const framework = determineFrameworkVersion(options);
 
-    this.cdkCliVersion = options.cdkCliVersion;
+    this.cdkCliVersion = options.cdkCliVersion ?? '^2';
     this.cdkVersion = framework.range;
     this.cdkMajorVersion = framework.major;
     this.cdkMinimumVersion = framework.minimum;

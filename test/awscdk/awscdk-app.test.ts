@@ -226,7 +226,7 @@ describe("CDK CLI version", () => {
     );
   });
 
-  test("defaults to latest if not specified", () => {
+  test("defaults to ^2 if not specified", () => {
     const project = new AwsCdkTypeScriptApp({
       cdkVersion: "2.126.0",
       defaultReleaseBranch: "main",
@@ -236,7 +236,7 @@ describe("CDK CLI version", () => {
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devDependencies).toEqual(
       expect.objectContaining({
-        "aws-cdk": "latest",
+        "aws-cdk": "^2",
       })
     );
   });
