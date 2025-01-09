@@ -1086,7 +1086,8 @@ export class NodeProject extends GitHubProject {
     } else if (this.package.packageManager === NodePackageManager.BUN) {
       install.push({
         name: "Setup bun",
-        uses: "oven-sh/setup-bun@v1",
+        uses: "oven-sh/setup-bun@v2",
+        with: { "bun-version": this.package.bunVersion },
       });
     }
 
