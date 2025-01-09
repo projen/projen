@@ -90,7 +90,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "16.0.0", // Do not change this before a version has been EOL for a while
-  workflowNodeVersion: "18.18.0",
+  workflowNodeVersion: "20.9.0",
 
   codeCov: true,
   prettier: true,
