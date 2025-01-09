@@ -133,6 +133,23 @@ exports[`inventory 1`] = `
         "switch": "cdk-assertions",
       },
       {
+        "default": ""^2"",
+        "docs": "Version range of the AWS CDK CLI to depend on.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkCliVersion",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": [
+          "cdkCliVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk-cli-version",
+      },
+      {
         "deprecated": true,
         "docs": "Which AWS CDKv1 modules this project requires.",
         "featured": false,
@@ -1321,6 +1338,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-assertions",
+      },
+      {
+        "default": ""^2"",
+        "docs": "Version range of the AWS CDK CLI to depend on.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkCliVersion",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": [
+          "cdkCliVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk-cli-version",
       },
       {
         "deprecated": true,
@@ -2952,6 +2986,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-assertions",
+      },
+      {
+        "default": ""^2"",
+        "docs": "Version range of the AWS CDK CLI to depend on.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkCliVersion",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": [
+          "cdkCliVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk-cli-version",
       },
       {
         "deprecated": true,
@@ -6034,6 +6085,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-assertions",
+      },
+      {
+        "default": ""^2"",
+        "docs": "Version range of the AWS CDK CLI to depend on.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkCliVersion",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": [
+          "cdkCliVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk-cli-version",
       },
       {
         "deprecated": true,

@@ -125,7 +125,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.appEntrypoint = options.appEntrypoint ?? "main.ts";
 
     // CLI
-    this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkVersion}`);
+    this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkCliVersion}`);
 
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
