@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.0.0
+          node-version: 20.9.0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -84,7 +84,7 @@ jobs:
           java-version: "11"
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.0.0
+          node-version: 20.9.0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -118,7 +118,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.0.0
+          node-version: 20.9.0
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
@@ -155,7 +155,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.0.0
+          node-version: 20.9.0
       - uses: actions/setup-go@v5
         with:
           go-version: ^1.18.0
@@ -229,7 +229,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.0.0
+          node-version: 20.9.0
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
