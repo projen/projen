@@ -102,59 +102,6 @@ does not do any content comparison. You likely will want to use this type of
 testing in conjunction with snapshot testing.
 :::
 
-## Debugging
-
-Unit testing is great for testing individual components of your project, but
-sometimes it's easier to actually build the project locally and debug it.
-
-### Debugging with yarn
-
-If you're using yarn, you can use the `yarn link` command to build your project
-locally and link it to your project. For example, if you have a projen project
-in `~/my-project` and you want to debug it in `~/my-app`, you can run the
-following commands:
-
-```bash
-# In ~/my-project
-yarn link
-
-# In ~/my-app
-yarn link my-project
-yarn projen new my-project --from my-project
-```
-
-Assuming `my-project` is the name of your project in `~/my-project/projenrc.js`.
-
-For more information, [see the yarn documentation](https://classic.yarnpkg.com/en/docs/cli/link/).
-
-### Debugging with npm
-
-If you prefer [NPM](https://docs.npmjs.com/cli/v10/commands/npm-link), the
-process is similar:
-
-```bash
-# In ~/my-project
-npm link
-
-# In ~/my-app
-npm link my-project
-
-npx projen new my-project --from my-project
-```
-
-### Debugging with pnpm
-
-For [PNPM](https://pnpm.io/) users, the steps are also quite straightforward:
-
-```bash
-# In ~/my-project
-pnpm link
-
-# In ~/my-app
-pnpm link my-project
-npx projen new my-project --from my-project
-```
-
 ## Common Issues and Solutions
 
 ### Non-Deterministic Snapshot Tests
