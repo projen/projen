@@ -102,7 +102,7 @@ does not do any content comparison. You likely will want to use this type of
 testing in conjunction with snapshot testing.
 :::
 
-## Debugging
+<!-- ## Debugging
 
 Unit testing is great for testing individual components of your project, but
 sometimes it's easier to actually build the project locally and debug it.
@@ -153,7 +153,7 @@ pnpm link
 # In ~/my-app
 pnpm link my-project
 npx projen new my-project --from my-project
-```
+``` -->
 
 ## Common Issues and Solutions
 
