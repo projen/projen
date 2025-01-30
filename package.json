@@ -93,7 +93,7 @@
     "fast-json-patch": "^3.1.1",
     "glob": "^8",
     "ini": "^2.0.0",
-    "semver": "^7.6.3",
+    "semver": "^7.7.0",
     "shx": "^0.3.4",
     "xmlbuilder2": "^3.1.1",
     "yaml": "^2.2.2",
