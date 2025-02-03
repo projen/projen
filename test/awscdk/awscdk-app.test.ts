@@ -244,19 +244,19 @@ describe("CDK CLI version", () => {
 
 test("uses ES2020 in TypeScript configuration", () => {
   const project = new AwsCdkTypeScriptApp({
-    name: "test",
+    cdkVersion: "2.126.0",
     defaultReleaseBranch: "main",
-    cdkVersion: "2.0.0",
+    name: "test",
   });
 
-  const snapshot = synthSnapshot(project);
-  expect(snapshot["tsconfig.json"].compilerOptions).toEqual(
+  const snap = synthSnapshot(project);
+  expect(snap["tsconfig.json"].compilerOptions).toEqual(
     expect.objectContaining({
       lib: ["es2020"],
       target: "ES2020",
     })
   );
-  expect(snapshot["tsconfig.dev.json"].compilerOptions).toEqual(
+  expect(snap["tsconfig.dev.json"].compilerOptions).toEqual(
     expect.objectContaining({
       lib: ["es2020"],
       target: "ES2020",
