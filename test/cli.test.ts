@@ -122,3 +122,13 @@ test('running "projen" with task if there is no tasks.json', () => {
   };
   expect(t).toThrowError("Unknown command: build");
 });
+
+test('running "projen" with task in root of a project that receives args will respect whitespaces', () => {
+  const project = new Project({ name: "my-project" });
+  project.testTask?.exec(`touch "$@"`, { receiveArgs: true });
+  project.synth();
+
+  execProjenCLI(project.outdir, ["test", "a b", "c d"]);
+  expect(directorySnapshot(project.outdir)["a b"]).toStrictEqual("");
+  expect(directorySnapshot(project.outdir)["c d"]).toStrictEqual("");
+});

@@ -11,6 +11,7 @@ import { makeCrossPlatform } from "./util/tasks";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
+const QUOTED_ARGS_MARKER = `"${ARGS_MARKER}"`;
 
 /**
  * The runtime component of the tasks engine.
@@ -174,7 +175,16 @@ class RunTask {
 
         let command = makeCrossPlatform(exec);
 
-        if (command.includes(ARGS_MARKER)) {
+        if (command.includes(QUOTED_ARGS_MARKER)) {
+          // Poorly imitate bash quoted variable expansion. If "$@" is encountered in bash, elements of the arg array
+          // that contain whitespace will be single quoted ('arg'). This preserves whitespace in things like filenames.
+          // Imitate that behavior here by single quoting every element of the arg array when a quoted arg marker ("$@")
+          // is encountered.
+          command = command.replace(
+            QUOTED_ARGS_MARKER,
+            argsList.map((arg) => `'${arg}'`).join(" ")
+          );
+        } else if (command.includes(ARGS_MARKER)) {
           command = command.replace(ARGS_MARKER, argsList.join(" "));
         } else {
           command = [command, ...argsList].join(" ");
