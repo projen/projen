@@ -366,6 +366,13 @@ export interface PoetryPyprojectOptionsWithoutDeps {
    * E.g. "Bug Tracker"
    */
   readonly urls?: { [key: string]: string };
+  /**
+   * Package mode (optional).
+   * @see https://python-poetry.org/docs/pyproject/#package-mode
+   * @default true
+   * @example false
+   */
+  readonly "package-mode"?: boolean;
 }
 
 /**
