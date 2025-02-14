@@ -372,7 +372,7 @@ export interface PoetryPyprojectOptionsWithoutDeps {
    * @default true
    * @example false
    */
-  readonly "package-mode"?: boolean;
+  readonly packageMode?: boolean;
 }
 
 /**
@@ -410,7 +410,9 @@ export class PoetryPyproject extends Component {
     super(project);
 
     const { dependencies, devDependencies, ...otherOptions } = options;
-    const decamelizedOptions = decamelizeKeysRecursively(otherOptions);
+    const decamelizedOptions = decamelizeKeysRecursively(otherOptions, {
+      separator: "-",
+    });
 
     const tomlStructure: any = {
       tool: {

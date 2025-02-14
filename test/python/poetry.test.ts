@@ -142,13 +142,15 @@ describe("poetry enabled with poetry-specific options", () => {
       urls: {
         "bug tracker": "https://github.com/test-python-project/issues",
       },
-      "package-mode": false,
+      packageMode: false,
     },
   });
   const snapshot = synthSnapshot(p);
   const actualTomlContent = snapshot["pyproject.toml"];
   const actualObjectContent = TOML.parse(actualTomlContent) as any;
-  expect(snapshot).toMatchSnapshot();
+  it("should match the snapshot", () => {
+    expect(snapshot).toMatchSnapshot();
+  });
   it("should set package-mode correctly", () => {
     expect(actualObjectContent.tool.poetry["package-mode"]).toBe(false);
   });
