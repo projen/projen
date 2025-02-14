@@ -323,12 +323,14 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (options.forceSuffix) {
     let suffix = options.forceSuffix;
     if (!suffix.match(/^-/)) suffix = `-${suffix}`;
-    if (!suffix.match(/\d$/)) suffix += '.0';
+    if (!suffix.match(/\d$/)) suffix += ".0";
     newVersion = `${newVersion}${suffix}`;
     updatedVersionFile.contents.version = newVersion;
 
-    const updatedContents = JSON.stringify(updatedVersionFile.contents, undefined, 2) + (updatedVersionFile.newline ? '\n' : '');
-    await fs.writeFile(versionFile, updatedContents, 'utf-8');
+    const updatedContents =
+      JSON.stringify(updatedVersionFile.contents, undefined, 2) +
+      (updatedVersionFile.newline ? "\n" : "");
+    await fs.writeFile(versionFile, updatedContents, "utf-8");
   }
 
   await fs.writeFile(bumpFile, newVersion);

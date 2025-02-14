@@ -137,7 +137,7 @@ describe("bump task", () => {
         workdir: project.outdir,
         env: {
           ...process.env,
-          FORCE_VERSION_SUFFIX: 'test.0',
+          FORCE_VERSION_SUFFIX: "test.0",
         },
         commits: [
           { message: "chore(release): v0.1.0", tag: "v0.1.0" },
@@ -205,7 +205,7 @@ describe("bump task", () => {
 function testBumpTask(
   opts: {
     workdir?: string;
-    env?: Record<string, string>,
+    env?: Record<string, string>;
     commits?: { message: string; tag?: string; path?: string }[];
   } = {}
 ) {
