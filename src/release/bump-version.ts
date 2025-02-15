@@ -241,7 +241,10 @@ export async function bump(cwd: string, options: BumpOptions) {
       // Calculate the next version
       if (isReleaseType(nextVersion)) {
         releaseAs = inc(latestVersion, nextVersion)?.toString();
-      } else if (isFullVersionString(nextVersion) && nextVersion !== latestVersion) {
+      } else if (
+        isFullVersionString(nextVersion) &&
+        nextVersion !== latestVersion
+      ) {
         releaseAs = nextVersion;
       } else {
         throw new Error(
