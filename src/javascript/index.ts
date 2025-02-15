@@ -7,6 +7,5 @@ export * from "./node-project";
 export * from "./npm-config";
 export * from "./prettier";
 export * from "./projenrc";
-export * from "./typescript-config";
 export * from "./upgrade-dependencies";
 export * from "./yarnrc";
