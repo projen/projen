@@ -13064,6 +13064,9 @@ Should this step receive args passed to the task.
 If `true`, args are passed through at the end of the `exec` shell command.\
 The position of the args can be changed by including the marker `$@` inside the command string.
 
+If the marker is explicitly double-quoted ("$@") arguments will be wrapped in single quotes, approximating
+the whitespace preserving behavior of bash variable expansion.
+
 If the step spawns a subtask, args are passed to the subtask.
 The subtask must define steps receiving args for this to have any effect.
 
@@ -13270,6 +13273,9 @@ Should this step receive args passed to the task.
 
 If `true`, args are passed through at the end of the `exec` shell command.\
 The position of the args can be changed by including the marker `$@` inside the command string.
+
+If the marker is explicitly double-quoted ("$@") arguments will be wrapped in single quotes, approximating
+the whitespace preserving behavior of bash variable expansion.
 
 If the step spawns a subtask, args are passed to the subtask.
 The subtask must define steps receiving args for this to have any effect.
