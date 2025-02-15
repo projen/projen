@@ -191,6 +191,7 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   // check for commits since the last release tag
   let skipBump = false;
+  let restoreTag = false;
 
   // First Release is never skipping bump
   if (!isFirstRelease) {
@@ -209,6 +210,7 @@ export async function bump(cwd: string, options: BumpOptions) {
     if (numCommitsSinceLastTag === 0) {
       logging.info("Skipping bump...");
       skipBump = true;
+      restoreTag = true;
 
       // delete the existing tag (locally)
       // if we don't do this, commit-and-tag-version generates an empty changelog
@@ -239,7 +241,7 @@ export async function bump(cwd: string, options: BumpOptions) {
       // Calculate the next version
       if (isReleaseType(nextVersion)) {
         releaseAs = inc(latestVersion, nextVersion)?.toString();
-      } else if (isFullVersionString(nextVersion)) {
+      } else if (isFullVersionString(nextVersion) && nextVersion !== latestVersion) {
         releaseAs = nextVersion;
       } else {
         throw new Error(
@@ -250,6 +252,12 @@ export async function bump(cwd: string, options: BumpOptions) {
       // Don't need to validate if the final version is within the expected declared major.minor range,
       // if given. That is done below after bumping.
     }
+  }
+
+  // If the nextVersionCommand forced a specific release version, we shouldn't
+  // skip the bump action.
+  if (releaseAs) {
+    skipBump = false;
   }
 
   // create a commit-and-tag-version configuration file
@@ -277,7 +285,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   exec(cmd.join(" "), { cwd });
 
   // add the tag back if it was previously removed
-  if (skipBump) {
+  if (restoreTag) {
     exec(`git tag ${latestTag}`, { cwd });
   }
 
