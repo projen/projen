@@ -378,7 +378,7 @@ export class TypeScriptProject extends NodeProject {
   /**
    * Projen default Typescript compiler options.
    */
-  public DefaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
+  public defaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
     alwaysStrict: true,
     declaration: true,
     esModuleInterop: true,
@@ -502,7 +502,7 @@ export class TypeScriptProject extends NodeProject {
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,
-              ...this.DefaultCompilerOptions,
+              ...this.defaultCompilerOptions,
             },
           },
           options.tsconfig
@@ -522,7 +522,7 @@ export class TypeScriptProject extends NodeProject {
             include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
 
             exclude: ["node_modules"],
-            compilerOptions: this.DefaultCompilerOptions,
+            compilerOptions: this.defaultCompilerOptions,
           },
           options.tsconfig,
           options.tsconfigDev
