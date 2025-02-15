@@ -189,13 +189,13 @@ export class Eslint extends Component {
 
   private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
-  private readonly _plugins = new Map<string, string>();
+  private readonly _plugins: {importPath: string, pluginName: string, alias: string}[] = [];
   private readonly _extends = new Set<string>();
   private readonly _fileExtensions: Set<string>;
   private readonly _flagArgs: Set<string>;
   private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
-  private readonly sortExtends: ICompareString;
+  // private readonly sortExtends: ICompareString;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
@@ -204,12 +204,14 @@ export class Eslint extends Component {
 
     project.addDevDeps(
       "eslint@^9",
-      "@typescript-eslint/eslint-plugin@^8",
-      "@typescript-eslint/parser@^8",
+      "@eslint/js@^9",
+      "typescript-eslint@^8",
       "eslint-import-resolver-typescript",
-      "eslint-plugin-import"
+      "eslint-plugin-import",
+      "@stylistic/eslint-plugin"
     );
 
+    // TODO
     if (options.aliasMap) {
       project.addDevDeps("eslint-import-resolver-alias");
     }
@@ -237,7 +239,7 @@ export class Eslint extends Component {
     }
     this._flagArgs.add("--no-error-on-unmatched-pattern");
 
-    this.sortExtends = options.sortExtends ?? new ExtendsDefaultOrder();
+    // this.sortExtends = options.sortExtends ?? new ExtendsDefaultOrder();
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
@@ -405,9 +407,8 @@ export class Eslint extends Component {
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
-    this.addPlugins("@typescript-eslint");
-    this.addPlugins("import");
-    this.addExtends("plugin:import/typescript");
+    this.addPlugins({ importPath: "typescript-eslint", pluginName: "@typescript-eslint", alias: "tseslint"});
+    this.addPlugins({importPath: "eslint-plugin-import", pluginName: "import", alias: "import"});
 
     this.config = `
 import globals from "globals";
@@ -457,7 +458,7 @@ export default [
         }
       },
     },
-    plugins: ${[...this._plugins].map(([key, value]) => `"${key}": ${value}`).join(',\n      ')},
+    plugins: ${this._plugins.map((plugin) => `"${plugin.pluginName}": ${plugin.alias}`).join(',\n      ')},
     rules: {
       ${JSON.stringify({...this.rules, ...this._formattingRules}).slice(1, -1)}
     }
@@ -500,7 +501,7 @@ export default [
       this.enablePrettier();
     } else {
       this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
-      this.addPlugins("@stylistic");
+      this.addPlugins({importPath: "@stylistic/eslint-plugin", pluginName: "@stylistic", alias: "stylistic"});
     }
   }
 
@@ -536,9 +537,9 @@ export default [
    * Adds an eslint plugin
    * @param plugins The names of plugins to add
    */
-  public addPlugins(...plugins: string[]) {
+  public addPlugins(...plugins: {importPath: string, pluginName:string, alias: string}[]) {
     for (const plugin of plugins) {
-      this._plugins.add(plugin);
+      this._plugins.push(plugin);
     }
   }
 
@@ -651,14 +652,14 @@ export default [
  *
  * Places "prettier" plugins at the end of the array
  */
-class ExtendsDefaultOrder implements ICompareString {
-  // This is the order that ESLint best practices suggest
-  private static ORDER = ["plugin:prettier/recommended", "prettier"];
+// class ExtendsDefaultOrder implements ICompareString {
+//   // This is the order that ESLint best practices suggest
+//   private static ORDER = ["plugin:prettier/recommended", "prettier"];
 
-  public compare(a: string, b: string): number {
-    return (
-      ExtendsDefaultOrder.ORDER.indexOf(a) -
-      ExtendsDefaultOrder.ORDER.indexOf(b)
-    );
-  }
-}
+//   public compare(a: string, b: string): number {
+//     return (
+//       ExtendsDefaultOrder.ORDER.indexOf(a) -
+//       ExtendsDefaultOrder.ORDER.indexOf(b)
+//     );
+//   }
+// }
