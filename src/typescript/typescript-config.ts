@@ -717,38 +717,7 @@ export class TypescriptConfigExtends {
   }
 }
 
-type Writeable<T> = { -readonly [P in keyof T]: T[P] };
-
 export class TypescriptConfig extends Component {
-  /**
-   * Projen default Typescript compiler options.
-   * Modify before calling Project.super(...) or
-   * before new Project in projenrc file.
-   */
-  public static DefaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
-    alwaysStrict: true,
-    declaration: true,
-    esModuleInterop: true,
-    experimentalDecorators: true,
-    inlineSourceMap: true,
-    inlineSources: true,
-    lib: ["es2019"],
-    module: "CommonJS",
-    noEmitOnError: false,
-    noFallthroughCasesInSwitch: true,
-    noImplicitAny: true,
-    noImplicitReturns: true,
-    noImplicitThis: true,
-    noUnusedLocals: true,
-    noUnusedParameters: true,
-    resolveJsonModule: true,
-    strict: true,
-    strictNullChecks: true,
-    strictPropertyInitialization: true,
-    stripInternal: true,
-    target: "ES2019",
-  };
-
   private _extends: TypescriptConfigExtends;
   public readonly compilerOptions?: TypeScriptCompilerOptions;
   private readonly includeSet: Set<string>;
