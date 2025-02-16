@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as semver from "semver";
-import { NodeProject } from ".";
 import { Component } from "../component";
+import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { normalizePersistedPath } from "../util";

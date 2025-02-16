@@ -11,10 +11,12 @@ import {
   NodeProjectOptions,
   Projenrc as NodeProjectProjenrc,
   Transform,
+} from "../javascript";
+import {
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
-} from "../javascript";
+} from "./typescript-config";
 import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
@@ -363,12 +365,42 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly tsJestOptions?: TsJestOptions;
 }
 
+// Transforms readonly interface to have modifiable values
+type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+
 /**
  * TypeScript project
  * @pjid typescript
  */
 export class TypeScriptProject extends NodeProject {
   public static readonly DEFAULT_TS_JEST_TRANFORM_PATTERN = "^.+\\.[t]sx?$";
+
+  /**
+   * Projen default Typescript compiler options.
+   */
+  public defaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
+    alwaysStrict: true,
+    declaration: true,
+    esModuleInterop: true,
+    experimentalDecorators: true,
+    inlineSourceMap: true,
+    inlineSources: true,
+    lib: ["es2019"],
+    module: "CommonJS",
+    noEmitOnError: false,
+    noFallthroughCasesInSwitch: true,
+    noImplicitAny: true,
+    noImplicitReturns: true,
+    noImplicitThis: true,
+    noUnusedLocals: true,
+    noUnusedParameters: true,
+    resolveJsonModule: true,
+    strict: true,
+    strictNullChecks: true,
+    strictPropertyInitialization: true,
+    stripInternal: true,
+    target: "ES2019",
+  };
 
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
@@ -454,30 +486,6 @@ export class TypeScriptProject extends NodeProject {
       this.package.addField("types", entrypointTypes);
     }
 
-    const compilerOptionDefaults: TypeScriptCompilerOptions = {
-      alwaysStrict: true,
-      declaration: true,
-      esModuleInterop: true,
-      experimentalDecorators: true,
-      inlineSourceMap: true,
-      inlineSources: true,
-      lib: ["es2019"],
-      module: "CommonJS",
-      noEmitOnError: false,
-      noFallthroughCasesInSwitch: true,
-      noImplicitAny: true,
-      noImplicitReturns: true,
-      noImplicitThis: true,
-      noUnusedLocals: true,
-      noUnusedParameters: true,
-      resolveJsonModule: true,
-      strict: true,
-      strictNullChecks: true,
-      strictPropertyInitialization: true,
-      stripInternal: true,
-      target: "ES2019",
-    };
-
     if (options.disableTsconfigDev && options.disableTsconfig) {
       throw new Error(
         "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
@@ -494,7 +502,7 @@ export class TypeScriptProject extends NodeProject {
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,
-              ...compilerOptionDefaults,
+              ...this.defaultCompilerOptions,
             },
           },
           options.tsconfig
@@ -514,7 +522,7 @@ export class TypeScriptProject extends NodeProject {
             include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
 
             exclude: ["node_modules"],
-            compilerOptions: compilerOptionDefaults,
+            compilerOptions: this.defaultCompilerOptions,
           },
           options.tsconfig,
           options.tsconfigDev
