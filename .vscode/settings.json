@@ -1,0 +1,21 @@
+{
+  "eslint.useFlatConfig": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint"
+  ],
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "cSpell.words": ["pkgroll", "TSES", "vitepress"],
+  "markdownlint.config": {
+    "MD001": false,
+    "MD025": false,
+    "MD033": false
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
+}

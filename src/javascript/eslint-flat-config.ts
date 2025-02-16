@@ -1,13 +1,9 @@
 import { Project, TaskStepOptions } from "..";
-import { Prettier } from "./prettier";
-import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { ICompareString } from "../compare";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
-import { JsonFile } from "../json";
 import { Task } from "../task";
-import { YamlFile } from "../yaml";
-
+import { Prettier } from "./prettier";
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -27,6 +23,7 @@ export interface EslintOptions {
    * @default []
    */
   readonly devdirs?: string[];
+
   /**
    * File types that should be linted (e.g. [ ".js", ".ts" ])
    * @default [".ts"]
@@ -93,12 +90,6 @@ export interface EslintOptions {
    * @default true
    */
   readonly tsAlwaysTryTypes?: boolean;
-
-  /**
-   * Write eslint configuration as YAML instead of JSON
-   * @default false
-   */
-  readonly yaml?: boolean;
 }
 
 export interface EslintCommandOptions {
@@ -153,12 +144,13 @@ export interface EslintOverride {
 /**
  * Represents eslint configuration.
  */
-export class Eslint extends Component {
+export class EslintFlatConfig extends Component {
   /**
    * Returns the singleton Eslint component of a project or undefined if there is none.
    */
-  public static of(project: Project): Eslint | undefined {
-    const isEslint = (c: Component): c is Eslint => c instanceof Eslint;
+  public static of(project: Project): EslintFlatConfig | undefined {
+    const isEslint = (c: Component): c is EslintFlatConfig =>
+      c instanceof EslintFlatConfig;
     return project.components.find(isEslint);
   }
 
@@ -188,8 +180,32 @@ export class Eslint extends Component {
   public readonly ignorePatterns: string[];
 
   private _formattingRules: Record<string, any>;
+  private readonly _devdirs: string[];
   private readonly _allowDevDeps: Set<string>;
-  private readonly _plugins: {importPath: string, pluginName: string, alias: string}[] = [];
+  /**
+   * @param importPath: the import path of the plugin(e.g. "typescript-eslint")
+   * @param pluginName: the name of the plugin(e.g. "@typescript-eslint")
+   * @param alias: the alias to use in the config(e.g. "tseslint")
+   *
+   * @example
+   * ```ts
+   * import tseslint from "typescript-eslint" // import $PLUGIN_NAME from $IMPORT_PATH
+   *
+   * export default [
+   *   ...
+   *   {
+   *     plugins: {
+   *       "@typescript-eslint": tseslint // "$ALIAS": $PLUGIN_NAME
+   *     }
+   *   }
+   * ]
+   * ```
+   */
+  private readonly _plugins: {
+    importPath: string;
+    pluginName: string;
+    alias: string;
+  }[] = [];
   private readonly _extends = new Set<string>();
   private readonly _fileExtensions: Set<string>;
   private readonly _flagArgs: Set<string>;
@@ -207,8 +223,7 @@ export class Eslint extends Component {
       "@eslint/js@^9",
       "typescript-eslint@^8",
       "eslint-import-resolver-typescript",
-      "eslint-plugin-import",
-      "@stylistic/eslint-plugin"
+      "eslint-plugin-import"
     );
 
     // TODO
@@ -216,20 +231,11 @@ export class Eslint extends Component {
       project.addDevDeps("eslint-import-resolver-alias");
     }
 
-    const lintProjenRc = options.lintProjenRc ?? true;
-    const lintProjenRcFile =
-      options.lintProjenRcFile ?? DEFAULT_PROJEN_RC_JS_FILENAME;
+    this._devdirs = options.devdirs ?? [];
 
-    const devdirs = options.devdirs ?? [];
-
-    this._lintPatterns = new Set([
-      ...options.dirs,
-      ...devdirs,
-      ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
-    ]);
+    this._lintPatterns = new Set([...options.dirs, ...this._devdirs]);
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
-
-    this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
+    this._allowDevDeps = new Set(this._devdirs.map((dir) => `**/${dir}/**`));
 
     const commandOptions = options.commandOptions ?? {};
     const { fix = true, extraArgs: extraFlagArgs = [] } = commandOptions;
@@ -243,16 +249,13 @@ export class Eslint extends Component {
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
-      env: {
-        ESLINT_USE_FLAT_CONFIG: "false",
-      },
     });
     this.updateTask();
 
     project.testTask.spawn(this.eslintTask);
 
     // exclude some files
-    project.npmignore?.exclude("/.eslintrc.json");
+    project.npmignore?.exclude("/.eslint.config.mjs");
 
     this._formattingRules = {
       // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
@@ -267,7 +270,10 @@ export class Eslint extends Component {
       "@stylistic/array-bracket-spacing": ["error", "never"], // [1, 2, 3]
       "@stylistic/array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
       "@stylistic/object-curly-spacing": ["error", "always"], // { key: 'value' }
-      "@stylistic/object-curly-newline": ["error", { multiline: true, consistent: true }], // enforce consistent line breaks between braces
+      "@stylistic/object-curly-newline": [
+        "error",
+        { multiline: true, consistent: true },
+      ], // enforce consistent line breaks between braces
       "@stylistic/object-property-newline": [
         "error",
         { allowAllPropertiesOnSameLine: true },
@@ -366,12 +372,9 @@ export class Eslint extends Component {
             "protected-static-method",
             "private-static-field",
             "private-static-method",
-
             "field",
-
             // Constructors
             "constructor", // = ["public-constructor", "protected-constructor", "private-constructor"]
-
             // Methods
             "method",
           ],
@@ -379,26 +382,8 @@ export class Eslint extends Component {
       ],
     };
 
-    // Overrides for .projenrc.js
-    // @deprecated
-    if (lintProjenRc) {
-      this.overrides = [
-        {
-          files: [lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME],
-          rules: {
-            "@typescript-eslint/no-require-imports": "off",
-            "import/no-extraneous-dependencies": "off",
-          },
-        },
-      ];
-    }
-
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
-      // @deprecated
-      ...(lintProjenRc
-        ? [`!${lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME}`]
-        : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
@@ -407,22 +392,31 @@ export class Eslint extends Component {
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
-    this.addPlugins({ importPath: "typescript-eslint", pluginName: "@typescript-eslint", alias: "tseslint"});
-    this.addPlugins({importPath: "eslint-plugin-import", pluginName: "import", alias: "import"});
+    this.addPlugins({
+      importPath: "typescript-eslint",
+      pluginName: "tseslint",
+      alias: "@typescript-eslint",
+    });
+    this.addPlugins({
+      importPath: "eslint-plugin-import",
+      pluginName: "importPlugin",
+      alias: "import",
+    });
 
     this.config = `
 import globals from "globals";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint"
-import importPlugin from 'eslint-plugin-import';
-import stylistic from '@stylistic/eslint-plugin'
+${this._plugins
+  .map((plugin) => `import ${plugin.pluginName} from "${plugin.importPath}"`)
+  .join("\n")}
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   eslint.configs.recommended,
   importPlugin.flatConfigs.typescript,
   {
-    ...${[...this._extends].join(',\n  ...')},
+    ...${[...this._extends].join(",\n  ...")},
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: { 
       globals: {
@@ -458,42 +452,44 @@ export default [
         }
       },
     },
-    plugins: ${this._plugins.map((plugin) => `"${plugin.pluginName}": ${plugin.alias}`).join(',\n      ')},
+    plugins: {
+      ${this._plugins
+        .map((plugin) => `"${plugin.alias}": ${plugin.pluginName}`)
+        .join(",\n      ")}
+    },
     rules: {
-      ${JSON.stringify({...this.rules, ...this._formattingRules}).slice(1, -1)}
+      ${JSON.stringify({ ...this.rules, ...this._formattingRules }).slice(
+        1,
+        -1
+      )}
     }
   },
-  ${this.overrides.map((override) => `
+  ${this.overrides
+    .map(
+      (override) => `
     {
-      ...${override.extends?.map((extend) => `"${extend}"`).join(',\n  ...')},
+      ...${override.extends?.map((extend) => `"${extend}"`).join(",\n  ...")},
       files: ${override.files},
       plugins: ${override.plugins},
-      ${override.parser ? `
+      ${
+        override.parser
+          ? `
       languageOptions: {
         parser: ${override.parser},
-      }` : ''},
-      ${override.rules ? `rules: ${override.rules}` : ''},
-      ${override.excludedFiles ? `ignores: ${override.excludedFiles}` : ''},
+      }`
+          : ""
+      },
+      ${override.rules ? `rules: ${override.rules}` : ""},
+      ${override.excludedFiles ? `ignores: ${override.excludedFiles}` : ""},
     }
-    `).join(',\n  ')},
+    `
+    )
+    .join(",\n  ")},
   {
     ignores: ${JSON.stringify(this.ignorePatterns).slice(1, -1)}
   }
 ];
-`
-    if (options.yaml) {
-      new YamlFile(project, ".eslintrc.yml", {
-        obj: this.config,
-        marker: true,
-      });
-    } else {
-      new JsonFile(project, ".eslintrc.json", {
-        obj: this.config,
-        // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
-        marker: true,
-        allowComments: true,
-      });
-    }
+`;
 
     // if the user enabled prettier explicitly _or_ if the project has a
     // `Prettier` component, we shall tweak our configuration accordingly.
@@ -501,7 +497,11 @@ export default [
       this.enablePrettier();
     } else {
       this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
-      this.addPlugins({importPath: "@stylistic/eslint-plugin", pluginName: "@stylistic", alias: "stylistic"});
+      this.addPlugins({
+        importPath: "@stylistic/eslint-plugin",
+        pluginName: "stylistic",
+        alias: "@stylistic",
+      });
     }
   }
 
@@ -535,9 +535,28 @@ export default [
 
   /**
    * Adds an eslint plugin
-   * @param plugins The names of plugins to add
+   * @param plugins The details of plugins to add
+   * - importPath: the import path of the plugin(e.g. "typescript-eslint")
+   * - pluginName: the name of the plugin(e.g. "@typescript-eslint")
+   * - alias: the alias to use in the config(e.g. "tseslint")
+   *
+   * @example
+   * ```ts
+   * import tseslint from "typescript-eslint" // import $PLUGIN_NAME from $IMPORT_PATH
+   *
+   * export default [
+   *   ...
+   *   {
+   *     plugins: {
+   *       "@typescript-eslint": tseslint // "$ALIAS": $PLUGIN_NAME
+   *     }
+   *   }
+   * ]
+   * ```
    */
-  public addPlugins(...plugins: {importPath: string, pluginName:string, alias: string}[]) {
+  public addPlugins(
+    ...plugins: { importPath: string; pluginName: string; alias: string }[]
+  ) {
     for (const plugin of plugins) {
       this._plugins.push(plugin);
     }
