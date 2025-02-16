@@ -1,9 +1,107 @@
-import { Project, TaskStepOptions } from "..";
-import { ICompareString } from "../compare";
+import { Project } from "..";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
-import { Task } from "../task";
 import { Prettier } from "./prettier";
+
+/**
+ * plugin information for eslint configuration
+ *
+ * @example {importPath: "typescript-eslint", pluginName: "@typescript-eslint", alias: "tseslint"}
+ * ```ts
+ * import tseslint from "typescript-eslint" // import $pluginName from $importPath
+ *
+ * export default [
+ *   ...
+ *   {
+ *     plugins: {
+ *       "@typescript-eslint": tseslint // "$alias": $pluginName
+ *     }
+ *   }
+ * ]
+ * ```
+ */
+export interface Plugin {
+  /**
+   * the import path of the plugin(e.g. "typescript-eslint")
+   *
+   * @example "typescript-eslint"
+   */
+  importPath: string;
+
+  /**
+   * the name of the plugin(e.g. "@typescript-eslint")
+   *
+   * @example "@typescript-eslint"
+   */
+  pluginName: string;
+
+  /**
+   * the alias to use in the config(e.g. "tseslint")
+   *
+   * @example "tseslint"
+   */
+  alias: string;
+};
+
+/**
+ * extends items for eslint configuration.
+ * @example
+ * ### When needSpread is false
+ * {importPath: "eslint-plugin-prettier", pluginName: "prettierPlugin", extendsCode: "prettierPlugin"}
+ * ```ts
+ * import prettierPlugin from "eslint-plugin-prettier" // import $pluginName from $importPath
+ *
+ * export default [
+ *   prettierPlugin // $extendsCode
+ *   {
+ *     ...
+ *   }
+ * ]
+ * ```
+ *
+ * ### When needSpread is true
+ * {importPath: "eslint-plugin-prettier", pluginName: "prettierPlugin", extendsCode: "prettierPlugin", needSpread: true}
+ * ```ts
+ * import prettierPlugin from "eslint-plugin-prettier" // import $pluginName from $importPath
+ *
+ * export default [
+ *   ...prettierPlugin, // ...$extendsCode
+ *   {
+ *     ...
+ *   }
+ * ]
+ * ```
+ */
+export interface Extend {
+  /**
+   * the import path of the plugin(e.g. "eslint-plugin-prettier")
+   *
+   * @example "eslint-plugin-prettier"
+   */
+  importPath: string;
+
+  /**
+   * the name of the plugin(e.g. "prettierPlugin")
+   *
+   * @example "prettierPlugin"
+   */
+  pluginName: string;
+
+  /**
+   * the code to use in the config(e.g. "prettierPlugin")
+   *
+   * @example "prettierPlugin"
+   */
+  extendsCode: string;
+
+  /**
+   * whether to spread the extends code
+   *
+   * @default false
+   */
+  needSpread?: boolean;
+};
+
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -17,12 +115,12 @@ export interface EslintOptions {
   readonly dirs: string[];
 
   /**
-   * Files or glob patterns or directories with source files that include tests and build tools
-   *
+   * Files or glob patterns or directories with source files that include tests and build tools.
    * These sources are linted but may also import packages from `devDependencies`.
+   *
    * @default []
    */
-  readonly devdirs?: string[];
+  readonly devDirs?: string[];
 
   /**
    * File types that should be linted (e.g. [ ".js", ".ts" ])
@@ -39,38 +137,15 @@ export interface EslintOptions {
    * List of file patterns that should not be linted, using the same syntax
    * as .gitignore patterns.
    *
-   * @default [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
+   * @default - [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
    */
   readonly ignorePatterns?: string[];
-
-  /**
-   * Projenrc file to lint. Use empty string to disable.
-   * @default "projenrc.js"
-   * @deprecated provide as `devdirs`
-   */
-  readonly lintProjenRcFile?: string;
-
-  /**
-   * Should we lint .projenrc.js
-   *
-   * @default true
-   * @deprecated set to `false` to remove any automatic rules and add manually
-   */
-  readonly lintProjenRc?: boolean;
 
   /**
    * Enable prettier for code formatting
    * @default false
    */
   readonly prettier?: boolean;
-
-  /**
-   * The extends array in eslint is order dependent.
-   * This option allows to sort the extends array in any way seen fit.
-   *
-   * @default - Use known ESLint best practices to place "prettier" plugins at the end of the array
-   */
-  readonly sortExtends?: ICompareString;
 
   /**
    * Enable import alias for module paths
@@ -115,10 +190,10 @@ export interface EslintOverride {
   readonly files: string[];
 
   /**
-   * Pattern(s) to exclude from this override.
-   * If a file matches any of the excluded patterns, the configuration won’t apply.
+   * Pattern(s) to ignore from this override.
+   * If a file matches any of the ignored patterns, the configuration won’t apply.
    */
-  readonly excludedFiles?: string[];
+  readonly ignorePatterns?: string[];
 
   /**
    * The overridden rules
@@ -133,12 +208,12 @@ export interface EslintOverride {
   /**
    * Config(s) to extend in this override
    */
-  readonly extends?: string[];
+  readonly extends?: Extend[];
 
   /**
-   * `plugins` override
+   * Plugin(s) to use in this override
    */
-  readonly plugins?: string[];
+  readonly plugins?: Plugin[];
 }
 
 /**
@@ -165,11 +240,6 @@ export class EslintFlatConfig extends Component {
   public readonly overrides: EslintOverride[] = [];
 
   /**
-   * eslint task.
-   */
-  public readonly eslintTask: Task;
-
-  /**
    * Direct access to the eslint configuration (escape hatch)
    */
   public readonly config: string;
@@ -179,39 +249,21 @@ export class EslintFlatConfig extends Component {
    */
   public readonly ignorePatterns: string[];
 
-  private _formattingRules: Record<string, any>;
-  private readonly _devdirs: string[];
-  private readonly _allowDevDeps: Set<string>;
   /**
-   * @param importPath: the import path of the plugin(e.g. "typescript-eslint")
-   * @param pluginName: the name of the plugin(e.g. "@typescript-eslint")
-   * @param alias: the alias to use in the config(e.g. "tseslint")
-   *
-   * @example
-   * ```ts
-   * import tseslint from "typescript-eslint" // import $PLUGIN_NAME from $IMPORT_PATH
-   *
-   * export default [
-   *   ...
-   *   {
-   *     plugins: {
-   *       "@typescript-eslint": tseslint // "$ALIAS": $PLUGIN_NAME
-   *     }
-   *   }
-   * ]
-   * ```
+   * plugins items for eslint configuration.
    */
-  private readonly _plugins: {
-    importPath: string;
-    pluginName: string;
-    alias: string;
-  }[] = [];
-  private readonly _extends = new Set<string>();
-  private readonly _fileExtensions: Set<string>;
-  private readonly _flagArgs: Set<string>;
+  private readonly _plugins: Plugin[] = [];
+
+  /**
+   * extends items for eslint configuration.
+   */
+  private readonly _extends: Extend[] = [];
+
+  private _formattingRules: { [rule: string]: any };
+  private readonly _devDirs: string[];
+  private readonly _allowDevDeps: Set<string>;
   private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
-  // private readonly sortExtends: ICompareString;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
@@ -226,33 +278,9 @@ export class EslintFlatConfig extends Component {
       "eslint-plugin-import"
     );
 
-    // TODO
-    if (options.aliasMap) {
-      project.addDevDeps("eslint-import-resolver-alias");
-    }
-
-    this._devdirs = options.devdirs ?? [];
-
-    this._lintPatterns = new Set([...options.dirs, ...this._devdirs]);
-    this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
-    this._allowDevDeps = new Set(this._devdirs.map((dir) => `**/${dir}/**`));
-
-    const commandOptions = options.commandOptions ?? {};
-    const { fix = true, extraArgs: extraFlagArgs = [] } = commandOptions;
-    this._flagArgs = new Set(extraFlagArgs);
-    if (fix) {
-      this._flagArgs.add("--fix");
-    }
-    this._flagArgs.add("--no-error-on-unmatched-pattern");
-
-    // this.sortExtends = options.sortExtends ?? new ExtendsDefaultOrder();
-
-    this.eslintTask = project.addTask("eslint", {
-      description: "Runs eslint against the codebase",
-    });
-    this.updateTask();
-
-    project.testTask.spawn(this.eslintTask);
+    this._devDirs = options.devDirs ?? [];
+    this._lintPatterns = new Set([...options.dirs, ...this._devDirs]);
+    this._allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
 
     // exclude some files
     project.npmignore?.exclude("/.eslint.config.mjs");
@@ -402,22 +430,47 @@ export class EslintFlatConfig extends Component {
       pluginName: "importPlugin",
       alias: "import",
     });
+    this.addExtends({
+      importPath: "@eslint/js",
+      pluginName: "eslint",
+      extendsCode: "eslint.config.recommended",
+    });
+    this.addExtends({
+      importPath: "eslint-plugin-import",
+      pluginName: "importPlugin",
+      extendsCode: "importPlugin.flatConfigs.typescript",
+    });
+
+    // if the user enabled prettier explicitly _or_ if the project has a
+    // `Prettier` component, we shall tweak our configuration accordingly.
+    if (options.prettier || Prettier.of(project)) {
+      this.enablePrettier();
+    } else {
+      this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
+      this.addPlugins({
+        importPath: "@stylistic/eslint-plugin",
+        pluginName: "stylistic",
+        alias: "@stylistic",
+      });
+    }
 
     this.config = `
 import globals from "globals";
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint"
-${this._plugins
+${this.generateUniqueImportCode([...this._plugins, ...this._extends])
   .map((plugin) => `import ${plugin.pluginName} from "${plugin.importPath}"`)
   .join("\n")}
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   eslint.configs.recommended,
-  importPlugin.flatConfigs.typescript,
+  ${this.generateUniqueExtends(this._extends, this._plugins)
+    .map((extend) =>
+      extend.needSpread ? `...${extend.extendsCode}` : extend.extendsCode
+    )
+    .join(",\n  ")},
   {
-    ...${[...this._extends].join(",\n  ...")},
-    files: ['**/*.ts', '**/*.tsx'],
+    files: [${[...this._lintPatterns].join(", ")}],
     languageOptions: { 
       globals: {
         ...globals.node,
@@ -464,45 +517,11 @@ export default [
       )}
     }
   },
-  ${this.overrides
-    .map(
-      (override) => `
-    {
-      ...${override.extends?.map((extend) => `"${extend}"`).join(",\n  ...")},
-      files: ${override.files},
-      plugins: ${override.plugins},
-      ${
-        override.parser
-          ? `
-      languageOptions: {
-        parser: ${override.parser},
-      }`
-          : ""
-      },
-      ${override.rules ? `rules: ${override.rules}` : ""},
-      ${override.excludedFiles ? `ignores: ${override.excludedFiles}` : ""},
-    }
-    `
-    )
-    .join(",\n  ")},
   {
     ignores: ${JSON.stringify(this.ignorePatterns).slice(1, -1)}
   }
 ];
 `;
-
-    // if the user enabled prettier explicitly _or_ if the project has a
-    // `Prettier` component, we shall tweak our configuration accordingly.
-    if (options.prettier || Prettier.of(project)) {
-      this.enablePrettier();
-    } else {
-      this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
-      this.addPlugins({
-        importPath: "@stylistic/eslint-plugin",
-        pluginName: "stylistic",
-        alias: "@stylistic",
-      });
-    }
   }
 
   /**
@@ -512,7 +531,6 @@ export default [
     if (this._lintPatterns && this._lintPatterns.size > 0) {
       return [...this._lintPatterns];
     }
-
     return [];
   }
 
@@ -521,7 +539,6 @@ export default [
    */
   public addLintPattern(pattern: string) {
     this._lintPatterns.add(pattern);
-    this.updateTask();
   }
 
   /**
@@ -535,28 +552,8 @@ export default [
 
   /**
    * Adds an eslint plugin
-   * @param plugins The details of plugins to add
-   * - importPath: the import path of the plugin(e.g. "typescript-eslint")
-   * - pluginName: the name of the plugin(e.g. "@typescript-eslint")
-   * - alias: the alias to use in the config(e.g. "tseslint")
-   *
-   * @example
-   * ```ts
-   * import tseslint from "typescript-eslint" // import $PLUGIN_NAME from $IMPORT_PATH
-   *
-   * export default [
-   *   ...
-   *   {
-   *     plugins: {
-   *       "@typescript-eslint": tseslint // "$ALIAS": $PLUGIN_NAME
-   *     }
-   *   }
-   * ]
-   * ```
    */
-  public addPlugins(
-    ...plugins: { importPath: string; pluginName: string; alias: string }[]
-  ) {
+  public addPlugins(...plugins: Plugin[]) {
     for (const plugin of plugins) {
       this._plugins.push(plugin);
     }
@@ -578,11 +575,10 @@ export default [
 
   /**
    * Adds an `extends` item to the eslint configuration.
-   * @param extendList The list of "extends" to add.
    */
-  public addExtends(...extendList: string[]) {
+  public addExtends(...extendList: Extend[]) {
     for (const extend of extendList) {
-      this._extends.add(extend);
+      this._extends.push(extend);
     }
   }
 
@@ -590,95 +586,75 @@ export default [
    * Add a glob file pattern which allows importing dev dependencies.
    * @param pattern glob pattern.
    */
-  public allowDevDeps(pattern: string) {
+  public addAllowDevDeps(pattern: string) {
     this._allowDevDeps.add(pattern);
+  }
+
+  /**
+   * Generate unique plugins from the given list.
+   */
+  private generateUniqueImportCode(
+    plugins: { importPath: string; pluginName: string }[]
+  ): { importPath: string; pluginName: string }[] {
+    return plugins.reduce<{ importPath: string; pluginName: string }[]>(
+      (acc, plugin) => {
+        if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
+          return acc;
+        }
+        return [...acc, plugin];
+      },
+      []
+    );
+  }
+
+  /**
+   * Generate unique plugins from the given list.
+   * @param extendList The list of extends to generate unique plugins from.
+   * @param plugins The list of plugins to generate unique plugins from.
+   *
+   * @return The list of unique extends.
+   */
+  private generateUniqueExtends(
+    extendList: Extend[],
+    plugins: Plugin[]
+  ): Extend[] {
+    return extendList.reduce<Extend[]>((acc, extend) => {
+      if (acc.find((p) => p.importPath === extend.importPath)) {
+        return acc;
+      }
+      // If specified in plugins, rewrite information in extends
+      const plugin = plugins.find(
+        ({ importPath }) => importPath === extend.importPath
+      );
+      if (!plugin) {
+        return [...acc, extend];
+      }
+      return [
+        ...acc,
+        {
+          pluginName: plugin.pluginName,
+          importPath: plugin.importPath,
+          extendsCode: extend.extendsCode.replace(/^[^.]+/, plugin.pluginName), // replace the first part of the extendsCode with the pluginName
+          needSpread: extend.needSpread,
+        },
+      ];
+    }, []);
   }
 
   /**
    * Enables prettier for code formatting.
    */
   private enablePrettier() {
-    this.nodeProject.addDevDeps(
-      "prettier",
-      "eslint-plugin-prettier",
-      "eslint-config-prettier"
-    );
-
+    this.nodeProject.addDevDeps("prettier", "eslint-config-prettier");
     this._formattingRules = {};
-
-    this.addExtends("plugin:prettier/recommended");
+    this.addExtends({
+      importPath: "eslint-config-prettier",
+      pluginName: "prettierConfig",
+      extendsCode: "prettierConfig",
+    });
   }
 
   private renderDevDepsAllowList() {
     return Array.from(this._allowDevDeps);
   }
-
-  /**
-   * Update the task with the current list of lint patterns and file extensions
-   */
-  private updateTask() {
-    const taskExecCommand = "eslint";
-    const argsSet = new Set<string>();
-    if (this._fileExtensions.size > 0) {
-      argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
-    }
-    argsSet.add(`${[...this._flagArgs].join(" ")}`);
-    argsSet.add("$@"); // External args go here
-
-    for (const pattern of this._lintPatterns) {
-      argsSet.add(pattern);
-    }
-
-    this.eslintTask.reset(
-      [taskExecCommand, ...argsSet].join(" "),
-      this.buildTaskStepOptions(taskExecCommand)
-    );
-  }
-
-  /**
-   * In case of external editing of the eslint task step, we preserve those changes.
-   * Otherwise, we return the default task step options.
-   *
-   * @param taskExecCommand The command that the ESLint tasks executes
-   * @returns Either the externally edited, or the default task step options
-   */
-  private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
-    const currentEslintTaskStep = this.eslintTask?.steps?.find((step) =>
-      step?.exec?.startsWith?.(taskExecCommand)
-    );
-
-    if (currentEslintTaskStep) {
-      const { args, condition, cwd, env, name, receiveArgs } =
-        currentEslintTaskStep;
-      return {
-        args,
-        condition,
-        cwd,
-        env,
-        name,
-        receiveArgs,
-      };
-    }
-
-    return {
-      receiveArgs: true,
-    };
-  }
 }
-
-/**
- * A compare protocol tp sort the extends array in eslint config using known ESLint best practices.
- *
- * Places "prettier" plugins at the end of the array
- */
-// class ExtendsDefaultOrder implements ICompareString {
-//   // This is the order that ESLint best practices suggest
-//   private static ORDER = ["plugin:prettier/recommended", "prettier"];
-
-//   public compare(a: string, b: string): number {
-//     return (
-//       ExtendsDefaultOrder.ORDER.indexOf(a) -
-//       ExtendsDefaultOrder.ORDER.indexOf(b)
-//     );
-//   }
-// }
