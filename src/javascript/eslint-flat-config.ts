@@ -106,14 +106,17 @@ export interface Extend {
 export interface EslintFlatConfigOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
+   * 
    * @default "./tsconfig.json"
    */
   readonly tsconfigPath?: string;
 
   /**
-   * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
+   * Files or glob patterns or directories with source files to lint 
+   * 
+   * @example ["src/*.ts"]
    */
-  readonly dirs: string[];
+  readonly enablePattern: string[];
 
   /**
    * Files or glob patterns or directories with source files that include tests and build tools.
@@ -125,6 +128,7 @@ export interface EslintFlatConfigOptions {
 
   /**
    * File types that should be linted (e.g. [ ".js", ".ts" ])
+   * 
    * @default [".ts"]
    */
   readonly fileExtensions?: string[];
@@ -279,7 +283,7 @@ export class EslintFlatConfig extends Component {
     );
 
     this._devDirs = options.devDirs ?? [];
-    this._lintPatterns = new Set([...options.dirs, ...this._devDirs]);
+    this._lintPatterns = new Set([...options.enablePattern, ...this._devDirs]);
     this._allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
 
     // exclude some files
@@ -420,6 +424,8 @@ export class EslintFlatConfig extends Component {
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
+    const rules = { ...this.rules, ...this._formattingRules };
+
     this.addPlugins({
       importPath: "typescript-eslint",
       pluginName: "tseslint",
@@ -454,7 +460,6 @@ export class EslintFlatConfig extends Component {
       });
     }
 
-    const rules = { ...this.rules, ...this._formattingRules };
     this.config = `
 import globals from "globals";
 ${this.generateUniqueImportSrc([...this._plugins, ...this._extends]).join("\n")}
@@ -467,7 +472,9 @@ export default [
     )
     .join(",\n  ")},
   {
-    files: [${[...this._lintPatterns].map((pattern) => `"${pattern}"`).join(", ")}],
+    files: [${[...this._lintPatterns]
+      .map((pattern) => `"${pattern}"`)
+      .join(", ")}],
     languageOptions: { 
       globals: {
         ...globals.node,
@@ -536,7 +543,7 @@ export default [
    * Returns an immutable copy of the lintPatterns being used by this eslint configuration.
    */
   public get lintPatterns(): string[] {
-    if (this._lintPatterns && this._lintPatterns.size > 0) {
+    if (this._lintPatterns.size) {
       return [...this._lintPatterns];
     }
     return [];
@@ -602,11 +609,9 @@ export default [
    * Generate unique plugins from the given list.
    */
   private generateUniqueImportSrc(
-    plugins: { importPath: string; pluginName: string }[]
+    plugins: (Plugin | Extend)[]
   ): string[] {
-    const uniquePlugins = plugins.reduce<
-      { importPath: string; pluginName: string }[]
-    >((acc, plugin) => {
+    const uniquePlugins = plugins.reduce<(Plugin | Extend)[]>((acc, plugin) => {
       if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
         return acc;
       }
