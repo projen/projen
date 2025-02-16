@@ -7,15 +7,15 @@ import { Prettier } from "./prettier";
 /**
  * plugin information for eslint configuration
  *
- * @example {importPath: "typescript-eslint", pluginName: "@typescript-eslint", alias: "tseslint"}
+ * @example {importPath: "typescript-eslint", moduleName: "tseslint", alias: "@typescript-eslint"}
  * ```ts
- * import tseslint from "typescript-eslint" // import $pluginName from $importPath
+ * import tseslint from "typescript-eslint" // import $moduleName from $importPath
  *
  * export default [
  *   ...
  *   {
  *     plugins: {
- *       "@typescript-eslint": tseslint // "$alias": $pluginName
+ *       "@typescript-eslint": tseslint // "$alias": $moduleName
  *     }
  *   }
  * ]
@@ -23,23 +23,23 @@ import { Prettier } from "./prettier";
  */
 export interface Plugin {
   /**
-   * the import path of the plugin(e.g. "typescript-eslint")
+   * the import path of the plugin
    *
    * @example "typescript-eslint"
    */
   importPath: string;
 
   /**
-   * the name of the plugin(e.g. "@typescript-eslint")
-   *
-   * @example "@typescript-eslint"
-   */
-  pluginName: string;
-
-  /**
-   * the alias to use in the config(e.g. "tseslint")
+   * the name of the plugin
    *
    * @example "tseslint"
+   */
+  moduleName: string;
+
+  /**
+   * the alias to use in the config
+   *
+   * @example "@typescript-eslint"
    */
   alias: string;
 }
@@ -48,9 +48,9 @@ export interface Plugin {
  * extends items for eslint configuration.
  * @example
  * ### When needSpread is false
- * {importPath: "eslint-plugin-prettier", pluginName: "prettierPlugin", extendsCode: "prettierPlugin"}
+ * {importPath: "eslint-plugin-prettier", moduleName: "prettierPlugin", extendsCode: "prettierPlugin"}
  * ```ts
- * import prettierPlugin from "eslint-plugin-prettier" // import $pluginName from $importPath
+ * import prettierPlugin from "eslint-plugin-prettier" // import $moduleName from $importPath
  *
  * export default [
  *   prettierPlugin // $extendsCode
@@ -61,9 +61,9 @@ export interface Plugin {
  * ```
  *
  * ### When needSpread is true
- * {importPath: "eslint-plugin-prettier", pluginName: "prettierPlugin", extendsCode: "prettierPlugin", needSpread: true}
+ * {importPath: "eslint-plugin-prettier", moduleName: "prettierPlugin", extendsCode: "prettierPlugin", needSpread: true}
  * ```ts
- * import prettierPlugin from "eslint-plugin-prettier" // import $pluginName from $importPath
+ * import prettierPlugin from "eslint-plugin-prettier" // import $moduleName from $importPath
  *
  * export default [
  *   ...prettierPlugin, // ...$extendsCode
@@ -75,21 +75,21 @@ export interface Plugin {
  */
 export interface Extend {
   /**
-   * the import path of the plugin(e.g. "eslint-plugin-prettier")
+   * the import path of the plugin
    *
    * @example "eslint-plugin-prettier"
    */
   importPath: string;
 
   /**
-   * the name of the plugin(e.g. "prettierPlugin")
+   * the name of the plugin
    *
    * @example "prettierPlugin"
    */
-  pluginName: string;
+  moduleName: string;
 
   /**
-   * the code to use in the config(e.g. "prettierPlugin")
+   * the code to use in the config
    *
    * @example "prettierPlugin"
    */
@@ -103,20 +103,59 @@ export interface Extend {
   needSpread?: boolean;
 }
 
+/**
+ * parser items for eslint configuration.
+ * @example
+ * {importPath: "typescript-eslint", moduleName: "tseslint", parserCode: "tseslint.parser"}
+ * ```ts
+ * import tseslint from "typescript-eslint" // import $moduleName from $importPath
+ *
+ * export default [
+ *   {
+ *     languageOptions: {
+ *       parser: tseslint.parser, // $parserCode
+ *     }
+ *   }
+ * ]
+ * ```
+ */
+export interface Parser {
+  /**
+   * the import path of the parser
+   *
+   * @example "typescript-eslint"
+   */
+  importPath: string;
+
+  /**
+   * the module name of the parser
+   *
+   * @example "tseslint"
+   */
+  moduleName: string;
+
+  /**
+   * the code to use in the parser
+   *
+   * @example "tseslint.parser"
+   */
+  parserCode: string;
+}
+
 export interface EslintFlatConfigOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
-   * 
+   *
    * @default "./tsconfig.json"
    */
   readonly tsconfigPath?: string;
 
   /**
-   * Files or glob patterns or directories with source files to lint 
-   * 
+   * Files or glob patterns or directories with source files to lint
+   *
    * @example ["src/*.ts"]
    */
-  readonly enablePattern: string[];
+  readonly enablePatterns: string[];
 
   /**
    * Files or glob patterns or directories with source files that include tests and build tools.
@@ -128,7 +167,7 @@ export interface EslintFlatConfigOptions {
 
   /**
    * File types that should be linted (e.g. [ ".js", ".ts" ])
-   * 
+   *
    * @default [".ts"]
    */
   readonly fileExtensions?: string[];
@@ -192,7 +231,7 @@ export interface EslintFlatConfigOverride {
   /**
    * Files or file patterns on which to apply the override
    */
-  readonly files: string[];
+  readonly enablePatterns: string[];
 
   /**
    * Pattern(s) to ignore from this override.
@@ -208,7 +247,7 @@ export interface EslintFlatConfigOverride {
   /**
    * The overridden parser
    */
-  readonly parser?: string;
+  readonly parser?: Parser;
 
   /**
    * Config(s) to extend in this override
@@ -283,7 +322,7 @@ export class EslintFlatConfig extends Component {
     );
 
     this._devDirs = options.devDirs ?? [];
-    this._lintPatterns = new Set([...options.enablePattern, ...this._devDirs]);
+    this._lintPatterns = new Set([...options.enablePatterns, ...this._devDirs]);
     this._allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
 
     // exclude some files
@@ -428,22 +467,22 @@ export class EslintFlatConfig extends Component {
 
     this.addPlugins({
       importPath: "typescript-eslint",
-      pluginName: "tseslint",
+      moduleName: "tseslint",
       alias: "@typescript-eslint",
     });
     this.addPlugins({
       importPath: "eslint-plugin-import",
-      pluginName: "importPlugin",
+      moduleName: "importPlugin",
       alias: "import",
     });
     this.addExtends({
       importPath: "@eslint/js",
-      pluginName: "eslint",
+      moduleName: "eslint",
       extendsCode: "eslint.configs.recommended",
     });
     this.addExtends({
       importPath: "eslint-plugin-import",
-      pluginName: "importPlugin",
+      moduleName: "importPlugin",
       extendsCode: "importPlugin.flatConfigs.typescript",
     });
 
@@ -455,14 +494,22 @@ export class EslintFlatConfig extends Component {
       this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
       this.addPlugins({
         importPath: "@stylistic/eslint-plugin",
-        pluginName: "stylistic",
+        moduleName: "stylistic",
         alias: "@stylistic",
       });
     }
 
     this.config = `
 import globals from "globals";
-${this.generateUniqueImportSrc([...this._plugins, ...this._extends]).join("\n")}
+${this.generateUniqueImportSrc([
+  ...this._plugins,
+  ...this._extends,
+  ...this.overrides?.flatMap((override) => [
+    ...(override.plugins ?? []),
+    ...(override.extends ?? []),
+    ...(override.parser ? [override.parser] : []),
+  ]),
+]).join("\n")}
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -516,7 +563,7 @@ export default [
     },
     plugins: {
       ${this._plugins
-        .map((plugin) => `"${plugin.alias}": ${plugin.pluginName}`)
+        .map((plugin) => `"${plugin.alias}": ${plugin.moduleName}`)
         .join(",\n      ")}
     },
     rules: {
@@ -528,6 +575,52 @@ export default [
         .join(",\n      ")}
     }
   },
+  ${this.overrides.map(
+    (override) => `
+  {
+    ${
+      override.extends
+        ? override.extends
+            .map((extend) =>
+              extend.needSpread
+                ? `...${extend.extendsCode}`
+                : extend.extendsCode
+            )
+            .join(",\n  ")
+        : ""
+    }
+    ${
+      override.parser
+        ? `languageOptions: {
+      parser: ${
+        this.replaceParser(override.parser, [
+          ...this._plugins,
+          ...this._extends,
+        ]).parserCode
+      }
+    },`
+        : ""
+    }
+    files: [${override.enablePatterns
+      .map((pattern) => `"${pattern}"`)
+      .join(", ")}],
+    plugins: {
+      ${override.plugins
+        ?.map((plugin) => `"${plugin.alias}": ${plugin.moduleName}`)
+        .join(",\n      ")}
+    },
+    rules: {
+      ${Object.keys(override.rules ?? {})
+        .map(
+          (key) =>
+            `"${key}": ${JSON.stringify(
+              override.rules?.[key as keyof typeof override.rules]
+            )}`
+        )
+        .join(",\n      ")}
+    }
+  }`
+  )}
   {
     ignores: [${this.ignorePatterns
       .map((pattern) => `"${pattern}"`)
@@ -609,16 +702,19 @@ export default [
    * Generate unique plugins from the given list.
    */
   private generateUniqueImportSrc(
-    plugins: (Plugin | Extend)[]
+    plugins: (Plugin | Extend | Parser)[]
   ): string[] {
-    const uniquePlugins = plugins.reduce<(Plugin | Extend)[]>((acc, plugin) => {
-      if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
-        return acc;
-      }
-      return [...acc, plugin];
-    }, []);
+    const uniquePlugins = plugins.reduce<(Plugin | Extend | Parser)[]>(
+      (acc, plugin) => {
+        if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
+          return acc;
+        }
+        return [...acc, plugin];
+      },
+      []
+    );
     return uniquePlugins.map(
-      (plugin) => `import ${plugin.pluginName} from "${plugin.importPath}"`
+      (plugin) => `import ${plugin.moduleName} from "${plugin.importPath}"`
     );
   }
 
@@ -634,7 +730,7 @@ export default [
     plugins: Plugin[]
   ): Extend[] {
     return extendList.reduce<Extend[]>((acc, extend) => {
-      if (acc.find((p) => p.importPath === extend.importPath)) {
+      if (acc.find(({ importPath }) => importPath === extend.importPath)) {
         return acc;
       }
       // If specified in plugins, rewrite information in extends
@@ -647,13 +743,35 @@ export default [
       return [
         ...acc,
         {
-          pluginName: plugin.pluginName,
+          moduleName: plugin.moduleName,
           importPath: plugin.importPath,
-          extendsCode: extend.extendsCode.replace(/^[^.]+/, plugin.pluginName), // replace the first part of the extendsCode with the pluginName
+          extendsCode: extend.extendsCode.replace(/^[^.]+/, plugin.moduleName), // replace the first part of the extendsCode with the pluginName
           needSpread: extend.needSpread,
         },
       ];
     }, []);
+  }
+
+  /**
+   * Generate unique plugins from the given list.
+   * @param parsers The list of extends to generate unique plugins from.
+   * @param plugins The list of plugins to generate unique plugins from.
+   *
+   * @return The list of unique extends.
+   */
+  private replaceParser(parser: Parser, plugins: (Plugin | Extend)[]): Parser {
+    // If specified in plugins, rewrite information in extends
+    const plugin = plugins.find(
+      ({ importPath }) => importPath === parser.importPath
+    );
+    if (plugin) {
+      return {
+        moduleName: plugin.moduleName,
+        importPath: plugin.importPath,
+        parserCode: parser.parserCode.replace(/^[^.]+/, plugin.moduleName), // replace the first part of the extendsCode with the pluginName
+      };
+    }
+    return parser;
   }
 
   /**
@@ -664,7 +782,7 @@ export default [
     this._formattingRules = {};
     this.addExtends({
       importPath: "eslint-config-prettier",
-      pluginName: "prettierConfig",
+      moduleName: "prettierConfig",
       extendsCode: "prettierConfig",
     });
   }
