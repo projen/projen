@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import { Project } from "..";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
@@ -41,7 +42,7 @@ export interface Plugin {
    * @example "tseslint"
    */
   alias: string;
-};
+}
 
 /**
  * extends items for eslint configuration.
@@ -100,9 +101,9 @@ export interface Extend {
    * @default false
    */
   needSpread?: boolean;
-};
+}
 
-export interface EslintOptions {
+export interface EslintFlatConfigOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
    * @default "./tsconfig.json"
@@ -131,7 +132,7 @@ export interface EslintOptions {
   /**
    * Options for eslint command executed by eslint task
    */
-  readonly commandOptions?: EslintCommandOptions;
+  readonly commandOptions?: EslintFlatConfigCommandOptions;
 
   /**
    * List of file patterns that should not be linted, using the same syntax
@@ -167,7 +168,7 @@ export interface EslintOptions {
   readonly tsAlwaysTryTypes?: boolean;
 }
 
-export interface EslintCommandOptions {
+export interface EslintFlatConfigCommandOptions {
   /**
    * Whether to fix eslint issues when running the eslint task
    * @default true
@@ -183,7 +184,7 @@ export interface EslintCommandOptions {
 /**
  * eslint rules override
  */
-export interface EslintOverride {
+export interface EslintFlatConfigOverride {
   /**
    * Files or file patterns on which to apply the override
    */
@@ -237,7 +238,7 @@ export class EslintFlatConfig extends Component {
   /**
    * eslint overrides.
    */
-  public readonly overrides: EslintOverride[] = [];
+  public readonly overrides: EslintFlatConfigOverride[] = [];
 
   /**
    * Direct access to the eslint configuration (escape hatch)
@@ -258,14 +259,13 @@ export class EslintFlatConfig extends Component {
    * extends items for eslint configuration.
    */
   private readonly _extends: Extend[] = [];
-
   private _formattingRules: { [rule: string]: any };
   private readonly _devDirs: string[];
   private readonly _allowDevDeps: Set<string>;
   private readonly _lintPatterns: Set<string>;
   private readonly nodeProject: NodeProject;
 
-  constructor(project: NodeProject, options: EslintOptions) {
+  constructor(project: NodeProject, options: EslintFlatConfigOptions) {
     super(project);
 
     this.nodeProject = project;
@@ -433,7 +433,7 @@ export class EslintFlatConfig extends Component {
     this.addExtends({
       importPath: "@eslint/js",
       pluginName: "eslint",
-      extendsCode: "eslint.config.recommended",
+      extendsCode: "eslint.configs.recommended",
     });
     this.addExtends({
       importPath: "eslint-plugin-import",
@@ -454,23 +454,20 @@ export class EslintFlatConfig extends Component {
       });
     }
 
+    const rules = { ...this.rules, ...this._formattingRules };
     this.config = `
 import globals from "globals";
-import eslint from "@eslint/js";
-${this.generateUniqueImportCode([...this._plugins, ...this._extends])
-  .map((plugin) => `import ${plugin.pluginName} from "${plugin.importPath}"`)
-  .join("\n")}
+${this.generateUniqueImportSrc([...this._plugins, ...this._extends]).join("\n")}
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  eslint.configs.recommended,
   ${this.generateUniqueExtends(this._extends, this._plugins)
     .map((extend) =>
       extend.needSpread ? `...${extend.extendsCode}` : extend.extendsCode
     )
     .join(",\n  ")},
   {
-    files: [${[...this._lintPatterns].join(", ")}],
+    files: [${[...this._lintPatterns].map((pattern) => `"${pattern}"`).join(", ")}],
     languageOptions: { 
       globals: {
         ...globals.node,
@@ -480,7 +477,7 @@ export default [
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
-        project: ${tsconfig},
+        project: "${tsconfig}",
       },
     },
     settings: {
@@ -488,20 +485,25 @@ export default [
         "@typescript-eslint/parser": [".ts", ".tsx"],
       },
       "import/resolver": {
-        ${JSON.stringify({
-          ...(options.aliasMap && {
-            alias: {
-              map: Object.entries(options.aliasMap).map(([k, v]) => [k, v]),
-              extensions: options.aliasExtensions,
-            },
-          }),
-        }).slice(1, -1)},
+        ${
+          options.aliasMap
+            ? JSON.stringify({
+                ...{
+                  alias: {
+                    map: Object.entries(options.aliasMap).map(([k, v]) => [
+                      k,
+                      v,
+                    ]),
+                    extensions: options.aliasExtensions,
+                  },
+                },
+              }).slice(1, -1)
+            : ""
+        }
         node: {},
         typescript: {
-          project: ${tsconfig},
-          ${JSON.stringify({
-            ...(options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true }),
-          }).slice(1, -1)},
+          project: "${tsconfig}",
+          ${options.tsAlwaysTryTypes !== false ? "alwaysTryTypes: true" : ""},
         }
       },
     },
@@ -511,17 +513,23 @@ export default [
         .join(",\n      ")}
     },
     rules: {
-      ${JSON.stringify({ ...this.rules, ...this._formattingRules }).slice(
-        1,
-        -1
-      )}
+      ${Object.keys(rules)
+        .map(
+          (key) =>
+            `"${key}": ${JSON.stringify(rules[key as keyof typeof rules])}`
+        )
+        .join(",\n      ")}
     }
   },
   {
-    ignores: ${JSON.stringify(this.ignorePatterns).slice(1, -1)}
+    ignores: [${this.ignorePatterns
+      .map((pattern) => `"${pattern}"`)
+      .join(", ")}]
   }
 ];
 `;
+
+    fs.writeFileSync("eslint.config.mjs", this.config);
   }
 
   /**
@@ -562,7 +570,7 @@ export default [
   /**
    * Add an eslint override.
    */
-  public addOverride(override: EslintOverride) {
+  public addOverride(override: EslintFlatConfigOverride) {
     this.overrides.push(override);
   }
 
@@ -593,17 +601,19 @@ export default [
   /**
    * Generate unique plugins from the given list.
    */
-  private generateUniqueImportCode(
+  private generateUniqueImportSrc(
     plugins: { importPath: string; pluginName: string }[]
-  ): { importPath: string; pluginName: string }[] {
-    return plugins.reduce<{ importPath: string; pluginName: string }[]>(
-      (acc, plugin) => {
-        if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
-          return acc;
-        }
-        return [...acc, plugin];
-      },
-      []
+  ): string[] {
+    const uniquePlugins = plugins.reduce<
+      { importPath: string; pluginName: string }[]
+    >((acc, plugin) => {
+      if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
+        return acc;
+      }
+      return [...acc, plugin];
+    }, []);
+    return uniquePlugins.map(
+      (plugin) => `import ${plugin.pluginName} from "${plugin.importPath}"`
     );
   }
 
