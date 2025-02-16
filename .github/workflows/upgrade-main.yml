@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    if: github.repository == 'projen/projen'
     outputs:
       patch_created: ${{ steps.create_patch.outputs.patch_created }}
     steps:
