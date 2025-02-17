@@ -378,7 +378,7 @@ export class TypeScriptProject extends NodeProject {
   /**
    * Projen default Typescript compiler options.
    */
-  public defaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
+  protected defaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
     alwaysStrict: true,
     declaration: true,
     esModuleInterop: true,
