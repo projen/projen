@@ -11,12 +11,10 @@ import {
   NodeProjectOptions,
   Projenrc as NodeProjectProjenrc,
   Transform,
-} from "../javascript";
-import {
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
-} from "../javascript/typescript-config";
+} from "../javascript";
 import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";

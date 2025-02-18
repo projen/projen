@@ -2,12 +2,12 @@ import { writeFileSync, mkdirSync } from "fs";
 import * as path from "path";
 import * as semver from "semver";
 import * as ts from "typescript";
-import { NodeProject } from "../../src/javascript";
 import {
+  NodeProject,
   TypescriptConfig,
   TypescriptConfigExtends,
   TypeScriptModuleResolution,
-} from "../../src/typescript";
+} from "../../src/javascript";
 import { withProjectDir } from "../util";
 
 describe("TypescriptConfig", () => {
