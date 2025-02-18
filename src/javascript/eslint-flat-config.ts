@@ -5,6 +5,8 @@ import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { Prettier } from "./prettier";
 
+type Rules = { [rule: string]: any }
+
 /**
  * ESLint plugin configuration information.
  *
@@ -254,7 +256,7 @@ export interface EslintFlatConfigCommandOptions {
 }
 
 /**
- * eslint rules override
+ * Override information for eslint rules
  */
 export interface EslintFlatConfigOverride {
   /**
@@ -275,7 +277,7 @@ export interface EslintFlatConfigOverride {
   /**
    * The overridden rules
    */
-  readonly rules?: { [rule: string]: any };
+  readonly rules?: Rules;
 
   /**
    * The overridden parser
@@ -309,7 +311,7 @@ export class EslintFlatConfig extends Component {
   /**
    * Public getter for eslint rules.
    */
-  public get rules(): { [rule: string]: any } {
+  public get rules(): Rules {
     return { ...this._rules, ...this._formattingRules };
   }
 
@@ -340,8 +342,8 @@ export class EslintFlatConfig extends Component {
   }
 
   private readonly nodeProject: NodeProject;
-  private _rules: { [rule: string]: any } = {};
-  private _formattingRules: { [rule: string]: any } = {};
+  private _rules: Rules = {};
+  private _formattingRules: Rules = {};
   private _enablePatterns: Set<string>;
   private _ignorePatterns: string[] = [];
   private _config: string = "";
@@ -418,7 +420,7 @@ export class EslintFlatConfig extends Component {
    *
    * @example { "no-console": "error" }
    */
-  public addRules(rules: { [rule: string]: any }) {
+  public addRules(rules: Rules) {
     for (const [k, v] of Object.entries(rules)) {
       this._rules[k] = v;
     }
@@ -426,6 +428,16 @@ export class EslintFlatConfig extends Component {
 
   /**
    * Adds an eslint plugin
+   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+   * - eslint
+   * - @eslint/js
+   * - typescript-eslint
+   * - eslint-plugin-import
+   * - @stylistic/eslint-plugin(when prettier is disabled)
+   * - prettier(when prettier is enabled)
+   * - eslint-config-prettier(when prettier is enabled)
+   * 
+   * @param plugins ESLint plugin information.
    */
   public addPlugins(...plugins: EslintPlugin[]) {
     this._plugins.push(...plugins);
@@ -433,6 +445,16 @@ export class EslintFlatConfig extends Component {
 
   /**
    * Add an eslint override.
+   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+   * - eslint
+   * - @eslint/js
+   * - typescript-eslint
+   * - eslint-plugin-import
+   * - @stylistic/eslint-plugin(when prettier is disabled)
+   * - prettier(when prettier is enabled)
+   * - eslint-config-prettier(when prettier is enabled)
+   * 
+   * @param overrides Override information for eslint rules
    */
   public addOverrides(...overrides: EslintFlatConfigOverride[]) {
     this.overrides.push(...overrides);
@@ -440,6 +462,16 @@ export class EslintFlatConfig extends Component {
 
   /**
    * Adds an `extends` item to the eslint configuration.
+   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+   * - eslint
+   * - @eslint/js
+   * - typescript-eslint
+   * - eslint-plugin-import
+   * - @stylistic/eslint-plugin(when prettier is disabled)
+   * - prettier(when prettier is enabled)
+   * - eslint-config-prettier(when prettier is enabled)
+   * 
+   * @param extendList ESLint configuration extension information.
    */
   public addExtends(...extendList: EslintConfigExtension[]) {
     this._extends.push(...extendList);
@@ -905,15 +937,49 @@ export default [
     return `parser: ${parser.parserReference}`;
   }
 
+
+  /**
+   * Generates a list of glob patterns for directories where dev dependencies are allowed.
+   * Takes the dev directories and transforms them into glob patterns that match all files within those directories.
+   * 
+   * @returns An array of glob patterns in the format `**=\/{dir}/**` for each dev directory
+   * 
+   * @example
+   * // If _devDirs = ["test", "build"]
+   * // Returns: ["**\/test/**", "**\/build/**"]
+   */
   private renderDevDepsAllowList() {
     const allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
     return Array.from(allowDevDeps);
   }
 
+  /**
+   * Converts an array of elements into a string representation suitable for ESLint configuration.
+   * Each element is wrapped in quotes and joined with commas.
+   * 
+   * @param element - The array to convert
+   * @returns A string representation of the array with quoted elements
+   * 
+   * @example
+   * // Input: ["src", "test"]
+   * // Returns: '["src", "test"]'
+   */
   private convertArrayToString(element: unknown[]): string {
     return `[${element.map((e) => `"${e}"`).join(", ")}]`;
   }
 
+  /**
+   * Converts an array of ESLint plugins into a string representation for the configuration file.
+   * Each plugin is formatted as a key-value pair where the key is the plugin alias and the value is the module name.
+   * 
+   * @param plugins - Array of ESLint plugin configurations
+   * @param spaceStringForEachPlugin - Indentation string to use for formatting
+   * @returns A formatted string of plugin configurations
+   * 
+   * @example
+   * // Input: [{pluginAlias: "@typescript-eslint", moduleName: "tseslint"}]
+   * // Returns: '"@typescript-eslint": tseslint'
+   */
   private convertPluginsToString(
     plugins: EslintPlugin[],
     spaceStringForEachPlugin: string
@@ -924,8 +990,20 @@ export default [
       .join(`,\n${spaceStringForEachPlugin}`);
   }
 
+  /**
+   * Converts an object containing ESLint rules into a string representation for the configuration file.
+   * Each rule is formatted as a key-value pair where the key is the rule name and the value is the stringified rule configuration.
+   * 
+   * @param rules - Object containing ESLint rules and their configurations
+   * @param spaceStringForEachRule - Indentation string to use for formatting
+   * @returns A formatted string of rule configurations
+   * 
+   * @example
+   * // Input: { "no-console": "error", "indent": ["error", 2] }
+   * // Returns: '"no-console": "error",\n  "indent": ["error", 2]'
+   */
   private convertRulesToString(
-    rules: { [rule: string]: any },
+    rules: Rules,
     spaceStringForEachRule: string
   ): string {
     if (!Object.keys(rules).length) return "";
