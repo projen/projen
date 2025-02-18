@@ -372,35 +372,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 export class TypeScriptProject extends NodeProject {
   public static readonly DEFAULT_TS_JEST_TRANFORM_PATTERN = "^.+\\.[t]sx?$";
 
-  /**
-   * Projen default Typescript compiler options.
-   */
-  protected getDefaultTsCompilerOptions(): TypeScriptCompilerOptions {
-    return {
-      alwaysStrict: true,
-      declaration: true,
-      esModuleInterop: true,
-      experimentalDecorators: true,
-      inlineSourceMap: true,
-      inlineSources: true,
-      lib: ["es2019"],
-      module: "CommonJS",
-      noEmitOnError: false,
-      noFallthroughCasesInSwitch: true,
-      noImplicitAny: true,
-      noImplicitReturns: true,
-      noImplicitThis: true,
-      noUnusedLocals: true,
-      noUnusedParameters: true,
-      resolveJsonModule: true,
-      strict: true,
-      strictNullChecks: true,
-      strictPropertyInitialization: true,
-      stripInternal: true,
-      target: "ES2019",
-    };
-  }
-
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
@@ -606,6 +577,35 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+  }
+
+  /**
+   * Projen default Typescript compiler options.
+   */
+  protected getDefaultTsCompilerOptions(): TypeScriptCompilerOptions {
+    return {
+      alwaysStrict: true,
+      declaration: true,
+      esModuleInterop: true,
+      experimentalDecorators: true,
+      inlineSourceMap: true,
+      inlineSources: true,
+      lib: ["es2019"],
+      module: "CommonJS",
+      noEmitOnError: false,
+      noFallthroughCasesInSwitch: true,
+      noImplicitAny: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      noUnusedLocals: true,
+      noUnusedParameters: true,
+      resolveJsonModule: true,
+      strict: true,
+      strictNullChecks: true,
+      strictPropertyInitialization: true,
+      stripInternal: true,
+      target: "ES2019",
+    };
   }
 
   /**
