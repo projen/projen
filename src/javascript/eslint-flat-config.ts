@@ -339,42 +339,20 @@ export class EslintFlatConfig extends Component {
     return this._ignorePatterns;
   }
 
-  /**
-   * Rules for eslint configuration.
-   */
-  private _rules: { [rule: string]: any } = {};
-
-  /**
-   * Formatting rules for eslint configuration.
-   */
-  private _formattingRules: { [rule: string]: any } = {};
-
-  /**
-   * Files or glob patterns or directories that should be linted
-   */
-  private _enablePatterns: Set<string>;
-
-  /**
-   * Plugins items for eslint configuration.
-   */
-  private _plugins: EslintPlugin[] = [];
-
-  /**
-   * Extends items for eslint configuration.
-   */
-  private _extends: EslintConfigExtension[] = [];
-
-  private _config: string = "";
-
-  private _ignorePatterns: string[] = [];
-
   private readonly nodeProject: NodeProject;
-  private readonly _devDirs: string[];
-  private readonly _allowDevDeps: Set<string>;
+  private _rules: { [rule: string]: any } = {};
+  private _formattingRules: { [rule: string]: any } = {};
+  private _enablePatterns: Set<string>;
+  private _ignorePatterns: string[] = [];
+  private _config: string = "";
+  private _plugins: EslintPlugin[] = [];
+  private _extends: EslintConfigExtension[] = [];
   private readonly _tsconfigPath: string;
-  private readonly _aliasMap: { [key: string]: string };
-  private readonly _aliasExtensions: string[];
+  private readonly _devDirs: string[];
+  private readonly _aliasMap?: { [key: string]: string };
+  private readonly _aliasExtensions?: string[];
   private readonly _tsAlwaysTryTypes: boolean;
+
   constructor(project: NodeProject, options: EslintFlatConfigOptions) {
     super(project);
 
@@ -383,6 +361,13 @@ export class EslintFlatConfig extends Component {
     this.initializeProject(project);
     this.initializePluginsAndExtends();
 
+    // Validate options
+    if (options.aliasMap && !options.aliasExtensions?.length) {
+      throw new Error(
+        "aliasExtensions must be specified when aliasMap is used"
+      );
+    }
+
     // Set options to class properties
     this._devDirs = options.devDirs ?? [];
     this._enablePatterns = new Set([
@@ -390,10 +375,9 @@ export class EslintFlatConfig extends Component {
       ...this._devDirs,
     ]);
     this._tsconfigPath = options.tsconfigPath ?? "./tsconfig.json";
-    this._aliasMap = options.aliasMap ?? {};
+    this._aliasMap = options.aliasMap;
     this._aliasExtensions = options.aliasExtensions ?? [];
     this._tsAlwaysTryTypes = options.tsAlwaysTryTypes ?? true;
-    this._allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
     this.initializeRules();
     this.initializeCodeFormatter(project, options);
     this.initializeIgnorePatterns(options);
@@ -480,7 +464,7 @@ export class EslintFlatConfig extends Component {
    * Initialize plugins and extends for ESLint configuration
    */
   private initializePluginsAndExtends(): void {
-    this._plugins.concat([
+    this.addPlugins(
       {
         importPath: "typescript-eslint",
         moduleName: "tseslint",
@@ -490,9 +474,9 @@ export class EslintFlatConfig extends Component {
         importPath: "eslint-plugin-import",
         moduleName: "importPlugin",
         pluginAlias: "import",
-      },
-    ]);
-    this._extends.concat([
+      }
+    );
+    this.addExtends(
       {
         importPath: "@eslint/js",
         moduleName: "eslint",
@@ -502,8 +486,8 @@ export class EslintFlatConfig extends Component {
         importPath: "eslint-plugin-import",
         moduleName: "importPlugin",
         configReference: "importPlugin.flatConfigs.typescript",
-      },
-    ]);
+      }
+    );
   }
 
   /**
@@ -922,7 +906,8 @@ export default [
   }
 
   private renderDevDepsAllowList() {
-    return Array.from(this._allowDevDeps);
+    const allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
+    return Array.from(allowDevDeps);
   }
 
   private convertArrayToString(element: unknown[]): string {
