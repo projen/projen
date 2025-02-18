@@ -2296,12 +2296,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which source files reside. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.web.NextJsTypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.assetsdir">assetsdir</a></code> | <code>string</code> | The directory in which app assets reside. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.tailwind">tailwind</a></code> | <code>boolean</code> | Setup Tailwind as a PostCSS plugin. |
 
@@ -2999,7 +2999,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -3043,7 +3043,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -3053,7 +3053,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -5654,12 +5654,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.ReactTypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which source files reside. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.web.ReactTypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
 
 ---
 
@@ -6355,7 +6355,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -6399,7 +6399,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -6409,7 +6409,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -8801,8 +8801,8 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -10910,7 +10910,7 @@ compile the code in-memory.
 public readonly tsconfig: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -10923,7 +10923,7 @@ Custom TSConfig.
 public readonly tsconfigDev: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
@@ -13522,8 +13522,8 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -15604,7 +15604,7 @@ compile the code in-memory.
 public readonly tsconfig: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -15617,7 +15617,7 @@ Custom TSConfig.
 public readonly tsconfigDev: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).

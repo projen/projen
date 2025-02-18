@@ -363,7 +363,7 @@ The project.
 | <code><a href="#projen.typescript.ProjenrcTs.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.typescript.ProjenrcTs.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.typescript.ProjenrcTs.property.filePath">filePath</a></code> | <code>string</code> | The path of the projenrc file. |
-| <code><a href="#projen.typescript.ProjenrcTs.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | TypeScript configuration file used to compile projen source files. |
+| <code><a href="#projen.typescript.ProjenrcTs.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | TypeScript configuration file used to compile projen source files. |
 
 ---
 
@@ -407,7 +407,7 @@ The path of the projenrc file.
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 TypeScript configuration file used to compile projen source files.
 
@@ -1128,12 +1128,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | *No description.* |
 
 ---
 
@@ -1829,7 +1829,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -1873,7 +1873,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 ---
 
@@ -1883,7 +1883,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 ---
 
@@ -1920,6 +1920,347 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 - *Type:* string
 
 ---
+
+### TypescriptConfig <a name="TypescriptConfig" id="projen.typescript.TypescriptConfig"></a>
+
+#### Initializers <a name="Initializers" id="projen.typescript.TypescriptConfig.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+new typescript.TypescriptConfig(project: Project, options: TypescriptConfigOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfig.Initializer.parameter.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfig.Initializer.parameter.options">options</a></code> | <code><a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.typescript.TypescriptConfig.Initializer.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.typescript.TypescriptConfig.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfig.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.TypescriptConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.typescript.TypescriptConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.typescript.TypescriptConfig.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.typescript.TypescriptConfig.addExclude">addExclude</a></code> | Add an exclude pattern to the `exclude` array of the TSConfig. |
+| <code><a href="#projen.typescript.TypescriptConfig.addExtends">addExtends</a></code> | Extend from base `TypescriptConfig` instance. |
+| <code><a href="#projen.typescript.TypescriptConfig.addInclude">addInclude</a></code> | Add an include pattern to the `include` array of the TSConfig. |
+| <code><a href="#projen.typescript.TypescriptConfig.removeExclude">removeExclude</a></code> | Remove an exclude pattern from the `exclude` array of the TSConfig. |
+| <code><a href="#projen.typescript.TypescriptConfig.removeInclude">removeInclude</a></code> | Remove an include pattern from the `include` array of the TSConfig. |
+| <code><a href="#projen.typescript.TypescriptConfig.resolveExtendsPath">resolveExtendsPath</a></code> | Resolve valid TypeScript extends paths relative to this config. |
+
+---
+
+##### `toString` <a name="toString" id="projen.typescript.TypescriptConfig.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.typescript.TypescriptConfig.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.typescript.TypescriptConfig.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.typescript.TypescriptConfig.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addExclude` <a name="addExclude" id="projen.typescript.TypescriptConfig.addExclude"></a>
+
+```typescript
+public addExclude(pattern: string): void
+```
+
+Add an exclude pattern to the `exclude` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#exclude](https://www.typescriptlang.org/tsconfig#exclude)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypescriptConfig.addExclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to add.
+
+---
+
+##### `addExtends` <a name="addExtends" id="projen.typescript.TypescriptConfig.addExtends"></a>
+
+```typescript
+public addExtends(value: TypescriptConfig): void
+```
+
+Extend from base `TypescriptConfig` instance.
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.typescript.TypescriptConfig.addExtends.parameter.value"></a>
+
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
+
+Base `TypescriptConfig` instance.
+
+---
+
+##### `addInclude` <a name="addInclude" id="projen.typescript.TypescriptConfig.addInclude"></a>
+
+```typescript
+public addInclude(pattern: string): void
+```
+
+Add an include pattern to the `include` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#include](https://www.typescriptlang.org/tsconfig#include)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypescriptConfig.addInclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to add.
+
+---
+
+##### `removeExclude` <a name="removeExclude" id="projen.typescript.TypescriptConfig.removeExclude"></a>
+
+```typescript
+public removeExclude(pattern: string): void
+```
+
+Remove an exclude pattern from the `exclude` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#exclude](https://www.typescriptlang.org/tsconfig#exclude)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypescriptConfig.removeExclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to remove.
+
+---
+
+##### `removeInclude` <a name="removeInclude" id="projen.typescript.TypescriptConfig.removeInclude"></a>
+
+```typescript
+public removeInclude(pattern: string): void
+```
+
+Remove an include pattern from the `include` array of the TSConfig.
+
+> [https://www.typescriptlang.org/tsconfig#include](https://www.typescriptlang.org/tsconfig#include)
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.typescript.TypescriptConfig.removeInclude.parameter.pattern"></a>
+
+- *Type:* string
+
+The pattern to remove.
+
+---
+
+##### `resolveExtendsPath` <a name="resolveExtendsPath" id="projen.typescript.TypescriptConfig.resolveExtendsPath"></a>
+
+```typescript
+public resolveExtendsPath(configPath: string): string
+```
+
+Resolve valid TypeScript extends paths relative to this config.
+
+###### `configPath`<sup>Required</sup> <a name="configPath" id="projen.typescript.TypescriptConfig.resolveExtendsPath.parameter.configPath"></a>
+
+- *Type:* string
+
+Path to resolve against.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfig.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.typescript.TypescriptConfig.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.typescript.TypescriptConfig.isConstruct"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypescriptConfig.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.typescript.TypescriptConfig.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.typescript.TypescriptConfig.isComponent"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypescriptConfig.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.typescript.TypescriptConfig.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfig.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.typescript.TypescriptConfig.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfig.property.exclude">exclude</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfig.property.extends">extends</a></code> | <code>string[]</code> | Array of base `tsconfig.json` paths. Any absolute paths are resolved relative to this instance, while any relative paths are used as is. |
+| <code><a href="#projen.typescript.TypescriptConfig.property.file">file</a></code> | <code>projen.JsonFile</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfig.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfig.property.include">include</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfig.property.compilerOptions">compilerOptions</a></code> | <code><a href="#projen.typescript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.typescript.TypescriptConfig.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.typescript.TypescriptConfig.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `exclude`<sup>Required</sup> <a name="exclude" id="projen.typescript.TypescriptConfig.property.exclude"></a>
+
+```typescript
+public readonly exclude: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `extends`<sup>Required</sup> <a name="extends" id="projen.typescript.TypescriptConfig.property.extends"></a>
+
+```typescript
+public readonly extends: string[];
+```
+
+- *Type:* string[]
+
+Array of base `tsconfig.json` paths. Any absolute paths are resolved relative to this instance, while any relative paths are used as is.
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.typescript.TypescriptConfig.property.file"></a>
+
+```typescript
+public readonly file: JsonFile;
+```
+
+- *Type:* projen.JsonFile
+
+---
+
+##### `fileName`<sup>Required</sup> <a name="fileName" id="projen.typescript.TypescriptConfig.property.fileName"></a>
+
+```typescript
+public readonly fileName: string;
+```
+
+- *Type:* string
+
+---
+
+##### `include`<sup>Required</sup> <a name="include" id="projen.typescript.TypescriptConfig.property.include"></a>
+
+```typescript
+public readonly include: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `compilerOptions`<sup>Optional</sup> <a name="compilerOptions" id="projen.typescript.TypescriptConfig.property.compilerOptions"></a>
+
+```typescript
+public readonly compilerOptions: TypeScriptCompilerOptions;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
+
+---
+
 
 ### TypeScriptLibraryProject <a name="TypeScriptLibraryProject" id="projen.typescript.TypeScriptLibraryProject"></a>
 
@@ -2633,12 +2974,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | *No description.* |
 
 ---
 
@@ -3438,7 +3779,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -3490,7 +3831,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 ---
 
@@ -3502,7 +3843,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 ---
 
@@ -4258,12 +4599,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.typescript.TypeScriptProject.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code><a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a></code> | *No description.* |
 
 ---
 
@@ -4959,7 +5300,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -5003,7 +5344,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 ---
 
@@ -5013,7 +5354,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>
 
 ---
 
@@ -5352,6 +5693,1050 @@ Enable ESM support.
 
 ---
 
+### TypeScriptCompilerOptions <a name="TypeScriptCompilerOptions" id="projen.typescript.TypeScriptCompilerOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.typescript.TypeScriptCompilerOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const typeScriptCompilerOptions: typescript.TypeScriptCompilerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.allowArbitraryExtensions">allowArbitraryExtensions</a></code> | <code>boolean</code> | Suppress arbitrary extension import errors with the assumption that a bundler will be handling it. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.allowImportingTsExtensions">allowImportingTsExtensions</a></code> | <code>boolean</code> | Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`). Requires `noEmit` or `emitDeclarationOnly`. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.allowJs">allowJs</a></code> | <code>boolean</code> | Allow JavaScript files to be compiled. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.allowSyntheticDefaultImports">allowSyntheticDefaultImports</a></code> | <code>boolean</code> | Allow default imports from modules with no default export. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.allowUnreachableCode">allowUnreachableCode</a></code> | <code>boolean</code> | Allow Unreachable Code. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.allowUnusedLabels">allowUnusedLabels</a></code> | <code>boolean</code> | Allow Unused Labels. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.alwaysStrict">alwaysStrict</a></code> | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.baseUrl">baseUrl</a></code> | <code>string</code> | Lets you set a base directory to resolve non-absolute module names. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.checkJs">checkJs</a></code> | <code>boolean</code> | Check JS. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.customConditions">customConditions</a></code> | <code>string[]</code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.declaration">declaration</a></code> | <code>boolean</code> | To be specified along with the above. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.declarationDir">declarationDir</a></code> | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.declarationMap">declarationMap</a></code> | <code>boolean</code> | Generates a source map for .d.ts files which map back to the original .ts source file. This will allow editors such as VS Code to go to the original .ts file when using features like Go to Definition. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.downlevelIteration">downlevelIteration</a></code> | <code>boolean</code> | Downleveling is TypeScript’s term for transpiling to an older version of JavaScript. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.emitDeclarationOnly">emitDeclarationOnly</a></code> | <code>boolean</code> | Only emit .d.ts files; do not emit .js files. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.emitDecoratorMetadata">emitDecoratorMetadata</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.esModuleInterop">esModuleInterop</a></code> | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.exactOptionalPropertyTypes">exactOptionalPropertyTypes</a></code> | <code>boolean</code> | Specifies that optional property types should be interpreted exactly as written, meaning that `\| undefined` is not added to the type Available with TypeScript 4.4 and newer. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.experimentalDecorators">experimentalDecorators</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.forceConsistentCasingInFileNames">forceConsistentCasingInFileNames</a></code> | <code>boolean</code> | Disallow inconsistently-cased references to the same file. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.importsNotUsedAsValues">importsNotUsedAsValues</a></code> | <code><a href="#projen.typescript.TypeScriptImportsNotUsedAsValues">TypeScriptImportsNotUsedAsValues</a></code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.incremental">incremental</a></code> | <code>boolean</code> | Tells TypeScript to save information about the project graph from the last compilation to files stored on disk. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.inlineSourceMap">inlineSourceMap</a></code> | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.inlineSources">inlineSources</a></code> | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.isolatedModules">isolatedModules</a></code> | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.jsx">jsx</a></code> | <code><a href="#projen.typescript.TypeScriptJsxMode">TypeScriptJsxMode</a></code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.jsxImportSource">jsxImportSource</a></code> | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.lib">lib</a></code> | <code>string[]</code> | Reference for type definitions / libraries to use (eg. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.module">module</a></code> | <code>string</code> | Sets the module system for the program. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.moduleDetection">moduleDetection</a></code> | <code><a href="#projen.typescript.TypeScriptModuleDetection">TypeScriptModuleDetection</a></code> | This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript). |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.moduleResolution">moduleResolution</a></code> | <code><a href="#projen.typescript.TypeScriptModuleResolution">TypeScriptModuleResolution</a></code> | Determine how modules get resolved. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noEmit">noEmit</a></code> | <code>boolean</code> | Do not emit outputs. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noEmitOnError">noEmitOnError</a></code> | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noFallthroughCasesInSwitch">noFallthroughCasesInSwitch</a></code> | <code>boolean</code> | Report errors for fallthrough cases in switch statements. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noImplicitAny">noImplicitAny</a></code> | <code>boolean</code> | In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noImplicitOverride">noImplicitOverride</a></code> | <code>boolean</code> | Using `noImplicitOverride`, you can ensure that sub-classes never go out of sync as they are required to explicitly declare that they are overriding a member using the `override` keyword. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noImplicitReturns">noImplicitReturns</a></code> | <code>boolean</code> | When enabled, TypeScript will check all code paths in a function to ensure they return a value. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noImplicitThis">noImplicitThis</a></code> | <code>boolean</code> | Raise error on ‘this’ expressions with an implied ‘any’ type. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noPropertyAccessFromIndexSignature">noPropertyAccessFromIndexSignature</a></code> | <code>boolean</code> | Raise error on use of the dot syntax to access fields which are not defined. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noUncheckedIndexedAccess">noUncheckedIndexedAccess</a></code> | <code>boolean</code> | Raise error when accessing indexes on objects with unknown keys defined in index signatures. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noUnusedLocals">noUnusedLocals</a></code> | <code>boolean</code> | Report errors on unused local variables. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.noUnusedParameters">noUnusedParameters</a></code> | <code>boolean</code> | Report errors on unused parameters in functions. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.outDir">outDir</a></code> | <code>string</code> | Output directory for the compiled files. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.paths">paths</a></code> | <code>{[ key: string ]: string[]}</code> | A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.resolveJsonModule">resolveJsonModule</a></code> | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.resolvePackageJsonExports">resolvePackageJsonExports</a></code> | <code>boolean</code> | Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.resolvePackageJsonImports">resolvePackageJsonImports</a></code> | <code>boolean</code> | Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.rootDir">rootDir</a></code> | <code>string</code> | Specifies the root directory of input files. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.skipLibCheck">skipLibCheck</a></code> | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts). |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.sourceMap">sourceMap</a></code> | <code>boolean</code> | Enables the generation of sourcemap files. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.sourceRoot">sourceRoot</a></code> | <code>string</code> | Specify the location where a debugger should locate TypeScript files instead of relative source locations. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.strict">strict</a></code> | <code>boolean</code> | The strict flag enables a wide range of type checking behavior that results in stronger guarantees of program correctness. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.strictNullChecks">strictNullChecks</a></code> | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.strictPropertyInitialization">strictPropertyInitialization</a></code> | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.stripInternal">stripInternal</a></code> | <code>boolean</code> | Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.target">target</a></code> | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.tsBuildInfoFile">tsBuildInfoFile</a></code> | <code>string</code> | This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.typeRoots">typeRoots</a></code> | <code>string[]</code> | If typeRoots is specified, only packages under typeRoots will be included. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.types">types</a></code> | <code>string[]</code> | If types is specified, only packages listed will be included in the global scope. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.useUnknownInCatchVariables">useUnknownInCatchVariables</a></code> | <code>boolean</code> | Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer. |
+| <code><a href="#projen.typescript.TypeScriptCompilerOptions.property.verbatimModuleSyntax">verbatimModuleSyntax</a></code> | <code>boolean</code> | Simplifies TypeScript's handling of import/export `type` modifiers. |
+
+---
+
+##### `allowArbitraryExtensions`<sup>Optional</sup> <a name="allowArbitraryExtensions" id="projen.typescript.TypeScriptCompilerOptions.property.allowArbitraryExtensions"></a>
+
+```typescript
+public readonly allowArbitraryExtensions: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Suppress arbitrary extension import errors with the assumption that a bundler will be handling it.
+
+> [https://www.typescriptlang.org/tsconfig#allowArbitraryExtensions](https://www.typescriptlang.org/tsconfig#allowArbitraryExtensions)
+
+---
+
+##### `allowImportingTsExtensions`<sup>Optional</sup> <a name="allowImportingTsExtensions" id="projen.typescript.TypeScriptCompilerOptions.property.allowImportingTsExtensions"></a>
+
+```typescript
+public readonly allowImportingTsExtensions: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Allows TypeScript files to import each other with TypeScript-specific extensions (`.ts`, `.mts`, `.tsx`). Requires `noEmit` or `emitDeclarationOnly`.
+
+---
+
+##### `allowJs`<sup>Optional</sup> <a name="allowJs" id="projen.typescript.TypeScriptCompilerOptions.property.allowJs"></a>
+
+```typescript
+public readonly allowJs: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Allow JavaScript files to be compiled.
+
+---
+
+##### `allowSyntheticDefaultImports`<sup>Optional</sup> <a name="allowSyntheticDefaultImports" id="projen.typescript.TypeScriptCompilerOptions.property.allowSyntheticDefaultImports"></a>
+
+```typescript
+public readonly allowSyntheticDefaultImports: boolean;
+```
+
+- *Type:* boolean
+
+Allow default imports from modules with no default export.
+
+This does not affect code emit, just typechecking.
+
+---
+
+##### `allowUnreachableCode`<sup>Optional</sup> <a name="allowUnreachableCode" id="projen.typescript.TypeScriptCompilerOptions.property.allowUnreachableCode"></a>
+
+```typescript
+public readonly allowUnreachableCode: boolean;
+```
+
+- *Type:* boolean
+
+Allow Unreachable Code.
+
+When:
+
+- `undefined` (default) provide suggestions as warnings to editors
+- `true` unreachable code is ignored
+- `false` raises compiler errors about unreachable code
+
+These warnings are only about code which is provably unreachable due to the use of JavaScript syntax.
+
+> [https://www.typescriptlang.org/tsconfig#allowUnreachableCode](https://www.typescriptlang.org/tsconfig#allowUnreachableCode)
+
+---
+
+##### `allowUnusedLabels`<sup>Optional</sup> <a name="allowUnusedLabels" id="projen.typescript.TypeScriptCompilerOptions.property.allowUnusedLabels"></a>
+
+```typescript
+public readonly allowUnusedLabels: boolean;
+```
+
+- *Type:* boolean
+
+Allow Unused Labels.
+
+When:
+
+- `undefined` (default) provide suggestions as warnings to editors
+- `true` unused labels are ignored
+- `false` raises compiler errors about unused labels
+
+Labels are very rare in JavaScript and typically indicate an attempt to write an object literal:
+
+```ts
+function verifyAge(age: number) {
+  // Forgot 'return' statement
+  if (age > 18) {
+    verified: true;
+//  ^^^^^^^^ Unused label.
+  }
+}
+```
+
+> [https://www.typescriptlang.org/tsconfig#allowUnusedLabels](https://www.typescriptlang.org/tsconfig#allowUnusedLabels)
+
+---
+
+##### `alwaysStrict`<sup>Optional</sup> <a name="alwaysStrict" id="projen.typescript.TypeScriptCompilerOptions.property.alwaysStrict"></a>
+
+```typescript
+public readonly alwaysStrict: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.
+
+---
+
+##### `baseUrl`<sup>Optional</sup> <a name="baseUrl" id="projen.typescript.TypeScriptCompilerOptions.property.baseUrl"></a>
+
+```typescript
+public readonly baseUrl: string;
+```
+
+- *Type:* string
+
+Lets you set a base directory to resolve non-absolute module names.
+
+You can define a root folder where you can do absolute file resolution.
+
+---
+
+##### `checkJs`<sup>Optional</sup> <a name="checkJs" id="projen.typescript.TypeScriptCompilerOptions.property.checkJs"></a>
+
+```typescript
+public readonly checkJs: boolean;
+```
+
+- *Type:* boolean
+
+Check JS.
+
+Works in tandem with [allowJs](https://www.typescriptlang.org/tsconfig#allowJs). When checkJs is enabled then
+errors are reported in JavaScript files. This is the equivalent of including //
+
+> [https://www.typescriptlang.org/tsconfig#checkJs](https://www.typescriptlang.org/tsconfig#checkJs)
+
+---
+
+##### `customConditions`<sup>Optional</sup> <a name="customConditions" id="projen.typescript.TypeScriptCompilerOptions.property.customConditions"></a>
+
+```typescript
+public readonly customConditions: string[];
+```
+
+- *Type:* string[]
+- *Default:* undefined
+
+List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`.
+
+> [https://www.typescriptlang.org/tsconfig#customConditions](https://www.typescriptlang.org/tsconfig#customConditions)
+
+---
+
+##### `declaration`<sup>Optional</sup> <a name="declaration" id="projen.typescript.TypeScriptCompilerOptions.property.declaration"></a>
+
+```typescript
+public readonly declaration: boolean;
+```
+
+- *Type:* boolean
+
+To be specified along with the above.
+
+---
+
+##### `declarationDir`<sup>Optional</sup> <a name="declarationDir" id="projen.typescript.TypeScriptCompilerOptions.property.declarationDir"></a>
+
+```typescript
+public readonly declarationDir: string;
+```
+
+- *Type:* string
+
+Offers a way to configure the root directory for where declaration files are emitted.
+
+---
+
+##### `declarationMap`<sup>Optional</sup> <a name="declarationMap" id="projen.typescript.TypeScriptCompilerOptions.property.declarationMap"></a>
+
+```typescript
+public readonly declarationMap: boolean;
+```
+
+- *Type:* boolean
+
+Generates a source map for .d.ts files which map back to the original .ts source file. This will allow editors such as VS Code to go to the original .ts file when using features like Go to Definition.
+
+> [{@link https://www.typescriptlang.org/tsconfig#declarationMap}]({@link https://www.typescriptlang.org/tsconfig#declarationMap})
+
+---
+
+##### `downlevelIteration`<sup>Optional</sup> <a name="downlevelIteration" id="projen.typescript.TypeScriptCompilerOptions.property.downlevelIteration"></a>
+
+```typescript
+public readonly downlevelIteration: boolean;
+```
+
+- *Type:* boolean
+
+Downleveling is TypeScript’s term for transpiling to an older version of JavaScript.
+
+This flag is to enable support for a more accurate implementation of how modern JavaScript iterates through new concepts in older JavaScript runtimes.
+
+ECMAScript 6 added several new iteration primitives: the for / of loop (for (el of arr)), Array spread ([a, ...b]), argument spread (fn(...args)), and Symbol.iterator.
+downlevelIteration allows for these iteration primitives to be used more accurately in ES5 environments if a Symbol.iterator implementation is present.
+
+---
+
+##### `emitDeclarationOnly`<sup>Optional</sup> <a name="emitDeclarationOnly" id="projen.typescript.TypeScriptCompilerOptions.property.emitDeclarationOnly"></a>
+
+```typescript
+public readonly emitDeclarationOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Only emit .d.ts files; do not emit .js files.
+
+---
+
+##### `emitDecoratorMetadata`<sup>Optional</sup> <a name="emitDecoratorMetadata" id="projen.typescript.TypeScriptCompilerOptions.property.emitDecoratorMetadata"></a>
+
+```typescript
+public readonly emitDecoratorMetadata: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
+
+Decorators are a language feature which hasn’t yet been fully ratified into the JavaScript specification.
+This means that the implementation version in TypeScript may differ from the implementation in JavaScript when it it decided by TC39.
+You can find out more about decorator support in TypeScript in the handbook.
+
+> [https://www.typescriptlang.org/docs/handbook/decorators.html](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+---
+
+##### `esModuleInterop`<sup>Optional</sup> <a name="esModuleInterop" id="projen.typescript.TypeScriptCompilerOptions.property.esModuleInterop"></a>
+
+```typescript
+public readonly esModuleInterop: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.
+
+---
+
+##### `exactOptionalPropertyTypes`<sup>Optional</sup> <a name="exactOptionalPropertyTypes" id="projen.typescript.TypeScriptCompilerOptions.property.exactOptionalPropertyTypes"></a>
+
+```typescript
+public readonly exactOptionalPropertyTypes: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Specifies that optional property types should be interpreted exactly as written, meaning that `| undefined` is not added to the type Available with TypeScript 4.4 and newer.
+
+---
+
+##### `experimentalDecorators`<sup>Optional</sup> <a name="experimentalDecorators" id="projen.typescript.TypeScriptCompilerOptions.property.experimentalDecorators"></a>
+
+```typescript
+public readonly experimentalDecorators: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
+
+---
+
+##### `forceConsistentCasingInFileNames`<sup>Optional</sup> <a name="forceConsistentCasingInFileNames" id="projen.typescript.TypeScriptCompilerOptions.property.forceConsistentCasingInFileNames"></a>
+
+```typescript
+public readonly forceConsistentCasingInFileNames: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Disallow inconsistently-cased references to the same file.
+
+---
+
+##### `importsNotUsedAsValues`<sup>Optional</sup> <a name="importsNotUsedAsValues" id="projen.typescript.TypeScriptCompilerOptions.property.importsNotUsedAsValues"></a>
+
+```typescript
+public readonly importsNotUsedAsValues: TypeScriptImportsNotUsedAsValues;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptImportsNotUsedAsValues">TypeScriptImportsNotUsedAsValues</a>
+- *Default:* "remove"
+
+This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
+
+> [https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues](https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues)
+
+---
+
+##### `incremental`<sup>Optional</sup> <a name="incremental" id="projen.typescript.TypeScriptCompilerOptions.property.incremental"></a>
+
+```typescript
+public readonly incremental: boolean;
+```
+
+- *Type:* boolean
+
+Tells TypeScript to save information about the project graph from the last compilation to files stored on disk.
+
+This creates a series of .tsbuildinfo files in the same folder as your compilation output.
+They are not used by your JavaScript at runtime and can be safely deleted.
+You can read more about the flag in the 3.4 release notes.
+
+> [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#faster-subsequent-builds-with-the---incremental-flag
+
+To control which folders you want to the files to be built to, use the config option tsBuildInfoFile.](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#faster-subsequent-builds-with-the---incremental-flag
+
+To control which folders you want to the files to be built to, use the config option tsBuildInfoFile.)
+
+---
+
+##### `inlineSourceMap`<sup>Optional</sup> <a name="inlineSourceMap" id="projen.typescript.TypeScriptCompilerOptions.property.inlineSourceMap"></a>
+
+```typescript
+public readonly inlineSourceMap: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.
+
+---
+
+##### `inlineSources`<sup>Optional</sup> <a name="inlineSources" id="projen.typescript.TypeScriptCompilerOptions.property.inlineSources"></a>
+
+```typescript
+public readonly inlineSources: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.
+
+---
+
+##### `isolatedModules`<sup>Optional</sup> <a name="isolatedModules" id="projen.typescript.TypeScriptCompilerOptions.property.isolatedModules"></a>
+
+```typescript
+public readonly isolatedModules: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Perform additional checks to ensure that separate compilation (such as with transpileModule or.
+
+---
+
+##### `jsx`<sup>Optional</sup> <a name="jsx" id="projen.typescript.TypeScriptCompilerOptions.property.jsx"></a>
+
+```typescript
+public readonly jsx: TypeScriptJsxMode;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptJsxMode">TypeScriptJsxMode</a>
+- *Default:* undefined
+
+Support JSX in .tsx files: "react", "preserve", "react-native" etc.
+
+---
+
+##### `jsxImportSource`<sup>Optional</sup> <a name="jsxImportSource" id="projen.typescript.TypeScriptCompilerOptions.property.jsxImportSource"></a>
+
+```typescript
+public readonly jsxImportSource: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.
+
+---
+
+##### `lib`<sup>Optional</sup> <a name="lib" id="projen.typescript.TypeScriptCompilerOptions.property.lib"></a>
+
+```typescript
+public readonly lib: string[];
+```
+
+- *Type:* string[]
+- *Default:* [ "es2018" ]
+
+Reference for type definitions / libraries to use (eg.
+
+ES2016, ES5, ES2018).
+
+---
+
+##### `module`<sup>Optional</sup> <a name="module" id="projen.typescript.TypeScriptCompilerOptions.property.module"></a>
+
+```typescript
+public readonly module: string;
+```
+
+- *Type:* string
+- *Default:* "CommonJS"
+
+Sets the module system for the program.
+
+See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
+
+---
+
+##### `moduleDetection`<sup>Optional</sup> <a name="moduleDetection" id="projen.typescript.TypeScriptCompilerOptions.property.moduleDetection"></a>
+
+```typescript
+public readonly moduleDetection: TypeScriptModuleDetection;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptModuleDetection">TypeScriptModuleDetection</a>
+- *Default:* "auto"
+
+This setting controls how TypeScript determines whether a file is a [script or a module](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript).
+
+---
+
+##### `moduleResolution`<sup>Optional</sup> <a name="moduleResolution" id="projen.typescript.TypeScriptCompilerOptions.property.moduleResolution"></a>
+
+```typescript
+public readonly moduleResolution: TypeScriptModuleResolution;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptModuleResolution">TypeScriptModuleResolution</a>
+- *Default:* "node"
+
+Determine how modules get resolved.
+
+Either "Node" for Node.js/io.js style resolution, or "Classic".
+
+---
+
+##### `noEmit`<sup>Optional</sup> <a name="noEmit" id="projen.typescript.TypeScriptCompilerOptions.property.noEmit"></a>
+
+```typescript
+public readonly noEmit: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Do not emit outputs.
+
+---
+
+##### `noEmitOnError`<sup>Optional</sup> <a name="noEmitOnError" id="projen.typescript.TypeScriptCompilerOptions.property.noEmitOnError"></a>
+
+```typescript
+public readonly noEmitOnError: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.
+
+---
+
+##### `noFallthroughCasesInSwitch`<sup>Optional</sup> <a name="noFallthroughCasesInSwitch" id="projen.typescript.TypeScriptCompilerOptions.property.noFallthroughCasesInSwitch"></a>
+
+```typescript
+public readonly noFallthroughCasesInSwitch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Report errors for fallthrough cases in switch statements.
+
+Ensures that any non-empty
+case inside a switch statement includes either break or return. This means you won’t
+accidentally ship a case fallthrough bug.
+
+---
+
+##### `noImplicitAny`<sup>Optional</sup> <a name="noImplicitAny" id="projen.typescript.TypeScriptCompilerOptions.property.noImplicitAny"></a>
+
+```typescript
+public readonly noImplicitAny: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type.
+
+---
+
+##### `noImplicitOverride`<sup>Optional</sup> <a name="noImplicitOverride" id="projen.typescript.TypeScriptCompilerOptions.property.noImplicitOverride"></a>
+
+```typescript
+public readonly noImplicitOverride: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Using `noImplicitOverride`, you can ensure that sub-classes never go out of sync as they are required to explicitly declare that they are overriding a member using the `override` keyword.
+
+This also improves readability of the programmer's intent.
+
+Available with TypeScript 4.3 and newer.
+
+---
+
+##### `noImplicitReturns`<sup>Optional</sup> <a name="noImplicitReturns" id="projen.typescript.TypeScriptCompilerOptions.property.noImplicitReturns"></a>
+
+```typescript
+public readonly noImplicitReturns: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+When enabled, TypeScript will check all code paths in a function to ensure they return a value.
+
+---
+
+##### `noImplicitThis`<sup>Optional</sup> <a name="noImplicitThis" id="projen.typescript.TypeScriptCompilerOptions.property.noImplicitThis"></a>
+
+```typescript
+public readonly noImplicitThis: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Raise error on ‘this’ expressions with an implied ‘any’ type.
+
+---
+
+##### `noPropertyAccessFromIndexSignature`<sup>Optional</sup> <a name="noPropertyAccessFromIndexSignature" id="projen.typescript.TypeScriptCompilerOptions.property.noPropertyAccessFromIndexSignature"></a>
+
+```typescript
+public readonly noPropertyAccessFromIndexSignature: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Raise error on use of the dot syntax to access fields which are not defined.
+
+---
+
+##### `noUncheckedIndexedAccess`<sup>Optional</sup> <a name="noUncheckedIndexedAccess" id="projen.typescript.TypeScriptCompilerOptions.property.noUncheckedIndexedAccess"></a>
+
+```typescript
+public readonly noUncheckedIndexedAccess: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Raise error when accessing indexes on objects with unknown keys defined in index signatures.
+
+---
+
+##### `noUnusedLocals`<sup>Optional</sup> <a name="noUnusedLocals" id="projen.typescript.TypeScriptCompilerOptions.property.noUnusedLocals"></a>
+
+```typescript
+public readonly noUnusedLocals: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Report errors on unused local variables.
+
+---
+
+##### `noUnusedParameters`<sup>Optional</sup> <a name="noUnusedParameters" id="projen.typescript.TypeScriptCompilerOptions.property.noUnusedParameters"></a>
+
+```typescript
+public readonly noUnusedParameters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Report errors on unused parameters in functions.
+
+---
+
+##### `outDir`<sup>Optional</sup> <a name="outDir" id="projen.typescript.TypeScriptCompilerOptions.property.outDir"></a>
+
+```typescript
+public readonly outDir: string;
+```
+
+- *Type:* string
+
+Output directory for the compiled files.
+
+---
+
+##### `paths`<sup>Optional</sup> <a name="paths" id="projen.typescript.TypeScriptCompilerOptions.property.paths"></a>
+
+```typescript
+public readonly paths: {[ key: string ]: string[]};
+```
+
+- *Type:* {[ key: string ]: string[]}
+
+A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.
+
+paths lets you declare how TypeScript should resolve an import in your require/imports.
+
+---
+
+##### `resolveJsonModule`<sup>Optional</sup> <a name="resolveJsonModule" id="projen.typescript.TypeScriptCompilerOptions.property.resolveJsonModule"></a>
+
+```typescript
+public readonly resolveJsonModule: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.
+
+---
+
+##### `resolvePackageJsonExports`<sup>Optional</sup> <a name="resolvePackageJsonExports" id="projen.typescript.TypeScriptCompilerOptions.property.resolvePackageJsonExports"></a>
+
+```typescript
+public readonly resolvePackageJsonExports: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`.
+
+---
+
+##### `resolvePackageJsonImports`<sup>Optional</sup> <a name="resolvePackageJsonImports" id="projen.typescript.TypeScriptCompilerOptions.property.resolvePackageJsonImports"></a>
+
+```typescript
+public readonly resolvePackageJsonImports: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor.
+
+---
+
+##### `rootDir`<sup>Optional</sup> <a name="rootDir" id="projen.typescript.TypeScriptCompilerOptions.property.rootDir"></a>
+
+```typescript
+public readonly rootDir: string;
+```
+
+- *Type:* string
+
+Specifies the root directory of input files.
+
+Only use to control the output directory structure with `outDir`.
+
+---
+
+##### `skipLibCheck`<sup>Optional</sup> <a name="skipLibCheck" id="projen.typescript.TypeScriptCompilerOptions.property.skipLibCheck"></a>
+
+```typescript
+public readonly skipLibCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Skip type checking of all declaration files (*.d.ts).
+
+---
+
+##### `sourceMap`<sup>Optional</sup> <a name="sourceMap" id="projen.typescript.TypeScriptCompilerOptions.property.sourceMap"></a>
+
+```typescript
+public readonly sourceMap: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Enables the generation of sourcemap files.
+
+---
+
+##### `sourceRoot`<sup>Optional</sup> <a name="sourceRoot" id="projen.typescript.TypeScriptCompilerOptions.property.sourceRoot"></a>
+
+```typescript
+public readonly sourceRoot: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Specify the location where a debugger should locate TypeScript files instead of relative source locations.
+
+---
+
+##### `strict`<sup>Optional</sup> <a name="strict" id="projen.typescript.TypeScriptCompilerOptions.property.strict"></a>
+
+```typescript
+public readonly strict: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+The strict flag enables a wide range of type checking behavior that results in stronger guarantees of program correctness.
+
+Turning this on is equivalent to enabling all of the strict mode family
+options, which are outlined below. You can then turn off individual strict mode family checks as
+needed.
+
+---
+
+##### `strictNullChecks`<sup>Optional</sup> <a name="strictNullChecks" id="projen.typescript.TypeScriptCompilerOptions.property.strictNullChecks"></a>
+
+```typescript
+public readonly strictNullChecks: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+When strictNullChecks is false, null and undefined are effectively ignored by the language.
+
+This can lead to unexpected errors at runtime.
+When strictNullChecks is true, null and undefined have their own distinct types and you’ll
+get a type error if you try to use them where a concrete value is expected.
+
+---
+
+##### `strictPropertyInitialization`<sup>Optional</sup> <a name="strictPropertyInitialization" id="projen.typescript.TypeScriptCompilerOptions.property.strictPropertyInitialization"></a>
+
+```typescript
+public readonly strictPropertyInitialization: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.
+
+---
+
+##### `stripInternal`<sup>Optional</sup> <a name="stripInternal" id="projen.typescript.TypeScriptCompilerOptions.property.stripInternal"></a>
+
+```typescript
+public readonly stripInternal: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Do not emit declarations for code that has an `@internal` annotation in it’s JSDoc comment.
+
+---
+
+##### `target`<sup>Optional</sup> <a name="target" id="projen.typescript.TypeScriptCompilerOptions.property.target"></a>
+
+```typescript
+public readonly target: string;
+```
+
+- *Type:* string
+- *Default:* "ES2018"
+
+Modern browsers support all ES6 features, so ES6 is a good choice.
+
+You might choose to set
+a lower target if your code is deployed to older environments, or a higher target if your
+code is guaranteed to run in newer environments.
+
+---
+
+##### `tsBuildInfoFile`<sup>Optional</sup> <a name="tsBuildInfoFile" id="projen.typescript.TypeScriptCompilerOptions.property.tsBuildInfoFile"></a>
+
+```typescript
+public readonly tsBuildInfoFile: string;
+```
+
+- *Type:* string
+
+This setting lets you specify a file for storing incremental compilation information as a part of composite projects which enables faster building of larger TypeScript codebases.
+
+You can read more about composite projects in the handbook.
+
+---
+
+##### `typeRoots`<sup>Optional</sup> <a name="typeRoots" id="projen.typescript.TypeScriptCompilerOptions.property.typeRoots"></a>
+
+```typescript
+public readonly typeRoots: string[];
+```
+
+- *Type:* string[]
+
+If typeRoots is specified, only packages under typeRoots will be included.
+
+> [https://www.typescriptlang.org/tsconfig/#typeRoots](https://www.typescriptlang.org/tsconfig/#typeRoots)
+
+---
+
+##### `types`<sup>Optional</sup> <a name="types" id="projen.typescript.TypeScriptCompilerOptions.property.types"></a>
+
+```typescript
+public readonly types: string[];
+```
+
+- *Type:* string[]
+
+If types is specified, only packages listed will be included in the global scope.
+
+> [https://www.typescriptlang.org/tsconfig#types](https://www.typescriptlang.org/tsconfig#types)
+
+---
+
+##### `useUnknownInCatchVariables`<sup>Optional</sup> <a name="useUnknownInCatchVariables" id="projen.typescript.TypeScriptCompilerOptions.property.useUnknownInCatchVariables"></a>
+
+```typescript
+public readonly useUnknownInCatchVariables: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Change the type of the variable in a catch clause from any to unknown Available with TypeScript 4.4 and newer.
+
+---
+
+##### `verbatimModuleSyntax`<sup>Optional</sup> <a name="verbatimModuleSyntax" id="projen.typescript.TypeScriptCompilerOptions.property.verbatimModuleSyntax"></a>
+
+```typescript
+public readonly verbatimModuleSyntax: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Simplifies TypeScript's handling of import/export `type` modifiers.
+
+> [https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax)
+
+---
+
+### TypescriptConfigOptions <a name="TypescriptConfigOptions" id="projen.typescript.TypescriptConfigOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.typescript.TypescriptConfigOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const typescriptConfigOptions: typescript.TypescriptConfigOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfigOptions.property.compilerOptions">compilerOptions</a></code> | <code><a href="#projen.typescript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a></code> | Compiler options to use. |
+| <code><a href="#projen.typescript.TypescriptConfigOptions.property.exclude">exclude</a></code> | <code>string[]</code> | Filters results from the "include" option. |
+| <code><a href="#projen.typescript.TypescriptConfigOptions.property.extends">extends</a></code> | <code><a href="#projen.typescript.TypescriptConfigExtends">TypescriptConfigExtends</a></code> | Base `tsconfig.json` configuration(s) to inherit from. |
+| <code><a href="#projen.typescript.TypescriptConfigOptions.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.typescript.TypescriptConfigOptions.property.include">include</a></code> | <code>string[]</code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation. |
+
+---
+
+##### `compilerOptions`<sup>Optional</sup> <a name="compilerOptions" id="projen.typescript.TypescriptConfigOptions.property.compilerOptions"></a>
+
+```typescript
+public readonly compilerOptions: TypeScriptCompilerOptions;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptCompilerOptions">TypeScriptCompilerOptions</a>
+
+Compiler options to use.
+
+---
+
+##### `exclude`<sup>Optional</sup> <a name="exclude" id="projen.typescript.TypescriptConfigOptions.property.exclude"></a>
+
+```typescript
+public readonly exclude: string[];
+```
+
+- *Type:* string[]
+- *Default:* node_modules is excluded by default
+
+Filters results from the "include" option.
+
+---
+
+##### `extends`<sup>Optional</sup> <a name="extends" id="projen.typescript.TypescriptConfigOptions.property.extends"></a>
+
+```typescript
+public readonly extends: TypescriptConfigExtends;
+```
+
+- *Type:* <a href="#projen.typescript.TypescriptConfigExtends">TypescriptConfigExtends</a>
+
+Base `tsconfig.json` configuration(s) to inherit from.
+
+---
+
+##### `fileName`<sup>Optional</sup> <a name="fileName" id="projen.typescript.TypescriptConfigOptions.property.fileName"></a>
+
+```typescript
+public readonly fileName: string;
+```
+
+- *Type:* string
+- *Default:* "tsconfig.json"
+
+---
+
+##### `include`<sup>Optional</sup> <a name="include" id="projen.typescript.TypescriptConfigOptions.property.include"></a>
+
+```typescript
+public readonly include: string[];
+```
+
+- *Type:* string[]
+- *Default:* all .ts files recursively
+
+Specifies a list of glob patterns that match TypeScript files to be included in compilation.
+
+---
+
 ### TypeScriptLibraryProjectOptions <a name="TypeScriptLibraryProjectOptions" id="projen.typescript.TypeScriptLibraryProjectOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.typescript.TypeScriptLibraryProjectOptions.Initializer"></a>
@@ -5509,8 +6894,8 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a></code> | Custom TSConfig. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a></code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code><a href="#projen.typescript.TsJestOptions">TsJestOptions</a></code> | Options for ts-jest. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -7854,7 +9239,7 @@ compile the code in-memory.
 public readonly tsconfig: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a>
 - *Default:* default options
 
 Custom TSConfig.
@@ -7869,7 +9254,7 @@ Custom TSConfig.
 public readonly tsconfigDev: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a>
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
@@ -8080,8 +9465,8 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfig">tsconfig</a></code> | <code><a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a></code> | Custom TSConfig. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code><a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a></code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code><a href="#projen.typescript.TsJestOptions">TsJestOptions</a></code> | Options for ts-jest. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -10161,7 +11546,7 @@ compile the code in-memory.
 public readonly tsconfig: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a>
 - *Default:* default options
 
 Custom TSConfig.
@@ -10174,7 +11559,7 @@ Custom TSConfig.
 public readonly tsconfigDev: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a>
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
@@ -10405,7 +11790,7 @@ Inline compiler options.
 
 ###### `config`<sup>Required</sup> <a name="config" id="projen.typescript.TsJestTsconfig.custom.parameter.config"></a>
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* <a href="#projen.typescript.TypescriptConfigOptions">TypescriptConfigOptions</a>
 
 ---
 
@@ -10457,4 +11842,284 @@ new typescript.TypedocDocgen(project: TypeScriptProject)
 
 
 
+### TypescriptConfigExtends <a name="TypescriptConfigExtends" id="projen.typescript.TypescriptConfigExtends"></a>
+
+Container for `TypescriptConfig` `tsconfig.json` base configuration(s). Extending from more than one base config file requires TypeScript 5.0+.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfigExtends.toJSON">toJSON</a></code> | *No description.* |
+
+---
+
+##### `toJSON` <a name="toJSON" id="projen.typescript.TypescriptConfigExtends.toJSON"></a>
+
+```typescript
+public toJSON(): string[]
+```
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypescriptConfigExtends.fromPaths">fromPaths</a></code> | Factory for creation from array of file paths. |
+| <code><a href="#projen.typescript.TypescriptConfigExtends.fromTypescriptConfigs">fromTypescriptConfigs</a></code> | Factory for creation from array of other `TypescriptConfig` instances. |
+
+---
+
+##### `fromPaths` <a name="fromPaths" id="projen.typescript.TypescriptConfigExtends.fromPaths"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypescriptConfigExtends.fromPaths(paths: string[])
+```
+
+Factory for creation from array of file paths.
+
+###### `paths`<sup>Required</sup> <a name="paths" id="projen.typescript.TypescriptConfigExtends.fromPaths.parameter.paths"></a>
+
+- *Type:* string[]
+
+Absolute or relative paths to base `tsconfig.json` files.
+
+---
+
+##### `fromTypescriptConfigs` <a name="fromTypescriptConfigs" id="projen.typescript.TypescriptConfigExtends.fromTypescriptConfigs"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypescriptConfigExtends.fromTypescriptConfigs(configs: TypescriptConfig[])
+```
+
+Factory for creation from array of other `TypescriptConfig` instances.
+
+###### `configs`<sup>Required</sup> <a name="configs" id="projen.typescript.TypescriptConfigExtends.fromTypescriptConfigs.parameter.configs"></a>
+
+- *Type:* <a href="#projen.typescript.TypescriptConfig">TypescriptConfig</a>[]
+
+Base `TypescriptConfig` instances.
+
+---
+
+
+
+
+## Enums <a name="Enums" id="Enums"></a>
+
+### TypeScriptImportsNotUsedAsValues <a name="TypeScriptImportsNotUsedAsValues" id="projen.typescript.TypeScriptImportsNotUsedAsValues"></a>
+
+This flag controls how `import` works, there are 3 different options.
+
+> [https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues](https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypeScriptImportsNotUsedAsValues.REMOVE">REMOVE</a></code> | The default behavior of dropping `import` statements which only reference types. |
+| <code><a href="#projen.typescript.TypeScriptImportsNotUsedAsValues.PRESERVE">PRESERVE</a></code> | Preserves all `import` statements whose values or types are never used. |
+| <code><a href="#projen.typescript.TypeScriptImportsNotUsedAsValues.ERROR">ERROR</a></code> | This preserves all imports (the same as the preserve option), but will error when a value import is only used as a type. |
+
+---
+
+##### `REMOVE` <a name="REMOVE" id="projen.typescript.TypeScriptImportsNotUsedAsValues.REMOVE"></a>
+
+The default behavior of dropping `import` statements which only reference types.
+
+---
+
+
+##### `PRESERVE` <a name="PRESERVE" id="projen.typescript.TypeScriptImportsNotUsedAsValues.PRESERVE"></a>
+
+Preserves all `import` statements whose values or types are never used.
+
+This can cause imports/side-effects to be preserved.
+
+---
+
+
+##### `ERROR` <a name="ERROR" id="projen.typescript.TypeScriptImportsNotUsedAsValues.ERROR"></a>
+
+This preserves all imports (the same as the preserve option), but will error when a value import is only used as a type.
+
+This might be useful if you want to ensure no values are being accidentally imported, but still make side-effect imports explicit.
+
+---
+
+
+### TypeScriptJsxMode <a name="TypeScriptJsxMode" id="projen.typescript.TypeScriptJsxMode"></a>
+
+Determines how JSX should get transformed into valid JavaScript.
+
+> [https://www.typescriptlang.org/docs/handbook/jsx.html](https://www.typescriptlang.org/docs/handbook/jsx.html)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypeScriptJsxMode.PRESERVE">PRESERVE</a></code> | Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel). |
+| <code><a href="#projen.typescript.TypeScriptJsxMode.REACT">REACT</a></code> | Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension. |
+| <code><a href="#projen.typescript.TypeScriptJsxMode.REACT_NATIVE">REACT_NATIVE</a></code> | Keeps all JSX like 'preserve' mode, but output will have a .js extension. |
+| <code><a href="#projen.typescript.TypeScriptJsxMode.REACT_JSX">REACT_JSX</a></code> | Passes `key` separately from props and always passes `children` as props (since React 17). |
+| <code><a href="#projen.typescript.TypeScriptJsxMode.REACT_JSXDEV">REACT_JSXDEV</a></code> | Same as `REACT_JSX` with additional debug data. |
+
+---
+
+##### `PRESERVE` <a name="PRESERVE" id="projen.typescript.TypeScriptJsxMode.PRESERVE"></a>
+
+Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel).
+
+---
+
+
+##### `REACT` <a name="REACT" id="projen.typescript.TypeScriptJsxMode.REACT"></a>
+
+Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension.
+
+---
+
+
+##### `REACT_NATIVE` <a name="REACT_NATIVE" id="projen.typescript.TypeScriptJsxMode.REACT_NATIVE"></a>
+
+Keeps all JSX like 'preserve' mode, but output will have a .js extension.
+
+---
+
+
+##### `REACT_JSX` <a name="REACT_JSX" id="projen.typescript.TypeScriptJsxMode.REACT_JSX"></a>
+
+Passes `key` separately from props and always passes `children` as props (since React 17).
+
+> [https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#react-17-jsx-factories](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#react-17-jsx-factories)
+
+---
+
+
+##### `REACT_JSXDEV` <a name="REACT_JSXDEV" id="projen.typescript.TypeScriptJsxMode.REACT_JSXDEV"></a>
+
+Same as `REACT_JSX` with additional debug data.
+
+---
+
+
+### TypeScriptModuleDetection <a name="TypeScriptModuleDetection" id="projen.typescript.TypeScriptModuleDetection"></a>
+
+This setting controls how TypeScript determines whether a file is a script or a module.
+
+> [https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript](https://www.typescriptlang.org/docs/handbook/modules/theory.html#scripts-and-modules-in-javascript)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypeScriptModuleDetection.AUTO">AUTO</a></code> | TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx. |
+| <code><a href="#projen.typescript.TypeScriptModuleDetection.LEGACY">LEGACY</a></code> | The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module. |
+| <code><a href="#projen.typescript.TypeScriptModuleDetection.FORCE">FORCE</a></code> | Ensures that every non-declaration file is treated as a module. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.typescript.TypeScriptModuleDetection.AUTO"></a>
+
+TypeScript will not only look for import and export statements, but it will also check whether the "type" field in a package.json is set to "module" when running with module: nodenext or node16, and check whether the current file is a JSX file when running under jsx: react-jsx.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+##### `LEGACY` <a name="LEGACY" id="projen.typescript.TypeScriptModuleDetection.LEGACY"></a>
+
+The same behavior as 4.6 and prior, usings import and export statements to determine whether a file is a module.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+##### `FORCE` <a name="FORCE" id="projen.typescript.TypeScriptModuleDetection.FORCE"></a>
+
+Ensures that every non-declaration file is treated as a module.
+
+> [https://www.typescriptlang.org/tsconfig/#moduleDetection](https://www.typescriptlang.org/tsconfig/#moduleDetection)
+
+---
+
+
+### TypeScriptModuleResolution <a name="TypeScriptModuleResolution" id="projen.typescript.TypeScriptModuleResolution"></a>
+
+Determines how modules get resolved.
+
+> [https://www.typescriptlang.org/docs/handbook/module-resolution.html](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypeScriptModuleResolution.CLASSIC">CLASSIC</a></code> | TypeScript's former default resolution strategy. |
+| <code><a href="#projen.typescript.TypeScriptModuleResolution.NODE">NODE</a></code> | Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime. |
+| <code><a href="#projen.typescript.TypeScriptModuleResolution.NODE10">NODE10</a></code> | `--moduleResolution node` was renamed to `node10` (keeping `node` as an alias for backward compatibility) in TypeScript 5.0. It reflects the CommonJS module resolution algorithm as it existed in Node.js versions earlier than v12. It should no longer be used. |
+| <code><a href="#projen.typescript.TypeScriptModuleResolution.NODE16">NODE16</a></code> | Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards. |
+| <code><a href="#projen.typescript.TypeScriptModuleResolution.NODE_NEXT">NODE_NEXT</a></code> | Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards. |
+| <code><a href="#projen.typescript.TypeScriptModuleResolution.BUNDLER">BUNDLER</a></code> | Resolution strategy which attempts to mimic resolution patterns of modern bundlers; |
+
+---
+
+##### `CLASSIC` <a name="CLASSIC" id="projen.typescript.TypeScriptModuleResolution.CLASSIC"></a>
+
+TypeScript's former default resolution strategy.
+
+> [https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic](https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic)
+
+---
+
+
+##### `NODE` <a name="NODE" id="projen.typescript.TypeScriptModuleResolution.NODE"></a>
+
+Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+> [https://www.typescriptlang.org/docs/handbook/module-resolution.html#node](https://www.typescriptlang.org/docs/handbook/module-resolution.html#node)
+
+---
+
+
+##### `NODE10` <a name="NODE10" id="projen.typescript.TypeScriptModuleResolution.NODE10"></a>
+
+`--moduleResolution node` was renamed to `node10` (keeping `node` as an alias for backward compatibility) in TypeScript 5.0. It reflects the CommonJS module resolution algorithm as it existed in Node.js versions earlier than v12. It should no longer be used.
+
+> [https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node](https://www.typescriptlang.org/docs/handbook/modules/reference.html#node10-formerly-known-as-node)
+
+---
+
+
+##### `NODE16` <a name="NODE16" id="projen.typescript.TypeScriptModuleResolution.NODE16"></a>
+
+Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
+
+> [https://www.typescriptlang.org/tsconfig#moduleResolution](https://www.typescriptlang.org/tsconfig#moduleResolution)
+
+---
+
+
+##### `NODE_NEXT` <a name="NODE_NEXT" id="projen.typescript.TypeScriptModuleResolution.NODE_NEXT"></a>
+
+Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
+
+> [https://www.typescriptlang.org/tsconfig#moduleResolution](https://www.typescriptlang.org/tsconfig#moduleResolution)
+
+---
+
+
+##### `BUNDLER` <a name="BUNDLER" id="projen.typescript.TypeScriptModuleResolution.BUNDLER"></a>
+
+Resolution strategy which attempts to mimic resolution patterns of modern bundlers;
+
+from TypeScript 5.0 onwards.
+
+> [https://www.typescriptlang.org/tsconfig#moduleResolution](https://www.typescriptlang.org/tsconfig#moduleResolution)
+
+---
 

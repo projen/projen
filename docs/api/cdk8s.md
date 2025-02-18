@@ -2262,12 +2262,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.appEntrypoint">appEntrypoint</a></code> | <code>string</code> | The CDK8s app entrypoint. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.cdk8sDeps">cdk8sDeps</a></code> | <code><a href="#projen.cdk8s.Cdk8sDeps">Cdk8sDeps</a></code> | *No description.* |
 
@@ -2965,7 +2965,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -3009,7 +3009,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -3019,7 +3019,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -3797,12 +3797,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.watchTask">watchTask</a></code> | <code>projen.Task</code> | The "watch" task. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.docgen">docgen</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.typescript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.cdk8sVersion">cdk8sVersion</a></code> | <code>string</code> | The CDK8s version this app is using. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.constructsVersion">constructsVersion</a></code> | <code>string</code> | The constructs version this app is using. |
 
@@ -4500,7 +4500,7 @@ The directory in which tests reside.
 public readonly tsconfigDev: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 A typescript configuration file which covers all files (sources, tests, projen).
 
@@ -4544,7 +4544,7 @@ public readonly eslint: Eslint;
 public readonly tsconfig: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -4554,7 +4554,7 @@ public readonly tsconfig: TypescriptConfig;
 public readonly tsconfigEslint: TypescriptConfig;
 ```
 
-- *Type:* projen.javascript.TypescriptConfig
+- *Type:* projen.typescript.TypescriptConfig
 
 ---
 
@@ -6737,8 +6737,8 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -8832,7 +8832,7 @@ compile the code in-memory.
 public readonly tsconfig: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -8845,7 +8845,7 @@ Custom TSConfig.
 public readonly tsconfigDev: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).
@@ -9244,8 +9244,8 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom TSConfig. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfig">tsconfig</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom TSConfig. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.typescript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name of the development tsconfig.json file. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
@@ -11348,7 +11348,7 @@ compile the code in-memory.
 public readonly tsconfig: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* default options
 
 Custom TSConfig.
@@ -11361,7 +11361,7 @@ Custom TSConfig.
 public readonly tsconfigDev: TypescriptConfigOptions;
 ```
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.typescript.TypescriptConfigOptions
 - *Default:* use the production tsconfig options
 
 Custom tsconfig options for the development tsconfig.json file (used for testing).

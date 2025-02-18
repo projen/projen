@@ -1,6 +1,6 @@
 import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { TypescriptConfig } from "./typescript-config";
+import { TypescriptConfig } from "../javascript/typescript-config";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";

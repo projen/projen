@@ -16,7 +16,7 @@ import {
   TypeScriptCompilerOptions,
   TypescriptConfig,
   TypescriptConfigOptions,
-} from "./typescript-config";
+} from "../javascript/typescript-config";
 import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
