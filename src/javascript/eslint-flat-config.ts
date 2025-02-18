@@ -1,145 +1,181 @@
 import * as fs from "fs";
+import * as path from "path";
 import { Project } from "..";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { Prettier } from "./prettier";
 
 /**
- * plugin information for eslint configuration
+ * ESLint plugin configuration information.
  *
- * @example {importPath: "typescript-eslint", moduleName: "tseslint", alias: "@typescript-eslint"}
+ * @example
  * ```ts
- * import tseslint from "typescript-eslint" // import $moduleName from $importPath
+ * // Configuration
+ * {
+ *   importPath: "typescript-eslint",
+ *   moduleName: "tseslint",
+ *   pluginAlias: "@typescript-eslint"
+ * }
  *
- * export default [
- *   ...
- *   {
- *     plugins: {
- *       "@typescript-eslint": tseslint // "$alias": $moduleName
- *     }
+ * // Results in:
+ * import tseslint from "typescript-eslint"
+ *
+ * export default [{
+ *   plugins: {
+ *     "@typescript-eslint": tseslint
  *   }
- * ]
+ * }]
  * ```
  */
-export interface Plugin {
+export interface EslintPlugin {
   /**
-   * the import path of the plugin
+   * The module import path.
    *
    * @example "typescript-eslint"
    */
   importPath: string;
 
   /**
-   * the name of the plugin
+   * The local module name to use in the import statement.
    *
    * @example "tseslint"
    */
   moduleName: string;
 
   /**
-   * the alias to use in the config
+   * The plugin alias to use in the ESLint configuration.
    *
    * @example "@typescript-eslint"
    */
-  alias: string;
+  pluginAlias: string;
 }
 
 /**
- * extends items for eslint configuration.
+ * ESLint configuration extension information.
+ *
  * @example
- * ### When needSpread is false
- * {importPath: "eslint-plugin-prettier", moduleName: "prettierPlugin", extendsCode: "prettierPlugin"}
  * ```ts
- * import prettierPlugin from "eslint-plugin-prettier" // import $moduleName from $importPath
+ * // Configuration without spread
+ * {
+ *   importPath: "eslint-plugin-prettier",
+ *   moduleName: "prettierPlugin",
+ *   configReference: "prettierPlugin"
+ * }
  *
+ * // Results in:
+ * import prettierPlugin from "eslint-plugin-prettier"
  * export default [
- *   prettierPlugin // $extendsCode
- *   {
- *     ...
- *   }
+ *   prettierPlugin,
+ *   // ...
  * ]
- * ```
  *
- * ### When needSpread is true
- * {importPath: "eslint-plugin-prettier", moduleName: "prettierPlugin", extendsCode: "prettierPlugin", needSpread: true}
- * ```ts
- * import prettierPlugin from "eslint-plugin-prettier" // import $moduleName from $importPath
+ * // Configuration with spread
+ * {
+ *   importPath: "eslint-plugin-prettier",
+ *   moduleName: "prettierPlugin",
+ *   configReference: "prettierPlugin",
+ *   shouldSpreadConfig: true
+ * }
  *
+ * // Results in:
+ * import prettierPlugin from "eslint-plugin-prettier"
  * export default [
- *   ...prettierPlugin, // ...$extendsCode
- *   {
- *     ...
- *   }
+ *   ...prettierPlugin,
+ *   // ...
  * ]
  * ```
  */
-export interface Extend {
+export interface EslintConfigExtension {
   /**
-   * the import path of the plugin
+   * The module import path.
    *
    * @example "eslint-plugin-prettier"
    */
   importPath: string;
 
   /**
-   * the name of the plugin
+   * The local module name to use in the import statement.
    *
    * @example "prettierPlugin"
    */
   moduleName: string;
 
   /**
-   * the code to use in the config
+   * The configuration reference to be used in the extends section.
+   * This can be a plugin name or a specific configuration path from the plugin.
    *
-   * @example "prettierPlugin"
+   * @example
+   * - "prettierPlugin" // Direct plugin reference
+   * - "eslint.configs.recommended" // Specific configuration path
    */
-  extendsCode: string;
+  configReference: string;
 
   /**
-   * whether to spread the extends code
+   * Indicates whether the configuration should be spread using the spread operator.
+   * When true, the configuration will be included as `...configReference`,
+   * when false, it will be included as `configReference`.
+   *
+   * @example
+   * true  -> ...eslint.configs.recommended
+   * false -> eslint.configs.recommended
    *
    * @default false
    */
-  needSpread?: boolean;
+  shouldSpreadConfig?: boolean;
 }
 
 /**
- * parser items for eslint configuration.
- * @example
- * {importPath: "typescript-eslint", moduleName: "tseslint", parserCode: "tseslint.parser"}
- * ```ts
- * import tseslint from "typescript-eslint" // import $moduleName from $importPath
+ * ESLint parser configuration information.
  *
- * export default [
- *   {
- *     languageOptions: {
- *       parser: tseslint.parser, // $parserCode
- *     }
+ * @example
+ * ```ts
+ * // Configuration
+ * {
+ *   importPath: "typescript-eslint",
+ *   moduleName: "tseslint",
+ *   parserReference: "tseslint.parser"
+ * }
+ *
+ * // Results in:
+ * import tseslint from "typescript-eslint"
+ *
+ * export default [{
+ *   languageOptions: {
+ *     parser: tseslint.parser
  *   }
- * ]
+ * }]
  * ```
  */
-export interface Parser {
+export interface EslintParser {
   /**
-   * the import path of the parser
+   * The module import path.
    *
    * @example "typescript-eslint"
    */
   importPath: string;
 
   /**
-   * the module name of the parser
+   * The local module name to use in the import statement.
    *
    * @example "tseslint"
    */
   moduleName: string;
 
   /**
-   * the code to use in the parser
+   * The reference path to the parser in the module.
+   * Specifies how to access the parser from the imported module.
    *
-   * @example "tseslint.parser"
+   * @example
+   * ```ts
+   * // When importing from typescript-eslint as "tseslint"
+   * parserReference: "tseslint.parser"
+   * // Results in:
+   * languageOptions: {
+   *   parser: tseslint.parser
+   * }
+   * ```
    */
-  parserCode: string;
+  parserReference: string;
 }
 
 export interface EslintFlatConfigOptions {
@@ -151,11 +187,19 @@ export interface EslintFlatConfigOptions {
   readonly tsconfigPath?: string;
 
   /**
-   * Files or glob patterns or directories with source files to lint
+   * List of files or glob patterns or directories with source files to lint
    *
    * @example ["src/*.ts"]
    */
   readonly enablePatterns: string[];
+
+  /**
+   * List of file patterns that should not be linted, using the same syntax
+   * as .gitignore patterns.
+   *
+   * @default - [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
+   */
+  readonly ignorePatterns?: string[];
 
   /**
    * Files or glob patterns or directories with source files that include tests and build tools.
@@ -166,24 +210,9 @@ export interface EslintFlatConfigOptions {
   readonly devDirs?: string[];
 
   /**
-   * File types that should be linted (e.g. [ ".js", ".ts" ])
-   *
-   * @default [".ts"]
-   */
-  readonly fileExtensions?: string[];
-
-  /**
    * Options for eslint command executed by eslint task
    */
   readonly commandOptions?: EslintFlatConfigCommandOptions;
-
-  /**
-   * List of file patterns that should not be linted, using the same syntax
-   * as .gitignore patterns.
-   *
-   * @default - [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
-   */
-  readonly ignorePatterns?: string[];
 
   /**
    * Enable prettier for code formatting
@@ -230,12 +259,16 @@ export interface EslintFlatConfigCommandOptions {
 export interface EslintFlatConfigOverride {
   /**
    * Files or file patterns on which to apply the override
+   *
+   * @example ["src/*.ts"]
    */
   readonly enablePatterns: string[];
 
   /**
    * Pattern(s) to ignore from this override.
    * If a file matches any of the ignored patterns, the configuration won't apply.
+   *
+   * @example [".gitignore", "node_modules"]
    */
   readonly ignorePatterns?: string[];
 
@@ -247,17 +280,17 @@ export interface EslintFlatConfigOverride {
   /**
    * The overridden parser
    */
-  readonly parser?: Parser;
+  readonly parser?: EslintParser;
 
   /**
    * Config(s) to extend in this override
    */
-  readonly extends?: Extend[];
+  readonly extends?: EslintConfigExtension[];
 
   /**
    * Plugin(s) to use in this override
    */
-  readonly plugins?: Plugin[];
+  readonly plugins?: EslintPlugin[];
 }
 
 /**
@@ -274,15 +307,10 @@ export class EslintFlatConfig extends Component {
   }
 
   /**
-   * eslint rules.
-   */
-  private _rules: { [rule: string]: any } = {};
-
-  /**
    * Public getter for eslint rules.
    */
   public get rules(): { [rule: string]: any } {
-    return this._rules;
+    return { ...this._rules, ...this._formattingRules };
   }
 
   /**
@@ -291,115 +319,147 @@ export class EslintFlatConfig extends Component {
   public readonly overrides: EslintFlatConfigOverride[] = [];
 
   /**
-   * Direct access to the eslint configuration (escape hatch)
+   * eslint configuration.
    */
-  public readonly config: string;
+  public get config(): string {
+    return this._config;
+  }
 
   /**
-   * File patterns that should not be linted
+   * File or glob patterns or directories that should be linted
    */
-  public readonly ignorePatterns: string[];
+  public get enablePatterns(): string[] {
+    return this._enablePatterns.size ? [...this._enablePatterns] : [];
+  }
 
   /**
-   * plugins items for eslint configuration.
+   * File or glob patterns or directories that should not be linted
    */
-  private readonly _plugins: Plugin[] = [];
+  public get ignorePatterns(): string[] {
+    return this._ignorePatterns;
+  }
 
   /**
-   * extends items for eslint configuration.
+   * Rules for eslint configuration.
    */
-  private readonly _extends: Extend[] = [];
+  private _rules: { [rule: string]: any } = {};
 
   /**
    * Formatting rules for eslint configuration.
    */
   private _formattingRules: { [rule: string]: any } = {};
 
+  /**
+   * Files or glob patterns or directories that should be linted
+   */
+  private _enablePatterns: Set<string>;
+
+  /**
+   * Plugins items for eslint configuration.
+   */
+  private _plugins: EslintPlugin[] = [];
+
+  /**
+   * Extends items for eslint configuration.
+   */
+  private _extends: EslintConfigExtension[] = [];
+
+  private _config: string = "";
+
+  private _ignorePatterns: string[] = [];
+
+  private readonly nodeProject: NodeProject;
   private readonly _devDirs: string[];
   private readonly _allowDevDeps: Set<string>;
-  private readonly _lintPatterns: Set<string>;
-  private readonly nodeProject: NodeProject;
-
+  private readonly _tsconfigPath: string;
+  private readonly _aliasMap: { [key: string]: string };
+  private readonly _aliasExtensions: string[];
+  private readonly _tsAlwaysTryTypes: boolean;
   constructor(project: NodeProject, options: EslintFlatConfigOptions) {
     super(project);
 
     this.nodeProject = project;
-    this._devDirs = options.devDirs ?? [];
-    this._lintPatterns = new Set([...options.enablePatterns, ...this._devDirs]);
-    this._allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
 
     this.initializeProject(project);
-    this.initializeRules();
     this.initializePluginsAndExtends();
-    this.initializePrettier(project, options);
 
-    this.ignorePatterns = this.initializeIgnorePatterns(options);
-    this.config = this.generateConfig(options);
-
-    fs.writeFileSync("eslint.config.mjs", this.config);
+    // Set options to class properties
+    this._devDirs = options.devDirs ?? [];
+    this._enablePatterns = new Set([
+      ...options.enablePatterns,
+      ...this._devDirs,
+    ]);
+    this._tsconfigPath = options.tsconfigPath ?? "./tsconfig.json";
+    this._aliasMap = options.aliasMap ?? {};
+    this._aliasExtensions = options.aliasExtensions ?? [];
+    this._tsAlwaysTryTypes = options.tsAlwaysTryTypes ?? true;
+    this._allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
+    this.initializeRules();
+    this.initializeCodeFormatter(project, options);
+    this.initializeIgnorePatterns(options);
   }
 
   /**
-   * Returns an immutable copy of the lintPatterns being used by this eslint configuration.
+   * Sync the config file with the current state of the class properties.
    */
-  public get lintPatterns(): string[] {
-    return this._lintPatterns.size ? [...this._lintPatterns] : [];
+  public synthesize() {
+    this._config = this.generateConfig();
+    const projectDir = this.project.outdir;
+    const configFile = path.join(projectDir, "eslint.config.mjs");
+    console.log("🚀 ~ EslintFlatConfig ~ synthesize ~ configFile:", configFile);
+    fs.writeFileSync(configFile, this.config);
   }
 
   /**
-   * Add a file, glob pattern or directory with source files to lint (e.g. [ "src" ])
+   * Add a file or glob pattern or directory to lint
+   *
+   * @example "src/*.ts"
    */
-  public addLintPattern(pattern: string) {
-    this._lintPatterns.add(pattern);
+  public addEnablePatterns(...patterns: string[]) {
+    for (const pattern of patterns) {
+      this._enablePatterns.add(pattern);
+    }
+  }
+
+  /**
+   * Do not lint these files.
+   *
+   * @example ".gitignore"
+   */
+  public addIgnorePatterns(...patterns: string[]) {
+    this._ignorePatterns.push(...patterns);
   }
 
   /**
    * Add an eslint rule.
+   *
+   * @example { "no-console": "error" }
    */
   public addRules(rules: { [rule: string]: any }) {
     for (const [k, v] of Object.entries(rules)) {
-      this.rules[k] = v;
+      this._rules[k] = v;
     }
   }
 
   /**
    * Adds an eslint plugin
    */
-  public addPlugins(...plugins: Plugin[]) {
-    for (const plugin of plugins) {
-      this._plugins.push(plugin);
-    }
+  public addPlugins(...plugins: EslintPlugin[]) {
+    this._plugins.push(...plugins);
   }
 
   /**
    * Add an eslint override.
    */
-  public addOverride(override: EslintFlatConfigOverride) {
-    this.overrides.push(override);
-  }
-
-  /**
-   * Do not lint these files.
-   */
-  public addIgnorePattern(pattern: string) {
-    this.ignorePatterns.push(pattern);
+  public addOverrides(...overrides: EslintFlatConfigOverride[]) {
+    this.overrides.push(...overrides);
   }
 
   /**
    * Adds an `extends` item to the eslint configuration.
    */
-  public addExtends(...extendList: Extend[]) {
-    for (const extend of extendList) {
-      this._extends.push(extend);
-    }
-  }
-
-  /**
-   * Add a glob file pattern which allows importing dev dependencies.
-   * @param pattern glob pattern.
-   */
-  public addAllowDevDeps(pattern: string) {
-    this._allowDevDeps.add(pattern);
+  public addExtends(...extendList: EslintConfigExtension[]) {
+    this._extends.push(...extendList);
   }
 
   /**
@@ -414,76 +474,44 @@ export class EslintFlatConfig extends Component {
       "eslint-import-resolver-typescript",
       "eslint-plugin-import"
     );
-    project.npmignore?.exclude("/.eslint.config.mjs");
+    project.npmignore?.exclude("eslint.config.mjs");
   }
 
   /**
-   * Initialize ESLint rules including formatting rules
+   * Initialize plugins and extends for ESLint configuration
+   */
+  private initializePluginsAndExtends(): void {
+    this._plugins.concat([
+      {
+        importPath: "typescript-eslint",
+        moduleName: "tseslint",
+        pluginAlias: "@typescript-eslint",
+      },
+      {
+        importPath: "eslint-plugin-import",
+        moduleName: "importPlugin",
+        pluginAlias: "import",
+      },
+    ]);
+    this._extends.concat([
+      {
+        importPath: "@eslint/js",
+        moduleName: "eslint",
+        configReference: "eslint.configs.recommended",
+      },
+      {
+        importPath: "eslint-plugin-import",
+        moduleName: "importPlugin",
+        configReference: "importPlugin.flatConfigs.typescript",
+      },
+    ]);
+  }
+
+  /**
+   * Initialize default ESLint rules
    */
   private initializeRules(): void {
-    this._formattingRules = this.getDefaultFormattingRules();
-    this._rules = this.getDefaultRules();
-  }
-
-  /**
-   * Get default formatting rules for ESLint
-   *
-   * @returns Default formatting rules configuration
-   */
-  private getDefaultFormattingRules(): { [rule: string]: any } {
-    return {
-      indent: "off",
-      "@stylistic/indent": ["error", 2],
-
-      // Style
-      "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
-      "@stylistic/comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
-      "@stylistic/comma-spacing": ["error", { before: false, after: true }], // space after, no space before
-      "@stylistic/no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
-      "@stylistic/array-bracket-spacing": ["error", "never"], // [1, 2, 3]
-      "@stylistic/array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
-      "@stylistic/object-curly-spacing": ["error", "always"], // { key: 'value' }
-      "@stylistic/object-curly-newline": [
-        "error",
-        { multiline: true, consistent: true },
-      ], // enforce consistent line breaks between braces
-      "@stylistic/object-property-newline": [
-        "error",
-        { allowAllPropertiesOnSameLine: true },
-      ], // enforce "same line" or "multiple line" on object properties
-      "@stylistic/keyword-spacing": "error", // require a space before & after keywords
-      "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
-      "@stylistic/space-before-blocks": "error", // require space before blocks
-      curly: ["error", "multi-line", "consistent"], // require curly braces for multiline control statements
-      "@stylistic/member-delimiter-style": "error",
-
-      // Require semicolons
-      "@stylistic/semi": ["error", "always"],
-
-      // Max line lengths
-      "@stylistic/max-len": [
-        "error",
-        {
-          code: 150,
-          ignoreUrls: true, // Most common reason to disable it
-          ignoreStrings: true, // These are not fantastic but necessary for error messages
-          ignoreTemplateLiterals: true,
-          ignoreComments: true,
-          ignoreRegExpLiterals: true,
-        },
-      ],
-
-      // Don't unnecessarily quote properties
-      "@stylistic/quote-props": ["error", "consistent-as-needed"],
-    };
-  }
-
-  /**
-   * Get default ESLint rules
-   * @returns Default ESLint rules configuration
-   */
-  private getDefaultRules(): { [rule: string]: any } {
-    return {
+    this._rules = {
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
       "@typescript-eslint/no-require-imports": "error",
 
@@ -563,49 +591,20 @@ export class EslintFlatConfig extends Component {
   }
 
   /**
-   * Initialize plugins and extends for ESLint configuration
-   */
-  private initializePluginsAndExtends(): void {
-    this.addPlugins({
-      importPath: "typescript-eslint",
-      moduleName: "tseslint",
-      alias: "@typescript-eslint",
-    });
-    this.addPlugins({
-      importPath: "eslint-plugin-import",
-      moduleName: "importPlugin",
-      alias: "import",
-    });
-    this.addExtends({
-      importPath: "@eslint/js",
-      moduleName: "eslint",
-      extendsCode: "eslint.configs.recommended",
-    });
-    this.addExtends({
-      importPath: "eslint-plugin-import",
-      moduleName: "importPlugin",
-      extendsCode: "importPlugin.flatConfigs.typescript",
-    });
-  }
-
-  /**
-   * Initialize Prettier configuration if enabled
+   * Initialize code formatting configuration for the project.
+   * Sets up either Prettier or Stylistic ESLint plugin based on project configuration.
+   *
    * @param project - The NodeProject instance
    * @param options - ESLint configuration options
    */
-  private initializePrettier(
+  private initializeCodeFormatter(
     project: NodeProject,
     options: EslintFlatConfigOptions
   ): void {
     if (options.prettier || Prettier.of(project)) {
-      this.enablePrettier();
+      this.initializePrettierFormatter();
     } else {
-      this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
-      this.addPlugins({
-        importPath: "@stylistic/eslint-plugin",
-        moduleName: "stylistic",
-        alias: "@stylistic",
-      });
+      this.initializeStylisticFormatter();
     }
   }
 
@@ -614,27 +613,109 @@ export class EslintFlatConfig extends Component {
    * @param options - ESLint configuration options
    * @returns Array of ignore patterns
    */
-  private initializeIgnorePatterns(options: EslintFlatConfigOptions): string[] {
-    return (
-      options.ignorePatterns ?? [
-        "*.js",
-        "*.d.ts",
-        "node_modules/",
-        "*.generated.ts",
-        "coverage",
-      ]
-    );
+  private initializeIgnorePatterns(options: EslintFlatConfigOptions): void {
+    this._ignorePatterns = options.ignorePatterns ?? [
+      "*.js",
+      "*.d.ts",
+      "node_modules/",
+      "*.generated.ts",
+      "coverage",
+    ];
+  }
+
+  /**
+   * Initializes code formatting configuration using Prettier.
+   * This method performs the following:
+   * 1. Adds Prettier-related dependencies
+   * 2. Clears formatting rules (to prioritize Prettier's rules)
+   * 3. Adds Prettier configuration to ESLint extends
+   *
+   * @remarks
+   * When this method is executed, Stylistic plugin's formatting rules are disabled,
+   * and Prettier takes control of all code formatting instead.
+   */
+  private initializePrettierFormatter() {
+    this.nodeProject.addDevDeps("prettier", "eslint-config-prettier");
+    this._formattingRules = {};
+    this.addExtends({
+      importPath: "eslint-config-prettier",
+      moduleName: "prettierConfig",
+      configReference: "prettierConfig",
+    });
+  }
+
+  /**
+   * Initializes code formatting configuration using the Stylistic ESLint plugin.
+   * This method performs the following:
+   * 1. Adds Stylistic plugin dependencies
+   * 2. Configures the plugin in ESLint
+   * 3. Sets up formatting rules for consistent code style
+   *
+   * @remarks
+   * The Stylistic plugin provides granular control over code formatting through ESLint rules,
+   * offering an alternative to Prettier for code style enforcement.
+   *
+   * @returns An object containing the configured formatting rules
+   */
+  private initializeStylisticFormatter() {
+    this.nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
+    this.addPlugins({
+      importPath: "@stylistic/eslint-plugin",
+      moduleName: "stylistic",
+      pluginAlias: "@stylistic",
+    });
+    this._formattingRules = {
+      indent: "off",
+      "@stylistic/indent": ["error", 2],
+
+      // Style
+      "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
+      "@stylistic/comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
+      "@stylistic/comma-spacing": ["error", { before: false, after: true }], // space after, no space before
+      "@stylistic/no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
+      "@stylistic/array-bracket-spacing": ["error", "never"], // [1, 2, 3]
+      "@stylistic/array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
+      "@stylistic/object-curly-spacing": ["error", "always"], // { key: 'value' }
+      "@stylistic/object-curly-newline": [
+        "error",
+        { multiline: true, consistent: true },
+      ], // enforce consistent line breaks between braces
+      "@stylistic/object-property-newline": [
+        "error",
+        { allowAllPropertiesOnSameLine: true },
+      ], // enforce "same line" or "multiple line" on object properties
+      "@stylistic/keyword-spacing": "error", // require a space before & after keywords
+      "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
+      "@stylistic/space-before-blocks": "error", // require space before blocks
+      curly: ["error", "multi-line", "consistent"], // require curly braces for multiline control statements
+      "@stylistic/member-delimiter-style": "error",
+
+      // Require semicolons
+      "@stylistic/semi": ["error", "always"],
+
+      // Max line lengths
+      "@stylistic/max-len": [
+        "error",
+        {
+          code: 150,
+          ignoreUrls: true, // Most common reason to disable it
+          ignoreStrings: true, // These are not fantastic but necessary for error messages
+          ignoreTemplateLiterals: true,
+          ignoreComments: true,
+          ignoreRegExpLiterals: true,
+        },
+      ],
+
+      // Don't unnecessarily quote properties
+      "@stylistic/quote-props": ["error", "consistent-as-needed"],
+    };
   }
 
   /**
    * Generate the complete ESLint configuration
-   * @param options - ESLint configuration options
    * @returns ESLint configuration as a string
    */
-  private generateConfig(options: EslintFlatConfigOptions): string {
-    const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
-    const rules = { ...this.rules, ...this._formattingRules };
-
+  private generateConfig(): string {
     return `
 import globals from "globals";
 ${this.generateImports()}
@@ -642,12 +723,10 @@ ${this.generateImports()}
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   ${this.generateExtendsConfig()},
-  ${this.generateMainConfig(tsconfig, rules, options)},
+  ${this.generateMainConfig()},
   ${this.generateOverridesConfig()}
   {
-    ignores: [${this.ignorePatterns
-      .map((pattern) => `"${pattern}"`)
-      .join(", ")}]
+    ignores: ${this.convertArrayToString(this.ignorePatterns)}
   }
 ];
 `;
@@ -666,12 +745,16 @@ export default [
         ...(override.extends ?? []),
         ...(override.parser ? [override.parser] : []),
       ]),
-    ].reduce<(Plugin | Extend | Parser)[]>((acc, plugin) => {
-      if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
-        return acc;
-      }
-      return [...acc, plugin];
-    }, []);
+    ].reduce<(EslintPlugin | EslintConfigExtension | EslintParser)[]>(
+      (acc, plugin) => {
+        // If the plugin is already in the array, skip it
+        if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
+          return acc;
+        }
+        return [...acc, plugin];
+      },
+      []
+    );
     return uniquePlugins
       .map(
         (plugin) => `import ${plugin.moduleName} from "${plugin.importPath}"`
@@ -685,52 +768,49 @@ export default [
    */
   private generateExtendsConfig(): string {
     return this._extends
-      .reduce<Extend[]>((acc, extend) => {
+      .reduce<EslintConfigExtension[]>((acc, extend) => {
+        // If the extend is already in the array, skip it
         if (acc.find(({ importPath }) => importPath === extend.importPath)) {
           return acc;
         }
+
         // If specified in plugins, rewrite information in extends
         const plugin = this._plugins.find(
           ({ importPath }) => importPath === extend.importPath
         );
-        if (!plugin) {
-          return [...acc, extend];
+
+        if (plugin) {
+          return [
+            ...acc,
+            {
+              moduleName: plugin.moduleName,
+              importPath: plugin.importPath,
+              configReference: extend.configReference.replace(
+                // replace the first part of the extendsCode with the pluginName
+                /^[^.]+/,
+                plugin.moduleName
+              ),
+              shouldSpreadConfig: extend.shouldSpreadConfig,
+            },
+          ];
         }
-        return [
-          ...acc,
-          {
-            moduleName: plugin.moduleName,
-            importPath: plugin.importPath,
-            extendsCode: extend.extendsCode.replace(
-              /^[^.]+/,
-              plugin.moduleName
-            ), // replace the first part of the extendsCode with the pluginName
-            needSpread: extend.needSpread,
-          },
-        ];
+        return [...acc, extend];
       }, [])
       .map((extend) =>
-        extend.needSpread ? `...${extend.extendsCode}` : extend.extendsCode
+        extend.shouldSpreadConfig
+          ? `...${extend.configReference}`
+          : extend.configReference
       )
       .join(",\n  ");
   }
 
   /**
    * Generate main ESLint configuration
-   * @param tsconfig - Path to tsconfig.json
-   * @param rules - ESLint rules
-   * @param options - ESLint configuration options
    * @returns Main configuration as a string
    */
-  private generateMainConfig(
-    tsconfig: string,
-    rules: { [rule: string]: any },
-    options: EslintFlatConfigOptions
-  ): string {
+  private generateMainConfig(): string {
     return `{
-    files: [${[...this._lintPatterns]
-      .map((pattern) => `"${pattern}"`)
-      .join(", ")}],
+    files: ${this.convertArrayToString([...this._enablePatterns])},
     languageOptions: { 
       globals: {
         ...globals.node,
@@ -740,7 +820,7 @@ export default [
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
-        project: "${tsconfig}",
+        project: "${this._tsconfigPath}",
       },
     },
     settings: {
@@ -749,15 +829,12 @@ export default [
       },
       "import/resolver": {
         ${
-          options.aliasMap
+          this._aliasMap
             ? JSON.stringify({
                 ...{
                   alias: {
-                    map: Object.entries(options.aliasMap).map(([k, v]) => [
-                      k,
-                      v,
-                    ]),
-                    extensions: options.aliasExtensions,
+                    map: Object.entries(this._aliasMap).map(([k, v]) => [k, v]),
+                    extensions: this._aliasExtensions,
                   },
                 },
               }).slice(1, -1)
@@ -765,23 +842,16 @@ export default [
         }
         node: {},
         typescript: {
-          project: "${tsconfig}",
-          ${options.tsAlwaysTryTypes !== false ? "alwaysTryTypes: true" : ""},
+          project: "${this._tsconfigPath}",
+          ${this._tsAlwaysTryTypes !== false ? "alwaysTryTypes: true" : ""},
         }
       },
     },
     plugins: {
-      ${this._plugins
-        .map((plugin) => `"${plugin.alias}": ${plugin.moduleName}`)
-        .join(",\n      ")}
+      ${this.convertPluginsToString(this._plugins, "      ")}
     },
     rules: {
-      ${Object.keys(rules)
-        .map(
-          (key) =>
-            `"${key}": ${JSON.stringify(rules[key as keyof typeof rules])}`
-        )
-        .join(",\n      ")}
+      ${this.convertRulesToString(this.rules, "      ")}
     }
   }`;
   }
@@ -793,52 +863,37 @@ export default [
    */
   private generateOverridesConfig(): string {
     return this.overrides
-      .map(
-        (override) => `
+      .map((override) => {
+        const plugins = [...this._plugins, ...this._extends];
+        const codeReferences = override.extends
+          ? override.extends
+              .map((extend) =>
+                extend.shouldSpreadConfig
+                  ? `...${extend.configReference}`
+                  : extend.configReference
+              )
+              .join(",\n  ")
+          : "";
+
+        return `
   {
-    ${
-      override.extends
-        ? override.extends
-            .map((extend) =>
-              extend.needSpread
-                ? `...${extend.extendsCode}`
-                : extend.extendsCode
-            )
-            .join(",\n  ")
-        : ""
-    }
-    ${
-      override.parser
-        ? `languageOptions: {
-      parser: ${
-        this.replaceParser(override.parser, [
-          ...this._plugins,
-          ...this._extends,
-        ]).parserCode
-      }
+    ${codeReferences}${
+          override.parser
+            ? `
+    languageOptions: {
+      ${this.convertParserToString(override.parser, plugins)}
     },`
-        : ""
-    }
-    files: [${override.enablePatterns
-      .map((pattern) => `"${pattern}"`)
-      .join(", ")}],
+            : ""
+        }
+    files: [${this.convertArrayToString(override.enablePatterns)}],
     plugins: {
-      ${override.plugins
-        ?.map((plugin) => `"${plugin.alias}": ${plugin.moduleName}`)
-        .join(",\n      ")}
+      ${this.convertPluginsToString(override.plugins ?? [], "      ")}
     },
     rules: {
-      ${Object.keys(override.rules ?? {})
-        .map(
-          (key) =>
-            `"${key}": ${JSON.stringify(
-              override.rules?.[key as keyof typeof override.rules]
-            )}`
-        )
-        .join(",\n      ")}
+      ${this.convertRulesToString(override.rules ?? {}, "      ")}
     }
-  }`
-      )
+  }`;
+      })
       .join(",\n");
   }
 
@@ -850,35 +905,50 @@ export default [
    * @param plugins - List of plugins and extends
    * @returns Updated parser information. Returns the original parser information if no matching plugin is found
    */
-  private replaceParser(parser: Parser, plugins: (Plugin | Extend)[]): Parser {
+  private convertParserToString(
+    parser: EslintParser,
+    plugins: (EslintPlugin | EslintConfigExtension)[]
+  ): string {
     // If specified in plugins, rewrite information in extends
     const plugin = plugins.find(
       ({ importPath }) => importPath === parser.importPath
     );
     if (plugin) {
-      return {
-        moduleName: plugin.moduleName,
-        importPath: plugin.importPath,
-        parserCode: parser.parserCode.replace(/^[^.]+/, plugin.moduleName), // replace the first part of the extendsCode with the pluginName
-      };
+      return `parser: ${parser.parserReference.replace(
+        /^[^.]+/,
+        plugin.moduleName
+      )}`;
     }
-    return parser;
-  }
-
-  /**
-   * Enables prettier for code formatting.
-   */
-  private enablePrettier() {
-    this.nodeProject.addDevDeps("prettier", "eslint-config-prettier");
-    this._formattingRules = {};
-    this.addExtends({
-      importPath: "eslint-config-prettier",
-      moduleName: "prettierConfig",
-      extendsCode: "prettierConfig",
-    });
+    return `parser: ${parser.parserReference}`;
   }
 
   private renderDevDepsAllowList() {
     return Array.from(this._allowDevDeps);
+  }
+
+  private convertArrayToString(element: unknown[]): string {
+    return `[${element.map((e) => `"${e}"`).join(", ")}]`;
+  }
+
+  private convertPluginsToString(
+    plugins: EslintPlugin[],
+    spaceStringForEachPlugin: string
+  ): string {
+    if (!plugins.length) return "";
+    return plugins
+      .map((plugin) => `"${plugin.pluginAlias}": ${plugin.moduleName}`)
+      .join(`,\n${spaceStringForEachPlugin}`);
+  }
+
+  private convertRulesToString(
+    rules: { [rule: string]: any },
+    spaceStringForEachRule: string
+  ): string {
+    if (!Object.keys(rules).length) return "";
+    return Object.keys(rules)
+      .map(
+        (key) => `"${key}": ${JSON.stringify(rules[key as keyof typeof rules])}`
+      )
+      .join(`,\n${spaceStringForEachRule}`);
   }
 }

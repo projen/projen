@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sample snapshot 1`] = `
+"
+import globals from "globals";
+import stylistic from "@stylistic/eslint-plugin"
+import tsEslint from "typescript-eslint"
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  ,
+  {
+    files: ["src"],
+    languageOptions: { 
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: "module",
+        project: "./tsconfig.json",
+      },
+    },
+    settings: {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"],
+      },
+      "import/resolver": {
+        "alias":{"map":[],"extensions":[]}
+        node: {},
+        typescript: {
+          project: "./tsconfig.json",
+          alwaysTryTypes: true,
+        }
+      },
+    },
+    plugins: {
+      "@stylistic": stylistic
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "error",
+      "import/no-extraneous-dependencies": ["error",{"optionalDependencies":false,"peerDependencies":true}],
+      "import/no-unresolved": "error",
+      "import/order": ["warn",{"groups":["builtin","external"],"alphabetize":{"order":"asc","caseInsensitive":true}}],
+      "import/no-duplicates": "error",
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": "error",
+      "@stylistic/key-spacing": "error",
+      "@stylistic/no-multiple-empty-lines": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "no-return-await": "off",
+      "@typescript-eslint/return-await": "error",
+      "@stylistic/no-trailing-spaces": "error",
+      "dot-notation": "error",
+      "no-bitwise": "error",
+      "@typescript-eslint/member-ordering": ["error",{"default":["public-static-field","public-static-method","protected-static-field","protected-static-method","private-static-field","private-static-method","field","constructor","method"]}],
+      "indent": "off",
+      "@stylistic/indent": ["error",2],
+      "@stylistic/quotes": ["error","single",{"avoidEscape":true}],
+      "@stylistic/comma-dangle": ["error","always-multiline"],
+      "@stylistic/comma-spacing": ["error",{"before":false,"after":true}],
+      "@stylistic/no-multi-spaces": ["error",{"ignoreEOLComments":false}],
+      "@stylistic/array-bracket-spacing": ["error","never"],
+      "@stylistic/array-bracket-newline": ["error","consistent"],
+      "@stylistic/object-curly-spacing": ["error","always"],
+      "@stylistic/object-curly-newline": ["error",{"multiline":true,"consistent":true}],
+      "@stylistic/object-property-newline": ["error",{"allowAllPropertiesOnSameLine":true}],
+      "@stylistic/keyword-spacing": "error",
+      "@stylistic/brace-style": ["error","1tbs",{"allowSingleLine":true}],
+      "@stylistic/space-before-blocks": "error",
+      "curly": ["error","multi-line","consistent"],
+      "@stylistic/member-delimiter-style": "error",
+      "@stylistic/semi": ["error","always"],
+      "@stylistic/max-len": ["error",{"code":150,"ignoreUrls":true,"ignoreStrings":true,"ignoreTemplateLiterals":true,"ignoreComments":true,"ignoreRegExpLiterals":true}],
+      "@stylistic/quote-props": ["error","consistent-as-needed"]
+    }
+  },
+  
+  {
+    
+    languageOptions: {
+      parser: tsEslint.parser
+    },
+    files: [["projenrc.ts"]],
+    plugins: {
+      
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "import/no-extraneous-dependencies": "off"
+    }
+  }
+  {
+    ignores: ["*.js", "*.d.ts", "node_modules/", "*.generated.ts", "coverage"]
+  }
+];
+"
+`;
