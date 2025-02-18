@@ -365,9 +365,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly tsJestOptions?: TsJestOptions;
 }
 
-// Transforms readonly interface to have modifiable values
-type Writeable<T> = { -readonly [P in keyof T]: T[P] };
-
 /**
  * TypeScript project
  * @pjid typescript
@@ -378,29 +375,31 @@ export class TypeScriptProject extends NodeProject {
   /**
    * Projen default Typescript compiler options.
    */
-  protected defaultCompilerOptions: Writeable<TypeScriptCompilerOptions> = {
-    alwaysStrict: true,
-    declaration: true,
-    esModuleInterop: true,
-    experimentalDecorators: true,
-    inlineSourceMap: true,
-    inlineSources: true,
-    lib: ["es2019"],
-    module: "CommonJS",
-    noEmitOnError: false,
-    noFallthroughCasesInSwitch: true,
-    noImplicitAny: true,
-    noImplicitReturns: true,
-    noImplicitThis: true,
-    noUnusedLocals: true,
-    noUnusedParameters: true,
-    resolveJsonModule: true,
-    strict: true,
-    strictNullChecks: true,
-    strictPropertyInitialization: true,
-    stripInternal: true,
-    target: "ES2019",
-  };
+  protected getDefaultTsCompilerOptions(): TypeScriptCompilerOptions {
+    return {
+      alwaysStrict: true,
+      declaration: true,
+      esModuleInterop: true,
+      experimentalDecorators: true,
+      inlineSourceMap: true,
+      inlineSources: true,
+      lib: ["es2019"],
+      module: "CommonJS",
+      noEmitOnError: false,
+      noFallthroughCasesInSwitch: true,
+      noImplicitAny: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      noUnusedLocals: true,
+      noUnusedParameters: true,
+      resolveJsonModule: true,
+      strict: true,
+      strictNullChecks: true,
+      strictPropertyInitialization: true,
+      stripInternal: true,
+      target: "ES2019",
+    };
+  }
 
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
@@ -502,7 +501,7 @@ export class TypeScriptProject extends NodeProject {
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,
-              ...this.defaultCompilerOptions,
+              ...this.getDefaultTsCompilerOptions(),
             },
           },
           options.tsconfig
@@ -522,7 +521,7 @@ export class TypeScriptProject extends NodeProject {
             include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
 
             exclude: ["node_modules"],
-            compilerOptions: this.defaultCompilerOptions,
+            compilerOptions: this.getDefaultTsCompilerOptions(),
           },
           options.tsconfig,
           options.tsconfigDev
