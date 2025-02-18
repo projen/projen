@@ -6249,7 +6249,7 @@ public readonly mergeQueue: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true
+- *Default:* false
 
 Whether a merge queue should be used on this repository to merge pull requests.
 
