@@ -406,7 +406,6 @@ export class EslintFlatConfig extends Component {
     this._config = this.generateConfig();
     const projectDir = this.project.outdir;
     const configFile = path.join(projectDir, "eslint.config.mjs");
-    console.log("🚀 ~ EslintFlatConfig ~ synthesize ~ configFile:", configFile);
     fs.writeFileSync(configFile, this.config);
   }
 
