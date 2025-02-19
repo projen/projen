@@ -200,7 +200,7 @@ describe("poetry correctly handles dependencies with toml inline tables", () => 
       extras: ["extra1", "extra2"],
     });
   });
-  it("should set environment markers dependencies correctly", () => {
+  it("should set dependency markers correctly that have both single and double quotes", () => {
     // Handles TOML table with both single and double quotes
     expect(actualObjectContent.tool.poetry.dependencies.package4).toEqual({
       version: "^2.2",
@@ -208,13 +208,16 @@ describe("poetry correctly handles dependencies with toml inline tables", () => 
     });
   });
 
-  // Handles TOML array of tables
-  expect(actualObjectContent.tool.poetry.dependencies.package5).toEqual([
-    { version: "<=1.9", python: ">=3.6,<3.8" },
-    { version: "^2.0", python: ">=3.8" },
-  ]);
-
-  expect(actualTomlContent).toMatchSnapshot();
+  it("should set multiple constraints dependencies correctly", () => {
+    // Handles TOML array of tables
+    expect(actualObjectContent.tool.poetry.dependencies.package5).toEqual([
+      { version: "<=1.9", python: ">=3.6,<3.8" },
+      { version: "^2.0", python: ">=3.8" },
+    ]);
+  });
+  it("should match the snapshot for the pyproject.toml file", () => {
+    expect(actualTomlContent).toMatchSnapshot();
+  });
 });
 
 test("poetry environment is setup with pythonExec", () => {
