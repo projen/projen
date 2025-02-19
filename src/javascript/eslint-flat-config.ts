@@ -1,6 +1,8 @@
-import { Project, TextFile } from "..";
+import * as fs from "fs";
+import * as path from "path";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
+import { Project } from "../project";
 import { Prettier } from "./prettier";
 
 const MODULE_TYPE = {
@@ -411,12 +413,9 @@ export class EslintFlatConfig extends Component {
    */
   public synthesize() {
     this._config = this.generateConfig();
-    const fileExt = this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs";
-    const configFile = new TextFile(this.project, `eslint.config.${fileExt}`, {
-      readonly: true,
-    });
-    configFile.addLine(this._config);
-    configFile.synthesize();
+    const projectDir = this.project.outdir;
+    const configFile = path.join(projectDir, `eslint.config.${this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"}`);
+    fs.writeFileSync(configFile, this._config);
   }
 
   /**

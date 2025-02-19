@@ -3,12 +3,15 @@
 exports[`sample snapshot 1`] = `
 "
 import globals from "globals";
+import tseslint from "typescript-eslint"
+import importPlugin from "eslint-plugin-import"
 import stylistic from "@stylistic/eslint-plugin"
-import tsEslint from "typescript-eslint"
+import eslint from "@eslint/js"
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  ,
+  eslint.configs.recommended,
+  importPlugin.flatConfigs.typescript,
   {
     files: ["src"],
     languageOptions: { 
@@ -28,7 +31,7 @@ export default [
         "@typescript-eslint/parser": [".ts", ".tsx"],
       },
       "import/resolver": {
-        "alias":{"map":[],"extensions":[]}
+        
         node: {},
         typescript: {
           project: "./tsconfig.json",
@@ -37,6 +40,8 @@ export default [
       },
     },
     plugins: {
+      "@typescript-eslint": tseslint,
+      "import": importPlugin,
       "@stylistic": stylistic
     },
     rules: {
@@ -81,7 +86,7 @@ export default [
   {
     
     languageOptions: {
-      parser: tsEslint.parser
+      parser: tseslint.parser
     },
     files: [["projenrc.ts"]],
     plugins: {
