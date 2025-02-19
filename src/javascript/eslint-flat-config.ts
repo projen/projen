@@ -406,6 +406,7 @@ export class EslintFlatConfig extends Component {
     this._moduleType = options.moduleType ?? "module";
     this.initializeRules();
     this.initializeCodeFormatter(project, options);
+    this.synthesize();
   }
 
   /**
