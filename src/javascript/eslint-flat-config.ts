@@ -1,6 +1,4 @@
-import * as fs from "fs";
-import * as path from "path";
-import { Project } from "..";
+import { Project, TextFile } from "..";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { Prettier } from "./prettier";
@@ -10,9 +8,8 @@ const MODULE_TYPE = {
   MODULE: "module",
 } as const;
 
-type ModuleType = typeof MODULE_TYPE[keyof typeof MODULE_TYPE];
+type ModuleType = (typeof MODULE_TYPE)[keyof typeof MODULE_TYPE];
 type Rules = { [rule: string]: any };
-
 
 /**
  * ESLint plugin configuration information.
@@ -355,11 +352,11 @@ export class EslintFlatConfig extends Component {
    */
   public readonly overrides: EslintFlatConfigOverride[] = [];
 
+  private _config: string = "";
   private _rules: Rules = {};
   private _formattingRules: Rules = {};
   private _enablePatterns: Set<string>;
   private _ignorePatterns: Set<string>;
-  private _config: string = "";
   private _plugins: EslintPlugin[] = [];
   private _extends: EslintConfigExtension[] = [];
   private readonly _tsconfigPath: string;
@@ -414,9 +411,12 @@ export class EslintFlatConfig extends Component {
    */
   public synthesize() {
     this._config = this.generateConfig();
-    const projectDir = this.project.outdir;
-    const configFile = path.join(projectDir, `eslint.config.${this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"}`);
-    fs.writeFileSync(configFile, this.config);
+    const fileExt = this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs";
+    const configFile = new TextFile(this.project, `eslint.config.${fileExt}`, {
+      readonly: true,
+    });
+    configFile.addLine(this._config);
+    configFile.synthesize();
   }
 
   /**
@@ -734,11 +734,19 @@ export class EslintFlatConfig extends Component {
    */
   private generateConfig(): string {
     return `
-${this._moduleType === MODULE_TYPE.MODULE ? 'import globals from "globals"' : 'const globals = require("globals")'};
+${
+  this._moduleType === MODULE_TYPE.MODULE
+    ? 'import globals from "globals"'
+    : 'const globals = require("globals")'
+};
 ${this.generateImports()}
 
 /** @type {import('eslint').Linter.Config[]} */
-${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports ='} [
+${
+  this._moduleType === MODULE_TYPE.MODULE
+    ? "export default"
+    : "module.exports ="
+} [
   ${this.generateExtendsConfig()},
   ${this.generateMainConfig()},
   ${this.generateOverridesConfig()}
@@ -755,14 +763,14 @@ ${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports =
    * 1. Collects plugins, extensions, and parsers from the main configuration and overrides
    * 2. Removes duplicates based on import paths
    * 3. Generates appropriate import statements based on the module type (ESM or CommonJS)
-   * 
+   *
    * @returns A string containing all necessary import statements, one per line
-   * 
+   *
    * @example
    * //When moduleType is "module":
    * // import tseslint from "typescript-eslint"
    * // import importPlugin from "eslint-plugin-import"
-   * 
+   *
    * // When moduleType is "commonjs":
    * // const tseslint = require("typescript-eslint")
    * // const importPlugin = require("eslint-plugin-import")
@@ -788,11 +796,10 @@ ${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports =
       []
     );
     return uniquePlugins
-      .map(
-        ({ moduleName, importPath }) =>
-          this._moduleType === MODULE_TYPE.MODULE
-            ? `import ${moduleName} from "${importPath}"`
-            : `const ${moduleName} = require("${importPath}")`
+      .map(({ moduleName, importPath }) =>
+        this._moduleType === MODULE_TYPE.MODULE
+          ? `import ${moduleName} from "${importPath}"`
+          : `const ${moduleName} = require("${importPath}")`
       )
       .join("\n");
   }
@@ -801,7 +808,7 @@ ${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports =
    * Generate extends configuration for ESLint.
    * Processes the list of configuration extensions, resolving any plugin references
    * and handling spread operators as needed.
-   * 
+   *
    * @returns A string containing the extends configuration, with each extension on a new line
    */
   private generateExtendsConfig(): string {
@@ -900,7 +907,7 @@ ${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports =
    * Generate overrides configuration for ESLint.
    * Creates configuration objects for each override, including their specific
    * extends, parser options, files patterns, plugins, and rules.
-   * 
+   *
    * @returns A string containing all override configurations, separated by commas
    */
   private generateOverridesConfig(): string {
@@ -943,7 +950,7 @@ ${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports =
    * Converts a parser configuration into a string representation for the ESLint configuration file.
    * If the parser's import path matches a plugin in the provided list, the parser reference is updated
    * to use the plugin's module name.
-   * 
+   *
    * @param parser - The parser configuration to convert
    * @param plugins - List of available plugins and extensions that might contain the parser module
    * @returns A string in the format `parser: moduleName.parser` where moduleName is either from a matching plugin or the original parser
@@ -1013,7 +1020,6 @@ ${this._moduleType === MODULE_TYPE.MODULE ? 'export default' : 'module.exports =
       )
       .join(`,\n${spaceStringForEachRule}`);
   }
-
 
   /**
    * Generates a list of glob patterns for directories where dev dependencies are allowed.
