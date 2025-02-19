@@ -414,7 +414,10 @@ export class EslintFlatConfig extends Component {
   public synthesize() {
     this._config = this.generateConfig();
     const projectDir = this.project.outdir;
-    const configFile = path.join(projectDir, `eslint.config.${this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"}`);
+    const configFile = path.join(
+      projectDir,
+      `eslint.config.${this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"}`
+    );
     fs.writeFileSync(configFile, this._config);
   }
 
