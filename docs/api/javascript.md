@@ -12270,6 +12270,7 @@ const upgradeDependenciesWorkflowOptions: javascript.UpgradeDependenciesWorkflow
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the upgrade job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method for authenticating with GitHub for creating the PR. |
+| <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.runOnForks">runOnForks</a></code> | <code>boolean</code> | Whether to run the workflow on forks. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.schedule">schedule</a></code> | <code><a href="#projen.javascript.UpgradeDependenciesSchedule">UpgradeDependenciesSchedule</a></code> | Schedule to run on. |
@@ -12371,6 +12372,19 @@ projen requires API access to be provided through e.g. a personal
 access token or other method.
 
 > [https://github.com/peter-evans/create-pull-request/issues/48](https://github.com/peter-evans/create-pull-request/issues/48)
+
+---
+
+##### `runOnForks`<sup>Optional</sup> <a name="runOnForks" id="projen.javascript.UpgradeDependenciesWorkflowOptions.property.runOnForks"></a>
+
+```typescript
+public readonly runOnForks: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to run the workflow on forks.
 
 ---
 

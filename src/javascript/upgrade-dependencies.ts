@@ -434,6 +434,7 @@ export class UpgradeDependencies extends Component {
       branch ? `-${branch.replace(/\//g, "-")}` : ""
     }`;
     const workflow = github.addWorkflow(workflowName);
+    
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
       schedule:
@@ -480,6 +481,9 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: "Upgrade",
+        ...(this.options.workflowOptions?.runOnForks !== true && {
+          if: "github.repository == 'projen/projen'"
+        }),
         container: this.containerOptions,
         permissions: this.permissions,
         ...filteredRunsOnOptions(
@@ -621,6 +625,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default `{ contents: JobPermission.READ }`
    */
   readonly permissions?: JobPermissions;
+
+  /**
+   * Whether to run the workflow on forks. 
+   * @default false
+   */
+  readonly runOnForks?: boolean;
 }
 
 /**
