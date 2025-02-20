@@ -454,30 +454,6 @@ export class TypeScriptProject extends NodeProject {
       this.package.addField("types", entrypointTypes);
     }
 
-    const compilerOptionDefaults: TypeScriptCompilerOptions = {
-      alwaysStrict: true,
-      declaration: true,
-      esModuleInterop: true,
-      experimentalDecorators: true,
-      inlineSourceMap: true,
-      inlineSources: true,
-      lib: ["es2019"],
-      module: "CommonJS",
-      noEmitOnError: false,
-      noFallthroughCasesInSwitch: true,
-      noImplicitAny: true,
-      noImplicitReturns: true,
-      noImplicitThis: true,
-      noUnusedLocals: true,
-      noUnusedParameters: true,
-      resolveJsonModule: true,
-      strict: true,
-      strictNullChecks: true,
-      strictPropertyInitialization: true,
-      stripInternal: true,
-      target: "ES2019",
-    };
-
     if (options.disableTsconfigDev && options.disableTsconfig) {
       throw new Error(
         "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
@@ -494,7 +470,7 @@ export class TypeScriptProject extends NodeProject {
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,
-              ...compilerOptionDefaults,
+              ...this.defaultTypeScriptCompilerOptions(),
             },
           },
           options.tsconfig
@@ -514,7 +490,7 @@ export class TypeScriptProject extends NodeProject {
             include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
 
             exclude: ["node_modules"],
-            compilerOptions: compilerOptionDefaults,
+            compilerOptions: this.defaultTypeScriptCompilerOptions(),
           },
           options.tsconfig,
           options.tsconfigDev
@@ -599,6 +575,35 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+  }
+
+  /**
+   * Projen default Typescript compiler options.
+   */
+  protected defaultTypeScriptCompilerOptions(): TypeScriptCompilerOptions {
+    return {
+      alwaysStrict: true,
+      declaration: true,
+      esModuleInterop: true,
+      experimentalDecorators: true,
+      inlineSourceMap: true,
+      inlineSources: true,
+      lib: ["es2019"],
+      module: "CommonJS",
+      noEmitOnError: false,
+      noFallthroughCasesInSwitch: true,
+      noImplicitAny: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      noUnusedLocals: true,
+      noUnusedParameters: true,
+      resolveJsonModule: true,
+      strict: true,
+      strictNullChecks: true,
+      strictPropertyInitialization: true,
+      stripInternal: true,
+      target: "ES2019",
+    };
   }
 
   /**
