@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { Component } from "../component";
-import { NodeProject } from "../javascript";
+import { EslintCommandOptions, NodeProject } from "../javascript";
 import { Project } from "../project";
 import { Prettier } from "./prettier";
 
@@ -355,6 +355,7 @@ export class EslintFlatConfig extends Component {
   public readonly overrides: EslintFlatConfigOverride[] = [];
 
   private _config: string = "";
+  private _filename: string = "";
   private _rules: Rules = {};
   private _formattingRules: Rules = {};
   private _enablePatterns: Set<string>;
@@ -404,8 +405,12 @@ export class EslintFlatConfig extends Component {
     this._aliasExtensions = options.aliasExtensions ?? [];
     this._tsAlwaysTryTypes = options.tsAlwaysTryTypes ?? true;
     this._moduleType = options.moduleType ?? "module";
+    this._filename = `eslint.config.${
+      this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"
+    }`;
     this.initializeRules();
     this.initializeCodeFormatter(project, options);
+    this.initializeEslintTask(options.commandOptions);
     this.synthesize();
   }
 
@@ -415,10 +420,7 @@ export class EslintFlatConfig extends Component {
   public synthesize() {
     this._config = this.generateConfig();
     const projectDir = this.project.outdir;
-    const configFile = path.join(
-      projectDir,
-      `eslint.config.${this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"}`
-    );
+    const configFile = path.join(projectDir, this._filename);
     fs.writeFileSync(configFile, this._config);
   }
 
@@ -729,6 +731,33 @@ export class EslintFlatConfig extends Component {
       ],
       "@stylistic/quote-props": ["error", "consistent-as-needed"],
     };
+  }
+
+  /**
+   * Initializes and configures the ESLint task for the project.
+   * This method performs the following:
+   * 1. Sets up the base ESLint command
+   * 2. Configures command line arguments including config file path
+   * 3. Adds fix option if enabled
+   * 4. Creates an ESLint task and adds it to the test task chain
+   *
+   * @param options - Command line options for ESLint task configuration
+   * @remarks
+   * The created task will be added as a subtask to the project's test task,
+   * ensuring ESLint runs during testing.
+   */
+  private initializeEslintTask(options?: EslintCommandOptions) {
+    const taskExecCommand = "eslint";
+    const extraArgs = options?.extraArgs ?? [];
+    const cliArgs = new Set(["--config", this._filename, ...extraArgs]);
+    if (options?.fix) {
+      cliArgs.add("--fix");
+    }
+    const eslintTask = this.project.addTask("eslint", {
+      description: "Runs eslint against the codebase",
+      exec: [taskExecCommand, ...cliArgs].join(" "),
+    });
+    this.project.testTask.spawn(eslintTask);
   }
 
   /**
