@@ -37,6 +37,24 @@ describe("snapshot", () => {
     expect(synthSnapshot(project)["eslint.config.mjs"]).toMatchSnapshot();
   });
 
+  test("commonjs", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new EslintFlatConfig(project, {
+      enablePatterns: ["**/*.ts", "**/*.tsx"],
+      moduleType: "commonjs",
+    });
+    eslint.synthesize();
+
+    // THEN
+    expect(synthSnapshot(project)["eslint.config.cjs"]).toMatchSnapshot();
+  });
+
   test("override setting", () => {
     // GIVEN
     const project = new NodeProject({
