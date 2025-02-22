@@ -736,7 +736,8 @@ export class EslintFlatConfig extends Component {
    * @returns ESLint configuration as a string
    */
   private generateConfig(): string {
-    return `
+    return (
+      `
 ${
   this._moduleType === MODULE_TYPE.MODULE
     ? 'import globals from "globals"'
@@ -757,7 +758,12 @@ ${
     ignores: ${this.convertArrayToString(this.ignorePatterns)}
   }
 ];
-`;
+`
+        // NOTE: remove empty lines
+        .split("\n")
+        .filter((line) => line.trim() !== "")
+        .join("\n")
+    );
   }
 
   /**
@@ -890,7 +896,6 @@ ${
               }).slice(1, -1)
             : ""
         }
-        node: {},
         typescript: {
           project: "${this._tsconfigPath}",
           ${this._tsAlwaysTryTypes !== false ? "alwaysTryTypes: true" : ""},
@@ -917,6 +922,8 @@ ${
     return this.overrides
       .map((override) => {
         const plugins = [...this._plugins, ...this._extends];
+        const overridePlugins = override.plugins ?? [];
+        const overrideIgnorePatterns = override.ignorePatterns ?? [];
         const codeReferences = override.extends
           ? override.extends
               .map((extend) =>
@@ -937,12 +944,21 @@ ${
     },`
             : ""
         }
-    files: [${this.convertArrayToString(override.enablePatterns)}],
-    plugins: {
-      ${this.convertPluginsToString(override.plugins ?? [], "      ")}
-    },
+    files: ${this.convertArrayToString(override.enablePatterns)},
+    ${
+      overridePlugins.length
+        ? `plugins: {
+      ${this.convertPluginsToString(overridePlugins, "      ")}
+    },`
+        : ""
+    }
     rules: {
       ${this.convertRulesToString(override.rules ?? {}, "      ")}
+    }
+    ${
+      overrideIgnorePatterns.length
+        ? `ignores: ${this.convertArrayToString(overrideIgnorePatterns)}`
+        : ""
     }
   }`;
       })

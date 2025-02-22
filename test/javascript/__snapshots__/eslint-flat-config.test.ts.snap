@@ -1,13 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sample snapshot 1`] = `
-"
-import globals from "globals";
+"import globals from "globals";
 import tseslint from "typescript-eslint"
 import importPlugin from "eslint-plugin-import"
 import stylistic from "@stylistic/eslint-plugin"
 import eslint from "@eslint/js"
-
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   eslint.configs.recommended,
@@ -31,8 +29,6 @@ export default [
         "@typescript-eslint/parser": [".ts", ".tsx"],
       },
       "import/resolver": {
-        
-        node: {},
         typescript: {
           project: "./tsconfig.json",
           alwaysTryTypes: true,
@@ -82,16 +78,11 @@ export default [
       "@stylistic/quote-props": ["error","consistent-as-needed"]
     }
   },
-  
   {
-    
     languageOptions: {
       parser: tseslint.parser
     },
-    files: [["projenrc.ts"]],
-    plugins: {
-      
-    },
+    files: ["projenrc.ts"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "import/no-extraneous-dependencies": "off"
@@ -100,6 +91,5 @@ export default [
   {
     ignores: ["*.js", "*.d.ts", "node_modules/", "*.generated.ts", "coverage"]
   }
-];
-"
+];"
 `;
