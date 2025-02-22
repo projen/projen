@@ -509,7 +509,9 @@ export class EslintFlatConfig extends Component {
       "typescript-eslint@^8",
       "@typescript-eslint/parser@^8",
       "eslint-plugin-import",
-      "eslint-import-resolver-typescript"
+      "eslint-import-resolver-typescript",
+      // `@stylistic/eslint-plugin` is used even if prettier is enabled
+      "@stylistic/eslint-plugin@^2"
     );
     project.npmignore?.exclude("eslint.config.mjs");
   }
@@ -528,6 +530,12 @@ export class EslintFlatConfig extends Component {
         importPath: "eslint-plugin-import",
         moduleName: "importPlugin",
         pluginAlias: "import",
+      },
+      // `@stylistic/eslint-plugin` is used even if prettier is enabled
+      {
+        importPath: "@stylistic/eslint-plugin",
+        moduleName: "stylistic",
+        pluginAlias: "@stylistic",
       }
     );
     this.addExtends(
@@ -677,12 +685,6 @@ export class EslintFlatConfig extends Component {
    * @returns An object containing the configured formatting rules
    */
   private initializeStylisticFormatter() {
-    this._nodeProject.addDevDeps("@stylistic/eslint-plugin@^2");
-    this.addPlugins({
-      importPath: "@stylistic/eslint-plugin",
-      moduleName: "stylistic",
-      pluginAlias: "@stylistic",
-    });
     this._formattingRules = {
       indent: "off",
       "@stylistic/indent": ["error", 2],
@@ -996,9 +998,9 @@ ${
         ? `ignores: ${this.convertArrayToString(overrideIgnorePatterns)}`
         : ""
     }
-  }`;
+  },`;
       })
-      .join(",\n");
+      .join("\n");
   }
 
   /**

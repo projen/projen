@@ -177,6 +177,7 @@ exports[`snapshot enable prettier 1`] = `
 import globals from "globals";
 import tseslint from "typescript-eslint"
 import importPlugin from "eslint-plugin-import"
+import stylistic from "@stylistic/eslint-plugin"
 import eslint from "@eslint/js"
 import prettierConfig from "eslint-config-prettier"    
 
@@ -212,7 +213,8 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
-      "import": importPlugin
+      "import": importPlugin,
+      "@stylistic": stylistic
     },
     rules: {
       "@typescript-eslint/no-require-imports": "error",
@@ -244,6 +246,7 @@ exports[`snapshot override setting 1`] = `
 import globals from "globals";
 import tseslint from "typescript-eslint"
 import importPlugin from "eslint-plugin-import"
+import stylistic from "@stylistic/eslint-plugin"
 import eslint from "@eslint/js"
 import prettierConfig from "eslint-config-prettier"    
 
@@ -279,7 +282,8 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
-      "import": importPlugin
+      "import": importPlugin,
+      "@stylistic": stylistic
     },
     rules: {
       "@typescript-eslint/no-require-imports": "error",
@@ -309,7 +313,7 @@ export default [
       "@typescript-eslint/no-require-imports": "off",
       "import/no-extraneous-dependencies": "off"
     }
-  }
+  },
   {
     ignores: ["*.js", "*.d.ts", "node_modules/", "*.generated.ts", "coverage"]
   }
