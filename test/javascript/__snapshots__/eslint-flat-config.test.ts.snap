@@ -1,17 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sample snapshot 1`] = `
-"import globals from "globals";
+exports[`snapshot disable prettier 1`] = `
+"
+import globals from "globals";
 import tseslint from "typescript-eslint"
 import importPlugin from "eslint-plugin-import"
 import stylistic from "@stylistic/eslint-plugin"
-import eslint from "@eslint/js"
+import eslint from "@eslint/js"    
+
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   eslint.configs.recommended,
   importPlugin.flatConfigs.typescript,
   {
-    files: ["src"],
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: { 
       globals: {
         ...globals.node,
@@ -42,7 +44,7 @@ export default [
     },
     rules: {
       "@typescript-eslint/no-require-imports": "error",
-      "import/no-extraneous-dependencies": ["error",{"optionalDependencies":false,"peerDependencies":true}],
+      "import/no-extraneous-dependencies": ["error",{"devDependencies":[],"optionalDependencies":false,"peerDependencies":true}],
       "import/no-unresolved": "error",
       "import/order": ["warn",{"groups":["builtin","external"],"alphabetize":{"order":"asc","caseInsensitive":true}}],
       "import/no-duplicates": "error",
@@ -76,6 +78,140 @@ export default [
       "@stylistic/semi": ["error","always"],
       "@stylistic/max-len": ["error",{"code":150,"ignoreUrls":true,"ignoreStrings":true,"ignoreTemplateLiterals":true,"ignoreComments":true,"ignoreRegExpLiterals":true}],
       "@stylistic/quote-props": ["error","consistent-as-needed"]
+    }
+  },
+  {
+    ignores: ["*.js", "*.d.ts", "node_modules/", "*.generated.ts", "coverage"]
+  }
+];"
+`;
+
+exports[`snapshot enable prettier 1`] = `
+"
+import globals from "globals";
+import tseslint from "typescript-eslint"
+import importPlugin from "eslint-plugin-import"
+import eslint from "@eslint/js"
+import prettierConfig from "eslint-config-prettier"    
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  eslint.configs.recommended,
+  importPlugin.flatConfigs.typescript,
+  prettierConfig,
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: { 
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: "module",
+        project: "./tsconfig.json",
+      },
+    },
+    settings: {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"],
+      },
+      "import/resolver": {
+        typescript: {
+          project: "./tsconfig.json",
+          alwaysTryTypes: true,
+        }
+      },
+    },
+    plugins: {
+      "@typescript-eslint": tseslint,
+      "import": importPlugin
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "error",
+      "import/no-extraneous-dependencies": ["error",{"devDependencies":[],"optionalDependencies":false,"peerDependencies":true}],
+      "import/no-unresolved": "error",
+      "import/order": ["warn",{"groups":["builtin","external"],"alphabetize":{"order":"asc","caseInsensitive":true}}],
+      "import/no-duplicates": "error",
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": "error",
+      "@stylistic/key-spacing": "error",
+      "@stylistic/no-multiple-empty-lines": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "no-return-await": "off",
+      "@typescript-eslint/return-await": "error",
+      "@stylistic/no-trailing-spaces": "error",
+      "dot-notation": "error",
+      "no-bitwise": "error",
+      "@typescript-eslint/member-ordering": ["error",{"default":["public-static-field","public-static-method","protected-static-field","protected-static-method","private-static-field","private-static-method","field","constructor","method"]}]
+    }
+  },
+  {
+    ignores: ["*.js", "*.d.ts", "node_modules/", "*.generated.ts", "coverage"]
+  }
+];"
+`;
+
+exports[`snapshot override setting 1`] = `
+"
+import globals from "globals";
+import tseslint from "typescript-eslint"
+import importPlugin from "eslint-plugin-import"
+import eslint from "@eslint/js"
+import prettierConfig from "eslint-config-prettier"    
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  eslint.configs.recommended,
+  importPlugin.flatConfigs.typescript,
+  prettierConfig,
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: { 
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: "module",
+        project: "./tsconfig.json",
+      },
+    },
+    settings: {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"],
+      },
+      "import/resolver": {
+        typescript: {
+          project: "./tsconfig.json",
+          alwaysTryTypes: true,
+        }
+      },
+    },
+    plugins: {
+      "@typescript-eslint": tseslint,
+      "import": importPlugin
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "error",
+      "import/no-extraneous-dependencies": ["error",{"devDependencies":[],"optionalDependencies":false,"peerDependencies":true}],
+      "import/no-unresolved": "error",
+      "import/order": ["warn",{"groups":["builtin","external"],"alphabetize":{"order":"asc","caseInsensitive":true}}],
+      "import/no-duplicates": "error",
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": "error",
+      "@stylistic/key-spacing": "error",
+      "@stylistic/no-multiple-empty-lines": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "no-return-await": "off",
+      "@typescript-eslint/return-await": "error",
+      "@stylistic/no-trailing-spaces": "error",
+      "dot-notation": "error",
+      "no-bitwise": "error",
+      "@typescript-eslint/member-ordering": ["error",{"default":["public-static-field","public-static-method","protected-static-field","protected-static-method","private-static-field","private-static-method","field","constructor","method"]}]
     }
   },
   {

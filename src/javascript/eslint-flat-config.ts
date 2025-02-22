@@ -567,7 +567,7 @@ export class EslintFlatConfig extends Component {
       "import/no-extraneous-dependencies": [
         "error",
         {
-          devDependencies: () => this.renderDevDepsAllowList(), // Only allow importing devDependencies from "devDirs".
+          devDependencies: this.renderDevDepsAllowList(), // Only allow importing devDependencies from "devDirs".
           optionalDependencies: false, // Disallow importing optional dependencies (those shouldn't be in use in the project)
           peerDependencies: true, // Allow importing peer dependencies (that aren't also direct dependencies)
         },
@@ -765,15 +765,16 @@ export class EslintFlatConfig extends Component {
    * @returns ESLint configuration as a string
    */
   private generateConfig(): string {
-    return (
-      `
+    const importParts = `
 ${
   this._moduleType === MODULE_TYPE.MODULE
     ? 'import globals from "globals"'
     : 'const globals = require("globals")'
 };
-${this.generateImports()}
+${this.generateImports()}    
+`;
 
+    const configParts = `
 /** @type {import('eslint').Linter.Config[]} */
 ${
   this._moduleType === MODULE_TYPE.MODULE
@@ -787,12 +788,12 @@ ${
     ignores: ${this.convertArrayToString(this.ignorePatterns)}
   }
 ];
-`
-        // NOTE: remove empty lines
-        .split("\n")
-        .filter((line) => line.trim() !== "")
-        .join("\n")
-    );
+` // NOTE: remove empty lines
+      .split("\n")
+      .filter((line) => line.trim() !== "")
+      .join("\n");
+
+    return `${importParts}\n${configParts}`;
   }
 
   /**
@@ -1075,7 +1076,7 @@ ${
    *
    * @returns An array of glob patterns in the format `**=\/{dir}/**` for each dev directory
    */
-  private renderDevDepsAllowList() {
+  private renderDevDepsAllowList(): string[] {
     const allowDevDeps = new Set(this._devDirs.map((dir) => `**/${dir}/**`));
     return Array.from(allowDevDeps);
   }
