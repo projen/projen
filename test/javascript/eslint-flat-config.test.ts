@@ -87,34 +87,6 @@ describe("snapshot", () => {
 });
 
 describe("eslint settings", () => {
-  test("alias", () => {
-    // GIVEN
-    const project = new NodeProject({
-      name: "test",
-      defaultReleaseBranch: "master",
-    });
-
-    // WHEN
-    const eslint = new EslintFlatConfig(project, {
-      enablePatterns: ["**/*.ts", "**/*.tsx"],
-      aliasMap: {
-        "@src": "./src",
-        "@foo": "./src/foo",
-      },
-      aliasExtensions: [".ts", ".tsx"],
-    });
-    eslint.synthesize();
-
-    // THEN
-    const pattern =
-      /settings:\s*{[\s\S]*?"import\/resolver":\s*{([\s\S]*?)}[\s\S]*?}/;
-    const settingsMatch = eslint.config.match(pattern);
-    expect(settingsMatch).not.toBeNull();
-    expect(settingsMatch![0]).toContain(
-      '"alias":{"map":[["@src","./src"],["@foo","./src/foo"]],"extensions":[".ts",".tsx"]}'
-    );
-  });
-
   test("tsAlwaysTryTypes", () => {
     // GIVEN
     const project = new NodeProject({

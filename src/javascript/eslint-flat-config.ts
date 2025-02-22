@@ -231,18 +231,6 @@ export interface EslintFlatConfigOptions {
   readonly prettier?: boolean;
 
   /**
-   * Enable import alias for module paths
-   * @default undefined
-   */
-  readonly aliasMap?: { [key: string]: string };
-
-  /**
-   * Enable import alias for module paths
-   * @default undefined
-   */
-  readonly aliasExtensions?: string[];
-
-  /**
    * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
    * This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
    * @default true
@@ -371,8 +359,6 @@ export class EslintFlatConfig extends Component {
   private _eslintTask: Task;
   private readonly _tsconfigPath: string;
   private readonly _devDirs: string[];
-  private readonly _aliasMap?: { [key: string]: string };
-  private readonly _aliasExtensions?: string[];
   private readonly _tsAlwaysTryTypes: boolean;
   private readonly _moduleType: ModuleType;
   private readonly _nodeProject: NodeProject;
@@ -384,13 +370,6 @@ export class EslintFlatConfig extends Component {
 
     this.initializeProject(project);
     this.initializePluginsAndExtends();
-
-    // Validate options
-    if (options.aliasMap && !options.aliasExtensions?.length) {
-      throw new Error(
-        "aliasExtensions must be specified when aliasMap is used"
-      );
-    }
 
     // Set options to class properties
     this._devDirs = options.devDirs ?? [];
@@ -408,8 +387,6 @@ export class EslintFlatConfig extends Component {
       ]
     );
     this._tsconfigPath = options.tsconfigPath ?? "./tsconfig.json";
-    this._aliasMap = options.aliasMap;
-    this._aliasExtensions = options.aliasExtensions ?? [];
     this._tsAlwaysTryTypes = options.tsAlwaysTryTypes ?? true;
     this._moduleType = options.moduleType ?? "module";
     this._filename = `eslint.config.${
@@ -955,18 +932,6 @@ ${
         "@typescript-eslint/parser": [".ts", ".tsx"],
       },
       "import/resolver": {
-        ${
-          this._aliasMap
-            ? JSON.stringify({
-                ...{
-                  alias: {
-                    map: Object.entries(this._aliasMap).map(([k, v]) => [k, v]),
-                    extensions: this._aliasExtensions,
-                  },
-                },
-              }).slice(1, -1)
-            : ""
-        }
         typescript: {
           project: "${this._tsconfigPath}",
           ${this._tsAlwaysTryTypes !== false ? "alwaysTryTypes: true" : ""},
@@ -1087,7 +1052,14 @@ ${
   ): string {
     if (!plugins.length) return "";
     return plugins
-      .map((plugin) => `"${plugin.pluginAlias}": ${plugin.moduleName}`)
+      .map((plugin) => {
+        if (
+          plugin.pluginAlias === "@typescript-eslint" &&
+          !plugin.moduleName.includes(".")
+        ) {
+          return `"${plugin.pluginAlias}": ${plugin.moduleName}.plugin`;
+        } else return `"${plugin.pluginAlias}": ${plugin.moduleName}`;
+      })
       .join(`,\n${spaceStringForEachPlugin}`);
   }
 

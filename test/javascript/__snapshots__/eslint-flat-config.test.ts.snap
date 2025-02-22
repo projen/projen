@@ -38,7 +38,7 @@ module.exports = [
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-eslint": tseslint.plugin,
       "import": importPlugin,
       "@stylistic": stylistic
     },
@@ -124,7 +124,7 @@ export default [
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-eslint": tseslint.plugin,
       "import": importPlugin,
       "@stylistic": stylistic
     },
@@ -211,7 +211,7 @@ export default [
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-eslint": tseslint.plugin,
       "import": importPlugin
     },
     rules: {
@@ -278,7 +278,7 @@ export default [
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-eslint": tseslint.plugin,
       "import": importPlugin
     },
     rules: {
