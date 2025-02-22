@@ -1,6 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
 import { Component } from "../component";
+import { FileBase, IResolver } from "../file";
 import { EslintCommandOptions, NodeProject } from "../javascript";
 import { Project } from "../project";
 import { Task } from "../task";
@@ -19,7 +18,6 @@ type Rules = { [rule: string]: any };
  * ESLint plugin configuration information.
  *
  * @example
- * ```ts
  * // Configuration
  * {
  *   importPath: "typescript-eslint",
@@ -35,7 +33,6 @@ type Rules = { [rule: string]: any };
  *     "@typescript-eslint": tseslint
  *   }
  * }]
- * ```
  */
 export interface EslintPlugin {
   /**
@@ -43,28 +40,27 @@ export interface EslintPlugin {
    *
    * @example "typescript-eslint"
    */
-  importPath: string;
+  readonly importPath: string;
 
   /**
    * The local module name to use in the import statement.
    *
    * @example "tseslint"
    */
-  moduleName: string;
+  readonly moduleName: string;
 
   /**
    * The plugin alias to use in the ESLint configuration.
    *
    * @example "@typescript-eslint"
    */
-  pluginAlias: string;
+  readonly pluginAlias: string;
 }
 
 /**
  * ESLint configuration extension information.
  *
  * @example
- * ```ts
  * // Configuration without spread
  * {
  *   importPath: "eslint-plugin-prettier",
@@ -93,7 +89,6 @@ export interface EslintPlugin {
  *   ...prettierPlugin,
  *   // ...
  * ]
- * ```
  */
 export interface EslintConfigExtension {
   /**
@@ -101,14 +96,14 @@ export interface EslintConfigExtension {
    *
    * @example "eslint-plugin-prettier"
    */
-  importPath: string;
+  readonly importPath: string;
 
   /**
    * The local module name to use in the import statement.
    *
    * @example "prettierPlugin"
    */
-  moduleName: string;
+  readonly moduleName: string;
 
   /**
    * The configuration reference to be used in the extends section.
@@ -118,7 +113,7 @@ export interface EslintConfigExtension {
    * - "prettierPlugin" // Direct plugin reference
    * - "eslint.configs.recommended" // Specific configuration path
    */
-  configReference: string;
+  readonly configReference: string;
 
   /**
    * Indicates whether the configuration should be spread using the spread operator.
@@ -131,14 +126,13 @@ export interface EslintConfigExtension {
    *
    * @default false
    */
-  shouldSpreadConfig?: boolean;
+  readonly shouldSpreadConfig?: boolean;
 }
 
 /**
  * ESLint parser configuration information.
  *
  * @example
- * ```ts
  * // Configuration
  * {
  *   importPath: "typescript-eslint",
@@ -154,7 +148,6 @@ export interface EslintConfigExtension {
  *     parser: tseslint.parser
  *   }
  * }]
- * ```
  */
 export interface EslintParser {
   /**
@@ -162,30 +155,28 @@ export interface EslintParser {
    *
    * @example "typescript-eslint"
    */
-  importPath: string;
+  readonly importPath: string;
 
   /**
    * The local module name to use in the import statement.
    *
    * @example "tseslint"
    */
-  moduleName: string;
+  readonly moduleName: string;
 
   /**
    * The reference path to the parser in the module.
    * Specifies how to access the parser from the imported module.
    *
    * @example
-   * ```ts
    * // When importing from typescript-eslint as "tseslint"
    * parserReference: "tseslint.parser"
    * // Results in:
    * languageOptions: {
    *   parser: tseslint.parser
    * }
-   * ```
    */
-  parserReference: string;
+  readonly parserReference: string;
 }
 
 export interface EslintFlatConfigOptions {
@@ -301,7 +292,7 @@ export interface EslintFlatConfigOverride {
   readonly plugins?: EslintPlugin[];
 }
 
-export class EslintFlatConfig extends Component {
+export class EslintFlatConfig extends FileBase {
   /**
    * Returns the singleton Eslint component of a project or undefined if there is none.
    */
@@ -349,7 +340,7 @@ export class EslintFlatConfig extends Component {
   public readonly overrides: EslintFlatConfigOverride[] = [];
 
   private _config: string = "";
-  private _filename: string = "";
+  private _filename: string;
   private _rules: Rules = {};
   private _formattingRules: Rules = {};
   private _enablePatterns: Set<string>;
@@ -364,8 +355,12 @@ export class EslintFlatConfig extends Component {
   private readonly _nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintFlatConfigOptions) {
-    super(project);
+    const moduleType = options.moduleType ?? "module";
+    const filename = `eslint.config.${
+      moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"
+    }`;
 
+    super(project, filename);
     this._nodeProject = project;
 
     this.initializeProject(project);
@@ -388,10 +383,8 @@ export class EslintFlatConfig extends Component {
     );
     this._tsconfigPath = options.tsconfigPath ?? "./tsconfig.json";
     this._tsAlwaysTryTypes = options.tsAlwaysTryTypes ?? true;
-    this._moduleType = options.moduleType ?? "module";
-    this._filename = `eslint.config.${
-      this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"
-    }`;
+    this._moduleType = moduleType;
+    this._filename = filename;
     this._eslintTask = this.project.addTask("eslint", {
       description: "Runs eslint against the codebase",
     });
@@ -406,11 +399,9 @@ export class EslintFlatConfig extends Component {
   /**
    * Sync the config file with the current state of the class properties.
    */
-  public synthesize() {
+  protected synthesizeContent(_: IResolver): string | undefined {
     this._config = this.generateConfig();
-    const projectDir = this.project.outdir;
-    const configFile = path.join(projectDir, this._filename);
-    fs.writeFileSync(configFile, this._config);
+    return this._config;
   }
 
   /**
