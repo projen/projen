@@ -217,9 +217,9 @@ describe("eslint settings", () => {
       enablePatterns: ["**/*.ts", "**/*.tsx"],
     });
     eslint.addPlugins({
-      importPath: "eslint-plugin-regexp",
-      moduleName: "regexpPlugin",
-      pluginAlias: "regexp",
+      importPath: "eslint-plugin-foo",
+      moduleName: "fooPlugin",
+      pluginAlias: "foo",
     });
     eslint.synthesize();
 
@@ -227,7 +227,7 @@ describe("eslint settings", () => {
     const pattern = /plugins:\s*{[\s\S]*?}/;
     const pluginMatch = eslint.config.match(pattern);
     expect(pluginMatch).not.toBeNull();
-    expect(pluginMatch![0]).toContain('"regexp": regexpPlugin');
+    expect(pluginMatch![0]).toContain('"foo": fooPlugin');
   });
 
   test("can add extends", () => {
@@ -253,5 +253,43 @@ describe("eslint settings", () => {
     const pattern =
       /export\s+default\s+\[[\s\S]*?,\s*(\.{3}tseslint\.config\.recommended)[\s\S]*?\]/;
     expect(pattern.test(eslint.config)).toStrictEqual(true);
+  });
+});
+
+describe("eslint command options", () => {
+  test("include `--fix` flag when fix is enabled", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new EslintFlatConfig(project, {
+      enablePatterns: ["**/*.ts", "**/*.tsx"],
+      commandOptions: { fix: true },
+    });
+    eslint.synthesize();
+
+    // THEN
+    expect(eslint.eslintTask.steps[0].exec).toContain("--fix");
+  });
+
+  test("can add external args", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new EslintFlatConfig(project, {
+      enablePatterns: ["**/*.ts", "**/*.tsx"],
+      commandOptions: { extraArgs: ["--cache"] },
+    });
+    eslint.synthesize();
+
+    // THEN
+    expect(eslint.eslintTask.steps[0].exec).toContain("--cache");
   });
 });

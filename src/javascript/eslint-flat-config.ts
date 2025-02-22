@@ -3,6 +3,8 @@ import * as path from "path";
 import { Component } from "../component";
 import { EslintCommandOptions, NodeProject } from "../javascript";
 import { Project } from "../project";
+import { Task } from "../task";
+import { TaskStepOptions } from "../task-model";
 import { Prettier } from "./prettier";
 
 const MODULE_TYPE = {
@@ -349,6 +351,10 @@ export class EslintFlatConfig extends Component {
     return this._ignorePatterns.size ? [...this._ignorePatterns] : [];
   }
 
+  public get eslintTask(): Task {
+    return this._eslintTask;
+  }
+
   /**
    * eslint overrides.
    */
@@ -362,6 +368,7 @@ export class EslintFlatConfig extends Component {
   private _ignorePatterns: Set<string>;
   private _plugins: EslintPlugin[] = [];
   private _extends: EslintConfigExtension[] = [];
+  private _eslintTask: Task;
   private readonly _tsconfigPath: string;
   private readonly _devDirs: string[];
   private readonly _aliasMap?: { [key: string]: string };
@@ -408,9 +415,14 @@ export class EslintFlatConfig extends Component {
     this._filename = `eslint.config.${
       this._moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"
     }`;
+    this._eslintTask = this.project.addTask("eslint", {
+      description: "Runs eslint against the codebase",
+    });
+
     this.initializeRules();
     this.initializeCodeFormatter(project, options);
     this.initializeEslintTask(options.commandOptions);
+    this.project.testTask.spawn(this._eslintTask);
     this.synthesize();
   }
 
@@ -734,17 +746,17 @@ export class EslintFlatConfig extends Component {
   }
 
   /**
-   * Initializes and configures the ESLint task for the project.
+   * Initializes and updates the ESLint task configuration.
    * This method performs the following:
    * 1. Sets up the base ESLint command
    * 2. Configures command line arguments including config file path
-   * 3. Adds fix option if enabled
-   * 4. Creates an ESLint task and adds it to the test task chain
+   * 3. Adds the `--fix` flag if the fix option is enabled
+   * 4. Updates the ESLint task while preserving existing task settings
    *
-   * @param options - Command line options for ESLint task configuration
+   * @param options - Configuration options for the ESLint task
    * @remarks
-   * The created task will be added as a subtask to the project's test task,
-   * ensuring ESLint runs during testing.
+   * - Preserves existing step options (args, condition, cwd, env, name, receiveArgs) when updating the task
+   * - Maintains any externally edited task configurations if they exist
    */
   private initializeEslintTask(options?: EslintCommandOptions) {
     const taskExecCommand = "eslint";
@@ -753,11 +765,40 @@ export class EslintFlatConfig extends Component {
     if (options?.fix) {
       cliArgs.add("--fix");
     }
-    const eslintTask = this.project.addTask("eslint", {
-      description: "Runs eslint against the codebase",
-      exec: [taskExecCommand, ...cliArgs].join(" "),
-    });
-    this.project.testTask.spawn(eslintTask);
+    this._eslintTask.reset(
+      [taskExecCommand, ...cliArgs].join(" "),
+      this.buildTaskStepOptions(taskExecCommand)
+    );
+  }
+
+  /**
+   * In case of external editing of the eslint task step, we preserve those changes.
+   * Otherwise, we return the default task step options.
+   *
+   * @param taskExecCommand The command that the ESLint tasks executes
+   * @returns Either the externally edited, or the default task step options
+   */
+  private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
+    const currentEslintTaskStep = this.eslintTask?.steps?.find((step) =>
+      step?.exec?.startsWith?.(taskExecCommand)
+    );
+
+    if (currentEslintTaskStep) {
+      const { args, condition, cwd, env, name, receiveArgs } =
+        currentEslintTaskStep;
+      return {
+        args,
+        condition,
+        cwd,
+        env,
+        name,
+        receiveArgs,
+      };
+    }
+
+    return {
+      receiveArgs: true,
+    };
   }
 
   /**
