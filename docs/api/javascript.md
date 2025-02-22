@@ -871,19 +871,19 @@ Installs the following npm scripts:.
 ```typescript
 import { javascript } from 'projen'
 
-new javascript.Jest(project: NodeProject, options?: JestOptions)
+new javascript.Jest(scope: IConstruct, options?: JestOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.Jest.Initializer.parameter.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Jest.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.JestOptions">JestOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Jest.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.Jest.Initializer.parameter.scope"></a>
 
-- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -1204,7 +1204,7 @@ Returns the singleton Jest component of a project or undefined if there is none.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.Jest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.javascript.Jest.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.Jest.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.property.config">config</a></code> | <code>any</code> | Escape hatch. |
 | <code><a href="#projen.javascript.Jest.property.jestVersion">jestVersion</a></code> | <code>string</code> | Jest version, including `@` symbol, like `@^29`. |
 | <code><a href="#projen.javascript.Jest.property.file">file</a></code> | <code>projen.JsonFile</code> | Jest config file. |
@@ -1226,10 +1226,10 @@ The tree node.
 ##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Jest.property.project"></a>
 
 ```typescript
-public readonly project: Project;
+public readonly project: NodeProject;
 ```
 
-- *Type:* projen.Project
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
 
 ---
 

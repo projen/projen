@@ -1,9 +1,11 @@
 import * as path from "path";
+import { IConstruct } from "constructs";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { normalizePersistedPath } from "../util";
+import { closestProjectMustBe } from "../util/constructs";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
@@ -677,6 +679,9 @@ export class Jest extends Component {
     const isJest = (c: Component): c is Jest => c instanceof Jest;
     return project.components.find(isJest);
   }
+
+  public readonly project: NodeProject;
+
   /**
    * Escape hatch.
    */
@@ -705,8 +710,9 @@ export class Jest extends Component {
   private readonly passWithNoTests: boolean;
   private _snapshotResolver: string | undefined;
 
-  constructor(project: NodeProject, options: JestOptions = {}) {
-    super(project);
+  constructor(scope: IConstruct, options: JestOptions = {}) {
+    super(scope);
+    this.project = closestProjectMustBe(scope, NodeProject, new.target.name);
 
     // hard deprecation
     if ((options as any).typescriptConfig) {
@@ -716,9 +722,9 @@ export class Jest extends Component {
     }
 
     // Jest snapshot files are generated files!
-    project.root.annotateGenerated("*.snap");
+    this.project.root.annotateGenerated("*.snap");
     this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
-    project.addDevDeps(`jest${this.jestVersion}`);
+    this.project.addDevDeps(`jest${this.jestVersion}`);
 
     // use native v8 coverage collection as default
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
@@ -786,14 +792,14 @@ export class Jest extends Component {
         new JestReporter("jest-junit", { outputDirectory: reportsDir })
       );
 
-      project.addDevDeps("jest-junit@^16");
+      this.project.addDevDeps("jest-junit@^16");
 
-      project.gitignore.exclude(
+      this.project.gitignore.exclude(
         "# jest-junit artifacts",
         `/${reportsDir}/`,
         "junit.xml"
       );
-      project.npmignore?.exclude(
+      this.project.npmignore?.exclude(
         "# jest-junit artifacts",
         `/${reportsDir}/`,
         "junit.xml"
@@ -815,17 +821,17 @@ export class Jest extends Component {
     this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
 
     if (options.configFilePath) {
-      this.file = new JsonFile(project, options.configFilePath, {
+      this.file = new JsonFile(this.project, options.configFilePath, {
         obj: this.config,
       });
-      project.npmignore?.addPatterns(`/${this.file.path}`);
+      this.project.npmignore?.addPatterns(`/${this.file.path}`);
     } else {
-      project.addFields({ jest: this.config });
+      this.project.addFields({ jest: this.config });
     }
 
     const coverageDirectoryPath = path.posix.join("/", coverageDirectory, "/");
-    project.npmignore?.exclude(coverageDirectoryPath);
-    project.gitignore.exclude(coverageDirectoryPath);
+    this.project.npmignore?.exclude(coverageDirectoryPath);
+    this.project.gitignore.exclude(coverageDirectoryPath);
 
     if (options.coverageText ?? true) {
       this.coverageReporters.push("text");
