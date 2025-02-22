@@ -399,8 +399,8 @@ export class EslintFlatConfig extends FileBase {
   /**
    * Sync the config file with the current state of the class properties.
    */
-  protected synthesizeContent(_: IResolver): string | undefined {
-    this._config = this.generateConfig();
+  protected synthesizeContent(resolver: IResolver): string | undefined {
+    this._config = this.generateConfig(resolver);
     return this._config;
   }
 
@@ -775,7 +775,7 @@ export class EslintFlatConfig extends FileBase {
    * Generate the complete ESLint configuration
    * @returns ESLint configuration as a string
    */
-  private generateConfig(): string {
+  private generateConfig(resolver: IResolver): string {
     const importParts = `
 ${
   this._moduleType === MODULE_TYPE.MODULE
@@ -792,11 +792,11 @@ ${
     ? "export default"
     : "module.exports ="
 } [
-  ${this.generateExtendsConfig()},
-  ${this.generateMainConfig()},
-  ${this.generateOverridesConfig()}
+  ${this.generateExtendsConfig(resolver)},
+  ${this.generateMainConfig(resolver)},
+  ${this.generateOverridesConfig(resolver)}
   {
-    ignores: ${this.convertArrayToString(this.ignorePatterns)}
+    ignores: ${this.convertArrayToString(resolver.resolve(this.ignorePatterns))}
   }
 ];
 ` // NOTE: remove empty lines
@@ -861,7 +861,7 @@ ${
    *
    * @returns A string containing the extends configuration, with each extension on a new line
    */
-  private generateExtendsConfig(): string {
+  private generateExtendsConfig(resolver: IResolver): string {
     const eslintConfigExtensions = this._extends.reduce<
       EslintConfigExtension[]
     >((acc, extend) => {
@@ -894,7 +894,7 @@ ${
       ];
     }, []);
 
-    return eslintConfigExtensions
+    return (resolver.resolve(eslintConfigExtensions) as EslintConfigExtension[])
       .map(({ shouldSpreadConfig, configReference }) =>
         shouldSpreadConfig ? `...${configReference}` : configReference
       )
@@ -905,9 +905,11 @@ ${
    * Generate main ESLint configuration
    * @returns Main configuration as a string
    */
-  private generateMainConfig(): string {
+  private generateMainConfig(resolver: IResolver): string {
     return `{
-    files: ${this.convertArrayToString([...this._enablePatterns])},
+    files: ${this.convertArrayToString(
+      resolver.resolve([...this._enablePatterns])
+    )},
     languageOptions: { 
       globals: {
         ...globals.node,
@@ -932,10 +934,10 @@ ${
       },
     },
     plugins: {
-      ${this.convertPluginsToString(this._plugins, "      ")}
+      ${this.convertPluginsToString(resolver.resolve(this._plugins), "      ")}
     },
     rules: {
-      ${this.convertRulesToString(this.rules, "      ")}
+      ${this.convertRulesToString(resolver.resolve(this.rules), "      ")}
     }
   }`;
   }
@@ -947,8 +949,8 @@ ${
    *
    * @returns A string containing all override configurations, separated by commas
    */
-  private generateOverridesConfig(): string {
-    return this.overrides
+  private generateOverridesConfig(resolver: IResolver): string {
+    return (resolver.resolve(this.overrides) as EslintFlatConfigOverride[])
       .map((override) => {
         const plugins = [...this._plugins, ...this._extends];
         const overridePlugins = override.plugins ?? [];

@@ -240,9 +240,34 @@ describe("eslint settings", () => {
     eslint.synthesize();
 
     // THEN
-    const pattern =
-      /export\s+default\s+\[[\s\S]*?,\s*(\.{3}tseslint\.config\.recommended)[\s\S]*?\]/;
-    expect(pattern.test(eslint.config)).toStrictEqual(true);
+    expect(eslint.config).toMatch(
+      /export\s+default\s+\[[\s\S]*?,\s*(\.{3}tseslint\.config\.recommended)[\s\S]*?\]/
+    );
+  });
+
+  test("can add extends with lazy value", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new EslintFlatConfig(project, {
+      enablePatterns: ["**/*.ts", "**/*.tsx"],
+    });
+    eslint.addExtends((() => ({
+      importPath: "typescript-eslint",
+      moduleName: "tseslint",
+      configReference: "tseslint.config.recommended",
+      shouldSpreadConfig: true,
+    })) as any);
+    eslint.synthesize();
+
+    // THEN
+    expect(eslint.config).toMatch(
+      /export\s+default\s+\[[\s\S]*?,\s*(\.{3}tseslint\.config\.recommended)[\s\S]*?\]/
+    );
   });
 });
 
