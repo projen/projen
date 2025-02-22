@@ -1,4 +1,5 @@
 import { relative, posix } from "path";
+import { IConstruct } from "constructs";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -377,6 +378,16 @@ export enum AutoRelease {
  * @pjid node
  */
 export class NodeProject extends GitHubProject {
+  /**
+   * Find the closest ancestor project for given construct.
+   * When given a project, this it the project itself.
+   *
+   * @throws when no project is found in the path to the root
+   */
+  public static of(construct: IConstruct): NodeProject {
+    return super.of(construct) as NodeProject;
+  }
+
   /**
    * API for managing the node package.
    */

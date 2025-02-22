@@ -24,9 +24,9 @@ import { Tasks } from "./tasks";
 import { isTruthy, normalizePersistedPath } from "./util";
 import {
   isProject,
-  findClosestProject,
   tagAsProject,
   isComponent,
+  tryFindClosest,
 } from "./util/constructs";
 
 /**
@@ -172,7 +172,17 @@ export class Project extends Construct {
    * @throws when no project is found in the path to the root
    */
   public static of(construct: IConstruct): Project {
-    return findClosestProject(construct);
+    const project = tryFindClosest<Project>(
+      (c) => isProject(c) && c instanceof this
+    )(construct);
+
+    if (!project) {
+      throw new Error(
+        `${construct.constructor.name} at '${construct.node.path}' has not been created in the scope of a ${this.name}`
+      );
+    }
+
+    return project;
   }
 
   /**

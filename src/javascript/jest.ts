@@ -703,8 +703,13 @@ export class Jest extends Component {
   private readonly passWithNoTests: boolean;
   private _snapshotResolver: string | undefined;
 
-  constructor(project: NodeProject, options: JestOptions = {}) {
-    super(project);
+  constructor(scope: IConstruct, options: JestOptions = {}) {
+    super(scope);
+    this.project = findClosestProjectOfType(
+      scope,
+      NodeProject,
+      new.target.name
+    );
 
     // hard deprecation
     if ((options as any).typescriptConfig) {

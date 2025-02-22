@@ -18,11 +18,22 @@ export function tryFindClosest<T extends IConstruct>(
 }
 
 /**
+<<<<<<< Updated upstream
  * Create a function to find the closest construct matching a predicate
  * @param predicate
  * @returns A function to find the closest construct matching the predicate
+=======
+ * Find the closest project, searching upwards from a construct.
+ *
+ * @param construct the construct to start searching from
+ * @param constructInCreation the name of the construct being created
+ * @returns the closest project, if any
+>>>>>>> Stashed changes
  */
-export function findClosestProject(construct: IConstruct): Project {
+export function findClosestProject(
+  construct: IConstruct,
+  constructInCreation: string
+): Project {
   if (isComponent(construct)) {
     return construct.project;
   }
@@ -30,9 +41,32 @@ export function findClosestProject(construct: IConstruct): Project {
   const project = tryFindClosest(isProject)(construct);
   if (!project) {
     throw new Error(
-      `${new.target.name} at '${
-        construct.node.path
-      }' must be created in the scope of a Project, but no Project was found`
+      `${constructInCreation} at '${construct.node.path}' must be created in the scope of a Project, but no Project was found`
+    );
+  }
+
+  return project;
+}
+
+/**
+ * Find the closest project of a given type, searching upwards from a construct.
+ *
+ * This function should be used within a class constructor.
+ * If not, you must provide a name as second argument or the call will fail.
+ *
+ * @param construct the construct to start searching from
+ * @param constructInCreation the name of the construct being created
+ * @returns the closest project of the expected type, if any
+ */
+export function findClosestProjectOfType<T>(
+  construct: IConstruct,
+  projectType: new (...args: any[]) => T,
+  constructInCreation: string
+): T {
+  const project = findClosestProject(construct, constructInCreation);
+  if (!(project instanceof projectType)) {
+    throw new Error(
+      `${constructInCreation} at '${construct.node.path}' must be created within a ${projectType.name}, but found: ${project.constructor.name}`
     );
   }
 
