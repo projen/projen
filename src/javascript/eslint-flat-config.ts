@@ -840,6 +840,7 @@ export class EslintFlatConfig extends FileBase {
    * @returns ESLint configuration as a string
    */
   private generateConfig(resolver: IResolver): string {
+    const overrideConfigs = this.generateOverridesConfig(resolver);
     const importParts = `
 ${
   this._moduleType === MODULE_TYPE.MODULE
@@ -858,7 +859,7 @@ ${
 } [
   ${this.generateExtendsConfig(resolver)},
   ${this.generateMainConfig(resolver)},
-  ${this.generateOverridesConfig(resolver)}
+  ${overrideConfigs.join(",\n")}${overrideConfigs.length ? "," : ""}
   {
     ignores: ${this.convertArrayToString(resolver.resolve(this.ignorePatterns))}
   }
@@ -1023,11 +1024,11 @@ ${
    * Creates configuration objects for each override, including their specific
    * extends, parser options, files patterns, plugins, and rules.
    *
-   * @returns A string containing all override configurations, separated by commas
+   * @returns List of strings containing override configurations
    */
-  private generateOverridesConfig(resolver: IResolver): string {
-    return (resolver.resolve(this.overrides) as EslintFlatConfigOverride[])
-      .map((override) => {
+  private generateOverridesConfig(resolver: IResolver): string[] {
+    return (resolver.resolve(this.overrides) as EslintFlatConfigOverride[]).map(
+      (override) => {
         const plugins = [...this._plugins, ...this._extends];
         const overridePlugins = override.plugins ?? [];
         const overrideIgnorePatterns = override.ignorePatterns ?? [];
@@ -1067,9 +1068,9 @@ ${
         ? `ignores: ${this.convertArrayToString(overrideIgnorePatterns)}`
         : ""
     }
-  },`;
-      })
-      .join("\n");
+  }`;
+      }
+    );
   }
 
   /**
