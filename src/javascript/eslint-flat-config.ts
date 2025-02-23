@@ -420,7 +420,7 @@ export class EslintFlatConfig extends FileBase {
   private readonly _nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintFlatConfigOptions) {
-    const moduleType = options.moduleType ?? "module";
+    const moduleType = options.moduleType ?? MODULE_TYPE.MODULE;
     const filename = `eslint.config.${
       moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"
     }`;
