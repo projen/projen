@@ -73,7 +73,6 @@ export interface EslintPlugin {
  * {
  *   moduleSpecifier: "eslint-plugin-prettier",
  *   importedBinding: "prettierPlugin",
- *   configReference: "prettierPlugin"
  * }
  *
  * // Results in:
@@ -87,7 +86,6 @@ export interface EslintPlugin {
  * {
  *   moduleSpecifier: "eslint-plugin-prettier",
  *   importedBinding: "prettierPlugin",
- *   configReference: "prettierPlugin",
  *   spreadConfig: true
  * }
  *
@@ -124,21 +122,29 @@ export interface EslintConfigExtension {
   /**
    * The configuration reference to be used in the extends section.
    * This can be a plugin name or a specific configuration path from the plugin.
+   * When directly referencing the importedBinding (e.g., "prettierPlugin"), this field becomes optional.
    *
    * @example
-   * - "prettierPlugin" // Direct plugin reference
-   * - "eslint.configs.recommended" // Specific configuration path
+   * - "prettierPlugin" // Direct plugin reference (optional, uses importedBinding)
+   * - "eslint.configs.recommended" // Specific configuration path (required)
+   *
+   * @default - same as `importedBinding`
    */
-  readonly configReference: string;
+  readonly configReference?: string;
 
   /**
    * Indicates whether the configuration should be spread using the spread operator.
-   * When true, the configuration will be included as `...configReference`,
-   * when false, it will be included as `configReference`.
+   * When true, the configuration will be included as `...configReference` or `...importedBinding` if configReference is omitted,
+   * when false, it will be included as `configReference` or `importedBinding` if configReference is omitted.
    *
    * @example
+   * // With configReference
    * true  -> ...eslint.configs.recommended
    * false -> eslint.configs.recommended
+   *
+   * // Without configReference (using importedBinding)
+   * true  -> ...prettierConfig
+   * false -> prettierConfig
    *
    * @default false
    */
@@ -682,7 +688,6 @@ export class EslintFlatConfig extends FileBase {
     this.addExtends({
       moduleSpecifier: "eslint-config-prettier",
       importedBinding: "prettierConfig",
-      configReference: "prettierConfig",
     });
   }
 
@@ -916,7 +921,9 @@ ${
         {
           importedBinding: plugin.importedBinding,
           moduleSpecifier: plugin.moduleSpecifier,
-          configReference: extend.configReference.replace(
+          configReference: (
+            extend.configReference ?? extend.importedBinding
+          ).replace(
             // replace the first part of the extendsCode with the pluginName
             /^[^.]+/,
             plugin.importedBinding
@@ -927,8 +934,10 @@ ${
     }, []);
 
     return (resolver.resolve(eslintConfigExtensions) as EslintConfigExtension[])
-      .map(({ spreadConfig, configReference }) =>
-        spreadConfig ? `...${configReference}` : configReference
+      .map(({ spreadConfig, configReference, importedBinding }) =>
+        spreadConfig
+          ? `...${configReference ?? importedBinding}`
+          : configReference ?? importedBinding
       )
       .join(",\n  ");
   }
@@ -991,8 +1000,8 @@ ${
           ? override.extends
               .map((extend) =>
                 extend.spreadConfig
-                  ? `...${extend.configReference}`
-                  : extend.configReference
+                  ? `...${extend.configReference ?? extend.importedBinding}`
+                  : extend.configReference ?? extend.importedBinding
               )
               .join(",\n  ")
           : "";
