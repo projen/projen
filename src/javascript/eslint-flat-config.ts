@@ -88,7 +88,7 @@ export interface EslintPlugin {
  *   moduleSpecifier: "eslint-plugin-prettier",
  *   importedBinding: "prettierPlugin",
  *   configReference: "prettierPlugin",
- *   shouldSpreadConfig: true
+ *   spreadConfig: true
  * }
  *
  * // Results in:
@@ -142,7 +142,7 @@ export interface EslintConfigExtension {
    *
    * @default false
    */
-  readonly shouldSpreadConfig?: boolean;
+  readonly spreadConfig?: boolean;
 }
 
 /**
@@ -921,14 +921,14 @@ ${
             /^[^.]+/,
             plugin.importedBinding
           ),
-          shouldSpreadConfig: extend.shouldSpreadConfig,
+          spreadConfig: extend.spreadConfig,
         },
       ];
     }, []);
 
     return (resolver.resolve(eslintConfigExtensions) as EslintConfigExtension[])
-      .map(({ shouldSpreadConfig, configReference }) =>
-        shouldSpreadConfig ? `...${configReference}` : configReference
+      .map(({ spreadConfig, configReference }) =>
+        spreadConfig ? `...${configReference}` : configReference
       )
       .join(",\n  ");
   }
@@ -990,7 +990,7 @@ ${
         const codeReferences = override.extends
           ? override.extends
               .map((extend) =>
-                extend.shouldSpreadConfig
+                extend.spreadConfig
                   ? `...${extend.configReference}`
                   : extend.configReference
               )

@@ -233,7 +233,7 @@ describe("eslint settings", () => {
       moduleSpecifier: "typescript-eslint",
       importedBinding: "tseslint",
       configReference: "tseslint.config.recommended",
-      shouldSpreadConfig: true,
+      spreadConfig: true,
     });
     eslint.synthesize();
 
@@ -255,10 +255,10 @@ describe("eslint settings", () => {
       enablePatterns: ["**/*.ts", "**/*.tsx"],
     });
     eslint.addExtends((() => ({
-      importPath: "typescript-eslint",
-      moduleName: "tseslint",
+      moduleSpecifier: "typescript-eslint",
+      importedBinding: "tseslint",
       configReference: "tseslint.config.recommended",
-      shouldSpreadConfig: true,
+      spreadConfig: true,
     })) as any);
     eslint.synthesize();
 
