@@ -155,11 +155,11 @@ export interface EslintConfigExtension {
  * ESLint parser configuration information.
  *
  * @example
- * // Configuration
+ * // Configuration with parserReference
  * {
  *   moduleSpecifier: "typescript-eslint",
  *   importedBinding: "tseslint",
- *   parserReference: "tseslint.parser"
+ *   parserReference: "parser"
  * }
  *
  * // Results in:
@@ -168,6 +168,21 @@ export interface EslintConfigExtension {
  * export default [{
  *   languageOptions: {
  *     parser: tseslint.parser
+ *   }
+ * }]
+ *
+ * // Configuration without parserReference
+ * {
+ *   moduleSpecifier: "@typescript-eslint/parser",
+ *   importedBinding: "tseslintParser"
+ * }
+ *
+ * // Results in:
+ * import tseslintParser from "@typescript-eslint/parser"
+ *
+ * export default [{
+ *   languageOptions: {
+ *     parser: tseslintParser
  *   }
  * }]
  */
@@ -196,17 +211,34 @@ export interface EslintParser {
 
   /**
    * The reference path to the parser in the module.
-   * Specifies how to access the parser from the imported module.
+   * When specified, this string will be appended to importedBinding with a dot (.).
+   * When omitted, only importedBinding will be used.
    *
    * @example
-   * // When importing from typescript-eslint as "tseslint"
-   * parserReference: "tseslint.parser"
+   * // With parserReference
+   * {
+   *   moduleSpecifier: "typescript-eslint",
+   *   importedBinding: "tseslint",
+   *   parserReference: "parser"
+   * }
    * // Results in:
    * languageOptions: {
    *   parser: tseslint.parser
    * }
+   *
+   * // Without parserReference (using importedBinding)
+   * {
+   *   moduleSpecifier: "@typescript-eslint/parser",
+   *   importedBinding: "tseslintParser"
+   * }
+   * // Results in:
+   * languageOptions: {
+   *   parser: tseslintParser
+   * }
+   *
+   * @default - same as `importedBinding`
    */
-  readonly parserReference: string;
+  readonly parserReference?: string;
 }
 
 export interface EslintFlatConfigOptions {
@@ -1054,13 +1086,15 @@ ${
     const plugin = plugins.find(
       ({ moduleSpecifier }) => moduleSpecifier === parser.moduleSpecifier
     );
+
+    const parserPath = parser.parserReference
+      ? `${parser.importedBinding}.${parser.parserReference}`
+      : parser.importedBinding;
+
     if (plugin) {
-      return `parser: ${parser.parserReference.replace(
-        /^[^.]+/,
-        plugin.importedBinding
-      )}`;
+      return `parser: ${parserPath.replace(/^[^.]+/, plugin.importedBinding)}`;
     }
-    return `parser: ${parser.parserReference}`;
+    return `parser: ${parserPath}`;
   }
 
   /**

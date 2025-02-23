@@ -76,7 +76,7 @@ describe("snapshot", () => {
       parser: {
         moduleSpecifier: "typescript-eslint",
         importedBinding: "tsEslint",
-        parserReference: "tsEslint.parser",
+        parserReference: "parser",
       },
     });
     eslint.synthesize();
