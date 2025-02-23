@@ -840,7 +840,9 @@ export class EslintFlatConfig extends FileBase {
    * @returns ESLint configuration as a string
    */
   private generateConfig(resolver: IResolver): string {
-    const overrideConfigs = this.generateOverridesConfig(resolver);
+    const overrideConfigs = (
+      resolver.resolve(this.overrides) as EslintFlatConfigOverride[]
+    ).map((override) => this.generateOverrideConfig(override));
     const importParts = `
 ${
   this._moduleType === MODULE_TYPE.MODULE
@@ -1020,38 +1022,36 @@ ${
   }
 
   /**
-   * Generate overrides configuration for ESLint.
-   * Creates configuration objects for each override, including their specific
+   * Generate override configuration for ESLint.
+   * Creates configuration object for override, including their specific
    * extends, parser options, files patterns, plugins, and rules.
    *
-   * @returns List of strings containing override configurations
+   * @returns A string containing override configuration
    */
-  private generateOverridesConfig(resolver: IResolver): string[] {
-    return (resolver.resolve(this.overrides) as EslintFlatConfigOverride[]).map(
-      (override) => {
-        const plugins = [...this._plugins, ...this._extends];
-        const overridePlugins = override.plugins ?? [];
-        const overrideIgnorePatterns = override.ignorePatterns ?? [];
-        const codeReferences = override.extends
-          ? override.extends
-              .map((extend) =>
-                extend.spreadConfig
-                  ? `...${extend.configReference ?? extend.importedBinding}`
-                  : extend.configReference ?? extend.importedBinding
-              )
-              .join(",\n  ")
-          : "";
+  private generateOverrideConfig(override: EslintFlatConfigOverride): string {
+    const plugins = [...this._plugins, ...this._extends];
+    const overridePlugins = override.plugins ?? [];
+    const overrideIgnorePatterns = override.ignorePatterns ?? [];
+    const codeReferences = override.extends
+      ? override.extends
+          .map((extend) =>
+            extend.spreadConfig
+              ? `...${extend.configReference ?? extend.importedBinding}`
+              : extend.configReference ?? extend.importedBinding
+          )
+          .join(",\n  ")
+      : "";
 
-        return `
+    return `
   {
     ${codeReferences}${
-          override.parser
-            ? `
+      override.parser
+        ? `
     languageOptions: {
       ${this.convertParserToString(override.parser, plugins)}
     },`
-            : ""
-        }
+        : ""
+    }
     files: ${this.convertArrayToString(override.enablePatterns)},
     ${
       overridePlugins.length
@@ -1069,8 +1069,6 @@ ${
         : ""
     }
   }`;
-      }
-    );
   }
 
   /**
