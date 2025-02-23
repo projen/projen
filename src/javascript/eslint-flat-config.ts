@@ -11,8 +11,11 @@ const MODULE_TYPE = {
   MODULE: "module",
 } as const;
 
-type ModuleType = (typeof MODULE_TYPE)[keyof typeof MODULE_TYPE];
-type Rules = { [rule: string]: any };
+export type ModuleType = (typeof MODULE_TYPE)[keyof typeof MODULE_TYPE];
+
+export interface ESLintRules {
+  [rule: string]: any;
+}
 
 /**
  * ESLint plugin configuration information.
@@ -336,7 +339,7 @@ export interface EslintFlatConfigOverride {
   /**
    * The overridden rules
    */
-  readonly rules?: Rules;
+  readonly rules?: ESLintRules;
 
   /**
    * The overridden parser
@@ -374,7 +377,7 @@ export class EslintFlatConfig extends FileBase {
   /**
    * Public getter for eslint rules.
    */
-  public get rules(): Rules {
+  public get rules(): ESLintRules {
     return { ...this._rules, ...this._formattingRules };
   }
 
@@ -403,8 +406,8 @@ export class EslintFlatConfig extends FileBase {
 
   private _config: string = "";
   private _filename: string;
-  private _rules: Rules = {};
-  private _formattingRules: Rules = {};
+  private _rules: ESLintRules = {};
+  private _formattingRules: ESLintRules = {};
   private _enablePatterns: Set<string>;
   private _ignorePatterns: Set<string>;
   private _plugins: EslintPlugin[] = [];
@@ -493,7 +496,7 @@ export class EslintFlatConfig extends FileBase {
    *
    * @example { "no-console": "error" }
    */
-  public addRules(rules: Rules) {
+  public addRules(rules: ESLintRules) {
     for (const [k, v] of Object.entries(rules)) {
       this._rules[k] = v;
     }
@@ -1142,7 +1145,7 @@ ${
    * @returns A formatted string of rule configurations
    */
   private convertRulesToString(
-    rules: Rules,
+    rules: ESLintRules,
     spaceStringForEachRule: string
   ): string {
     if (!Object.keys(rules).length) return "";
