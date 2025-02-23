@@ -20,8 +20,8 @@ type Rules = { [rule: string]: any };
  * @example
  * // Configuration
  * {
- *   importPath: "typescript-eslint",
- *   moduleName: "tseslint",
+ *   moduleSpecifier: "typescript-eslint",
+ *   importedBinding: "tseslint",
  *   pluginAlias: "@typescript-eslint"
  * }
  *
@@ -36,18 +36,26 @@ type Rules = { [rule: string]: any };
  */
 export interface EslintPlugin {
   /**
-   * The module import path.
+   * The moduleSpecifier that identifies the module to import from.
+   * This is the string literal that appears in the FromClause of an ImportDeclaration.
    *
    * @example "typescript-eslint"
+   * // In: import tseslint from "typescript-eslint"
+   * // typescript-eslint is the moduleSpecifier
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ModuleSpecifier}
    */
-  readonly importPath: string;
+  readonly moduleSpecifier: string;
 
   /**
-   * The local module name to use in the import statement.
+   * The importedBinding that defines the name to be bound to the module's default export.
+   * This is the local name that appears in a default import declaration.
    *
    * @example "tseslint"
+   * // In: import tseslint from "typescript-eslint"
+   * // tseslint is the importedBinding
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ImportedDefaultBinding}
    */
-  readonly moduleName: string;
+  readonly importedBinding: string;
 
   /**
    * The plugin alias to use in the ESLint configuration.
@@ -63,8 +71,8 @@ export interface EslintPlugin {
  * @example
  * // Configuration without spread
  * {
- *   importPath: "eslint-plugin-prettier",
- *   moduleName: "prettierPlugin",
+ *   moduleSpecifier: "eslint-plugin-prettier",
+ *   importedBinding: "prettierPlugin",
  *   configReference: "prettierPlugin"
  * }
  *
@@ -77,8 +85,8 @@ export interface EslintPlugin {
  *
  * // Configuration with spread
  * {
- *   importPath: "eslint-plugin-prettier",
- *   moduleName: "prettierPlugin",
+ *   moduleSpecifier: "eslint-plugin-prettier",
+ *   importedBinding: "prettierPlugin",
  *   configReference: "prettierPlugin",
  *   shouldSpreadConfig: true
  * }
@@ -92,18 +100,26 @@ export interface EslintPlugin {
  */
 export interface EslintConfigExtension {
   /**
-   * The module import path.
+   * The moduleSpecifier that identifies the module to import from.
+   * This is the string literal that appears in the FromClause of an ImportDeclaration.
    *
    * @example "eslint-plugin-prettier"
+   * // In: prettierPlugin tseslint from "eslint-plugin-prettier"
+   * // eslint-plugin-prettier is the moduleSpecifier
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ModuleSpecifier}
    */
-  readonly importPath: string;
+  readonly moduleSpecifier: string;
 
   /**
-   * The local module name to use in the import statement.
+   * The importedBinding that defines the name to be bound to the module's default export.
+   * This is the local name that appears in a default import declaration.
    *
    * @example "prettierPlugin"
+   * // In: import prettierPlugin from "eslint-plugin-prettier"
+   * // prettierPlugin is the importedBinding
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ImportedDefaultBinding}
    */
-  readonly moduleName: string;
+  readonly importedBinding: string;
 
   /**
    * The configuration reference to be used in the extends section.
@@ -135,8 +151,8 @@ export interface EslintConfigExtension {
  * @example
  * // Configuration
  * {
- *   importPath: "typescript-eslint",
- *   moduleName: "tseslint",
+ *   moduleSpecifier: "typescript-eslint",
+ *   importedBinding: "tseslint",
  *   parserReference: "tseslint.parser"
  * }
  *
@@ -151,18 +167,26 @@ export interface EslintConfigExtension {
  */
 export interface EslintParser {
   /**
-   * The module import path.
+   * The moduleSpecifier that identifies the module to import from.
+   * This is the string literal that appears in the FromClause of an ImportDeclaration.
    *
    * @example "typescript-eslint"
+   * // In: import tseslint from "typescript-eslint"
+   * // typescript-eslint is the moduleSpecifier
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ModuleSpecifier}
    */
-  readonly importPath: string;
+  readonly moduleSpecifier: string;
 
   /**
-   * The local module name to use in the import statement.
+   * The importedBinding that defines the name to be bound to the module's default export.
+   * This is the local name that appears in a default import declaration.
    *
    * @example "tseslint"
+   * // In: import tseslint from "typescript-eslint"
+   * // tseslint is the importedBinding
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ImportedDefaultBinding}
    */
-  readonly moduleName: string;
+  readonly importedBinding: string;
 
   /**
    * The reference path to the parser in the module.
@@ -513,31 +537,31 @@ export class EslintFlatConfig extends FileBase {
   private initializePluginsAndExtends(): void {
     this.addPlugins(
       {
-        importPath: "typescript-eslint",
-        moduleName: "tseslint",
+        moduleSpecifier: "typescript-eslint",
+        importedBinding: "tseslint",
         pluginAlias: "@typescript-eslint",
       },
       {
-        importPath: "eslint-plugin-import",
-        moduleName: "importPlugin",
+        moduleSpecifier: "eslint-plugin-import",
+        importedBinding: "importPlugin",
         pluginAlias: "import",
       },
       // `@stylistic/eslint-plugin` is used even if prettier is enabled
       {
-        importPath: "@stylistic/eslint-plugin",
-        moduleName: "stylistic",
+        moduleSpecifier: "@stylistic/eslint-plugin",
+        importedBinding: "stylistic",
         pluginAlias: "@stylistic",
       }
     );
     this.addExtends(
       {
-        importPath: "@eslint/js",
-        moduleName: "eslint",
+        moduleSpecifier: "@eslint/js",
+        importedBinding: "eslint",
         configReference: "eslint.configs.recommended",
       },
       {
-        importPath: "eslint-plugin-import",
-        moduleName: "importPlugin",
+        moduleSpecifier: "eslint-plugin-import",
+        importedBinding: "importPlugin",
         configReference: "importPlugin.flatConfigs.typescript",
       }
     );
@@ -656,8 +680,8 @@ export class EslintFlatConfig extends FileBase {
     this._nodeProject.addDevDeps("prettier", "eslint-config-prettier");
     this._formattingRules = {};
     this.addExtends({
-      importPath: "eslint-config-prettier",
-      moduleName: "prettierConfig",
+      moduleSpecifier: "eslint-config-prettier",
+      importedBinding: "prettierConfig",
       configReference: "prettierConfig",
     });
   }
@@ -838,7 +862,11 @@ ${
     ].reduce<(EslintPlugin | EslintConfigExtension | EslintParser)[]>(
       (acc, plugin) => {
         // If the plugin is already in the array, skip it
-        if (acc.find(({ importPath }) => importPath === plugin.importPath)) {
+        if (
+          acc.find(
+            ({ moduleSpecifier }) => moduleSpecifier === plugin.moduleSpecifier
+          )
+        ) {
           return acc;
         }
         return [...acc, plugin];
@@ -846,10 +874,10 @@ ${
       []
     );
     return uniquePlugins
-      .map(({ moduleName, importPath }) =>
+      .map(({ importedBinding, moduleSpecifier }) =>
         this._moduleType === MODULE_TYPE.MODULE
-          ? `import ${moduleName} from "${importPath}"`
-          : `const ${moduleName} = require("${importPath}")`
+          ? `import ${importedBinding} from "${moduleSpecifier}"`
+          : `const ${importedBinding} = require("${moduleSpecifier}")`
       )
       .join("\n");
   }
@@ -866,13 +894,17 @@ ${
       EslintConfigExtension[]
     >((acc, extend) => {
       // If the extend is already in the array, skip it
-      if (acc.find(({ importPath }) => importPath === extend.importPath)) {
+      if (
+        acc.find(
+          ({ moduleSpecifier }) => moduleSpecifier === extend.moduleSpecifier
+        )
+      ) {
         return acc;
       }
 
       // If specified in plugins, rewrite information in extends
       const plugin = this._plugins.find(
-        ({ importPath }) => importPath === extend.importPath
+        ({ moduleSpecifier }) => moduleSpecifier === extend.moduleSpecifier
       );
 
       // If the plugin is not found, return the original extend
@@ -882,12 +914,12 @@ ${
       return [
         ...acc,
         {
-          moduleName: plugin.moduleName,
-          importPath: plugin.importPath,
+          importedBinding: plugin.importedBinding,
+          moduleSpecifier: plugin.moduleSpecifier,
           configReference: extend.configReference.replace(
             // replace the first part of the extendsCode with the pluginName
             /^[^.]+/,
-            plugin.moduleName
+            plugin.importedBinding
           ),
           shouldSpreadConfig: extend.shouldSpreadConfig,
         },
@@ -1011,12 +1043,12 @@ ${
   ): string {
     // If specified in plugins, rewrite information in extends
     const plugin = plugins.find(
-      ({ importPath }) => importPath === parser.importPath
+      ({ moduleSpecifier }) => moduleSpecifier === parser.moduleSpecifier
     );
     if (plugin) {
       return `parser: ${parser.parserReference.replace(
         /^[^.]+/,
-        plugin.moduleName
+        plugin.importedBinding
       )}`;
     }
     return `parser: ${parser.parserReference}`;
@@ -1050,10 +1082,10 @@ ${
       .map((plugin) => {
         if (
           plugin.pluginAlias === "@typescript-eslint" &&
-          !plugin.moduleName.includes(".")
+          !plugin.importedBinding.includes(".")
         ) {
-          return `"${plugin.pluginAlias}": ${plugin.moduleName}.plugin`;
-        } else return `"${plugin.pluginAlias}": ${plugin.moduleName}`;
+          return `"${plugin.pluginAlias}": ${plugin.importedBinding}.plugin`;
+        } else return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
       })
       .join(`,\n${spaceStringForEachPlugin}`);
   }
