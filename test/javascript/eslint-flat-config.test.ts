@@ -104,9 +104,8 @@ describe("eslint settings", () => {
     // THEN
     const pattern =
       /settings:\s*{[\s\S]*?"import\/resolver":\s*{(\s*typescript:\s*{[\s\S]*?})\s*}[\s\S]*?}/;
-    const settingsMatch = eslint.config.match(pattern);
-    expect(settingsMatch).not.toBeNull();
-    expect(settingsMatch![0]).toContain("alwaysTryTypes: true");
+    expect(eslint.config).toMatch(pattern);
+    expect(eslint.config.match(pattern)![0]).toContain("alwaysTryTypes: true");
   });
 
   test("devDirs", () => {
@@ -215,9 +214,8 @@ describe("eslint settings", () => {
 
     // THEN
     const pattern = /plugins:\s*{[\s\S]*?}/;
-    const pluginMatch = eslint.config.match(pattern);
-    expect(pluginMatch).not.toBeNull();
-    expect(pluginMatch![0]).toContain('"foo": fooPlugin');
+    expect(eslint.config).toMatch(pattern);
+    expect(eslint.config.match(pattern)![0]).toContain('"foo": fooPlugin');
   });
 
   test("can add extends", () => {
