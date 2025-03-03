@@ -15106,6 +15106,7 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
+| <code><a href="#projen.Task.insertStep">insertStep</a></code> | Insert one or more steps at a given index. |
 | <code><a href="#projen.Task.lock">lock</a></code> | Forbid additional changes to this task. |
 | <code><a href="#projen.Task.prepend">prepend</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
@@ -15209,6 +15210,33 @@ Shell command.
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
 
 Options.
+
+---
+
+##### `insertStep` <a name="insertStep" id="projen.Task.insertStep"></a>
+
+```typescript
+public insertStep(index: number, steps: ...TaskStep[]): void
+```
+
+Insert one or more steps at a given index.
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.insertStep.parameter.index"></a>
+
+- *Type:* number
+
+Steps will be inserted before this index.
+
+May be negative to
+count backwards from the end, or may be `== steps().length` to insert at the end.
+
+---
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.Task.insertStep.parameter.steps"></a>
+
+- *Type:* ...<a href="#projen.TaskStep">TaskStep</a>[]
+
+The steps to insert.
 
 ---
 
