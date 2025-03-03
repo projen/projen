@@ -316,6 +316,47 @@ test("updateStep() can be used to replace a specific step", () => {
   });
 });
 
+test.each([[2], [-2]])("insertStep(%p) can be used to insert a step at a specific location", (index) => {
+  // GIVEN
+  const p = new TestProject();
+  const t = p.addTask("my");
+  t.exec("step1");
+  t.exec("step2");
+  t.exec("step3");
+  t.exec("step4");
+
+  t.insertStep(index, { exec: 'step2.5' });
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      my: {
+        name: "my",
+        steps: [
+          { exec: "step1" },
+          { exec: "step2" },
+          { exec: "step2.5" },
+          { exec: "step3" },
+          { exec: "step4" },
+        ],
+      },
+    },
+  });
+});
+
+test("insertStep throws if the index is out of bounds", () => {
+  // GIVEN
+  const p = new TestProject();
+  const t = p.addTask("my");
+  t.exec("step1");
+  t.exec("step2");
+  t.exec("step3");
+  t.exec("step4");
+
+  expect(() => t.insertStep(-5, { exec: 'asdf' })).toThrow(/out of bounds/);
+  expect(() => t.insertStep(5, { exec: 'asdf' })).toThrow(/out of bounds/);
+});
+
 test("removeStep() can be used to remove a specific step", () => {
   // GIVEN
   const p = new TestProject();
