@@ -497,7 +497,7 @@ export interface JobMatrix {
    * matrix.os property as the value of the runs-on keyword to create a job
    * for each operating system.
    */
-  readonly domain?: Record<string, JobMatrixValue[]>;
+  readonly domain?: Record<string, string | JobMatrixValue[]>;
 
   /**
    * You can add additional configuration options to a build matrix job that
