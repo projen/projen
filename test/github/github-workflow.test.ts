@@ -146,6 +146,52 @@ describe("github-workflow", () => {
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
   });
 
+  test("workflow job calling a reusable workflow with a strategy matrix, using domain string value", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+
+    workflow.addJob("get-matrix", {
+      name: "Get a matrix",
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      outputs: {
+        calculatedFruits: { stepId: "set-fruits", outputName: "fruits" },
+      },
+      steps: [
+        {
+          id: "set-fruits",
+          name: "Set fruit array output",
+          run: `echo "fruits=$(echo '["apple", "orange", "banana"]' | jq -c .)" >> $GITHUB_OUTPUT`,
+        },
+      ],
+    });
+
+    workflow.addJob("use-a-matrix", {
+      name: "Some reusable workflow",
+      needs: ["get-matrix"],
+      uses: "some-user/example-action.yaml@v1",
+      permissions: {},
+      secrets: "inherit",
+      strategy: {
+        matrix: {
+          domain: {
+            fruit: "${{ needs.get-matrix.outputs.calculatedFruits }}",
+          },
+        },
+      },
+      with: {
+        fruit: "${{ matrix.fruit }}",
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+  });
+
   test("workflow job calling a reusable workflow with a strategy matrix", () => {
     // GIVEN
     const project = new TestProject();
