@@ -71,6 +71,13 @@ export interface GithubWorkflowOptions {
    * @default - a path-safe version of the workflow name plus the .yml file ending, e.g. build.yml
    */
   readonly fileName?: string;
+
+  /**
+   * Additional environment variables to set for the workflow.
+   *
+   * @default - no additional environment variables
+   */
+  readonly env?: Record<string, string>;
 }
 
 /**
@@ -102,6 +109,11 @@ export class GithubWorkflow extends Component {
    * GitHub API authentication method used by projen workflows.
    */
   public readonly projenCredentials: GithubCredentials;
+
+  /**
+   * Additional environment variables to set for the workflow.
+   */
+  public readonly env?: Record<string, string>;
 
   /**
    * The name for workflow runs generated from the workflow. GitHub displays the
@@ -149,6 +161,8 @@ export class GithubWorkflow extends Component {
       : undefined;
     this.projenCredentials = github.projenCredentials;
     this.actions = github.actions;
+
+    this.env = options.env;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
@@ -278,6 +292,7 @@ export class GithubWorkflow extends Component {
             "cancel-in-progress": this.concurrency.cancelInProgress,
           }
         : undefined,
+      env: this.env,
       jobs: renderJobs(this.jobs, this.actions),
     };
   }

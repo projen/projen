@@ -6,6 +6,36 @@ import { synthSnapshot, TestProject } from "../util";
 describe("github-workflow", () => {
   const workflowName = "test-workflow";
 
+  test("env is not set by default", () => {
+    const project = new TestProject();
+
+    new GithubWorkflow(project.github!, workflowName);
+
+    const snapshot = synthSnapshot(project);
+
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    expect(workflow.env).toBeUndefined();
+  });
+
+  test("env can be set at workflow level", () => {
+    const project = new TestProject();
+
+    new GithubWorkflow(project.github!, workflowName, { env: { FOO: "bar" } });
+
+    const snapshot = synthSnapshot(project);
+
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    console.log(JSON.stringify(workflow, null, 2));
+
+    expect(workflow.env).toEqual({ FOO: "bar" });
+  });
+
   test("concurrency is not set by default", () => {
     const project = new TestProject();
 
