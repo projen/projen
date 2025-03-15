@@ -721,6 +721,7 @@ jobs:
       contents: read
     outputs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
+    if: github.repository == 'projen/projen'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -1886,6 +1887,7 @@ jobs:
       contents: read
     outputs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
+    if: github.repository == 'projen/projen'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -3095,6 +3097,7 @@ jobs:
       contents: read
     outputs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
+    if: github.repository == 'projen/projen'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -4171,6 +4174,7 @@ jobs:
       contents: read
     outputs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
+    if: github.repository == 'projen/projen'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
