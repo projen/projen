@@ -23,7 +23,11 @@ export interface AwsCdkTypeScriptAppOptions
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
-
+  /**
+   * Full override for the cdk.json app field.
+   * @example "bunx tsx -P tsconfig.build.json src/main.ts"
+   */
+  readonly cdkAppOverride?: string;
   /**
    * Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you can manually add an
@@ -119,7 +123,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     this.cdkDeps = new AwsCdkDepsJs(this, {
-      dependencyType: DependencyType.RUNTIME,
+      dependencyType: DependencyType.DEVENV,
       ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "main.ts";
@@ -139,12 +143,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (!tsConfigFile) {
       throw new Error("Expecting tsconfig.json");
     }
-
+    const defaultCdkAppValue = `${
+      this.runScriptCommand
+    } ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(
+      this.srcdir,
+      this.appEntrypoint
+    )}`;
     this.cdkConfig = new CdkConfig(this, {
-      app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(
-        this.srcdir,
-        this.appEntrypoint
-      )}`,
+      app: options.cdkAppOverride ?? defaultCdkAppValue,
       featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
