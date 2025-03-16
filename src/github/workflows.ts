@@ -61,6 +61,13 @@ export interface GithubWorkflowOptions {
   readonly concurrencyOptions?: ConcurrencyOptions;
 
   /**
+   * Additional environment variables to set for the workflow.
+   *
+   * @default - no additional environment variables
+   */
+  readonly env?: Record<string, string>;
+
+  /**
    * Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension.
    *
    * Use this option to set a file name for the workflow file, that is different than the display name.
@@ -71,13 +78,6 @@ export interface GithubWorkflowOptions {
    * @default - a path-safe version of the workflow name plus the .yml file ending, e.g. build.yml
    */
   readonly fileName?: string;
-
-  /**
-   * Additional environment variables to set for the workflow.
-   *
-   * @default - no additional environment variables
-   */
-  readonly env?: Record<string, string>;
 }
 
 /**
@@ -101,6 +101,11 @@ export class GithubWorkflow extends Component {
   public readonly concurrency?: ConcurrencyOptions;
 
   /**
+   * Additional environment variables to set for the workflow.
+   */
+  public readonly env?: Record<string, string>;
+
+  /**
    * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
    */
   public readonly file: YamlFile | undefined;
@@ -109,11 +114,6 @@ export class GithubWorkflow extends Component {
    * GitHub API authentication method used by projen workflows.
    */
   public readonly projenCredentials: GithubCredentials;
-
-  /**
-   * Additional environment variables to set for the workflow.
-   */
-  public readonly env?: Record<string, string>;
 
   /**
    * The name for workflow runs generated from the workflow. GitHub displays the
