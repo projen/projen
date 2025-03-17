@@ -2431,6 +2431,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.GithubWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
 | <code><a href="#projen.github.GithubWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 
@@ -2498,6 +2499,18 @@ public readonly concurrency: ConcurrencyOptions;
 The concurrency configuration of the workflow.
 
 undefined means no concurrency limitations.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.GithubWorkflow.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Additional environment variables to set for the workflow.
 
 ---
 
@@ -3977,6 +3990,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
 | <code><a href="#projen.github.TaskWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.jobId">jobId</a></code> | <code>string</code> | *No description.* |
@@ -4046,6 +4060,18 @@ public readonly concurrency: ConcurrencyOptions;
 The concurrency configuration of the workflow.
 
 undefined means no concurrency limitations.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TaskWorkflow.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Additional environment variables to set for the workflow.
 
 ---
 
@@ -6878,6 +6904,7 @@ const githubWorkflowOptions: github.GithubWorkflowOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.concurrencyOptions">concurrencyOptions</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
+| <code><a href="#projen.github.GithubWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.fileName">fileName</a></code> | <code>string</code> | Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.force">force</a></code> | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.limitConcurrency">limitConcurrency</a></code> | <code>boolean</code> | Enable concurrency limitations. |
@@ -6898,6 +6925,19 @@ Concurrency ensures that only a single job or workflow using the same concurrenc
 Currently in beta.
 
 > [https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency)
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.GithubWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* no additional environment variables
+
+Additional environment variables to set for the workflow.
 
 ---
 
