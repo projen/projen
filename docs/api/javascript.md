@@ -626,6 +626,471 @@ eslint rules.
 ---
 
 
+### EslintFlatConfig <a name="EslintFlatConfig" id="projen.javascript.EslintFlatConfig"></a>
+
+#### Initializers <a name="Initializers" id="projen.javascript.EslintFlatConfig.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.EslintFlatConfig(project: NodeProject, options: EslintFlatConfigOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfig.Initializer.parameter.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.EslintFlatConfig.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.EslintFlatConfigOptions">EslintFlatConfigOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.EslintFlatConfig.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.javascript.EslintFlatConfig.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.EslintFlatConfigOptions">EslintFlatConfigOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfig.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.EslintFlatConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.EslintFlatConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.EslintFlatConfig.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.javascript.EslintFlatConfig.addEnablePatterns">addEnablePatterns</a></code> | Add a file or glob pattern or directory to enable. |
+| <code><a href="#projen.javascript.EslintFlatConfig.addExtends">addExtends</a></code> | Adds an `extends` item to the eslint configuration. |
+| <code><a href="#projen.javascript.EslintFlatConfig.addIgnorePatterns">addIgnorePatterns</a></code> | Add a file or glob pattern or directory to ignore. |
+| <code><a href="#projen.javascript.EslintFlatConfig.addOverrides">addOverrides</a></code> | Add an eslint override. |
+| <code><a href="#projen.javascript.EslintFlatConfig.addPlugins">addPlugins</a></code> | Add eslint plugins If you use a module other than the following, you need to install the module using `project.addDevDeps`. - eslint -. |
+| <code><a href="#projen.javascript.EslintFlatConfig.addRules">addRules</a></code> | Add an eslint rule. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.EslintFlatConfig.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.EslintFlatConfig.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.EslintFlatConfig.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.EslintFlatConfig.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `addEnablePatterns` <a name="addEnablePatterns" id="projen.javascript.EslintFlatConfig.addEnablePatterns"></a>
+
+```typescript
+public addEnablePatterns(patterns: ...string[]): void
+```
+
+Add a file or glob pattern or directory to enable.
+
+*Example*
+
+```typescript
+"src/*.ts"
+```
+
+
+###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.javascript.EslintFlatConfig.addEnablePatterns.parameter.patterns"></a>
+
+- *Type:* ...string[]
+
+---
+
+##### `addExtends` <a name="addExtends" id="projen.javascript.EslintFlatConfig.addExtends"></a>
+
+```typescript
+public addExtends(extendList: ...EslintConfigExtension[]): void
+```
+
+Adds an `extends` item to the eslint configuration.
+
+If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+- eslint
+-
+
+###### `extendList`<sup>Required</sup> <a name="extendList" id="projen.javascript.EslintFlatConfig.addExtends.parameter.extendList"></a>
+
+- *Type:* ...<a href="#projen.javascript.EslintConfigExtension">EslintConfigExtension</a>[]
+
+ESLint configuration extension information.
+
+---
+
+##### `addIgnorePatterns` <a name="addIgnorePatterns" id="projen.javascript.EslintFlatConfig.addIgnorePatterns"></a>
+
+```typescript
+public addIgnorePatterns(patterns: ...string[]): void
+```
+
+Add a file or glob pattern or directory to ignore.
+
+*Example*
+
+```typescript
+".gitignore"
+```
+
+
+###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.javascript.EslintFlatConfig.addIgnorePatterns.parameter.patterns"></a>
+
+- *Type:* ...string[]
+
+---
+
+##### `addOverrides` <a name="addOverrides" id="projen.javascript.EslintFlatConfig.addOverrides"></a>
+
+```typescript
+public addOverrides(overrides: ...EslintFlatConfigOverride[]): void
+```
+
+Add an eslint override.
+
+If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+- eslint
+-
+
+###### `overrides`<sup>Required</sup> <a name="overrides" id="projen.javascript.EslintFlatConfig.addOverrides.parameter.overrides"></a>
+
+- *Type:* ...<a href="#projen.javascript.EslintFlatConfigOverride">EslintFlatConfigOverride</a>[]
+
+Override information for eslint rules.
+
+---
+
+##### `addPlugins` <a name="addPlugins" id="projen.javascript.EslintFlatConfig.addPlugins"></a>
+
+```typescript
+public addPlugins(plugins: ...EslintPlugin[]): void
+```
+
+Add eslint plugins If you use a module other than the following, you need to install the module using `project.addDevDeps`. - eslint -.
+
+###### `plugins`<sup>Required</sup> <a name="plugins" id="projen.javascript.EslintFlatConfig.addPlugins.parameter.plugins"></a>
+
+- *Type:* ...<a href="#projen.javascript.EslintPlugin">EslintPlugin</a>[]
+
+ESLint plugin information.
+
+---
+
+##### `addRules` <a name="addRules" id="projen.javascript.EslintFlatConfig.addRules"></a>
+
+```typescript
+public addRules(rules: {[ key: string ]: any}): void
+```
+
+Add an eslint rule.
+
+*Example*
+
+```typescript
+{ "no-console": "error" }
+```
+
+
+###### `rules`<sup>Required</sup> <a name="rules" id="projen.javascript.EslintFlatConfig.addRules.parameter.rules"></a>
+
+- *Type:* {[ key: string ]: any}
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfig.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.EslintFlatConfig.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.EslintFlatConfig.of">of</a></code> | Returns the singleton Eslint component of a project or undefined if there is none. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.EslintFlatConfig.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.EslintFlatConfig.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.EslintFlatConfig.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.EslintFlatConfig.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.EslintFlatConfig.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.EslintFlatConfig.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.EslintFlatConfig.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.EslintFlatConfig.of(project: Project)
+```
+
+Returns the singleton Eslint component of a project or undefined if there is none.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.EslintFlatConfig.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.config">config</a></code> | <code>string</code> | eslint configuration. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.enablePatterns">enablePatterns</a></code> | <code>string[]</code> | File or glob patterns or directories that should be linted. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.eslintTask">eslintTask</a></code> | <code>projen.Task</code> | *No description.* |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | File or glob patterns or directories that should not be linted. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.overrides">overrides</a></code> | <code><a href="#projen.javascript.EslintFlatConfigOverride">EslintFlatConfigOverride</a>[]</code> | eslint overrides. |
+| <code><a href="#projen.javascript.EslintFlatConfig.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | Public getter for eslint rules. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.EslintFlatConfig.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.EslintFlatConfig.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.javascript.EslintFlatConfig.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.javascript.EslintFlatConfig.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.javascript.EslintFlatConfig.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.javascript.EslintFlatConfig.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.javascript.EslintFlatConfig.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.javascript.EslintFlatConfig.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `config`<sup>Required</sup> <a name="config" id="projen.javascript.EslintFlatConfig.property.config"></a>
+
+```typescript
+public readonly config: string;
+```
+
+- *Type:* string
+
+eslint configuration.
+
+---
+
+##### `enablePatterns`<sup>Required</sup> <a name="enablePatterns" id="projen.javascript.EslintFlatConfig.property.enablePatterns"></a>
+
+```typescript
+public readonly enablePatterns: string[];
+```
+
+- *Type:* string[]
+
+File or glob patterns or directories that should be linted.
+
+---
+
+##### `eslintTask`<sup>Required</sup> <a name="eslintTask" id="projen.javascript.EslintFlatConfig.property.eslintTask"></a>
+
+```typescript
+public readonly eslintTask: Task;
+```
+
+- *Type:* projen.Task
+
+---
+
+##### `ignorePatterns`<sup>Required</sup> <a name="ignorePatterns" id="projen.javascript.EslintFlatConfig.property.ignorePatterns"></a>
+
+```typescript
+public readonly ignorePatterns: string[];
+```
+
+- *Type:* string[]
+
+File or glob patterns or directories that should not be linted.
+
+---
+
+##### `overrides`<sup>Required</sup> <a name="overrides" id="projen.javascript.EslintFlatConfig.property.overrides"></a>
+
+```typescript
+public readonly overrides: EslintFlatConfigOverride[];
+```
+
+- *Type:* <a href="#projen.javascript.EslintFlatConfigOverride">EslintFlatConfigOverride</a>[]
+
+eslint overrides.
+
+---
+
+##### `rules`<sup>Required</sup> <a name="rules" id="projen.javascript.EslintFlatConfig.property.rules"></a>
+
+```typescript
+public readonly rules: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+Public getter for eslint rules.
+
+---
+
+
 ### Jest <a name="Jest" id="projen.javascript.Jest"></a>
 
 Installs the following npm scripts:.
@@ -5791,6 +6256,447 @@ Whether to fix eslint issues when running the eslint task.
 
 ---
 
+### EslintConfigExtension <a name="EslintConfigExtension" id="projen.javascript.EslintConfigExtension"></a>
+
+ESLint configuration extension information.
+
+*Example*
+
+```typescript
+// Configuration without spread
+{
+  importPath: "eslint-plugin-prettier",
+  moduleName: "prettierPlugin",
+  configReference: "prettierPlugin"
+}
+
+// Results in:
+import prettierPlugin from "eslint-plugin-prettier"
+export default [
+  prettierPlugin,
+  // ...
+]
+
+// Configuration with spread
+{
+  importPath: "eslint-plugin-prettier",
+  moduleName: "prettierPlugin",
+  configReference: "prettierPlugin",
+  shouldSpreadConfig: true
+}
+
+// Results in:
+import prettierPlugin from "eslint-plugin-prettier"
+export default [
+  ...prettierPlugin,
+  // ...
+]
+```
+
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintConfigExtension.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintConfigExtension: javascript.EslintConfigExtension = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintConfigExtension.property.configReference">configReference</a></code> | <code>string</code> | The configuration reference to be used in the extends section. |
+| <code><a href="#projen.javascript.EslintConfigExtension.property.importPath">importPath</a></code> | <code>string</code> | The module import path. |
+| <code><a href="#projen.javascript.EslintConfigExtension.property.moduleName">moduleName</a></code> | <code>string</code> | The local module name to use in the import statement. |
+| <code><a href="#projen.javascript.EslintConfigExtension.property.shouldSpreadConfig">shouldSpreadConfig</a></code> | <code>boolean</code> | Indicates whether the configuration should be spread using the spread operator. |
+
+---
+
+##### `configReference`<sup>Required</sup> <a name="configReference" id="projen.javascript.EslintConfigExtension.property.configReference"></a>
+
+```typescript
+public readonly configReference: string;
+```
+
+- *Type:* string
+
+The configuration reference to be used in the extends section.
+
+This can be a plugin name or a specific configuration path from the plugin.
+
+---
+
+*Example*
+
+```typescript
+- "prettierPlugin" // Direct plugin reference
+- "eslint.configs.recommended" // Specific configuration path
+```
+
+
+##### `importPath`<sup>Required</sup> <a name="importPath" id="projen.javascript.EslintConfigExtension.property.importPath"></a>
+
+```typescript
+public readonly importPath: string;
+```
+
+- *Type:* string
+
+The module import path.
+
+---
+
+*Example*
+
+```typescript
+"eslint-plugin-prettier"
+```
+
+
+##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.javascript.EslintConfigExtension.property.moduleName"></a>
+
+```typescript
+public readonly moduleName: string;
+```
+
+- *Type:* string
+
+The local module name to use in the import statement.
+
+---
+
+*Example*
+
+```typescript
+"prettierPlugin"
+```
+
+
+##### `shouldSpreadConfig`<sup>Optional</sup> <a name="shouldSpreadConfig" id="projen.javascript.EslintConfigExtension.property.shouldSpreadConfig"></a>
+
+```typescript
+public readonly shouldSpreadConfig: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Indicates whether the configuration should be spread using the spread operator.
+
+When true, the configuration will be included as `...configReference`,
+when false, it will be included as `configReference`.
+
+---
+
+*Example*
+
+```typescript
+true  -> ...eslint.configs.recommended
+false -> eslint.configs.recommended
+```
+
+
+### EslintFlatConfigCommandOptions <a name="EslintFlatConfigCommandOptions" id="projen.javascript.EslintFlatConfigCommandOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintFlatConfigCommandOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintFlatConfigCommandOptions: javascript.EslintFlatConfigCommandOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfigCommandOptions.property.extraArgs">extraArgs</a></code> | <code>string[]</code> | Extra flag arguments to pass to eslint command. |
+| <code><a href="#projen.javascript.EslintFlatConfigCommandOptions.property.fix">fix</a></code> | <code>boolean</code> | Whether to fix eslint issues when running the eslint task. |
+
+---
+
+##### `extraArgs`<sup>Optional</sup> <a name="extraArgs" id="projen.javascript.EslintFlatConfigCommandOptions.property.extraArgs"></a>
+
+```typescript
+public readonly extraArgs: string[];
+```
+
+- *Type:* string[]
+
+Extra flag arguments to pass to eslint command.
+
+---
+
+##### `fix`<sup>Optional</sup> <a name="fix" id="projen.javascript.EslintFlatConfigCommandOptions.property.fix"></a>
+
+```typescript
+public readonly fix: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to fix eslint issues when running the eslint task.
+
+---
+
+### EslintFlatConfigOptions <a name="EslintFlatConfigOptions" id="projen.javascript.EslintFlatConfigOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintFlatConfigOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintFlatConfigOptions: javascript.EslintFlatConfigOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.enablePatterns">enablePatterns</a></code> | <code>string[]</code> | List of files or glob patterns or directories with source files to enable. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.commandOptions">commandOptions</a></code> | <code><a href="#projen.javascript.EslintFlatConfigCommandOptions">EslintFlatConfigCommandOptions</a></code> | Options for eslint command executed by eslint task. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.devDirs">devDirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files that include tests and build tools. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of files or glob patterns or directories with source files to ignore. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.moduleType">moduleType</a></code> | <code>string</code> | The module type of configuration file. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.prettier">prettier</a></code> | <code>boolean</code> | Enable prettier for code formatting. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.tsAlwaysTryTypes">tsAlwaysTryTypes</a></code> | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. |
+| <code><a href="#projen.javascript.EslintFlatConfigOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to `tsconfig.json` which should be used by eslint. |
+
+---
+
+##### `enablePatterns`<sup>Required</sup> <a name="enablePatterns" id="projen.javascript.EslintFlatConfigOptions.property.enablePatterns"></a>
+
+```typescript
+public readonly enablePatterns: string[];
+```
+
+- *Type:* string[]
+
+List of files or glob patterns or directories with source files to enable.
+
+---
+
+*Example*
+
+```typescript
+["src/*.ts"]
+```
+
+
+##### `commandOptions`<sup>Optional</sup> <a name="commandOptions" id="projen.javascript.EslintFlatConfigOptions.property.commandOptions"></a>
+
+```typescript
+public readonly commandOptions: EslintFlatConfigCommandOptions;
+```
+
+- *Type:* <a href="#projen.javascript.EslintFlatConfigCommandOptions">EslintFlatConfigCommandOptions</a>
+
+Options for eslint command executed by eslint task.
+
+---
+
+##### `devDirs`<sup>Optional</sup> <a name="devDirs" id="projen.javascript.EslintFlatConfigOptions.property.devDirs"></a>
+
+```typescript
+public readonly devDirs: string[];
+```
+
+- *Type:* string[]
+- *Default:* []
+
+Files or glob patterns or directories with source files that include tests and build tools.
+
+These sources are linted but may also import packages from `devDependencies`.
+
+---
+
+##### `ignorePatterns`<sup>Optional</sup> <a name="ignorePatterns" id="projen.javascript.EslintFlatConfigOptions.property.ignorePatterns"></a>
+
+```typescript
+public readonly ignorePatterns: string[];
+```
+
+- *Type:* string[]
+- *Default:* [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
+
+List of files or glob patterns or directories with source files to ignore.
+
+as .gitignore patterns.
+
+---
+
+##### `moduleType`<sup>Optional</sup> <a name="moduleType" id="projen.javascript.EslintFlatConfigOptions.property.moduleType"></a>
+
+```typescript
+public readonly moduleType: string;
+```
+
+- *Type:* string
+- *Default:* "module"
+
+The module type of configuration file.
+
+When specified `module`, generate `eslint.config.mjs` file.
+- When specified `commonjs`, generate `eslint.config.cjs` file.
+
+---
+
+##### `prettier`<sup>Optional</sup> <a name="prettier" id="projen.javascript.EslintFlatConfigOptions.property.prettier"></a>
+
+```typescript
+public readonly prettier: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable prettier for code formatting.
+
+---
+
+##### `tsAlwaysTryTypes`<sup>Optional</sup> <a name="tsAlwaysTryTypes" id="projen.javascript.EslintFlatConfigOptions.property.tsAlwaysTryTypes"></a>
+
+```typescript
+public readonly tsAlwaysTryTypes: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
+
+This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
+
+---
+
+##### `tsconfigPath`<sup>Optional</sup> <a name="tsconfigPath" id="projen.javascript.EslintFlatConfigOptions.property.tsconfigPath"></a>
+
+```typescript
+public readonly tsconfigPath: string;
+```
+
+- *Type:* string
+- *Default:* "./tsconfig.json"
+
+Path to `tsconfig.json` which should be used by eslint.
+
+---
+
+### EslintFlatConfigOverride <a name="EslintFlatConfigOverride" id="projen.javascript.EslintFlatConfigOverride"></a>
+
+Override information for eslint rules.
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintFlatConfigOverride.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintFlatConfigOverride: javascript.EslintFlatConfigOverride = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintFlatConfigOverride.property.enablePatterns">enablePatterns</a></code> | <code>string[]</code> | List of files or glob patterns or directories with source files to enable. |
+| <code><a href="#projen.javascript.EslintFlatConfigOverride.property.extends">extends</a></code> | <code><a href="#projen.javascript.EslintConfigExtension">EslintConfigExtension</a>[]</code> | Config(s) to extend in this override. |
+| <code><a href="#projen.javascript.EslintFlatConfigOverride.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of files or glob patterns or directories with source files to ignore. |
+| <code><a href="#projen.javascript.EslintFlatConfigOverride.property.parser">parser</a></code> | <code><a href="#projen.javascript.EslintParser">EslintParser</a></code> | The overridden parser. |
+| <code><a href="#projen.javascript.EslintFlatConfigOverride.property.plugins">plugins</a></code> | <code><a href="#projen.javascript.EslintPlugin">EslintPlugin</a>[]</code> | Plugin(s) to use in this override. |
+| <code><a href="#projen.javascript.EslintFlatConfigOverride.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | The overridden rules. |
+
+---
+
+##### `enablePatterns`<sup>Required</sup> <a name="enablePatterns" id="projen.javascript.EslintFlatConfigOverride.property.enablePatterns"></a>
+
+```typescript
+public readonly enablePatterns: string[];
+```
+
+- *Type:* string[]
+
+List of files or glob patterns or directories with source files to enable.
+
+---
+
+*Example*
+
+```typescript
+["src/*.ts"]
+```
+
+
+##### `extends`<sup>Optional</sup> <a name="extends" id="projen.javascript.EslintFlatConfigOverride.property.extends"></a>
+
+```typescript
+public readonly extends: EslintConfigExtension[];
+```
+
+- *Type:* <a href="#projen.javascript.EslintConfigExtension">EslintConfigExtension</a>[]
+
+Config(s) to extend in this override.
+
+---
+
+##### `ignorePatterns`<sup>Optional</sup> <a name="ignorePatterns" id="projen.javascript.EslintFlatConfigOverride.property.ignorePatterns"></a>
+
+```typescript
+public readonly ignorePatterns: string[];
+```
+
+- *Type:* string[]
+
+List of files or glob patterns or directories with source files to ignore.
+
+as .gitignore patterns.
+
+---
+
+*Example*
+
+```typescript
+[".gitignore", "node_modules"]
+```
+
+
+##### `parser`<sup>Optional</sup> <a name="parser" id="projen.javascript.EslintFlatConfigOverride.property.parser"></a>
+
+```typescript
+public readonly parser: EslintParser;
+```
+
+- *Type:* <a href="#projen.javascript.EslintParser">EslintParser</a>
+
+The overridden parser.
+
+---
+
+##### `plugins`<sup>Optional</sup> <a name="plugins" id="projen.javascript.EslintFlatConfigOverride.property.plugins"></a>
+
+```typescript
+public readonly plugins: EslintPlugin[];
+```
+
+- *Type:* <a href="#projen.javascript.EslintPlugin">EslintPlugin</a>[]
+
+Plugin(s) to use in this override.
+
+---
+
+##### `rules`<sup>Optional</sup> <a name="rules" id="projen.javascript.EslintFlatConfigOverride.property.rules"></a>
+
+```typescript
+public readonly rules: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+The overridden rules.
+
+---
+
 ### EslintOptions <a name="EslintOptions" id="projen.javascript.EslintOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.EslintOptions.Initializer"></a>
@@ -6112,6 +7018,213 @@ public readonly rules: {[ key: string ]: any};
 The overridden rules.
 
 ---
+
+### EslintParser <a name="EslintParser" id="projen.javascript.EslintParser"></a>
+
+ESLint parser configuration information.
+
+*Example*
+
+```typescript
+// Configuration
+{
+  importPath: "typescript-eslint",
+  moduleName: "tseslint",
+  parserReference: "tseslint.parser"
+}
+
+// Results in:
+import tseslint from "typescript-eslint"
+
+export default [{
+  languageOptions: {
+    parser: tseslint.parser
+  }
+}]
+```
+
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintParser.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintParser: javascript.EslintParser = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintParser.property.importPath">importPath</a></code> | <code>string</code> | The module import path. |
+| <code><a href="#projen.javascript.EslintParser.property.moduleName">moduleName</a></code> | <code>string</code> | The local module name to use in the import statement. |
+| <code><a href="#projen.javascript.EslintParser.property.parserReference">parserReference</a></code> | <code>string</code> | The reference path to the parser in the module. |
+
+---
+
+##### `importPath`<sup>Required</sup> <a name="importPath" id="projen.javascript.EslintParser.property.importPath"></a>
+
+```typescript
+public readonly importPath: string;
+```
+
+- *Type:* string
+
+The module import path.
+
+---
+
+*Example*
+
+```typescript
+"typescript-eslint"
+```
+
+
+##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.javascript.EslintParser.property.moduleName"></a>
+
+```typescript
+public readonly moduleName: string;
+```
+
+- *Type:* string
+
+The local module name to use in the import statement.
+
+---
+
+*Example*
+
+```typescript
+"tseslint"
+```
+
+
+##### `parserReference`<sup>Required</sup> <a name="parserReference" id="projen.javascript.EslintParser.property.parserReference"></a>
+
+```typescript
+public readonly parserReference: string;
+```
+
+- *Type:* string
+
+The reference path to the parser in the module.
+
+Specifies how to access the parser from the imported module.
+
+---
+
+*Example*
+
+```typescript
+// When importing from typescript-eslint as "tseslint"
+parserReference: "tseslint.parser"
+// Results in:
+languageOptions: {
+  parser: tseslint.parser
+}
+```
+
+
+### EslintPlugin <a name="EslintPlugin" id="projen.javascript.EslintPlugin"></a>
+
+ESLint plugin configuration information.
+
+*Example*
+
+```typescript
+// Configuration
+{
+  importPath: "typescript-eslint",
+  moduleName: "tseslint",
+  pluginAlias: "@typescript-eslint"
+}
+
+// Results in:
+import tseslint from "typescript-eslint"
+
+export default [{
+  plugins: {
+    "@typescript-eslint": tseslint
+  }
+}]
+```
+
+
+#### Initializer <a name="Initializer" id="projen.javascript.EslintPlugin.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const eslintPlugin: javascript.EslintPlugin = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EslintPlugin.property.importPath">importPath</a></code> | <code>string</code> | The module import path. |
+| <code><a href="#projen.javascript.EslintPlugin.property.moduleName">moduleName</a></code> | <code>string</code> | The local module name to use in the import statement. |
+| <code><a href="#projen.javascript.EslintPlugin.property.pluginAlias">pluginAlias</a></code> | <code>string</code> | The plugin alias to use in the ESLint configuration. |
+
+---
+
+##### `importPath`<sup>Required</sup> <a name="importPath" id="projen.javascript.EslintPlugin.property.importPath"></a>
+
+```typescript
+public readonly importPath: string;
+```
+
+- *Type:* string
+
+The module import path.
+
+---
+
+*Example*
+
+```typescript
+"typescript-eslint"
+```
+
+
+##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.javascript.EslintPlugin.property.moduleName"></a>
+
+```typescript
+public readonly moduleName: string;
+```
+
+- *Type:* string
+
+The local module name to use in the import statement.
+
+---
+
+*Example*
+
+```typescript
+"tseslint"
+```
+
+
+##### `pluginAlias`<sup>Required</sup> <a name="pluginAlias" id="projen.javascript.EslintPlugin.property.pluginAlias"></a>
+
+```typescript
+public readonly pluginAlias: string;
+```
+
+- *Type:* string
+
+The plugin alias to use in the ESLint configuration.
+
+---
+
+*Example*
+
+```typescript
+"@typescript-eslint"
+```
+
 
 ### HasteConfig <a name="HasteConfig" id="projen.javascript.HasteConfig"></a>
 
