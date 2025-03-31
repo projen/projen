@@ -2316,7 +2316,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -2330,7 +2330,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2023", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -2369,7 +2369,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -2760,7 +2760,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -2774,7 +2774,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2023", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -2813,7 +2813,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -4069,7 +4069,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -4083,7 +4083,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2023", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -4122,7 +4122,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -7760,7 +7760,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -7774,7 +7774,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2023", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -7813,7 +7813,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -8487,7 +8487,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -8501,7 +8501,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2023", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -8540,7 +8540,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -8931,7 +8931,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
@@ -8945,7 +8945,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2023", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -8984,7 +8984,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2023"]
   ...
 }
 ...
