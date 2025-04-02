@@ -121,12 +121,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         runBundleTask: RunBundleTask.MANUAL,
       },
     });
-
+    this.appEntrypoint = options.appEntrypoint ?? "main.ts";
     this.cdkDeps = new AwsCdkDepsJs(this, {
       dependencyType: DependencyType.RUNTIME,
       ...options,
     });
-    this.appEntrypoint = options.appEntrypoint ?? "main.ts";
 
     // CLI
     this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkCliVersion}`);
@@ -158,7 +157,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         "node_modules",
       ],
       ...options,
-      app: this.getCdkApp(options.app),
+      app: this.getCdkApp(options),
     });
 
     this.gitignore.exclude(".parcel-cache/");
@@ -199,18 +198,21 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public addCdkDependency(...modules: string[]) {
     return this.cdkDeps.addV1Dependencies(...modules);
   }
-  public getCdkApp(appOverride?: string) {
-    if (appOverride) {
-      return appOverride;
+  private getCdkApp(options: AwsCdkTypeScriptAppOptions): string {
+    let appEntrypoint: string;
+    if (options.app && options.appEntrypoint) {
+      throw new Error("Only one of 'app' or 'appEntrypoint' can be specified");
+    } else if (options.app) {
+      return options.app;
+    } else {
+      appEntrypoint = path.posix.join(this.srcdir, this.appEntrypoint);
     }
     switch (this.package.packageManager) {
       case NodePackageManager.BUN:
         // bun doesn't support tsconfig overrides yet
-        return `bunx ${path.posix.join(this.srcdir, this.appEntrypoint)}`;
+        return `bunx ${appEntrypoint}`;
       default:
-        return `${this.runScriptCommand} ts-node -P ${
-          this.tsconfig?.fileName
-        } --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`;
+        return `${this.runScriptCommand} ts-node -P ${this.tsconfig?.fileName} --prefer-ts-exts ${appEntrypoint}`;
     }
   }
 }

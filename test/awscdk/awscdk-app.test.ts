@@ -72,6 +72,17 @@ describe("cdk.json", () => {
       "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts"
     );
   });
+  it("throws an error if both app and appEntrypoint are specified", () => {
+    expect(() => {
+      new AwsCdkTypeScriptApp({
+        name: "hello",
+        defaultReleaseBranch: "main",
+        cdkVersion: "1.100.0",
+        app: "bunx --smol my-app.ts",
+        appEntrypoint: "my-app.ts",
+      });
+    }).toThrowError("Only one of 'app' or 'appEntrypoint' can be specified");
+  });
 });
 
 describe("lambda functions", () => {
