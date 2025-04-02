@@ -142,6 +142,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (!tsConfigFile) {
       throw new Error("Expecting tsconfig.json");
     }
+      
     this.cdkConfig = new CdkConfig(this, {
       featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
