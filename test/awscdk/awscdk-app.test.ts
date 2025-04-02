@@ -4,18 +4,18 @@ import { AwsCdkTypeScriptApp, LambdaRuntime } from "../../src/awscdk";
 import { NodePackageManager } from "../../src/javascript";
 import { mkdtemp, SynthOutput, synthSnapshot } from "../util";
 
-describe("app with overrides", () => {
-  it("allows full overrides of cdk.json app value", () => {
+describe("cdk.json", () => {
+  it("app fully overridden", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
       cdkVersion: "1.100.0",
-      cdkAppOverride: "bunx tsx my-app.ts",
+      app: "bunx --smol my-app.ts",
     });
     const files = synthSnapshot(project);
-    expect(files["cdk.json"].app).toStrictEqual("bunx tsx my-app.ts");
+    expect(files["cdk.json"].app).toStrictEqual("bunx --smol my-app.ts");
   });
-  it("correctly sets the cdk.json app runtime command", () => {
+  it("with bun as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
@@ -23,8 +23,53 @@ describe("app with overrides", () => {
       packageManager: NodePackageManager.BUN,
     });
     const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual("bunx src/main.ts");
+  });
+  it("with pnpm as package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.PNPM,
+    });
+    const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "bun run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "pnpm run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+  it("with npm as package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.NPM,
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "npm run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+  it("with the default package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+  it("with a custom appEntrypoint", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      appEntrypoint: "my-app.ts",
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts"
     );
   });
 });
@@ -202,13 +247,13 @@ describe("CDK v2", () => {
     });
     snapshot = synthSnapshot(project);
   });
-  it("has a aws-cdk-lib dev depdendency", () => {
-    expect(snapshot["package.json"].devDependencies).toMatchObject({
+  it("has a aws-cdk-lib runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
       "aws-cdk-lib": "^2.0.0-rc.1",
     });
   });
-  it("has a constructs dev depdendency", () => {
-    expect(snapshot["package.json"].devDependencies).toMatchObject({
+  it("has a constructs runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
       constructs: "^10.0.5",
     });
   });
@@ -234,13 +279,13 @@ describe("CDK v1", () => {
     });
     snapshot = synthSnapshot(project);
   });
-  it("has a aws-cdk-lib dev depdendency", () => {
-    expect(snapshot["package.json"].devDependencies).toMatchObject({
+  it("has a aws-cdk-lib runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
       "@aws-cdk/core": "^1.100.0",
     });
   });
-  it("has a constructs dev depdendency", () => {
-    expect(snapshot["package.json"].devDependencies).toMatchObject({
+  it("has a constructs runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
       constructs: "^3.2.27",
     });
   });

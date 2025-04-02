@@ -9,7 +9,7 @@ import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { RunBundleTask } from "../javascript";
+import { NodePackageManager, RunBundleTask } from "../javascript";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
@@ -24,10 +24,10 @@ export interface AwsCdkTypeScriptAppOptions
    */
   readonly appEntrypoint?: string;
   /**
-   * Full override for the cdk.json app field.
-   * @example "bunx tsx -P tsconfig.build.json src/main.ts"
+   * The command line to execute in order to synthesize the CDK application
+   * (language specific).
    */
-  readonly cdkAppOverride?: string;
+  readonly app?: string;
   /**
    * Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you can manually add an
@@ -123,7 +123,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     this.cdkDeps = new AwsCdkDepsJs(this, {
-      dependencyType: DependencyType.DEVENV,
+      dependencyType: DependencyType.RUNTIME,
       ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "main.ts";
@@ -143,14 +143,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (!tsConfigFile) {
       throw new Error("Expecting tsconfig.json");
     }
-    const defaultCdkAppValue = `${
-      this.runScriptCommand
-    } ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(
-      this.srcdir,
-      this.appEntrypoint
-    )}`;
     this.cdkConfig = new CdkConfig(this, {
-      app: options.cdkAppOverride ?? defaultCdkAppValue,
       featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
@@ -165,6 +158,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         "node_modules",
       ],
       ...options,
+      app: this.getCdkApp(options.app),
     });
 
     this.gitignore.exclude(".parcel-cache/");
@@ -204,6 +198,20 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    */
   public addCdkDependency(...modules: string[]) {
     return this.cdkDeps.addV1Dependencies(...modules);
+  }
+  public getCdkApp(appOverride?: string) {
+    if (appOverride) {
+      return appOverride;
+    }
+    switch (this.package.packageManager) {
+      case NodePackageManager.BUN:
+        // bun doesn't support tsconfig overrides yet
+        return `bunx ${path.posix.join(this.srcdir, this.appEntrypoint)}`;
+      default:
+        return `${this.runScriptCommand} ts-node -P ${
+          this.tsconfig?.fileName
+        } --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`;
+    }
   }
 }
 
