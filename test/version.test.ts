@@ -145,6 +145,33 @@ describe("bump task", () => {
     });
   });
 
+  test("if there are 0 commits but the version script outputs a version, bump anyway", async () => {
+    withProjectDir((projectdir) => {
+      const project = new TestProject({
+        outdir: projectdir,
+      });
+      new Version(project, {
+        versionInputFile: "package.json",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "echo 9.9.9",
+      });
+
+      project.synth();
+
+      // Run with no new commits since last release
+      const result = testBumpTask({
+        workdir: project.outdir,
+        commits: [
+          // projen will fully skip the 'bump' task if the most recent commit contains the text "chore(release):",
+          // so name this commit something else.
+          { message: "release: v0.1.0", tag: "v0.1.0" },
+        ],
+      });
+
+      expect(result.version).toEqual("9.9.9");
+    });
+  });
+
   test("throws an error if the bump command output is not valid", async () => {
     withProjectDir((projectdir) => {
       const project = new TestProject({

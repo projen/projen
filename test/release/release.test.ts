@@ -343,6 +343,30 @@ describe("Single Project", () => {
     });
   });
 
+  test("workflowDispatch only leads to workflow dispatch trigger", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.workflowDispatch(),
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow).toMatchObject({
+      on: {
+        workflow_dispatch: {},
+      },
+    });
+  });
+
   test("manual release publish happens after anti-tamper check", () => {
     // GIVEN
     const project = new TestProject();

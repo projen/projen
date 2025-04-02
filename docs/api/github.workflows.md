@@ -1534,7 +1534,7 @@ const jobMatrix: github.workflows.JobMatrix = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.workflows.JobMatrix.property.domain">domain</a></code> | <code>{[ key: string ]: string \| number \| boolean[]}</code> | Each option you define in the matrix has a key and value. |
+| <code><a href="#projen.github.workflows.JobMatrix.property.domain">domain</a></code> | <code>{[ key: string ]: string \| string \| number \| boolean[]}</code> | Each option you define in the matrix has a key and value. |
 | <code><a href="#projen.github.workflows.JobMatrix.property.exclude">exclude</a></code> | <code>{[ key: string ]: string \| number \| boolean}[]</code> | You can remove a specific configurations defined in the build matrix using the exclude option. |
 | <code><a href="#projen.github.workflows.JobMatrix.property.include">include</a></code> | <code>{[ key: string ]: string \| number \| boolean}[]</code> | You can add additional configuration options to a build matrix job that already exists. |
 
@@ -1543,10 +1543,10 @@ const jobMatrix: github.workflows.JobMatrix = { ... }
 ##### `domain`<sup>Optional</sup> <a name="domain" id="projen.github.workflows.JobMatrix.property.domain"></a>
 
 ```typescript
-public readonly domain: {[ key: string ]: string | number | boolean[]};
+public readonly domain: {[ key: string ]: string | string | number | boolean[]};
 ```
 
-- *Type:* {[ key: string ]: string | number | boolean[]}
+- *Type:* {[ key: string ]: string | string | number | boolean[]}
 
 Each option you define in the matrix has a key and value.
 
