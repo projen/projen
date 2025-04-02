@@ -121,11 +121,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         runBundleTask: RunBundleTask.MANUAL,
       },
     });
-    this.appEntrypoint = options.appEntrypoint ?? "main.ts";
     this.cdkDeps = new AwsCdkDepsJs(this, {
-      dependencyType: DependencyType.RUNTIME,
-      ...options,
+        dependencyType: DependencyType.RUNTIME,
+        ...options,
     });
+    this.appEntrypoint = options.appEntrypoint ?? "main.ts";
 
     // CLI
     this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkCliVersion}`);
