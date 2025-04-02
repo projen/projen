@@ -122,8 +122,8 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       },
     });
     this.cdkDeps = new AwsCdkDepsJs(this, {
-        dependencyType: DependencyType.RUNTIME,
-        ...options,
+      dependencyType: DependencyType.RUNTIME,
+      ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "main.ts";
 
@@ -142,7 +142,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (!tsConfigFile) {
       throw new Error("Expecting tsconfig.json");
     }
-      
+
     this.cdkConfig = new CdkConfig(this, {
       featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
