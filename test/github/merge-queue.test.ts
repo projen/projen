@@ -75,7 +75,7 @@ describe("merge-queue", () => {
     expect(autoQueue).toMatchSnapshot();
   });
 
-  test("auto queue workflow generated with target branches", async () => {
+  test("auto queue workflow generated with mergeQueue targetBranches", async () => {
     const project = new NodeProject({
       buildWorkflow: true,
       defaultReleaseBranch: "asd",
@@ -96,5 +96,26 @@ describe("merge-queue", () => {
     expect(build).toContain(`    branches:
       - feature-1
       - feature-2`);
+  });
+
+  test("auto queue workflow generated with autoQueue targetBranches", async () => {
+    const project = new NodeProject({
+      buildWorkflow: true,
+      defaultReleaseBranch: "asd",
+      name: "adas",
+      githubOptions: {
+        mergeQueue: true,
+        mergeQueueOptions: {
+          autoQueueOptions: {
+            targetBranches: ["feature-1", "feature-2"],
+          },
+        },
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    const autoQueue = snapshot[`.github/workflows/auto-queue.yml`];
+
+    expect(autoQueue).toMatchSnapshot();
   });
 });

@@ -1,6 +1,7 @@
 import { IConstruct } from "constructs";
 import { Component } from "../component";
 import * as gh from "../github";
+import { toGitHubExpr } from "./private/util";
 
 /**
  * The merge method used to add the PR to the merge queue
@@ -53,6 +54,40 @@ export interface AutoQueueOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   * The branch names that we should auto-queue for
+   *
+   * This will turn on AutoQueue for PRs that target one of the given branches,
+   * or that is changed to target one of the given branches. This property
+   * takes a list of exact branch names; patterns don't work.
+   *
+   * This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
+   * (That condition is not automatically validated as the other branch set can contain
+   * wildcards and this branch set cannot.)
+   *
+   * ## Automatically merging a set of Stacked PRs
+   *
+   * If you set this to `['main']` you can automatically merge a set of Stacked PRs
+   * in the right order. It works like this:
+   *
+   * - Create PR #1 from branch `a`, targeting `main`.
+   * - Create PR #2 from branch `b`, targeting branch `a`.
+   * - Create PR #3 from branch `c`, targeting branch `b`.
+   *
+   * Initially, PR #1 will be set to auto-merge, PRs #2 and #3 will not.
+   *
+   * Once PR #1 passes all of its requirements it will merge. That will delete
+   * branch `a` and change  the target branch of PR #2 change to `main`. At that
+   * point, auto-queueing will switch on for PR #2 and it gets merged, etc.
+   *
+   * > [!IMPORTANT]
+   * > This component will disable AutoMerge, only enable it. So if a PR is
+   * > initially targeted one of the branches in this list, and then
+   * > subsequently retargeted to another branch, *AutoMerge is not
+   * > automatically turned off*.
+   */
+  readonly targetBranches?: string[];
 }
 
 /**
@@ -69,6 +104,12 @@ export class AutoQueue extends Component {
         `Cannot add ${
           new.target.name
         } to project without GitHub enabled. Please enable GitHub for this project.`
+      );
+    }
+
+    if (options.targetBranches?.some((b) => b.includes("*"))) {
+      throw new Error(
+        `Cannot use wildcard branches in targetBranches: ${options.targetBranches}`
       );
     }
 
@@ -95,6 +136,23 @@ export class AutoQueue extends Component {
             .join(" || ") +
           ")"
       );
+    }
+
+    if (options.targetBranches) {
+      // Branch conditions, based off the 'opened' or 'edited' events.
+
+      const branches = toGitHubExpr(options.targetBranches);
+      const isCorrectBranch = `contains(${branches}, github.event.pull_request.base.ref)`;
+      const isOpened = `github.event.action == 'opened'`;
+      const isBranchChanged = `(github.event.action == 'edited' && github.event.changes.base)`;
+
+      conditions.push(
+        `${isCorrectBranch} && (${isOpened} || ${isBranchChanged})`
+      );
+    } else {
+      // If we don't have branch conditions, we completely ignore the 'edited' event
+      // (otherwise we would run if the PR title or body got changed, etc)
+      conditions.push(`github.event.action != 'edited'`);
     }
 
     const credentials =
@@ -135,11 +193,14 @@ export class AutoQueue extends Component {
       // 'read-write' permissions. This is safe because, this event, unlike the 'pull request'
       // event references the BASE commit of the pull request and not the HEAD commit.
       //
-      // We only enable auto-queue when a PR is opened, reopened or moving from Draft to Ready.
-      // That way a user can always disable auto-queue if they want to and the workflow will
-      // not automatically re-enable it, unless one of the events occurs.
+      // We only enable auto-queue when a PR is opened, reopened or moving from Draft to Ready,
+      // or retargeted to a different branch. Specifically, if a user disableds auto-queue we try very hard to avoid
+      // accidentally re-enabling it.
+      //
+      // The 'edited' trigger is only used to detect base branch changes.
       pullRequestTarget: {
-        types: ["opened", "reopened", "ready_for_review"],
+        types: ["opened", "reopened", "ready_for_review", "edited"],
+        branches: options.targetBranches,
       },
     });
     workflow.addJobs({ enableAutoQueue: autoQueueJob });
