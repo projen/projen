@@ -4793,6 +4793,10 @@ The branch names that we should auto-queue for.
 
 This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
 
+Be sure not to enable `autoQueue` for branches that don't have branch rules
+with merge requirements set up, otherwise new PRs will be merged
+immediately after creating without a chance for review.
+
 ## Automatically merging a set of Stacked PRs
 
 If you set this to `['main']` you can automatically merge a set of Stacked PRs
@@ -4809,8 +4813,8 @@ branch `a` and change  the target branch of PR #2 change to `main`. At that
 point, auto-queueing will switch on for PR #2 and it gets merged, etc.
 
 > [!IMPORTANT]
-> This component will disable AutoMerge, only enable it. So if a PR is
-> initially targeted one of the branches in this list, and then
+> This component will never disable AutoMerge, only enable it. So if a PR is
+> initially targeted at one of the branches in this list, and then
 > subsequently retargeted to another branch, *AutoMerge is not
 > automatically turned off*.
 
