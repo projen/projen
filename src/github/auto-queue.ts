@@ -59,6 +59,10 @@ export interface AutoQueueOptions {
    *
    * This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
    *
+   * Be sure not to enable `autoQueue` for branches that don't have branch rules
+   * with merge requirements set up, otherwise new PRs will be merged
+   * immediately after creating without a chance for review.
+   *
    * ## Automatically merging a set of Stacked PRs
    *
    * If you set this to `['main']` you can automatically merge a set of Stacked PRs
