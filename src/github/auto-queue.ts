@@ -182,7 +182,7 @@ export class AutoQueue extends Component {
       // event references the BASE commit of the pull request and not the HEAD commit.
       //
       // We only enable auto-queue when a PR is opened, reopened or moving from Draft to Ready,
-      // or retargeted to a different branch. Specifically, if a user disableds auto-queue we try very hard to avoid
+      // or retargeted to a different branch. Specifically, if a user disables auto-queue we try very hard to avoid
       // accidentally re-enabling it.
       //
       // The 'edited' trigger is only used to detect base branch changes.
