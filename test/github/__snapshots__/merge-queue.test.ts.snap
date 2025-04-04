@@ -10,7 +10,6 @@ on:
       - opened
       - reopened
       - ready_for_review
-      - edited
 jobs:
   enableAutoQueue:
     name: "Set AutoQueue on PR #\${{ github.event.number }}"
@@ -18,7 +17,6 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    if: github.event.action != 'edited'
     steps:
       - uses: peter-evans/enable-pull-request-automerge@v3
         with:
@@ -49,7 +47,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    if: contains(fromJSON('["feature-1","feature-2"]'), github.event.pull_request.base.ref) && (github.event.action == 'opened' || (github.event.action == 'edited' && github.event.changes.base))
+    if: (github.event.action == 'opened' || (github.event.action == 'edited' && github.event.changes.base))
     steps:
       - uses: peter-evans/enable-pull-request-automerge@v3
         with:
@@ -69,7 +67,6 @@ on:
       - opened
       - reopened
       - ready_for_review
-      - edited
 jobs:
   enableAutoQueue:
     name: "Set AutoQueue on PR #\${{ github.event.number }}"
@@ -77,7 +74,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo') && github.event.action != 'edited'
+    if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo')
     steps:
       - uses: peter-evans/enable-pull-request-automerge@v3
         with:

@@ -118,4 +118,24 @@ describe("merge-queue", () => {
 
     expect(autoQueue).toMatchSnapshot();
   });
+
+  test("autoqueue branches must be subset of merge queue branches", async () => {
+    expect(
+      () =>
+        new NodeProject({
+          buildWorkflow: true,
+          defaultReleaseBranch: "asd",
+          name: "adas",
+          githubOptions: {
+            mergeQueue: true,
+            mergeQueueOptions: {
+              targetBranches: ["feature-1"],
+              autoQueueOptions: {
+                targetBranches: ["feature-1", "feature-2"],
+              },
+            },
+          },
+        })
+    ).toThrow(/must be a subset/);
+  });
 });

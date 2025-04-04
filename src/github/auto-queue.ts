@@ -1,7 +1,6 @@
 import { IConstruct } from "constructs";
 import { Component } from "../component";
 import * as gh from "../github";
-import { toGitHubExpr } from "./private/util";
 
 /**
  * The merge method used to add the PR to the merge queue
@@ -58,13 +57,7 @@ export interface AutoQueueOptions {
   /**
    * The branch names that we should auto-queue for
    *
-   * This will turn on AutoQueue for PRs that target one of the given branches,
-   * or that is changed to target one of the given branches. This property
-   * takes a list of exact branch names; patterns don't work.
-   *
    * This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
-   * (That condition is not automatically validated as the other branch set can contain
-   * wildcards and this branch set cannot.)
    *
    * ## Automatically merging a set of Stacked PRs
    *
@@ -107,12 +100,6 @@ export class AutoQueue extends Component {
       );
     }
 
-    if (options.targetBranches?.some((b) => b.includes("*"))) {
-      throw new Error(
-        `Cannot use wildcard branches in targetBranches: ${options.targetBranches}`
-      );
-    }
-
     const labels = options.labels ?? [];
     const usernames = options.allowedUsernames ?? [];
 
@@ -141,16 +128,15 @@ export class AutoQueue extends Component {
     let needsEditedEvent = false;
     if (options.targetBranches) {
       // Branch conditions, based off the 'opened' or 'edited' events.
+      //
+      // The current workflow will only run if the target branch is one of the intended
+      // ones, so we only need to check if the event type is correct.
       needsEditedEvent = true;
 
-      const branches = toGitHubExpr(options.targetBranches);
-      const isCorrectBranch = `contains(${branches}, github.event.pull_request.base.ref)`;
       const isOpened = `github.event.action == 'opened'`;
       const isBranchChanged = `(github.event.action == 'edited' && github.event.changes.base)`;
 
-      conditions.push(
-        `${isCorrectBranch} && (${isOpened} || ${isBranchChanged})`
-      );
+      conditions.push(`(${isOpened} || ${isBranchChanged})`);
     }
 
     const credentials =
