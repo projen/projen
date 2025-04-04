@@ -138,8 +138,10 @@ export class AutoQueue extends Component {
       );
     }
 
+    let needsEditedEvent = false;
     if (options.targetBranches) {
       // Branch conditions, based off the 'opened' or 'edited' events.
+      needsEditedEvent = true;
 
       const branches = toGitHubExpr(options.targetBranches);
       const isCorrectBranch = `contains(${branches}, github.event.pull_request.base.ref)`;
@@ -149,10 +151,6 @@ export class AutoQueue extends Component {
       conditions.push(
         `${isCorrectBranch} && (${isOpened} || ${isBranchChanged})`
       );
-    } else {
-      // If we don't have branch conditions, we completely ignore the 'edited' event
-      // (otherwise we would run if the PR title or body got changed, etc)
-      conditions.push(`github.event.action != 'edited'`);
     }
 
     const credentials =
@@ -199,7 +197,12 @@ export class AutoQueue extends Component {
       //
       // The 'edited' trigger is only used to detect base branch changes.
       pullRequestTarget: {
-        types: ["opened", "reopened", "ready_for_review", "edited"],
+        types: [
+          "opened",
+          "reopened",
+          "ready_for_review",
+          ...(needsEditedEvent ? ["edited" as const] : []),
+        ],
         branches: options.targetBranches,
       },
     });
