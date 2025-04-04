@@ -79,7 +79,7 @@ export interface AutoQueueOptions {
    * point, auto-queueing will switch on for PR #2 and it gets merged, etc.
    *
    * > [!IMPORTANT]
-   * > This component will disable AutoMerge, only enable it. So if a PR is
+   * > This component will never disable AutoMerge, only enable it. So if a PR is
    * > initially targeted one of the branches in this list, and then
    * > subsequently retargeted to another branch, *AutoMerge is not
    * > automatically turned off*.
