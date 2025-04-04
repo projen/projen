@@ -50,7 +50,40 @@ export class MergeQueue extends Component {
 
     const autoMerge = options.autoQueue ?? true;
     if (autoMerge) {
-      new AutoQueue(this, options.autoQueueOptions);
+      // Validate the autoQueue.targetBranches w.r.t. the mergeQueue.targetBranches
+      //
+      // - mergeQueue.targetBranches: those branches we CAN use merge queues for
+      // - autoQueue.targetBranches: those branches we AUTOMATICALLY use merge queues for (subset of former)
+      //
+      //                                 mergeBranches
+      //                       |   undefined   |   defined    |
+      //                       |---------------|--------------|
+      //  auto       undefined |      ok       |     copy     |
+      //  Branches     defined |      ok       |   validate   |
+      //                       |---------------|--------------|
+      if (options.autoQueueOptions?.targetBranches && options.targetBranches) {
+        if (
+          !isSubset(
+            options.autoQueueOptions?.targetBranches,
+            options.targetBranches
+          )
+        ) {
+          throw new Error(
+            `autoQueueOptions.targetBranches (${JSON.stringify(
+              options.autoQueueOptions?.targetBranches
+            )} must be a subset of targetBranches (${JSON.stringify(
+              options.targetBranches
+            )})`
+          );
+        }
+      }
+
+      new AutoQueue(this, {
+        ...options.autoQueueOptions,
+        // Copy over maximal set of merge branches if necessary
+        targetBranches:
+          options.autoQueueOptions?.targetBranches ?? options.targetBranches,
+      });
     }
   }
 
@@ -67,4 +100,8 @@ export class MergeQueue extends Component {
       mergeGroup,
     });
   }
+}
+
+function isSubset(xs: string[], ys: string[]) {
+  return xs.every((x) => ys.includes(x));
 }
