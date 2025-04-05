@@ -9,7 +9,7 @@ import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { RunBundleTask } from "../javascript";
+import { NodePackageManager, RunBundleTask } from "../javascript";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
@@ -23,7 +23,11 @@ export interface AwsCdkTypeScriptAppOptions
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
-
+  /**
+   * The command line to execute in order to synthesize the CDK application
+   * (language specific).
+   */
+  readonly app?: string;
   /**
    * Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you can manually add an
@@ -117,7 +121,6 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         runBundleTask: RunBundleTask.MANUAL,
       },
     });
-
     this.cdkDeps = new AwsCdkDepsJs(this, {
       dependencyType: DependencyType.RUNTIME,
       ...options,
@@ -141,10 +144,6 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     }
 
     this.cdkConfig = new CdkConfig(this, {
-      app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(
-        this.srcdir,
-        this.appEntrypoint
-      )}`,
       featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
@@ -159,6 +158,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         "node_modules",
       ],
       ...options,
+      app: this.getCdkApp(options),
     });
 
     this.gitignore.exclude(".parcel-cache/");
@@ -198,6 +198,23 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    */
   public addCdkDependency(...modules: string[]) {
     return this.cdkDeps.addV1Dependencies(...modules);
+  }
+  private getCdkApp(options: AwsCdkTypeScriptAppOptions): string {
+    let appEntrypoint: string;
+    if (options.app && options.appEntrypoint) {
+      throw new Error("Only one of 'app' or 'appEntrypoint' can be specified");
+    } else if (options.app) {
+      return options.app;
+    } else {
+      appEntrypoint = path.posix.join(this.srcdir, this.appEntrypoint);
+    }
+    switch (this.package.packageManager) {
+      case NodePackageManager.BUN:
+        // bun doesn't support tsconfig overrides yet
+        return `bunx ${appEntrypoint}`;
+      default:
+        return `${this.runScriptCommand} ts-node -P ${this.tsconfig?.fileName} --prefer-ts-exts ${appEntrypoint}`;
+    }
   }
 }
 
