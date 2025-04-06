@@ -165,7 +165,7 @@ project.eslint?.addRules({
   'eqeqeq': 'error',
   'no-trailing-spaces': 'error',
   'eol-last': ['error', 'always'],
-  'comma-dangle': ['error', 'always-multiline'],
+  'comma-dangle': ['error', 'only-multiline'],
 });
 ```
 
