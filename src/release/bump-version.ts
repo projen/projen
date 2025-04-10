@@ -213,9 +213,11 @@ export async function bump(cwd: string, options: BumpOptions) {
     tagPrefix,
   });
 
-  // The --first-release option of CATV will generate the changelog without
-  // bumping. That is equivalent to our `skipBump: true` which we already do
-  // below.
+  // We used to translate `isFirstRelease` to the `--first-release` flag of CATV.
+  // What that does is skip a bump, only generate the changelog.
+  //
+  // Our `{ bump: none }` does the same, so we don't need to carry over this
+  // flag anymore.
   let bumpType: BumpType =
     shouldRelease && !isFirstRelease
       ? relativeBumpType(latestVersion, await catv.dryRun())
@@ -263,19 +265,23 @@ export async function bump(cwd: string, options: BumpOptions) {
   const newRelease = bumpType.bump !== "none";
 
   if (!newRelease && !isFirstRelease) {
-    // delete the existing tag (locally). If no tag exists we will have isFirstRelease: true.
+    // delete the existing tag (locally). `isFirstRelease` will be true if there
+    // was no tag, so there's also nothing to delete.
     //
     // Doing this, combined with skipping the bump, will make CATV regenerate
     // the changelog of the most recent release.
     exec(`git tag --delete ${latestTag}`, { cwd });
   }
-  await catv.invoke({
-    releaseAs: newRelease ? renderBumpType(bumpType) : undefined,
-    skipBump: !newRelease,
-  });
-  if (!newRelease && !isFirstRelease) {
-    // add the tag back if it was previously removed
-    exec(`git tag ${latestTag}`, { cwd });
+  try {
+    await catv.invoke({
+      releaseAs: newRelease ? renderBumpType(bumpType) : undefined,
+      skipBump: !newRelease,
+    });
+  } finally {
+    if (!newRelease && !isFirstRelease) {
+      // add the tag back if it was previously removed
+      exec(`git tag ${latestTag}`, { cwd });
+    }
   }
 
   // Validate the version that we ended up with

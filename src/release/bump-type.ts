@@ -1,3 +1,8 @@
+/**
+ * Symbolic representations of version bumps
+ *
+ * There are 3 types of bumps: no bump, a relative bump (increasing one component) or an absolute bump (a specific new version)
+ */
 import { inc, parse } from "semver";
 
 export type BumpType =
@@ -41,6 +46,9 @@ export function relativeBumpType(v0: string, v1: string): RelativeBumpType {
   return { bump: "relative", relative: "patch" };
 }
 
+/**
+ * Bump type to string
+ */
 export function renderBumpType(bumpType: BumpType) {
   switch (bumpType.bump) {
     case "none":
@@ -52,6 +60,25 @@ export function renderBumpType(bumpType: BumpType) {
   }
 }
 
+/**
+ * String to bump type
+ */
+export function parseBumpType(x: string): BumpType {
+  if (x === "none") {
+    return { bump: "none" };
+  }
+  if (isMajorMinorPatch(x)) {
+    return { bump: "relative", relative: x };
+  }
+  if (isFullVersionString(x)) {
+    return { bump: "absolute", absolute: x };
+  }
+  throw new Error(`Invalid version: ${x}`);
+}
+
+/**
+ * Perform the given bump on the given version, returning the new version
+ */
 export function performBump(baseVersion: string, bumpType: BumpType): string {
   switch (bumpType.bump) {
     case "none":
@@ -69,21 +96,7 @@ export function performBump(baseVersion: string, bumpType: BumpType): string {
   }
 }
 
-export function parseBumpType(x: string): BumpType {
-  if (x === "none") {
-    return { bump: "none" };
-  }
-  if (isMajorMinorPatch(x)) {
-    return { bump: "relative", relative: x };
-  }
-  if (isFullVersionString(x)) {
-    return { bump: "absolute", absolute: x };
-  }
-  throw new Error(`Invalid version: ${x}`);
-}
-
 export function isMajorMinorPatch(v: string): v is MajorMinorPatch {
-  // We are not recognizing all of them yet. That's fine for now.
   return !!v.match(/^(major|minor|patch)$/);
 }
 
