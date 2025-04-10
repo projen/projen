@@ -145,6 +145,31 @@ describe("bump task", () => {
     });
   });
 
+  test("shell command can see proposed version", async () => {
+    withProjectDir((projectdir) => {
+      const project = new TestProject({
+        outdir: projectdir,
+      });
+      new Version(project, {
+        versionInputFile: "package.json",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "[[ $SUGGESTED_BUMP = patch ]] || exit 1", // Suggestion must be 'patch' or we fail
+      });
+
+      project.synth();
+
+      const result = testBumpTask({
+        workdir: project.outdir,
+        commits: [
+          { message: "chore(release): v0.1.0", tag: "v0.1.0" },
+          { message: "fix: new change" }, // Leads to a patch
+        ],
+      });
+
+      expect(result.version).toEqual("0.1.1");
+    });
+  });
+
   test("if there are 0 commits but the version script outputs a version, bump anyway", async () => {
     withProjectDir((projectdir) => {
       const project = new TestProject({
