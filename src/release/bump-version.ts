@@ -224,7 +224,7 @@ export async function bump(cwd: string, options: BumpOptions) {
       : { bump: "none" };
 
   if (options.nextVersionCommand) {
-    logging.debug(`Proposed bump type: ${bumpType}`);
+    logging.debug(`Proposed bump type: ${renderBumpType(bumpType)}`);
     const nextVersion = execCapture(options.nextVersionCommand, {
       cwd,
       modEnv: {
@@ -239,7 +239,9 @@ export async function bump(cwd: string, options: BumpOptions) {
     if (nextVersion) {
       try {
         bumpType = parseBumpType(nextVersion);
-        logging.info(`nextVersionCommand selects bump type: ${bumpType}`);
+        logging.info(
+          `nextVersionCommand selects bump type: ${renderBumpType(bumpType)}`
+        );
       } catch (e) {
         throw new Error(
           `nextVersionCommand "${options.nextVersionCommand}" returned invalid output: ${e}`
@@ -247,7 +249,7 @@ export async function bump(cwd: string, options: BumpOptions) {
       }
     }
   } else {
-    logging.info(`bump type: ${bumpType}`);
+    logging.info(`bump type: ${renderBumpType(bumpType)}`);
   }
 
   // Respect minMajorVersion to correct the result of the nextVersionCommand
