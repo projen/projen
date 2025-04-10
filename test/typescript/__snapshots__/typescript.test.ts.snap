@@ -1307,7 +1307,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": [
-        "es2023",
+        "es2020",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1322,7 +1322,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2023",
+      "target": "ES2020",
     },
     "exclude": [
       "node_modules",
@@ -1342,7 +1342,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": [
-        "es2023",
+        "es2020",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1359,7 +1359,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2023",
+      "target": "ES2020",
     },
     "exclude": [],
     "include": [
