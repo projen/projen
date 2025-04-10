@@ -156,7 +156,6 @@ export async function bump(cwd: string, options: BumpOptions) {
   const bumpFile = join(cwd, options.bumpFile);
   const changelogFile = join(cwd, options.changelog);
   const releaseTagFile = join(cwd, options.releaseTagFile);
-  const bumpPackage = options.bumpPackage ?? "commit-and-tag-version@^12";
 
   if (major && minMajorVersion) {
     throw new Error(
@@ -196,31 +195,31 @@ export async function bump(cwd: string, options: BumpOptions) {
   );
 
   // Determine the initial bump status. CATV will always do a patch even if
-  // there are no commits, so look at commits ourselves first.
-  const initialDecision = shouldWeRelease({
-    cwd,
-    isFirstRelease,
-    latestTag,
-    releasableCommits: options.releasableCommits,
-  });
-  if (initialDecision.temporarilyDeleteTag) {
-    // delete the existing tag (locally)
-    // if we don't do this, commit-and-tag-version generates an empty changelog
-    exec(`git tag --delete ${latestTag}`, { cwd });
-  }
+  // there are no commits, so look at commits ourselves first to decide
+  // if we even should do nothing at all.
+  const shouldRelease = isFirstRelease
+    ? true
+    : newInterestingCommits({
+        cwd,
+        latestTag,
+        releasableCommits: options.releasableCommits,
+      });
 
-  const catv = new CommitAndTagVersion(bumpPackage, cwd, {
+  const catv = new CommitAndTagVersion(options.bumpPackage, cwd, {
     versionFile,
     changelogFile,
     prerelease,
     configOptions: options.versionrcOptions,
-    isFirstRelease,
     tagPrefix,
   });
 
-  let bumpType: BumpType = !initialDecision.shouldRelease
-    ? { bump: "none" }
-    : relativeBumpType(latestVersion, await catv.dryRun());
+  // The --first-release option of CATV will generate the changelog without
+  // bumping. That is equivalent to our `skipBump: true` which we already do
+  // below.
+  let bumpType: BumpType =
+    shouldRelease && !isFirstRelease
+      ? relativeBumpType(latestVersion, await catv.dryRun())
+      : { bump: "none" };
 
   if (options.nextVersionCommand) {
     logging.debug(`Proposed bump type: ${bumpType}`);
@@ -261,13 +260,21 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   // Invoke CATV with the options we landed on. If we decided not to do a bump,
   // we will use this to regenerate the changelog of the most recent version.
-  await catv.invoke({
-    releaseAs: bumpType.bump !== "none" ? renderBumpType(bumpType) : undefined,
-    skipBump: bumpType.bump === "none",
-  });
+  const newRelease = bumpType.bump !== "none";
 
-  // add the tag back if it was previously removed
-  if (initialDecision.temporarilyDeleteTag) {
+  if (!newRelease && !isFirstRelease) {
+    // delete the existing tag (locally). If no tag exists we will have isFirstRelease: true.
+    //
+    // Doing this, combined with skipping the bump, will make CATV regenerate
+    // the changelog of the most recent release.
+    exec(`git tag --delete ${latestTag}`, { cwd });
+  }
+  await catv.invoke({
+    releaseAs: newRelease ? renderBumpType(bumpType) : undefined,
+    skipBump: !newRelease,
+  });
+  if (!newRelease && !isFirstRelease) {
+    // add the tag back if it was previously removed
     exec(`git tag ${latestTag}`, { cwd });
   }
 
@@ -300,20 +307,11 @@ export async function bump(cwd: string, options: BumpOptions) {
 /**
  * Determine based on releaseable commits whether we should release or not
  */
-function shouldWeRelease(options: {
-  isFirstRelease: boolean;
+function newInterestingCommits(options: {
   releasableCommits?: string;
   latestTag: string;
   cwd: string;
 }) {
-  if (options.isFirstRelease) {
-    // First release is never skipping bump
-    return {
-      shouldRelease: true,
-      temporarilyDeleteTag: false,
-    };
-  }
-
   const findCommits = (
     options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
   ).replace("$LATEST_TAG", options.latestTag);
@@ -327,17 +325,11 @@ function shouldWeRelease(options: {
 
   // Nothing to release right now
   if (numCommitsSinceLastTag === 0) {
-    logging.info("Skipping bump...");
-    return {
-      shouldRelease: false,
-      temporarilyDeleteTag: true,
-    };
+    logging.info("No new interesting commits.");
+    return false;
   }
 
-  return {
-    shouldRelease: true,
-    temporarilyDeleteTag: false,
-  };
+  return true;
 }
 
 async function tryReadVersionFile(

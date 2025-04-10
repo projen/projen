@@ -7,8 +7,9 @@ import { Config } from "conventional-changelog-config-spec";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
+const DEFAULT_CATV_SPEC = "commit-and-tag-version@^12";
+
 export interface CommitAndTagOptions {
-  readonly isFirstRelease?: boolean;
   readonly tagPrefix?: string;
   readonly versionFile: string;
   readonly changelogFile?: string;
@@ -26,11 +27,28 @@ export interface InvokeOptions {
 }
 
 export class CommitAndTagVersion {
+  private readonly cmd: string;
+
   constructor(
-    private readonly packageSpec: string,
+    packageSpec: string | undefined,
     private readonly cwd: string,
     private readonly options: CommitAndTagOptions
-  ) {}
+  ) {
+    let cmd;
+    if (!packageSpec) {
+      // If no packageSpec is given, try and resolve the CATV binary
+      // from devDependencies. This will speed up execution a lot.
+      try {
+        cmd = `${process.execPath} ${require.resolve(
+          "commit-and-tag-version/bin/cli.js"
+        )}`;
+      } catch {
+        // Oh well
+      }
+    }
+
+    this.cmd = cmd ?? `npx ${packageSpec ?? DEFAULT_CATV_SPEC}`;
+  }
 
   /**
    * Invoke the `commit-and-tag` package
@@ -61,7 +79,6 @@ export class CommitAndTagVersion {
         bump: options.skipBump,
         changelog: options.skipChangelog,
       },
-      firstRelease: this.options.isFirstRelease,
       tagPrefix: this.options.tagPrefix
         ? `${this.options.tagPrefix}v`
         : undefined,
@@ -76,17 +93,18 @@ export class CommitAndTagVersion {
     const rcfile = path.join(this.cwd, ".versionrc.json");
     await fs.writeFile(rcfile, JSON.stringify(catvConfig, undefined, 2));
     try {
-      const commandline = `npx ${this.packageSpec} ${
-        options.noColors ? "--no-colors" : ""
-      }`;
+      const cmd = [this.cmd];
+      if (options.noColors) {
+        cmd.push("--no-colors");
+      }
 
       let ret: any;
       if (options.capture) {
-        ret = execCapture(commandline, {
+        ret = execCapture(cmd.join(" "), {
           cwd: this.cwd,
         }).toString();
       } else {
-        ret = exec(commandline, { cwd: this.cwd });
+        ret = exec(cmd.join(" "), { cwd: this.cwd });
       }
       return ret;
     } finally {

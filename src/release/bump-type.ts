@@ -1,4 +1,4 @@
-import { inc, parse, ReleaseType } from "semver";
+import { inc, parse } from "semver";
 
 export type BumpType =
   | RelativeBumpType
@@ -6,7 +6,10 @@ export type BumpType =
 
 export type RelativeBumpType =
   | { bump: "none" }
-  | { bump: "relative"; relative: ReleaseType };
+  | { bump: "relative"; relative: MajorMinorPatch };
+
+// The only relative types that CATV supports
+export type MajorMinorPatch = "major" | "minor" | "patch";
 
 /**
  * Reverse engineer the bump type from two version
@@ -30,15 +33,12 @@ export function relativeBumpType(v0: string, v1: string): RelativeBumpType {
   }
 
   if (s0.major !== s1.major) {
-    return { bump: "relative", relative: "minor" };
+    return { bump: "relative", relative: "major" };
   }
   if (s0.minor !== s1.minor) {
     return { bump: "relative", relative: "minor" };
   }
-  if (s0.patch !== s1.patch) {
-    return { bump: "relative", relative: "patch" };
-  }
-  return { bump: "relative", relative: "prerelease" };
+  return { bump: "relative", relative: "patch" };
 }
 
 export function renderBumpType(bumpType: BumpType) {
@@ -73,7 +73,7 @@ export function parseBumpType(x: string): BumpType {
   if (x === "none") {
     return { bump: "none" };
   }
-  if (isReleaseType(x)) {
+  if (isMajorMinorPatch(x)) {
     return { bump: "relative", relative: x };
   }
   if (isFullVersionString(x)) {
@@ -82,9 +82,9 @@ export function parseBumpType(x: string): BumpType {
   throw new Error(`Invalid version: ${x}`);
 }
 
-export function isReleaseType(v: string): v is ReleaseType {
+export function isMajorMinorPatch(v: string): v is MajorMinorPatch {
   // We are not recognizing all of them yet. That's fine for now.
-  return !!v.match(/^(major|minor|patch|prerelease)$/);
+  return !!v.match(/^(major|minor|patch)$/);
 }
 
 function isFullVersionString(nextVersion: string) {
