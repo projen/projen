@@ -153,7 +153,7 @@ describe("bump task", () => {
       new Version(project, {
         versionInputFile: "package.json",
         artifactsDirectory: "dist",
-        nextVersionCommand: "[[ $SUGGESTED_BUMP = patch ]] || exit 1", // Suggestion must be 'patch' or we fail
+        nextVersionCommand: "[ $SUGGESTED_BUMP = patch ] || exit 1", // Suggestion must be 'patch' or we fail
       });
 
       project.synth();
