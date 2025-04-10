@@ -23,7 +23,6 @@ export interface InvokeOptions {
   readonly skipBump?: boolean;
   readonly skipChangelog?: boolean;
   readonly capture?: boolean;
-  readonly noColors?: boolean;
 }
 
 export class CommitAndTagVersion {
@@ -93,18 +92,13 @@ export class CommitAndTagVersion {
     const rcfile = path.join(this.cwd, ".versionrc.json");
     await fs.writeFile(rcfile, JSON.stringify(catvConfig, undefined, 2));
     try {
-      const cmd = [this.cmd];
-      if (options.noColors) {
-        cmd.push("--no-colors");
-      }
-
       let ret: any;
       if (options.capture) {
-        ret = execCapture(cmd.join(" "), {
+        ret = execCapture(this.cmd, {
           cwd: this.cwd,
         }).toString();
       } else {
-        ret = exec(cmd.join(" "), { cwd: this.cwd });
+        ret = exec(this.cmd, { cwd: this.cwd });
       }
       return ret;
     } finally {
@@ -122,12 +116,13 @@ export class CommitAndTagVersion {
    * but I don't see that we have another way.
    */
   public async dryRun(): Promise<string> {
-    const output = await this.invoke({
-      capture: true,
-      dryRun: true,
-      skipChangelog: true,
-      noColors: true,
-    });
+    const output = stripAnsi(
+      await this.invoke({
+        capture: true,
+        dryRun: true,
+        skipChangelog: true,
+      })
+    );
     const re = /bumping version.*from ([0-9a-z.+-]+) to ([0-9a-z.+-]+)/im;
     const m = re.exec(output);
     if (!m) {
@@ -158,4 +153,19 @@ interface CommitAndTagConfig extends Config {
   releaseAs?: string;
   dryRun?: boolean;
   path?: string;
+}
+
+/**
+ * Strips ANSI escape codes from a string
+ *
+ * Need to use this because the `--no-colors` argument to CATV is sometimes
+ * respected and sometimes not and it's driving me crazy.
+ */
+function stripAnsi(str: string): string {
+  // Pattern matches all ANSI escape sequences including colors, cursor movement, etc
+  const pattern = [
+    "[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
+    "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
+  ].join("|");
+  return str.replace(new RegExp(pattern, "g"), "");
 }
