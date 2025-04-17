@@ -3,7 +3,7 @@ import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
 import { compare } from "semver";
 import * as logging from "../logging";
-import { exec, execCapture, execOrUndefined } from "../util";
+import { execCapture, execOrUndefined } from "../util";
 import { ReleasableCommits } from "../version";
 import {
   BumpType,
