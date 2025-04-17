@@ -199,7 +199,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   // if we even should do nothing at all.
   const shouldRelease = isFirstRelease
     ? true
-    : newInterestingCommits({
+    : hasNewInterestingCommits({
         cwd,
         latestTag,
         releasableCommits: options.releasableCommits,
@@ -266,24 +266,18 @@ export async function bump(cwd: string, options: BumpOptions) {
   // we will use this to regenerate the changelog of the most recent version.
   const newRelease = bumpType.bump !== "none";
 
+  // If we're not doing a new release and this is not the
+  // first release, we're just regenerating the previous changelog again.
   if (!newRelease && !isFirstRelease) {
-    // delete the existing tag (locally). `isFirstRelease` will be true if there
-    // was no tag, so there's also nothing to delete.
-    //
-    // Doing this, combined with skipping the bump, will make CATV regenerate
-    // the changelog of the most recent release.
-    exec(`git tag --delete ${latestTag}`, { cwd });
-  }
-  try {
+    await catv.regeneratePreviousChangeLog(latestVersion, latestTag);
+  } else {
+    // Otherwise we're either doing a bump + release, or we're releasing the
+    // first version as 0.0.0 (which is already the number in the file so we
+    // skip bumping).
     await catv.invoke({
       releaseAs: newRelease ? renderBumpType(bumpType) : undefined,
       skipBump: !newRelease,
     });
-  } finally {
-    if (!newRelease && !isFirstRelease) {
-      // add the tag back if it was previously removed
-      exec(`git tag ${latestTag}`, { cwd });
-    }
   }
 
   // Validate the version that we ended up with
@@ -315,7 +309,7 @@ export async function bump(cwd: string, options: BumpOptions) {
 /**
  * Determine based on releaseable commits whether we should release or not
  */
-function newInterestingCommits(options: {
+function hasNewInterestingCommits(options: {
   releasableCommits?: string;
   latestTag: string;
   cwd: string;

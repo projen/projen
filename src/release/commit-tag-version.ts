@@ -20,6 +20,7 @@ export interface CommitAndTagOptions {
 export interface InvokeOptions {
   readonly releaseAs?: string;
   readonly dryRun?: boolean;
+  /** Avoid updating the version files */
   readonly skipBump?: boolean;
   readonly skipChangelog?: boolean;
   readonly capture?: boolean;
@@ -103,6 +104,34 @@ export class CommitAndTagVersion {
       return ret;
     } finally {
       await fs.unlink(rcfile);
+    }
+  }
+
+  /**
+   * Regenerate the most recent change log
+   *
+   * Do this by deleting the most recent tag, running CATV, then
+   * restoring the tag.
+   *
+   * We do this combined with skipping the bump to make CATV regenerate the
+   * changelog of the most recent release (if we left the tag, the changelog
+   * would be empty).
+   */
+  public async regeneratePreviousChangeLog(version: string, latestTag: string) {
+    const oldCommit = execCapture(`git rev-parse ${latestTag}`, {
+      cwd: this.cwd,
+    })
+      .toString("utf8")
+      .trim();
+
+    exec(`git tag --delete ${latestTag}`, { cwd: this.cwd });
+    try {
+      await this.invoke({
+        releaseAs: version,
+        skipBump: true,
+      });
+    } finally {
+      exec(`git tag ${latestTag} ${oldCommit}`, { cwd: this.cwd });
     }
   }
 
