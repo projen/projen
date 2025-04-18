@@ -10,10 +10,10 @@ describe("cdk.json", () => {
       name: "hello",
       defaultReleaseBranch: "main",
       cdkVersion: "1.100.0",
-      app: "bunx --smol my-app.ts",
+      app: "bun --smol my-app.ts",
     });
     const files = synthSnapshot(project);
-    expect(files["cdk.json"].app).toStrictEqual("bunx --smol my-app.ts");
+    expect(files["cdk.json"].app).toStrictEqual("bun --smol my-app.ts");
   });
   it("with bun as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
@@ -23,7 +23,7 @@ describe("cdk.json", () => {
       packageManager: NodePackageManager.BUN,
     });
     const files = synthSnapshot(project);
-    expect(files["cdk.json"].app).toStrictEqual("bunx src/main.ts");
+    expect(files["cdk.json"].app).toStrictEqual("bun src/main.ts");
   });
   it("with pnpm as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
@@ -78,7 +78,7 @@ describe("cdk.json", () => {
         name: "hello",
         defaultReleaseBranch: "main",
         cdkVersion: "1.100.0",
-        app: "bunx --smol my-app.ts",
+        app: "bun --smol my-app.ts",
         appEntrypoint: "my-app.ts",
       });
     }).toThrowError("Only one of 'app' or 'appEntrypoint' can be specified");
