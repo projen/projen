@@ -45,7 +45,13 @@ export interface BuildWorkflowCommonOptions {
    *
    * @default "build"
    */
-  readonly name?: string;
+    readonly name?: string;
+    
+  /**
+   * The container image to use for builds.
+   * @default - the default workflow container
+   */
+  readonly containerImage?: string;
 
   /**
    * Steps to execute before the build.
@@ -64,43 +70,8 @@ export interface BuildWorkflowCommonOptions {
    * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
    * @default `{ contents: JobPermission.WRITE }`
    */
-  readonly permissions?: JobPermissions;
-}
-
-export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
-  /**
-   * The task to execute in order to build the project.
-   */
-  readonly buildTask: Task;
-
-  /**
-   * A name of a directory that includes build artifacts.
-   * @default "dist"
-   */
-  readonly artifactsDirectory?: string;
-
-  /**
-   * The container image to use for builds.
-   * @default - the default workflow container
-   */
-  readonly containerImage?: string;
-
-  /**
-   * Automatically update files modified during builds to pull-request branches.
-   * This means that any files synthesized by projen or e.g. test snapshots will
-   * always be up-to-date before a PR is merged.
-   *
-   * Implies that PR builds do not have anti-tamper checks.
-   *
-   * This is enabled by default only if `githubTokenSecret` is set. Otherwise it
-   * is disabled, which implies that file changes that happen during build will
-   * not be pushed back to the branch.
-   *
-   * @default true
-   */
-  readonly mutableBuild?: boolean;
-
-  /**
+    readonly permissions?: JobPermissions;
+    /**
    * Steps to execute after build.
    * @default []
    */
@@ -131,7 +102,36 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @description Defines a target Runner Group by name and/or labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
-  readonly runsOnGroup?: GroupRunnerOptions;
+    readonly runsOnGroup?: GroupRunnerOptions;
+    
+}
+
+export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
+  /**
+   * The task to execute in order to build the project.
+   */
+  readonly buildTask: Task;
+
+  /**
+   * A name of a directory that includes build artifacts.
+   * @default "dist"
+   */
+  readonly artifactsDirectory?: string;
+
+  /**
+   * Automatically update files modified during builds to pull-request branches.
+   * This means that any files synthesized by projen or e.g. test snapshots will
+   * always be up-to-date before a PR is merged.
+   *
+   * Implies that PR builds do not have anti-tamper checks.
+   *
+   * This is enabled by default only if `githubTokenSecret` is set. Otherwise it
+   * is disabled, which implies that file changes that happen during build will
+   * not be pushed back to the branch.
+   *
+   * @default true
+   */
+  readonly mutableBuild?: boolean;
 }
 
 export class BuildWorkflow extends Component {
