@@ -2013,3 +2013,28 @@ describe("npmignore", () => {
     );
   });
 });
+
+describe("build workflow options", () => {
+    let project: NodeProject;
+    let snapshot: any;
+    
+    beforeEach(() => {
+        project = new NodeProject({
+            name: "test-node-project",
+            defaultReleaseBranch: "main",
+            buildWorkflowOptions: {
+                env: {
+                    MY_ENV_VAR: "my-value",
+                },
+            }
+        });
+        snapshot = synthSnapshot(project);
+    });
+    it("should set the environment variables in the build workflow", () => {
+        const buildWorkflow = yaml.parse(snapshot[".github/workflows/build.yml"]);
+        expect(buildWorkflow.jobs.build.env).toEqual({
+            CI: "true",
+            MY_ENV_VAR: "my-value",
+        });
+    });
+});
