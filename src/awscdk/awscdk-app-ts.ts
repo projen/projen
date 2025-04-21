@@ -211,7 +211,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     switch (this.package.packageManager) {
       case NodePackageManager.BUN:
         // bun doesn't support tsconfig overrides yet
-        return `bun ${appEntrypoint}`;
+        return `${this.runScriptCommand} ${appEntrypoint}`;
       default:
         return `${this.runScriptCommand} ts-node -P ${this.tsconfig?.fileName} --prefer-ts-exts ${appEntrypoint}`;
     }

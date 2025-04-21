@@ -23,7 +23,7 @@ describe("cdk.json", () => {
       packageManager: NodePackageManager.BUN,
     });
     const files = synthSnapshot(project);
-    expect(files["cdk.json"].app).toStrictEqual("bun src/main.ts");
+    expect(files["cdk.json"].app).toStrictEqual("bun run src/main.ts");
   });
   it("with pnpm as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
