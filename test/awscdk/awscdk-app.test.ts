@@ -15,6 +15,7 @@ describe("cdk.json", () => {
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual("bun --smol my-app.ts");
   });
+
   it("with bun as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
@@ -27,6 +28,7 @@ describe("cdk.json", () => {
       "bun run --tsconfig-override=tsconfig.json ./src/main.ts"
     );
   });
+
   it("with pnpm as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
@@ -36,9 +38,10 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "pnpm run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "pnpm exec ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
     );
   });
+
   it("with npm as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
@@ -48,9 +51,36 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npm run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
     );
   });
+
+  it("with yarn berry as package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "yarn exec ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+
+  it("with yarn classic as package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.YARN_CLASSIC,
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "yarn exec ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+
   it("with the default package manager", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
@@ -59,9 +89,10 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "yarn exec ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
     );
   });
+
   it("with a custom appEntrypoint", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
@@ -71,9 +102,10 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts"
+      "yarn exec ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts"
     );
   });
+
   it("throws an error if both app and appEntrypoint are specified", () => {
     expect(() => {
       new AwsCdkTypeScriptApp({

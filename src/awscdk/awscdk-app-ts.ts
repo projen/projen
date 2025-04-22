@@ -212,19 +212,33 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     const appEntrypoint = path.posix.join(this.srcdir, this.appEntrypoint);
 
+    const tsNodeConfig = this.tsconfig?.fileName
+      ? ` -P ${this.tsconfig?.fileName}`
+      : "";
+    const tsNodeApp = `ts-node${tsNodeConfig} --prefer-ts-exts ${appEntrypoint}`;
+
     switch (this.package.packageManager) {
       case NodePackageManager.BUN:
         const bunTsConfig = this.tsconfig?.fileName
           ? ` --tsconfig-override=${this.tsconfig?.fileName}`
           : "";
-        return `${
-          this.runScriptCommand
-        }${bunTsConfig} ${ensureRelativePathPrefix(appEntrypoint)}`;
+        const bunEntrypoint = ensureRelativePathPrefix(appEntrypoint);
+
+        // https://bun.sh/docs/cli/run
+        // bun can run ts files directly
+        return `bun run${bunTsConfig} ${bunEntrypoint}`;
+      case NodePackageManager.PNPM:
+        // https://pnpm.io/cli/exec
+        return `pnpm exec ${tsNodeApp}`;
+      case NodePackageManager.YARN_CLASSIC:
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_BERRY:
+      case NodePackageManager.YARN2:
+        // https://classic.yarnpkg.com/lang/en/docs/cli/exec/
+        // https://yarnpkg.com/cli/exec
+        return `yarn exec ${tsNodeApp}`;
       default:
-        const tsNodeConfig = this.tsconfig?.fileName
-          ? ` -P ${this.tsconfig?.fileName}`
-          : "";
-        return `${this.runScriptCommand} ts-node${tsNodeConfig} --prefer-ts-exts ${appEntrypoint}`;
+        return `npx ${tsNodeApp}`;
     }
   }
 }
