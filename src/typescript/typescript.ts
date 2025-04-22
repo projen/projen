@@ -588,7 +588,7 @@ export class TypeScriptProject extends NodeProject {
       experimentalDecorators: true,
       inlineSourceMap: true,
       inlineSources: true,
-      lib: ["es2019"],
+      lib: ["es2020"],
       module: "CommonJS",
       noEmitOnError: false,
       noFallthroughCasesInSwitch: true,
@@ -602,7 +602,7 @@ export class TypeScriptProject extends NodeProject {
       strictNullChecks: true,
       strictPropertyInitialization: true,
       stripInternal: true,
-      target: "ES2019",
+      target: "ES2020",
     };
   }
 
