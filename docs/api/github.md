@@ -180,13 +180,19 @@ public readonly label: string;
 
 ### AutoMerge <a name="AutoMerge" id="projen.github.AutoMerge"></a>
 
-Sets up mergify to merging approved pull requests.
+Automatically merge Pull Requests using Mergify.
+
+> [!NOTE]
+> GitHub now natively provides the same features, so you don't need Mergify
+> anymore. See `GitHubOptions.mergeQueue` and `MergeQueueOptions.autoQueue`.
 
 If `buildJob` is specified, the specified GitHub workflow job ID is required
 to succeed in order for the PR to be merged.
 
 `approvedReviews` specified the number of code review approvals required for
 the PR to be merged.
+
+> [https://mergify.com/](https://mergify.com/)
 
 #### Initializers <a name="Initializers" id="projen.github.AutoMerge.Initializer"></a>
 
@@ -2431,6 +2437,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.GithubWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
 | <code><a href="#projen.github.GithubWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 
@@ -2498,6 +2505,18 @@ public readonly concurrency: ConcurrencyOptions;
 The concurrency configuration of the workflow.
 
 undefined means no concurrency limitations.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.GithubWorkflow.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Additional environment variables to set for the workflow.
 
 ---
 
@@ -3977,6 +3996,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
 | <code><a href="#projen.github.TaskWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.jobId">jobId</a></code> | <code>string</code> | *No description.* |
@@ -4046,6 +4066,18 @@ public readonly concurrency: ConcurrencyOptions;
 The concurrency configuration of the workflow.
 
 undefined means no concurrency limitations.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.TaskWorkflow.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Additional environment variables to set for the workflow.
 
 ---
 
@@ -4674,6 +4706,7 @@ const autoQueueOptions: github.AutoQueueOptions = { ... }
 | <code><a href="#projen.github.AutoQueueOptions.property.mergeMethod">mergeMethod</a></code> | <code><a href="#projen.github.MergeMethod">MergeMethod</a></code> | The method used to add the PR to the merge queue Any branch protection rules must allow this merge method. |
 | <code><a href="#projen.github.AutoQueueOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method for authenticating with GitHub to enable auto-queue on pull requests. |
 | <code><a href="#projen.github.AutoQueueOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.AutoQueueOptions.property.targetBranches">targetBranches</a></code> | <code>string[]</code> | The branch names that we should auto-queue for. |
 
 ---
 
@@ -4745,6 +4778,45 @@ public readonly runsOn: string[];
 - *Default:* ["ubuntu-latest"]
 
 Github Runner selection labels.
+
+---
+
+##### `targetBranches`<sup>Optional</sup> <a name="targetBranches" id="projen.github.AutoQueueOptions.property.targetBranches"></a>
+
+```typescript
+public readonly targetBranches: string[];
+```
+
+- *Type:* string[]
+
+The branch names that we should auto-queue for.
+
+This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
+
+Be sure not to enable `autoQueue` for branches that don't have branch rules
+with merge requirements set up, otherwise new PRs will be merged
+immediately after creating without a chance for review.
+
+## Automatically merging a set of Stacked PRs
+
+If you set this to `['main']` you can automatically merge a set of Stacked PRs
+in the right order. It works like this:
+
+- Create PR #1 from branch `a`, targeting `main`.
+- Create PR #2 from branch `b`, targeting branch `a`.
+- Create PR #3 from branch `c`, targeting branch `b`.
+
+Initially, PR #1 will be set to auto-merge, PRs #2 and #3 will not.
+
+Once PR #1 passes all of its requirements it will merge. That will delete
+branch `a` and change  the target branch of PR #2 change to `main`. At that
+point, auto-queueing will switch on for PR #2 and it gets merged, etc.
+
+> [!IMPORTANT]
+> This component will never disable AutoMerge, only enable it. So if a PR is
+> initially targeted at one of the branches in this list, and then
+> subsequently retargeted to another branch, *AutoMerge is not
+> automatically turned off*.
 
 ---
 
@@ -6249,7 +6321,7 @@ public readonly mergeQueue: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true
+- *Default:* false
 
 Whether a merge queue should be used on this repository to merge pull requests.
 
@@ -6878,6 +6950,7 @@ const githubWorkflowOptions: github.GithubWorkflowOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.concurrencyOptions">concurrencyOptions</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. |
+| <code><a href="#projen.github.GithubWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.fileName">fileName</a></code> | <code>string</code> | Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.force">force</a></code> | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`. |
 | <code><a href="#projen.github.GithubWorkflowOptions.property.limitConcurrency">limitConcurrency</a></code> | <code>boolean</code> | Enable concurrency limitations. |
@@ -6898,6 +6971,19 @@ Concurrency ensures that only a single job or workflow using the same concurrenc
 Currently in beta.
 
 > [https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency)
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.github.GithubWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* no additional environment variables
+
+Additional environment variables to set for the workflow.
 
 ---
 

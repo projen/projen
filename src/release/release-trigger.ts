@@ -76,6 +76,11 @@ interface ReleaseTriggerOptions {
    * Set to an empty string to disable pushing.
    */
   readonly gitPushCommand?: string;
+
+  /**
+   * Only a workflowDispatch trigger
+   */
+  readonly workflowDispatchOnly?: boolean;
 }
 
 /**
@@ -127,6 +132,20 @@ export class ReleaseTrigger {
   }
 
   /**
+   * The release can only be triggered using the GitHub UI.
+   */
+  public static workflowDispatch() {
+    // This works because every workflow is always automatically `workflowDispatch`able
+    //
+    // The only thing we need to ensure is that no schedule or push trigger is
+    // added, and that we don't count as "manual" because that leads to the
+    // creation of a working copy task we don't need.
+    return new ReleaseTrigger({
+      workflowDispatchOnly: true,
+    });
+  }
+
+  /**
    * Creates a continuous release trigger.
    *
    * Automated releases will occur on every commit.
@@ -169,18 +188,23 @@ export class ReleaseTrigger {
    */
   public readonly gitPushCommand?: string;
 
+  private readonly workflowDispatchOnly?: boolean;
+
   private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
     this.paths = options.paths;
     this.schedule = options.schedule;
     this.changelogPath = options.changelogPath;
     this.gitPushCommand = options.gitPushCommand;
+    this.workflowDispatchOnly = options.workflowDispatchOnly;
   }
 
   /**
-   * Whether or not this is a manual release trigger.
+   * Whether or not this is a release trigger with a manual task run in a working copy.
+   *
+   * If the `ReleaseTrigger` is a GitHub-only manual task, this will return `false`.
    */
   public get isManual() {
-    return !(this.isContinuous || this.schedule);
+    return !(this.isContinuous || this.schedule) && !this.workflowDispatchOnly;
   }
 }

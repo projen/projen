@@ -114,3 +114,13 @@ describe("scheduled release", () => {
     expect(releaseTrigger.changelogPath).toBeUndefined();
   });
 });
+
+describe("workflowdispatch release", () => {
+  const trigger = ReleaseTrigger.workflowDispatch();
+
+  test("is not manual", () => {
+    // Well it is, but not for what this property is used for, which is to determine
+    // whether a local `yarn release` task needs to be generated.
+    expect(trigger.isManual).toEqual(false);
+  });
+});

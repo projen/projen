@@ -116,7 +116,7 @@ describe("JsiiProject with jsiiVersion: '*'", () => {
 });
 
 // matrix test
-describe.each([["~5.4.0"], ["~5.5.0"], ["~5.6.0"]])(
+describe.each([["~5.5.0"], ["~5.6.0"], ["~5.7.0"], ["~5.8.0"]])(
   "JsiiProject with jsiiVersion: '%s'",
   (jsiiVersion) => {
     describe.each([
