@@ -6203,9 +6203,11 @@ const githubCredentialsAppOptions: github.GithubCredentialsAppOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.GithubCredentialsAppOptions.property.appIdSecret">appIdSecret</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.GithubCredentialsAppOptions.property.appIdSecret">appIdSecret</a></code> | <code>string</code> | The secret containing the GitHub App ID. |
+| <code><a href="#projen.github.GithubCredentialsAppOptions.property.owner">owner</a></code> | <code>string</code> | The owner of the GitHub App installation. |
 | <code><a href="#projen.github.GithubCredentialsAppOptions.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.AppPermissions">AppPermissions</a></code> | The permissions granted to the token. |
-| <code><a href="#projen.github.GithubCredentialsAppOptions.property.privateKeySecret">privateKeySecret</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.GithubCredentialsAppOptions.property.privateKeySecret">privateKeySecret</a></code> | <code>string</code> | The secret containing the GitHub App private key. |
+| <code><a href="#projen.github.GithubCredentialsAppOptions.property.repositories">repositories</a></code> | <code>string[]</code> | List of repositories to grant access to. |
 
 ---
 
@@ -6216,6 +6218,22 @@ public readonly appIdSecret: string;
 ```
 
 - *Type:* string
+- *Default:* "PROJEN_APP_ID"
+
+The secret containing the GitHub App ID.
+
+---
+
+##### `owner`<sup>Optional</sup> <a name="owner" id="projen.github.GithubCredentialsAppOptions.property.owner"></a>
+
+```typescript
+public readonly owner: string;
+```
+
+- *Type:* string
+- *Default:* if empty, defaults to the current repository owner
+
+The owner of the GitHub App installation.
 
 ---
 
@@ -6239,6 +6257,24 @@ public readonly privateKeySecret: string;
 ```
 
 - *Type:* string
+- *Default:* "PROJEN_APP_PRIVATE_KEY"
+
+The secret containing the GitHub App private key.
+
+Escaped newlines (\\n) will be automatically replaced with actual newlines.
+
+---
+
+##### `repositories`<sup>Optional</sup> <a name="repositories" id="projen.github.GithubCredentialsAppOptions.property.repositories"></a>
+
+```typescript
+public readonly repositories: string[];
+```
+
+- *Type:* string[]
+- *Default:* if owner is set and repositories is empty, access will be scoped to all repositories in the provided repository owner's installation. If owner and repositories are empty, access will be scoped to only the current repository.
+
+List of repositories to grant access to.
 
 ---
 

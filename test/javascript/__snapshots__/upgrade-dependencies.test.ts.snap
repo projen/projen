@@ -1150,10 +1150,10 @@ jobs:
     steps:
       - name: Generate token
         id: generate_token
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
         with:
-          app_id: \${{ secrets.PROJEN_APP_ID }}
-          private_key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
+          app-id: \${{ secrets.PROJEN_APP_ID }}
+          private-key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -1248,11 +1248,12 @@ jobs:
     steps:
       - name: Generate token
         id: generate_token
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5
         with:
-          app_id: \${{ secrets.PROJEN_APP_ID }}
-          private_key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
-          permissions: '{"pull_requests":"write","contents":"write"}'
+          app-id: \${{ secrets.PROJEN_APP_ID }}
+          private-key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
+          permission-pull-requests: write
+          permission-contents: write
       - name: Checkout
         uses: actions/checkout@v4
         with:
