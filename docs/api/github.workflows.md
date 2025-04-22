@@ -450,7 +450,7 @@ public readonly pullRequests: AppPermission;
 
 ##### ~~`repositoryAnnouncementBanners`~~<sup>Optional</sup> <a name="repositoryAnnouncementBanners" id="projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners"></a>
 
-- *Deprecated:* remove by GitHub
+- *Deprecated:* removed by GitHub
 
 ```typescript
 public readonly repositoryAnnouncementBanners: AppPermission;
@@ -1942,7 +1942,7 @@ public readonly pullRequests: JobPermission;
 
 ##### ~~`repositoryProjects`~~<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.JobPermissions.property.repositoryProjects"></a>
 
-- *Deprecated:* deprecated by GitHub
+- *Deprecated:* removed by GitHub
 
 ```typescript
 public readonly repositoryProjects: JobPermission;
