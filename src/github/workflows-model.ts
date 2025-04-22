@@ -224,18 +224,25 @@ export interface ToolRequirement {
  * specify the access for any of these scopes, all those that are not
  * specified are set to `JobPermission.NONE`, instead of the default behavior
  * when none is specified.
+ *
+ * @see https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions
  */
 export interface JobPermissions {
   readonly actions?: JobPermission;
+  readonly attestations?: JobPermission;
   readonly checks?: JobPermission;
   readonly contents?: JobPermission;
   readonly deployments?: JobPermission;
   readonly idToken?: JobPermission;
   readonly issues?: JobPermission;
+  readonly models?: JobPermission;
   readonly discussions?: JobPermission;
   readonly packages?: JobPermission;
   readonly pages?: JobPermission;
   readonly pullRequests?: JobPermission;
+  /**
+   * @deprecated removed by GitHub
+   */
   readonly repositoryProjects?: JobPermission;
   readonly securityEvents?: JobPermission;
   readonly statuses?: JobPermission;
@@ -249,41 +256,62 @@ export interface JobPermissions {
  * **only** the specified permissions are granted to the token.
  *
  * @see https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app
+ * @see https://github.com/actions/create-github-app-token/blob/main/action.yml#L28
  */
 export interface AppPermissions {
   readonly actions?: AppPermission;
+  readonly attestations?: AppPermission;
   readonly administration?: AppPermission;
   readonly checks?: AppPermission;
+  readonly codespaces?: AppPermission;
   readonly contents?: AppPermission;
+  readonly dependabotSecrets?: AppPermission;
   readonly deployments?: AppPermission;
+  readonly emailAddresses?: AppPermission;
   readonly environments?: AppPermission;
+  readonly followers?: AppPermission;
+  readonly gitSshKeys?: AppPermission;
+  readonly gpgKeys?: AppPermission;
+  readonly interactionLimits?: AppPermission;
   readonly issues?: AppPermission;
+  readonly members?: AppPermission;
   readonly metadata?: AppPermission;
+  readonly organizationAdministration?: AppPermission;
+  readonly organizationAnnouncementBanners?: AppPermission;
+  readonly organizationCopilotSeatManagement?: AppPermission;
+  readonly organizationCustomOrgRoles?: AppPermission;
+  readonly organizationCustomProperties?: AppPermission;
+  readonly organizationCustomRoles?: AppPermission;
+  readonly organizationEvents?: AppPermission;
+  readonly organizationHooks?: AppPermission;
+  readonly organizationPackages?: AppPermission;
+  readonly organizationPersonalAccessTokenRequests?: AppPermission;
+  readonly organizationPersonalAccessTokens?: AppPermission;
+  readonly organizationPlan?: AppPermission;
+  readonly organizationProjects?: AppPermission;
+  readonly organizationSecrets?: AppPermission;
+  readonly organizationSelfHostedRunners?: AppPermission;
+  readonly orgnaizationUserBlocking?: AppPermission;
   readonly packages?: AppPermission;
   readonly pages?: AppPermission;
+  readonly profile?: AppPermission;
   readonly pullRequests?: AppPermission;
+  /**
+   * @deprecated removed by GitHub
+   */
   readonly repositoryAnnouncementBanners?: AppPermission;
+  readonly repositoryCustomProperties?: AppPermission;
   readonly repositoryHooks?: AppPermission;
-  readonly repositoryProject?: AppPermission;
+  readonly repositoryProjects?: AppPermission;
   readonly secretScanningAlerts?: AppPermission;
   readonly secrets?: AppPermission;
   readonly securityEvents?: AppPermission;
   readonly singleFile?: AppPermission;
+  readonly starring?: AppPermission;
   readonly statuses?: AppPermission;
+  readonly teamDiscussions?: AppPermission;
   readonly vulnerabilityAlerts?: AppPermission;
   readonly workflows?: AppPermission;
-  readonly members?: AppPermission;
-  readonly organizationAdministration?: AppPermission;
-  readonly organizationCustomRoles?: AppPermission;
-  readonly organizationAnnouncementBanners?: AppPermission;
-  readonly organizationHooks?: AppPermission;
-  readonly organizationPlan?: AppPermission;
-  readonly organizationProjects?: AppPermission;
-  readonly organizationPackages?: AppPermission;
-  readonly organizationSecrets?: AppPermission;
-  readonly organizationSelfHostedRunners?: AppPermission;
-  readonly orgnaizationUserBlocking?: AppPermission;
-  readonly teamDiscussions?: AppPermission;
 }
 
 /**
