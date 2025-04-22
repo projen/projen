@@ -199,23 +199,54 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public addCdkDependency(...modules: string[]) {
     return this.cdkDeps.addV1Dependencies(...modules);
   }
+
   private getCdkApp(options: AwsCdkTypeScriptAppOptions): string {
-    let appEntrypoint: string;
     if (options.app && options.appEntrypoint) {
       throw new Error("Only one of 'app' or 'appEntrypoint' can be specified");
-    } else if (options.app) {
-      return options.app;
-    } else {
-      appEntrypoint = path.posix.join(this.srcdir, this.appEntrypoint);
     }
+
+    // prefer an explicitly provided app command
+    if (options.app) {
+      return options.app;
+    }
+
+    const appEntrypoint = path.posix.join(this.srcdir, this.appEntrypoint);
+
     switch (this.package.packageManager) {
       case NodePackageManager.BUN:
-        // bun doesn't support tsconfig overrides yet
-        return `${this.runScriptCommand} ${appEntrypoint}`;
+        const bunTsConfig = this.tsconfig?.fileName
+          ? ` --tsconfig-override=${this.tsconfig?.fileName}`
+          : "";
+        return `${
+          this.runScriptCommand
+        }${bunTsConfig} ${ensureRelativePathPrefix(appEntrypoint)}`;
       default:
-        return `${this.runScriptCommand} ts-node -P ${this.tsconfig?.fileName} --prefer-ts-exts ${appEntrypoint}`;
+        const tsNodeConfig = this.tsconfig?.fileName
+          ? ` -P ${this.tsconfig?.fileName}`
+          : "";
+        return `${this.runScriptCommand} ts-node${tsNodeConfig} --prefer-ts-exts ${appEntrypoint}`;
     }
   }
+}
+
+/**
+ * Ensures a path is properly prefixed with './' if it's a relative path
+ * @param {string} filePath - The path to normalize
+ * @returns {string} - The normalized path
+ */
+function ensureRelativePathPrefix(filePath: string) {
+  // If it's already an absolute path, return as is
+  if (path.isAbsolute(filePath)) {
+    return filePath;
+  }
+
+  // If it already starts with ./ or ../, return as is
+  if (filePath.startsWith("./") || filePath.startsWith("../")) {
+    return filePath;
+  }
+
+  // Otherwise, add ./ prefix
+  return `./${filePath}`;
 }
 
 class SampleCode extends Component {
