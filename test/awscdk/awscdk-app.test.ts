@@ -1,35 +1,89 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import { AwsCdkTypeScriptApp, LambdaRuntime } from "../../src/awscdk";
-import { mkdtemp, synthSnapshot } from "../util";
+import { NodePackageManager } from "../../src/javascript";
+import { mkdtemp, SynthOutput, synthSnapshot } from "../util";
 
-describe("cdkVersion is >= 2.0.0", () => {
-  test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {
+describe("cdk.json", () => {
+  it("app fully overridden", () => {
     const project = new AwsCdkTypeScriptApp({
-      cdkVersion: "2.0.0-rc.1",
+      name: "hello",
       defaultReleaseBranch: "main",
-      name: "test",
+      cdkVersion: "1.100.0",
+      app: "bun --smol my-app.ts",
     });
-    const snap = synthSnapshot(project);
-    expect(snap["package.json"].dependencies).toStrictEqual({
-      "aws-cdk-lib": "^2.0.0-rc.1",
-      constructs: "^10.0.5",
-    });
-    expect(
-      snap["src/main.ts"].indexOf(
-        "import { App, Stack, StackProps } from 'aws-cdk-lib'"
-      )
-    ).not.toEqual(-1);
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual("bun --smol my-app.ts");
   });
-
-  test("empty context", () => {
+  it("with bun as package manager", () => {
     const project = new AwsCdkTypeScriptApp({
-      cdkVersion: "2.0.0-rc.1",
+      name: "hello",
       defaultReleaseBranch: "main",
-      name: "test",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.BUN,
     });
-    const snap = synthSnapshot(project);
-    expect(snap["cdk.json"].context).toBeUndefined();
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "bun run --tsconfig-override=tsconfig.json ./src/main.ts"
+    );
+  });
+  it("with pnpm as package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.PNPM,
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "pnpm run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+  it("with npm as package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      packageManager: NodePackageManager.NPM,
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "npm run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+  it("with the default package manager", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+    );
+  });
+  it("with a custom appEntrypoint", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+      appEntrypoint: "my-app.ts",
+    });
+    const files = synthSnapshot(project);
+    expect(files["cdk.json"].app).toStrictEqual(
+      "yarn run ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts"
+    );
+  });
+  it("throws an error if both app and appEntrypoint are specified", () => {
+    expect(() => {
+      new AwsCdkTypeScriptApp({
+        name: "hello",
+        defaultReleaseBranch: "main",
+        cdkVersion: "1.100.0",
+        app: "bun --smol my-app.ts",
+        appEntrypoint: "my-app.ts",
+      });
+    }).toThrowError("Only one of 'app' or 'appEntrypoint' can be specified");
   });
 });
 
@@ -195,17 +249,58 @@ describe("integ-runner", () => {
   });
 });
 
-test("CDK v1 usage", () => {
-  const project = new AwsCdkTypeScriptApp({
-    cdkVersion: "1.126.0",
-    defaultReleaseBranch: "main",
-    name: "test",
+describe("CDK v2", () => {
+  let project: AwsCdkTypeScriptApp;
+  let snapshot: SynthOutput;
+  beforeEach(() => {
+    project = new AwsCdkTypeScriptApp({
+      cdkVersion: "2.0.0-rc.1",
+      defaultReleaseBranch: "main",
+      name: "test",
+    });
+    snapshot = synthSnapshot(project);
   });
+  it("has a aws-cdk-lib runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
+      "aws-cdk-lib": "^2.0.0-rc.1",
+    });
+  });
+  it("has a constructs runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
+      constructs: "^10.0.5",
+    });
+  });
+  it("has the correct import for the sample file", () => {
+    expect(snapshot["src/main.ts"]).toContain(
+      "import { App, Stack, StackProps } from 'aws-cdk-lib'"
+    );
+  });
+  it("has an empty context", () => {
+    expect(snapshot["cdk.json"].context).toBeUndefined();
+  });
+});
 
-  const snap = synthSnapshot(project);
-  expect(snap["package.json"].dependencies).toStrictEqual({
-    "@aws-cdk/core": "^1.126.0",
-    constructs: "^3.2.27",
+describe("CDK v1", () => {
+  let project: AwsCdkTypeScriptApp;
+  let snapshot: SynthOutput;
+
+  beforeEach(() => {
+    project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "1.100.0",
+    });
+    snapshot = synthSnapshot(project);
+  });
+  it("has a aws-cdk-lib runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
+      "@aws-cdk/core": "^1.100.0",
+    });
+  });
+  it("has a constructs runtime depdendency", () => {
+    expect(snapshot["package.json"].dependencies).toMatchObject({
+      constructs: "^3.2.27",
+    });
   });
 });
 
