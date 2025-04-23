@@ -3255,7 +3255,6 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
-- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
@@ -3770,7 +3769,6 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
-- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
@@ -4111,7 +4109,6 @@ and release artifact automation
 | <code><a href="#projen.release.ReleaseTrigger.continuous">continuous</a></code> | Creates a continuous release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.manual">manual</a></code> | Creates a manual release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.scheduled">scheduled</a></code> | Creates a scheduled release trigger. |
-| <code><a href="#projen.release.ReleaseTrigger.workflowDispatch">workflowDispatch</a></code> | The release can only be triggered using the GitHub UI. |
 
 ---
 
@@ -4183,22 +4180,12 @@ release options.
 
 ---
 
-##### `workflowDispatch` <a name="workflowDispatch" id="projen.release.ReleaseTrigger.workflowDispatch"></a>
-
-```typescript
-import { release } from 'projen'
-
-release.ReleaseTrigger.workflowDispatch()
-```
-
-The release can only be triggered using the GitHub UI.
-
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.release.ReleaseTrigger.property.isContinuous">isContinuous</a></code> | <code>boolean</code> | Whether or not this is a continuous release. |
-| <code><a href="#projen.release.ReleaseTrigger.property.isManual">isManual</a></code> | <code>boolean</code> | Whether or not this is a release trigger with a manual task run in a working copy. |
+| <code><a href="#projen.release.ReleaseTrigger.property.isManual">isManual</a></code> | <code>boolean</code> | Whether or not this is a manual release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.property.changelogPath">changelogPath</a></code> | <code>string</code> | Project-level changelog file path. |
 | <code><a href="#projen.release.ReleaseTrigger.property.gitPushCommand">gitPushCommand</a></code> | <code>string</code> | Override git-push command used when releasing manually. |
 | <code><a href="#projen.release.ReleaseTrigger.property.paths">paths</a></code> | <code>string[]</code> | Paths for which pushes will trigger a release when `isContinuous` is `true`. |
@@ -4226,9 +4213,7 @@ public readonly isManual: boolean;
 
 - *Type:* boolean
 
-Whether or not this is a release trigger with a manual task run in a working copy.
-
-If the `ReleaseTrigger` is a GitHub-only manual task, this will return `false`.
+Whether or not this is a manual release trigger.
 
 ---
 
