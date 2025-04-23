@@ -2316,7 +2316,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -2330,7 +2330,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -2369,7 +2369,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -2760,7 +2760,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -2774,7 +2774,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -2813,7 +2813,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -4069,7 +4069,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -4083,7 +4083,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -4122,7 +4122,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -7760,7 +7760,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -7774,7 +7774,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -7813,7 +7813,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8487,7 +8487,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8501,7 +8501,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -8540,7 +8540,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8931,7 +8931,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8945,7 +8945,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -8984,7 +8984,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -13706,6 +13706,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 

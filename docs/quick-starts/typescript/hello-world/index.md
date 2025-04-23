@@ -113,5 +113,5 @@ const project = new typescript.TypeScriptProject({
 As described in the section above, Projen recommends that you list your dependencies
 only by module name and have Projen install the latest version of the package. A
 consequence of this recommendation is that when migrating, you may unknowingly update
-your dependencies to incompatible versions. You can always provide specific semvar
+your dependencies to incompatible versions. You can always provide specific semver
 requirements (e.g. `express@2.1.0`) if necessary.

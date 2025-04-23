@@ -1032,8 +1032,8 @@ test("buildWorkflow can use GitHub App for API access", () => {
   expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
     name: "Generate token",
     with: {
-      app_id: `\${{ secrets.${appId} }}`,
-      private_key: `\${{ secrets.${privateKey} }}`,
+      "app-id": `\${{ secrets.${appId} }}`,
+      "private-key": `\${{ secrets.${privateKey} }}`,
     },
   });
   expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
