@@ -125,7 +125,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -298,7 +298,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -516,7 +516,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -689,7 +689,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -907,7 +907,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -1087,7 +1087,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -1300,7 +1300,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -1442,7 +1442,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -1642,7 +1642,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".github/workflows/release-2.x.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -1722,7 +1722,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -1802,7 +1802,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 node_modules/
@@ -1921,7 +1921,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -1938,7 +1938,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "10.x"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -1955,7 +1955,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "2.x"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -2155,7 +2155,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -2300,7 +2300,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -2449,7 +2449,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -2466,7 +2466,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "foo"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -2702,7 +2702,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
     env:
       BAR: VALUE2
 ",
@@ -2819,7 +2819,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -2956,7 +2956,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
       - name: Extract Version
         id: extract-version
         if: \${{ failure() }}
@@ -3139,7 +3139,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -3339,7 +3339,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -3530,7 +3530,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 "
 `;
 
@@ -3625,7 +3625,7 @@ exports[`Single Project majorVersion can be 0 2`] = `
           "exec": "test "$(git branch --show-current)" = "main"",
         },
         {
-          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+          "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
         },
       ],
     },
@@ -3770,7 +3770,7 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
           "exec": "test "$(git branch --show-current)" = "main"",
         },
         {
-          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+          "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
         },
       ],
     },
@@ -3946,7 +3946,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 node_modules/
@@ -4061,7 +4061,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -4195,7 +4195,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 "
 `;
 
@@ -4292,7 +4292,7 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
           "exec": "test "$(git branch --show-current)" = "main"",
         },
         {
-          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+          "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
         },
       ],
     },
@@ -4309,7 +4309,7 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
           "exec": "test "$(git branch --show-current)" = "10.x"",
         },
         {
-          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF -p 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+          "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag -p; fi",
         },
       ],
     },
@@ -4474,7 +4474,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
   release_golang:
     name: Publish to GitHub Go Module Repository
     needs: release
@@ -4705,7 +4705,7 @@ exports[`Single Project publisher (defaults) 2`] = `
           "exec": "test "$(git branch --show-current)" = "main"",
         },
         {
-          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+          "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
         },
       ],
     },
@@ -4968,7 +4968,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".github/workflows/release-safari.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -5048,7 +5048,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 node_modules/
@@ -5165,7 +5165,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "firefox"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -5182,7 +5182,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "safari"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -5389,7 +5389,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".github/workflows/release-next.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -5469,7 +5469,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF -p 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag -p; fi
 ",
   ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -5549,7 +5549,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 node_modules/
@@ -5668,7 +5668,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "main"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -5685,7 +5685,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "3.x"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -5702,7 +5702,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "next"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF -p 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag -p; fi",
           },
         ],
       },
@@ -5931,7 +5931,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 node_modules/
@@ -6046,7 +6046,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "10.x"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -6224,7 +6224,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 node_modules/
@@ -6339,7 +6339,7 @@ node_modules/
             "exec": "test "$(git branch --show-current)" = "10.x"",
           },
           {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi",
           },
         ],
       },
@@ -6478,6 +6478,6 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: if git ls-remote --exit-code --tags origin "refs/tags/$(cat dist/releasetag.txt)" >/dev/null; then   echo "Tag $(cat dist/releasetag.txt) already exists. Skipping release."; else   git tag $(cat dist/releasetag.txt) $GITHUB_REF && git push tag $(cat dist/releasetag.txt) && gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --verify-tag; fi
 "
 `;

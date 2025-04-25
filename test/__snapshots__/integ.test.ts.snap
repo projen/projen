@@ -1555,7 +1555,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2020"
+      "es2019"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -1570,7 +1570,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2019"
   },
   "include": [
     "src/**/*.ts",
@@ -2763,7 +2763,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2020"
+      "es2019"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -2778,7 +2778,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2019"
   },
   "include": [
     "src/**/*.ts",
@@ -3870,7 +3870,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2020"
+      "es2019"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -3885,7 +3885,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2019"
   },
   "include": [
     "src/**/*.ts",
@@ -3909,7 +3909,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2020"
+      "es2019"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -3924,7 +3924,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2019"
   },
   "include": [
     "src/**/*.ts"

@@ -2585,22 +2585,6 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
       },
       {
-        "docs": "The command line to execute in order to synthesize the CDK application (language specific).",
-        "featured": false,
-        "fullType": {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "app",
-        "optional": true,
-        "parent": "AwsCdkTypeScriptAppOptions",
-        "path": [
-          "app",
-        ],
-        "simpleType": "string",
-        "switch": "app",
-      },
-      {
         "default": ""main.ts"",
         "docs": "The CDK app's entrypoint (relative to the source directory, which is "src" by default).",
         "featured": false,

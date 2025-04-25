@@ -773,33 +773,30 @@ export class Publisher extends Component {
     const changelogFile = options.changelogFile;
     const releaseTagFile = options.releaseTagFile;
 
-    // create a github release
+    // create a github release. We've seen behavior where the release tag is pointing
+    // to the wrong commit if the `main` branch moved during releasing, even when using
+    // the `--target` argument, so use a git command to create the tag and use `--verify-tag` instead.
     const releaseTag = `$(cat ${releaseTagFile})`;
+
+    const gitTagCommand = `git tag ${releaseTag} $GITHUB_REF && git push tag ${releaseTag}`;
+
     const ghReleaseCommand = [
       `gh release create ${releaseTag}`,
       "-R $GITHUB_REPOSITORY",
       `-F ${changelogFile}`,
       `-t ${releaseTag}`,
-      "--target $GITHUB_REF",
-    ];
-
-    if (branchOptions.prerelease) {
-      ghReleaseCommand.push("-p");
-    }
-
-    const ghRelease = ghReleaseCommand.join(" ");
+      "--verify-tag",
+      ...(branchOptions.prerelease ? ["-p"] : []),
+    ].join(" ");
 
     // release script that does not error when re-releasing a given version
-    const idempotentRelease = [
-      "errout=$(mktemp);",
-      `${ghRelease} 2> $errout && true;`,
-      "exitcode=$?;",
-      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
-      "cat $errout;",
-      "exit $exitcode;",
+    return [
+      `if git ls-remote --exit-code --tags origin "refs/tags/${releaseTag}" >/dev/null; then`,
+      `  echo "Tag ${releaseTag} already exists. Skipping release.";`,
+      "else",
+      `  ${gitTagCommand} && ${ghReleaseCommand};`,
       "fi",
     ].join(" ");
-    return idempotentRelease;
   }
 }
 
