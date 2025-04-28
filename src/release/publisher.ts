@@ -299,8 +299,6 @@ export class Publisher extends Component {
           .map(([_, job]) => job),
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
-          GITHUB_REPOSITORY: "${{ github.repository }}",
-          GITHUB_REF: "${{ github.sha }}",
         },
         run: this.githubReleaseCommand(options, branchOptions),
       };
@@ -780,7 +778,7 @@ export class Publisher extends Component {
       "-R $GITHUB_REPOSITORY",
       `-F ${changelogFile}`,
       `-t ${releaseTag}`,
-      "--target $GITHUB_REF",
+      "--target $GITHUB_SHA",
     ];
 
     if (branchOptions.prerelease) {
