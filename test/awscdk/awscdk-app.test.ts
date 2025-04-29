@@ -38,7 +38,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "pnpm exec ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
     );
   });
 
