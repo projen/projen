@@ -228,13 +228,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         // bun can run ts files directly
         return `bun run${bunTsConfig} ${bunEntrypoint}`;
       case NodePackageManager.PNPM:
-        // https://pnpm.io/cli/exec
-        return `pnpm exec ${tsNodeApp}`;
       case NodePackageManager.YARN_CLASSIC:
       case NodePackageManager.YARN:
       case NodePackageManager.YARN_BERRY:
       case NodePackageManager.YARN2:
-        // use npx with yarn due to reported issues
+        // use npx with also for yarn & pnpm due to reported issues
         // @see https://github.com/projen/projen/issues/4180
         return `npx ${tsNodeApp}`;
       default:
