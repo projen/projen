@@ -40,7 +40,11 @@ export class TaskRuntime {
     this.workdir = resolve(workdir);
     const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
-      ? parseConflictJSON(readFileSync(manifestPath, "utf-8"))
+      ? parseConflictJSON(
+          readFileSync(manifestPath, "utf-8"),
+          undefined,
+          "theirs"
+        )
       : { tasks: {} };
   }
 

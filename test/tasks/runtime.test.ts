@@ -609,7 +609,7 @@ describe("manifest with merge conflicts", () => {
     const rt = new TaskRuntime(workdir);
     expect(rt.tasks.find((t) => t.name === "foo")).toStrictEqual({
       name: "foo",
-      steps: [{ exec: 'echo "current"' }],
+      steps: [{ exec: 'echo "incoming"' }],
     });
   });
 });
