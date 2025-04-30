@@ -1,12 +1,12 @@
 import { spawnSync } from "child_process";
-import { mkdirSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
-import { basename, join } from "path";
+import { basename, dirname, join } from "path";
 import { Project } from "../../src";
 import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
 import { makeCrossPlatform } from "../../src/util/tasks";
-import { TestProject } from "../util";
+import { mkdtemp, TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
   // GIVEN
@@ -576,6 +576,41 @@ describe("makeCrossPlatform", () => {
 
   test("Empty command returns an empty string", () => {
     expect(makeCrossPlatform("")).toBe("");
+  });
+});
+
+describe("manifest with merge conflicts", () => {
+  test("can parse tasks from a manifest file with merge conflicts", () => {
+    const manifestWithConflict =
+      `{
+  "tasks": {
+    "foo": {
+      "name": "foo",
+      "steps": [
+        {` +
+      "\n<<<<<<< HEAD\n" +
+      `          "exec": "echo \\"current\\""
+=======
+          "exec": "echo \\"incoming\\""
+>>>>>>> other         
+        }
+      ]
+    }
+  }
+}
+`;
+
+    const workdir = mkdtemp();
+    const manifestPath = join(workdir, TaskRuntime.MANIFEST_FILE);
+
+    mkdirSync(dirname(manifestPath));
+    writeFileSync(manifestPath, manifestWithConflict);
+
+    const rt = new TaskRuntime(workdir);
+    expect(rt.tasks.find((t) => t.name === "foo")).toStrictEqual({
+      name: "foo",
+      steps: [{ exec: 'echo "current"' }],
+    });
   });
 });
 
