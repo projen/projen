@@ -22,6 +22,10 @@
       "type": "build"
     },
     {
+      "name": "@types/parse-conflict-json",
+      "type": "build"
+    },
+    {
       "name": "@types/semver",
       "type": "build"
     },
@@ -162,6 +166,10 @@
     },
     {
       "name": "ini",
+      "type": "bundled"
+    },
+    {
+      "name": "parse-conflict-json",
       "type": "bundled"
     },
     {

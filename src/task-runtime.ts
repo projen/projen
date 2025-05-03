@@ -4,6 +4,7 @@ import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
 import { gray, underline } from "chalk";
+import * as parseConflictJSON from "parse-conflict-json";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
@@ -39,7 +40,11 @@ export class TaskRuntime {
     this.workdir = resolve(workdir);
     const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
-      ? JSON.parse(readFileSync(manifestPath, "utf-8"))
+      ? parseConflictJSON(
+          readFileSync(manifestPath, "utf-8"),
+          undefined,
+          "theirs"
+        )
       : { tasks: {} };
   }
 

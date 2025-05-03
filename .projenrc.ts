@@ -70,6 +70,7 @@ const project = new JsiiProject({
     "shx",
     "fast-json-patch",
     "comment-json@4.2.2",
+    "parse-conflict-json",
   ],
 
   devDeps: [
@@ -78,6 +79,7 @@ const project = new JsiiProject({
     "@types/glob",
     "@types/semver",
     "@types/ini",
+    "@types/parse-conflict-json",
     "markmac",
     "esbuild",
     "all-contributors-cli",
