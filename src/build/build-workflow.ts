@@ -45,8 +45,8 @@ export interface BuildWorkflowCommonOptions {
    *
    * @default "build"
    */
-    readonly name?: string;
-    
+  readonly name?: string;
+
   /**
    * The container image to use for builds.
    * @default - the default workflow container
@@ -70,8 +70,8 @@ export interface BuildWorkflowCommonOptions {
    * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
    * @default `{ contents: JobPermission.WRITE }`
    */
-    readonly permissions?: JobPermissions;
-    /**
+  readonly permissions?: JobPermissions;
+  /**
    * Steps to execute after build.
    * @default []
    */
@@ -102,8 +102,7 @@ export interface BuildWorkflowCommonOptions {
    * @description Defines a target Runner Group by name and/or labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
-    readonly runsOnGroup?: GroupRunnerOptions;
-    
+  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
