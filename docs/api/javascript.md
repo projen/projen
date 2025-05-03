@@ -5285,11 +5285,56 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+
+---
+
+##### `containerImage`<sup>Optional</sup> <a name="containerImage" id="projen.javascript.BuildWorkflowOptions.property.containerImage"></a>
+
+```typescript
+public readonly containerImage: string;
+```
+
+- *Type:* string
+- *Default:* the default workflow container
+
+The container image to use for builds.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.javascript.BuildWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables.
+
+---
+
+##### `gitIdentity`<sup>Optional</sup> <a name="gitIdentity" id="projen.javascript.BuildWorkflowOptions.property.gitIdentity"></a>
+
+```typescript
+public readonly gitIdentity: GitIdentity;
+```
+
+- *Type:* projen.github.GitIdentity
+- *Default:* default identity
+
+Git identity to use for the workflow.
 
 ---
 
@@ -5319,6 +5364,19 @@ Permissions granted to the build job To limit job permissions for `contents`, th
 
 ---
 
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.javascript.BuildWorkflowOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute after build.
+
+---
+
 ##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.javascript.BuildWorkflowOptions.property.preBuildSteps"></a>
 
 ```typescript
@@ -5329,6 +5387,31 @@ public readonly preBuildSteps: JobStep[];
 - *Default:* []
 
 Steps to execute before the build.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.javascript.BuildWorkflowOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.javascript.BuildWorkflowOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -9437,6 +9520,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
