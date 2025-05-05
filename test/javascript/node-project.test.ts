@@ -2030,7 +2030,7 @@ describe("build workflow options", () => {
     });
     snapshot = synthSnapshot(project);
   });
-  it("should set the environment variables in the build workflow", () => {
+  it("should allow additional environment variables to be set in the build workflow", () => {
     const buildWorkflow = yaml.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.env).toEqual({
       CI: "true",
