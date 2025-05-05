@@ -464,29 +464,11 @@ const buildWorkflowCommonOptions: build.BuildWorkflowCommonOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
-| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
-| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
-| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
-| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
-
----
-
-##### `containerImage`<sup>Optional</sup> <a name="containerImage" id="projen.build.BuildWorkflowCommonOptions.property.containerImage"></a>
-
-```typescript
-public readonly containerImage: string;
-```
-
-- *Type:* string
-- *Default:* the default workflow container
-
-The container image to use for builds.
 
 ---
 
@@ -500,19 +482,6 @@ public readonly env: {[ key: string ]: string};
 - *Default:* {}
 
 Build environment variables.
-
----
-
-##### `gitIdentity`<sup>Optional</sup> <a name="gitIdentity" id="projen.build.BuildWorkflowCommonOptions.property.gitIdentity"></a>
-
-```typescript
-public readonly gitIdentity: GitIdentity;
-```
-
-- *Type:* projen.github.GitIdentity
-- *Default:* default identity
-
-Git identity to use for the workflow.
 
 ---
 
@@ -542,19 +511,6 @@ Permissions granted to the build job To limit job permissions for `contents`, th
 
 ---
 
-##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowCommonOptions.property.postBuildSteps"></a>
-
-```typescript
-public readonly postBuildSteps: JobStep[];
-```
-
-- *Type:* projen.github.workflows.JobStep[]
-- *Default:* []
-
-Steps to execute after build.
-
----
-
 ##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.build.BuildWorkflowCommonOptions.property.preBuildSteps"></a>
 
 ```typescript
@@ -565,31 +521,6 @@ public readonly preBuildSteps: JobStep[];
 - *Default:* []
 
 Steps to execute before the build.
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.build.BuildWorkflowCommonOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
-
----
-
-##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.build.BuildWorkflowCommonOptions.property.runsOnGroup"></a>
-
-```typescript
-public readonly runsOnGroup: GroupRunnerOptions;
-```
-
-- *Type:* projen.GroupRunnerOptions
-
-Github Runner Group selection options.
 
 ---
 
@@ -620,32 +551,19 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.buildTask">buildTask</a></code> | <code>projen.Task</code> | The task to execute in order to build the project. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
-
----
-
-##### `containerImage`<sup>Optional</sup> <a name="containerImage" id="projen.build.BuildWorkflowOptions.property.containerImage"></a>
-
-```typescript
-public readonly containerImage: string;
-```
-
-- *Type:* string
-- *Default:* the default workflow container
-
-The container image to use for builds.
+| <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 
 ---
 
@@ -659,19 +577,6 @@ public readonly env: {[ key: string ]: string};
 - *Default:* {}
 
 Build environment variables.
-
----
-
-##### `gitIdentity`<sup>Optional</sup> <a name="gitIdentity" id="projen.build.BuildWorkflowOptions.property.gitIdentity"></a>
-
-```typescript
-public readonly gitIdentity: GitIdentity;
-```
-
-- *Type:* projen.github.GitIdentity
-- *Default:* default identity
-
-Git identity to use for the workflow.
 
 ---
 
@@ -701,19 +606,6 @@ Permissions granted to the build job To limit job permissions for `contents`, th
 
 ---
 
-##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowOptions.property.postBuildSteps"></a>
-
-```typescript
-public readonly postBuildSteps: JobStep[];
-```
-
-- *Type:* projen.github.workflows.JobStep[]
-- *Default:* []
-
-Steps to execute after build.
-
----
-
 ##### `preBuildSteps`<sup>Optional</sup> <a name="preBuildSteps" id="projen.build.BuildWorkflowOptions.property.preBuildSteps"></a>
 
 ```typescript
@@ -724,31 +616,6 @@ public readonly preBuildSteps: JobStep[];
 - *Default:* []
 
 Steps to execute before the build.
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.build.BuildWorkflowOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
-
----
-
-##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.build.BuildWorkflowOptions.property.runsOnGroup"></a>
-
-```typescript
-public readonly runsOnGroup: GroupRunnerOptions;
-```
-
-- *Type:* projen.GroupRunnerOptions
-
-Github Runner Group selection options.
 
 ---
 
@@ -790,6 +657,32 @@ A name of a directory that includes build artifacts.
 
 ---
 
+##### `containerImage`<sup>Optional</sup> <a name="containerImage" id="projen.build.BuildWorkflowOptions.property.containerImage"></a>
+
+```typescript
+public readonly containerImage: string;
+```
+
+- *Type:* string
+- *Default:* the default workflow container
+
+The container image to use for builds.
+
+---
+
+##### `gitIdentity`<sup>Optional</sup> <a name="gitIdentity" id="projen.build.BuildWorkflowOptions.property.gitIdentity"></a>
+
+```typescript
+public readonly gitIdentity: GitIdentity;
+```
+
+- *Type:* projen.github.GitIdentity
+- *Default:* default identity
+
+Git identity to use for the workflow.
+
+---
+
 ##### `mutableBuild`<sup>Optional</sup> <a name="mutableBuild" id="projen.build.BuildWorkflowOptions.property.mutableBuild"></a>
 
 ```typescript
@@ -809,6 +702,44 @@ Implies that PR builds do not have anti-tamper checks.
 This is enabled by default only if `githubTokenSecret` is set. Otherwise it
 is disabled, which implies that file changes that happen during build will
 not be pushed back to the branch.
+
+---
+
+##### `postBuildSteps`<sup>Optional</sup> <a name="postBuildSteps" id="projen.build.BuildWorkflowOptions.property.postBuildSteps"></a>
+
+```typescript
+public readonly postBuildSteps: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+- *Default:* []
+
+Steps to execute after build.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.build.BuildWorkflowOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.build.BuildWorkflowOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 

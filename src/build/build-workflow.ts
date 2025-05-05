@@ -48,12 +48,6 @@ export interface BuildWorkflowCommonOptions {
   readonly name?: string;
 
   /**
-   * The container image to use for builds.
-   * @default - the default workflow container
-   */
-  readonly containerImage?: string;
-
-  /**
    * Steps to execute before the build.
    * @default []
    */
@@ -71,17 +65,6 @@ export interface BuildWorkflowCommonOptions {
    * @default `{ contents: JobPermission.WRITE }`
    */
   readonly permissions?: JobPermissions;
-  /**
-   * Steps to execute after build.
-   * @default []
-   */
-  readonly postBuildSteps?: JobStep[];
-
-  /**
-   * Git identity to use for the workflow.
-   * @default - default identity
-   */
-  readonly gitIdentity?: GitIdentity;
 
   /**
    * Build environment variables.
@@ -103,6 +86,12 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   readonly artifactsDirectory?: string;
 
   /**
+   * The container image to use for builds.
+   * @default - the default workflow container
+   */
+  readonly containerImage?: string;
+
+  /**
    * Automatically update files modified during builds to pull-request branches.
    * This means that any files synthesized by projen or e.g. test snapshots will
    * always be up-to-date before a PR is merged.
@@ -116,6 +105,19 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Steps to execute after build.
+   * @default []
+   */
+  readonly postBuildSteps?: JobStep[];
+
+  /**
+   * Git identity to use for the workflow.
+   * @default - default identity
+   */
+  readonly gitIdentity?: GitIdentity;
+
   /**
    * Github Runner selection labels
    * @default ["ubuntu-latest"]
