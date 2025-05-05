@@ -9,7 +9,11 @@ import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { NodePackageManager, RunBundleTask } from "../javascript";
+import {
+  NodePackageManager,
+  RunBundleTask,
+  TypeScriptModuleResolution,
+} from "../javascript";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
@@ -119,6 +123,20 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         // we invoke the "bundle" task as part of the build step in cdk.json so
         // we don't want it to be added to the pre-compile phase.
         runBundleTask: RunBundleTask.MANUAL,
+      },
+      tsconfig: {
+        compilerOptions: {
+          lib: ["es2022"],
+          module: "NodeNext",
+          moduleResolution: TypeScriptModuleResolution.NODE_NEXT,
+          noFallthroughCasesInSwitch: false,
+          noUnusedLocals: false,
+          noUnusedParameters: false,
+          strictPropertyInitialization: false,
+          target: "ES2022",
+          typeRoots: ["./node_modules/@types"],
+        },
+        exclude: ["cdk.out"],
       },
     });
     this.cdkDeps = new AwsCdkDepsJs(this, {
