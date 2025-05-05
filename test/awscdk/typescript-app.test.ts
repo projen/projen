@@ -3,7 +3,7 @@ import { TypeScriptModuleResolution } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 describe("AwsCdkTypeScriptApp", () => {
-  test("synthesizes with updated tsconfig defaults", () => {
+  test("synthesizes with exact CDK tsconfig defaults", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "test-app",
       defaultReleaseBranch: "main",
@@ -13,26 +13,33 @@ describe("AwsCdkTypeScriptApp", () => {
     const snapshot = synthSnapshot(project);
     const tsconfig = snapshot["tsconfig.json"];
 
-    // Assertions for the specific CDK defaults added/overridden
-    expect(tsconfig.compilerOptions.target).toBe("ES2022");
-    expect(tsconfig.compilerOptions.module).toBe("NodeNext");
-    expect(tsconfig.compilerOptions.moduleResolution).toBe(
-      TypeScriptModuleResolution.NODE_NEXT
-    );
-    expect(tsconfig.compilerOptions.lib).toEqual(["es2022"]);
-    expect(tsconfig.compilerOptions.noUnusedLocals).toBe(false);
-    expect(tsconfig.compilerOptions.noUnusedParameters).toBe(false);
-    expect(tsconfig.compilerOptions.noFallthroughCasesInSwitch).toBe(false);
-    expect(tsconfig.compilerOptions.strictPropertyInitialization).toBe(false);
-    expect(tsconfig.compilerOptions.typeRoots).toEqual([
-      "./node_modules/@types",
-    ]);
-    expect(tsconfig.exclude).toEqual(["cdk.out"]);
+    expect(tsconfig.compilerOptions).toEqual({
+      alwaysStrict: true,
+      declaration: true,
+      esModuleInterop: true,
+      experimentalDecorators: true,
+      inlineSourceMap: true,
+      inlineSources: true,
+      lib: ["es2022"],
+      module: "NodeNext",
+      moduleResolution: TypeScriptModuleResolution.NODE_NEXT,
+      noEmitOnError: false,
+      noFallthroughCasesInSwitch: false,
+      noImplicitAny: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      noUnusedLocals: false,
+      noUnusedParameters: false,
+      outDir: "lib",
+      resolveJsonModule: true,
+      rootDir: "src",
+      strict: true,
+      strictNullChecks: true,
+      strictPropertyInitialization: false,
+      stripInternal: true,
+      target: "ES2022",
+    });
 
-    // Assertions for base options to ensure merging worked
-    expect(tsconfig.compilerOptions.strict).toBe(true);
-    expect(tsconfig.compilerOptions.declaration).toBe(true);
-    expect(tsconfig.compilerOptions.esModuleInterop).toBe(true);
-    expect(tsconfig.compilerOptions.inlineSourceMap).toBe(true);
+    expect(tsconfig.exclude).toEqual(["node_modules", "cdk.out"]);
   });
 });

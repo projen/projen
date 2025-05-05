@@ -124,19 +124,33 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         // we don't want it to be added to the pre-compile phase.
         runBundleTask: RunBundleTask.MANUAL,
       },
+      // Completely override tsconfig with CDK defaults
       tsconfig: {
         compilerOptions: {
+          alwaysStrict: true,
+          declaration: true,
+          esModuleInterop: true,
+          experimentalDecorators: true,
+          inlineSourceMap: true,
+          inlineSources: true,
           lib: ["es2022"],
           module: "NodeNext",
           moduleResolution: TypeScriptModuleResolution.NODE_NEXT,
+          noEmitOnError: false,
           noFallthroughCasesInSwitch: false,
+          noImplicitAny: true,
+          noImplicitReturns: true,
+          noImplicitThis: true,
           noUnusedLocals: false,
           noUnusedParameters: false,
+          resolveJsonModule: true,
+          strict: true,
+          strictNullChecks: true,
           strictPropertyInitialization: false,
+          stripInternal: true,
           target: "ES2022",
-          typeRoots: ["./node_modules/@types"],
         },
-        exclude: ["cdk.out"],
+        exclude: ["node_modules", "cdk.out"],
       },
     });
     this.cdkDeps = new AwsCdkDepsJs(this, {
