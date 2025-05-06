@@ -1,5 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { NodePackageManager, RunBundleTask } from "../javascript";
+import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { AutoDiscover } from "./auto-discover";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
@@ -7,10 +11,6 @@ import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
-import { Component } from "../component";
-import { DependencyType } from "../dependencies";
-import { NodePackageManager, RunBundleTask } from "../javascript";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
   extends TypeScriptProjectOptions,
@@ -144,7 +144,8 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     }
 
     this.cdkConfig = new CdkConfig(this, {
-      featureFlags: this.cdkDeps.cdkMajorVersion < 2,
+      // featureFlags: this.cdkDeps.cdkMajorVersion < 2,
+      cdkMajorVersion: this.cdkDeps.cdkMajorVersion,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
       watchExcludes: [

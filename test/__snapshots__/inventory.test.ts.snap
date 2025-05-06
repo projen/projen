@@ -190,6 +190,22 @@ exports[`inventory 1`] = `
         "switch": "cdk-dependencies-as-deps",
       },
       {
+        "docs": "The major version of the AWS CDK (e.g. 1, 2, ...).",
+        "featured": false,
+        "fullType": {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "cdkMajorVersion",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": [
+          "cdkMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "cdk-major-version",
+      },
+      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -1395,6 +1411,22 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-dependencies-as-deps",
+      },
+      {
+        "docs": "The major version of the AWS CDK (e.g. 1, 2, ...).",
+        "featured": false,
+        "fullType": {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "cdkMajorVersion",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": [
+          "cdkMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "cdk-major-version",
       },
       {
         "default": ""cdk.out"",
@@ -3076,6 +3108,22 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "cdk-dependencies-as-deps",
+      },
+      {
+        "docs": "The major version of the AWS CDK (e.g. 1, 2, ...).",
+        "featured": false,
+        "fullType": {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "cdkMajorVersion",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": [
+          "cdkMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "cdk-major-version",
       },
       {
         "default": ""cdk.out"",
