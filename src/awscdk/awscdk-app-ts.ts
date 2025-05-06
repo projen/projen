@@ -142,6 +142,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     let finalCompilerOptions = cdkDefaultCompilerOptions;
     if (options.tsconfig?.compilerOptions) {
+      // Deep merge user's `compilerOptions` onto CDK-specific defaults.
       finalCompilerOptions = deepMerge(
         [cdkDefaultCompilerOptions, options.tsconfig.compilerOptions],
         true
@@ -152,6 +153,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     const cdkDefaultExclude = ["node_modules", "cdk.out"];
     let finalExclude = cdkDefaultExclude;
     if (options.tsconfig?.exclude) {
+      // Merge and deduplicate user's `exclude` with CDK-specific defaults.
       finalExclude = [
         ...new Set([...cdkDefaultExclude, ...options.tsconfig.exclude]),
       ];
