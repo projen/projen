@@ -159,7 +159,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     /**
      * The final `tsconfig` object passed to the superclass.
-     * It incorporates AWS CDK recommended defaults (derived from `cdkDefaultCompilerOptions` and `cdkDefaultExclude` above)
+     * It incorporates AWS CDK defaults (derived from `cdkDefaultCompilerOptions` and `cdkDefaultExclude` above)
      * and any user-provided overrides. The aim is to align with the standard CDK `tsconfig.json`:
      * @see https://github.com/aws/aws-cdk-cli/blob/main/packages/aws-cdk/lib/init-templates/app/typescript/tsconfig.json
      */
@@ -174,6 +174,8 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       sampleCode: false,
       bundlerOptions: {
         ...options.bundlerOptions,
+        // we invoke the "bundle" task as part of the build step in cdk.json so
+        // we don't want it to be added to the pre-compile phase.
         runBundleTask: RunBundleTask.MANUAL,
       },
       tsconfig: tsconfigToSuper,
