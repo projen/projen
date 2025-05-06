@@ -67,7 +67,7 @@ describe("semantic titles", () => {
     new PullRequestLint(project.github!, {
       semanticTitle: true,
       semanticTitleOptions: {
-        scopes: ['cli', 'api'],
+        scopes: ["cli", "api"],
       },
     });
 
