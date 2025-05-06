@@ -70,6 +70,14 @@ export interface SemanticTitleOptions {
    * @default false
    */
   readonly requireScope?: boolean;
+
+  /**
+   * Configure which scopes are allowed (newline-delimited).
+   * These are regex patterns auto-wrapped in `^ $`.
+   *
+   * @default - all scopes allowed
+   */
+  readonly scopes?: string[];
 }
 
 /**
@@ -148,6 +156,7 @@ export class PullRequestLint extends Component {
             },
             with: {
               types: types.join("\n"),
+              ...(opts.scopes ? { scopes: opts.scopes.join("\n")} : {}),
               requireScope: opts.requireScope ?? false,
             },
           },

@@ -8092,6 +8092,7 @@ const semanticTitleOptions: github.SemanticTitleOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.SemanticTitleOptions.property.requireScope">requireScope</a></code> | <code>boolean</code> | Configure that a scope must always be provided. |
+| <code><a href="#projen.github.SemanticTitleOptions.property.scopes">scopes</a></code> | <code>string[]</code> | Configure which scopes are allowed (newline-delimited). |
 | <code><a href="#projen.github.SemanticTitleOptions.property.types">types</a></code> | <code>string[]</code> | Configure a list of commit types that are allowed. |
 
 ---
@@ -8108,6 +8109,21 @@ public readonly requireScope: boolean;
 Configure that a scope must always be provided.
 
 e.g. feat(ui), fix(core)
+
+---
+
+##### `scopes`<sup>Optional</sup> <a name="scopes" id="projen.github.SemanticTitleOptions.property.scopes"></a>
+
+```typescript
+public readonly scopes: string[];
+```
+
+- *Type:* string[]
+- *Default:* all scopes allowed
+
+Configure which scopes are allowed (newline-delimited).
+
+These are regex patterns auto-wrapped in `^ $`.
 
 ---
 
