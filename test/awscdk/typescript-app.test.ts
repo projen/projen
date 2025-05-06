@@ -47,6 +47,4 @@ describe("AwsCdkTypeScriptApp", () => {
       expect.arrayContaining(["cdk.out", "custom-exclude", "another-exclude"])
     );
   });
-
-  // Test for user overrides will be added here
 });

@@ -116,50 +116,53 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public readonly cdkDeps: AwsCdkDeps;
 
   constructor(options: AwsCdkTypeScriptAppOptions) {
-    // Define our CDK-specific defaults
+    // CDK default compiler options
     const cdkDefaultCompilerOptions: TypescriptConfigOptions["compilerOptions"] =
       {
         target: "ES2022",
         module: "NodeNext",
         moduleResolution: TypeScriptModuleResolution.NODE_NEXT,
         lib: ["es2022"],
+        declaration: true,
+        strict: true,
+        noImplicitAny: true,
+        strictNullChecks: true,
+        noImplicitThis: true,
+        alwaysStrict: true,
         noUnusedLocals: false,
         noUnusedParameters: false,
-        noFallthroughCasesInSwitch: false,
-        strictPropertyInitialization: false,
-        typeRoots: ["./node_modules/@types"],
-        // Base options that are also part of CDK explicit defaults
-        alwaysStrict: true,
-        declaration: true,
-        noImplicitAny: true,
         noImplicitReturns: true,
-        noImplicitThis: true,
-        strict: true,
-        strictNullChecks: true,
+        noFallthroughCasesInSwitch: false,
         inlineSourceMap: true,
         inlineSources: true,
         experimentalDecorators: true,
+        strictPropertyInitialization: false,
+        typeRoots: ["./node_modules/@types"],
       };
 
     let finalCompilerOptions = cdkDefaultCompilerOptions;
     if (options.tsconfig?.compilerOptions) {
-      // Deep merge user's compilerOptions onto our CDK defaults
-      // The base TypeScriptProject defaults will be merged by the TypescriptConfig component later
       finalCompilerOptions = deepMerge(
         [cdkDefaultCompilerOptions, options.tsconfig.compilerOptions],
         true
       );
     }
 
+    // CDK default exclude
     const cdkDefaultExclude = ["node_modules", "cdk.out"];
     let finalExclude = cdkDefaultExclude;
     if (options.tsconfig?.exclude) {
-      // Merge and deduplicate user's exclude with CDK defaults
       finalExclude = [
         ...new Set([...cdkDefaultExclude, ...options.tsconfig.exclude]),
       ];
     }
 
+    /**
+     * The final `tsconfig` object passed to the superclass.
+     * It incorporates AWS CDK recommended defaults (derived from `cdkDefaultCompilerOptions` and `cdkDefaultExclude` above)
+     * and any user-provided overrides. The aim is to align with the standard CDK `tsconfig.json`:
+     * @see https://github.com/aws/aws-cdk-cli/blob/main/packages/aws-cdk/lib/init-templates/app/typescript/tsconfig.json
+     */
     const tsconfigToSuper: TypescriptConfigOptions = {
       ...options.tsconfig, // Pass through any other top-level tsconfig options from user
       compilerOptions: finalCompilerOptions,
