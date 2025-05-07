@@ -1127,8 +1127,9 @@ export class NodePackage extends Component {
             `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
             `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
           ];
-          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16)
+          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16) {
             commands.push(`npm config set //${registry}:always-auth=true`);
+          }
           return {
             exec: commands.join("; "),
           };
