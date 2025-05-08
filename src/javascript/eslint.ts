@@ -1,11 +1,13 @@
-import { Project, TaskStepOptions } from "..";
 import { Prettier } from "./prettier";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { ICompareString } from "../compare";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import { ObjectFile } from "../object-file";
+import { Project } from "../project";
 import { Task } from "../task";
+import { TaskStepOptions } from "../task-model";
 import { YamlFile } from "../yaml";
 
 export interface EslintOptions {
@@ -161,6 +163,11 @@ export class Eslint extends Component {
     const isEslint = (c: Component): c is Eslint => c instanceof Eslint;
     return project.components.find(isEslint);
   }
+
+  /**
+   * The underlying config file
+   */
+  public readonly file: ObjectFile;
 
   /**
    * eslint rules.
@@ -452,12 +459,12 @@ export class Eslint extends Component {
     };
 
     if (options.yaml) {
-      new YamlFile(project, ".eslintrc.yml", {
+      this.file = new YamlFile(project, ".eslintrc.yml", {
         obj: this.config,
         marker: true,
       });
     } else {
-      new JsonFile(project, ".eslintrc.json", {
+      this.file = new JsonFile(project, ".eslintrc.json", {
         obj: this.config,
         // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
         marker: true,
