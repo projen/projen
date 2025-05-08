@@ -524,6 +524,7 @@ Returns the singleton Eslint component of a project or undefined if there is non
 | <code><a href="#projen.javascript.Eslint.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.Eslint.property.config">config</a></code> | <code>any</code> | Direct access to the eslint configuration (escape hatch). |
 | <code><a href="#projen.javascript.Eslint.property.eslintTask">eslintTask</a></code> | <code>projen.Task</code> | eslint task. |
+| <code><a href="#projen.javascript.Eslint.property.file">file</a></code> | <code>projen.ObjectFile</code> | The underlying config file. |
 | <code><a href="#projen.javascript.Eslint.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | File patterns that should not be linted. |
 | <code><a href="#projen.javascript.Eslint.property.lintPatterns">lintPatterns</a></code> | <code>string[]</code> | Returns an immutable copy of the lintPatterns being used by this eslint configuration. |
 | <code><a href="#projen.javascript.Eslint.property.overrides">overrides</a></code> | <code><a href="#projen.javascript.EslintOverride">EslintOverride</a>[]</code> | eslint overrides. |
@@ -574,6 +575,18 @@ public readonly eslintTask: Task;
 - *Type:* projen.Task
 
 eslint task.
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.Eslint.property.file"></a>
+
+```typescript
+public readonly file: ObjectFile;
+```
+
+- *Type:* projen.ObjectFile
+
+The underlying config file.
 
 ---
 
