@@ -5285,11 +5285,25 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.javascript.BuildWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables.
 
 ---
 
