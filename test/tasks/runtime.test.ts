@@ -623,7 +623,7 @@ describe("command", () => {
       // 1️⃣ Node prints its argv (slice(1) skips "node")
       // 2️⃣ bare "--" ends Node’s own option parsing
       // 3️⃣ the fragment we really want to test
-      exec: `node -e "console.log(JSON.stringify(process.argv.slice(1)))" -- --pack-command "pnpm pack"`
+      exec: `node -e "console.log(JSON.stringify(process.argv.slice(1)))" -- --pack-command "pnpm pack"`,
     });
 
     // THEN
