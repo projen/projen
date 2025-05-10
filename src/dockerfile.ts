@@ -1,3 +1,4 @@
+import { Component } from "./component";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
 import { Project } from "./project";
 
@@ -44,6 +45,14 @@ export interface DockerfileStageOptions {
    * @default - No identifier is specified.
    */
   readonly id?: string;
+
+  /**
+   * The platform to use for this stage of the Dockerfile.
+   * This is specified using the `--platform` option in the Dockerfile.
+   *
+   * @default - No platform is specified.
+   */
+  readonly platform?: string;
 }
 
 /**
@@ -81,7 +90,7 @@ export class Dockerfile extends FileBase {
     super(project, filePath, options);
     this.project = project;
     this.stages = options.stages
-      ? options.stages.map((stage) => new DockerfileStage(stage))
+      ? options.stages.map((stage) => new DockerfileStage(project, stage))
       : [];
   }
 
@@ -92,7 +101,7 @@ export class Dockerfile extends FileBase {
    * @returns The newly created `DockerfileStage` instance.
    */
   public addStage(stageOptions: DockerfileStageOptions): DockerfileStage {
-    const updatedStage = new DockerfileStage(stageOptions);
+    const updatedStage = new DockerfileStage(this.project, stageOptions);
     this.stages.push(updatedStage);
     return updatedStage;
   }
@@ -123,7 +132,12 @@ export class Dockerfile extends FileBase {
     const lines: string[] = [];
     lines.push(...(this.marker ? [`# ${this.marker}`] : []));
     this.stages.forEach((stage) => {
-      lines.push(`FROM ${stage.fromImage}${stage.id ? ` AS ${stage.id}` : ""}`);
+      const fromParts = [
+        stage.platform ? `--platform=${stage.platform}` : null,
+        stage.fromImage,
+        stage.id ? `AS ${stage.id}` : null,
+      ].filter(Boolean); // Remove null or undefined parts
+      lines.push(`FROM ${fromParts.join(" ")}`);
       stage.instructions?.forEach((instruction) =>
         lines.push(`${instruction.command} ${instruction.arguments}`)
       );
@@ -150,9 +164,9 @@ export interface DockerfileCopyOptions extends AddCopyOptions {
 
 /**
  * Options for the `ADD` instruction in a Dockerfile.
- * 
+ *
  * @extends AddCopyOptions
- * 
+ *
  */
 export interface DockerfileAddOptions extends AddCopyOptions {
   /**
@@ -203,6 +217,52 @@ interface AddCopyOptions {
 }
 
 /**
+ * Options for Dockerfile healthcheck configuration
+ */
+export interface HealthCheckOptions {
+  /**
+   * The command to run to check health
+   * Required when disable is false or not provided
+   */
+  command?: string[] | string;
+
+  /**
+   * The interval between health checks (in seconds)
+   * @default 30s
+   */
+  interval?: string;
+
+  /**
+   * How long to wait before considering the check to have hung (in seconds)
+   * @default 30s
+   */
+  timeout?: string;
+
+  /**
+   * The number of consecutive failures needed to consider the container as unhealthy
+   * @default 3
+   */
+  retries?: number;
+
+  /**
+   * The optional grace period before starting health checks (in seconds)
+   * @default 0s
+   */
+  startPeriod?: string;
+
+  /**
+   * The interval between health checks during the start period (in seconds)
+   * @default 5s
+   */
+  startInterval?: string;
+
+  /**
+   * Set to true to disable any healthcheck inherited from the base image
+   */
+  disable?: boolean;
+}
+
+/**
  * Represents a stage in a Dockerfile, allowing the construction of Dockerfile instructions
  * programmatically. This class provides methods to add various Dockerfile commands such as
  * `RUN`, `COPY`, `ENV`, and more.
@@ -227,13 +287,16 @@ interface AddCopyOptions {
  * respectively.
  *
  */
-export class DockerfileStage {
+export class DockerfileStage extends Component {
   readonly instructions: DockerfileInstruction[];
   readonly fromImage?: string;
+  readonly platform?: string;
   readonly id?: string;
 
-  constructor(options: DockerfileStageOptions) {
+  constructor(project: Project, options: DockerfileStageOptions) {
+    super(project);
     this.instructions = options.instructions ?? [];
+    this.platform = options.platform;
     this.fromImage = options.fromImage;
     if (options.id !== "default") {
       this.id = options.id;
@@ -274,8 +337,17 @@ export class DockerfileStage {
     return this;
   }
 
-  public env(args: string) {
-    this.instructions.push({ command: "ENV", arguments: args });
+  /**
+   * The `ENV` instruction sets environment variables in the container.
+   * Only for backward compatibility docker allows `ENV MY_VAR my-value` syntax
+   * It is not recommended to use it anymore.
+   *
+   * @param args - A single environment variable (e.g., `KEY=value`), an array of variables,
+   *               or an object where keys are variable names and values are their values.
+   * @returns The current instance for method chaining.
+   */
+  public env(args: string | string[] | Record<string, string | number>) {
+    this.addKeyValueInstruction("ENV", args);
     return this;
   }
 
@@ -298,8 +370,67 @@ export class DockerfileStage {
     return this;
   }
 
-  public arg(args: string) {
-    this.instructions.push({ command: "ARG", arguments: args });
+  /**
+   * The `ARG` instruction defines one or more variables that users can pass at build-time
+   * to the builder with the `--build-arg` flag. This is useful for parameterizing
+   * the build process.
+   *
+   * @param args - A single argument string (e.g., `name=value`), an array of strings,
+   *               or an object where keys are argument names and values are their defaults.
+   * @returns The current instance for method chaining.
+   */
+  public arg(
+    args: string | string[] | Record<string, string | number | undefined>
+  ) {
+    this.addKeyValueInstruction("ARG", args);
+    return this;
+  }
+
+  public healthcheck(options: HealthCheckOptions) {
+    if (options.disable) {
+      this.instructions.push({
+        command: "HEALTHCHECK",
+        arguments: "NONE",
+      });
+      return this;
+    }
+
+    if (!options.command) {
+      throw new Error("command is required when healthcheck is not disabled");
+    }
+
+    const parts = [];
+
+    if (options.interval) {
+      parts.push(`--interval=${options.interval}`);
+    }
+
+    if (options.timeout) {
+      parts.push(`--timeout=${options.timeout}`);
+    }
+
+    if (options.retries) {
+      parts.push(`--retries=${options.retries}`);
+    }
+
+    if (options.startPeriod) {
+      parts.push(`--start-period=${options.startPeriod}`);
+    }
+
+    if (options.startInterval) {
+      parts.push(`--start-interval=${options.startInterval}`);
+    }
+
+    if (Array.isArray(options.command)) {
+      parts.push("CMD " + options.command.join(" "));
+    } else {
+      parts.push("CMD " + options.command);
+    }
+
+    this.instructions.push({
+      command: "HEALTHCHECK",
+      arguments: parts.join(" "),
+    });
     return this;
   }
 
@@ -308,13 +439,36 @@ export class DockerfileStage {
     return this;
   }
 
+  public label(args: string | string[] | Record<string, string>) {
+    this.addKeyValueInstruction("LABEL", args);
+    return this;
+  }
+
   public user(args: string) {
     this.instructions.push({ command: "USER", arguments: args });
     return this;
   }
 
-  public cmd(args: string) {
-    this.instructions.push({ command: "CMD", arguments: args });
+  /**
+   *
+   * The `CMD` instruction is used to specify the default command to run when a container is started.
+   *
+   * @param args - The arguments for the `CMD` instruction. This can be a command string (shell form)
+   *               or an array of strings (exec form).
+   * @returns The current instance for method chaining.
+   */
+  public cmd(args: string | string[]) {
+    this.addShellOrExecInstruction("CMD", args);
+    return this;
+  }
+
+  /**
+   * @param args - The command to set as the entrypoint. Can be a single string
+   *               (shell form) or an array of strings (exec form).
+   * @returns The current instance for method chaining.
+   */
+  public entrypoint(args: string | string[]) {
+    this.addShellOrExecInstruction("ENTRYPOINT", args);
     return this;
   }
 
@@ -323,8 +477,71 @@ export class DockerfileStage {
     return this;
   }
 
+  /**
+   * The `EXPOSE` instruction informs Docker that the container listens on specific network ports at runtime.
+   * By default, the protocol is `tcp`, but `udp` can also be specified.
+   *
+   * @param ports - A single port (e.g., `8080`), an array of ports (e.g., `[8080, 9090]`),
+   *                or an object where keys are ports and values are protocols (`tcp` or `udp`).
+   * @returns The current instance for method chaining.
+   */
+  public expose(ports: number | string | (number | string)[]) {
+    let argumentsString: string;
+
+    if (Array.isArray(ports)) {
+      // Array of ports
+      argumentsString = ports.map((port) => port.toString()).join(" ");
+    } else {
+      argumentsString = ports.toString();
+    }
+    this.instructions.push({ command: "EXPOSE", arguments: argumentsString });
+    return this;
+  }
+
   public comment(comment: string) {
     this.instructions.push({ command: "#", arguments: comment });
     return this;
+  }
+
+  /**
+   * Handles both shell and exec forms for Dockerfile instructions and adds them to the instructions array.
+   *
+   * @param command - The Dockerfile command (e.g., `CMD`, `ENTRYPOINT`).
+   * @param args - The arguments for the command. Can be a string (shell form) or an array of strings (exec form).
+   */
+  private addShellOrExecInstruction(command: string, args: string | string[]) {
+    const argumentsString =
+      typeof args === "string" ? args : JSON.stringify(args); // Convert array to JSON for exec form
+    this.instructions.push({ command, arguments: argumentsString });
+  }
+
+  /**
+   * Handles key-value pair instructions and adds them to the instructions array.
+   *
+   * @param command - The Dockerfile command (e.g., `ENV`, `ADD`).
+   * @param args - The arguments for the command. Can be a string, an array of strings, or an object.
+   */
+  private addKeyValueInstruction(
+    command: string,
+    args: string | string[] | Record<string, string | number | undefined>
+  ) {
+    let argumentsString: string;
+
+    if (typeof args === "string") {
+      // Single argument string
+      argumentsString = args;
+    } else if (Array.isArray(args)) {
+      // Array of argument strings
+      argumentsString = args.join(" ");
+    } else {
+      // Object with key-value pairs
+      argumentsString = Object.entries(args)
+        .map(([key, value]) =>
+          value !== undefined ? `${key}="${String(value).replace(/"/g, '\\"')}"` : key
+        )
+        .join(" ");
+    }
+
+    this.instructions.push({ command, arguments: argumentsString });
   }
 }
