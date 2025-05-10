@@ -2665,9 +2665,9 @@ eventsource-parser@^3.0.1:
   integrity sha512-VARTJ9CYeuQYb0pZEPbzi740OWFgpHe7AYJ2WFZVnUDUQp5Dk2yJUgF36YsZ81cOyxT0QxmXD2EQpapAouzWVA==
 
 eventsource@^3.0.2:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-3.0.6.tgz#5c4b24cd70c0323eed2651a5ee07bd4bc391e656"
-  integrity sha512-l19WpE2m9hSuyP06+FbuUUf1G+R0SFLrtQfbRb9PRr+oimOfxQhgGCbVaXg5IvZyyTThJsxh6L/srkMiCeBPDA==
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-3.0.7.tgz#1157622e2f5377bb6aef2114372728ba0c156989"
+  integrity sha512-CRT1WTyuQoD771GW56XEZFQ/ZoSfWid1alKGDYMmkt2yl8UXrVR4pspqWNEcqKvVIzg6PAltWjxcSSPrboA4iA==
   dependencies:
     eventsource-parser "^3.0.1"
 
