@@ -133,7 +133,74 @@ export class Dockerfile extends FileBase {
   }
 }
 
+/**
+ * Options for the `COPY` instruction in a Dockerfile.
+ *
+ * @extends AddCopyOptions
+ *
+ */
+export interface DockerfileCopyOptions extends AddCopyOptions {
+  /**
+   *  The stage to copy from in a multi-stage Dockerfile build.
+   *  This can be specified as a string (stage name) or a number
+   *  (stage index).
+   */
+  from?: string | number;
+}
 
+/**
+ * Options for the `ADD` instruction in a Dockerfile.
+ * 
+ * @extends AddCopyOptions
+ * 
+ */
+export interface DockerfileAddOptions extends AddCopyOptions {
+  /**
+   * Option to add .git directory along with rest of repo content when <src> is a remote Git repository.
+   * @default false
+   */
+  keepGitDir?: boolean;
+
+  /**
+   * Only SHA256 checksum is supported.
+   * Formatted as sha256:<hash>
+   */
+  checksum?: string;
+}
+
+/**
+ * This interface contains common options used by both the `COPY` and `ADD` instructions.
+ */
+interface AddCopyOptions {
+  /**
+   * The source path(s) to copy from.
+   */
+  src: string | string[];
+
+  /**
+   * The destination path to copy to.
+   */
+  dest: string;
+
+  /**
+   * The user/group to set ownership to.
+   * This is a string in the format "user:group" or "user".
+   */
+  chown?: string;
+
+  /**
+   * The file permissions to set on the copied files.
+   * This is a string in the format "u+x" or "755".
+   */
+  chmod?: string;
+
+  /**
+   * Files remain independent on their own layer and don't get invalidated when commands on previous layers are changed.
+   * Creates much better conditions for cache reuse.
+   * @default false
+   */
+  link?: boolean;
+}
 
 /**
  * Represents a stage in a Dockerfile, allowing the construction of Dockerfile instructions
@@ -173,10 +240,91 @@ export class DockerfileStage {
     }
   }
 
+  public run(args: string[]) {
+    const trimmedArgs = args.map((arg) => arg.replace(/ ?; *\\? *$/, ""));
+    this.instructions.push({
+      command: "RUN",
+      arguments: trimmedArgs.join(" ; \\\n\t"),
+    });
+    return this;
+  }
+
+  public copy(options: DockerfileCopyOptions) {
+    const src = Array.isArray(options.src)
+      ? options.src.join(" ")
+      : options.src;
+
+    const linkOption = options.link ? "--link" : "";
+
+    const args = [
+      options.chown ? `--chown=${options.chown}` : "",
+      options.chmod ? `--chmod=${options.chmod}` : "",
+      typeof options.from !== undefined ? `--from=${options.from}` : "",
+      linkOption,
+      src,
+      options.dest,
+    ]
+      .filter((arg) => arg !== "") // Remove empty arguments
+      .join(" ");
+
+    this.instructions.push({
+      command: "COPY",
+      arguments: args,
+    });
+    return this;
+  }
+
+  public env(args: string) {
+    this.instructions.push({ command: "ENV", arguments: args });
+    return this;
+  }
+
+  public add(options: DockerfileAddOptions) {
+    const src = Array.isArray(options.src)
+      ? options.src.join(" ")
+      : options.src;
+    const args = [
+      options.keepGitDir ? "--keep-git-dir" : "",
+      options.checksum ? `--checksum=${options.checksum}` : "",
+      options.chown ? `--chown=${options.chown}` : "",
+      options.chmod ? `--chmod=${options.chmod}` : "",
+      src,
+      options.dest,
+    ]
+      .filter((arg) => arg !== "") // Remove empty arguments
+      .join(" ");
+
+    this.instructions.push({ command: "ADD", arguments: args });
+    return this;
+  }
+
+  public arg(args: string) {
+    this.instructions.push({ command: "ARG", arguments: args });
+    return this;
+  }
+
+  public shell(args: string) {
+    this.instructions.push({ command: "SHELL", arguments: args });
+    return this;
+  }
+
+  public user(args: string) {
+    this.instructions.push({ command: "USER", arguments: args });
+    return this;
+  }
+
+  public cmd(args: string) {
+    this.instructions.push({ command: "CMD", arguments: args });
+    return this;
+  }
+
   public instruction(instruction: DockerfileInstruction) {
     this.instructions.push(instruction);
     return this;
   }
 
-
+  public comment(comment: string) {
+    this.instructions.push({ command: "#", arguments: comment });
+    return this;
+  }
 }
