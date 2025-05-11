@@ -4,53 +4,58 @@ import { Project } from "./project";
 
 /**
  * Represents a single instruction in a Dockerfile.
+ * Each instruction consists of a command and its arguments that will be written to the Dockerfile.
  */
 export interface DockerfileInstruction {
   /**
-   * The command to execute in the Dockerfile.
-   * This is typically a Dockerfile instruction like `RUN`, `COPY`, etc.
+   * The command to execute in the Dockerfile (e.g., RUN, COPY, ENV).
+   * This corresponds to the instruction keyword in the Dockerfile syntax.
    */
   readonly command: string;
+
   /**
-   * The arguments to pass to the command.
-   * This is a string that contains the arguments for the command.
+   * The arguments for the command, formatted as a string.
+   * This can include flags, parameters, and values specific to the command.
    */
   readonly arguments: string;
 }
 
 /**
  * Options for defining a stage in a Dockerfile.
+ * Multi-stage builds are useful for creating optimized production images.
  */
 export interface DockerfileStageOptions {
   /**
-   * A list of instructions to include in this stage of the Dockerfile.
-   * Each instruction represents a command or directive in the Dockerfile.
+   * A list of instructions to include in the stage.
+   * These instructions will be executed in order during the build.
    *
-   * @default - No instructions are specified.
+   * @default []
    */
   readonly instructions?: DockerfileInstruction[];
 
   /**
-   * The base image to use for this stage of the Dockerfile.
-   * This is specified using the `FROM` directive in the Dockerfile.
+   * The base image for this stage.
+   * Specified using the FROM instruction at the start of the stage.
    *
-   * @default - No base image is specified.
+   * Can be:
+   * - An image from a docker registry
+   * - Scratch image for minimal builds ('scratch')
+   * - Previous stage in multi-stage build
+   *
    */
-  readonly fromImage?: string;
+  readonly fromImage: string;
 
   /**
-   * An optional identifier for this stage of the Dockerfile.
-   * This can be used to reference the stage in multi-stage builds.
+   * An identifier for this stage that can be referenced in subsequent stages.
+   * While useful for readability in multi-stage builds, it's optional as stages
+   * can also be referenced by their positional index (0, 1, 2, etc.).
    *
-   * @default - No identifier is specified.
    */
   readonly id?: string;
 
   /**
-   * The platform to use for this stage of the Dockerfile.
-   * This is specified using the `--platform` option in the Dockerfile.
-   *
-   * @default - No platform is specified.
+   * The target platform for this stage.
+   * Used for multi-platform builds or ensuring consistent builds.
    */
   readonly platform?: string;
 }
@@ -63,13 +68,15 @@ export interface DockerfileOptions extends FileBaseOptions {
    * A list of stages to include in the Dockerfile.
    * Each stage is defined using the `DockerfileStageOptions` interface.
    *
-   * @default - No stages are specified.
+   * @default []
    */
   readonly stages?: DockerfileStageOptions[];
 }
 
 /**
- * A Dockerfile.
+ * A class representing a Dockerfile with support for multi-stage builds.
+ * Provides a type-safe and programmatic way to generate Dockerfile instructions.
+ *
  */
 export class Dockerfile extends FileBase {
   private readonly stages: DockerfileStage[];
@@ -95,15 +102,15 @@ export class Dockerfile extends FileBase {
   }
 
   /**
-   * Adds a new stage to the Dockerfile with the specified options.
+   * Adds a new stage to the Dockerfile.
    *
-   * @param stageOptions - The configuration options for the new Dockerfile stage.
+   * @param options - The configuration options for the new Dockerfile stage.
    * @returns The newly created `DockerfileStage` instance.
    */
-  public addStage(stageOptions: DockerfileStageOptions): DockerfileStage {
-    const updatedStage = new DockerfileStage(this.project, stageOptions);
-    this.stages.push(updatedStage);
-    return updatedStage;
+  public addStage(options: DockerfileStageOptions): DockerfileStage {
+    const stage = new DockerfileStage(this.project, options);
+    this.stages.push(stage);
+    return stage;
   }
 
   /**
@@ -114,13 +121,13 @@ export class Dockerfile extends FileBase {
    * it will attempt to retrieve the stage at the corresponding index in the stages array,
    * provided the number is within valid bounds.
    *
-   * @param stageId - The identifier of the stage to find. Can be a string or a number.
+   * @param id - The identifier of the stage to find. Can be a string or a number.
    * @returns The matching `DockerfileStage` if found, or `undefined` if no match is found.
    */
-  public tryFindStage(stageId: string | number): DockerfileStage | undefined {
-    const stage = this.stages.find((stage) => stage.id === stageId);
+  public tryFindStage(id: string | number): DockerfileStage | undefined {
+    const stage = this.stages.find((stage) => stage.id === id);
     if (!stage) {
-      const numId = Number(stageId);
+      const numId = Number(id);
       if (!isNaN(numId) && numId >= 0 && numId < this.stages.length) {
         return this.stages[numId];
       }
@@ -136,7 +143,7 @@ export class Dockerfile extends FileBase {
         stage.platform ? `--platform=${stage.platform}` : null,
         stage.fromImage,
         stage.id ? `AS ${stage.id}` : null,
-      ].filter(Boolean); // Remove null or undefined parts
+      ].filter(Boolean);
       lines.push(`FROM ${fromParts.join(" ")}`);
       stage.instructions?.forEach((instruction) =>
         lines.push(`${instruction.command} ${instruction.arguments}`)
@@ -148,12 +155,14 @@ export class Dockerfile extends FileBase {
 }
 
 /**
- * Options for `RUN` instruction in a Dockerfile
+ * Options for the `RUN` instruction in a Dockerfile
  */
 export interface RunOptions {
   /**
    * Command to execute
-   * @example 'npm install' or ['npm', 'install'] or 'npm install && npm run build'
+   * @example 'yarn install'
+   * ['npm', 'install']
+   * 'npm install && npm run build'
    */
   command: string | string[];
 
@@ -180,12 +189,10 @@ export interface RunOptions {
 /**
  * Options for the `COPY` instruction in a Dockerfile.
  *
- * @extends AddCopyOptions
- *
  */
 export interface DockerfileCopyOptions extends AddCopyOptions {
   /**
-   *  The stage to copy from in a multi-stage Dockerfile build.
+   *  Copy files from an image, a build stage, or a named context instead.
    *  This can be specified as a string (stage name) or a number
    *  (stage index).
    */
@@ -194,8 +201,6 @@ export interface DockerfileCopyOptions extends AddCopyOptions {
 
 /**
  * Options for the `ADD` instruction in a Dockerfile.
- *
- * @extends AddCopyOptions
  *
  */
 export interface DockerfileAddOptions extends AddCopyOptions {
@@ -218,6 +223,7 @@ export interface DockerfileAddOptions extends AddCopyOptions {
 interface AddCopyOptions {
   /**
    * The source path(s) to copy from.
+   * When string[] is provided, the instruction will use JSON array format.
    */
   src: string | string[];
 
@@ -295,26 +301,7 @@ export interface HealthCheckOptions {
 /**
  * Represents a stage in a Dockerfile, allowing the construction of Dockerfile instructions
  * programmatically. This class provides methods to add various Dockerfile commands such as
- * `RUN`, `COPY`, `ENV`, and more.
- *
- * @example
- * ```typescript
- * const stage = new DockerfileStage({
- *   fromImage: "node:14",
- *   id: "build",
- *   instructions: [],
- * });
- *
- * stage
- *   .run(["npm install"])
- *   .copy({ src: "src/", dest: "/app/src" })
- *   .env("NODE_ENV=production");
- * ```
- *
- * @remarks
- * Each method appends a corresponding Dockerfile instruction to the `instructions` array.
- * The `fromImage` and `id` properties define the base image and identifier for the stage,
- * respectively.
+ * `RUN`, `COPY`, `ENV`, and more. Each method appends a corresponding Dockerfile instruction to the `instructions` array.
  *
  */
 export class DockerfileStage extends Component {
@@ -328,44 +315,29 @@ export class DockerfileStage extends Component {
     this.instructions = options.instructions ?? [];
     this.platform = options.platform;
     this.fromImage = options.fromImage;
-    if (options.id !== "default") {
-      this.id = options.id;
-    }
+    this.id = options.id;
   }
 
   /**
    * The RUN instruction executes commands in a new layer on top of the current image
    *
    * @param options - Configuration for the RUN instruction
-   * @returns The current instance for method chaining
+   * @returns The current instance for method chaining.
    *
-   * @example
-   * ```typescript
-   * stage.run({ command: 'npm install' });
-   *
-   * stage.run({
-   *   command: 'apt-get update && apt-get install -y curl',
-   *   mounts: ['type=cache,target=/var/cache/apt'],
-   *   network: 'none'
-   * });
-   * ```
    */
   public run(options: RunOptions): DockerfileStage {
     const flags: string[] = [];
 
-    // Add mount options
     if (options.mounts?.length) {
       options.mounts.forEach((mount) => {
         flags.push(`--mount=${mount}`);
       });
     }
 
-    // Add network option
     if (options.network) {
       flags.push(`--network=${options.network}`);
     }
 
-    // Add security option
     if (options.security) {
       flags.push(`--security=${options.security}`);
     }
@@ -393,11 +365,10 @@ export class DockerfileStage extends Component {
             }
             return part;
           })
-          .join("\n    ");
+          .join("\n  ");
       }
     }
 
-    // Combine flags with command
     const finalCommand =
       flags.length > 0 ? `${flags.join(" ")} ${commandArgs}` : commandArgs;
 
@@ -405,23 +376,54 @@ export class DockerfileStage extends Component {
     return this;
   }
 
+  /**
+   * The `COPY` instruction copies files or directories from source to destination in the container's filesystem.
+   * Supports both regular file copying and multi-stage build copying with --from flag.
+   *
+   * When the source is a string[], the instruction uses JSON array format which is preferred
+   * for better handling of spaces in filenames.
+   *
+   * @param options - Configuration options for the COPY instruction
+   * @returns The current instance for method chaining.
+   *
+   *
+   * @example Multiple source files
+   * ```typescript
+   * stage.copy({
+   *   src: ["package.json", "yarn.lock"],
+   *   link: true  // Enables better layer caching
+   *   dest: "/app/"
+   * });
+   * // Produces: COPY --link ["package.json", "yarn.lock", "/app/"]
+   * ```
+   *
+   * @example Multi-stage build copy
+   * ```typescript
+   * stage.copy({
+   *   from: "builder",
+   *   src: "dist",
+   *   dest: "/app/",
+   *   chown: "node:node"
+   * });
+   * // Produces: COPY --from=builder --chown=node:node dist /app/
+   * ```
+   *
+   */
   public copy(options: DockerfileCopyOptions) {
-    const src = Array.isArray(options.src)
-      ? options.src.join(" ")
-      : options.src;
-
     const linkOption = options.link ? "--link" : "";
 
-    const args = [
+    const flags = [
       options.chown ? `--chown=${options.chown}` : "",
       options.chmod ? `--chmod=${options.chmod}` : "",
-      typeof options.from !== undefined ? `--from=${options.from}` : "",
+      options.from !== undefined ? `--from=${options.from}` : "",
       linkOption,
-      src,
-      options.dest,
-    ]
-      .filter((arg) => arg !== "") // Remove empty arguments
-      .join(" ");
+    ].filter((arg) => arg !== "");
+
+    const args = Array.isArray(options.src)
+      ? [...flags, JSON.stringify([...options.src, options.dest])]
+          .join(" ")
+          .trim()
+      : [...flags, options.src, options.dest].join(" ").trim();
 
     this.instructions.push({
       command: "COPY",
@@ -444,22 +446,54 @@ export class DockerfileStage extends Component {
     return this;
   }
 
+  /**
+   * The `ADD` instruction copies files, directories, or remote URLs from source to destination.
+   * Similar to COPY but with additional features like URL support and tar extraction.
+   *
+   * When the source is a string[], the instruction uses JSON array format which is preferred
+   * for better handling of spaces in filenames.
+   *
+   * @param options - Configuration options for the ADD instruction
+   * @returns The current instance for method chaining.
+   *
+   * @example Remote URL
+   * ```typescript
+   * stage.add({
+   *   src: "https://example.com/app.tar.gz",
+   *   dest: "/app/",
+   *   checksum: "sha256:a9561eb1b190625c9adb5a9513e72c4dedafc1cb2d4c5236c9a6957ec7dfd5a9"
+   * });
+   * // Produces: ADD --checksum=sha256:a9561eb... https://example.com/app.tar.gz /app/
+   * ```
+   *
+   * @example Git repository
+   * ```typescript
+   * stage.add({
+   *   src: "https://github.com/user/repo.git",
+   *   dest: "/app/",
+   *   keepGitDir: true
+   * });
+   * // Produces: ADD --keep-git-dir https://github.com/user/repo.git /app/
+   * ```
+   */
   public add(options: DockerfileAddOptions) {
-    const src = Array.isArray(options.src)
-      ? options.src.join(" ")
-      : options.src;
-    const args = [
+    const flags = [
       options.keepGitDir ? "--keep-git-dir" : "",
       options.checksum ? `--checksum=${options.checksum}` : "",
       options.chown ? `--chown=${options.chown}` : "",
       options.chmod ? `--chmod=${options.chmod}` : "",
-      src,
-      options.dest,
-    ]
-      .filter((arg) => arg !== "") // Remove empty arguments
-      .join(" ");
+    ].filter((arg) => arg !== "");
 
-    this.instructions.push({ command: "ADD", arguments: args });
+    const args = Array.isArray(options.src)
+      ? [...flags, JSON.stringify([...options.src, options.dest])]
+          .join(" ")
+          .trim()
+      : [...flags, options.src, options.dest].join(" ").trim();
+
+    this.instructions.push({
+      command: "ADD",
+      arguments: args,
+    });
     return this;
   }
 
@@ -527,11 +561,36 @@ export class DockerfileStage extends Component {
     return this;
   }
 
+  /**
+   * Adds a `SHELL` instruction to the Dockerfile with the specified arguments.
+   *
+   * The `SHELL` instruction allows you to specify the default shell to use for
+   * the `RUN, CMD and ENTRYPOINT` instructions in the Dockerfile when their shell form is used. This can be useful for changing
+   * the shell to a different one, such as `bash` or `powershell`, or for
+   * providing additional arguments to the shell.
+   *
+   * @param args - An array of strings representing the shell command and its
+   *               arguments. The first element is the shell executable, and
+   *               the subsequent elements are its arguments.
+   * @returns The current instance for method chaining.
+   */
   public shell(args: string[]) {
     this.addShellOrExecInstruction("SHELL", args);
     return this;
   }
 
+  /**
+   * Adds a `LABEL` instruction to the Dockerfile with the specified arguments.
+   *
+   * The `LABEL` instruction is used to add metadata to an image in the form of key-value pairs.
+   *
+   * @param args - The label arguments to add. This can be:
+   * - A string representing a single key-value pair in the format `key=value`.
+   * - An array of strings, each representing a key-value pair in the format `key=value`.
+   * - A record object where keys are label names and values are their corresponding values (strings or numbers).
+   *
+   * @returns The current instance for method chaining.
+   */
   public label(args: string | string[] | Record<string, string | number>) {
     this.addKeyValueInstruction("LABEL", args);
     return this;
@@ -543,12 +602,6 @@ export class DockerfileStage extends Component {
    *
    * @param mountpoints - A single mountpoint path (e.g., "/data") or an array of paths (e.g., ["/data", "/var/log"]).
    * @returns The current instance for method chaining.
-   *
-   * @example
-   * ```typescript
-   * stage.volume("/data");                     // Single volume
-   * stage.volume(["/data", "/var/log"]);      // Multiple volumes
-   * ```
    */
   public volume(mountpoints: string | string[]) {
     const args = Array.isArray(mountpoints)
@@ -569,13 +622,6 @@ export class DockerfileStage extends Component {
    * @param path - The path to set as the working directory. Can be absolute or relative.
    *              If relative, it is relative to the previous WORKDIR instruction.
    * @returns The current instance for method chaining.
-   *
-   * @example
-   * ```typescript
-   * stage.workdir("/app");               // Absolute path
-   * stage.workdir("src");                // Relative to previous WORKDIR
-   * stage.workdir("/usr/local/app");     // Nested absolute path
-   * ```
    */
   public workdir(path: string) {
     this.instructions.push({
@@ -594,12 +640,6 @@ export class DockerfileStage extends Component {
    *               - <UID>[:<GID>]
    * @returns The current instance for method chaining.
    *
-   * @example
-   * ```typescript
-   * stage.user("nginx");              // Set user
-   * stage.user("nginx:www-data");     // Set user and group
-   * stage.user("1000:1000");          // Set UID and GID
-   * ```
    */
   public user(args: string) {
     this.instructions.push({ command: "USER", arguments: args });
@@ -613,12 +653,6 @@ export class DockerfileStage extends Component {
    *
    * @param signal - The signal to send to the container. Can be a number (1-64) or a signal name (e.g., SIGKILL).
    * @returns The current instance for method chaining.
-   *
-   * @example
-   * ```typescript
-   * stage.stopsignal("SIGTERM");
-   * stage.stopsignal(9); // SIGKILL
-   * ```
    */
   public stopsignal(signal: string | number) {
     if (typeof signal === "number") {
@@ -656,6 +690,35 @@ export class DockerfileStage extends Component {
     return this;
   }
 
+  /**
+   * Adds a raw Dockerfile instruction to the list of instructions.
+   * This is a low-level method that serves as a fallback when specialized methods
+   * (like `run()`, `copy()`, etc.) don't meet specific needs or encounter issues.
+   *
+   * Consider using specialized methods first, as they provide:
+   * - Better type safety
+   * - Input validation
+   * - Proper argument formatting
+   * - Documentation and examples
+   *
+   * @param instruction - The raw Dockerfile instruction to be added
+   * @returns The current instance for method chaining
+   *
+   * @example Fallback for complex or uncommon instructions
+   * ```typescript
+   * // When specialized methods don't work as needed:
+   * stage.instruction({
+   *   command: "RUN",
+   *   arguments: "--mount=type=secret,id=mykey cat /run/secrets/mykey"
+   * });
+   *
+   * // For experimental or new Dockerfile features:
+   * stage.instruction({
+   *   command: "NEW_INSTRUCTION",
+   *   arguments: "some special args"
+   * });
+   * ```
+   */
   public instruction(instruction: DockerfileInstruction) {
     this.instructions.push(instruction);
     return this;
@@ -673,7 +736,6 @@ export class DockerfileStage extends Component {
     let argumentsString: string;
 
     if (Array.isArray(ports)) {
-      // Array of ports
       argumentsString = ports.map((port) => port.toString()).join(" ");
     } else {
       argumentsString = ports.toString();
@@ -682,6 +744,12 @@ export class DockerfileStage extends Component {
     return this;
   }
 
+  /**
+   * Adds a comment to the Dockerfile instructions.
+   *
+   * @param comment - The comment text to be added. This will be prefixed with `#` in the Dockerfile.
+   * @returns The current instance for method chaining.
+   */
   public comment(comment: string) {
     this.instructions.push({ command: "#", arguments: comment });
     return this;
@@ -695,7 +763,7 @@ export class DockerfileStage extends Component {
    */
   private addShellOrExecInstruction(command: string, args: string | string[]) {
     const argumentsString =
-      typeof args === "string" ? args : JSON.stringify(args); // Convert array to JSON for exec form
+      typeof args === "string" ? args : JSON.stringify(args);
     this.instructions.push({ command, arguments: argumentsString });
   }
 
@@ -712,13 +780,10 @@ export class DockerfileStage extends Component {
     let argumentsString: string;
 
     if (typeof args === "string") {
-      // Single argument string
       argumentsString = args;
     } else if (Array.isArray(args)) {
-      // Array of argument strings
       argumentsString = args.join(" ");
     } else {
-      // Object with key-value pairs
       argumentsString = Object.entries(args)
         .map(([key, value]) =>
           value !== undefined
