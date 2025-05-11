@@ -148,6 +148,36 @@ export class Dockerfile extends FileBase {
 }
 
 /**
+ * Options for `RUN` instruction in a Dockerfile
+ */
+export interface RunOptions {
+  /**
+   * Command to execute
+   * @example 'npm install' or ['npm', 'install'] or 'npm install && npm run build'
+   */
+  command: string | string[];
+
+  /**
+   * Mount options
+   * @example ["type=cache,target=/var/cache/apt"]
+   */
+  mounts?: string[];
+
+  /**
+   * Run in a specific network mode
+   * @example "none"
+   * @default "default"
+   */
+  network?: "default" | "none" | "host";
+
+  /**
+   * Run with specific security options
+   * @example "insecure"
+   */
+  security?: "insecure" | "sandbox";
+}
+
+/**
  * Options for the `COPY` instruction in a Dockerfile.
  *
  * @extends AddCopyOptions
@@ -303,12 +333,75 @@ export class DockerfileStage extends Component {
     }
   }
 
-  public run(args: string[]) {
-    const trimmedArgs = args.map((arg) => arg.replace(/ ?; *\\? *$/, ""));
-    this.instructions.push({
-      command: "RUN",
-      arguments: trimmedArgs.join(" ; \\\n\t"),
-    });
+  /**
+   * The RUN instruction executes commands in a new layer on top of the current image
+   *
+   * @param options - Configuration for the RUN instruction
+   * @returns The current instance for method chaining
+   *
+   * @example
+   * ```typescript
+   * stage.run({ command: 'npm install' });
+   *
+   * stage.run({
+   *   command: 'apt-get update && apt-get install -y curl',
+   *   mounts: ['type=cache,target=/var/cache/apt'],
+   *   network: 'none'
+   * });
+   * ```
+   */
+  public run(options: RunOptions): DockerfileStage {
+    const flags: string[] = [];
+
+    // Add mount options
+    if (options.mounts?.length) {
+      options.mounts.forEach((mount) => {
+        flags.push(`--mount=${mount}`);
+      });
+    }
+
+    // Add network option
+    if (options.network) {
+      flags.push(`--network=${options.network}`);
+    }
+
+    // Add security option
+    if (options.security) {
+      flags.push(`--security=${options.security}`);
+    }
+
+    let commandArgs = options.command;
+    if (typeof commandArgs === "string") {
+      const splitOperators = [";", "&&", "||"];
+      const hasOperators = splitOperators.some((op) =>
+        commandArgs.includes(op)
+      );
+
+      if (hasOperators) {
+        const parts = commandArgs
+          .split(/(?<=;|&&|\|\|)/g)
+          .map((part) => part.trim())
+          .filter(Boolean);
+
+        commandArgs = parts
+          .map((part, index, array) => {
+            if (
+              index < array.length - 1 &&
+              splitOperators.some((op) => part.includes(op))
+            ) {
+              return part + " \\";
+            }
+            return part;
+          })
+          .join("\n    ");
+      }
+    }
+
+    // Combine flags with command
+    const finalCommand =
+      flags.length > 0 ? `${flags.join(" ")} ${commandArgs}` : commandArgs;
+
+    this.addShellOrExecInstruction("RUN", finalCommand);
     return this;
   }
 
@@ -434,18 +527,109 @@ export class DockerfileStage extends Component {
     return this;
   }
 
-  public shell(args: string) {
-    this.instructions.push({ command: "SHELL", arguments: args });
+  public shell(args: string[]) {
+    this.addShellOrExecInstruction("SHELL", args);
     return this;
   }
 
-  public label(args: string | string[] | Record<string, string>) {
+  public label(args: string | string[] | Record<string, string | number>) {
     this.addKeyValueInstruction("LABEL", args);
     return this;
   }
 
+  /**
+   * The `VOLUME` instruction creates a mount point with the specified name and marks it
+   * as holding externally mounted volumes from native host or other containers.
+   *
+   * @param mountpoints - A single mountpoint path (e.g., "/data") or an array of paths (e.g., ["/data", "/var/log"]).
+   * @returns The current instance for method chaining.
+   *
+   * @example
+   * ```typescript
+   * stage.volume("/data");                     // Single volume
+   * stage.volume(["/data", "/var/log"]);      // Multiple volumes
+   * ```
+   */
+  public volume(mountpoints: string | string[]) {
+    const args = Array.isArray(mountpoints)
+      ? JSON.stringify(mountpoints)
+      : mountpoints;
+    this.instructions.push({
+      command: "VOLUME",
+      arguments: JSON.stringify(args),
+    });
+    return this;
+  }
+
+  /**
+   * The `WORKDIR` instruction sets the working directory for any subsequent
+   * `RUN`, `CMD`, `ENTRYPOINT`, `COPY` and `ADD` instructions that follow it.
+   * If the directory doesn't exist, it will be created.
+   *
+   * @param path - The path to set as the working directory. Can be absolute or relative.
+   *              If relative, it is relative to the previous WORKDIR instruction.
+   * @returns The current instance for method chaining.
+   *
+   * @example
+   * ```typescript
+   * stage.workdir("/app");               // Absolute path
+   * stage.workdir("src");                // Relative to previous WORKDIR
+   * stage.workdir("/usr/local/app");     // Nested absolute path
+   * ```
+   */
+  public workdir(path: string) {
+    this.instructions.push({
+      command: "WORKDIR",
+      arguments: path,
+    });
+    return this;
+  }
+
+  /**
+   * The `USER` instruction sets the user name (or UID) and optionally the user group (or GID)
+   * to use when running the image and for any subsequent instructions in the Dockerfile.
+   *
+   * @param args - The user name/UID and optionally the group name/GID. Can be in the following formats:
+   *               - <user>[:<group>]
+   *               - <UID>[:<GID>]
+   * @returns The current instance for method chaining.
+   *
+   * @example
+   * ```typescript
+   * stage.user("nginx");              // Set user
+   * stage.user("nginx:www-data");     // Set user and group
+   * stage.user("1000:1000");          // Set UID and GID
+   * ```
+   */
   public user(args: string) {
     this.instructions.push({ command: "USER", arguments: args });
+    return this;
+  }
+
+  /**
+   * The `STOPSIGNAL` instruction sets the system call signal that will be sent to the container to exit.
+   * The signal can be a valid unsigned number that matches a position in the kernel's syscall table (e.g., 9),
+   * or a signal name in the format SIGNAME (e.g., SIGKILL).
+   *
+   * @param signal - The signal to send to the container. Can be a number (1-64) or a signal name (e.g., SIGKILL).
+   * @returns The current instance for method chaining.
+   *
+   * @example
+   * ```typescript
+   * stage.stopsignal("SIGTERM");
+   * stage.stopsignal(9); // SIGKILL
+   * ```
+   */
+  public stopsignal(signal: string | number) {
+    if (typeof signal === "number") {
+      if (signal < 1 || signal > 64) {
+        throw new Error("Signal number must be between 1 and 64");
+      }
+    }
+    this.instructions.push({
+      command: "STOPSIGNAL",
+      arguments: signal.toString(),
+    });
     return this;
   }
 
@@ -537,7 +721,9 @@ export class DockerfileStage extends Component {
       // Object with key-value pairs
       argumentsString = Object.entries(args)
         .map(([key, value]) =>
-          value !== undefined ? `${key}="${String(value).replace(/"/g, '\\"')}"` : key
+          value !== undefined
+            ? `${key}="${String(value).replace(/"/g, '\\"')}"`
+            : key
         )
         .join(" ");
     }
