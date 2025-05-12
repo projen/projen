@@ -3,6 +3,7 @@ export * from "./component";
 export * from "./dev-env";
 export * from "./dependencies";
 export * from "./docker-compose";
+export * from "./dockerfile";
 export * from "./file";
 export * from "./gitattributes";
 export * from "./gitpod";

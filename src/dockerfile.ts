@@ -164,26 +164,24 @@ export interface RunOptions {
    * ['npm', 'install']
    * 'npm install && npm run build'
    */
-  command: string | string[];
+  readonly command: string | string[];
 
   /**
    * Mount options
    * @example ["type=cache,target=/var/cache/apt"]
    */
-  mounts?: string[];
+  readonly mounts?: string[];
 
   /**
    * Run in a specific network mode
-   * @example "none"
    * @default "default"
    */
-  network?: "default" | "none" | "host";
+  readonly network?: "default" | "none" | "host";
 
   /**
    * Run with specific security options
-   * @example "insecure"
    */
-  security?: "insecure" | "sandbox";
+  readonly security?: "insecure" | "sandbox";
 }
 
 /**
@@ -196,7 +194,7 @@ export interface DockerfileCopyOptions extends AddCopyOptions {
    *  This can be specified as a string (stage name) or a number
    *  (stage index).
    */
-  from?: string | number;
+  readonly from?: string | number;
 }
 
 /**
@@ -208,13 +206,13 @@ export interface DockerfileAddOptions extends AddCopyOptions {
    * Option to add .git directory along with rest of repo content when <src> is a remote Git repository.
    * @default false
    */
-  keepGitDir?: boolean;
+  readonly keepGitDir?: boolean;
 
   /**
    * Only SHA256 checksum is supported.
    * Formatted as sha256:<hash>
    */
-  checksum?: string;
+  readonly checksum?: string;
 }
 
 /**
@@ -225,31 +223,32 @@ interface AddCopyOptions {
    * The source path(s) to copy from.
    * When string[] is provided, the instruction will use JSON array format.
    */
-  src: string | string[];
+  readonly src: string | string[];
 
   /**
    * The destination path to copy to.
    */
-  dest: string;
+  readonly dest: string;
 
   /**
    * The user/group to set ownership to.
    * This is a string in the format "user:group" or "user".
    */
-  chown?: string;
+  readonly chown?: string;
 
   /**
    * The file permissions to set on the copied files.
    * This is a string in the format "u+x" or "755".
    */
-  chmod?: string;
+  readonly chmod?: string;
 
   /**
-   * Files remain independent on their own layer and don't get invalidated when commands on previous layers are changed.
+   * Files remain independent on their own layer and
+   * don't get invalidated when commands on previous layers are changed.
    * Creates much better conditions for cache reuse.
    * @default false
    */
-  link?: boolean;
+  readonly link?: boolean;
 }
 
 /**
@@ -260,48 +259,49 @@ export interface HealthCheckOptions {
    * The command to run to check health
    * Required when disable is false or not provided
    */
-  command?: string[] | string;
+  readonly command?: string[] | string;
 
   /**
    * The interval between health checks (in seconds)
    * @default 30s
    */
-  interval?: string;
+  readonly interval?: string;
 
   /**
    * How long to wait before considering the check to have hung (in seconds)
    * @default 30s
    */
-  timeout?: string;
+  readonly timeout?: string;
 
   /**
    * The number of consecutive failures needed to consider the container as unhealthy
    * @default 3
    */
-  retries?: number;
+  readonly retries?: number;
 
   /**
    * The optional grace period before starting health checks (in seconds)
    * @default 0s
    */
-  startPeriod?: string;
+  readonly startPeriod?: string;
 
   /**
    * The interval between health checks during the start period (in seconds)
    * @default 5s
    */
-  startInterval?: string;
+  readonly startInterval?: string;
 
   /**
    * Set to true to disable any healthcheck inherited from the base image
    */
-  disable?: boolean;
+  readonly disable?: boolean;
 }
 
 /**
  * Represents a stage in a Dockerfile, allowing the construction of Dockerfile instructions
  * programmatically. This class provides methods to add various Dockerfile commands such as
- * `RUN`, `COPY`, `ENV`, and more. Each method appends a corresponding Dockerfile instruction to the `instructions` array.
+ * `RUN`, `COPY`, `ENV`, and more.
+ * Each method appends a corresponding Dockerfile instruction to the `instructions` array.
  *
  */
 export class DockerfileStage extends Component {
@@ -319,7 +319,7 @@ export class DockerfileStage extends Component {
   }
 
   /**
-   * The RUN instruction executes commands in a new layer on top of the current image
+   * The `RUN` instruction executes commands in a new layer on top of the current image
    *
    * @param options - Configuration for the RUN instruction
    * @returns The current instance for method chaining.
@@ -387,18 +387,16 @@ export class DockerfileStage extends Component {
    * @returns The current instance for method chaining.
    *
    *
-   * @example Multiple source files
-   * ```typescript
+   * @example
+   * // Multiple source files
    * stage.copy({
    *   src: ["package.json", "yarn.lock"],
    *   link: true  // Enables better layer caching
    *   dest: "/app/"
    * });
    * // Produces: COPY --link ["package.json", "yarn.lock", "/app/"]
-   * ```
    *
-   * @example Multi-stage build copy
-   * ```typescript
+   * // Multi-stage build copy
    * stage.copy({
    *   from: "builder",
    *   src: "dist",
@@ -406,17 +404,14 @@ export class DockerfileStage extends Component {
    *   chown: "node:node"
    * });
    * // Produces: COPY --from=builder --chown=node:node dist /app/
-   * ```
    *
    */
   public copy(options: DockerfileCopyOptions) {
-    const linkOption = options.link ? "--link" : "";
-
     const flags = [
       options.chown ? `--chown=${options.chown}` : "",
       options.chmod ? `--chmod=${options.chmod}` : "",
       options.from !== undefined ? `--from=${options.from}` : "",
-      linkOption,
+      options.link ? "--link" : "",
     ].filter((arg) => arg !== "");
 
     const args = Array.isArray(options.src)
@@ -456,25 +451,22 @@ export class DockerfileStage extends Component {
    * @param options - Configuration options for the ADD instruction
    * @returns The current instance for method chaining.
    *
-   * @example Remote URL
-   * ```typescript
+   * @example
+   * // Remote URL
    * stage.add({
    *   src: "https://example.com/app.tar.gz",
    *   dest: "/app/",
    *   checksum: "sha256:a9561eb1b190625c9adb5a9513e72c4dedafc1cb2d4c5236c9a6957ec7dfd5a9"
    * });
    * // Produces: ADD --checksum=sha256:a9561eb... https://example.com/app.tar.gz /app/
-   * ```
    *
-   * @example Git repository
-   * ```typescript
+   * // Git repository
    * stage.add({
    *   src: "https://github.com/user/repo.git",
    *   dest: "/app/",
    *   keepGitDir: true
    * });
    * // Produces: ADD --keep-git-dir https://github.com/user/repo.git /app/
-   * ```
    */
   public add(options: DockerfileAddOptions) {
     const flags = [
@@ -502,17 +494,55 @@ export class DockerfileStage extends Component {
    * to the builder with the `--build-arg` flag. This is useful for parameterizing
    * the build process.
    *
-   * @param args - A single argument string (e.g., `name=value`), an array of strings,
-   *               or an object where keys are argument names and values are their defaults.
+   * @param args - A single argument string (e.g., `name=value`), an array of strings.
    * @returns The current instance for method chaining.
    */
-  public arg(
-    args: string | string[] | Record<string, string | number | undefined>
-  ) {
+  public arg(args: string | string[]) {
     this.addKeyValueInstruction("ARG", args);
     return this;
   }
 
+  /**
+   * The `HEALTHCHECK` instruction tells Docker how to test a container to check that it is still working.
+   * This is useful for ensuring that the container is healthy and can respond to requests.
+   *
+   * @param options - Configuration options for the HEALTHCHECK instruction
+   * @returns The current instance for method chaining.
+   * @throws {Error} If command is not provided and disable is false
+   *
+   *
+   * @example
+   * // HTTP endpoint check
+   * stage.healthcheck({
+   *   command: ["curl", "-f http://localhost:3000/health || exit 1"],
+   *   interval: "30s",
+   *   timeout: "10s",
+   *   retries: 3,
+   *   startPeriod: "40s"
+   * });
+   * // Produces: HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s CMD curl -f http://localhost:3000/health || exit 1
+   *
+   * // Using command array
+   * stage.healthcheck({
+   *   command: ["curl", "-f", "http://localhost:3000/health"],
+   *   interval: "1m",
+   *   timeout: "5s"
+   * });
+   * // Produces: HEALTHCHECK --interval=1m --timeout=5s CMD curl -f http://localhost:3000/health
+   *
+   * // Custom script check
+   * stage.healthcheck({
+   *   command: ["/health-check.sh"],
+   *   interval: "45s",
+   *   startInterval: "5s"
+   * });
+   * // Produces: HEALTHCHECK --interval=45s --start-interval=5s CMD /health-check.sh
+   *
+   * // Disable health check
+   * stage.healthcheck({ disable: true });
+   * // Produces: HEALTHCHECK NONE
+   *
+   */
   public healthcheck(options: HealthCheckOptions) {
     if (options.disable) {
       this.instructions.push({
@@ -522,8 +552,16 @@ export class DockerfileStage extends Component {
       return this;
     }
 
-    if (!options.command) {
-      throw new Error("command is required when healthcheck is not disabled");
+    if (
+      !options.command ||
+      (typeof options.command === "string" && options.command.trim() === "") ||
+      (Array.isArray(options.command) &&
+        (options.command.length === 0 ||
+          options.command.every((cmd) => cmd.trim() === "")))
+    ) {
+      throw new Error(
+        "command is required when healthcheck is not disabled and must not be empty"
+      );
     }
 
     const parts = [];
@@ -565,9 +603,9 @@ export class DockerfileStage extends Component {
    * Adds a `SHELL` instruction to the Dockerfile with the specified arguments.
    *
    * The `SHELL` instruction allows you to specify the default shell to use for
-   * the `RUN, CMD and ENTRYPOINT` instructions in the Dockerfile when their shell form is used. This can be useful for changing
-   * the shell to a different one, such as `bash` or `powershell`, or for
-   * providing additional arguments to the shell.
+   * the `RUN, CMD and ENTRYPOINT` instructions in the Dockerfile when their shell form is used.
+   * This can be useful for changing the shell to a different one, such as `bash` or `powershell`,
+   * or for providing additional arguments to the shell.
    *
    * @param args - An array of strings representing the shell command and its
    *               arguments. The first element is the shell executable, and
@@ -609,7 +647,7 @@ export class DockerfileStage extends Component {
       : mountpoints;
     this.instructions.push({
       command: "VOLUME",
-      arguments: JSON.stringify(args),
+      arguments: args,
     });
     return this;
   }
@@ -635,9 +673,8 @@ export class DockerfileStage extends Component {
    * The `USER` instruction sets the user name (or UID) and optionally the user group (or GID)
    * to use when running the image and for any subsequent instructions in the Dockerfile.
    *
-   * @param args - The user name/UID and optionally the group name/GID. Can be in the following formats:
-   *               - <user>[:<group>]
-   *               - <UID>[:<GID>]
+   * @param args - The user name/UID and optionally the group name/GID.
+   *               `<user>[:<group>]` `<UID>[:<GID>]`
    * @returns The current instance for method chaining.
    *
    */
@@ -651,15 +688,10 @@ export class DockerfileStage extends Component {
    * The signal can be a valid unsigned number that matches a position in the kernel's syscall table (e.g., 9),
    * or a signal name in the format SIGNAME (e.g., SIGKILL).
    *
-   * @param signal - The signal to send to the container. Can be a number (1-64) or a signal name (e.g., SIGKILL).
+   * @param signal - The signal to send to the container. Can be a number or a signal name (e.g., SIGKILL).
    * @returns The current instance for method chaining.
    */
   public stopsignal(signal: string | number) {
-    if (typeof signal === "number") {
-      if (signal < 1 || signal > 64) {
-        throw new Error("Signal number must be between 1 and 64");
-      }
-    }
     this.instructions.push({
       command: "STOPSIGNAL",
       arguments: signal.toString(),
@@ -681,6 +713,12 @@ export class DockerfileStage extends Component {
   }
 
   /**
+   * The `ENTRYPOINT` instruction allows you to configure a container that will run as an executable.
+   * It is similar to `CMD`, but it is not overridden when arguments are passed to `docker run`.
+   * This means that the command specified in `ENTRYPOINT` will always be executed,
+   * and any additional arguments will be passed to it.
+   * Can be overridden by `docker run --entrypoint`.
+   *
    * @param args - The command to set as the entrypoint. Can be a single string
    *               (shell form) or an array of strings (exec form).
    * @returns The current instance for method chaining.
@@ -702,10 +740,10 @@ export class DockerfileStage extends Component {
    * - Documentation and examples
    *
    * @param instruction - The raw Dockerfile instruction to be added
-   * @returns The current instance for method chaining
+   * @returns The current instance for method chaining.
    *
-   * @example Fallback for complex or uncommon instructions
-   * ```typescript
+   * @example
+   * // Fallback for complex or uncommon instructions
    * // When specialized methods don't work as needed:
    * stage.instruction({
    *   command: "RUN",
@@ -717,7 +755,6 @@ export class DockerfileStage extends Component {
    *   command: "NEW_INSTRUCTION",
    *   arguments: "some special args"
    * });
-   * ```
    */
   public instruction(instruction: DockerfileInstruction) {
     this.instructions.push(instruction);
@@ -732,7 +769,7 @@ export class DockerfileStage extends Component {
    *                or an object where keys are ports and values are protocols (`tcp` or `udp`).
    * @returns The current instance for method chaining.
    */
-  public expose(ports: number | string | (number | string)[]) {
+  public expose(ports: number | string | number[] | string[]) {
     let argumentsString: string;
 
     if (Array.isArray(ports)) {
@@ -770,12 +807,12 @@ export class DockerfileStage extends Component {
   /**
    * Handles key-value pair instructions and adds them to the instructions array.
    *
-   * @param command - The Dockerfile command (e.g., `ENV`, `ADD`).
+   * @param command - The Dockerfile command (e.g., `ENV`, `ARG`).
    * @param args - The arguments for the command. Can be a string, an array of strings, or an object.
    */
   private addKeyValueInstruction(
     command: string,
-    args: string | string[] | Record<string, string | number | undefined>
+    args: string | string[] | Record<string, string | number>
   ) {
     let argumentsString: string;
 
@@ -785,11 +822,7 @@ export class DockerfileStage extends Component {
       argumentsString = args.join(" ");
     } else {
       argumentsString = Object.entries(args)
-        .map(([key, value]) =>
-          value !== undefined
-            ? `${key}="${String(value).replace(/"/g, '\\"')}"`
-            : key
-        )
+        .map(([key, value]) => `${key}=${JSON.stringify(value)}`)
         .join(" ");
     }
 
