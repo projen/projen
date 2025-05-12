@@ -1,8 +1,10 @@
+import * as fs from "fs";
+import * as path from "path";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
+import { AwsCdkTypeScriptApp } from "./awscdk-app-ts";
 import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "./internal";
-
 /**
  * Common options for `cdk.json`.
  */
@@ -180,17 +182,17 @@ export class CdkConfig extends Component {
    * Set CDK feature flags based on the given version in the `cdk.json`.
    *
    * @param context The context to add the feature flags to.
-   * @param fflags Include all feature flags. Defaults to `true`.
+   * @param fflagsEnabled Include all feature flags. Defaults to `true`.
    * @param cdkMajorVersion The major version of the CDK to include the feature flags for.
    *     Defaults to 1.
    * @returns The updated context.
    */
   private setFeatureFlags(
     context: Record<string, any>,
-    fflags: boolean = true,
+    fflagsEnabled: boolean = true,
     cdkMajorVersion: number = 1
   ) {
-    if (!fflags) {
+    if (!fflagsEnabled) {
       return context;
     }
 
@@ -199,15 +201,46 @@ export class CdkConfig extends Component {
         for (const flag of FEATURE_FLAGS) {
           context[flag] = true;
         }
-
         break;
       case 2:
-        Object.assign(context, FEATURE_FLAGS_V2);
-
+        const featureFlags = this.tryLoadFeatureFlags(this.project);
+        if (featureFlags) {
+          Object.assign(context, featureFlags);
+        } else {
+          Object.assign(context, FEATURE_FLAGS_V2);
+        }
         break;
     }
 
     return context;
+  }
+
+  /**
+   * Attempt to load the feature flags from the `recommended-feature-flags.json` in the CDK package.
+   *
+   * This file is only present in the CDK package for TypeScript projects.
+   *
+   * @param project The project to load the feature flags for.
+   * @returns The feature flags, or `undefined` if they could not be loaded.
+   */
+  private tryLoadFeatureFlags(project: Project) {
+    if (project instanceof AwsCdkTypeScriptApp) {
+      try {
+        const jsonFile = fs.readFileSync(
+          path.join(
+            process.cwd(),
+            "node_modules",
+            "aws-cdk-lib",
+            "recommended-feature-flags.json"
+          ),
+          "utf-8"
+        );
+
+        return JSON.parse(jsonFile);
+      } catch (e) {
+        return undefined;
+      }
+    }
   }
 }
 
