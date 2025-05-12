@@ -503,7 +503,7 @@ export class JsiiProject extends TypeScriptProject {
     const commandParts = ["jsii-pacmak", "-v"];
 
     if (this.package.packageManager === NodePackageManager.PNPM) {
-      commandParts.push("--pack-command 'pnpm pack'");
+      commandParts.push('--pack-command "pnpm pack"');
     }
 
     commandParts.push(`--target ${language}`);

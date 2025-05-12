@@ -19,6 +19,26 @@ test.each([
   execProjenCLI(project.outdir, ["eslint"]);
 });
 
+test("can acceess file", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+  });
+
+  const eslint = new Eslint(project, {
+    dirs: ["mysrc"],
+    lintProjenRc: false,
+  });
+
+  // WHEN
+  eslint.file.addOverride("env.foo", "bar");
+
+  // THEN
+  const output = synthSnapshot(project)[".eslintrc.json"];
+  expect(output.env).toHaveProperty("foo", "bar");
+});
+
 describe("prettier", () => {
   test("snapshot", () => {
     // GIVEN

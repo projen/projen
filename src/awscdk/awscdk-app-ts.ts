@@ -1,9 +1,5 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Component } from "../component";
-import { DependencyType } from "../dependencies";
-import { NodePackageManager, RunBundleTask } from "../javascript";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { AutoDiscover } from "./auto-discover";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
@@ -11,6 +7,16 @@ import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import {
+  NodePackageManager,
+  RunBundleTask,
+  TypeScriptModuleResolution,
+  TypescriptConfigOptions,
+} from "../javascript";
+import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import { deepMerge } from "../util";
 
 export interface AwsCdkTypeScriptAppOptions
   extends TypeScriptProjectOptions,
@@ -110,16 +116,71 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public readonly cdkDeps: AwsCdkDeps;
 
   constructor(options: AwsCdkTypeScriptAppOptions) {
+    // CDK default compiler options
+    const cdkDefaultCompilerOptions: TypescriptConfigOptions["compilerOptions"] =
+      {
+        target: "ES2022",
+        module: "NodeNext",
+        moduleResolution: TypeScriptModuleResolution.NODE_NEXT,
+        lib: ["es2022"],
+        declaration: true,
+        strict: true,
+        noImplicitAny: true,
+        strictNullChecks: true,
+        noImplicitThis: true,
+        alwaysStrict: true,
+        noUnusedLocals: false,
+        noUnusedParameters: false,
+        noImplicitReturns: true,
+        noFallthroughCasesInSwitch: false,
+        inlineSourceMap: true,
+        inlineSources: true,
+        experimentalDecorators: true,
+        strictPropertyInitialization: false,
+        typeRoots: ["./node_modules/@types"],
+      };
+
+    let finalCompilerOptions = cdkDefaultCompilerOptions;
+    if (options.tsconfig?.compilerOptions) {
+      // Deep merge user's `compilerOptions` onto CDK-specific defaults.
+      finalCompilerOptions = deepMerge(
+        [cdkDefaultCompilerOptions, options.tsconfig.compilerOptions],
+        true
+      );
+    }
+
+    // CDK default exclude
+    const cdkDefaultExclude = ["node_modules", "cdk.out"];
+    let finalExclude = cdkDefaultExclude;
+    if (options.tsconfig?.exclude) {
+      // Merge and deduplicate user's `exclude` with CDK-specific defaults.
+      finalExclude = [
+        ...new Set([...cdkDefaultExclude, ...options.tsconfig.exclude]),
+      ];
+    }
+
+    /**
+     * The final `tsconfig` object passed to the superclass.
+     * It incorporates AWS CDK defaults (derived from `cdkDefaultCompilerOptions` and `cdkDefaultExclude` above)
+     * and any user-provided overrides. The aim is to align with the standard CDK `tsconfig.json`:
+     * @see https://github.com/aws/aws-cdk-cli/blob/main/packages/aws-cdk/lib/init-templates/app/typescript/tsconfig.json
+     */
+    const tsconfigToSuper: TypescriptConfigOptions = {
+      ...options.tsconfig, // Pass through any other top-level tsconfig options from user
+      compilerOptions: finalCompilerOptions,
+      exclude: finalExclude,
+    };
+
     super({
       ...options,
       sampleCode: false,
       bundlerOptions: {
         ...options.bundlerOptions,
-
         // we invoke the "bundle" task as part of the build step in cdk.json so
         // we don't want it to be added to the pre-compile phase.
         runBundleTask: RunBundleTask.MANUAL,
       },
+      tsconfig: tsconfigToSuper,
     });
     this.cdkDeps = new AwsCdkDepsJs(this, {
       dependencyType: DependencyType.RUNTIME,
