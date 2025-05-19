@@ -4006,18 +4006,18 @@ jsii-reflect@^1.112.0:
     yargs "^16.2.0"
 
 jsii-rosetta@5.8.x:
-  version "5.8.7"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.7.tgz#c88d7dedf51bb5068ac6d69e4dd9bf6a27451c84"
-  integrity sha512-8Ecl+BcCUXgRvqx9wqnVRqTlADuwdjS35sYSrKuXyAyLntdwlqn1NP3kMLLn20PBGjTkeqbCt8VmRox4hBASNA==
+  version "5.8.8"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.8.8.tgz#129d8499187b9039aba05a8df479641db067579f"
+  integrity sha512-zhLu75CwQFAYDiOffMXKLmEiw8QAmgMjDHStgd9z5k91Wt4EGrSI5AG2UNV3N9QLkOWdQCCuYjdyaH4BPRvwEg==
   dependencies:
-    "@jsii/check-node" "1.111.0"
-    "@jsii/spec" "^1.111.0"
+    "@jsii/check-node" "1.112.0"
+    "@jsii/spec" "^1.112.0"
     "@xmldom/xmldom" "^0.9.8"
     chalk "^4"
     commonmark "^0.31.2"
     fast-glob "^3.3.3"
     jsii "~5.8.0"
-    semver "^7.7.1"
+    semver "^7.7.2"
     semver-intersect "^1.5.0"
     stream-json "^1.9.1"
     typescript "~5.8"
