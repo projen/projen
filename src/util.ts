@@ -26,7 +26,8 @@ export function exec(
     stdio?: child_process.StdioOptions;
   }
 ): void {
-  logging.debug(command);
+  logging.debug(`${command} (cwd: ${options.cwd})`);
+
   child_process.execSync(command, {
     stdio: options.stdio || ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
@@ -42,7 +43,8 @@ export function execCapture(
   command: string,
   options: { cwd: string; modEnv?: Record<string, string> }
 ) {
-  logging.debug(command);
+  logging.debug(`${command} (cwd: ${options.cwd})`);
+
   return child_process.execSync(command, {
     stdio: ["inherit", "pipe", "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
@@ -61,6 +63,8 @@ export function execOrUndefined(
   command: string,
   options: { cwd: string }
 ): string | undefined {
+  logging.debug(`${command} (cwd: ${options.cwd})`);
+
   try {
     const value = child_process
       .execSync(command, {
