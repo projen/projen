@@ -75,7 +75,7 @@ flowchart TD
     H -->|generates| M[releasetag.txt]
 ```
 
-## Proposed Solution
+## Comprehensive Solution
 
 Fortunately, the `commit-and-tag-version` package already [supports Poetry](https://github.com/absolute-version/commit-and-tag-version?tab=readme-ov-file#python-support).
 We can leverage this existing capability with minimal changes to projen's codebase,
@@ -163,3 +163,24 @@ export class PythonProject extends Project {
   }
 }
 ```
+
+## Simpler Alternative
+
+A lighter-weight approach would be to remove the hardcoded `type` from `CommitAndTagVersion`, without modifying `PythonProject`.
+This would enable users to manually instantiate `Release` in their Python Poetry projects:
+
+```typescript
+const project = new PythonProject({
+  // ... other options
+});
+
+// Add release automation manually
+new Release(project, {
+  versionFile: "pyproject.toml",
+  task: project.buildTask,
+  branch: "main",
+  // ... other release options
+});
+```
+
+This approach addresses the core issue raised in [the discussion](https://github.com/projen/projen/discussions/4078) while requiring minimal changes to projen's codebase.
