@@ -50,91 +50,82 @@ The `Release` class creates and manages an instance of the `Version` class, whic
 - Manages changelog generation
 - Creates files that track the version and release tag
 
-Version bumping is implemented through the [`BumpVersion`](../src/release/bump-version.ts) class, which relies on the [`CommitAndTagVersion`](../src/release/commit-tag-version.ts) class:
+Version bumping is implemented through a series of components:
 
-- `BumpVersion` determines the next version based on conventional commits
-- `CommitAndTagVersion` wraps the external `commit-and-tag-version` npm package
-- Updates version files (like `package.json` for Node projects or `pyproject.toml` for Poetry)
-- Generates changelogs based on conventional commits
+- The [`Version`](../src/version.ts) component sets up tasks for version bumping and changelog generation
+- The bump task uses code from [`bump-version.task.ts`](../src/release/bump-version.task.ts), which calls the [`bump`](../src/release/bump-version.ts) function
+- The `bump` function uses the [`CommitAndTagVersion`](../src/release/commit-tag-version.ts) class, which wraps the external `commit-and-tag-version` npm package
+- This process updates version files (like `package.json` for Node projects or `pyproject.toml` for Poetry) and generates changelogs based on conventional commits
 
-### Visual Component Overview
+### Version Bumping Process Flow
 
 ```mermaid
-classDiagram
-
-    NodeProject o-- Release : has
-
-    Release o-- Version : manages
-
-    Version --> BumpVersion : uses
-    BumpVersion --> CommitAndTagVersion : uses
-    Version --> UpdateChangelog : uses
-
-    class NodeProject {
-        +release: Release
-        +packageJson: JsonFile
-    }
-
-    class Release {
-        +version: Version
-    }
-
-    class Version {
-        +versionFile: string
-    }
-
-    class BumpVersion {
-        +determineLatestTag()
-        +hasNewInterestingCommits()
-    }
-
-    class UpdateChangelog {
-        +update()
-    }
-
-    class CommitAndTagVersion {
-        +invoke(options)
-        +generateChangelog()
-    }
+flowchart TD
+    A[NodeProject] -->|creates| B[Release]
+    B -->|manages| C[Version]
+    C -->|registers| D[bump-version Task]
+    D -->|determines latest tag| G[Git History]
+    D -->|checks for new commits| G
+    D -->|instantiates| H[CommitAndTagVersion]
+    H -->|writes| I[.versionrc.json]
+    H -->|executes| J[commit-and-tag-version]
+    J -->|reads| I
+    J -->|updates| K[package.json]
+    J -->|generates| L[changelog.md]
 ```
 
 ## Proposed Solution
 
 Fortunately, the `commit-and-tag-version` package already includes native support for Poetry's `pyproject.toml` format. We can leverage this existing capability with minimal changes to projen's codebase.
 
-```mermaid
-classDiagram
-    PythonProject --> Release : has
-    PythonProject o-- Poetry : has
+However, the current implementation in the `CommitAndTagVersion` class hard-codes the version file type as `"json"`:
 
-    Release o-- Version : manages
-
-    Version --> BumpVersion : uses
-    BumpVersion --> CommitAndTagVersion : uses
-    Version --> UpdateChangelog : uses
-
-    class PythonProject {
-        +poetry: Poetry
-        +release: Release
-    }
-
-    class Release {
-        +version: Version
-    }
-
-    class Version {
-        +versionFile: string
-        +bumpTask: Task
-    }
-
-    class Poetry {
-        +pyprojectToml: TomlFile
-    }
+```typescript
+const catvConfig: CommitAndTagConfig = {
+  packageFiles: [
+    {
+      filename: this.options.versionFile,
+      type: "json",
+    },
+  ],
+  bumpFiles: [
+    {
+      filename: this.options.versionFile,
+      type: "json",
+    },
+  ],
+  // ... other options
+};
 ```
 
-### Implementation
+The `commit-and-tag-version` package can actually [detect file types automatically](https://github.com/absolute-version/commit-and-tag-version/blob/400e3c17616cfc2481c5a17dad85c0d4d67a49f1/lib/updaters/index.js#L23-L51)
+if the `type` property is omitted, e.g.:
 
-Update the `PythonProject` class to create and configure a `Release` component when Poetry is enabled:
+```javascript
+if (/pyproject.toml/.test(filename)) {
+    return getUpdaterByType('python');
+}
+```
+
+So, we should remove the `type` property from the configuration:
+
+```typescript
+const catvConfig: CommitAndTagConfig = {
+  packageFiles: [
+    {
+      filename: this.options.versionFile,
+    },
+  ],
+  bumpFiles: [
+    {
+      filename: this.options.versionFile,
+    },
+  ],
+  // ... other options
+};
+```
+
+Then, we can update the `PythonProject` class to create and configure a `Release` component when Poetry is enabled:
 
 ```typescript
 export interface PythonProjectOptions
@@ -142,6 +133,7 @@ export interface PythonProjectOptions
     PythonPackagingOptions,
     PythonExecutableOptions,
     ReleaseProjectOptions {
+
   // Existing options...
 
   /**
@@ -168,28 +160,6 @@ export class PythonProject extends Project {
   }
 }
 ```
-
-Also, the current implementation in the `CommitAndTagVersion` class hard-codes the version file type as "json":
-
-```typescript
-const catvConfig: CommitAndTagConfig = {
-  packageFiles: [
-    {
-      filename: this.options.versionFile,
-      type: "json",
-    },
-  ],
-  bumpFiles: [
-    {
-      filename: this.options.versionFile,
-      type: "json",
-    },
-  ],
-  // ... other options
-};
-```
-
-We should be able to remove the `type` property and let `commit-and-tag-version` automatically detect the file type based on the filename, which would be more future-proof.
 
 ### Advantages
 
