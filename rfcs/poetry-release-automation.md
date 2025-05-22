@@ -23,23 +23,25 @@ The [`Release`](../src/release/release.ts) class orchestrates the entire release
 The `Release` class is typically initialized in the project constructor, as seen in [`NodeProject`](../src/javascript/node-project.ts):
 
 ```typescript
-// Example from NodeProject
-this.release = options.release && !this.parent
-  ? new Release(this, {
-      ...options.releaseOptions,
-      task: this.buildTask,
-      artifactsDirectory: this.artifactsDirectory,
-      versionFile: "package.json",
-      majorVersion: options.majorVersion,
-      minMajorVersion: options.minMajorVersion,
-      minor: options.minor,
-      prerelease: options.prerelease,
-      releaseBranches: options.releaseBranches,
-      defaultReleaseBranch: options.defaultReleaseBranch,
-      releaseTagPrefix: options.releaseTagPrefix,
-      ghpages: options.releaseToGhPages,
-    })
-  : undefined;
+this.release = new Release(this, {
+  versionFile: "package.json", // this is where "version" is set after bump
+  task: this.buildTask,
+  branch: options.defaultReleaseBranch ?? "main",
+  ...options,
+
+  artifactsDirectory: this.artifactsDirectory,
+  releaseWorkflowSetupSteps: [
+    ...this.renderWorkflowSetup({
+      installStepConfiguration: {
+        workingDirectory: this.determineInstallWorkingDirectory(),
+      },
+      mutable: false,
+    }),
+    ...(options.releaseWorkflowSetupSteps ?? []),
+  ],
+
+  // ...other options
+});
 ```
 
 The `Release` class creates and manages an instance of the `Version` class, which:
@@ -135,7 +137,11 @@ classDiagram
 Update the `PythonProject` class to create and configure a `Release` component when Poetry is enabled:
 
 ```typescript
-export interface PythonProjectOptions extends ProjectOptions {
+export interface PythonProjectOptions
+  extends GitHubProjectOptions,
+    PythonPackagingOptions,
+    PythonExecutableOptions,
+    ReleaseProjectOptions {
   // Existing options...
 
   /**
@@ -153,16 +159,9 @@ export class PythonProject extends Project {
       this.poetry = new Poetry(this, options.poetryOptions);
 
       if (options.release) {
-        // For Poetry projects, use pyproject.toml as the version file
         this.release = new Release(this, {
-          ...options.releaseOptions,
-          task: this.buildTask,
-          versionFile: 'pyproject.toml',
-          // Other release options carried over from options
-          majorVersion: options.majorVersion,
-          minMajorVersion: options.minMajorVersion,
-          prerelease: options.prerelease,
-          // etc.
+          versionFile: 'pyproject.toml', // Use Poetry's pyproject.toml instead of package.json
+          // ...other options
         });
       }
     }
@@ -170,7 +169,7 @@ export class PythonProject extends Project {
 }
 ```
 
-Also, our current implementation in the `CommitAndTagVersion` class hard-codes the version file type as "json":
+Also, the current implementation in the `CommitAndTagVersion` class hard-codes the version file type as "json":
 
 ```typescript
 const catvConfig: CommitAndTagConfig = {
