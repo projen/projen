@@ -55,7 +55,7 @@ Version bumping is implemented through a series of components:
 - The [`Version`](../src/version.ts) component sets up projen tasks for version bumping and changelog generation
 - The `bump` task uses code from [`bump-version.task.ts`](../src/release/bump-version.task.ts), which calls the [`bump`](../src/release/bump-version.ts) function
 - The `bump` function uses the [`CommitAndTagVersion`](../src/release/commit-tag-version.ts) class, which wraps the [`commit-and-tag-version` npm package](https://www.npmjs.com/package/commit-and-tag-version/)
-- This process updates version files (like `package.json` for Node projects) and generates changelogs based on conventional commits
+- This process updates `package.json` and generates a changelog based on conventional commits
 
 ### Version Bumping Process Flow
 
@@ -70,16 +70,18 @@ flowchart TD
     E -->|spawns| D
     D -->|instantiates| H[CommitAndTagVersion]
     H -->|executes| J[commit-and-tag-version]
-    J -->|updates| K[package.json]
+    J -->|sets new version| K[package.json]
+    D -->|sets current version| K
     J -->|generates| L[changelog.md]
     H -->|generates| M[releasetag.txt]
 ```
 
-## Comprehensive Solution
+## Proposed Solution
 
 Fortunately, the `commit-and-tag-version` package already [supports Poetry](https://github.com/absolute-version/commit-and-tag-version?tab=readme-ov-file#python-support).
-We can leverage this existing capability with minimal changes to projen's codebase,
-resulting in the same flow above, but with `PythonProject` and `pyproject.toml` instead of `NodeProject` and `package.json`.
+We can leverage this existing capability by implementing an extensible architecture that follows `commit-and-tag-version`'s approach for handling different types of version files.
+
+### `CommitAndTagVersion` Changes
 
 The current implementation in the `CommitAndTagVersion` class hard-codes the version file type as `"json"`:
 
@@ -128,7 +130,95 @@ const catvConfig: CommitAndTagConfig = {
 };
 ```
 
-Then, we can update the `PythonProject` class to create and configure a `Release` component when Poetry is enabled:
+### Version File Handler Architecture
+
+projen's internal version handling in [`bump-version.ts`](../src/release/bump-version.ts) currently assumes that the version file is JSON.
+Instead, we can create a flexible pattern that mirrors the approach in `commit-and-tag-version`.
+
+In `src/release/bump-version.ts`:
+
+```typescript
+interface VersionFileHandler {
+  canHandle(filePath: string): boolean;
+  readVersion(contents: string): string | undefined;
+  writeVersion(contents: string, version: string): string;
+}
+
+class JsonVersionHandler implements VersionFileHandler {
+  canHandle(filePath: string): boolean {
+    return filePath.endsWith('.json');
+  }
+
+  // Implementation of readVersion and writeVersion mirrors commit-and-tag-version's JSON updater:
+  // https://github.com/absolute-version/commit-and-tag-version/blob/master/lib/updaters/types/json.js
+}
+
+class PythonVersionHandler implements VersionFileHandler {
+  canHandle(filePath: string): boolean {
+    return filePath.endsWith('pyproject.toml') || filePath.endsWith('setup.py');
+  }
+
+  // Implementation of readVersion and writeVersion mirrors commit-and-tag-version's Python updater:
+  // https://github.com/absolute-version/commit-and-tag-version/blob/master/lib/updaters/types/python.js
+}
+
+const VERSION_HANDLERS = [
+  new JsonVersionHandler(),
+  new PythonVersionHandler(),
+];
+
+function getVersionHandler(filePath: string): VersionFileHandler {
+  for (const handler of VERSION_HANDLERS) {
+    if (handler.canHandle(filePath)) {
+      return handler;
+    }
+  }
+  // Default to JSON for backward compatibility
+  return new JsonVersionHandler();
+}
+
+export async function bump(cwd: string, options: BumpOptions) {
+  // Replace this code:
+  const { contents, newline } = await tryReadVersionFile(versionFile);
+  contents.version = latestVersion;
+  await fs.writeFile(versionFile, JSON.stringify(contents, undefined, 2) + (newline ? "\n" : ""));
+
+  // With:
+  const handler = getVersionHandler(versionFile);
+  const contents = await fs.readFile(versionFile, 'utf-8');
+  const updatedContents = handler.writeVersion(contents, latestVersion);
+  await fs.writeFile(versionFile, updatedContents);
+
+  // Replace this code:
+  const newVersion = (await tryReadVersionFile(versionFile)).version;
+
+  // With:
+  const handler = getVersionHandler(versionFile);
+  const contents = await fs.readFile(versionFile, 'utf-8');
+  const newVersion = handler.readVersion(contents);
+}
+
+// Remove the tryReadVersionFile function
+```
+
+### `PythonProject` Integration
+
+The changes above should enable users to manually instantiate `Release` in their Python Poetry projects:
+
+```typescript
+const project = new PythonProject({
+  // ... options
+});
+
+new Release(project, {
+  versionFile: "pyproject.toml",
+  task: project.buildTask,
+  branch: "main",
+  // ... other release options
+});
+```
+
+For a more comprehensive solution, we could update the `PythonProject` class to create and configure a `Release` component when Poetry is enabled:
 
 ```typescript
 export interface PythonProjectOptions
@@ -163,24 +253,3 @@ export class PythonProject extends Project {
   }
 }
 ```
-
-## Simpler Alternative
-
-A lighter-weight approach would be to remove the hardcoded `type` from `CommitAndTagVersion`, without modifying `PythonProject`.
-This would enable users to manually instantiate `Release` in their Python Poetry projects:
-
-```typescript
-const project = new PythonProject({
-  // ... other options
-});
-
-// Add release automation manually
-new Release(project, {
-  versionFile: "pyproject.toml",
-  task: project.buildTask,
-  branch: "main",
-  // ... other release options
-});
-```
-
-This approach addresses the core issue raised in [the discussion](https://github.com/projen/projen/discussions/4078) while requiring minimal changes to projen's codebase.
