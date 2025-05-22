@@ -6701,6 +6701,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.awscdk.CdkConfig.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.awscdk.CdkConfig.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.awscdk.CdkConfig.property.cdkout">cdkout</a></code> | <code>string</code> | Name of the cdk.out directory. |
+| <code><a href="#projen.awscdk.CdkConfig.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | The context to write to cdk.json. |
 | <code><a href="#projen.awscdk.CdkConfig.property.exclude">exclude</a></code> | <code>string[]</code> | List of glob patterns to be excluded by CDK. |
 | <code><a href="#projen.awscdk.CdkConfig.property.include">include</a></code> | <code>string[]</code> | List of glob patterns to be included by CDK. |
 | <code><a href="#projen.awscdk.CdkConfig.property.json">json</a></code> | <code>projen.JsonFile</code> | Represents the JSON file. |
@@ -6738,6 +6739,18 @@ public readonly cdkout: string;
 - *Type:* string
 
 Name of the cdk.out directory.
+
+---
+
+##### `context`<sup>Required</sup> <a name="context" id="projen.awscdk.CdkConfig.property.context"></a>
+
+```typescript
+public readonly context: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+The context to write to cdk.json.
 
 ---
 
@@ -13435,6 +13448,7 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.sampleJavaPackage">sampleJavaPackage</a></code> | <code>string</code> | The java package to use for the code sample. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. |
@@ -14168,6 +14182,18 @@ code before redeployment.
 
 ---
 
+##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.AwsCdkJavaAppOptions.property.cdkMajorVersion"></a>
+
+```typescript
+public readonly cdkMajorVersion: number;
+```
+
+- *Type:* number
+
+The major version of the AWS CDK (e.g. 1, 2, ...).
+
+---
+
 ##### `cdkout`<sup>Optional</sup> <a name="cdkout" id="projen.awscdk.AwsCdkJavaAppOptions.property.cdkout"></a>
 
 ```typescript
@@ -14563,6 +14589,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. |
@@ -15410,6 +15437,18 @@ code before redeployment.
 
 ---
 
+##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.AwsCdkPythonAppOptions.property.cdkMajorVersion"></a>
+
+```typescript
+public readonly cdkMajorVersion: number;
+```
+
+- *Type:* number
+
+The major version of the AWS CDK (e.g. 1, 2, ...).
+
+---
+
 ##### `cdkout`<sup>Optional</sup> <a name="cdkout" id="projen.awscdk.AwsCdkPythonAppOptions.property.cdkout"></a>
 
 ```typescript
@@ -15821,6 +15860,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. |
@@ -17999,6 +18039,18 @@ code before redeployment.
 
 ---
 
+##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkMajorVersion"></a>
+
+```typescript
+public readonly cdkMajorVersion: number;
+```
+
+- *Type:* number
+
+The major version of the AWS CDK (e.g. 1, 2, ...).
+
+---
+
 ##### `cdkout`<sup>Optional</sup> <a name="cdkout" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkout"></a>
 
 ```typescript
@@ -18339,6 +18391,7 @@ const cdkConfigCommonOptions: awscdk.CdkConfigCommonOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
+| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. |
@@ -18362,6 +18415,18 @@ A command to execute before synthesis.
 This command will be called when
 running `cdk synth` or when `cdk watch` identifies a change in your source
 code before redeployment.
+
+---
+
+##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.CdkConfigCommonOptions.property.cdkMajorVersion"></a>
+
+```typescript
+public readonly cdkMajorVersion: number;
+```
+
+- *Type:* number
+
+The major version of the AWS CDK (e.g. 1, 2, ...).
 
 ---
 
@@ -18460,6 +18525,7 @@ const cdkConfigOptions: awscdk.CdkConfigOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
+| <code><a href="#projen.awscdk.CdkConfigOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. |
@@ -18484,6 +18550,18 @@ A command to execute before synthesis.
 This command will be called when
 running `cdk synth` or when `cdk watch` identifies a change in your source
 code before redeployment.
+
+---
+
+##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.CdkConfigOptions.property.cdkMajorVersion"></a>
+
+```typescript
+public readonly cdkMajorVersion: number;
+```
+
+- *Type:* number
+
+The major version of the AWS CDK (e.g. 1, 2, ...).
 
 ---
 
