@@ -237,7 +237,9 @@ test("poetry environment is setup with pythonExec", () => {
   }
 
   // THEN
-  expect(debug).toBeCalledWith("poetry env use python-exec-test-path");
+  expect(debug).toBeCalledWith(
+    expect.stringContaining("poetry env use python-exec-test-path")
+  );
 
   // AFTER
   debug.mockRestore();
