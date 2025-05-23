@@ -262,7 +262,7 @@ test("generates correct pyproject.toml content", () => {
     tool: {
       poetry: {
         name: "test-python-project",
-        version: "0.1.0",
+        version: "0.0.0",
         description: "A short project description",
         license: "Apache-2.0",
         authors: ["First Last <email@example.com>"],

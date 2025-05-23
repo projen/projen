@@ -56,17 +56,22 @@ export class CommitAndTagVersion {
   public async invoke<A extends InvokeOptions>(
     options: A
   ): Promise<A extends { capture: true } ? string : void> {
+    // JSON files need explicit type, others are auto-detected by commit-and-tag-version
+    const fileType = this.options.versionFile.endsWith(".json")
+      ? "json"
+      : undefined;
+
     const catvConfig: CommitAndTagConfig = {
       packageFiles: [
         {
           filename: this.options.versionFile,
-          type: "json",
+          ...(fileType && { type: fileType }),
         },
       ],
       bumpFiles: [
         {
           filename: this.options.versionFile,
-          type: "json",
+          ...(fileType && { type: fileType }),
         },
       ],
       commitAll: false,
@@ -166,8 +171,8 @@ export class CommitAndTagVersion {
  * Modeling the CATV config file
  */
 interface CommitAndTagConfig extends Config {
-  packageFiles?: Array<{ filename: string; type: string }>;
-  bumpFiles?: Array<{ filename: string; type: string }>;
+  packageFiles?: Array<{ filename: string; type?: string }>;
+  bumpFiles?: Array<{ filename: string; type?: string }>;
   commitAll?: boolean;
   infile?: string;
   prerelease?: string;

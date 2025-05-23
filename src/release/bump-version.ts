@@ -1,4 +1,4 @@
-import { promises as fs, existsSync } from "fs";
+import { promises as fs } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
 import { compare } from "semver";
@@ -13,10 +13,11 @@ import {
   renderBumpType,
 } from "./bump-type";
 import { CommitAndTagVersion } from "./commit-tag-version";
+import { createVersionHandler } from "./version-handlers";
 
 export interface BumpOptions {
   /**
-   * The name of a .json file to set `version`.
+   * The name of a version file to set `version` (e.g., package.json, pyproject.toml, version.json).
    */
   readonly versionFile: string;
 
@@ -184,15 +185,11 @@ export async function bump(cwd: string, options: BumpOptions) {
   });
 
   // Write the current version into the version file so that CATV will know the current version
-  const { contents, newline } = await tryReadVersionFile(versionFile);
-  contents.version = latestVersion;
+  const versionHandler = createVersionHandler(versionFile);
   logging.info(
     `Update ${versionFile} to latest resolved version: ${latestVersion}`
   );
-  await fs.writeFile(
-    versionFile,
-    JSON.stringify(contents, undefined, 2) + (newline ? "\n" : "")
-  );
+  versionHandler.writeVersion(latestVersion);
 
   // Determine the initial bump status. CATV will always do a patch even if
   // there are no commits, so look at commits ourselves first to decide
@@ -281,7 +278,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   }
 
   // Validate the version that we ended up with
-  const newVersion = (await tryReadVersionFile(versionFile)).version;
+  const newVersion = versionHandler.readVersion();
   if (!newVersion) {
     throw new Error(`bump failed: ${versionFile} does not have a version set`);
   }
@@ -332,22 +329,6 @@ function hasNewInterestingCommits(options: {
   }
 
   return true;
-}
-
-async function tryReadVersionFile(
-  versionFile: string
-): Promise<{ contents: any; version?: string; newline: boolean }> {
-  if (!existsSync(versionFile)) {
-    return { contents: {}, newline: true };
-  }
-  const raw = await fs.readFile(versionFile, "utf-8");
-  const contents = JSON.parse(raw);
-
-  return {
-    contents,
-    version: contents.version,
-    newline: raw.endsWith("\n"),
-  };
 }
 
 interface LatestTagOptions {
