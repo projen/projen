@@ -139,63 +139,49 @@ In `src/release/bump-version.ts`:
 
 ```typescript
 interface VersionFileHandler {
-  canHandle(filePath: string): boolean;
-  readVersion(contents: string): string | undefined;
-  writeVersion(contents: string, version: string): string;
+  /** Read version from the file */
+  readVersion(): Promise<string | undefined>;
+  
+  /** Write version to the file, preserving formatting */
+  writeVersion(version: string): Promise<void>;
 }
 
 class JsonVersionHandler implements VersionFileHandler {
-  canHandle(filePath: string): boolean {
-    return filePath.endsWith('.json');
-  }
+  constructor(private filePath: string) {}
 
-  // Implementation of readVersion and writeVersion mirrors commit-and-tag-version's JSON updater:
+  // Implementation mirrors commit-and-tag-version's JSON updater:
   // https://github.com/absolute-version/commit-and-tag-version/blob/master/lib/updaters/types/json.js
 }
 
 class PythonVersionHandler implements VersionFileHandler {
-  canHandle(filePath: string): boolean {
-    return filePath.endsWith('pyproject.toml') || filePath.endsWith('setup.py');
-  }
+  constructor(private filePath: string) {}
 
-  // Implementation of readVersion and writeVersion mirrors commit-and-tag-version's Python updater:
+  // Implementation mirrors commit-and-tag-version's Python updater:
   // https://github.com/absolute-version/commit-and-tag-version/blob/master/lib/updaters/types/python.js
 }
 
-const VERSION_HANDLERS = [
-  new JsonVersionHandler(),
-  new PythonVersionHandler(),
-];
-
-function getVersionHandler(filePath: string): VersionFileHandler {
-  for (const handler of VERSION_HANDLERS) {
-    if (handler.canHandle(filePath)) {
-      return handler;
-    }
+function createVersionHandler(filePath: string): VersionFileHandler {
+  if (filePath.endsWith('pyproject.toml') || filePath.endsWith('setup.py')) {
+    return new PythonVersionHandler(filePath);
   }
   // Default to JSON for backward compatibility
-  return new JsonVersionHandler();
+  return new JsonVersionHandler(filePath);
 }
 
 export async function bump(cwd: string, options: BumpOptions) {
-  // Replace this code:
+  // Replace:
   const { contents, newline } = await tryReadVersionFile(versionFile);
   contents.version = latestVersion;
   await fs.writeFile(versionFile, JSON.stringify(contents, undefined, 2) + (newline ? "\n" : ""));
 
   // With:
-  const handler = getVersionHandler(versionFile);
-  const contents = await fs.readFile(versionFile, 'utf-8');
-  const updatedContents = handler.writeVersion(contents, latestVersion);
-  await fs.writeFile(versionFile, updatedContents);
+  await createVersionHandler(versionFile).writeVersion(latestVersion);
 
-  // Replace this code:
+  // Replace:
   const newVersion = (await tryReadVersionFile(versionFile)).version;
 
   // With:
-  const handler = getVersionHandler(versionFile);
-  const contents = await fs.readFile(versionFile, 'utf-8');
-  const newVersion = handler.readVersion(contents);
+  const newVersion = await createVersionHandler(versionFile).readVersion();
 }
 
 // Remove the tryReadVersionFile function
