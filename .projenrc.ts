@@ -14,6 +14,7 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
+  setupBiomeTypesGeneration,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -192,6 +193,8 @@ setupNpmignore(project);
 
 setupIntegTest(project);
 setupBundleTaskRunner(project);
+
+setupBiomeTypesGeneration(project);
 
 new WindowsBuild(project);
 

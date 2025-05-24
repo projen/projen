@@ -173,6 +173,14 @@
         }
       ]
     },
+    "generate-biome-types": {
+      "name": "generate-biome-types",
+      "steps": [
+        {
+          "exec": "node ./scripts/generate-biome-types.js"
+        }
+      ]
+    },
     "install": {
       "name": "install",
       "description": "Install project dependencies and update lockfile (non-frozen)",
@@ -311,6 +319,9 @@
       "steps": [
         {
           "spawn": "check-licenses"
+        },
+        {
+          "spawn": "generate-biome-types"
         }
       ]
     },
