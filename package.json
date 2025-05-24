@@ -49,6 +49,7 @@
     "organization": true
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@types/conventional-changelog-config-spec": "^2.1.5",
     "@types/glob": "^7.2.0",
     "@types/ini": "^1.3.34",
@@ -74,6 +75,7 @@
     "jsii-docgen": "^10.5.0",
     "jsii-pacmak": "^1.112.0",
     "jsii-rosetta": "5.8.x",
+    "json-schema-to-typescript": "^15.0.4",
     "license-checker": "^25.0.1",
     "markmac": "^0.1.146",
     "prettier": "^2.8.8",

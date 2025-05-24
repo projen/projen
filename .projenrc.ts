@@ -83,6 +83,9 @@ const project = new JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "json-schema-to-typescript",
+    // Can be removed if linting and formating is done with Biome
+    "@biomejs/biome",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
