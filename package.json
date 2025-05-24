@@ -22,6 +22,7 @@
     "docgen": "node ./projen.js docgen",
     "eject": "node ./projen.js eject",
     "eslint": "node ./projen.js eslint",
+    "generate-biome-types": "node ./projen.js generate-biome-types",
     "integ": "node ./projen.js integ",
     "integ:python-compat": "node ./projen.js integ:python-compat",
     "package": "node ./projen.js package",

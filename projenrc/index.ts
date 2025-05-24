@@ -337,3 +337,17 @@ export function setupNpmignore(project: NodeProject) {
   project.npmignore?.exclude("/SECURITY.md");
   project.npmignore?.exclude("/.gitpod.yml");
 }
+
+export function setupBiomeTypesGeneration(project: NodeProject) {
+  const genetateBiomeTypesTask = project.addTask("generate-biome-types", {
+    exec: "node ./scripts/generate-biome-types.js",
+  });
+
+  const preCompileTask = project.tasks.tryFind("pre-compile");
+  // Add type generation to build step to include it also to self-mutation
+  if (preCompileTask) {
+    preCompileTask.insertStep(preCompileTask.steps.length, {
+      spawn: genetateBiomeTypesTask.name,
+    });
+  }
+}
