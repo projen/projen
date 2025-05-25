@@ -1,12 +1,11 @@
 import { deepClone } from "fast-json-patch";
 import { Component } from "../component";
 import { JsonFile } from "../json";
-import { ProjenrcFile } from "../projenrc";
-import { TypeScriptProject } from "../typescript";
 import type { IConfiguration } from "./biome-config";
 import { Eslint } from "./eslint";
 import type { NodeProject } from "./node-project";
 import { Prettier } from "./prettier";
+import type { Task } from "../task";
 export * from "./biome-config";
 
 export interface BiomeOptions {
@@ -209,14 +208,16 @@ export class Biome extends Component {
   private readonly configFile: string;
   private readonly optionsWithDefaults: BiomeOptions;
   private readonly biomeConfiguration: IConfiguration;
-  private readonly projenrcFile?: string;
+  private readonly _lintPatterns: Set<string>;
+  private readonly biomeCommand = "biome check --write";
+  /**
+   * Biome task.
+   */
+  public readonly biomeTask: Task;
 
   constructor(project: NodeProject, options: BiomeOptions = {}) {
     super(project);
     this.configFile = "biome.jsonc";
-    this.projenrcFile = this.project.components.find(
-      (component) => component instanceof ProjenrcFile
-    )?.filePath;
     this.optionsWithDefaults = {
       mergeArraysInConfiguration: (options as Object).hasOwnProperty(
         "mergeArraysInConfiguration"
@@ -243,8 +244,10 @@ export class Biome extends Component {
       marker: true,
     });
 
-    const localTask = this.createLocalBiomeTask();
-    project.testTask.spawn(localTask);
+    this._lintPatterns = new Set([]);
+
+    this.biomeTask = this.createLocalBiomeTask();
+    project.testTask.spawn(this.biomeTask);
   }
 
   public override preSynthesize(): void {
@@ -269,20 +272,40 @@ export class Biome extends Component {
     }
   }
 
-  private createLocalBiomeTask() {
-    const targetDirs: string[] = [];
-    this.projenrcFile && targetDirs.push(this.projenrcFile);
+  /**
+   * Update the task with the current list of lint patterns and file extensions
+   */
+  private updateTask() {
+    const args = new Set<string>();
 
-    if (this.project instanceof TypeScriptProject) {
-      targetDirs.push(this.project.srcdir);
-      targetDirs.push(this.project.testdir);
+    for (const arg of this._lintPatterns) {
+      args.add(arg);
     }
 
+    this.biomeTask.reset(
+      [
+        this.biomeCommand,
+        // Allow also external arguments
+        "$@",
+        ...args,
+      ].join(" "),
+      {
+        args: this.biomeTask.steps[0].args,
+      }
+    );
+  }
+
+  public addLintPattern(pattern: string) {
+    this._lintPatterns.add(pattern);
+    this.updateTask();
+  }
+
+  private createLocalBiomeTask() {
     return this.project.addTask("biome", {
       description: "Runs Biome against the codebase",
       steps: [
         {
-          exec: `biome check --write ${targetDirs.join(" ")}`,
+          exec: this.biomeCommand,
         },
       ],
     });

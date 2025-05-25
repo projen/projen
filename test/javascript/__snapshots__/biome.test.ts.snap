@@ -613,7 +613,7 @@ exports[`biome with default configuration generates correct snapshot for .projen
       "name": "biome",
       "steps": [
         {
-          "exec": "biome check --write .projenrc.js src test",
+          "exec": "biome check --write $@ .projenrc.js",
         },
       ],
     },
