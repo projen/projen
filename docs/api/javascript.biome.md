@@ -39,6 +39,7 @@ new javascript.biome.Biome(project: NodeProject, options?: BiomeOptions)
 | <code><a href="#projen.javascript.biome.Biome.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.javascript.biome.Biome.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.biome.Biome.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.biome.Biome.addLintPattern">addLintPattern</a></code> | *No description.* |
 
 ---
 
@@ -75,6 +76,18 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `addLintPattern` <a name="addLintPattern" id="projen.javascript.biome.Biome.addLintPattern"></a>
+
+```typescript
+public addLintPattern(pattern: string): void
+```
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.biome.Biome.addLintPattern.parameter.pattern"></a>
+
+- *Type:* string
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -139,12 +152,12 @@ Test whether the given construct is a component.
 ```typescript
 import { javascript } from 'projen'
 
-javascript.biome.Biome.of(project: NodeProject)
+javascript.biome.Biome.of(project: Project)
 ```
 
 ###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.biome.Biome.of.parameter.project"></a>
 
-- *Type:* projen.javascript.NodeProject
+- *Type:* projen.Project
 
 ---
 
@@ -155,6 +168,7 @@ javascript.biome.Biome.of(project: NodeProject)
 | <code><a href="#projen.javascript.biome.Biome.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.biome.Biome.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.biome.Biome.property.file">file</a></code> | <code>projen.JsonFile</code> | Biome configuration file content. |
+| <code><a href="#projen.javascript.biome.Biome.property.task">task</a></code> | <code>projen.Task</code> | Biome task. |
 
 ---
 
@@ -189,6 +203,18 @@ public readonly file: JsonFile;
 - *Type:* projen.JsonFile
 
 Biome configuration file content.
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.javascript.biome.Biome.property.task"></a>
+
+```typescript
+public readonly task: Task;
+```
+
+- *Type:* projen.Task
+
+Biome task.
 
 ---
 

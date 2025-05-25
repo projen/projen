@@ -1,10 +1,10 @@
 import { deepClone } from "fast-json-patch";
-import { Component } from "../../component";
-import { JsonFile } from "../../json";
-import { ProjenrcFile } from "../../projenrc";
-import { TypeScriptProject } from "../../typescript";
 import type { IConfiguration } from "./biome-config";
+import { Component } from "../../component";
 import type { NodeProject } from "../../javascript";
+import { JsonFile } from "../../json";
+import type { Project } from "../../project";
+import type { Task } from "../../task";
 
 export interface BiomeOptions {
   /**
@@ -198,7 +198,7 @@ export const _createBiomeConfiguration = (
 };
 
 export class Biome extends Component {
-  public static of(project: NodeProject): Biome | undefined {
+  public static of(project: Project): Biome | undefined {
     const isBiome = (c: Component): c is Biome => c instanceof Biome;
     return project.components.find(isBiome);
   }
@@ -206,7 +206,12 @@ export class Biome extends Component {
   private readonly configFile: string;
   private readonly optionsWithDefaults: BiomeOptions;
   private readonly biomeConfiguration: IConfiguration;
-  private readonly projenrcFile?: string;
+  private readonly _lintPatterns: Set<string>;
+  private readonly biomeCommand = "biome check --write";
+  /**
+   * Biome task.
+   */
+  public readonly task: Task;
   /**
    * Biome configuration file content
    */
@@ -215,9 +220,6 @@ export class Biome extends Component {
   constructor(project: NodeProject, options: BiomeOptions = {}) {
     super(project);
     this.configFile = "biome.jsonc";
-    this.projenrcFile = this.project.components.find(
-      (component) => component instanceof ProjenrcFile
-    )?.filePath;
     this.optionsWithDefaults = {
       mergeArraysInConfiguration: (options as Object).hasOwnProperty(
         "mergeArraysInConfiguration"
@@ -244,24 +246,46 @@ export class Biome extends Component {
       marker: true,
     });
 
-    const localTask = this.createLocalBiomeTask();
-    project.testTask.spawn(localTask);
+    this._lintPatterns = new Set([]);
+
+    this.task = this.createLocalBiomeTask();
+    project.testTask.spawn(this.task);
+  }
+
+  /**
+   * Update the task with the current list of lint patterns and file extensions
+   */
+  private updateTask() {
+    const args = new Set<string>();
+
+    for (const arg of this._lintPatterns) {
+      args.add(arg);
+    }
+
+    this.task.reset(
+      [
+        this.biomeCommand,
+        // Allow also external arguments
+        "$@",
+        ...args,
+      ].join(" "),
+      {
+        args: this.task.steps[0].args,
+      }
+    );
+  }
+
+  public addLintPattern(pattern: string) {
+    this._lintPatterns.add(pattern);
+    this.updateTask();
   }
 
   private createLocalBiomeTask() {
-    const targetDirs: string[] = [];
-    this.projenrcFile && targetDirs.push(this.projenrcFile);
-
-    if (this.project instanceof TypeScriptProject) {
-      targetDirs.push(this.project.srcdir);
-      targetDirs.push(this.project.testdir);
-    }
-
     return this.project.addTask("biome", {
       description: "Runs Biome against the codebase",
       steps: [
         {
-          exec: `biome check --write ${targetDirs.join(" ")}`,
+          exec: this.biomeCommand,
         },
       ],
     });

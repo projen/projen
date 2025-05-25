@@ -3,6 +3,7 @@ import {
   _createBiomeConfiguration,
 } from "../../../src/javascript/biome/biome";
 import type { IConfiguration } from "../../../src/javascript/biome/biome-config";
+import { NodeProject } from "../../../src/javascript/node-project";
 import {
   TypeScriptProject,
   type TypeScriptProjectOptions,
@@ -73,6 +74,30 @@ describe("biome", () => {
       const config: IConfiguration = synthSnapshot(project)["biome.jsonc"];
       expect(config.formatter?.enabled).toBeTruthy();
       expect(config.files?.ignore).toContain("ignored-file.txt");
+    });
+
+    test("additional lint pattern", () => {
+      // GIVEN
+      const project = new NodeProject({
+        name: "test",
+        defaultReleaseBranch: "master",
+        prettier: false,
+      });
+
+      // WHEN
+      const biome = new Biome(project, {});
+
+      const taskStep = biome.task.steps[0];
+      const newTestArg = "--foo";
+      biome.task.reset(taskStep.exec, { args: [newTestArg] });
+
+      console.dir(biome.task.steps[0]);
+      const newLintPattern = "bar";
+      biome.addLintPattern(newLintPattern);
+
+      // THEN
+      expect(biome.task.steps[0].args).toContain(newTestArg);
+      expect(biome.task.steps[0].exec).toContain(newLintPattern);
     });
   });
 
