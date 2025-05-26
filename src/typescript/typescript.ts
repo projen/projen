@@ -547,6 +547,10 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
+    this.biome?.addLintPattern(this.srcdir);
+    this.biome?.addLintPattern(this.testdir);
+    this.biome?.addLintPattern("build-tools");
+
     // when this is a root project
     if (!this.parent) {
       if (options.projenrcTs) {

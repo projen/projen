@@ -10,3 +10,5 @@ export * from "./projenrc";
 export * from "./typescript-config";
 export * from "./upgrade-dependencies";
 export * from "./yarnrc";
+export * from "./biome";
+export * from "./biome-config";

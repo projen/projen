@@ -22,6 +22,7 @@ import {
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
+import { Biome, BiomeOptions } from "./biome";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
@@ -338,6 +339,19 @@ export interface NodeProjectOptions
    * @default - no license checks are run during the build and all licenses will be accepted
    */
   readonly checkLicenses?: LicenseCheckerOptions;
+
+  /**
+   * Setup Biome.
+   *
+   * @default false
+   */
+  readonly biome?: boolean;
+
+  /**
+   * Biome options
+   * @default - default options
+   */
+  readonly biomeOptions?: BiomeOptions;
 }
 
 /**
@@ -504,6 +518,7 @@ export class NodeProject extends GitHubProject {
   private readonly workflowGitIdentity: GitIdentity;
   protected readonly workflowPackageCache: boolean;
   public readonly prettier?: Prettier;
+  public readonly biome?: Biome;
 
   constructor(options: NodeProjectOptions) {
     super({
@@ -856,6 +871,10 @@ export class NodeProject extends GitHubProject {
       this.packageTask.exec(
         `${pkgMgr} pack --pack-destination ${this.artifactsJavascriptDirectory}`
       );
+    }
+
+    if (options.biome ?? false) {
+      this.biome = new Biome(this, { ...options.biomeOptions });
     }
 
     if (options.prettier ?? false) {
