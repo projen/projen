@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import { AwsCdkTypeScriptApp, LambdaRuntime } from "../../src/awscdk";
+import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "../../src/awscdk/internal";
 import { NodePackageManager } from "../../src/javascript";
 import { mkdtemp, SynthOutput, synthSnapshot } from "../util";
 
@@ -307,8 +308,10 @@ describe("CDK v2", () => {
       "import { App, Stack, StackProps } from 'aws-cdk-lib'"
     );
   });
-  it("has an empty context", () => {
-    expect(snapshot["cdk.json"].context).toBeUndefined();
+  it("has v2 feature flags in context", () => {
+    expect(snapshot["cdk.json"].context).toEqual(
+      expect.objectContaining(FEATURE_FLAGS_V2)
+    );
   });
 });
 
@@ -333,6 +336,9 @@ describe("CDK v1", () => {
     expect(snapshot["package.json"].dependencies).toMatchObject({
       constructs: "^3.2.27",
     });
+  });
+  it("has v1 feature flags in context", () => {
+    expect(Object.keys(snapshot["cdk.json"].context)).toEqual(FEATURE_FLAGS);
   });
 });
 
