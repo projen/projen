@@ -1114,7 +1114,6 @@ export class NodePackage extends Component {
     }
 
     this.project.addTask("ca:login", {
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
