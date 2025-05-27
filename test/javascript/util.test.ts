@@ -9,6 +9,7 @@ import {
   tryResolveModuleManifest,
   tryResolveDependencyVersion,
   installedVersionProbablyMatches,
+  extractCodeArtifactDetails,
 } from "../../src/javascript/util";
 import { mkdtemp } from "../util";
 
@@ -144,3 +145,46 @@ test.each([
     expect(installedVersionProbablyMatches(requested, check)).toEqual(expected);
   }
 );
+
+test.each([
+  [
+    "https://foobar-123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo/",
+    {
+      accountId: "123456789013",
+      domain: "foobar",
+      region: "xx-region-1",
+      registry:
+        "foobar-123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo/",
+      repository: "MyRepo",
+    },
+  ],
+
+  [
+    "https://foobar-123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo.With.Dots/",
+    {
+      accountId: "123456789013",
+      domain: "foobar",
+      region: "xx-region-1",
+      registry:
+        "foobar-123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo.With.Dots/",
+      repository: "MyRepo.With.Dots",
+    },
+  ],
+])("extractCodeArtifactDetails(%p) should work", (url, retVal) => {
+  expect(extractCodeArtifactDetails(url)).toEqual(retVal);
+});
+
+test.each([
+  [
+    "https://foobar-123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo",
+  ],
+  ["https://foobar-123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm"],
+  [
+    "https://123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo//",
+  ],
+  ["https://123456789013.d.codeartifact.xx-region-1.amazonaws.com/npm/MyRepo"],
+])("extractCodeArtifactDetails(%p) should throw an exception", (url) => {
+  expect(() => {
+    extractCodeArtifactDetails(url);
+  }).toThrow(/Could not get CodeArtifact details from npm Registry/);
+});
