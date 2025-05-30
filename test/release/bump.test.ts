@@ -607,3 +607,155 @@ async function testBump(
     workdir,
   };
 }
+
+//----------------------------------------------------------------------------------------------------------------------------------
+describe("Poetry Version Handling", () => {
+  test("bumps pyproject.toml version correctly", async () => {
+    const result = await testBumpPoetry();
+    expect(result.version).toStrictEqual("0.0.0");
+    expect(result.changelog).toMatch(/.*## 0\.0\.0 \(\d{4}-\d{2}-\d{2}\).*/);
+    expect(result.bumpfile).toStrictEqual("0.0.0");
+    expect(result.tag).toStrictEqual("v0.0.0");
+  });
+
+  test("bumps pyproject.toml with existing version", async () => {
+    const result = await testBumpPoetry({
+      commits: [{ message: "v1", tag: "v1.2.3" }, { message: "fix: bug" }],
+    });
+    expect(result.version).toStrictEqual("1.2.4");
+    expect(result.changelog).toContain("## [1.2.4]");
+    expect(result.bumpfile).toStrictEqual("1.2.4");
+    expect(result.tag).toStrictEqual("v1.2.4");
+  });
+
+  test("preserves pyproject.toml structure when bumping", async () => {
+    const workdir = mkdtempSync(join(tmpdir(), "poetry-bump-test-"));
+
+    const git = (cmd: string) =>
+      execSync(`git ${cmd}`, {
+        cwd: workdir,
+        stdio: "inherit",
+        timeout: 10_000,
+      });
+
+    // init a git repository
+    git("init -b main");
+    git('config user.email "you@example.com"');
+    git('config user.name "Your Name"');
+    git("config commit.gpgsign false");
+    git("config tag.gpgsign false");
+
+    // Create initial pyproject.toml with structure
+    const initialToml = `[tool.poetry]
+name = "test-package"
+version = "1.0.0"
+description = "A test package"
+authors = ["Test Author <test@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.28.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+`;
+    await fs.writeFile(join(workdir, "pyproject.toml"), initialToml);
+    await fs.writeFile(join(workdir, "dummy.txt"), "initial commit");
+    git("add .");
+    git('commit -m "initial commit"');
+    git("tag v1.0.0");
+
+    // Make a change that should trigger a patch bump
+    await fs.writeFile(join(workdir, "dummy.txt"), "fix: bug fix");
+    git("add .");
+    git('commit -m "fix: bug fix"');
+
+    await bump(workdir, {
+      changelog: "changelog.md",
+      versionFile: "pyproject.toml",
+      bumpFile: "bump.txt",
+      releaseTagFile: "releasetag.txt",
+    });
+
+    const updatedToml = await fs.readFile(
+      join(workdir, "pyproject.toml"),
+      "utf-8"
+    );
+
+    // Check that version was updated
+    expect(updatedToml).toContain('version = "1.0.1"');
+
+    // Check that structure was preserved
+    expect(updatedToml).toContain('name = "test-package"');
+    expect(updatedToml).toContain('description = "A test package"');
+    expect(updatedToml).toContain('python = "^3.8"');
+    expect(updatedToml).toContain('requests = "^2.28.0"');
+    expect(updatedToml).toContain("[build-system]");
+    expect(updatedToml).toContain("poetry-core");
+  });
+});
+
+async function testBumpPoetry(
+  opts: {
+    options?: Partial<BumpOptions>;
+    commits?: { message: string; tag?: string; path?: string }[];
+  } = {}
+) {
+  const workdir = mkdtempSync(join(tmpdir(), "poetry-bump-test-"));
+
+  const git = (cmd: string) =>
+    execSync(`git ${cmd}`, {
+      cwd: workdir,
+      stdio: "inherit",
+      timeout: 10_000,
+    });
+
+  // init a git repository
+  git("init -b main");
+  git('config user.email "you@example.com"');
+  git('config user.name "Your Name"');
+  git("config commit.gpgsign false");
+  git("config tag.gpgsign false");
+
+  const commit = async (message: string, path: string = "dummy.txt") => {
+    const filePath = join(workdir, path);
+    await fs.mkdir(dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, message);
+    git("add .");
+    git(`commit -F "${filePath}"`);
+  };
+
+  await commit("initial commit");
+
+  for (const c of opts.commits ?? []) {
+    await commit(c.message, c.path);
+    if (c.tag) {
+      git(`tag ${c.tag}`);
+    }
+  }
+
+  await bump(workdir, {
+    changelog: "changelog.md",
+    versionFile: "pyproject.toml",
+    bumpFile: "bump.txt",
+    releaseTagFile: "releasetag.txt",
+    ...opts.options,
+  });
+
+  // Read version from pyproject.toml using TOML parser
+  const tomlContent = await fs.readFile(
+    join(workdir, "pyproject.toml"),
+    "utf-8"
+  );
+  const TOML = await import("@iarna/toml");
+  const parsed = TOML.parse(tomlContent) as any;
+
+  return {
+    version: parsed.tool?.poetry?.version,
+    changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
+    bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),
+    tag: await fs.readFile(join(workdir, "releasetag.txt"), "utf8"),
+    workdir,
+  };
+}
