@@ -208,6 +208,7 @@ export class ReactComponent extends Component {
     project.addDeps("react", "react-dom", "web-vitals");
     project.addDevDeps(
       "react-scripts@^5",
+      "@testing-library/dom",
       "@testing-library/jest-dom",
       "@testing-library/react",
       "@testing-library/user-event"
