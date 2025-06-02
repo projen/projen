@@ -6991,7 +6991,7 @@ public readonly mavenEndpoint: string;
 ```
 
 - *Type:* string
-- *Default:* "https://oss.sonatype.org"
+- *Default:* "https://oss.sonatype.org" or none when publishing to Maven Central
 
 URL of Nexus repository.
 
@@ -7075,6 +7075,8 @@ public readonly mavenServerId: string;
 - *Default:* "ossrh" (Maven Central) or "github" when using GitHub Packages
 
 Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+
+Set to `central-ossrh` to publish to Maven Central.
 
 ---
 
