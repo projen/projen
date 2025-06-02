@@ -138,9 +138,9 @@ const project = new JsiiProject({
 
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
+    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
-    mavenEndpoint: "https://s01.oss.sonatype.org",
   },
   publishToPypi: {
     distName: "projen",
