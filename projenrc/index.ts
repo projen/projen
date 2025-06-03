@@ -6,6 +6,7 @@ import {
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
+import { VsCodeMcpConfig } from "./vscode/mcp-config";
 
 export * from "./windows-build";
 
@@ -261,6 +262,11 @@ export function setupVscode(project: NodeProject) {
     skipFiles: ["<node_internals>/**"],
     program: "${workspaceFolder}/lib/cli/index.js",
     outFiles: ["${workspaceFolder}/lib/**/*.js"],
+  });
+
+  // Scaffold .vscode/mcp.json with a default structure
+  new VsCodeMcpConfig(project, {
+    // Add default MCP config properties here if needed
   });
 }
 
