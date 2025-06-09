@@ -21,11 +21,11 @@ exports[`cleanup falls back to greedy method 1`] = `
 exports[`cleanup only orphaned files 1`] = `
 [
   ".gitattributes",
+  ".github/workflows/pull-request-lint.yml",
   ".gitignore",
-  "not-this",
   ".projen/files.json",
   ".projen/tasks.json",
-  ".github/workflows/pull-request-lint.yml",
+  "not-this",
 ]
 `;
 
