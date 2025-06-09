@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import * as glob from "glob";
+import * as glob from "fast-glob";
 import { Component } from "./component";
 import { Project } from "./project";
 import { getFilePermissions, writeFile } from "./util";
@@ -147,7 +147,8 @@ export class SampleDir extends Component {
       const basedir = this.options.sourceDir;
       const files = glob.sync("**", {
         cwd: basedir,
-        nodir: true,
+        onlyFiles: true,
+        followSymbolicLinks: false,
         dot: true,
       }); // returns relative file paths with POSIX separators
 

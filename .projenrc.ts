@@ -61,7 +61,7 @@ const project = new JsiiProject({
     "yaml@^2.2.2",
     "yargs",
     "case",
-    "glob@^8",
+    "fast-glob",
     "semver",
     "chalk",
     "@iarna/toml",

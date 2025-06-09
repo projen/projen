@@ -156,12 +156,11 @@
       "type": "bundled"
     },
     {
-      "name": "fast-json-patch",
+      "name": "fast-glob",
       "type": "bundled"
     },
     {
-      "name": "glob",
-      "version": "^8",
+      "name": "fast-json-patch",
       "type": "bundled"
     },
     {
