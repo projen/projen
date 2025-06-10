@@ -61,6 +61,13 @@ export interface GithubWorkflowOptions {
   readonly concurrencyOptions?: ConcurrencyOptions;
 
   /**
+   * Additional environment variables to set for the workflow.
+   *
+   * @default - no additional environment variables
+   */
+  readonly env?: Record<string, string>;
+
+  /**
    * Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension.
    *
    * Use this option to set a file name for the workflow file, that is different than the display name.
@@ -92,6 +99,11 @@ export class GithubWorkflow extends Component {
    * The concurrency configuration of the workflow. undefined means no concurrency limitations.
    */
   public readonly concurrency?: ConcurrencyOptions;
+
+  /**
+   * Additional environment variables to set for the workflow.
+   */
+  public readonly env?: Record<string, string>;
 
   /**
    * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
@@ -149,6 +161,8 @@ export class GithubWorkflow extends Component {
       : undefined;
     this.projenCredentials = github.projenCredentials;
     this.actions = github.actions;
+
+    this.env = options.env;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
@@ -278,6 +292,7 @@ export class GithubWorkflow extends Component {
             "cancel-in-progress": this.concurrency.cancelInProgress,
           }
         : undefined,
+      env: this.env,
       jobs: renderJobs(this.jobs, this.actions),
     };
   }

@@ -5110,6 +5110,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
@@ -6990,7 +6991,7 @@ public readonly mavenEndpoint: string;
 ```
 
 - *Type:* string
-- *Default:* "https://oss.sonatype.org"
+- *Default:* "https://oss.sonatype.org" or none when publishing to Maven Central
 
 URL of Nexus repository.
 
@@ -7074,6 +7075,8 @@ public readonly mavenServerId: string;
 - *Default:* "ossrh" (Maven Central) or "github" when using GitHub Packages
 
 Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+
+Set to `central-ossrh` to publish to Maven Central.
 
 ---
 
@@ -8403,6 +8406,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 

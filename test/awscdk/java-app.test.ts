@@ -13,16 +13,16 @@ test("happy flow", () => {
   });
 
   const snapshot = Testing.synth(p);
-  expect(Object.keys(snapshot)).toStrictEqual([
+  expect(Object.keys(snapshot).sort()).toStrictEqual([
     ".gitattributes",
     ".github/workflows/pull-request-lint.yml",
     ".gitignore",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
+    "README.md",
     "cdk.json",
     "pom.xml",
-    "README.md",
     "src/main/java/org/bacme/BoomApp.java",
     "src/test/java/org/bacme/MyTest.java",
   ]);

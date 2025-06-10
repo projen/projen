@@ -17,3 +17,24 @@ export function ensureNotHiddenPath(value: string, name: string) {
     throw Error(`${name} cannot be a hidden path, got: ${value}`);
   }
 }
+
+/**
+ * Turn any JavaScript value into a GitHub expression
+ */
+export function toGitHubExpr(x: NonNullable<any>): string {
+  switch (typeof x) {
+    case "string":
+      return `'${x.replace(/'/g, `''`)}'`;
+    case "number":
+    case "boolean":
+      // The JSON representation of this value is also the GH representation of this value
+      return JSON.stringify(x);
+    case "object":
+      if (x === null) {
+        return "null";
+      }
+      return `fromJSON(${toGitHubExpr(JSON.stringify(x))})`;
+    default:
+      throw new Error(`Unsupported type: ${typeof x}`);
+  }
+}

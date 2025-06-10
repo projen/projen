@@ -524,10 +524,11 @@ Returns the singleton Eslint component of a project or undefined if there is non
 | <code><a href="#projen.javascript.Eslint.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.Eslint.property.config">config</a></code> | <code>any</code> | Direct access to the eslint configuration (escape hatch). |
 | <code><a href="#projen.javascript.Eslint.property.eslintTask">eslintTask</a></code> | <code>projen.Task</code> | eslint task. |
+| <code><a href="#projen.javascript.Eslint.property.file">file</a></code> | <code>projen.ObjectFile</code> | The underlying config file. |
 | <code><a href="#projen.javascript.Eslint.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | File patterns that should not be linted. |
 | <code><a href="#projen.javascript.Eslint.property.lintPatterns">lintPatterns</a></code> | <code>string[]</code> | Returns an immutable copy of the lintPatterns being used by this eslint configuration. |
 | <code><a href="#projen.javascript.Eslint.property.overrides">overrides</a></code> | <code><a href="#projen.javascript.EslintOverride">EslintOverride</a>[]</code> | eslint overrides. |
-| <code><a href="#projen.javascript.Eslint.property.rules">rules</a></code> | <code>{[ key: string ]: any[]}</code> | eslint rules. |
+| <code><a href="#projen.javascript.Eslint.property.rules">rules</a></code> | <code>{[ key: string ]: any}</code> | eslint rules. |
 
 ---
 
@@ -577,6 +578,18 @@ eslint task.
 
 ---
 
+##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.Eslint.property.file"></a>
+
+```typescript
+public readonly file: ObjectFile;
+```
+
+- *Type:* projen.ObjectFile
+
+The underlying config file.
+
+---
+
 ##### `ignorePatterns`<sup>Required</sup> <a name="ignorePatterns" id="projen.javascript.Eslint.property.ignorePatterns"></a>
 
 ```typescript
@@ -616,10 +629,10 @@ eslint overrides.
 ##### `rules`<sup>Required</sup> <a name="rules" id="projen.javascript.Eslint.property.rules"></a>
 
 ```typescript
-public readonly rules: {[ key: string ]: any[]};
+public readonly rules: {[ key: string ]: any};
 ```
 
-- *Type:* {[ key: string ]: any[]}
+- *Type:* {[ key: string ]: any}
 
 eslint rules.
 
@@ -5750,11 +5763,25 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.javascript.BuildWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables.
 
 ---
 
@@ -10550,6 +10577,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 

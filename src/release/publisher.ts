@@ -299,8 +299,6 @@ export class Publisher extends Component {
           .map(([_, job]) => job),
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
-          GITHUB_REPOSITORY: "${{ github.repository }}",
-          GITHUB_REF: "${{ github.sha }}",
         },
         run: this.githubReleaseCommand(options, branchOptions),
       };
@@ -455,6 +453,12 @@ export class Publisher extends Component {
     if (isGitHubPackages && mavenServerId != "github") {
       throw new Error(
         'publishing to GitHub Packages requires the "mavenServerId" to be "github"'
+      );
+    }
+
+    if (mavenServerId === "central-ossrh" && options.mavenEndpoint != null) {
+      throw new Error(
+        'Custom endpoints are not supported when publishing to Maven Central (mavenServerId: "central-ossrh"). Please remove "mavenEndpoint" from the options.'
       );
     }
 
@@ -780,7 +784,7 @@ export class Publisher extends Component {
       "-R $GITHUB_REPOSITORY",
       `-F ${changelogFile}`,
       `-t ${releaseTag}`,
-      "--target $GITHUB_REF",
+      "--target $GITHUB_SHA",
     ];
 
     if (branchOptions.prerelease) {
@@ -1083,12 +1087,14 @@ export interface MavenPublishOptions extends CommonPublishOptions {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
-   * @default "https://oss.sonatype.org"
+   * @default - "https://oss.sonatype.org" or none when publishing to Maven Central
    */
   readonly mavenEndpoint?: string;
 
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+   *
+   * Set to `central-ossrh` to publish to Maven Central.
    *
    * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
    */

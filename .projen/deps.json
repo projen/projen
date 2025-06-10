@@ -22,6 +22,10 @@
       "type": "build"
     },
     {
+      "name": "@types/parse-conflict-json",
+      "type": "build"
+    },
+    {
       "name": "@types/semver",
       "type": "build"
     },
@@ -97,12 +101,12 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.7.x",
+      "version": "5.8.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.7.x",
+      "version": "5.8.x",
       "type": "build"
     },
     {
@@ -127,7 +131,7 @@
     },
     {
       "name": "typescript",
-      "version": "5.7.x",
+      "version": "5.8.x",
       "type": "build"
     },
     {
@@ -152,16 +156,19 @@
       "type": "bundled"
     },
     {
+      "name": "fast-glob",
+      "type": "bundled"
+    },
+    {
       "name": "fast-json-patch",
       "type": "bundled"
     },
     {
-      "name": "glob",
-      "version": "^8",
+      "name": "ini",
       "type": "bundled"
     },
     {
-      "name": "ini",
+      "name": "parse-conflict-json",
       "type": "bundled"
     },
     {

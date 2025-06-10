@@ -51,8 +51,8 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.7.x",
-  typescriptVersion: "5.7.x",
+  jsiiVersion: "5.8.x",
+  typescriptVersion: "5.8.x",
 
   deps: ["constructs@^10.0.0"],
 
@@ -61,7 +61,7 @@ const project = new JsiiProject({
     "yaml@^2.2.2",
     "yargs",
     "case",
-    "glob@^8",
+    "fast-glob",
     "semver",
     "chalk",
     "@iarna/toml",
@@ -70,6 +70,7 @@ const project = new JsiiProject({
     "shx",
     "fast-json-patch",
     "comment-json@4.2.2",
+    "parse-conflict-json",
   ],
 
   devDeps: [
@@ -78,6 +79,7 @@ const project = new JsiiProject({
     "@types/glob",
     "@types/semver",
     "@types/ini",
+    "@types/parse-conflict-json",
     "markmac",
     "esbuild",
     "all-contributors-cli",
@@ -136,9 +138,9 @@ const project = new JsiiProject({
 
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
+    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
-    mavenEndpoint: "https://s01.oss.sonatype.org",
   },
   publishToPypi: {
     distName: "projen",

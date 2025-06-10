@@ -11,7 +11,7 @@ Typically a token for a GitHub App has all the available scopes/permissions avai
 itself; however, a more limited set of permissions can be specified. When permissions are provided,
 **only** the specified permissions are granted to the token.
 
-> [https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app](https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app)
+> [https://github.com/actions/create-github-app-token/blob/main/action.yml#L28](https://github.com/actions/create-github-app-token/blob/main/action.yml#L28)
 
 #### Initializer <a name="Initializer" id="projen.github.workflows.AppPermissions.Initializer"></a>
 
@@ -27,18 +27,32 @@ const appPermissions: github.workflows.AppPermissions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.AppPermissions.property.actions">actions</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.administration">administration</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.attestations">attestations</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.checks">checks</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.codespaces">codespaces</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.contents">contents</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.dependabotSecrets">dependabotSecrets</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.deployments">deployments</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.emailAddresses">emailAddresses</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.environments">environments</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.followers">followers</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.gitSshKeys">gitSshKeys</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.gpgKeys">gpgKeys</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.interactionLimits">interactionLimits</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.issues">issues</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.members">members</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.metadata">metadata</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationAdministration">organizationAdministration</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationAnnouncementBanners">organizationAnnouncementBanners</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.organizationCopilotSeatManagement">organizationCopilotSeatManagement</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.organizationCustomOrgRoles">organizationCustomOrgRoles</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.organizationCustomProperties">organizationCustomProperties</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationCustomRoles">organizationCustomRoles</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.organizationEvents">organizationEvents</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationHooks">organizationHooks</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationPackages">organizationPackages</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.organizationPersonalAccessTokenRequests">organizationPersonalAccessTokenRequests</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.organizationPersonalAccessTokens">organizationPersonalAccessTokens</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationPlan">organizationPlan</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationProjects">organizationProjects</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.organizationSecrets">organizationSecrets</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
@@ -46,14 +60,17 @@ const appPermissions: github.workflows.AppPermissions = { ... }
 | <code><a href="#projen.github.workflows.AppPermissions.property.orgnaizationUserBlocking">orgnaizationUserBlocking</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.packages">packages</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.profile">profile</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners">repositoryAnnouncementBanners</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.repositoryCustomProperties">repositoryCustomProperties</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryHooks">repositoryHooks</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.AppPermissions.property.repositoryProject">repositoryProject</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.secrets">secrets</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.secretScanningAlerts">secretScanningAlerts</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.securityEvents">securityEvents</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.singleFile">singleFile</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.AppPermissions.property.starring">starring</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.statuses">statuses</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.teamDiscussions">teamDiscussions</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.vulnerabilityAlerts">vulnerabilityAlerts</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
@@ -81,10 +98,30 @@ public readonly administration: AppPermission;
 
 ---
 
+##### `attestations`<sup>Optional</sup> <a name="attestations" id="projen.github.workflows.AppPermissions.property.attestations"></a>
+
+```typescript
+public readonly attestations: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
 ##### `checks`<sup>Optional</sup> <a name="checks" id="projen.github.workflows.AppPermissions.property.checks"></a>
 
 ```typescript
 public readonly checks: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `codespaces`<sup>Optional</sup> <a name="codespaces" id="projen.github.workflows.AppPermissions.property.codespaces"></a>
+
+```typescript
+public readonly codespaces: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -101,6 +138,16 @@ public readonly contents: AppPermission;
 
 ---
 
+##### `dependabotSecrets`<sup>Optional</sup> <a name="dependabotSecrets" id="projen.github.workflows.AppPermissions.property.dependabotSecrets"></a>
+
+```typescript
+public readonly dependabotSecrets: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
 ##### `deployments`<sup>Optional</sup> <a name="deployments" id="projen.github.workflows.AppPermissions.property.deployments"></a>
 
 ```typescript
@@ -111,10 +158,60 @@ public readonly deployments: AppPermission;
 
 ---
 
+##### `emailAddresses`<sup>Optional</sup> <a name="emailAddresses" id="projen.github.workflows.AppPermissions.property.emailAddresses"></a>
+
+```typescript
+public readonly emailAddresses: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
 ##### `environments`<sup>Optional</sup> <a name="environments" id="projen.github.workflows.AppPermissions.property.environments"></a>
 
 ```typescript
 public readonly environments: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `followers`<sup>Optional</sup> <a name="followers" id="projen.github.workflows.AppPermissions.property.followers"></a>
+
+```typescript
+public readonly followers: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `gitSshKeys`<sup>Optional</sup> <a name="gitSshKeys" id="projen.github.workflows.AppPermissions.property.gitSshKeys"></a>
+
+```typescript
+public readonly gitSshKeys: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `gpgKeys`<sup>Optional</sup> <a name="gpgKeys" id="projen.github.workflows.AppPermissions.property.gpgKeys"></a>
+
+```typescript
+public readonly gpgKeys: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `interactionLimits`<sup>Optional</sup> <a name="interactionLimits" id="projen.github.workflows.AppPermissions.property.interactionLimits"></a>
+
+```typescript
+public readonly interactionLimits: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -171,10 +268,50 @@ public readonly organizationAnnouncementBanners: AppPermission;
 
 ---
 
+##### `organizationCopilotSeatManagement`<sup>Optional</sup> <a name="organizationCopilotSeatManagement" id="projen.github.workflows.AppPermissions.property.organizationCopilotSeatManagement"></a>
+
+```typescript
+public readonly organizationCopilotSeatManagement: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `organizationCustomOrgRoles`<sup>Optional</sup> <a name="organizationCustomOrgRoles" id="projen.github.workflows.AppPermissions.property.organizationCustomOrgRoles"></a>
+
+```typescript
+public readonly organizationCustomOrgRoles: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `organizationCustomProperties`<sup>Optional</sup> <a name="organizationCustomProperties" id="projen.github.workflows.AppPermissions.property.organizationCustomProperties"></a>
+
+```typescript
+public readonly organizationCustomProperties: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
 ##### `organizationCustomRoles`<sup>Optional</sup> <a name="organizationCustomRoles" id="projen.github.workflows.AppPermissions.property.organizationCustomRoles"></a>
 
 ```typescript
 public readonly organizationCustomRoles: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `organizationEvents`<sup>Optional</sup> <a name="organizationEvents" id="projen.github.workflows.AppPermissions.property.organizationEvents"></a>
+
+```typescript
+public readonly organizationEvents: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -195,6 +332,26 @@ public readonly organizationHooks: AppPermission;
 
 ```typescript
 public readonly organizationPackages: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `organizationPersonalAccessTokenRequests`<sup>Optional</sup> <a name="organizationPersonalAccessTokenRequests" id="projen.github.workflows.AppPermissions.property.organizationPersonalAccessTokenRequests"></a>
+
+```typescript
+public readonly organizationPersonalAccessTokenRequests: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `organizationPersonalAccessTokens`<sup>Optional</sup> <a name="organizationPersonalAccessTokens" id="projen.github.workflows.AppPermissions.property.organizationPersonalAccessTokens"></a>
+
+```typescript
+public readonly organizationPersonalAccessTokens: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -271,6 +428,16 @@ public readonly pages: AppPermission;
 
 ---
 
+##### `profile`<sup>Optional</sup> <a name="profile" id="projen.github.workflows.AppPermissions.property.profile"></a>
+
+```typescript
+public readonly profile: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
 ##### `pullRequests`<sup>Optional</sup> <a name="pullRequests" id="projen.github.workflows.AppPermissions.property.pullRequests"></a>
 
 ```typescript
@@ -281,10 +448,22 @@ public readonly pullRequests: AppPermission;
 
 ---
 
-##### `repositoryAnnouncementBanners`<sup>Optional</sup> <a name="repositoryAnnouncementBanners" id="projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners"></a>
+##### ~~`repositoryAnnouncementBanners`~~<sup>Optional</sup> <a name="repositoryAnnouncementBanners" id="projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners"></a>
+
+- *Deprecated:* removed by GitHub
 
 ```typescript
 public readonly repositoryAnnouncementBanners: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `repositoryCustomProperties`<sup>Optional</sup> <a name="repositoryCustomProperties" id="projen.github.workflows.AppPermissions.property.repositoryCustomProperties"></a>
+
+```typescript
+public readonly repositoryCustomProperties: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -301,10 +480,10 @@ public readonly repositoryHooks: AppPermission;
 
 ---
 
-##### `repositoryProject`<sup>Optional</sup> <a name="repositoryProject" id="projen.github.workflows.AppPermissions.property.repositoryProject"></a>
+##### `repositoryProjects`<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.AppPermissions.property.repositoryProjects"></a>
 
 ```typescript
-public readonly repositoryProject: AppPermission;
+public readonly repositoryProjects: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -345,6 +524,16 @@ public readonly securityEvents: AppPermission;
 
 ```typescript
 public readonly singleFile: AppPermission;
+```
+
+- *Type:* projen.github.workflows.AppPermission
+
+---
+
+##### `starring`<sup>Optional</sup> <a name="starring" id="projen.github.workflows.AppPermissions.property.starring"></a>
+
+```typescript
+public readonly starring: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -1534,7 +1723,7 @@ const jobMatrix: github.workflows.JobMatrix = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.workflows.JobMatrix.property.domain">domain</a></code> | <code>{[ key: string ]: string \| number \| boolean[]}</code> | Each option you define in the matrix has a key and value. |
+| <code><a href="#projen.github.workflows.JobMatrix.property.domain">domain</a></code> | <code>{[ key: string ]: string \| string \| number \| boolean[]}</code> | Each option you define in the matrix has a key and value. |
 | <code><a href="#projen.github.workflows.JobMatrix.property.exclude">exclude</a></code> | <code>{[ key: string ]: string \| number \| boolean}[]</code> | You can remove a specific configurations defined in the build matrix using the exclude option. |
 | <code><a href="#projen.github.workflows.JobMatrix.property.include">include</a></code> | <code>{[ key: string ]: string \| number \| boolean}[]</code> | You can add additional configuration options to a build matrix job that already exists. |
 
@@ -1543,10 +1732,10 @@ const jobMatrix: github.workflows.JobMatrix = { ... }
 ##### `domain`<sup>Optional</sup> <a name="domain" id="projen.github.workflows.JobMatrix.property.domain"></a>
 
 ```typescript
-public readonly domain: {[ key: string ]: string | number | boolean[]};
+public readonly domain: {[ key: string ]: string | string | number | boolean[]};
 ```
 
-- *Type:* {[ key: string ]: string | number | boolean[]}
+- *Type:* {[ key: string ]: string | string | number | boolean[]}
 
 Each option you define in the matrix has a key and value.
 
@@ -1599,6 +1788,8 @@ specify the access for any of these scopes, all those that are not
 specified are set to `JobPermission.NONE`, instead of the default behavior
 when none is specified.
 
+> [https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token#defining-access-for-the-github_token-permissions)
+
 #### Initializer <a name="Initializer" id="projen.github.workflows.JobPermissions.Initializer"></a>
 
 ```typescript
@@ -1612,12 +1803,14 @@ const jobPermissions: github.workflows.JobPermissions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.JobPermissions.property.actions">actions</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.JobPermissions.property.attestations">attestations</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.checks">checks</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.contents">contents</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.deployments">deployments</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.discussions">discussions</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.idToken">idToken</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.issues">issues</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
+| <code><a href="#projen.github.workflows.JobPermissions.property.models">models</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.packages">packages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
@@ -1631,6 +1824,16 @@ const jobPermissions: github.workflows.JobPermissions = { ... }
 
 ```typescript
 public readonly actions: JobPermission;
+```
+
+- *Type:* projen.github.workflows.JobPermission
+
+---
+
+##### `attestations`<sup>Optional</sup> <a name="attestations" id="projen.github.workflows.JobPermissions.property.attestations"></a>
+
+```typescript
+public readonly attestations: JobPermission;
 ```
 
 - *Type:* projen.github.workflows.JobPermission
@@ -1697,6 +1900,16 @@ public readonly issues: JobPermission;
 
 ---
 
+##### `models`<sup>Optional</sup> <a name="models" id="projen.github.workflows.JobPermissions.property.models"></a>
+
+```typescript
+public readonly models: JobPermission;
+```
+
+- *Type:* projen.github.workflows.JobPermission
+
+---
+
 ##### `packages`<sup>Optional</sup> <a name="packages" id="projen.github.workflows.JobPermissions.property.packages"></a>
 
 ```typescript
@@ -1727,7 +1940,9 @@ public readonly pullRequests: JobPermission;
 
 ---
 
-##### `repositoryProjects`<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.JobPermissions.property.repositoryProjects"></a>
+##### ~~`repositoryProjects`~~<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.JobPermissions.property.repositoryProjects"></a>
+
+- *Deprecated:* removed by GitHub
 
 ```typescript
 public readonly repositoryProjects: JobPermission;

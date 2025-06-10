@@ -1032,8 +1032,8 @@ test("buildWorkflow can use GitHub App for API access", () => {
   expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
     name: "Generate token",
     with: {
-      app_id: `\${{ secrets.${appId} }}`,
-      private_key: `\${{ secrets.${privateKey} }}`,
+      "app-id": `\${{ secrets.${appId} }}`,
+      "private-key": `\${{ secrets.${privateKey} }}`,
     },
   });
   expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
@@ -1715,7 +1715,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1742,7 +1741,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1779,7 +1777,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -2011,5 +2008,30 @@ describe("npmignore", () => {
     expect(output[".github/workflows/upgrade-main.yml"]).toContain(
       "bun-version: 1.1.38"
     );
+  });
+});
+
+describe("build workflow options", () => {
+  let project: NodeProject;
+  let snapshot: any;
+
+  beforeEach(() => {
+    project = new NodeProject({
+      name: "test-node-project",
+      defaultReleaseBranch: "main",
+      buildWorkflowOptions: {
+        env: {
+          MY_ENV_VAR: "my-value",
+        },
+      },
+    });
+    snapshot = synthSnapshot(project);
+  });
+  it("should allow additional environment variables to be set in the build workflow", () => {
+    const buildWorkflow = yaml.parse(snapshot[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build.env).toEqual({
+      CI: "true",
+      MY_ENV_VAR: "my-value",
+    });
   });
 });

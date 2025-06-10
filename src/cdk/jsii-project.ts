@@ -136,7 +136,7 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * (e.g. `~5.0.0`).
    *
    * @default "~5.6.0"
-   * @pjnew "~5.7.0"
+   * @pjnew "~5.8.0"
    */
   readonly jsiiVersion?: string;
 }
@@ -503,7 +503,7 @@ export class JsiiProject extends TypeScriptProject {
     const commandParts = ["jsii-pacmak", "-v"];
 
     if (this.package.packageManager === NodePackageManager.PNPM) {
-      commandParts.push("--pack-command 'pnpm pack'");
+      commandParts.push('--pack-command "pnpm pack"');
     }
 
     commandParts.push(`--target ${language}`);

@@ -1114,7 +1114,6 @@ export class NodePackage extends Component {
     }
 
     this.project.addTask("ca:login", {
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
@@ -1127,8 +1126,9 @@ export class NodePackage extends Component {
             `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
             `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
           ];
-          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16)
+          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16) {
             commands.push(`npm config set //${registry}:always-auth=true`);
+          }
           return {
             exec: commands.join("; "),
           };
