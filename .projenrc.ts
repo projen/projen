@@ -14,6 +14,7 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
+  setupBiomeTypesGeneration,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -83,6 +84,9 @@ const project = new JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "json-schema-to-typescript",
+    // Can be removed if linting and formating is done with Biome
+    "@biomejs/biome",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -189,6 +193,8 @@ setupNpmignore(project);
 
 setupIntegTest(project);
 setupBundleTaskRunner(project);
+
+setupBiomeTypesGeneration(project);
 
 new WindowsBuild(project);
 
