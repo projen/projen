@@ -205,7 +205,8 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     }
 
     this.cdkConfig = new CdkConfig(this, {
-      featureFlags: this.cdkDeps.cdkMajorVersion < 2,
+      // featureFlags: this.cdkDeps.cdkMajorVersion < 2,
+      cdkMajorVersion: this.cdkDeps.cdkMajorVersion,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
       watchExcludes: [
