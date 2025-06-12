@@ -1,10 +1,10 @@
-import { NodeProject } from "../../node-project";
 import {
   EslintConfigExtension,
   EslintPlugin,
   ESLintRules,
   IESLintConfig,
 } from "./eslint-config";
+import { NodeProject } from "../../node-project";
 
 export interface EslintFlatConfigOptions {
   /**

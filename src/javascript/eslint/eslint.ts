@@ -25,9 +25,8 @@ export interface ESLintFlatConfigFile {
 }
 
 export class ESLint {
-  public readonly config: IESLintFlatConfigFile;
-
-  private _task: Task;
+  public readonly configFile: IESLintFlatConfigFile;
+  public readonly task: Task;
 
   constructor(
     project: NodeProject,
@@ -35,13 +34,13 @@ export class ESLint {
       commandOptions?: EslintCommandOptions;
     }
   ) {
-    this._task = project.addTask("eslint", {
+    this.task = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
     });
-    this.config = new EslintFlatConfigFile(project, options);
+    this.configFile = new EslintFlatConfigFile(project, options);
     this.initializeEslintTask(options.commandOptions);
-    project.testTask.spawn(this._task);
-    project.npmignore?.exclude(this.config.filename);
+    project.testTask.spawn(this.task);
+    project.npmignore?.exclude(this.configFile.filename);
   }
 
   /**
@@ -60,11 +59,15 @@ export class ESLint {
   private initializeEslintTask(options?: EslintCommandOptions) {
     const taskExecCommand = "eslint";
     const extraArgs = options?.extraArgs ?? [];
-    const cliArgs = new Set(["--config", this.config.filename, ...extraArgs]);
+    const cliArgs = new Set([
+      "--config",
+      this.configFile.filename,
+      ...extraArgs,
+    ]);
     if (options?.fix) {
       cliArgs.add("--fix");
     }
-    this._task.reset(
+    this.task.reset(
       [taskExecCommand, ...cliArgs].join(" "),
       this.buildTaskStepOptions(taskExecCommand)
     );
@@ -78,7 +81,7 @@ export class ESLint {
    * @returns Either the externally edited, or the default task step options
    */
   private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
-    const currentEslintTaskStep = this._task?.steps?.find((step) =>
+    const currentEslintTaskStep = this.task?.steps?.find((step) =>
       step?.exec?.startsWith?.(taskExecCommand)
     );
 

@@ -201,6 +201,7 @@ export interface IESLintFlatConfigFile {
   addPlugins(...plugins: EslintPlugin[]): void;
   addOverrides(...overrides: EslintFlatConfigOverride[]): void;
   addExtends(...extendList: EslintConfigExtension[]): void;
+  synthesize(): void;
 }
 
 export class EslintFlatConfigFile
@@ -500,26 +501,18 @@ ${
         return acc;
       }
 
-      // If specified in plugins, rewrite information in extends
-      const plugin = this._plugins.find(
-        ({ moduleSpecifier }) => moduleSpecifier === extend.moduleSpecifier
-      );
-
-      // If the plugin is not found, return the original extend
-      if (!plugin) return [...acc, extend];
-
       // Otherwise, rewrite the configReference with the pluginName
       return [
         ...acc,
         {
-          importedBinding: plugin.importedBinding,
-          moduleSpecifier: plugin.moduleSpecifier,
+          importedBinding: extend.importedBinding,
+          moduleSpecifier: extend.moduleSpecifier,
           configReference: (
             extend.configReference ?? extend.importedBinding
           ).replace(
             // replace the first part of the extendsCode with the pluginName
             /^[^.]+/,
-            plugin.importedBinding
+            extend.importedBinding
           ),
           spreadConfig: extend.spreadConfig,
         },
@@ -685,7 +678,9 @@ ${
           !plugin.importedBinding.includes(".")
         ) {
           return `"${plugin.pluginAlias}": ${plugin.importedBinding}.plugin`;
-        } else return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
+        } else {
+          return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
+        }
       })
       .join(`,\n${spaceStringForEachPlugin}`);
   }

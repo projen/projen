@@ -1,9 +1,9 @@
-import { NodeProject } from "../../node-project";
 import {
   EslintConfigExtension,
   ESLintRules,
   IESLintConfig,
 } from "./eslint-config";
+import { NodeProject } from "../../node-project";
 
 export class PrettierConfig implements IESLintConfig {
   public readonly rules: ESLintRules;

@@ -1,5 +1,5 @@
-import { NodeProject } from "../../node-project";
 import { EslintPlugin, ESLintRules, IESLintConfig } from "./eslint-config";
+import { NodeProject } from "../../node-project";
 
 export class StylisticConfig implements IESLintConfig {
   public readonly rules: ESLintRules;

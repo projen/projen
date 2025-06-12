@@ -1130,7 +1130,9 @@ ${
           !plugin.importedBinding.includes(".")
         ) {
           return `"${plugin.pluginAlias}": ${plugin.importedBinding}.plugin`;
-        } else return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
+        } else {
+          return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
+        }
       })
       .join(`,\n${spaceStringForEachPlugin}`);
   }
