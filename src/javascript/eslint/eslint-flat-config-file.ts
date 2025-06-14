@@ -4,13 +4,11 @@ import { FileBase, IResolver } from "../../file";
 import { Project } from "../../project";
 import {
   EslintConfigExtension,
+  EslintParser,
   EslintPlugin,
-  ESLintRules,
+  EslintRules,
+  IEslintConfig,
 } from "./config/eslint-config";
-import {
-  ESLintFlatConfig,
-  EslintFlatConfigOptions,
-} from "./config/eslint-flat-config";
 
 const MODULE_TYPE = {
   COMMONJS: "commonjs",
@@ -19,137 +17,12 @@ const MODULE_TYPE = {
 
 export type ModuleType = (typeof MODULE_TYPE)[keyof typeof MODULE_TYPE];
 
-/**
- * ESLint parser configuration information.
- *
- * @example
- * // Configuration with parserReference
- * {
- *   moduleSpecifier: "typescript-eslint",
- *   importedBinding: "tseslint",
- *   parserReference: "parser"
- * }
- *
- * // Results in:
- * import tseslint from "typescript-eslint"
- *
- * export default [{
- *   languageOptions: {
- *     parser: tseslint.parser
- *   }
- * }]
- *
- * // Configuration without parserReference
- * {
- *   moduleSpecifier: "@typescript-eslint/parser",
- *   importedBinding: "tseslintParser"
- * }
- *
- * // Results in:
- * import tseslintParser from "@typescript-eslint/parser"
- *
- * export default [{
- *   languageOptions: {
- *     parser: tseslintParser
- *   }
- * }]
- */
-export interface EslintParser {
+export interface EslintFlatConfigFileOptions {
   /**
-   * The moduleSpecifier that identifies the module to import from.
-   * This is the string literal that appears in the FromClause of an ImportDeclaration.
-   *
-   * @example "typescript-eslint"
-   * // In: import tseslint from "typescript-eslint"
-   * // typescript-eslint is the moduleSpecifier
-   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ModuleSpecifier}
+   * ESLint configuration.
    */
-  readonly moduleSpecifier: string;
+  readonly config: IEslintConfig;
 
-  /**
-   * The importedBinding that defines the name to be bound to the module's default export.
-   * This is the local name that appears in a default import declaration.
-   *
-   * @example "tseslint"
-   * // In: import tseslint from "typescript-eslint"
-   * // tseslint is the importedBinding
-   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ImportedDefaultBinding}
-   */
-  readonly importedBinding: string;
-
-  /**
-   * The reference path to the parser in the module.
-   * When specified, this string will be appended to importedBinding with a dot (.).
-   * When omitted, only importedBinding will be used.
-   *
-   * @example
-   * // With parserReference
-   * {
-   *   moduleSpecifier: "typescript-eslint",
-   *   importedBinding: "tseslint",
-   *   parserReference: "parser"
-   * }
-   * // Results in:
-   * languageOptions: {
-   *   parser: tseslint.parser
-   * }
-   *
-   * // Without parserReference (using importedBinding)
-   * {
-   *   moduleSpecifier: "@typescript-eslint/parser",
-   *   importedBinding: "tseslintParser"
-   * }
-   * // Results in:
-   * languageOptions: {
-   *   parser: tseslintParser
-   * }
-   *
-   * @default - same as `importedBinding`
-   */
-  readonly parserReference?: string;
-}
-
-/**
- * Override information for eslint rules
- */
-export interface EslintFlatConfigOverride {
-  /**
-   * List of files or glob patterns or directories with source files to enable.
-   *
-   * @example ["src/*.ts"]
-   */
-  readonly enablePatterns: string[];
-
-  /**
-   * List of files or glob patterns or directories with source files to ignore.
-   * as .gitignore patterns.
-   *
-   * @example [".gitignore", "node_modules"]
-   */
-  readonly ignorePatterns?: string[];
-
-  /**
-   * The overridden rules
-   */
-  readonly rules?: ESLintRules;
-
-  /**
-   * The overridden parser
-   */
-  readonly parser?: EslintParser;
-
-  /**
-   * Config(s) to extend in this override
-   */
-  readonly extends?: EslintConfigExtension[];
-
-  /**
-   * Plugin(s) to use in this override
-   */
-  readonly plugins?: EslintPlugin[];
-}
-
-export interface EslintFlatConfigFileOptions extends EslintFlatConfigOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
    *
@@ -157,20 +30,6 @@ export interface EslintFlatConfigFileOptions extends EslintFlatConfigOptions {
    */
   readonly tsconfigPath?: string;
 
-  /**
-   * List of files or glob patterns or directories with source files to enable.
-   *
-   * @example ["src/*.ts"]
-   */
-  readonly enablePatterns: string[];
-
-  /**
-   * List of files or glob patterns or directories with source files to ignore.
-   * as .gitignore patterns.
-   *
-   * @default - [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
-   */
-  readonly ignorePatterns?: string[];
   /**
    * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
    * This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
@@ -188,25 +47,17 @@ export interface EslintFlatConfigFileOptions extends EslintFlatConfigOptions {
   readonly moduleType?: ModuleType;
 }
 
-export interface IESLintFlatConfigFile {
-  readonly config: string;
-  readonly rules: ESLintRules;
-  readonly enablePatterns: string[];
-  readonly ignorePatterns: string[];
-  readonly overrides: EslintFlatConfigOverride[];
+export interface IEslintFlatConfigFile {
+  readonly content: string;
   readonly filename: string;
-  addEnablePatterns(...patterns: string[]): void;
-  addIgnorePatterns(...patterns: string[]): void;
-  addRules(rules: ESLintRules): void;
-  addPlugins(...plugins: EslintPlugin[]): void;
-  addOverrides(...overrides: EslintFlatConfigOverride[]): void;
-  addExtends(...extendList: EslintConfigExtension[]): void;
+  updateConfig(config: IEslintConfig): void;
+  addOverrides(...overrides: IEslintConfig[]): void;
   synthesize(): void;
 }
 
 export class EslintFlatConfigFile
   extends FileBase
-  implements IESLintFlatConfigFile
+  implements IEslintFlatConfigFile
 {
   /**
    * Returns the singleton Eslint component of a project or undefined if there is none.
@@ -218,50 +69,24 @@ export class EslintFlatConfigFile
   }
 
   /**
-   * eslint configuration.
+   * eslint configuration content.
    */
-  public get config(): string {
-    return this._config;
-  }
-
-  /**
-   * Public getter for eslint rules.
-   */
-  public get rules(): ESLintRules {
-    return { ...this._rules, ...this._formattingRules };
-  }
-
-  /**
-   * File or glob patterns or directories that should be linted
-   */
-  public get enablePatterns(): string[] {
-    return this._enablePatterns.size ? [...this._enablePatterns] : [];
-  }
-
-  /**
-   * File or glob patterns or directories that should not be linted
-   */
-  public get ignorePatterns(): string[] {
-    return this._ignorePatterns.size ? [...this._ignorePatterns] : [];
+  public get content(): string {
+    return this._content;
   }
 
   /**
    * eslint overrides.
    */
-  public readonly overrides: EslintFlatConfigOverride[] = [];
+  public readonly overrides: IEslintConfig[] = [];
 
   /**
    * eslint configuration filename.
    */
   public readonly filename: string;
 
-  private _config: string = "";
-  private _rules: ESLintRules = {};
-  private _formattingRules: ESLintRules = {};
-  private _enablePatterns: Set<string>;
-  private _ignorePatterns: Set<string>;
-  private _plugins: EslintPlugin[] = [];
-  private _extends: EslintConfigExtension[] = [];
+  private _content: string = "";
+  private _config: IEslintConfig;
   private readonly _tsconfigPath: string;
   private readonly _tsAlwaysTryTypes: boolean;
   private readonly _moduleType: ModuleType;
@@ -271,31 +96,16 @@ export class EslintFlatConfigFile
     const filename = `eslint.config.${
       moduleType === MODULE_TYPE.MODULE ? "mjs" : "cjs"
     }`;
-    const devDirs = options.devDirs ?? [];
 
     super(project, filename);
 
-    const flatConfig = new ESLintFlatConfig(project, {
-      devDirs,
-      styleConfig: options.styleConfig,
-    });
-
     // Set options to class properties
-    this._enablePatterns = new Set([...options.enablePatterns, ...devDirs]);
-    this._ignorePatterns = new Set(
-      options.ignorePatterns ?? [
-        "*.js",
-        "*.d.ts",
-        "node_modules/",
-        "*.generated.ts",
-        "coverage",
-      ]
-    );
+    this._config = options.config;
     this._tsconfigPath = options.tsconfigPath ?? "./tsconfig.json";
     this._tsAlwaysTryTypes = options.tsAlwaysTryTypes ?? true;
     this._moduleType = moduleType;
     this.filename = filename;
-    this._rules = flatConfig.rules;
+
     this.synthesize();
   }
 
@@ -303,58 +113,15 @@ export class EslintFlatConfigFile
    * Sync the config file with the current state of the class properties.
    */
   protected synthesizeContent(resolver: IResolver): string | undefined {
-    this._config = this.generateConfig(resolver);
-    return this._config;
+    this._content = this.generateConfig(resolver);
+    return this._content;
   }
 
   /**
-   * Add a file or glob pattern or directory to enable.
-   *
-   * @example "src/*.ts"
+   * update ESLint configuration.
    */
-  public addEnablePatterns(...patterns: string[]) {
-    for (const pattern of patterns) {
-      this._enablePatterns.add(pattern);
-    }
-  }
-
-  /**
-   * Add a file or glob pattern or directory to ignore.
-   *
-   * @example ".gitignore"
-   */
-  public addIgnorePatterns(...patterns: string[]) {
-    for (const pattern of patterns) {
-      this._ignorePatterns.add(pattern);
-    }
-  }
-
-  /**
-   * Add an eslint rule.
-   *
-   * @example { "no-console": "error" }
-   */
-  public addRules(rules: ESLintRules) {
-    for (const [k, v] of Object.entries(rules)) {
-      this._rules[k] = v;
-    }
-  }
-
-  /**
-   * Add eslint plugins
-   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
-   * - eslint
-   * - @eslint/js
-   * - typescript-eslint
-   * - eslint-plugin-import
-   * - @stylistic/eslint-plugin(when prettier is disabled)
-   * - prettier(when prettier is enabled)
-   * - eslint-config-prettier(when prettier is enabled)
-   *
-   * @param plugins ESLint plugin information.
-   */
-  public addPlugins(...plugins: EslintPlugin[]) {
-    this._plugins.push(...plugins);
+  public updateConfig(config: IEslintConfig): void {
+    this._config = config;
   }
 
   /**
@@ -370,25 +137,8 @@ export class EslintFlatConfigFile
    *
    * @param overrides Override information for eslint rules
    */
-  public addOverrides(...overrides: EslintFlatConfigOverride[]) {
+  public addOverrides(...overrides: IEslintConfig[]) {
     this.overrides.push(...overrides);
-  }
-
-  /**
-   * Adds an `extends` item to the eslint configuration.
-   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
-   * - eslint
-   * - @eslint/js
-   * - typescript-eslint
-   * - eslint-plugin-import
-   * - @stylistic/eslint-plugin(when prettier is disabled)
-   * - prettier(when prettier is enabled)
-   * - eslint-config-prettier(when prettier is enabled)
-   *
-   * @param extendList ESLint configuration extension information.
-   */
-  public addExtends(...extendList: EslintConfigExtension[]) {
-    this._extends.push(...extendList);
   }
 
   /**
@@ -397,7 +147,7 @@ export class EslintFlatConfigFile
    */
   private generateConfig(resolver: IResolver): string {
     const overrideConfigs = (
-      resolver.resolve(this.overrides) as EslintFlatConfigOverride[]
+      resolver.resolve(this.overrides) as IEslintConfig[]
     ).map((override) => this.generateOverrideConfig(override));
     const importParts = `
 ${
@@ -419,7 +169,9 @@ ${
   ${this.generateMainConfig(resolver)},
   ${overrideConfigs.join(",\n")}${overrideConfigs.length ? "," : ""}
   {
-    ignores: ${this.convertArrayToString(resolver.resolve(this.ignorePatterns))}
+    ignores: ${this.convertArrayToString(
+      resolver.resolve(this._config.ignorePatterns ?? [])
+    )}
   }
 ];
 ` // NOTE: remove empty lines
@@ -451,12 +203,12 @@ ${
   private generateImports(): string {
     const pluginsForOverrides = this.overrides?.flatMap((override) => [
       ...(override.plugins ?? []),
-      ...(override.extends ?? []),
+      ...(override.extensions ?? []),
       ...(override.parser ? [override.parser] : []),
     ]);
     const uniquePlugins = [
-      ...this._plugins,
-      ...this._extends,
+      ...(this._config.plugins ?? []),
+      ...(this._config.extensions ?? []),
       ...pluginsForOverrides,
     ].reduce<(EslintPlugin | EslintConfigExtension | EslintParser)[]>(
       (acc, plugin) => {
@@ -489,7 +241,7 @@ ${
    * @returns A string containing the extends configuration, with each extension on a new line
    */
   private generateExtendsConfig(resolver: IResolver): string {
-    const eslintConfigExtensions = this._extends.reduce<
+    const eslintConfigExtensions = (this._config.extensions ?? []).reduce<
       EslintConfigExtension[]
     >((acc, extend) => {
       // If the extend is already in the array, skip it
@@ -535,7 +287,7 @@ ${
   private generateMainConfig(resolver: IResolver): string {
     return `{
     files: ${this.convertArrayToString(
-      resolver.resolve([...this._enablePatterns])
+      resolver.resolve([...(this._config.enablePatterns ?? [])])
     )},
     languageOptions: { 
       globals: {
@@ -561,10 +313,16 @@ ${
       },
     },
     plugins: {
-      ${this.convertPluginsToString(resolver.resolve(this._plugins), "      ")}
+      ${this.convertPluginsToString(
+        resolver.resolve(this._config.plugins ?? []),
+        "      "
+      )}
     },
     rules: {
-      ${this.convertRulesToString(resolver.resolve(this.rules), "      ")}
+      ${this.convertRulesToString(
+        resolver.resolve(this._config.rules ?? {}),
+        "      "
+      )}
     }
   }`;
   }
@@ -576,12 +334,15 @@ ${
    *
    * @returns A string containing override configuration
    */
-  private generateOverrideConfig(override: EslintFlatConfigOverride): string {
-    const plugins = [...this._plugins, ...this._extends];
+  private generateOverrideConfig(override: IEslintConfig): string {
+    const plugins = [
+      ...(this._config.plugins ?? []),
+      ...(this._config.extensions ?? []),
+    ];
     const overridePlugins = override.plugins ?? [];
     const overrideIgnorePatterns = override.ignorePatterns ?? [];
-    const codeReferences = override.extends
-      ? override.extends
+    const codeReferences = override.extensions
+      ? override.extensions
           .map((extend) =>
             extend.spreadConfig
               ? `...${extend.configReference ?? extend.importedBinding}`
@@ -595,12 +356,12 @@ ${
     ${codeReferences}${
       override.parser
         ? `
+    files: ${this.convertArrayToString(override.enablePatterns)},
     languageOptions: {
       ${this.convertParserToString(override.parser, plugins)}
     },`
         : ""
     }
-    files: ${this.convertArrayToString(override.enablePatterns)},
     ${
       overridePlugins.length
         ? `plugins: {
@@ -694,7 +455,7 @@ ${
    * @returns A formatted string of rule configurations
    */
   private convertRulesToString(
-    rules: ESLintRules,
+    rules: EslintRules,
     spaceStringForEachRule: string
   ): string {
     if (!Object.keys(rules).length) return "";

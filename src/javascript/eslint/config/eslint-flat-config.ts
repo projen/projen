@@ -1,8 +1,9 @@
 import {
   EslintConfigExtension,
+  EslintParser,
   EslintPlugin,
-  ESLintRules,
-  IESLintConfig,
+  EslintRules,
+  IEslintConfig,
 } from "./eslint-config";
 import { NodeProject } from "../../node-project";
 
@@ -13,21 +14,36 @@ export interface EslintFlatConfigOptions {
    *
    * @default []
    */
-  readonly devDirs?: string[];
-
-  /**
-   * The style configuration to use for ESLint.
-   * This is used to extend the base ESLint configuration with additional rules and plugins.
-   */
-  readonly styleConfig: IESLintConfig;
+  readonly devDirs: string[];
 }
 
-export class ESLintFlatConfig implements IESLintConfig {
-  public readonly rules: ESLintRules;
-  public readonly plugins?: EslintPlugin[] | undefined;
-  public readonly extensions?: EslintConfigExtension[];
+export class EslintFlatConfig implements IEslintConfig {
+  public get enablePatterns(): string[] {
+    return this._enablePatterns.size ? [...this._enablePatterns] : [];
+  }
+  public get ignorePatterns(): string[] | undefined {
+    if (!this._ignorePatterns) return undefined;
+    return this._ignorePatterns.size ? [...this._ignorePatterns] : [];
+  }
+  public get rules(): EslintRules {
+    return this._rules;
+  }
+  public get plugins(): EslintPlugin[] | undefined {
+    return this._plugins;
+  }
+  public get extensions(): EslintConfigExtension[] | undefined {
+    return this._extensions;
+  }
+  // TODO:
+  public readonly parser?: EslintParser;
 
-  constructor(project: NodeProject, options: EslintFlatConfigOptions) {
+  private _enablePatterns: Set<string> = new Set();
+  private _ignorePatterns?: Set<string>;
+  private _rules: EslintRules;
+  private _plugins?: EslintPlugin[];
+  private _extensions?: EslintConfigExtension[];
+
+  constructor(project: NodeProject, options?: EslintFlatConfigOptions) {
     project.addDevDeps(
       "globals",
       "eslint@^9",
@@ -37,15 +53,69 @@ export class ESLintFlatConfig implements IESLintConfig {
       "eslint-plugin-import",
       "eslint-import-resolver-typescript"
     );
-    this.rules = this.initializeRules(options.devDirs ?? []);
-    this.plugins = this.initializePlugins(options.styleConfig);
-    this.extensions = this.initializeExtensions(options.styleConfig);
+    this._enablePatterns = new Set(options?.devDirs ?? []);
+    this._rules = this.initializeRules(options?.devDirs);
+    this._plugins = this.initializePlugins();
+    this._extensions = this.initializeExtensions();
+  }
+
+  /**
+   * Add a file or glob pattern or directory to enable.
+   *
+   * @example "src/*.ts"
+   */
+  public addEnablePatterns(...patterns: string[]) {
+    for (const pattern of patterns) {
+      this._enablePatterns.add(pattern);
+    }
+  }
+
+  /**
+   * Add a file or glob pattern or directory to ignore.
+   *
+   * @example ".gitignore"
+   */
+  public addIgnorePatterns(...patterns: string[]) {
+    if (!this._ignorePatterns) this._ignorePatterns = new Set<string>();
+    for (const pattern of patterns) {
+      this._ignorePatterns.add(pattern);
+    }
+  }
+
+  /**
+   * Add an eslint rule.
+   *
+   * @example { "no-console": "error" }
+   */
+  public addRules(rules: EslintRules) {
+    if (!this._rules) this._rules = {};
+    for (const [k, v] of Object.entries(rules)) {
+      this._rules[k] = v;
+    }
+  }
+
+  /**
+   * Add eslint plugins
+   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+   * - eslint
+   * - @eslint/js
+   * - typescript-eslint
+   * - eslint-plugin-import
+   * - @stylistic/eslint-plugin(when prettier is disabled)
+   * - prettier(when prettier is enabled)
+   * - eslint-config-prettier(when prettier is enabled)
+   *
+   * @param plugins ESLint plugin information.
+   */
+  public addPlugins(...plugins: EslintPlugin[]) {
+    if (!this._plugins) this._plugins = [];
+    this._plugins.push(...plugins);
   }
 
   /**
    * Initialize plugins for ESLint configuration
    */
-  private initializePlugins(styleConfig: IESLintConfig): EslintPlugin[] {
+  private initializePlugins(): EslintPlugin[] {
     return [
       {
         moduleSpecifier: "typescript-eslint",
@@ -57,32 +127,31 @@ export class ESLintFlatConfig implements IESLintConfig {
         importedBinding: "importPlugin",
         pluginAlias: "import",
       },
-      ...(styleConfig.plugins ?? []),
     ];
   }
 
   /**
-   * Initialize extends for ESLint configuration
+   * Adds an `extends` item to the eslint configuration.
+   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+   * - eslint
+   * - @eslint/js
+   * - typescript-eslint
+   * - eslint-plugin-import
+   * - @stylistic/eslint-plugin(when prettier is disabled)
+   * - prettier(when prettier is enabled)
+   * - eslint-config-prettier(when prettier is enabled)
+   *
+   * @param extensions ESLint configuration extension information.
    */
-  private initializeExtensions(
-    styleConfig: IESLintConfig
-  ): EslintConfigExtension[] {
-    return [
-      {
-        moduleSpecifier: "@eslint/js",
-        importedBinding: "eslint",
-        configReference: "eslint.configs.recommended",
-      },
-      {
-        moduleSpecifier: "eslint-plugin-import",
-        importedBinding: "importPlugin",
-        configReference: "importPlugin.flatConfigs.typescript",
-      },
-      ...(styleConfig.extensions ?? []),
-    ];
+  public addExtensions(...extensions: EslintConfigExtension[]) {
+    if (!this._extensions) this._extensions = [];
+    this._extensions.push(...extensions);
   }
 
-  private initializeRules(devDirs: string[]): ESLintRules {
+  /**
+   * Initialize rules for ESLint configuration
+   */
+  private initializeRules(devDirs?: string[]): EslintRules {
     return {
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
       "@typescript-eslint/no-require-imports": "error",
@@ -91,7 +160,7 @@ export class ESLintFlatConfig implements IESLintConfig {
       "import/no-extraneous-dependencies": [
         "error",
         {
-          devDependencies: this.renderDevDepsAllowList(devDirs), // Only allow importing devDependencies from "devDirs".
+          devDependencies: this.renderDevDepsAllowList(devDirs ?? []), // Only allow importing devDependencies from "devDirs".
           optionalDependencies: false, // Disallow importing optional dependencies (those shouldn't be in use in the project)
           peerDependencies: true, // Allow importing peer dependencies (that aren't also direct dependencies)
         },
@@ -157,6 +226,24 @@ export class ESLintFlatConfig implements IESLintConfig {
         },
       ],
     };
+  }
+
+  /**
+   * Initialize extends for ESLint configuration
+   */
+  private initializeExtensions(): EslintConfigExtension[] {
+    return [
+      {
+        moduleSpecifier: "@eslint/js",
+        importedBinding: "eslint",
+        configReference: "eslint.configs.recommended",
+      },
+      {
+        moduleSpecifier: "eslint-plugin-import",
+        importedBinding: "importPlugin",
+        configReference: "importPlugin.flatConfigs.typescript",
+      },
+    ];
   }
 
   /**

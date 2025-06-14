@@ -90,7 +90,7 @@ describe("eslint command options", () => {
       styleConfig: new StylisticConfig(project),
       commandOptions: { fix: true },
     });
-    eslint.configFile.synthesize();
+    eslint.synthesize();
 
     // THEN
     expect(eslint.task.steps[0].exec).toContain("--fix");
@@ -109,9 +109,28 @@ describe("eslint command options", () => {
       styleConfig: new StylisticConfig(project),
       commandOptions: { extraArgs: ["--cache"] },
     });
-    eslint.configFile.synthesize();
+    eslint.synthesize();
 
     // THEN
     expect(eslint.task.steps[0].exec).toContain("--cache");
+  });
+
+  test("synthesize", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new ESLint(project, {
+      enablePatterns: ["**/*.ts", "**/*.tsx"],
+      styleConfig: new StylisticConfig(project),
+    });
+    eslint.config.addRules({ "no-console": "warn" });
+    eslint.synthesize();
+
+    // THEN
+    expect(eslint.file.content).toMatch(/"no-console": "warn"/);
   });
 });

@@ -1,9 +1,19 @@
-import { EslintPlugin, ESLintRules, IESLintConfig } from "./eslint-config";
+import {
+  EslintConfigExtension,
+  EslintParser,
+  EslintPlugin,
+  EslintRules,
+  IEslintConfig,
+} from "./eslint-config";
 import { NodeProject } from "../../node-project";
 
-export class StylisticConfig implements IESLintConfig {
-  public readonly rules: ESLintRules;
-  public readonly plugins?: EslintPlugin[] | undefined;
+export class StylisticConfig implements IEslintConfig {
+  public readonly enablePatterns: string[] = [];
+  public readonly ignorePatterns?: string[];
+  public readonly rules?: EslintRules;
+  public readonly parser?: EslintParser;
+  public readonly plugins?: EslintPlugin[];
+  public readonly extensions?: EslintConfigExtension[];
 
   constructor(project: NodeProject) {
     project.addDevDeps("@stylistic/eslint-plugin@^2");
@@ -17,7 +27,7 @@ export class StylisticConfig implements IESLintConfig {
     ];
   }
 
-  private initializeRules(): ESLintRules {
+  private initializeRules(): EslintRules {
     return {
       indent: "off",
       "@stylistic/indent": ["error", 2],

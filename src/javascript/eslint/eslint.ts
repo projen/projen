@@ -1,13 +1,74 @@
 import { Task } from "../../task";
 import { TaskStepOptions } from "../../task-model";
 import { NodeProject } from "../node-project";
+import { IEslintConfig } from "./config/eslint-config";
+import { EslintFlatConfig } from "./config/eslint-flat-config";
 import {
   EslintFlatConfigFile,
-  EslintFlatConfigFileOptions,
-  IESLintFlatConfigFile,
+  IEslintFlatConfigFile,
+  ModuleType,
 } from "./eslint-flat-config-file";
 
-export interface EslintCommandOptions {
+export interface EslintOptions {
+  /**
+   * The style configuration to use for ESLint.
+   * This is used to extend the base ESLint configuration with additional rules and plugins.
+   */
+  readonly styleConfig: IEslintConfig;
+
+  /**
+   * List of files or glob patterns or directories with source files to enable.
+   *
+   * @example ["src/*.ts"]
+   */
+  readonly enablePatterns: string[];
+
+  /**
+   * List of files or glob patterns or directories with source files to ignore.
+   * as .gitignore patterns.
+   *
+   * @default - [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
+   */
+  readonly ignorePatterns?: string[];
+
+  /**
+   * Path to `tsconfig.json` which should be used by eslint.
+   *
+   * @default "./tsconfig.json"
+   */
+  readonly tsconfigPath?: string;
+
+  /**
+   * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
+   * This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
+   * @default true
+   */
+  readonly tsAlwaysTryTypes?: boolean;
+
+  /**
+   * The module type of configuration file.
+   * - When specified `module`, generate `eslint.config.mjs` file.
+   * - When specified `commonjs`, generate `eslint.config.cjs` file.
+   *
+   * @default "module"
+   */
+  readonly moduleType?: ModuleType;
+
+  /**
+   * Files or glob patterns or directories with source files that include tests and build tools.
+   * These sources are linted but may also import packages from `devDependencies`.
+   *
+   * @default []
+   */
+  readonly devDirs?: string[];
+
+  /**
+   * Options for the ESLint command.
+   */
+  readonly commandOptions?: EslintCommandOptions;
+}
+
+interface EslintCommandOptions {
   /**
    * Whether to fix eslint issues when running the eslint task
    * @default true
@@ -20,27 +81,51 @@ export interface EslintCommandOptions {
   readonly extraArgs?: string[];
 }
 
-export interface ESLintFlatConfigFile {
-  filename: string;
-}
-
 export class ESLint {
-  public readonly configFile: IESLintFlatConfigFile;
+  public get file(): IEslintFlatConfigFile {
+    return this.configFile;
+  }
   public readonly task: Task;
+  public readonly config: EslintFlatConfig;
 
-  constructor(
-    project: NodeProject,
-    options: EslintFlatConfigFileOptions & {
-      commandOptions?: EslintCommandOptions;
-    }
-  ) {
+  private readonly configFile: IEslintFlatConfigFile;
+
+  constructor(project: NodeProject, options: EslintOptions) {
+    const devDirs = options.devDirs ?? [];
+    const ignorePatterns = options.ignorePatterns ?? [
+      "*.js",
+      "*.d.ts",
+      "node_modules/",
+      "*.generated.ts",
+      "coverage",
+    ];
+
     this.task = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
     });
-    this.configFile = new EslintFlatConfigFile(project, options);
-    this.initializeEslintTask(options.commandOptions);
+
+    this.config = new EslintFlatConfig(project, {
+      devDirs,
+    });
+    this.config.addEnablePatterns(...options.enablePatterns);
+    this.config.addIgnorePatterns(...ignorePatterns);
+    this.config.addRules(options.styleConfig.rules ?? {});
+    this.config.addPlugins(...(options.styleConfig.plugins ?? []));
+    this.config.addExtensions(...(options.styleConfig.extensions ?? []));
+
+    this.configFile = new EslintFlatConfigFile(project, {
+      ...options,
+      config: this.config,
+    });
+
+    this.initializeTask(options.commandOptions);
     project.testTask.spawn(this.task);
     project.npmignore?.exclude(this.configFile.filename);
+  }
+
+  public synthesize() {
+    this.configFile.updateConfig(this.config);
+    this.configFile.synthesize();
   }
 
   /**
@@ -56,7 +141,7 @@ export class ESLint {
    * - Preserves existing step options (args, condition, cwd, env, name, receiveArgs) when updating the task
    * - Maintains any externally edited task configurations if they exist
    */
-  private initializeEslintTask(options?: EslintCommandOptions) {
+  private initializeTask(options?: EslintCommandOptions) {
     const taskExecCommand = "eslint";
     const extraArgs = options?.extraArgs ?? [];
     const cliArgs = new Set([

@@ -1,17 +1,22 @@
 import {
   EslintConfigExtension,
-  ESLintRules,
-  IESLintConfig,
+  EslintParser,
+  EslintPlugin,
+  EslintRules,
+  IEslintConfig,
 } from "./eslint-config";
 import { NodeProject } from "../../node-project";
 
-export class PrettierConfig implements IESLintConfig {
-  public readonly rules: ESLintRules;
+export class PrettierConfig implements IEslintConfig {
+  public readonly enablePatterns: string[] = [];
+  public readonly ignorePatterns?: string[];
+  public readonly rules?: EslintRules;
+  public readonly parser?: EslintParser;
+  public readonly plugins?: EslintPlugin[];
   public readonly extensions?: EslintConfigExtension[];
 
   constructor(project: NodeProject) {
     project.addDevDeps("prettier", "eslint-config-prettier");
-    this.rules = {};
     this.extensions = [
       {
         moduleSpecifier: "eslint-config-prettier",

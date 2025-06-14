@@ -1,6 +1,5 @@
 export * from "./bundler";
 export * from "./eslint";
-export * from "./eslint-flat-config";
 export * from "./jest";
 export * from "./license-checker";
 export * from "./node-package";

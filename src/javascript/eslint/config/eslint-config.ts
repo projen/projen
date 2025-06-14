@@ -1,4 +1,94 @@
 /**
+ * ESLint parser configuration information.
+ *
+ * @example
+ * // Configuration with parserReference
+ * {
+ *   moduleSpecifier: "typescript-eslint",
+ *   importedBinding: "tseslint",
+ *   parserReference: "parser"
+ * }
+ *
+ * // Results in:
+ * import tseslint from "typescript-eslint"
+ *
+ * export default [{
+ *   languageOptions: {
+ *     parser: tseslint.parser
+ *   }
+ * }]
+ *
+ * // Configuration without parserReference
+ * {
+ *   moduleSpecifier: "@typescript-eslint/parser",
+ *   importedBinding: "tseslintParser"
+ * }
+ *
+ * // Results in:
+ * import tseslintParser from "@typescript-eslint/parser"
+ *
+ * export default [{
+ *   languageOptions: {
+ *     parser: tseslintParser
+ *   }
+ * }]
+ */
+export interface EslintParser {
+  /**
+   * The moduleSpecifier that identifies the module to import from.
+   * This is the string literal that appears in the FromClause of an ImportDeclaration.
+   *
+   * @example "typescript-eslint"
+   * // In: import tseslint from "typescript-eslint"
+   * // typescript-eslint is the moduleSpecifier
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ModuleSpecifier}
+   */
+  readonly moduleSpecifier: string;
+
+  /**
+   * The importedBinding that defines the name to be bound to the module's default export.
+   * This is the local name that appears in a default import declaration.
+   *
+   * @example "tseslint"
+   * // In: import tseslint from "typescript-eslint"
+   * // tseslint is the importedBinding
+   * @see {@link https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#prod-ImportedDefaultBinding}
+   */
+  readonly importedBinding: string;
+
+  /**
+   * The reference path to the parser in the module.
+   * When specified, this string will be appended to importedBinding with a dot (.).
+   * When omitted, only importedBinding will be used.
+   *
+   * @example
+   * // With parserReference
+   * {
+   *   moduleSpecifier: "typescript-eslint",
+   *   importedBinding: "tseslint",
+   *   parserReference: "parser"
+   * }
+   * // Results in:
+   * languageOptions: {
+   *   parser: tseslint.parser
+   * }
+   *
+   * // Without parserReference (using importedBinding)
+   * {
+   *   moduleSpecifier: "@typescript-eslint/parser",
+   *   importedBinding: "tseslintParser"
+   * }
+   * // Results in:
+   * languageOptions: {
+   *   parser: tseslintParser
+   * }
+   *
+   * @default - same as `importedBinding`
+   */
+  readonly parserReference?: string;
+}
+
+/**
  * ESLint plugin configuration information.
  *
  * @example
@@ -135,12 +225,50 @@ export interface EslintConfigExtension {
   readonly spreadConfig?: boolean;
 }
 
-export interface ESLintRules {
+export interface EslintRules {
   [rule: string]: any;
 }
 
-export interface IESLintConfig {
-  readonly rules: ESLintRules;
+export interface IEslintConfig {
+  /**
+   * List of files or glob patterns or directories with source files to enable.
+   *
+   * @example ["src/*.ts"]
+   */
+  readonly enablePatterns: string[];
+
+  /**
+   * List of files or glob patterns or directories with source files to ignore.
+   * as .gitignore patterns.
+   *
+   * @example [".gitignore", "node_modules"]
+   * @default - no ignore patterns
+   */
+  readonly ignorePatterns?: string[];
+
+  /**
+   * ESLint rules to apply.
+   * @example { "no-console": "error" }
+   * @default - no rules
+   */
+  readonly rules?: EslintRules;
+
+  /**
+   * parser options to apply.
+   * @default - no parser options
+   */
+  readonly parser?: EslintParser;
+
+  /**
+   * Plugin(s) to use in ESLint configuration.
+   * @default - no plugins
+   */
   readonly plugins?: EslintPlugin[];
+
+  /**
+   * Extensions to use in ESLint configuration.
+   * These are typically configurations from plugins or other ESLint configurations.
+   * @default - no extensions
+   */
   readonly extensions?: EslintConfigExtension[];
 }
