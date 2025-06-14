@@ -72,33 +72,6 @@ describe("eslint setting", () => {
     expect(file).toContain("module.exports =");
   });
 
-  test("can add overrides", () => {
-    // GIVEN
-    const project = new NodeProject({
-      name: "test",
-      defaultReleaseBranch: "master",
-    });
-
-    const eslint = new EslintFlatConfigFile(project, {
-      config: new EslintFlatConfig(project),
-    });
-
-    // WHEN
-    eslint.addOverrides({
-      enablePatterns: ["**/*.test.ts"],
-      rules: {
-        "@typescript-eslint/no-explicit-any": "off",
-      },
-    });
-
-    // THEN
-    expect(eslint.overrides).toHaveLength(1);
-    expect(eslint.overrides[0].enablePatterns).toEqual(["**/*.test.ts"]);
-    expect(eslint.overrides[0].rules).toEqual({
-      "@typescript-eslint/no-explicit-any": "off",
-    });
-  });
-
   test("uses default tsconfig path", () => {
     // GIVEN
     const project = new NodeProject({

@@ -1,19 +1,10 @@
-import {
-  EslintConfigExtension,
-  EslintParser,
-  EslintPlugin,
-  EslintRules,
-  IEslintConfig,
-} from "./eslint-config";
+import { EslintPlugin, EslintRules, IEslintConfig } from "./eslint-config";
 import { NodeProject } from "../../node-project";
 
 export class StylisticConfig implements IEslintConfig {
   public readonly enablePatterns: string[] = [];
-  public readonly ignorePatterns?: string[];
-  public readonly rules?: EslintRules;
-  public readonly parser?: EslintParser;
-  public readonly plugins?: EslintPlugin[];
-  public readonly extensions?: EslintConfigExtension[];
+  public readonly rules: EslintRules;
+  public readonly plugins: EslintPlugin[];
 
   constructor(project: NodeProject) {
     project.addDevDeps("@stylistic/eslint-plugin@^2");

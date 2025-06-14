@@ -51,7 +51,6 @@ export interface IEslintFlatConfigFile {
   readonly content: string;
   readonly filename: string;
   updateConfig(config: IEslintConfig): void;
-  addOverrides(...overrides: IEslintConfig[]): void;
   synthesize(): void;
 }
 
@@ -74,11 +73,6 @@ export class EslintFlatConfigFile
   public get content(): string {
     return this._content;
   }
-
-  /**
-   * eslint overrides.
-   */
-  public readonly overrides: IEslintConfig[] = [];
 
   /**
    * eslint configuration filename.
@@ -125,29 +119,12 @@ export class EslintFlatConfigFile
   }
 
   /**
-   * Add an eslint override.
-   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
-   * - eslint
-   * - @eslint/js
-   * - typescript-eslint
-   * - eslint-plugin-import
-   * - @stylistic/eslint-plugin(when prettier is disabled)
-   * - prettier(when prettier is enabled)
-   * - eslint-config-prettier(when prettier is enabled)
-   *
-   * @param overrides Override information for eslint rules
-   */
-  public addOverrides(...overrides: IEslintConfig[]) {
-    this.overrides.push(...overrides);
-  }
-
-  /**
    * Generate the complete ESLint configuration
    * @returns ESLint configuration as a string
    */
   private generateConfig(resolver: IResolver): string {
     const overrideConfigs = (
-      resolver.resolve(this.overrides) as IEslintConfig[]
+      resolver.resolve(this._config.overrides ?? []) as IEslintConfig[]
     ).map((override) => this.generateOverrideConfig(override));
     const importParts = `
 ${
@@ -201,11 +178,13 @@ ${
    * // const importPlugin = require("eslint-plugin-import")
    */
   private generateImports(): string {
-    const pluginsForOverrides = this.overrides?.flatMap((override) => [
-      ...(override.plugins ?? []),
-      ...(override.extensions ?? []),
-      ...(override.parser ? [override.parser] : []),
-    ]);
+    const pluginsForOverrides = (this._config.overrides ?? []).flatMap(
+      (override) => [
+        ...(override.plugins ?? []),
+        ...(override.extensions ?? []),
+        ...(override.parser ? [override.parser] : []),
+      ]
+    );
     const uniquePlugins = [
       ...(this._config.plugins ?? []),
       ...(this._config.extensions ?? []),

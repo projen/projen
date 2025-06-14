@@ -271,4 +271,9 @@ export interface IEslintConfig {
    * @default - no extensions
    */
   readonly extensions?: EslintConfigExtension[];
+
+  /**
+   * eslint overrides.
+   */
+  readonly overrides?: Omit<IEslintConfig, "overrides">[];
 }

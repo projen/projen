@@ -128,4 +128,29 @@ describe("eslint setting", () => {
       spreadConfig: true,
     });
   });
+
+  test("can add overrides", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    const eslint = new EslintFlatConfig(project);
+
+    // WHEN
+    eslint.addOverrides({
+      enablePatterns: ["**/*.test.ts"],
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      },
+    });
+
+    // THEN
+    expect(eslint.overrides).toHaveLength(1);
+    expect(eslint.overrides[0].enablePatterns).toEqual(["**/*.test.ts"]);
+    expect(eslint.overrides[0].rules).toEqual({
+      "@typescript-eslint/no-explicit-any": "off",
+    });
+  });
 });

@@ -1,7 +1,6 @@
 import { NodeProject } from "../../node-project";
 import {
   EslintConfigExtension,
-  EslintParser,
   EslintPlugin,
   EslintRules,
   IEslintConfig,
@@ -33,14 +32,21 @@ export class EslintFlatConfig implements IEslintConfig {
   public get extensions(): EslintConfigExtension[] {
     return this._extensions;
   }
+  public get overrides(): NonNullable<IEslintConfig["overrides"]> {
+    return this._overrides;
+  }
+
   // TODO:
-  public readonly parser?: EslintParser;
+  // public readonly parser?: EslintParser;
 
   private _enablePatterns: Set<string> = new Set();
   private _ignorePatterns: Set<string> = new Set();
   private _rules: EslintRules;
   private _plugins: EslintPlugin[];
   private _extensions: EslintConfigExtension[];
+  // TODO:
+  // private _parser?: EslintParser;
+  private _overrides: NonNullable<IEslintConfig["overrides"]> = [];
 
   constructor(project: NodeProject, options?: EslintFlatConfigOptions) {
     project.addDevDeps(
@@ -127,6 +133,23 @@ export class EslintFlatConfig implements IEslintConfig {
         pluginAlias: "import",
       },
     ];
+  }
+
+  /**
+   * Add an eslint override.
+   * If you use a module other than the following, you need to install the module using `project.addDevDeps`.
+   * - eslint
+   * - @eslint/js
+   * - typescript-eslint
+   * - eslint-plugin-import
+   * - @stylistic/eslint-plugin(when prettier is disabled)
+   * - prettier(when prettier is enabled)
+   * - eslint-config-prettier(when prettier is enabled)
+   *
+   * @param overrides Override information for eslint rules
+   */
+  public addOverrides(...overrides: IEslintConfig[]) {
+    this._overrides.push(...overrides);
   }
 
   /**
