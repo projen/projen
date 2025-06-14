@@ -110,18 +110,18 @@ export class EslintFlatConfigFile
   }
 
   /**
+   * update ESLint configuration.
+   */
+  public updateConfig(config: IEslintConfig): void {
+    this._config = config;
+  }
+
+  /**
    * Sync the config file with the current state of the class properties.
    */
   protected synthesizeContent(resolver: IResolver): string | undefined {
     this._content = this.generateConfig(resolver);
     return this._content;
-  }
-
-  /**
-   * update ESLint configuration.
-   */
-  public updateConfig(config: IEslintConfig): void {
-    this._config = config;
   }
 
   /**
@@ -287,7 +287,7 @@ ${
   private generateMainConfig(resolver: IResolver): string {
     return `{
     files: ${this.convertArrayToString(
-      resolver.resolve([...(this._config.enablePatterns ?? [])])
+      resolver.resolve([...this._config.enablePatterns])
     )},
     languageOptions: { 
       globals: {

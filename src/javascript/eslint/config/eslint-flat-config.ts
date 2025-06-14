@@ -1,3 +1,4 @@
+import { NodeProject } from "../../node-project";
 import {
   EslintConfigExtension,
   EslintParser,
@@ -5,7 +6,6 @@ import {
   EslintRules,
   IEslintConfig,
 } from "./eslint-config";
-import { NodeProject } from "../../node-project";
 
 export interface EslintFlatConfigOptions {
   /**
@@ -21,27 +21,26 @@ export class EslintFlatConfig implements IEslintConfig {
   public get enablePatterns(): string[] {
     return this._enablePatterns.size ? [...this._enablePatterns] : [];
   }
-  public get ignorePatterns(): string[] | undefined {
-    if (!this._ignorePatterns) return undefined;
+  public get ignorePatterns(): string[] {
     return this._ignorePatterns.size ? [...this._ignorePatterns] : [];
   }
   public get rules(): EslintRules {
     return this._rules;
   }
-  public get plugins(): EslintPlugin[] | undefined {
+  public get plugins(): EslintPlugin[] {
     return this._plugins;
   }
-  public get extensions(): EslintConfigExtension[] | undefined {
+  public get extensions(): EslintConfigExtension[] {
     return this._extensions;
   }
   // TODO:
   public readonly parser?: EslintParser;
 
   private _enablePatterns: Set<string> = new Set();
-  private _ignorePatterns?: Set<string>;
+  private _ignorePatterns: Set<string> = new Set();
   private _rules: EslintRules;
-  private _plugins?: EslintPlugin[];
-  private _extensions?: EslintConfigExtension[];
+  private _plugins: EslintPlugin[];
+  private _extensions: EslintConfigExtension[];
 
   constructor(project: NodeProject, options?: EslintFlatConfigOptions) {
     project.addDevDeps(
