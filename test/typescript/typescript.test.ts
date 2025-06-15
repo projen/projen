@@ -672,3 +672,17 @@ describe("tsconfigDev", () => {
     expect(packageJson.devDependencies["@types/node"]).toBe("ts4.8");
   });
 });
+
+describe("only one of components can be enabled", () => {
+  test("eslint and biome", () => {
+    expect(
+      () =>
+        new TypeScriptProject({
+          biome: true,
+          eslint: true,
+          defaultReleaseBranch: "main",
+          name: "test",
+        })
+    ).toThrowError("Only one of biome, and eslint can be enabled.");
+  });
+});

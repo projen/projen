@@ -1114,6 +1114,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.biome">biome</a></code> | <code>projen.javascript.biome.Biome</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -1645,6 +1646,16 @@ public readonly autoMerge: AutoMerge;
 - *Type:* projen.github.AutoMerge
 
 Component that sets up mergify for merging approved pull requests.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.typescript.TypeScriptAppProject.property.biome"></a>
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* projen.javascript.biome.Biome
 
 ---
 
@@ -2619,6 +2630,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.biome">biome</a></code> | <code>projen.javascript.biome.Biome</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -3226,6 +3238,18 @@ public readonly autoMerge: AutoMerge;
 - *Type:* projen.github.AutoMerge
 
 Component that sets up mergify for merging approved pull requests.
+
+---
+
+##### ~~`biome`~~<sup>Optional</sup> <a name="biome" id="projen.typescript.TypeScriptLibraryProject.property.biome"></a>
+
+- *Deprecated:* use `TypeScriptProject`
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* projen.javascript.biome.Biome
 
 ---
 
@@ -4244,6 +4268,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.typescript.TypeScriptProject.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.typescript.TypeScriptProject.property.biome">biome</a></code> | <code>projen.javascript.biome.Biome</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -4775,6 +4800,16 @@ public readonly autoMerge: AutoMerge;
 - *Type:* projen.github.AutoMerge
 
 Component that sets up mergify for merging approved pull requests.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.typescript.TypeScriptProject.property.biome"></a>
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* projen.javascript.biome.Biome
 
 ---
 
@@ -5460,6 +5495,8 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.biome.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -7099,6 +7136,36 @@ Throw if set to true but `autoApproveOptions` are not defined.
 
 ---
 
+##### ~~`biome`~~<sup>Optional</sup> <a name="biome" id="projen.typescript.TypeScriptLibraryProjectOptions.property.biome"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly biome: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup Biome.
+
+---
+
+##### ~~`biomeOptions`~~<sup>Optional</sup> <a name="biomeOptions" id="projen.typescript.TypeScriptLibraryProjectOptions.property.biomeOptions"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly biomeOptions: BiomeOptions;
+```
+
+- *Type:* projen.javascript.biome.BiomeOptions
+- *Default:* default options
+
+Biome options.
+
+---
+
 ##### ~~`buildWorkflow`~~<sup>Optional</sup> <a name="buildWorkflow" id="projen.typescript.TypeScriptLibraryProjectOptions.property.buildWorkflow"></a>
 
 - *Deprecated:* use TypeScriptProjectOptions
@@ -8032,6 +8099,8 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.biome.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -9496,6 +9565,32 @@ public readonly autoApproveUpgrades: boolean;
 Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).
 
 Throw if set to true but `autoApproveOptions` are not defined.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.typescript.TypeScriptProjectOptions.property.biome"></a>
+
+```typescript
+public readonly biome: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup Biome.
+
+---
+
+##### `biomeOptions`<sup>Optional</sup> <a name="biomeOptions" id="projen.typescript.TypeScriptProjectOptions.property.biomeOptions"></a>
+
+```typescript
+public readonly biomeOptions: BiomeOptions;
+```
+
+- *Type:* projen.javascript.biome.BiomeOptions
+- *Default:* default options
+
+Biome options.
 
 ---
 
