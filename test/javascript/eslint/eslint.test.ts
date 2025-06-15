@@ -74,6 +74,45 @@ describe("snapshot tests", () => {
     // THEN
     expect(synthSnapshot(project)["eslint.config.mjs"]).toMatchSnapshot();
   });
+
+  test("overrides configuration", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    // WHEN
+    const eslint = new ESLint(project, {
+      enablePatterns: ["**/*.ts", "**/*.tsx"],
+      styleConfig: new StylisticConfig(project),
+    });
+    eslint.config.addOverrides({
+      enablePatterns: ["**/*.test.ts"],
+      languageOptions: {
+        globals: {
+          node: true,
+        },
+        parserOptions: {
+          ecmaVersion: "latest",
+          sourceType: "module",
+          project: "tsconfig.json",
+        },
+        parser: {
+          moduleSpecifier: "typescript-eslint",
+          importedBinding: "tseslint",
+          parserReference: "parser",
+        },
+      },
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      },
+    });
+    eslint.synthesize();
+
+    // THEN
+    expect(synthSnapshot(project)["eslint.config.mjs"]).toMatchSnapshot();
+  });
 });
 
 describe("eslint command options", () => {

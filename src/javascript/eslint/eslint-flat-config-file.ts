@@ -4,6 +4,7 @@ import { FileBase, IResolver } from "../../file";
 import { Project } from "../../project";
 import {
   EslintConfigExtension,
+  EslintLanguageOptions,
   EslintParser,
   EslintPlugin,
   EslintRules,
@@ -126,13 +127,14 @@ export class EslintFlatConfigFile
     const overrideConfigs = (
       resolver.resolve(this._config.overrides ?? []) as IEslintConfig[]
     ).map((override) => this.generateOverrideConfig(override));
+
     const importParts = `
 ${
   this._moduleType === MODULE_TYPE.MODULE
     ? 'import globals from "globals"'
     : 'const globals = require("globals")'
-};
-${this.generateImports()}    
+}
+${this.generateImports()}
 `;
 
     const configParts = `
@@ -151,7 +153,8 @@ ${
     )}
   }
 ];
-` // NOTE: remove empty lines
+`
+      // NOTE: remove empty lines
       .split("\n")
       .filter((line) => line.trim() !== "")
       .join("\n");
@@ -182,7 +185,9 @@ ${
       (override) => [
         ...(override.plugins ?? []),
         ...(override.extensions ?? []),
-        ...(override.parser ? [override.parser] : []),
+        ...(override.languageOptions?.parser
+          ? [override.languageOptions.parser]
+          : []),
       ]
     );
     const uniquePlugins = [
@@ -268,17 +273,11 @@ ${
     files: ${this.convertArrayToString(
       resolver.resolve([...this._config.enablePatterns])
     )},
-    languageOptions: { 
-      globals: {
-        ...globals.node,
-        ...globals.jest,
-      },
-      parser: tseslint.parser,
-      parserOptions: {
-        ecmaVersion: 2018,
-        sourceType: "module",
-        project: "${this._tsconfigPath}",
-      },
+    languageOptions: {
+      ${this.convertLanguageOptionsToString(
+        resolver.resolve(this._config.languageOptions ?? {}),
+        "      "
+      )}
     },
     settings: {
       "import/parsers": {
@@ -314,49 +313,95 @@ ${
    * @returns A string containing override configuration
    */
   private generateOverrideConfig(override: IEslintConfig): string {
-    const plugins = [
-      ...(this._config.plugins ?? []),
-      ...(this._config.extensions ?? []),
-    ];
-    const overridePlugins = override.plugins ?? [];
-    const overrideIgnorePatterns = override.ignorePatterns ?? [];
-    const codeReferences = override.extensions
-      ? override.extensions
-          .map((extend) =>
-            extend.spreadConfig
-              ? `...${extend.configReference ?? extend.importedBinding}`
-              : extend.configReference ?? extend.importedBinding
-          )
-          .join(",\n  ")
-      : "";
+    const codeReferences =
+      override.extensions
+        ?.map((extend) =>
+          extend.spreadConfig
+            ? `...${extend.configReference ?? extend.importedBinding}`
+            : extend.configReference ?? extend.importedBinding
+        )
+        .join(",\n  ") ?? "";
+
+    const sections = [
+      codeReferences,
+      override.enablePatterns.length &&
+        `files: ${this.convertArrayToString(override.enablePatterns)}`,
+      override.languageOptions &&
+        `languageOptions: {
+      ${this.convertLanguageOptionsToString(override.languageOptions, "      ")}
+    }`,
+      override.plugins?.length &&
+        `plugins: {
+      ${this.convertPluginsToString(override.plugins, "      ")}
+    }`,
+      `rules: {
+      ${this.convertRulesToString(override.rules ?? {}, "      ")}
+    }`,
+      override.ignorePatterns?.length &&
+        `ignores: ${this.convertArrayToString(override.ignorePatterns)}`,
+    ].filter(Boolean);
 
     return `
   {
-    ${codeReferences}${
-      override.parser
-        ? `
-    files: ${this.convertArrayToString(override.enablePatterns)},
-    languageOptions: {
-      ${this.convertParserToString(override.parser, plugins)}
-    },`
-        : ""
-    }
-    ${
-      overridePlugins.length
-        ? `plugins: {
-      ${this.convertPluginsToString(overridePlugins, "      ")}
-    },`
-        : ""
-    }
-    rules: {
-      ${this.convertRulesToString(override.rules ?? {}, "      ")}
-    }
-    ${
-      overrideIgnorePatterns.length
-        ? `ignores: ${this.convertArrayToString(overrideIgnorePatterns)}`
-        : ""
-    }
+    ${sections.join(",\n    ")}
   }`;
+  }
+
+  /**
+   * Converts an array of elements into a string representation suitable for ESLint configuration.
+   * Each element is wrapped in quotes and joined with commas.
+   *
+   * @param element - The array to convert
+   * @returns A string representation of the array with quoted elements
+   */
+  private convertArrayToString(element: unknown[]): string {
+    return `[${element.map((e) => `"${e}"`).join(", ")}]`;
+  }
+
+  /**
+   * Converts an object containing ESLint rules into a string representation for the configuration file.
+   * Each rule is formatted as a key-value pair where the key is the rule name and the value is the stringified rule configuration.
+   *
+   * @param rules - Object containing ESLint rules and their configurations
+   * @param spaceStringForEachRule - Indentation string to use for formatting
+   * @returns A formatted string of rule configurations
+   */
+  private convertRulesToString(
+    rules: EslintRules,
+    spaceStringForEachRule: string
+  ): string {
+    if (!Object.keys(rules).length) return "";
+    return Object.keys(rules)
+      .map(
+        (key) => `"${key}": ${JSON.stringify(rules[key as keyof typeof rules])}`
+      )
+      .join(`,\n${spaceStringForEachRule}`);
+  }
+
+  /**
+   * Converts an array of ESLint plugins into a string representation for the configuration file.
+   * Each plugin is formatted as a key-value pair where the key is the plugin alias and the value is the module name.
+   *
+   * @param plugins - Array of ESLint plugin configurations
+   * @param spaceStringForEachPlugin - Indentation string to use for formatting
+   * @returns A formatted string of plugin configurations
+   */
+  private convertPluginsToString(
+    plugins: EslintPlugin[],
+    spaceStringForEachPlugin: string
+  ): string {
+    if (!plugins.length) return "";
+    return plugins
+      .map((plugin) => {
+        if (
+          plugin.pluginAlias === "@typescript-eslint" &&
+          !plugin.importedBinding.includes(".")
+        ) {
+          return `"${plugin.pluginAlias}": ${plugin.importedBinding}.plugin`;
+        }
+        return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
+      })
+      .join(`,\n${spaceStringForEachPlugin}`);
   }
 
   /**
@@ -388,60 +433,73 @@ ${
   }
 
   /**
-   * Converts an array of elements into a string representation suitable for ESLint configuration.
-   * Each element is wrapped in quotes and joined with commas.
-   *
-   * @param element - The array to convert
-   * @returns A string representation of the array with quoted elements
+   * Convert language options into a string representation for the ESLint configuration file.
+   * @returns Language options as a string
    */
-  private convertArrayToString(element: unknown[]): string {
-    return `[${element.map((e) => `"${e}"`).join(", ")}]`;
+  private convertLanguageOptionsToString(
+    languageOptions: EslintLanguageOptions,
+    spaceStringForEachLanguageOption: string
+  ): string {
+    if (!Object.keys(languageOptions).length) return "";
+    return [
+      Object.keys(languageOptions.globals ?? {}).length &&
+        `globals: {${this.generateGlobals(languageOptions.globals!)}}`,
+      Object.keys(languageOptions.parser ?? {}).length &&
+        this.convertParserToString(languageOptions.parser!, [
+          ...(this._config.plugins ?? []),
+          ...(this._config.extensions ?? []),
+        ]),
+      languageOptions.parserOptions &&
+        `parserOptions: {
+${spaceStringForEachLanguageOption + "  "}${this.generateParserOptions(
+          languageOptions.parserOptions,
+          spaceStringForEachLanguageOption + "  "
+        )}
+${spaceStringForEachLanguageOption}}`,
+    ]
+      .filter(Boolean)
+      .join(`,\n${spaceStringForEachLanguageOption}`);
   }
 
   /**
-   * Converts an array of ESLint plugins into a string representation for the configuration file.
-   * Each plugin is formatted as a key-value pair where the key is the plugin alias and the value is the module name.
-   *
-   * @param plugins - Array of ESLint plugin configurations
-   * @param spaceStringForEachPlugin - Indentation string to use for formatting
-   * @returns A formatted string of plugin configurations
+   * Generate globals configuration
+   * @returns Globals configuration as a string
    */
-  private convertPluginsToString(
-    plugins: EslintPlugin[],
-    spaceStringForEachPlugin: string
+  private generateGlobals(
+    globals: Record<string, boolean | "readonly" | "writable">
   ): string {
-    if (!plugins.length) return "";
-    return plugins
-      .map((plugin) => {
-        if (
-          plugin.pluginAlias === "@typescript-eslint" &&
-          !plugin.importedBinding.includes(".")
-        ) {
-          return `"${plugin.pluginAlias}": ${plugin.importedBinding}.plugin`;
-        } else {
-          return `"${plugin.pluginAlias}": ${plugin.importedBinding}`;
-        }
+    return Object.entries(globals)
+      .map(([key, value]) => {
+        if (typeof value === "boolean") return `...globals.${key}`;
+        return `${key}: "${value}"`;
       })
-      .join(`,\n${spaceStringForEachPlugin}`);
+      .join(", ");
   }
 
   /**
-   * Converts an object containing ESLint rules into a string representation for the configuration file.
-   * Each rule is formatted as a key-value pair where the key is the rule name and the value is the stringified rule configuration.
-   *
-   * @param rules - Object containing ESLint rules and their configurations
-   * @param spaceStringForEachRule - Indentation string to use for formatting
-   * @returns A formatted string of rule configurations
+   * Generate parser options configuration
+   * @returns Parser options configuration as a string
    */
-  private convertRulesToString(
-    rules: EslintRules,
-    spaceStringForEachRule: string
+  private generateParserOptions(
+    parserOptions: NonNullable<EslintLanguageOptions["parserOptions"]>,
+    spaceStringForParserOptions: string
   ): string {
-    if (!Object.keys(rules).length) return "";
-    return Object.keys(rules)
-      .map(
-        (key) => `"${key}": ${JSON.stringify(rules[key as keyof typeof rules])}`
-      )
-      .join(`,\n${spaceStringForEachRule}`);
+    const entries = [
+      parserOptions.ecmaVersion &&
+        `ecmaVersion: ${
+          typeof parserOptions.ecmaVersion === "string"
+            ? `"${parserOptions.ecmaVersion}"`
+            : parserOptions.ecmaVersion
+        }`,
+      parserOptions.sourceType && `sourceType: "${parserOptions.sourceType}"`,
+      `project: ${
+        parserOptions.project === this._tsconfigPath
+          ? `"${this._tsconfigPath}"`
+          : parserOptions.project
+          ? `"${parserOptions.project}"`
+          : `"${this._tsconfigPath}"`
+      }`,
+    ].filter(Boolean);
+    return entries.join(`,\n${spaceStringForParserOptions}`);
   }
 }

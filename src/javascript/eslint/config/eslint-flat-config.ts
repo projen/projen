@@ -1,10 +1,11 @@
-import { NodeProject } from "../../node-project";
 import {
   EslintConfigExtension,
+  EslintLanguageOptions,
   EslintPlugin,
   EslintRules,
   IEslintConfig,
 } from "./eslint-config";
+import { NodeProject } from "../../node-project";
 
 export interface EslintFlatConfigOptions {
   /**
@@ -35,17 +36,16 @@ export class EslintFlatConfig implements IEslintConfig {
   public get overrides(): NonNullable<IEslintConfig["overrides"]> {
     return this._overrides;
   }
-
-  // TODO:
-  // public readonly parser?: EslintParser;
+  public get languageOptions(): EslintLanguageOptions {
+    return this._languageOptions;
+  }
 
   private _enablePatterns: Set<string> = new Set();
   private _ignorePatterns: Set<string> = new Set();
   private _rules: EslintRules;
   private _plugins: EslintPlugin[];
   private _extensions: EslintConfigExtension[];
-  // TODO:
-  // private _parser?: EslintParser;
+  private _languageOptions: EslintLanguageOptions;
   private _overrides: NonNullable<IEslintConfig["overrides"]> = [];
 
   constructor(project: NodeProject, options?: EslintFlatConfigOptions) {
@@ -62,6 +62,7 @@ export class EslintFlatConfig implements IEslintConfig {
     this._rules = this.initializeRules(options?.devDirs);
     this._plugins = this.initializePlugins();
     this._extensions = this.initializeExtensions();
+    this._languageOptions = this.initializeLanguageOptions();
   }
 
   /**
@@ -266,6 +267,27 @@ export class EslintFlatConfig implements IEslintConfig {
         configReference: "importPlugin.flatConfigs.typescript",
       },
     ];
+  }
+
+  /**
+   * Initialize language options for ESLint configuration
+   */
+  private initializeLanguageOptions(): EslintLanguageOptions {
+    return {
+      globals: {
+        node: true,
+        jest: true,
+      },
+      parser: {
+        moduleSpecifier: "typescript-eslint",
+        importedBinding: "tseslint",
+        parserReference: "parser",
+      },
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: "module",
+      },
+    };
   }
 
   /**

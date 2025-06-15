@@ -1,4 +1,64 @@
 /**
+ * ESLint language options configuration.
+ * Contains parser, globals, and parser options settings.
+ *
+ * @example
+ * {
+ *   globals: { node: true, jest: true },
+ *   parser: {
+ *     moduleSpecifier: "typescript-eslint",
+ *     importedBinding: "tseslint",
+ *     parserReference: "parser"
+ *   },
+ *   parserOptions: {
+ *     ecmaVersion: 2018,
+ *     sourceType: "module",
+ *     project: "./tsconfig.json"
+ *   }
+ * }
+ */
+export interface EslintLanguageOptions {
+  /**
+   * Global variables configuration
+   * @example { node: true, jest: true }
+   */
+  readonly globals?: Record<string, boolean | "readonly" | "writable">;
+
+  /**
+   * Parser configuration
+   */
+  readonly parser?: EslintParser;
+
+  /**
+   * Parser options
+   */
+  readonly parserOptions?: {
+    /**
+     * The ECMAScript version to parse
+     * @example 2018
+     * @example "latest"
+     * @default 2018
+     */
+    readonly ecmaVersion?: number | "latest";
+
+    /**
+     * The type of JavaScript source code
+     * @example "module"
+     * @example "script"
+     * @default "module"
+     */
+    readonly sourceType?: "script" | "module" | "commonjs";
+
+    /**
+     * Path to tsconfig.json for TypeScript projects
+     * @example "./tsconfig.json"
+     * @example "../../tsconfig.json"
+     */
+    readonly project?: string;
+  };
+}
+
+/**
  * ESLint parser configuration information.
  *
  * @example
@@ -254,10 +314,10 @@ export interface IEslintConfig {
   readonly rules?: EslintRules;
 
   /**
-   * parser options to apply.
-   * @default - no parser options
+   * Language options including parser, globals, and parser options
+   * @default - no language options
    */
-  readonly parser?: EslintParser;
+  readonly languageOptions?: EslintLanguageOptions;
 
   /**
    * Plugin(s) to use in ESLint configuration.
