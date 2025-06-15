@@ -1,4 +1,31 @@
 /**
+ * ESLint settings configuration.
+ * A flexible object that can contain any ESLint plugin settings.
+ *
+ * @example
+ * {
+ *   "import/parsers": {
+ *     "@typescript-eslint/parser": [".ts", ".tsx"]
+ *   },
+ *   "import/resolver": {
+ *     typescript: {
+ *       project: "./tsconfig.json",
+ *       alwaysTryTypes: true
+ *     }
+ *   },
+ *   "react": {
+ *     version: "detect"
+ *   }
+ * }
+ */
+export interface EslintSettings {
+  /**
+   * Flexible settings object that can contain any plugin-specific settings
+   */
+  [key: string]: any;
+}
+
+/**
  * ESLint language options configuration.
  * Contains parser, globals, and parser options settings.
  *
@@ -37,7 +64,6 @@ export interface EslintLanguageOptions {
      * The ECMAScript version to parse
      * @example 2018
      * @example "latest"
-     * @default 2018
      */
     readonly ecmaVersion?: number | "latest";
 
@@ -45,7 +71,6 @@ export interface EslintLanguageOptions {
      * The type of JavaScript source code
      * @example "module"
      * @example "script"
-     * @default "module"
      */
     readonly sourceType?: "script" | "module" | "commonjs";
 
@@ -318,6 +343,12 @@ export interface IEslintConfig {
    * @default - no language options
    */
   readonly languageOptions?: EslintLanguageOptions;
+
+  /**
+   * ESLint settings configuration
+   * @default - no settings
+   */
+  readonly settings?: EslintSettings;
 
   /**
    * Plugin(s) to use in ESLint configuration.

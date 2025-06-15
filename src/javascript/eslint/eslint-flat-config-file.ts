@@ -8,6 +8,7 @@ import {
   EslintParser,
   EslintPlugin,
   EslintRules,
+  EslintSettings,
   IEslintConfig,
 } from "./config/eslint-config";
 
@@ -280,15 +281,10 @@ ${
       )}
     },
     settings: {
-      "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"],
-      },
-      "import/resolver": {
-        typescript: {
-          project: "${this._tsconfigPath}",
-          ${this._tsAlwaysTryTypes !== false ? "alwaysTryTypes: true" : ""},
-        }
-      },
+      ${this.convertSettingsToString(
+        resolver.resolve(this._config.settings ?? {}),
+        "      "
+      )}
     },
     plugins: {
       ${this.convertPluginsToString(
@@ -329,6 +325,10 @@ ${
       override.languageOptions &&
         `languageOptions: {
       ${this.convertLanguageOptionsToString(override.languageOptions, "      ")}
+    }`,
+      override.settings &&
+        `settings: {
+      ${this.convertSettingsToString(override.settings, "      ")}
     }`,
       override.plugins?.length &&
         `plugins: {
@@ -501,5 +501,108 @@ ${spaceStringForEachLanguageOption}}`,
       }`,
     ].filter(Boolean);
     return entries.join(`,\n${spaceStringForParserOptions}`);
+  }
+
+  /**
+   * Convert settings into a string representation for the ESLint configuration file.
+   * @returns Settings as a string
+   */
+  private convertSettingsToString(
+    settings: EslintSettings,
+    spaceStringForEachSetting: string
+  ): string {
+    if (!Object.keys(settings).length) return "";
+    return Object.entries(settings)
+      .map(([key, value]) => {
+        return `"${key}": ${this.convertSettingsValueToString(
+          value,
+          spaceStringForEachSetting
+        )}`;
+      })
+      .join(`,\n${spaceStringForEachSetting}`);
+  }
+
+  /**
+   * Convert a settings value into a string representation, handling special cases like TypeScript resolver
+   */
+  private convertSettingsValueToString(
+    value: unknown,
+    indentation: string
+  ): string {
+    if (!this.isRecordType(value)) {
+      return JSON.stringify(value);
+    }
+    if (!this.hasTypescriptProperty(value)) {
+      return this.convertObjectToString(value, indentation + "  ");
+    }
+
+    const typescript = value.typescript;
+    if (!this.isRecordType(typescript)) {
+      return this.convertObjectToString(value, indentation + "  ");
+    }
+
+    return this.convertObjectToString(
+      {
+        ...value,
+        typescript: {
+          ...typescript,
+          project:
+            this.getStringProperty(typescript, "project") ?? this._tsconfigPath,
+          alwaysTryTypes:
+            this.getBooleanProperty(typescript, "alwaysTryTypes") ??
+            this._tsAlwaysTryTypes,
+        },
+      },
+      indentation + "  "
+    );
+  }
+
+  /**
+   * Convert an object to a string representation
+   */
+  private convertObjectToString(
+    obj: Record<string, unknown>,
+    indentation: string
+  ): string {
+    const entries = Object.entries(obj).map(([key, value]) => {
+      const valueStr = this.isRecordType(value)
+        ? this.convertObjectToString(value, indentation + "  ")
+        : JSON.stringify(value);
+      return `"${key}": ${valueStr}`;
+    });
+
+    return `{
+${indentation}${entries.join(`,\n${indentation}`)}
+${indentation.slice(2)}}`;
+  }
+
+  private isRecordType(arg: unknown): arg is Record<string, unknown> {
+    return typeof arg === "object" && arg !== null && !Array.isArray(arg);
+  }
+
+  private hasTypescriptProperty(
+    obj: Record<string, unknown>
+  ): obj is Record<string, unknown> & { typescript: unknown } {
+    return (
+      "typescript" in obj &&
+      typeof obj.typescript === "object" &&
+      obj.typescript !== null
+    );
+  }
+
+  private getStringProperty(
+    obj: Record<string, unknown>,
+    key: string
+  ): string | undefined {
+    const value = obj[key];
+    return typeof value === "string" ? value : undefined;
+  }
+
+  private getBooleanProperty(
+    obj: Record<string, unknown>,
+    key: string
+  ): boolean | undefined {
+    const value = obj[key];
+    return typeof value === "boolean" ? value : undefined;
   }
 }

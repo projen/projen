@@ -25,14 +25,14 @@ export default [
     },
     settings: {
       "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"],
+        "@typescript-eslint/parser": [".ts",".tsx"]
       },
       "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-          alwaysTryTypes: true,
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json"
         }
-      },
+      }
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
@@ -108,14 +108,14 @@ module.exports = [
     },
     settings: {
       "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"],
+        "@typescript-eslint/parser": [".ts",".tsx"]
       },
       "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-          alwaysTryTypes: true,
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json"
         }
-      },
+      }
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
@@ -192,14 +192,14 @@ export default [
     },
     settings: {
       "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"],
+        "@typescript-eslint/parser": [".ts",".tsx"]
       },
       "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-          alwaysTryTypes: true,
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json"
         }
-      },
+      }
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
@@ -255,14 +255,14 @@ export default [
     },
     settings: {
       "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"],
+        "@typescript-eslint/parser": [".ts",".tsx"]
       },
       "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-          alwaysTryTypes: true,
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json"
         }
-      },
+      }
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
@@ -353,14 +353,14 @@ export default [
     },
     settings: {
       "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"],
+        "@typescript-eslint/parser": [".ts",".tsx"]
       },
       "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-          alwaysTryTypes: true,
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json"
         }
-      },
+      }
     },
     plugins: {
       "@typescript-eslint": tseslint.plugin,

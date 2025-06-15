@@ -3,6 +3,7 @@ import {
   EslintLanguageOptions,
   EslintPlugin,
   EslintRules,
+  EslintSettings,
   IEslintConfig,
 } from "./eslint-config";
 import { NodeProject } from "../../node-project";
@@ -39,6 +40,7 @@ export class EslintFlatConfig implements IEslintConfig {
   public get languageOptions(): EslintLanguageOptions {
     return this._languageOptions;
   }
+  public readonly settings: EslintSettings;
 
   private _enablePatterns: Set<string> = new Set();
   private _ignorePatterns: Set<string> = new Set();
@@ -63,6 +65,7 @@ export class EslintFlatConfig implements IEslintConfig {
     this._plugins = this.initializePlugins();
     this._extensions = this.initializeExtensions();
     this._languageOptions = this.initializeLanguageOptions();
+    this.settings = this.initializeSettings();
   }
 
   /**
@@ -286,6 +289,25 @@ export class EslintFlatConfig implements IEslintConfig {
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
+      },
+    };
+  }
+
+  /**
+   * Initialize settings for ESLint configuration
+   */
+  private initializeSettings(): EslintSettings {
+    if (this._plugins.every((plugin) => plugin.pluginAlias !== "import")) {
+      return {};
+    }
+    return {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"],
+      },
+      "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+        },
       },
     };
   }
