@@ -121,7 +121,7 @@ describe("eslint setting", () => {
 
     // THEN
     const config = eslint.content;
-    expect(config).toContain("alwaysTryTypes: true");
+    expect(config).toContain('"alwaysTryTypes": true');
   });
 
   test("can disable alwaysTryTypes", () => {

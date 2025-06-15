@@ -9,7 +9,7 @@ import {
   ModuleType,
 } from "./eslint-flat-config-file";
 
-export interface EslintOptions {
+export interface ESLintOptions {
   /**
    * The style configuration to use for ESLint.
    * This is used to extend the base ESLint configuration with additional rules and plugins.
@@ -90,7 +90,7 @@ export class ESLint {
 
   private readonly configFile: IEslintFlatConfigFile;
 
-  constructor(project: NodeProject, options: EslintOptions) {
+  constructor(project: NodeProject, options: ESLintOptions) {
     const devDirs = options.devDirs ?? [];
     const ignorePatterns = options.ignorePatterns ?? [
       "*.js",
