@@ -907,7 +907,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.biome">biome</a></code> | <code>projen.javascript.biome.Biome</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.biome">biome</a></code> | <code>projen.javascript.Biome</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -1451,7 +1451,7 @@ Component that sets up mergify for merging approved pull requests.
 public readonly biome: Biome;
 ```
 
-- *Type:* projen.javascript.biome.Biome
+- *Type:* projen.javascript.Biome
 
 ---
 
@@ -5668,7 +5668,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.biome">biome</a></code> | <code>projen.javascript.biome.Biome</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.biome">biome</a></code> | <code>projen.javascript.Biome</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -6214,7 +6214,7 @@ Component that sets up mergify for merging approved pull requests.
 public readonly biome: Biome;
 ```
 
-- *Type:* projen.javascript.biome.Biome
+- *Type:* projen.javascript.Biome
 
 ---
 
@@ -7770,7 +7770,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
-| <code><a href="#projen.awscdk.ConstructLibraryAws.property.biome">biome</a></code> | <code>projen.javascript.biome.Biome</code> | *No description.* |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.property.biome">biome</a></code> | <code>projen.javascript.Biome</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -8392,7 +8392,7 @@ Component that sets up mergify for merging approved pull requests.
 public readonly biome: Biome;
 ```
 
-- *Type:* projen.javascript.biome.Biome
+- *Type:* projen.javascript.Biome
 
 ---
 
@@ -10369,7 +10369,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.biome.BiomeOptions</code> | Biome options. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -11888,7 +11888,7 @@ Setup Biome.
 public readonly biomeOptions: BiomeOptions;
 ```
 
-- *Type:* projen.javascript.biome.BiomeOptions
+- *Type:* projen.javascript.BiomeOptions
 - *Default:* default options
 
 Biome options.
@@ -15830,7 +15830,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.biome.BiomeOptions</code> | Biome options. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -17341,7 +17341,7 @@ Setup Biome.
 public readonly biomeOptions: BiomeOptions;
 ```
 
-- *Type:* projen.javascript.biome.BiomeOptions
+- *Type:* projen.javascript.BiomeOptions
 - *Default:* default options
 
 Biome options.
@@ -18777,7 +18777,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
-| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.biome.BiomeOptions</code> | Biome options. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -20472,7 +20472,7 @@ Setup Biome.
 public readonly biomeOptions: BiomeOptions;
 ```
 
-- *Type:* projen.javascript.biome.BiomeOptions
+- *Type:* projen.javascript.BiomeOptions
 - *Default:* default options
 
 Biome options.
