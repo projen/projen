@@ -1,4 +1,4 @@
-import { Biome, biome_config } from "../../../src/javascript/biome";
+import { Biome, biome_config } from "../../../src/javascript";
 import { NodeProject } from "../../../src/javascript/node-project";
 import {
   TypeScriptProject,
