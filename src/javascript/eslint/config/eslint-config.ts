@@ -1,3 +1,43 @@
+export type EslintGlobalConf =
+  | boolean
+  | "off"
+  | "readable"
+  | "readonly"
+  | "writable"
+  | "writeable";
+
+/**
+ * The ECMAScript version of the code being linted.
+ */
+export type EslintEcmaVersion =
+  | 3
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 2015
+  | 2016
+  | 2017
+  | 2018
+  | 2019
+  | 2020
+  | 2021
+  | 2022
+  | 2023
+  | 2024
+  | 2025
+  | 2026
+  | "latest";
+
 /**
  * ESLint settings configuration.
  * A flexible object that can contain any ESLint plugin settings.
@@ -49,7 +89,7 @@ export interface EslintLanguageOptions {
    * Global variables configuration
    * @example { node: true, jest: true }
    */
-  readonly globals?: Record<string, boolean | "readonly" | "writable">;
+  readonly globals?: { [name: string]: EslintGlobalConf };
 
   /**
    * Parser configuration
@@ -65,7 +105,7 @@ export interface EslintLanguageOptions {
      * @example 2018
      * @example "latest"
      */
-    readonly ecmaVersion?: number | "latest";
+    readonly ecmaVersion?: EslintEcmaVersion;
 
     /**
      * The type of JavaScript source code

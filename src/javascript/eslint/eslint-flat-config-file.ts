@@ -4,6 +4,7 @@ import { FileBase, IResolver } from "../../file";
 import { Project } from "../../project";
 import {
   EslintConfigExtension,
+  EslintGlobalConf,
   EslintLanguageOptions,
   EslintParser,
   EslintPlugin,
@@ -465,9 +466,9 @@ ${spaceStringForEachLanguageOption}}`,
    * Generate globals configuration
    * @returns Globals configuration as a string
    */
-  private generateGlobals(
-    globals: Record<string, boolean | "readonly" | "writable">
-  ): string {
+  private generateGlobals(globals: {
+    [name: string]: EslintGlobalConf;
+  }): string {
     return Object.entries(globals)
       .map(([key, value]) => {
         if (typeof value === "boolean") return `...globals.${key}`;
