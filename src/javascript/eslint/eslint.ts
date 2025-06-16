@@ -65,20 +65,18 @@ export interface ESLintOptions {
   /**
    * Options for the ESLint command.
    */
-  readonly commandOptions?: EslintCommandOptions;
-}
+  readonly commandOptions?: {
+    /**
+     * Whether to fix eslint issues when running the eslint task
+     * @default true
+     */
+    readonly fix?: boolean;
 
-interface EslintCommandOptions {
-  /**
-   * Whether to fix eslint issues when running the eslint task
-   * @default true
-   */
-  readonly fix?: boolean;
-
-  /**
-   * Extra flag arguments to pass to eslint command
-   */
-  readonly extraArgs?: string[];
+    /**
+     * Extra flag arguments to pass to eslint command
+     */
+    readonly extraArgs?: string[];
+  };
 }
 
 export class ESLint {
@@ -141,7 +139,7 @@ export class ESLint {
    * - Preserves existing step options (args, condition, cwd, env, name, receiveArgs) when updating the task
    * - Maintains any externally edited task configurations if they exist
    */
-  private initializeTask(options?: EslintCommandOptions) {
+  private initializeTask(options?: ESLintOptions["commandOptions"]) {
     const taskExecCommand = "eslint";
     const extraArgs = options?.extraArgs ?? [];
     const cliArgs = new Set([
