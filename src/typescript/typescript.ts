@@ -24,7 +24,7 @@ import {
   ProjenrcOptions as ProjenrcTsOptions,
   TypedocDocgen,
 } from "../typescript";
-import { deepMerge, normalizePersistedPath } from "../util";
+import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
@@ -534,6 +534,10 @@ export class TypeScriptProject extends NodeProject {
       }
     }
 
+    if (multipleSelected([options.biome, options.eslint])) {
+      throw new Error("Only one of biome, and eslint can be enabled.");
+    }
+
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${this.tsconfigDev.fileName}`,
@@ -546,6 +550,10 @@ export class TypeScriptProject extends NodeProject {
 
       this.tsconfigEslint = this.tsconfigDev;
     }
+
+    this.biome?.addLintPattern(this.srcdir);
+    this.biome?.addLintPattern(this.testdir);
+    this.biome?.addLintPattern("build-tools");
 
     // when this is a root project
     if (!this.parent) {

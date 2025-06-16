@@ -145,7 +145,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       // Deep merge user's `compilerOptions` onto CDK-specific defaults.
       finalCompilerOptions = deepMerge(
         [cdkDefaultCompilerOptions, options.tsconfig.compilerOptions],
-        true
+        { destructive: true }
       );
     }
 
