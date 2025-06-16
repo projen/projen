@@ -240,7 +240,7 @@ export abstract class ObjectFile extends FileBase {
       }) ?? undefined;
 
     if (resolved) {
-      deepMerge([resolved, this.rawOverrides], true);
+      deepMerge([resolved, this.rawOverrides], { destructive: true });
     }
 
     let patched = resolved;

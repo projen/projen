@@ -15,6 +15,7 @@ The following submodules are available:
 - [gitlab](./gitlab.md)
 - [java](./java.md)
 - [javascript](./javascript.md)
+- [javascript.biome_config](./javascript.biome_config.md)
 - [python](./python.md)
 - [release](./release.md)
 - [typescript](./typescript.md)

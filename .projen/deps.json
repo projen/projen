@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@biomejs/biome",
+      "type": "build"
+    },
+    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
@@ -107,6 +111,10 @@
     {
       "name": "jsii",
       "version": "5.8.x",
+      "type": "build"
+    },
+    {
+      "name": "json-schema-to-typescript",
       "type": "build"
     },
     {

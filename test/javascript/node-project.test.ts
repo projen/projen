@@ -2035,3 +2035,17 @@ describe("build workflow options", () => {
     });
   });
 });
+
+describe("only one of components can be enabled", () => {
+  test("prettier and biome", () => {
+    expect(
+      () =>
+        new NodeProject({
+          biome: true,
+          prettier: true,
+          defaultReleaseBranch: "main",
+          name: "test",
+        })
+    ).toThrowError("Only one of biome, and prettier can be enabled.");
+  });
+});
