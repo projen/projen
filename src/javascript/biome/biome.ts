@@ -1,6 +1,7 @@
+import { deepClone } from "fast-json-patch";
 import type { IConfiguration } from "./biome-config";
 import { Component } from "../../component";
-import type { NodeProject } from "../../javascript";
+import type { NodeProject } from "../../javascript/node-project";
 import { JsonFile } from "../../json";
 import type { Project } from "../../project";
 import type { Task } from "../../task";
@@ -139,7 +140,7 @@ export class Biome extends Component {
     };
 
     this.biomeConfiguration = deepMerge(
-      [defaultConfig, options.biomeConfig ?? {}],
+      [deepClone(defaultConfig), deepClone(options.biomeConfig ?? {})],
       { mergeArrays: options.mergeArraysInConfiguration ?? true }
     );
 
