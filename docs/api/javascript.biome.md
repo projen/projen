@@ -235,14 +235,35 @@ const biomeOptions: javascript.biome.BiomeOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.biome.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code>projen.javascript.biome.biome_config.IConfiguration</code> | Full Biome configuration. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.mergeArraysInConfiguration">mergeArraysInConfiguration</a></code> | <code>boolean</code> | Should arrays be merged or overwritten when creating Biome configuration. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.organizeImports">organizeImports</a></code> | <code>boolean</code> | Enable import sorting/organizing. |
-| <code><a href="#projen.javascript.biome.BiomeOptions.property.overrides">overrides</a></code> | <code>projen.javascript.biomeConfig.IConfiguration</code> | Full Biome configuration. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.version">version</a></code> | <code>string</code> | Version of Biome to use. |
 
 ---
+
+##### `biomeConfig`<sup>Optional</sup> <a name="biomeConfig" id="projen.javascript.biome.BiomeOptions.property.biomeConfig"></a>
+
+```typescript
+public readonly biomeConfig: IConfiguration;
+```
+
+- *Type:* projen.javascript.biome.biome_config.IConfiguration
+
+Full Biome configuration.
+
+Note that this configuration dictates the final outcome if value is set.
+
+---
+
+*Example*
+
+```typescript
+if linter is disabled on main level, it can be enabled on fullConfiguration.formatter.enabled.
+```
+
 
 ##### `formatter`<sup>Optional</sup> <a name="formatter" id="projen.javascript.biome.BiomeOptions.property.formatter"></a>
 
@@ -303,27 +324,6 @@ Enable import sorting/organizing.
 Replaces mainly Prettier
 
 ---
-
-##### `overrides`<sup>Optional</sup> <a name="overrides" id="projen.javascript.biome.BiomeOptions.property.overrides"></a>
-
-```typescript
-public readonly overrides: IConfiguration;
-```
-
-- *Type:* projen.javascript.biomeConfig.IConfiguration
-
-Full Biome configuration.
-
-Note that this configuration dictates the final outcome if value is set.
-
----
-
-*Example*
-
-```typescript
-if linter is disabled on main level, it can be enabled on fullConfiguration.formatter.enabled.
-```
-
 
 ##### `version`<sup>Optional</sup> <a name="version" id="projen.javascript.biome.BiomeOptions.property.version"></a>
 

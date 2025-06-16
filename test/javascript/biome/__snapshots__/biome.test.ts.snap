@@ -3,7 +3,6 @@
 exports[`Configuration should match snapshot without overrides with all features 1`] = `
 {
   "files": {
-    "ignore": [],
     "ignoreUnknown": false,
   },
   "formatter": {
@@ -33,8 +32,8 @@ exports[`Configuration should match snapshot without overrides with all features
   },
   "vcs": {
     "clientKind": "git",
-    "enabled": false,
-    "useIgnoreFile": false,
+    "enabled": true,
+    "useIgnoreFile": true,
   },
 }
 `;
@@ -42,7 +41,6 @@ exports[`Configuration should match snapshot without overrides with all features
 exports[`Configuration should match snapshot without overrides with formatter 1`] = `
 {
   "files": {
-    "ignore": [],
     "ignoreUnknown": false,
   },
   "formatter": {
@@ -55,15 +53,22 @@ exports[`Configuration should match snapshot without overrides with formatter 1`
     },
   },
   "linter": {
-    "enabled": false,
-  },
-  "organizeImports": {
-    "enabled": false,
+    "enabled": true,
+    "ignore": [
+      "**/*.js",
+      "**/*.d.ts",
+      "**/node_modules/",
+      "**/*.generated.ts",
+      "**/coverage",
+    ],
+    "rules": {
+      "recommended": true,
+    },
   },
   "vcs": {
     "clientKind": "git",
-    "enabled": false,
-    "useIgnoreFile": false,
+    "enabled": true,
+    "useIgnoreFile": true,
   },
 }
 `;
@@ -71,24 +76,6 @@ exports[`Configuration should match snapshot without overrides with formatter 1`
 exports[`Configuration should match snapshot without overrides with import organizer 1`] = `
 {
   "files": {
-    "ignore": [],
-    "ignoreUnknown": false,
-  },
-  "organizeImports": {
-    "enabled": true,
-  },
-  "vcs": {
-    "clientKind": "git",
-    "enabled": false,
-    "useIgnoreFile": false,
-  },
-}
-`;
-
-exports[`Configuration should match snapshot without overrides with linter 1`] = `
-{
-  "files": {
-    "ignore": [],
     "ignoreUnknown": false,
   },
   "linter": {
@@ -105,12 +92,38 @@ exports[`Configuration should match snapshot without overrides with linter 1`] =
     },
   },
   "organizeImports": {
-    "enabled": false,
+    "enabled": true,
   },
   "vcs": {
     "clientKind": "git",
-    "enabled": false,
-    "useIgnoreFile": false,
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;
+
+exports[`Configuration should match snapshot without overrides with linter 1`] = `
+{
+  "files": {
+    "ignoreUnknown": false,
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": [
+      "**/*.js",
+      "**/*.d.ts",
+      "**/node_modules/",
+      "**/*.generated.ts",
+      "**/coverage",
+    ],
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
   },
 }
 `;
@@ -118,16 +131,25 @@ exports[`Configuration should match snapshot without overrides with linter 1`] =
 exports[`Configuration should match snapshot without overrides without options 1`] = `
 {
   "files": {
-    "ignore": [],
     "ignoreUnknown": false,
   },
-  "organizeImports": {
-    "enabled": false,
+  "linter": {
+    "enabled": true,
+    "ignore": [
+      "**/*.js",
+      "**/*.d.ts",
+      "**/node_modules/",
+      "**/*.generated.ts",
+      "**/coverage",
+    ],
+    "rules": {
+      "recommended": true,
+    },
   },
   "vcs": {
     "clientKind": "git",
-    "enabled": false,
-    "useIgnoreFile": false,
+    "enabled": true,
+    "useIgnoreFile": true,
   },
 }
 `;
@@ -1074,7 +1096,6 @@ exports[`biome with default configuration generates correct snapshot for README.
 exports[`biome with default configuration generates correct snapshot for biome.jsonc 1`] = `
 {
   "files": {
-    "ignore": [],
     "ignoreUnknown": false,
   },
   "linter": {
@@ -1090,13 +1111,10 @@ exports[`biome with default configuration generates correct snapshot for biome.j
       "recommended": true,
     },
   },
-  "organizeImports": {
-    "enabled": false,
-  },
   "vcs": {
     "clientKind": "git",
-    "enabled": false,
-    "useIgnoreFile": false,
+    "enabled": true,
+    "useIgnoreFile": true,
   },
 }
 `;

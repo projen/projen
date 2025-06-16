@@ -5,7 +5,7 @@ import { renderJavaScriptOptions } from "./render-options";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
-import { Biome } from "./biome/biome";
+import { Biome } from "./biome";
 
 export interface ProjenrcOptions {
   /**

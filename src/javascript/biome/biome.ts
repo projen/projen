@@ -1,10 +1,72 @@
-import { deepClone } from "fast-json-patch";
 import type { IConfiguration } from "./biome-config";
 import { Component } from "../../component";
 import type { NodeProject } from "../../javascript";
 import { JsonFile } from "../../json";
 import type { Project } from "../../project";
 import type { Task } from "../../task";
+import { deepMerge } from "../../util";
+
+/**
+ * Enabling VCS configuration by default.
+ *
+ * Note that this differs from `biome init`, as projen can be presumed to use version control
+ */
+const DEFAULT_CONFIG: Pick<IConfiguration, "vcs" | "files"> = {
+  vcs: {
+    clientKind: "git",
+    enabled: true,
+    useIgnoreFile: true,
+  },
+  files: {
+    ignoreUnknown: false,
+  },
+};
+
+/**
+ * Default linting configuration if linter is enabled.
+ *
+ * Ignores by default following patterns: '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage'.
+ */
+const DEFAULT_LINTER: Pick<IConfiguration, "linter"> = {
+  linter: {
+    enabled: true,
+    rules: {
+      recommended: true,
+    },
+    // Default ignore's from Projen
+    ignore: [
+      "**/*.js",
+      "**/*.d.ts",
+      "**/node_modules/",
+      "**/*.generated.ts",
+      "**/coverage",
+    ],
+  },
+};
+
+/**
+ * Default formatting configuration if formatter is enabled.
+ */
+const DEFAULT_FORMATTER: Pick<IConfiguration, "formatter" | "javascript"> = {
+  formatter: {
+    enabled: true,
+    indentStyle: "tab",
+  },
+  javascript: {
+    formatter: {
+      quoteStyle: "double",
+    },
+  },
+};
+
+/**
+ * Default formatting configuration if organize imports is enabled.
+ */
+const DEFAULT_ORGANIZE_IMPORTS: Pick<IConfiguration, "organizeImports"> = {
+  organizeImports: {
+    enabled: true,
+  },
+};
 
 export interface BiomeOptions {
   /**
@@ -31,7 +93,6 @@ export interface BiomeOptions {
    * @default false
    */
   readonly organizeImports?: boolean;
-
   /**
    * Should arrays be merged or overwritten when creating Biome configuration
    *
@@ -45,157 +106,8 @@ export interface BiomeOptions {
    *
    * @example if linter is disabled on main level, it can be enabled on fullConfiguration.formatter.enabled.
    */
-  readonly overrides?: IConfiguration;
+  readonly biomeConfig?: IConfiguration;
 }
-
-/**
- * Enabling VCS configuration by default.
- *
- * Note that this differs from `biome init`, as projen can be presumed to use version control
- */
-const baseConfiguration: IConfiguration = {
-  vcs: {
-    clientKind: "git",
-    enabled: true,
-    useIgnoreFile: true,
-  },
-  files: {
-    ignoreUnknown: false,
-  },
-};
-
-/**
- * Default linting configuration for Biome when it's initialized.
- *
- * Ignores by default following patterns: '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage'.
- */
-const defaultLinterConfiguration: IConfiguration = {
-  linter: {
-    enabled: true,
-    rules: {
-      recommended: true,
-    },
-    // Default ignore's from Projen
-    ignore: [
-      "**/*.js",
-      "**/*.d.ts",
-      "**/node_modules/",
-      "**/*.generated.ts",
-      "**/coverage",
-    ],
-  },
-};
-
-/**
- * Default formatting configuration for Biome when it's initialized.
- *
- * Note that this enables also import organizer.
- */
-const defaultFormatterConfiguration: IConfiguration = {
-  formatter: {
-    enabled: true,
-    indentStyle: "tab",
-  },
-  organizeImports: {
-    enabled: true,
-  },
-  linter: {
-    enabled: false, // Separating clearly linter and formatter
-  },
-  javascript: {
-    formatter: {
-      quoteStyle: "double",
-    },
-  },
-};
-
-/**
- * Merge 2 objects deeply.
- *
- * Can't type to actual type, as function is called recursively.
- *
- * Note that explicit undefined would override value from target; missing key (implicit undefined) is not affecting to result.
- *
- * @param target Object to start with
- * @param overrides Object that can override values in target
- * @param mergeArrays Should arrays be merged or overwritten from overrides. Defaults to merging.
- */
-const mergeConfigurations = (
-  target: any,
-  overrides: any,
-  mergeArrays = true
-): any => {
-  const results = deepClone(target);
-
-  for (const key in overrides) {
-    // Check if override's key is it's own or inherited; we want to handle only it's own.
-    if ((overrides as Object).hasOwnProperty(key)) {
-      // Handle arrays
-      if (Array.isArray(overrides[key]) && Array.isArray(results[key])) {
-        if (mergeArrays) {
-          // Merge arrays and drop duplicates
-          results[key] = [...new Set([...overrides[key], ...results[key]])];
-        } else {
-          results[key] = overrides[key];
-        }
-      } else if (
-        overrides[key] instanceof Object &&
-        results[key] instanceof Object
-      ) {
-        // Handle objects
-        results[key] = mergeConfigurations(
-          results[key],
-          overrides[key],
-          mergeArrays
-        );
-      } else {
-        // Handle primitive values
-        results[key] = overrides[key];
-      }
-    }
-  }
-
-  return results;
-};
-
-const commonConfiguration: IConfiguration = {
-  vcs: { enabled: false, clientKind: "git", useIgnoreFile: false },
-  files: {
-    ignoreUnknown: false,
-    ignore: [],
-  },
-};
-
-export const _createBiomeConfiguration = (
-  options: BiomeOptions
-): IConfiguration => {
-  const defaultLinter: IConfiguration = options.linter
-    ? defaultLinterConfiguration
-    : {};
-  const defaultFormatter: IConfiguration = options.formatter
-    ? defaultFormatterConfiguration
-    : {};
-  const defaultOrganized: IConfiguration = options.organizeImports
-    ? { organizeImports: { enabled: true } }
-    : { organizeImports: { enabled: false } };
-
-  const defaultConfig = mergeConfigurations(
-    mergeConfigurations(
-      baseConfiguration,
-      mergeConfigurations(
-        mergeConfigurations(defaultFormatter, defaultLinter),
-        defaultOrganized
-      )
-    ),
-    commonConfiguration
-  );
-
-  return mergeConfigurations(
-    defaultConfig,
-    options.overrides,
-    options.mergeArraysInConfiguration
-  );
-};
 
 export class Biome extends Component {
   public static of(project: Project): Biome | undefined {
@@ -203,8 +115,6 @@ export class Biome extends Component {
     return project.components.find(isBiome);
   }
 
-  private readonly configFile: string;
-  private readonly optionsWithDefaults: BiomeOptions;
   private readonly biomeConfiguration: IConfiguration;
   private readonly _lintPatterns: Set<string>;
   private readonly biomeCommand = "biome check --write";
@@ -219,29 +129,22 @@ export class Biome extends Component {
 
   constructor(project: NodeProject, options: BiomeOptions = {}) {
     super(project);
-    this.configFile = "biome.jsonc";
-    this.optionsWithDefaults = {
-      mergeArraysInConfiguration: (options as Object).hasOwnProperty(
-        "mergeArraysInConfiguration"
-      )
-        ? options.mergeArraysInConfiguration
-        : true,
-      formatter: options.formatter ?? false,
-      linter: options.linter ?? true,
-      organizeImports: options.organizeImports ?? false,
-      version: options.version ?? "^1",
-      overrides: options.overrides,
+    project.addDevDeps(`@biomejs/biome@${options.version ?? "^1"}`);
+
+    const defaultConfig: IConfiguration = {
+      ...DEFAULT_CONFIG,
+      ...(options.linter ?? true ? DEFAULT_LINTER : {}),
+      ...(options.formatter ?? false ? DEFAULT_FORMATTER : {}),
+      ...(options.organizeImports ?? false ? DEFAULT_ORGANIZE_IMPORTS : {}),
     };
 
-    project.addDevDeps(`@biomejs/biome@${this.optionsWithDefaults.version}`);
-
-    this.biomeConfiguration = _createBiomeConfiguration(
-      this.optionsWithDefaults
+    this.biomeConfiguration = deepMerge(
+      [defaultConfig, options.biomeConfig ?? {}],
+      { mergeArrays: options.mergeArraysInConfiguration ?? true }
     );
 
-    this.file = new JsonFile(this, this.configFile, {
+    this.file = new JsonFile(this, "biome.jsonc", {
       obj: this.biomeConfiguration,
-      committed: true,
       allowComments: true,
       marker: true,
     });

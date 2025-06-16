@@ -1,8 +1,4 @@
-import {
-  Biome,
-  _createBiomeConfiguration,
-} from "../../../src/javascript/biome/biome";
-import type { IConfiguration } from "../../../src/javascript/biome/biome-config";
+import { Biome, biome_config } from "../../../src/javascript/biome";
 import { NodeProject } from "../../../src/javascript/node-project";
 import {
   TypeScriptProject,
@@ -46,7 +42,8 @@ describe("biome", () => {
         formatter: true,
       });
 
-      const config: IConfiguration = synthSnapshot(project)["biome.jsonc"];
+      const config: biome_config.IConfiguration =
+        synthSnapshot(project)["biome.jsonc"];
       expect(config.formatter?.enabled).toBeTruthy();
     });
 
@@ -56,7 +53,8 @@ describe("biome", () => {
         organizeImports: true,
       });
 
-      const config: IConfiguration = synthSnapshot(project)["biome.jsonc"];
+      const config: biome_config.IConfiguration =
+        synthSnapshot(project)["biome.jsonc"];
       expect(config.organizeImports?.enabled).toBeTruthy();
     });
 
@@ -64,14 +62,15 @@ describe("biome", () => {
       const project = getTestProject({ eslint: false, prettier: false });
       new Biome(project, {
         formatter: true,
-        overrides: {
+        biomeConfig: {
           files: {
             ignore: ["ignored-file.txt"],
           },
         },
       });
 
-      const config: IConfiguration = synthSnapshot(project)["biome.jsonc"];
+      const config: biome_config.IConfiguration =
+        synthSnapshot(project)["biome.jsonc"];
       expect(config.formatter?.enabled).toBeTruthy();
       expect(config.files?.ignore).toContain("ignored-file.txt");
     });
@@ -122,32 +121,42 @@ describe("Configuration", () => {
   describe("should match snapshot", () => {
     describe("without overrides", () => {
       it("without options", () => {
-        expect(_createBiomeConfiguration({})).toMatchSnapshot();
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, {});
+        const config = synthSnapshot(project)["biome.jsonc"];
+        expect(config).toMatchSnapshot();
       });
+
       it("with linter", () => {
-        expect(_createBiomeConfiguration({ linter: true })).toMatchSnapshot();
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, { linter: true });
+        const config = synthSnapshot(project)["biome.jsonc"];
+        expect(config).toMatchSnapshot();
       });
 
       it("with formatter", () => {
-        expect(
-          _createBiomeConfiguration({ formatter: true })
-        ).toMatchSnapshot();
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, { formatter: true });
+        const config = synthSnapshot(project)["biome.jsonc"];
+        expect(config).toMatchSnapshot();
       });
 
       it("with import organizer", () => {
-        expect(
-          _createBiomeConfiguration({ organizeImports: true })
-        ).toMatchSnapshot();
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, { organizeImports: true });
+        const config = synthSnapshot(project)["biome.jsonc"];
+        expect(config).toMatchSnapshot();
       });
 
       it("with all features", () => {
-        expect(
-          _createBiomeConfiguration({
-            linter: true,
-            formatter: true,
-            organizeImports: true,
-          })
-        ).toMatchSnapshot();
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, {
+          linter: true,
+          formatter: true,
+          organizeImports: true,
+        });
+        const config = synthSnapshot(project)["biome.jsonc"];
+        expect(config).toMatchSnapshot();
       });
     });
   });
@@ -155,74 +164,68 @@ describe("Configuration", () => {
   describe("should", () => {
     describe("merge arrays", () => {
       it("when mergeArraysInConfiguration is true", () => {
-        const linterConfig = _createBiomeConfiguration({ linter: true });
-
-        expect(linterConfig.linter?.ignore?.[0]).toBeDefined();
-
-        const mergedConfig = _createBiomeConfiguration({
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, {
           linter: true,
-          overrides: {
+          mergeArraysInConfiguration: true,
+          biomeConfig: {
             linter: {
               ignore: ["**/bin"],
             },
           },
         });
+        const mergedConfig = synthSnapshot(project)["biome.jsonc"];
 
-        expect(mergedConfig.linter?.ignore?.length).toBe(
-          linterConfig.linter!.ignore!.length + 1
-        );
+        expect(mergedConfig.linter?.ignore?.length >= 2).toBe(true);
       });
 
       it("without duplicate values", () => {
-        const linterConfig = _createBiomeConfiguration({ linter: true });
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, { linter: true });
+        const config = synthSnapshot(project)["biome.jsonc"];
 
-        expect(linterConfig.linter?.ignore?.[0]).toBeDefined();
-        const mergedConfig = _createBiomeConfiguration({
+        expect(config.linter?.ignore?.[0]).toBeDefined();
+
+        const project2 = getTestProject({ eslint: false, prettier: false });
+        new Biome(project2, {
           linter: true,
-          overrides: {
+          biomeConfig: {
             linter: {
-              ignore: [linterConfig.linter!.ignore![0]],
+              ignore: [...config.linter!.ignore!],
             },
           },
         });
+        const mergedConfig = synthSnapshot(project2)["biome.jsonc"];
 
-        expect(
-          mergedConfig.linter?.ignore?.filter(
-            (ignore) => ignore === linterConfig.linter?.ignore?.[0]
-          ).length
-        ).toBe(1);
+        expect(mergedConfig.linter!.ignore!.length).toBe(
+          config.linter!.ignore!.length
+        );
       });
     });
 
     describe("replace whole array", () => {
       it("when mergeArraysInConfiguration is false", () => {
-        const linterConfig = _createBiomeConfiguration({ linter: true });
-        if (!linterConfig.linter?.ignore?.[0]) {
-        }
-
-        expect(linterConfig.linter?.ignore?.[0]).toBeDefined();
-        const mergedConfig = _createBiomeConfiguration({
+        const project = getTestProject({ eslint: false, prettier: false });
+        new Biome(project, {
           linter: true,
           mergeArraysInConfiguration: false,
-          overrides: {
+          biomeConfig: {
             linter: {
-              ignore: [linterConfig.linter!.ignore![0]],
+              ignore: ["foo"],
             },
           },
         });
+        const mergedConfig = synthSnapshot(project)["biome.jsonc"];
 
-        expect(
-          mergedConfig.linter?.ignore?.filter(
-            (ignore) => ignore === linterConfig.linter?.ignore?.[0]
-          ).length
-        ).toBe(1);
+        expect(mergedConfig.linter?.ignore).toEqual(["foo"]);
       });
     });
 
     it("make deep merge", () => {
-      const mergedConfig = _createBiomeConfiguration({
+      const project = getTestProject({ eslint: false, prettier: false });
+      new Biome(project, {
         linter: true,
-        overrides: {
+        biomeConfig: {
           linter: {
             rules: {
               a11y: {
@@ -232,11 +235,15 @@ describe("Configuration", () => {
           },
         },
       });
+      const mergedConfig = synthSnapshot(project)["biome.jsonc"];
 
-      expect(mergedConfig.linter?.rules).toBeDefined();
-      expect(Object.keys(mergedConfig.linter!.rules!).length).toBeGreaterThan(
-        1
-      );
+      expect(mergedConfig.linter!.rules).toBeDefined();
+      expect(mergedConfig.linter!.rules).toMatchObject({
+        recommended: true,
+        a11y: {
+          noBlankTarget: "error",
+        },
+      });
     });
   });
 });

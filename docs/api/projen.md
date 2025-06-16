@@ -16,7 +16,7 @@ The following submodules are available:
 - [java](./java.md)
 - [javascript](./javascript.md)
 - [javascript.biome](./javascript.biome.md)
-- [javascript.biomeConfig](./javascript.biomeConfig.md)
+- [javascript.biome.biome_config](./javascript.biome.biome_config.md)
 - [python](./python.md)
 - [release](./release.md)
 - [typescript](./typescript.md)

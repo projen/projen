@@ -22,7 +22,7 @@ import {
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
-import { Biome, BiomeOptions } from "./biome/biome";
+import { Biome, BiomeOptions } from "./biome";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
