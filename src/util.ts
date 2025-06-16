@@ -220,7 +220,7 @@ export function isTruthy(value: string | undefined): boolean {
 export type Obj<T> = { [key: string]: T };
 
 /**
- * Return whether the given value is an object
+ * Return whether the given value is a plain struct object
  *
  * Even though arrays and instances of classes technically are objects, we
  * usually want to treat them differently, so we return false in those cases.
@@ -235,6 +235,24 @@ export function isObject(x: any): x is Obj<any> {
 }
 
 /**
+ * Influence the behavior of `deepMerge`.
+ */
+interface MergeOptions {
+  /**
+   * Whether to delete keys with `undefined` values.
+   *
+   * @default false
+   */
+  readonly destructive?: boolean;
+  /**
+   * Whether to merge arrays.
+   *
+   * @default false
+   */
+  readonly mergeArrays?: boolean;
+}
+
+/**
  * Recursively merge objects together
  *
  * The leftmost object is mutated and returned. Arrays are not merged
@@ -246,12 +264,13 @@ export function isObject(x: any): x is Obj<any> {
  */
 export function deepMerge(
   objects: Array<Obj<any> | undefined>,
-  destructive: boolean = false
+  { destructive = false, mergeArrays = false }: MergeOptions = {}
 ) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
     for (const key of Object.keys(source)) {
       const value = source[key];
 
+      // if the current value is a plain object, we recursively merge it
       if (isObject(value)) {
         // if the value at the target is not an object, override it with an
         // object so we can continue the recursion
@@ -259,6 +278,7 @@ export function deepMerge(
           target[key] = value;
         }
 
+        // Special handling for __$APPEND, which is used to append values to arrays
         if ("__$APPEND" in value && Array.isArray(value.__$APPEND)) {
           if (Array.isArray(target[key])) {
             target[key].push(...value.__$APPEND);
@@ -267,6 +287,7 @@ export function deepMerge(
           }
         }
 
+        // recursively merge the object
         mergeOne(target[key], value);
 
         // if the result of the merge is an empty object, it's because the
@@ -274,15 +295,29 @@ export function deepMerge(
         // sibling concrete values alongside, so we can delete this tree.
         const output = target[key];
         if (
+          destructive &&
           typeof output === "object" &&
-          Object.keys(output).length === 0 &&
-          destructive
+          Object.keys(output).length === 0
         ) {
           delete target[key];
         }
-      } else if (value === undefined && destructive) {
+        continue;
+      }
+
+      // in destructive mode, we delete the existing key if the value is undefined
+      if (destructive && value === undefined) {
         delete target[key];
-      } else if (typeof value !== "undefined") {
+        continue;
+      }
+
+      // in array merging mode, we merge and deduplicate arrays
+      if (mergeArrays && Array.isArray(target[key]) && Array.isArray(value)) {
+        target[key] = [...new Set([...target[key], ...value])];
+        continue;
+      }
+
+      // all other values are simply overwritten by overriding object
+      if (typeof value !== "undefined") {
         target[key] = value;
       }
     }

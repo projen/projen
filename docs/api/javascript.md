@@ -2,6 +2,223 @@
 
 ## Constructs <a name="Constructs" id="Constructs"></a>
 
+### Biome <a name="Biome" id="projen.javascript.Biome"></a>
+
+#### Initializers <a name="Initializers" id="projen.javascript.Biome.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.Biome(project: NodeProject, options?: BiomeOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Biome.Initializer.parameter.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Biome.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Biome.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.Biome.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.BiomeOptions">BiomeOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Biome.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.Biome.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.Biome.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.Biome.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.Biome.addLintPattern">addLintPattern</a></code> | *No description.* |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.Biome.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.Biome.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.Biome.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.Biome.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addLintPattern` <a name="addLintPattern" id="projen.javascript.Biome.addLintPattern"></a>
+
+```typescript
+public addLintPattern(pattern: string): void
+```
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Biome.addLintPattern.parameter.pattern"></a>
+
+- *Type:* string
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Biome.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.Biome.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.Biome.of">of</a></code> | *No description.* |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.Biome.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Biome.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.Biome.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.Biome.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Biome.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.Biome.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.Biome.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Biome.of(project: Project)
+```
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Biome.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Biome.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.Biome.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.Biome.property.file">file</a></code> | <code>projen.JsonFile</code> | Biome configuration file content. |
+| <code><a href="#projen.javascript.Biome.property.task">task</a></code> | <code>projen.Task</code> | Biome task. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.Biome.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Biome.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.Biome.property.file"></a>
+
+```typescript
+public readonly file: JsonFile;
+```
+
+- *Type:* projen.JsonFile
+
+Biome configuration file content.
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.javascript.Biome.property.task"></a>
+
+```typescript
+public readonly task: Task;
+```
+
+- *Type:* projen.Task
+
+Biome task.
+
+---
+
+
 ### Bundler <a name="Bundler" id="projen.javascript.Bundler"></a>
 
 Adds support for bundling JavaScript applications and dependencies into a single file.
@@ -3195,6 +3412,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.javascript.NodeProject.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The package manager to use. |
 | <code><a href="#projen.javascript.NodeProject.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.javascript.NodeProject.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.javascript.NodeProject.property.biome">biome</a></code> | <code><a href="#projen.javascript.Biome">Biome</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The Jest configuration (if enabled). |
@@ -3716,6 +3934,16 @@ public readonly autoMerge: AutoMerge;
 - *Type:* projen.github.AutoMerge
 
 Component that sets up mergify for merging approved pull requests.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.javascript.NodeProject.property.biome"></a>
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* <a href="#projen.javascript.Biome">Biome</a>
 
 ---
 
@@ -5744,6 +5972,123 @@ public readonly tsconfigPath: string;
 - *Default:* "tsconfig.json"
 
 The path of the tsconfig.json file to use for bundling.
+
+---
+
+### BiomeOptions <a name="BiomeOptions" id="projen.javascript.BiomeOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.BiomeOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const biomeOptions: javascript.BiomeOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code><a href="#projen.javascript.biome_config.IConfiguration">IConfiguration</a></code> | Full Biome configuration. |
+| <code><a href="#projen.javascript.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter. |
+| <code><a href="#projen.javascript.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting. |
+| <code><a href="#projen.javascript.BiomeOptions.property.mergeArraysInConfiguration">mergeArraysInConfiguration</a></code> | <code>boolean</code> | Should arrays be merged or overwritten when creating Biome configuration. |
+| <code><a href="#projen.javascript.BiomeOptions.property.organizeImports">organizeImports</a></code> | <code>boolean</code> | Enable import sorting/organizing. |
+| <code><a href="#projen.javascript.BiomeOptions.property.version">version</a></code> | <code>string</code> | Version of Biome to use. |
+
+---
+
+##### `biomeConfig`<sup>Optional</sup> <a name="biomeConfig" id="projen.javascript.BiomeOptions.property.biomeConfig"></a>
+
+```typescript
+public readonly biomeConfig: IConfiguration;
+```
+
+- *Type:* <a href="#projen.javascript.biome_config.IConfiguration">IConfiguration</a>
+
+Full Biome configuration.
+
+Note that this configuration dictates the final outcome if value is set.
+
+---
+
+*Example*
+
+```typescript
+if linter is disabled on main level, it can be enabled on fullConfiguration.formatter.enabled.
+```
+
+
+##### `formatter`<sup>Optional</sup> <a name="formatter" id="projen.javascript.BiomeOptions.property.formatter"></a>
+
+```typescript
+public readonly formatter: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable code formatter.
+
+Replaces mainly Prettier
+
+---
+
+##### `linter`<sup>Optional</sup> <a name="linter" id="projen.javascript.BiomeOptions.property.linter"></a>
+
+```typescript
+public readonly linter: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable linting.
+
+Replaces Eslint.
+
+---
+
+##### `mergeArraysInConfiguration`<sup>Optional</sup> <a name="mergeArraysInConfiguration" id="projen.javascript.BiomeOptions.property.mergeArraysInConfiguration"></a>
+
+```typescript
+public readonly mergeArraysInConfiguration: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Should arrays be merged or overwritten when creating Biome configuration.
+
+By default arrays are merged and duplicate values are removed
+
+---
+
+##### `organizeImports`<sup>Optional</sup> <a name="organizeImports" id="projen.javascript.BiomeOptions.property.organizeImports"></a>
+
+```typescript
+public readonly organizeImports: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable import sorting/organizing.
+
+Replaces mainly Prettier
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.javascript.BiomeOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* "^1"
+
+Version of Biome to use.
 
 ---
 
@@ -9454,6 +9799,8 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | Biome options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code><a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a></code> | Options for PR build workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -10900,6 +11247,32 @@ public readonly autoApproveUpgrades: boolean;
 Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).
 
 Throw if set to true but `autoApproveOptions` are not defined.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.javascript.NodeProjectOptions.property.biome"></a>
+
+```typescript
+public readonly biome: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup Biome.
+
+---
+
+##### `biomeOptions`<sup>Optional</sup> <a name="biomeOptions" id="projen.javascript.NodeProjectOptions.property.biomeOptions"></a>
+
+```typescript
+public readonly biomeOptions: BiomeOptions;
+```
+
+- *Type:* <a href="#projen.javascript.BiomeOptions">BiomeOptions</a>
+- *Default:* default options
+
+Biome options.
 
 ---
 
