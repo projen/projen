@@ -50,7 +50,7 @@ export class Projenrc extends ProjenrcFile {
     });
 
     const biome = Biome.of(this.project);
-    biome?.addLintPattern(this.filePath);
+    biome?.addFilePattern(this.filePath);
   }
 
   private generateProjenrc() {

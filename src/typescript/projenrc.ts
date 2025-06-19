@@ -95,8 +95,8 @@ export class Projenrc extends ProjenrcFile {
       },
     });
 
-    this._tsProject.biome?.addLintPattern(this._projenCodeDir);
-    this._tsProject.biome?.addLintPattern(this.filePath);
+    this._tsProject.biome?.addFilePattern(this.filePath);
+    this._tsProject.biome?.addFilePattern(`${this._projenCodeDir}/**`);
 
     this._tsProject.jest?.discoverTestMatchPatternsForDirs(
       [this._projenCodeDir],
