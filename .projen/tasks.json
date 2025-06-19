@@ -173,14 +173,6 @@
         }
       ]
     },
-    "generate-biome-types": {
-      "name": "generate-biome-types",
-      "steps": [
-        {
-          "exec": "node ./scripts/generate-biome-types.js"
-        }
-      ]
-    },
     "install": {
       "name": "install",
       "description": "Install project dependencies and update lockfile (non-frozen)",
@@ -319,9 +311,6 @@
       "steps": [
         {
           "spawn": "check-licenses"
-        },
-        {
-          "spawn": "generate-biome-types"
         }
       ]
     },
@@ -411,13 +400,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@biomejs/biome,@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,license-checker,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/conventional-changelog-config-spec,@types/glob,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,prettier,ts-jest,ts-node"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @biomejs/biome @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json-schema-to-typescript license-checker prettier ts-jest ts-node typescript"
+          "exec": "yarn upgrade @biomejs/biome @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker prettier ts-jest ts-node typescript"
         },
         {
           "exec": "node ./projen.js"

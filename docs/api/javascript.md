@@ -4,6 +4,8 @@
 
 ### Biome <a name="Biome" id="projen.javascript.Biome"></a>
 
+Biome component.
+
 #### Initializers <a name="Initializers" id="projen.javascript.Biome.Initializer"></a>
 
 ```typescript
@@ -39,7 +41,7 @@ new javascript.Biome(project: NodeProject, options?: BiomeOptions)
 | <code><a href="#projen.javascript.Biome.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.javascript.Biome.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.Biome.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.javascript.Biome.addLintPattern">addLintPattern</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Biome.addFilePattern">addFilePattern</a></code> | *No description.* |
 
 ---
 
@@ -77,13 +79,13 @@ public synthesize(): void
 
 Synthesizes files to the project output directory.
 
-##### `addLintPattern` <a name="addLintPattern" id="projen.javascript.Biome.addLintPattern"></a>
+##### `addFilePattern` <a name="addFilePattern" id="projen.javascript.Biome.addFilePattern"></a>
 
 ```typescript
-public addLintPattern(pattern: string): void
+public addFilePattern(pattern: string): void
 ```
 
-###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Biome.addLintPattern.parameter.pattern"></a>
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Biome.addFilePattern.parameter.pattern"></a>
 
 - *Type:* string
 
@@ -5524,35 +5526,42 @@ const biomeOptions: javascript.BiomeOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code><a href="#projen.javascript.biome_config.IConfiguration">IConfiguration</a></code> | Full Biome configuration. |
-| <code><a href="#projen.javascript.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter. |
-| <code><a href="#projen.javascript.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting. |
+| <code><a href="#projen.javascript.BiomeOptions.property.assist">assist</a></code> | <code>boolean</code> | Enable code assist with recommended actions. |
+| <code><a href="#projen.javascript.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code><a href="#projen.javascript.biome_config.BiomeConfiguration">BiomeConfiguration</a></code> | Full Biome configuration. |
+| <code><a href="#projen.javascript.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter with recommended settings. |
+| <code><a href="#projen.javascript.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting with recommended rules. |
 | <code><a href="#projen.javascript.BiomeOptions.property.mergeArraysInConfiguration">mergeArraysInConfiguration</a></code> | <code>boolean</code> | Should arrays be merged or overwritten when creating Biome configuration. |
-| <code><a href="#projen.javascript.BiomeOptions.property.organizeImports">organizeImports</a></code> | <code>boolean</code> | Enable import sorting/organizing. |
 | <code><a href="#projen.javascript.BiomeOptions.property.version">version</a></code> | <code>string</code> | Version of Biome to use. |
+
+---
+
+##### `assist`<sup>Optional</sup> <a name="assist" id="projen.javascript.BiomeOptions.property.assist"></a>
+
+```typescript
+public readonly assist: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable code assist with recommended actions.
 
 ---
 
 ##### `biomeConfig`<sup>Optional</sup> <a name="biomeConfig" id="projen.javascript.BiomeOptions.property.biomeConfig"></a>
 
 ```typescript
-public readonly biomeConfig: IConfiguration;
+public readonly biomeConfig: BiomeConfiguration;
 ```
 
-- *Type:* <a href="#projen.javascript.biome_config.IConfiguration">IConfiguration</a>
+- *Type:* <a href="#projen.javascript.biome_config.BiomeConfiguration">BiomeConfiguration</a>
 
 Full Biome configuration.
 
-Note that this configuration dictates the final outcome if value is set.
+This configuration dictates the final outcome if value is set.
+For example, if the linter is disabled at the top-level, it can be enabled with `biomeConfig.linter.enabled`.
 
 ---
-
-*Example*
-
-```typescript
-if linter is disabled on main level, it can be enabled on fullConfiguration.formatter.enabled.
-```
-
 
 ##### `formatter`<sup>Optional</sup> <a name="formatter" id="projen.javascript.BiomeOptions.property.formatter"></a>
 
@@ -5561,11 +5570,9 @@ public readonly formatter: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false
+- *Default:* true
 
-Enable code formatter.
-
-Replaces mainly Prettier
+Enable code formatter with recommended settings.
 
 ---
 
@@ -5578,9 +5585,7 @@ public readonly linter: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Enable linting.
-
-Replaces Eslint.
+Enable linting with recommended rules.
 
 ---
 
@@ -5599,21 +5604,6 @@ By default arrays are merged and duplicate values are removed
 
 ---
 
-##### `organizeImports`<sup>Optional</sup> <a name="organizeImports" id="projen.javascript.BiomeOptions.property.organizeImports"></a>
-
-```typescript
-public readonly organizeImports: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Enable import sorting/organizing.
-
-Replaces mainly Prettier
-
----
-
 ##### `version`<sup>Optional</sup> <a name="version" id="projen.javascript.BiomeOptions.property.version"></a>
 
 ```typescript
@@ -5621,7 +5611,7 @@ public readonly version: string;
 ```
 
 - *Type:* string
-- *Default:* "^1"
+- *Default:* "^2"
 
 Version of Biome to use.
 

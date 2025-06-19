@@ -3651,7 +3651,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -6850,7 +6850,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -11282,7 +11282,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -14268,7 +14268,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -17335,7 +17335,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -21187,7 +21187,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -26545,7 +26545,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -35394,7 +35394,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -38127,7 +38127,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -40838,7 +40838,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
