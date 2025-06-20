@@ -202,15 +202,10 @@ exports[`biome with default configuration generates correct snapshot for biome.j
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "!**/node_modules/",
-      "!coverage",
-      "src",
-      "test",
-      "!**/*.js",
-      "!**/*.generated.ts",
-      "!**/*.d.ts",
-      "projenrc",
+      "src/**",
+      "test/**",
       ".projenrc.ts",
+      "projenrc/**",
     ],
   },
   "formatter": {
