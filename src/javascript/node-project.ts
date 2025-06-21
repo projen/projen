@@ -874,7 +874,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (multipleSelected([options.biome, options.prettier])) {
-      throw new Error("Only one of biome, and prettier can be enabled.");
+      throw new Error("Only one of biome and prettier can be enabled.");
     }
 
     if (options.biome ?? false) {

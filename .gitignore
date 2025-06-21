@@ -62,5 +62,6 @@ tsconfig.json
 **/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
+!/src/javascript/biome/biome-config.ts
 !/.projen/tree.json
 !/.projenrc.ts

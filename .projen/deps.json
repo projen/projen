@@ -2,6 +2,7 @@
   "dependencies": [
     {
       "name": "@biomejs/biome",
+      "version": "^2",
       "type": "build"
     },
     {
@@ -114,7 +115,7 @@
       "type": "build"
     },
     {
-      "name": "json-schema-to-typescript",
+      "name": "json2jsii",
       "type": "build"
     },
     {
