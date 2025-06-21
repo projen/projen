@@ -207,3 +207,15 @@ test("github: false disables github integration", () => {
   // THEN
   expect(p.github).toBeUndefined();
 });
+
+describe("project", () => {
+    describe("fromEnv", () => {
+        let project: Project;
+        beforeEach(() => {
+            project = Project.fromEnv();
+        });
+        it("should return a project", () => {
+            expect(project).toBeInstanceOf(Project);
+        });
+    });
+});
