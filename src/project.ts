@@ -1,6 +1,6 @@
 import { mkdtempSync, realpathSync, renameSync } from "fs";
-import { tmpdir } from "os";
 import * as fs from "fs";
+import { tmpdir } from "os";
 import * as path from "path";
 import { Construct, IConstruct } from "constructs";
 import * as glob from "fast-glob";
@@ -147,97 +147,126 @@ export interface GitOptions {
    *
    * @default EndOfLine.LF
    */
-    readonly endOfLine?: EndOfLine;
-    /**
-     * fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables.
-     * It is used to configure the project without user input or other environment variables.
-     * @default {}
-     */
-    readonly fromEnvOptions?: Record<string, any>;
-    /**
-     * Whether the project is being initialized from environment variables.
-     * @default false
-     */
-    readonly fromEnv?: boolean;
+  readonly endOfLine?: EndOfLine;
+  /**
+   * fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables.
+   * It is used to configure the project without user input or other environment variables.
+   * @default {}
+   */
+  readonly fromEnvOptions?: Record<string, any>;
+  /**
+   * Whether the project is being initialized from environment variables.
+   * @default false
+   */
+  readonly fromEnv?: boolean;
 }
 /**
  * Base project
  */
 export class Project extends Construct {
-    /**
-     * Initializes project from a .env file or PROJEN_* environment variables. 
-     * This can be used by project types and other components to configure their options 
-     * without user input or other environment variables. PROJEN_ env variables wtill override
-     * the .env file.
-     */
-    public static fromEnv(projectOptions?: any): Project {
-        let fromEnvOptions: Record<string, any> = {};
-        // Load environment variables from .env file;
-        const envFile = path.join(process.cwd(), ".env");
-        const dotEnvContent = fs.existsSync(envFile) ? fs.readFileSync(envFile, "utf-8") : "";
-        dotEnvContent.split("\n").forEach((line) => {
-            line.split("=").forEach((kv) => {
-                const [key, value] = kv.split("=");
-                if (key && value) {
-                    fromEnvOptions[key.trim()] = value.trim();
-                }
-            });
-        });
-        // Override with PROJEN_ environment variables
-        Object.keys(process.env).forEach((key) => {
-            if (key.startsWith("PROJEN_")) {
-                fromEnvOptions[key] = process.env[key];
-            }
-        });
-        return new Project({
-            // Set default options using the environment variables
-            ...fromEnvOptions,
-            // Merge with the provided project options
-            ...projectOptions,
-            // Pass the options to the project as a separate object 
-            // to use in subclasses and sub-components
-            fromEnvOptions: Project.convertEnvToOptions(fromEnvOptions),
-            fromEnv: true,
-        });
-    }
-    // We need to lower case env var names and convert them to camel case
-    // to match the project options.
-    public static convertEnvToOptions(env: Record<string, string>): Record<string, any> {
-        const options: Record<string, any> = {};
-        for (const [key, value] of Object.entries(env)) {
-            // Convert PROJEN_ prefix to camel case
-            const optionKey = key
-                .replace(/^PROJEN_/, "")
-                .toLowerCase()
-                .replace(/_(\w)/g, (_, c) => c.toUpperCase());
-            // Convert to boolean if the value is "true" or "false"
-            if (value === "true") {
-                options[optionKey] = true;
-            } else if (value === "false") {
-                options[optionKey] = false;
-            } else if (!isNaN(Number(value))) {
-                options[optionKey] = Number(value);
-            } else if (value.startsWith("[") && value.endsWith("]")) {
-                // Convert to array if the value is a JSON array
-                try {
-                    options[optionKey] = JSON.parse(value);
-                } catch {
-                    // If parsing fails, keep the value as a string
-                    options[optionKey] = value;
-                }
-            } else {
-                // Keep the value as a string
-                options[optionKey] = value;
-            }
-        }
-        return options;
-    }
-
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
    */
   public static readonly DEFAULT_TASK = "default";
+  /**
+   * Initializes project from a .env file or PROJEN_* environment variables.
+   * This can be used by project types and other components to configure their options
+   * without user input or other environment variables. PROJEN_ env variables wtill override
+   * the .env file.
+   */
+  public static fromEnv(filePath?: string, projectOptions?: any): Project {
+    const fromEnvOptions: Record<string, any> = {};
+    // Load environment variables from .env file;
+    const envFilePath = filePath ?? path.join(process.cwd(), ".env");
+    const fileExists = fs.existsSync(envFilePath);
+    if (filePath && !fileExists) {
+      throw new Error(`.env file not found at ${envFilePath}`);
+    } else if (!filePath && !fileExists) {
+      // If no file is specified and the .env file does not exist, we will not load any options
+      console.warn(
+        `.env file not found at ${envFilePath}. No options will be loaded from .env file.`
+      );
+    } else {
+      const dotEnvContent = fs.readFileSync(envFilePath, "utf-8");
+      dotEnvContent.split("\n").forEach((line) => {
+        // Ignore comments and empty lines
+        if (line.startsWith("#") || line.trim() === "") {
+          return;
+        }
+        // Split the line into key and value
+        const [key, value] = line.split("=").map((s) => s.trim());
+        // If the value is not defined, skip it
+        if (!key || value === undefined) {
+          return;
+        }
+        // Add the key-value pair to the options object
+        fromEnvOptions[key] = value;
+      });
+      console.debug(
+        `Loaded options from .env file: ${JSON.stringify(fromEnvOptions)}`
+      );
+    }
+    // Override with PROJEN_ environment variables
+    Object.keys(process.env).forEach((key) => {
+      if (key.startsWith("PROJEN_")) {
+        fromEnvOptions[key.replace(/^PROJEN_/, "")] = process.env[key];
+      }
+    });
+    if (Object.keys(fromEnvOptions).length === 0) {
+      // If no options were loaded from the .env file or PROJEN_ env variables, throw an error
+      throw new Error(
+        `No PROJEN_ environment variables or empty .env file found at ${envFilePath}`
+      );
+    }
+    const convertedOptions = Project.convertEnvToOptions(fromEnvOptions);
+    console.debug(
+      `Converted options from environment: ${JSON.stringify(convertedOptions)}`
+    );
+    return new Project({
+      // Merge with the provided project options
+      ...projectOptions,
+      // Set default options using the environment variables
+      ...convertedOptions,
+      // Pass the options to the project as a separate object
+      // to use in subclasses and sub-components
+      fromEnvOptions: convertedOptions,
+      fromEnv: true,
+    });
+  }
+  // We need to lower case env var names and convert them to camel case
+  // to match the project options.
+  public static convertEnvToOptions(
+    env: Record<string, string>
+  ): Record<string, any> {
+    const options: Record<string, any> = {};
+    for (const [key, value] of Object.entries(env)) {
+      // Convert PROJEN_ prefix to camel case
+      const optionKey = key
+        .toLowerCase()
+        .replace(/_(\w)/g, (_, c) => c.toUpperCase());
+      // Convert to boolean if the value is "true" or "false"
+      if (value === "true") {
+        options[optionKey] = true;
+      } else if (value === "false") {
+        options[optionKey] = false;
+      } else if (!isNaN(Number(value))) {
+        options[optionKey] = Number(value);
+      } else if (value.startsWith("[") && value.endsWith("]")) {
+        // Convert to array if the value is a JSON array
+        try {
+          options[optionKey] = JSON.parse(value);
+        } catch {
+          // If parsing fails, keep the value as a string
+          options[optionKey] = value;
+        }
+      } else {
+        // Keep the value as a string
+        options[optionKey] = value;
+      }
+    }
+    return options;
+  }
 
   /**
    * Test whether the given construct is a project.
