@@ -209,13 +209,69 @@ test("github: false disables github integration", () => {
 });
 
 describe("project", () => {
-    describe("fromEnv", () => {
-        let project: Project;
-        beforeEach(() => {
-            project = Project.fromEnv();
-        });
-        it("should return a project", () => {
-            expect(project).toBeInstanceOf(Project);
-        });
+  describe("fromEnv", () => {
+    describe("when .env file is present", () => {
+      let project: Project;
+      beforeEach(() => {
+        project = Project.fromEnv(path.join(__dirname, ".env"));
+      });
+      it("should return a project", () => {
+        expect(project).toBeInstanceOf(Project);
+      });
+      it("should have the correct name", () => {
+        expect(project.name).toBe("Awesome Dotenv Project");
+      });
+      it("should have the correct projen commands", () => {
+        expect(project.projenCommand).toEqual("run me");
+      });
     });
+    describe("when PROJEN_ is used", () => {
+      let project: Project;
+      beforeEach(() => {
+        process.env.PROJEN_NAME = "Awesome Projen Project";
+        process.env.PROJEN_PROJEN_COMMAND = "run me";
+        project = Project.fromEnv();
+      });
+      it("should return a project", () => {
+        expect(project).toBeInstanceOf(Project);
+      });
+      it("should have the correct name", () => {
+        expect(project.name).toBe("Awesome Projen Project");
+      });
+      it("should have the correct projen commands", () => {
+        expect(project.projenCommand).toEqual("run me");
+      });
+    });
+    describe("when both .env and PROJEN_ are used", () => {
+      let project: Project;
+      beforeEach(() => {
+        process.env.PROJEN_NAME = "Env var named project";
+        project = Project.fromEnv(path.join(__dirname, ".env"));
+      });
+      it("should return a project", () => {
+        expect(project).toBeInstanceOf(Project);
+      });
+      it("should have the correct name", () => {
+        expect(project.name).toBe("Env var named project");
+      });
+      it("should have the correct projen commands", () => {
+        expect(project.projenCommand).toEqual("run me");
+      });
+    });
+    describe("invalid configurations", () => {
+      it("should throw an error if an invalid .env file is specified", () => {
+        expect(() => {
+          Project.fromEnv("invalid/path/to/.env");
+        }).toThrow(".env file not found at invalid/path/to/.env");
+      });
+      it("should throw an error if no .env file or PROJEN_ env vars are specified", () => {
+        process.env = {};
+        expect(() => {
+          Project.fromEnv();
+        }).toThrow(
+          "No PROJEN_ environment variables or empty .env file found at "
+        );
+      });
+    });
+  });
 });

@@ -47,80 +47,88 @@ exports[`cdk-watchful 1`] = `
     "!.projenrc.js"
   ],
   "rules": {
+    "indent": [
+      "off"
+    ],
     "@stylistic/indent": [
       "error",
       2
     ],
-    "@stylistic/quotes": [
+    "quotes": [
       "error",
       "single",
       {
         "avoidEscape": true
       }
     ],
-    "@stylistic/comma-dangle": [
+    "comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "@stylistic/comma-spacing": [
+    "comma-spacing": [
       "error",
       {
         "before": false,
         "after": true
       }
     ],
-    "@stylistic/no-multi-spaces": [
+    "no-multi-spaces": [
       "error",
       {
         "ignoreEOLComments": false
       }
     ],
-    "@stylistic/array-bracket-spacing": [
+    "array-bracket-spacing": [
       "error",
       "never"
     ],
-    "@stylistic/array-bracket-newline": [
+    "array-bracket-newline": [
       "error",
       "consistent"
     ],
-    "@stylistic/object-curly-spacing": [
+    "object-curly-spacing": [
       "error",
       "always"
     ],
-    "@stylistic/object-curly-newline": [
+    "object-curly-newline": [
       "error",
       {
         "multiline": true,
         "consistent": true
       }
     ],
-    "@stylistic/object-property-newline": [
+    "object-property-newline": [
       "error",
       {
         "allowAllPropertiesOnSameLine": true
       }
     ],
-    "@stylistic/keyword-spacing": [
+    "keyword-spacing": [
       "error"
     ],
-    "@stylistic/brace-style": [
+    "brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
-    "@stylistic/space-before-blocks": [
+    "space-before-blocks": [
       "error"
+    ],
+    "curly": [
+      "error",
+      "multi-line",
+      "consistent"
     ],
     "@stylistic/member-delimiter-style": [
       "error"
     ],
-    "@stylistic/semi": [
+    "semi": [
       "error",
       "always"
     ],
-    "@stylistic/max-len": [
+    "max-len": [
       "error",
       {
         "code": 150,
@@ -131,25 +139,13 @@ exports[`cdk-watchful 1`] = `
         "ignoreRegExpLiterals": true
       }
     ],
-    "@stylistic/quote-props": [
+    "quote-props": [
       "error",
       "consistent-as-needed"
     ],
-    "@stylistic/key-spacing": [
+    "@typescript-eslint/no-require-imports": [
       "error"
     ],
-    "@stylistic/no-multiple-empty-lines": [
-      "error"
-    ],
-    "@stylistic/no-trailing-spaces": [
-      "error"
-    ],
-    "curly": [
-      "error",
-      "multi-line",
-      "consistent"
-    ],
-    "@typescript-eslint/no-require-imports": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -183,12 +179,27 @@ exports[`cdk-watchful 1`] = `
     "no-shadow": [
       "off"
     ],
-    "@typescript-eslint/no-shadow": "error",
-    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "key-spacing": [
+      "error"
+    ],
+    "no-multiple-empty-lines": [
+      "error"
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      "error"
+    ],
     "no-return-await": [
       "off"
     ],
-    "@typescript-eslint/return-await": "error",
+    "@typescript-eslint/return-await": [
+      "error"
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
     "dot-notation": [
       "error"
     ],
@@ -1619,80 +1630,88 @@ exports[`cdk8s 1`] = `
     "!.projenrc.js"
   ],
   "rules": {
+    "indent": [
+      "off"
+    ],
     "@stylistic/indent": [
       "error",
       2
     ],
-    "@stylistic/quotes": [
+    "quotes": [
       "error",
       "single",
       {
         "avoidEscape": true
       }
     ],
-    "@stylistic/comma-dangle": [
+    "comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "@stylistic/comma-spacing": [
+    "comma-spacing": [
       "error",
       {
         "before": false,
         "after": true
       }
     ],
-    "@stylistic/no-multi-spaces": [
+    "no-multi-spaces": [
       "error",
       {
         "ignoreEOLComments": false
       }
     ],
-    "@stylistic/array-bracket-spacing": [
+    "array-bracket-spacing": [
       "error",
       "never"
     ],
-    "@stylistic/array-bracket-newline": [
+    "array-bracket-newline": [
       "error",
       "consistent"
     ],
-    "@stylistic/object-curly-spacing": [
+    "object-curly-spacing": [
       "error",
       "always"
     ],
-    "@stylistic/object-curly-newline": [
+    "object-curly-newline": [
       "error",
       {
         "multiline": true,
         "consistent": true
       }
     ],
-    "@stylistic/object-property-newline": [
+    "object-property-newline": [
       "error",
       {
         "allowAllPropertiesOnSameLine": true
       }
     ],
-    "@stylistic/keyword-spacing": [
+    "keyword-spacing": [
       "error"
     ],
-    "@stylistic/brace-style": [
+    "brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
-    "@stylistic/space-before-blocks": [
+    "space-before-blocks": [
       "error"
+    ],
+    "curly": [
+      "error",
+      "multi-line",
+      "consistent"
     ],
     "@stylistic/member-delimiter-style": [
       "error"
     ],
-    "@stylistic/semi": [
+    "semi": [
       "error",
       "always"
     ],
-    "@stylistic/max-len": [
+    "max-len": [
       "error",
       {
         "code": 150,
@@ -1703,25 +1722,13 @@ exports[`cdk8s 1`] = `
         "ignoreRegExpLiterals": true
       }
     ],
-    "@stylistic/quote-props": [
+    "quote-props": [
       "error",
       "consistent-as-needed"
     ],
-    "@stylistic/key-spacing": [
+    "@typescript-eslint/no-require-imports": [
       "error"
     ],
-    "@stylistic/no-multiple-empty-lines": [
-      "error"
-    ],
-    "@stylistic/no-trailing-spaces": [
-      "error"
-    ],
-    "curly": [
-      "error",
-      "multi-line",
-      "consistent"
-    ],
-    "@typescript-eslint/no-require-imports": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -1755,12 +1762,27 @@ exports[`cdk8s 1`] = `
     "no-shadow": [
       "off"
     ],
-    "@typescript-eslint/no-shadow": "error",
-    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "key-spacing": [
+      "error"
+    ],
+    "no-multiple-empty-lines": [
+      "error"
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      "error"
+    ],
     "no-return-await": [
       "off"
     ],
-    "@typescript-eslint/return-await": "error",
+    "@typescript-eslint/return-await": [
+      "error"
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
     "dot-notation": [
       "error"
     ],
@@ -2817,80 +2839,88 @@ exports[`cdk8s-cli 1`] = `
     "!.projenrc.js"
   ],
   "rules": {
+    "indent": [
+      "off"
+    ],
     "@stylistic/indent": [
       "error",
       2
     ],
-    "@stylistic/quotes": [
+    "quotes": [
       "error",
       "single",
       {
         "avoidEscape": true
       }
     ],
-    "@stylistic/comma-dangle": [
+    "comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "@stylistic/comma-spacing": [
+    "comma-spacing": [
       "error",
       {
         "before": false,
         "after": true
       }
     ],
-    "@stylistic/no-multi-spaces": [
+    "no-multi-spaces": [
       "error",
       {
         "ignoreEOLComments": false
       }
     ],
-    "@stylistic/array-bracket-spacing": [
+    "array-bracket-spacing": [
       "error",
       "never"
     ],
-    "@stylistic/array-bracket-newline": [
+    "array-bracket-newline": [
       "error",
       "consistent"
     ],
-    "@stylistic/object-curly-spacing": [
+    "object-curly-spacing": [
       "error",
       "always"
     ],
-    "@stylistic/object-curly-newline": [
+    "object-curly-newline": [
       "error",
       {
         "multiline": true,
         "consistent": true
       }
     ],
-    "@stylistic/object-property-newline": [
+    "object-property-newline": [
       "error",
       {
         "allowAllPropertiesOnSameLine": true
       }
     ],
-    "@stylistic/keyword-spacing": [
+    "keyword-spacing": [
       "error"
     ],
-    "@stylistic/brace-style": [
+    "brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
-    "@stylistic/space-before-blocks": [
+    "space-before-blocks": [
       "error"
+    ],
+    "curly": [
+      "error",
+      "multi-line",
+      "consistent"
     ],
     "@stylistic/member-delimiter-style": [
       "error"
     ],
-    "@stylistic/semi": [
+    "semi": [
       "error",
       "always"
     ],
-    "@stylistic/max-len": [
+    "max-len": [
       "error",
       {
         "code": 150,
@@ -2901,25 +2931,13 @@ exports[`cdk8s-cli 1`] = `
         "ignoreRegExpLiterals": true
       }
     ],
-    "@stylistic/quote-props": [
+    "quote-props": [
       "error",
       "consistent-as-needed"
     ],
-    "@stylistic/key-spacing": [
+    "@typescript-eslint/no-require-imports": [
       "error"
     ],
-    "@stylistic/no-multiple-empty-lines": [
-      "error"
-    ],
-    "@stylistic/no-trailing-spaces": [
-      "error"
-    ],
-    "curly": [
-      "error",
-      "multi-line",
-      "consistent"
-    ],
-    "@typescript-eslint/no-require-imports": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -2953,12 +2971,27 @@ exports[`cdk8s-cli 1`] = `
     "no-shadow": [
       "off"
     ],
-    "@typescript-eslint/no-shadow": "error",
-    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "key-spacing": [
+      "error"
+    ],
+    "no-multiple-empty-lines": [
+      "error"
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      "error"
+    ],
     "no-return-await": [
       "off"
     ],
-    "@typescript-eslint/return-await": "error",
+    "@typescript-eslint/return-await": [
+      "error"
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
     "dot-notation": [
       "error"
     ],
