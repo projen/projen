@@ -229,7 +229,7 @@ describe("project", () => {
           name: "Awesome Dotenv Project",
           projenCommand: "run me",
         });
-        expect(project.fromEnv).toBeTruthy();
+        expect(project.isFromEnv).toBeTruthy();
       });
     });
     describe("when PROJEN_ is used", () => {
