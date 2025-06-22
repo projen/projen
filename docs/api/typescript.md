@@ -997,6 +997,8 @@ The command to execute.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptAppProject.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptAppProject.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -1031,6 +1033,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.typescript.TypeScriptAppProject.convertEnvToOptions"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptAppProject.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.typescript.TypeScriptAppProject.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.typescript.TypeScriptAppProject.fromEnv"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptAppProject.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.typescript.TypeScriptAppProject.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.typescript.TypeScriptAppProject.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -1082,6 +1120,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -1095,6 +1134,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -1254,6 +1294,21 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.typescript.TypeScriptAppProject.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `logger`<sup>Required</sup> <a name="logger" id="projen.typescript.TypeScriptAppProject.property.logger"></a>
 
 ```typescript
@@ -1402,6 +1457,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.typescript.TypeScriptAppProject.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -2513,6 +2583,8 @@ The command to execute.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -2547,6 +2619,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### ~~`convertEnvToOptions`~~ <a name="convertEnvToOptions" id="projen.typescript.TypeScriptLibraryProject.convertEnvToOptions"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptLibraryProject.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.typescript.TypeScriptLibraryProject.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### ~~`fromEnv`~~ <a name="fromEnv" id="projen.typescript.TypeScriptLibraryProject.fromEnv"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptLibraryProject.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.typescript.TypeScriptLibraryProject.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.typescript.TypeScriptLibraryProject.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -2598,6 +2706,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -2611,6 +2720,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -2790,6 +2900,23 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### ~~`isFromEnv`~~<sup>Required</sup> <a name="isFromEnv" id="projen.typescript.TypeScriptLibraryProject.property.isFromEnv"></a>
+
+- *Deprecated:* use `TypeScriptProject`
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### ~~`logger`~~<sup>Required</sup> <a name="logger" id="projen.typescript.TypeScriptLibraryProject.property.logger"></a>
 
 - *Deprecated:* use `TypeScriptProject`
@@ -2964,6 +3091,23 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### ~~`fromEnvOptions`~~<sup>Optional</sup> <a name="fromEnvOptions" id="projen.typescript.TypeScriptLibraryProject.property.fromEnvOptions"></a>
+
+- *Deprecated:* use `TypeScriptProject`
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -4151,6 +4295,8 @@ The command to execute.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptProject.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.typescript.TypeScriptProject.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptProject.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.typescript.TypeScriptProject.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.typescript.TypeScriptProject.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -4185,6 +4331,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.typescript.TypeScriptProject.convertEnvToOptions"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptProject.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.typescript.TypeScriptProject.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.typescript.TypeScriptProject.fromEnv"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptProject.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.typescript.TypeScriptProject.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.typescript.TypeScriptProject.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -4236,6 +4418,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.typescript.TypeScriptProject.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -4249,6 +4432,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.typescript.TypeScriptProject.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -4408,6 +4592,21 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.typescript.TypeScriptProject.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `logger`<sup>Required</sup> <a name="logger" id="projen.typescript.TypeScriptProject.property.logger"></a>
 
 ```typescript
@@ -4556,6 +4755,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.typescript.TypeScriptProject.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -5403,8 +5617,10 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | --- | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -5584,6 +5800,21 @@ Whether to commit the managed files by default.
 
 ---
 
+##### ~~`fromEnvOptions`~~<sup>Optional</sup> <a name="fromEnvOptions" id="projen.typescript.TypeScriptLibraryProjectOptions.property.fromEnvOptions"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### ~~`gitIgnoreOptions`~~<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.typescript.TypeScriptLibraryProjectOptions.property.gitIgnoreOptions"></a>
 
 - *Deprecated:* use TypeScriptProjectOptions
@@ -5609,6 +5840,23 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### ~~`isFromEnv`~~<sup>Optional</sup> <a name="isFromEnv" id="projen.typescript.TypeScriptLibraryProjectOptions.property.isFromEnv"></a>
+
+- *Deprecated:* use TypeScriptProjectOptions
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -8007,8 +8255,10 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -8184,6 +8434,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.typescript.TypeScriptProjectOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.typescript.TypeScriptProjectOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -8205,6 +8468,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.typescript.TypeScriptProjectOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 

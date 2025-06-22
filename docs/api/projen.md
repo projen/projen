@@ -4651,6 +4651,8 @@ resolved from the root of _this_ project.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Project.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.Project.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.Project.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.Project.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.Project.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -4685,6 +4687,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.Project.convertEnvToOptions"></a>
+
+```typescript
+import { Project } from 'projen'
+
+Project.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.Project.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.Project.fromEnv"></a>
+
+```typescript
+import { Project } from 'projen'
+
+Project.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.Project.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.Project.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -4736,6 +4774,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.Project.property.files">files</a></code> | <code><a href="#projen.FileBase">FileBase</a>[]</code> | All files in this project. |
 | <code><a href="#projen.Project.property.gitattributes">gitattributes</a></code> | <code><a href="#projen.GitAttributesFile">GitAttributesFile</a></code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.Project.property.gitignore">gitignore</a></code> | <code><a href="#projen.IgnoreFile">IgnoreFile</a></code> | .gitignore. |
+| <code><a href="#projen.Project.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.Project.property.logger">logger</a></code> | <code><a href="#projen.Logger">Logger</a></code> | Logging utilities. |
 | <code><a href="#projen.Project.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.Project.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -4749,6 +4788,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.Project.property.tasks">tasks</a></code> | <code><a href="#projen.Tasks">Tasks</a></code> | Project tasks. |
 | <code><a href="#projen.Project.property.testTask">testTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Project.property.defaultTask">defaultTask</a></code> | <code><a href="#projen.Task">Task</a></code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.Project.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.Project.property.initProject">initProject</a></code> | <code><a href="#projen.InitProject">InitProject</a></code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.Project.property.parent">parent</a></code> | <code><a href="#projen.Project">Project</a></code> | A parent project. |
 
@@ -4867,6 +4907,21 @@ public readonly gitignore: IgnoreFile;
 - *Type:* <a href="#projen.IgnoreFile">IgnoreFile</a>
 
 .gitignore.
+
+---
+
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.Project.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -5018,6 +5073,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.Project.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -11797,8 +11867,10 @@ const projectOptions: ProjectOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.ProjectOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.ProjectOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.ProjectOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.ProjectOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code><a href="#projen.IgnoreFileOptions">IgnoreFileOptions</a></code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.ProjectOptions.property.gitOptions">gitOptions</a></code> | <code><a href="#projen.GitOptions">GitOptions</a></code> | Configuration options for git. |
+| <code><a href="#projen.ProjectOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.ProjectOptions.property.logging">logging</a></code> | <code><a href="#projen.LoggerOptions">LoggerOptions</a></code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.ProjectOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.ProjectOptions.property.parent">parent</a></code> | <code><a href="#projen.Project">Project</a></code> | The parent project, if this project is part of a bigger project. |
@@ -11836,6 +11908,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.ProjectOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.ProjectOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -11857,6 +11942,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* <a href="#projen.GitOptions">GitOptions</a>
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.ProjectOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 

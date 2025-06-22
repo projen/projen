@@ -763,6 +763,8 @@ The command to execute.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk.ConstructLibrary.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.cdk.ConstructLibrary.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.cdk.ConstructLibrary.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.cdk.ConstructLibrary.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.cdk.ConstructLibrary.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -797,6 +799,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.cdk.ConstructLibrary.convertEnvToOptions"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.ConstructLibrary.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.cdk.ConstructLibrary.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.cdk.ConstructLibrary.fromEnv"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.ConstructLibrary.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.cdk.ConstructLibrary.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.cdk.ConstructLibrary.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -848,6 +886,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.ConstructLibrary.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.cdk.ConstructLibrary.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -861,6 +900,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.ConstructLibrary.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk.ConstructLibrary.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.cdk.ConstructLibrary.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -1020,6 +1060,21 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.cdk.ConstructLibrary.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `logger`<sup>Required</sup> <a name="logger" id="projen.cdk.ConstructLibrary.property.logger"></a>
 
 ```typescript
@@ -1168,6 +1223,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.cdk.ConstructLibrary.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -2826,6 +2896,8 @@ The command to execute.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk.JsiiProject.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.cdk.JsiiProject.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.cdk.JsiiProject.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.cdk.JsiiProject.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.cdk.JsiiProject.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -2860,6 +2932,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.cdk.JsiiProject.convertEnvToOptions"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiProject.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.cdk.JsiiProject.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.cdk.JsiiProject.fromEnv"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiProject.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.cdk.JsiiProject.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.cdk.JsiiProject.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -2911,6 +3019,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.JsiiProject.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.cdk.JsiiProject.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.cdk.JsiiProject.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.cdk.JsiiProject.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.cdk.JsiiProject.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.cdk.JsiiProject.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.cdk.JsiiProject.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -2924,6 +3033,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.JsiiProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.cdk.JsiiProject.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.cdk.JsiiProject.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.cdk.JsiiProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.cdk.JsiiProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.cdk.JsiiProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -3083,6 +3193,21 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.cdk.JsiiProject.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `logger`<sup>Required</sup> <a name="logger" id="projen.cdk.JsiiProject.property.logger"></a>
 
 ```typescript
@@ -3231,6 +3356,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.cdk.JsiiProject.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -3882,8 +4022,10 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -4076,6 +4218,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.cdk.ConstructLibraryOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.cdk.ConstructLibraryOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -4097,6 +4252,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.cdk.ConstructLibraryOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -7207,8 +7377,10 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -7400,6 +7572,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.cdk.JsiiProjectOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.cdk.JsiiProjectOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -7421,6 +7606,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.cdk.JsiiProjectOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 

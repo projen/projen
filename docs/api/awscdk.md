@@ -790,6 +790,8 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -824,6 +826,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.awscdk.AwsCdkConstructLibrary.convertEnvToOptions"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkConstructLibrary.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.awscdk.AwsCdkConstructLibrary.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.awscdk.AwsCdkConstructLibrary.fromEnv"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkConstructLibrary.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.awscdk.AwsCdkConstructLibrary.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.awscdk.AwsCdkConstructLibrary.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -875,6 +913,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -888,6 +927,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -1050,6 +1090,21 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkConstructLibrary.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `logger`<sup>Required</sup> <a name="logger" id="projen.awscdk.AwsCdkConstructLibrary.property.logger"></a>
 
 ```typescript
@@ -1198,6 +1253,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkConstructLibrary.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -3260,6 +3330,8 @@ The list of modules to depend on (e.g. "software.amazon.awscdk/aws-lambda", "sof
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.awscdk.AwsCdkJavaApp.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkJavaApp.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -3294,6 +3366,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.awscdk.AwsCdkJavaApp.convertEnvToOptions"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkJavaApp.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.awscdk.AwsCdkJavaApp.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.awscdk.AwsCdkJavaApp.fromEnv"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkJavaApp.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.awscdk.AwsCdkJavaApp.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.awscdk.AwsCdkJavaApp.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -3345,6 +3453,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.awscdk.AwsCdkJavaApp.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -3358,6 +3467,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.awscdk.AwsCdkJavaApp.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -3494,6 +3604,21 @@ public readonly gitignore: IgnoreFile;
 - *Type:* projen.IgnoreFile
 
 .gitignore.
+
+---
+
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkJavaApp.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -3645,6 +3770,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkJavaApp.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -4273,6 +4413,8 @@ Format `<module>@<semver>`.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -4307,6 +4449,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.awscdk.AwsCdkPythonApp.convertEnvToOptions"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkPythonApp.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.awscdk.AwsCdkPythonApp.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.awscdk.AwsCdkPythonApp.fromEnv"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkPythonApp.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.awscdk.AwsCdkPythonApp.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.awscdk.AwsCdkPythonApp.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -4358,6 +4536,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -4371,6 +4550,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -4508,6 +4688,21 @@ public readonly gitignore: IgnoreFile;
 - *Type:* projen.IgnoreFile
 
 .gitignore.
+
+---
+
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkPythonApp.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -4659,6 +4854,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkPythonApp.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -5551,6 +5761,8 @@ The list of modules to depend on.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -5585,6 +5797,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `convertEnvToOptions` <a name="convertEnvToOptions" id="projen.awscdk.AwsCdkTypeScriptApp.convertEnvToOptions"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkTypeScriptApp.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.awscdk.AwsCdkTypeScriptApp.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### `fromEnv` <a name="fromEnv" id="projen.awscdk.AwsCdkTypeScriptApp.fromEnv"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.AwsCdkTypeScriptApp.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.awscdk.AwsCdkTypeScriptApp.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.awscdk.AwsCdkTypeScriptApp.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -5636,6 +5884,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -5649,6 +5898,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -5813,6 +6063,21 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### `isFromEnv`<sup>Required</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkTypeScriptApp.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `logger`<sup>Required</sup> <a name="logger" id="projen.awscdk.AwsCdkTypeScriptApp.property.logger"></a>
 
 ```typescript
@@ -5961,6 +6226,21 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkTypeScriptApp.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -7653,6 +7933,8 @@ names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.convertEnvToOptions">convertEnvToOptions</a></code> | *No description.* |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.fromEnv">fromEnv</a></code> | Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.isProject">isProject</a></code> | Test whether the given construct is a project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.of">of</a></code> | Find the closest ancestor project for given construct. |
 
@@ -7687,6 +7969,42 @@ this type-testing method instead.
 - *Type:* any
 
 Any object.
+
+---
+
+##### ~~`convertEnvToOptions`~~ <a name="convertEnvToOptions" id="projen.awscdk.ConstructLibraryAws.convertEnvToOptions"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.ConstructLibraryAws.convertEnvToOptions(env: {[ key: string ]: string})
+```
+
+###### `env`<sup>Required</sup> <a name="env" id="projen.awscdk.ConstructLibraryAws.convertEnvToOptions.parameter.env"></a>
+
+- *Type:* {[ key: string ]: string}
+
+---
+
+##### ~~`fromEnv`~~ <a name="fromEnv" id="projen.awscdk.ConstructLibraryAws.fromEnv"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.ConstructLibraryAws.fromEnv(filePath?: string, projectOptions?: any)
+```
+
+Initializes project from a .env file or PROJEN_* environment variables. This can be used by project types and other components to configure their options without user input or other environment variables. PROJEN_ env variables wtill override the .env file.
+
+###### `filePath`<sup>Optional</sup> <a name="filePath" id="projen.awscdk.ConstructLibraryAws.fromEnv.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+###### `projectOptions`<sup>Optional</sup> <a name="projectOptions" id="projen.awscdk.ConstructLibraryAws.fromEnv.parameter.projectOptions"></a>
+
+- *Type:* any
 
 ---
 
@@ -7738,6 +8056,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.files">files</a></code> | <code>projen.FileBase[]</code> | All files in this project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | .gitignore. |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.logger">logger</a></code> | <code>projen.Logger</code> | Logging utilities. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.name">name</a></code> | <code>string</code> | Project name. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this project. |
@@ -7751,6 +8070,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.testTask">testTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | Options set when the project is initialized from environment variables. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
@@ -7933,6 +8253,23 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
+##### ~~`isFromEnv`~~<sup>Required</sup> <a name="isFromEnv" id="projen.awscdk.ConstructLibraryAws.property.isFromEnv"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibrary`
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
+
+---
+
 ##### ~~`logger`~~<sup>Required</sup> <a name="logger" id="projen.awscdk.ConstructLibraryAws.property.logger"></a>
 
 - *Deprecated:* use `AwsCdkConstructLibrary`
@@ -8107,6 +8444,23 @@ This is the "default" task, the one that executes "projen".
 
 Undefined if
 the project is being ejected.
+
+---
+
+##### ~~`fromEnvOptions`~~<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.ConstructLibraryAws.property.fromEnvOptions"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibrary`
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+Options set when the project is initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -10276,8 +10630,10 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -10485,6 +10841,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -10506,6 +10875,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -13452,8 +13836,10 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -13543,6 +13929,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkJavaAppOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.awscdk.AwsCdkJavaAppOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -13564,6 +13963,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkJavaAppOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -14569,8 +14983,10 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -14672,6 +15088,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkPythonAppOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.awscdk.AwsCdkPythonAppOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -14693,6 +15122,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkPythonAppOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -15737,8 +16181,10 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -15938,6 +16384,19 @@ Whether to commit the managed files by default.
 
 ---
 
+##### `fromEnvOptions`<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.fromEnvOptions"></a>
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.gitIgnoreOptions"></a>
 
 ```typescript
@@ -15959,6 +16418,21 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### `isFromEnv`<sup>Optional</sup> <a name="isFromEnv" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.isFromEnv"></a>
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
@@ -18684,8 +19158,10 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.fromEnvOptions">fromEnvOptions</a></code> | <code>{[ key: string ]: any}</code> | fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.isFromEnv">isFromEnv</a></code> | <code>boolean</code> | Whether the project is being initialized from environment variables. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
@@ -18897,6 +19373,21 @@ Whether to commit the managed files by default.
 
 ---
 
+##### ~~`fromEnvOptions`~~<sup>Optional</sup> <a name="fromEnvOptions" id="projen.awscdk.ConstructLibraryAwsOptions.property.fromEnvOptions"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly fromEnvOptions: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* {}
+
+fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.
+
+---
+
 ##### ~~`gitIgnoreOptions`~~<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.awscdk.ConstructLibraryAwsOptions.property.gitIgnoreOptions"></a>
 
 - *Deprecated:* use `AwsCdkConstructLibraryOptions`
@@ -18922,6 +19413,23 @@ public readonly gitOptions: GitOptions;
 - *Type:* projen.GitOptions
 
 Configuration options for git.
+
+---
+
+##### ~~`isFromEnv`~~<sup>Optional</sup> <a name="isFromEnv" id="projen.awscdk.ConstructLibraryAwsOptions.property.isFromEnv"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly isFromEnv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the project is being initialized from environment variables.
+
+This is used to configure the project without user input or other environment variables.
 
 ---
 
