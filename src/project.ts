@@ -124,6 +124,18 @@ export interface ProjectOptions {
    * Configuration options for .gitignore file
    */
   readonly gitIgnoreOptions?: IgnoreFileOptions;
+  /**
+   * fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables.
+   * It is used to configure the project without user input or other environment variables.
+   * @default {}
+   */
+  readonly fromEnvOptions?: Record<string, any>;
+  /**
+   * Whether the project is being initialized from environment variables.
+   * This is used to configure the project without user input or other environment variables.
+   * @default false
+   */
+  readonly fromEnv?: boolean;
 }
 
 /**
@@ -229,7 +241,7 @@ export class Project extends Construct {
       // Set default options using the environment variables
       ...convertedOptions,
       // Pass the options to the project as a separate object
-      // to use in subclasses and sub-components
+      // for reuse such as in components
       fromEnvOptions: convertedOptions,
       fromEnv: true,
     });
@@ -367,6 +379,19 @@ export class Project extends Construct {
   private readonly _ejected: boolean;
   /** projenCommand without default value */
   private readonly _projenCommand?: string;
+  /**
+   *
+   * Options set when the project is initialized from environment variables.
+   * This is used to configure the project without user input or other environment variables.
+   * @default {}
+   */
+  public readonly fromEnvOptions?: Record<string, any>;
+  /**
+   * Whether the project is being initialized from environment variables.
+   * This is used to configure the project without user input or other environment variables.
+   * @default false
+   */
+  public readonly fromEnv?: boolean;
 
   constructor(options: ProjectOptions) {
     const outdir = determineOutdir(options.parent, options.outdir);
@@ -388,6 +413,8 @@ export class Project extends Construct {
     this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
+    this.fromEnvOptions = options.fromEnvOptions;
+    this.fromEnv = options.fromEnv;
 
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
