@@ -135,7 +135,7 @@ export interface ProjectOptions {
    * This is used to configure the project without user input or other environment variables.
    * @default false
    */
-  readonly fromEnv?: boolean;
+  readonly isFromEnv?: boolean;
 }
 
 /**
@@ -160,17 +160,6 @@ export interface GitOptions {
    * @default EndOfLine.LF
    */
   readonly endOfLine?: EndOfLine;
-  /**
-   * fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables.
-   * It is used to configure the project without user input or other environment variables.
-   * @default {}
-   */
-  readonly fromEnvOptions?: Record<string, any>;
-  /**
-   * Whether the project is being initialized from environment variables.
-   * @default false
-   */
-  readonly fromEnv?: boolean;
 }
 /**
  * Base project
@@ -243,7 +232,7 @@ export class Project extends Construct {
       // Pass the options to the project as a separate object
       // for reuse such as in components
       fromEnvOptions: convertedOptions,
-      fromEnv: true,
+      isFromEnv: true,
     });
   }
   // We need to lower case env var names and convert them to camel case
@@ -391,7 +380,7 @@ export class Project extends Construct {
    * This is used to configure the project without user input or other environment variables.
    * @default false
    */
-  public readonly fromEnv?: boolean;
+  public readonly isFromEnv: boolean;
 
   constructor(options: ProjectOptions) {
     const outdir = determineOutdir(options.parent, options.outdir);
@@ -414,7 +403,7 @@ export class Project extends Construct {
     this.parent = options.parent;
     this.excludeFromCleanup = [];
     this.fromEnvOptions = options.fromEnvOptions;
-    this.fromEnv = options.fromEnv;
+    this.isFromEnv = options.isFromEnv ?? false;
 
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
