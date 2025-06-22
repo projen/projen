@@ -444,6 +444,28 @@ exports[`inventory 1`] = `
         "switch": "feature-flags",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -548,6 +570,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "group-id",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -1658,6 +1697,28 @@ exports[`inventory 1`] = `
         "switch": "feature-flags",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -1761,6 +1822,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "docs": "License of this package as an SPDX identifier.",
@@ -2809,6 +2887,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -3685,6 +3799,28 @@ exports[`inventory 1`] = `
         "switch": "feature-flags",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -3826,6 +3962,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "integration-test-auto-discover",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -5923,6 +6076,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -6852,6 +7041,28 @@ exports[`inventory 1`] = `
         "switch": "experimental-integ-runner",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -6993,6 +7204,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "integration-test-auto-discover",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -9343,6 +9571,28 @@ exports[`inventory 1`] = `
         "switch": "dev-deps",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -9446,6 +9696,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "22",
@@ -10431,6 +10698,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -11210,6 +11513,28 @@ exports[`inventory 1`] = `
         "switch": "eslint-options",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -11351,6 +11676,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "integration-test-auto-discover",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -13366,6 +13708,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -14181,6 +14559,28 @@ exports[`inventory 1`] = `
         "switch": "exclude-typescript",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -14322,6 +14722,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "integration-test-auto-discover",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -16448,6 +16865,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -17212,6 +17665,28 @@ exports[`inventory 1`] = `
         "switch": "exclude-typescript",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -17336,6 +17811,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -19417,6 +19909,28 @@ exports[`inventory 1`] = `
         "switch": "distdir",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -19521,6 +20035,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "group-id",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -20317,6 +20848,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -21028,6 +21595,28 @@ exports[`inventory 1`] = `
         "switch": "exclude-typescript",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -21152,6 +21741,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -23261,6 +23867,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -23744,6 +24386,28 @@ exports[`inventory 1`] = `
         "switch": "entrypoint",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -23868,6 +24532,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -25689,6 +26370,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -26293,6 +27010,28 @@ exports[`inventory 1`] = `
         "switch": "eslint-options",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -26417,6 +27156,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -28381,6 +29137,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -28864,6 +29656,28 @@ exports[`inventory 1`] = `
         "switch": "entrypoint",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -28988,6 +29802,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -30550,6 +31381,28 @@ exports[`inventory 1`] = `
         "switch": "commit-generated",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "docs": "Configuration options for .gitignore file.",
         "featured": false,
         "fqn": "projen.IgnoreFileOptions",
@@ -30584,6 +31437,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "GitOptions",
         "switch": "git-options",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "{}",
@@ -30977,6 +31847,28 @@ exports[`inventory 1`] = `
         "switch": "dev-deps",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -31080,6 +31972,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "docs": "License of this package as an SPDX identifier.",
@@ -32014,6 +32923,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -32497,6 +33442,28 @@ exports[`inventory 1`] = `
         "switch": "entrypoint",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -32621,6 +33588,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -34430,6 +35414,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -35034,6 +36054,28 @@ exports[`inventory 1`] = `
         "switch": "eslint-options",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -35158,6 +36200,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -37127,6 +38186,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -37731,6 +38826,28 @@ exports[`inventory 1`] = `
         "switch": "eslint-options",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -37855,6 +38972,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
@@ -39802,6 +40936,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -40406,6 +41576,28 @@ exports[`inventory 1`] = `
         "switch": "eslint-options",
       },
       {
+        "default": "{}",
+        "docs": "fromEnvOptions is a set of options that are loaded from the .env file or PROJEN_* environment variables. It is used to configure the project without user input or other environment variables.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "fromEnvOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "fromEnvOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "from-env-options",
+      },
+      {
         "default": "true",
         "docs": "Enable GitHub integration.",
         "featured": false,
@@ -40530,6 +41722,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      {
+        "default": "false",
+        "docs": "Whether the project is being initialized from environment variables.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "isFromEnv",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "isFromEnv",
+        ],
+        "simpleType": "boolean",
+        "switch": "is-from-env",
       },
       {
         "default": "true",
