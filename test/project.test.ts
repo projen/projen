@@ -224,6 +224,13 @@ describe("project", () => {
       it("should have the correct projen commands", () => {
         expect(project.projenCommand).toEqual("run me");
       });
+      it("should have the class properties set correctly", () => {
+        expect(project.fromEnvOptions).toEqual({
+          name: "Awesome Dotenv Project",
+          projenCommand: "run me",
+        });
+        expect(project.fromEnv).toBeTruthy();
+      });
     });
     describe("when PROJEN_ is used", () => {
       let project: Project;
