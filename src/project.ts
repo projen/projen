@@ -223,7 +223,7 @@ export class Project extends Construct {
     console.debug(
       `Converted options from environment: ${JSON.stringify(convertedOptions)}`
     );
-    return new Project({
+    return new this({
       // Merge with the provided project options
       ...projectOptions,
       // Set default options using the environment variables
