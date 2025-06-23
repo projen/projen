@@ -90,6 +90,7 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
     "name": "Find mutations",
     "run": "git add .
 git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "shell": "bash",
     "working-directory": "./",
   },
   {
@@ -168,6 +169,7 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
     "name": "Find mutations",
     "run": "git add .
 git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "shell": "bash",
     "working-directory": "./",
   },
   {
@@ -354,6 +356,7 @@ exports[`provided preBuildSteps for build workflow get combined with setup steps
     "name": "Find mutations",
     "run": "git add .
 git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "shell": "bash",
     "working-directory": "./",
   },
   {
