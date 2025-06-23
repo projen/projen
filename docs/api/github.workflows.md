@@ -1994,6 +1994,7 @@ const jobStep: github.workflows.JobStep = { ... }
 | <code><a href="#projen.github.workflows.JobStep.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.workflows.JobStep.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.workflows.JobStep.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.JobStep.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.workflows.JobStep.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.workflows.JobStep.property.run">run</a></code> | <code>string</code> | Runs command-line programs using the operating system's shell. |
 | <code><a href="#projen.github.workflows.JobStep.property.uses">uses</a></code> | <code>string</code> | Selects an action to run as part of a step in your job. |
@@ -2056,6 +2057,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.workflows.JobStep.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -2169,6 +2186,7 @@ const jobStepConfiguration: github.workflows.JobStepConfiguration = { ... }
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -2228,6 +2246,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.workflows.JobStepConfiguration.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -3123,6 +3157,7 @@ const step: github.workflows.Step = { ... }
 | <code><a href="#projen.github.workflows.Step.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.workflows.Step.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.workflows.Step.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.Step.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.workflows.Step.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.workflows.Step.property.run">run</a></code> | <code>string</code> | Runs command-line programs using the operating system's shell. |
 | <code><a href="#projen.github.workflows.Step.property.uses">uses</a></code> | <code>string</code> | Selects an action to run as part of a step in your job. |
@@ -3183,6 +3218,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.workflows.Step.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -3273,6 +3324,7 @@ const stepConfiguration: github.workflows.StepConfiguration = { ... }
 | <code><a href="#projen.github.workflows.StepConfiguration.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.workflows.StepConfiguration.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.workflows.StepConfiguration.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.workflows.StepConfiguration.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.workflows.StepConfiguration.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 
 ---
@@ -3330,6 +3382,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.workflows.StepConfiguration.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
