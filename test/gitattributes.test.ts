@@ -115,3 +115,14 @@ describe("GitAttributesFile", () => {
     expect(project.gitattributes.endOfLine).toBe(EndOfLine.LF);
   });
 });
+
+describe("annotateGenerated", () => {
+  test("uses normalized paths", () => {
+    const project = new TestProject();
+    project.annotateGenerated("\\some\\windows\\like\\path");
+
+    const lines = synthSnapshot(project)[".gitattributes"].split("\n");
+
+    expect(lines).toContain("/some/windows/like/path linguist-generated");
+  });
+});
