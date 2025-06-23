@@ -75,6 +75,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Check if tag exists",
         id: options.id ?? "check-tag",
+        shell: "bash",
       }),
       run: [
         `TAG=${tag}`,
