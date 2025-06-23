@@ -425,6 +425,7 @@ function renderJobs(
       uses: step.uses && actions.get(step.uses),
       env: step.env,
       run: step.run,
+      shell: step.shell,
       with: step.with,
       "continue-on-error": step.continueOnError,
       "timeout-minutes": step.timeoutMinutes,
