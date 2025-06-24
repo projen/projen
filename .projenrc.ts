@@ -1,3 +1,4 @@
+import * as path from "path";
 import {
   setupAllContributors,
   setupProjenBootstrap,
@@ -14,7 +15,7 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
-  setupBiomeTypesGeneration,
+  JsiiFromJsonSchema,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -84,9 +85,9 @@ const project = new JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
-    "json-schema-to-typescript",
-    // Can be removed if linting and formating is done with Biome
-    "@biomejs/biome",
+    "json2jsii",
+    // Needed to generate biome config
+    "@biomejs/biome@^2",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -194,7 +195,10 @@ setupNpmignore(project);
 setupIntegTest(project);
 setupBundleTaskRunner(project);
 
-setupBiomeTypesGeneration(project);
+new JsiiFromJsonSchema(project, {
+  schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
+  filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
 
 new WindowsBuild(project);
 
