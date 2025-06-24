@@ -275,6 +275,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
@@ -379,6 +380,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -536,6 +538,10 @@ tsconfig.tsbuildinfo
         "name": "@stylistic/eslint-plugin",
         "type": "build",
         "version": "^2",
+      },
+      {
+        "name": "@testing-library/dom",
+        "type": "build",
       },
       {
         "name": "@testing-library/jest-dom",
@@ -788,13 +794,13 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,react,react-dom,web-vitals",
+            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,react,react-dom,web-vitals",
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @stylistic/eslint-plugin @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts typescript react react-dom web-vitals",
+            "exec": "yarn upgrade @stylistic/eslint-plugin @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts typescript react react-dom web-vitals",
           },
           {
             "exec": "npx projen",
@@ -1040,6 +1046,7 @@ tsconfig.tsbuildinfo
     },
     "devDependencies": {
       "@stylistic/eslint-plugin": "^2",
+      "@testing-library/dom": "*",
       "@testing-library/jest-dom": "*",
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",

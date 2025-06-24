@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@biomejs/biome",
+      "type": "build"
+    },
+    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
@@ -110,6 +114,10 @@
       "type": "build"
     },
     {
+      "name": "json-schema-to-typescript",
+      "type": "build"
+    },
+    {
       "name": "license-checker",
       "type": "build"
     },
@@ -156,12 +164,11 @@
       "type": "bundled"
     },
     {
-      "name": "fast-json-patch",
+      "name": "fast-glob",
       "type": "bundled"
     },
     {
-      "name": "glob",
-      "version": "^8",
+      "name": "fast-json-patch",
       "type": "bundled"
     },
     {

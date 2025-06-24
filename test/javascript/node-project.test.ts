@@ -1715,7 +1715,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1742,7 +1741,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1779,7 +1777,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -2036,5 +2033,19 @@ describe("build workflow options", () => {
       CI: "true",
       MY_ENV_VAR: "my-value",
     });
+  });
+});
+
+describe("only one of components can be enabled", () => {
+  test("prettier and biome", () => {
+    expect(
+      () =>
+        new NodeProject({
+          biome: true,
+          prettier: true,
+          defaultReleaseBranch: "main",
+          name: "test",
+        })
+    ).toThrowError("Only one of biome, and prettier can be enabled.");
   });
 });

@@ -220,8 +220,8 @@ export async function bump(cwd: string, options: BumpOptions) {
       ? relativeBumpType(latestVersion, await catv.dryRun())
       : { bump: "none" };
 
+  logging.info(`Bump from commits: ${renderBumpType(bumpType)}`);
   if (options.nextVersionCommand) {
-    logging.debug(`Proposed bump type: ${renderBumpType(bumpType)}`);
     const nextVersion = execCapture(options.nextVersionCommand, {
       cwd,
       modEnv: {
@@ -237,7 +237,7 @@ export async function bump(cwd: string, options: BumpOptions) {
       try {
         bumpType = parseBumpType(nextVersion);
         logging.info(
-          `nextVersionCommand selects bump type: ${renderBumpType(bumpType)}`
+          `Bump from nextVersionCommand: ${renderBumpType(bumpType)}`
         );
       } catch (e) {
         throw new Error(
@@ -245,8 +245,6 @@ export async function bump(cwd: string, options: BumpOptions) {
         );
       }
     }
-  } else {
-    logging.info(`bump type: ${renderBumpType(bumpType)}`);
   }
 
   // Respect minMajorVersion to correct the result of the nextVersionCommand
@@ -314,6 +312,7 @@ function hasNewInterestingCommits(options: {
   const findCommits = (
     options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
   ).replace("$LATEST_TAG", options.latestTag);
+
   const commitsSinceLastTag = execOrUndefined(findCommits, {
     cwd: options.cwd,
   })?.split("\n");

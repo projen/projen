@@ -15,6 +15,7 @@ The following submodules are available:
 - [gitlab](./gitlab.md)
 - [java](./java.md)
 - [javascript](./javascript.md)
+- [javascript.biome_config](./javascript.biome_config.md)
 - [python](./python.md)
 - [release](./release.md)
 - [typescript](./typescript.md)
@@ -14785,6 +14786,10 @@ result of a new project creation (and take additional steps accordingly)
 ### ReleasableCommits <a name="ReleasableCommits" id="projen.ReleasableCommits"></a>
 
 Find commits that should be considered releasable to decide if a release is required.
+
+This setting only controls whether a release is triggered, yes or no. The
+paths used here are independent of the code that controls what commits are inspected
+to determine the version number.
 
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>

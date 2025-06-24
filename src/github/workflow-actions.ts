@@ -32,6 +32,7 @@ export class WorkflowActions {
       {
         id: options.stepId,
         name: options.stepName ?? "Find mutations",
+        shell: "bash",
         run: [
           "git add .",
           `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,

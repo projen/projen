@@ -456,6 +456,12 @@ export class Publisher extends Component {
       );
     }
 
+    if (mavenServerId === "central-ossrh" && options.mavenEndpoint != null) {
+      throw new Error(
+        'Custom endpoints are not supported when publishing to Maven Central (mavenServerId: "central-ossrh"). Please remove "mavenEndpoint" from the options.'
+      );
+    }
+
     this.addPublishJob(
       "maven",
       (_branch, _branchOptions): PublishJobOptions => ({
@@ -722,6 +728,7 @@ export class Publisher extends Component {
               name: "Extract Version",
               if: "${{ failure() }}",
               id: "extract-version",
+              shell: "bash",
               run: 'echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT',
             },
             {
@@ -1081,12 +1088,14 @@ export interface MavenPublishOptions extends CommonPublishOptions {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
-   * @default "https://oss.sonatype.org"
+   * @default - "https://oss.sonatype.org" or none when publishing to Maven Central
    */
   readonly mavenEndpoint?: string;
 
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+   *
+   * Set to `central-ossrh` to publish to Maven Central.
    *
    * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
    */

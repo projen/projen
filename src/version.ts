@@ -293,6 +293,10 @@ export interface VersionBranchOptions {
 
 /**
  * Find commits that should be considered releasable to decide if a release is required.
+ *
+ * This setting only controls whether a release is triggered, yes or no. The
+ * paths used here are independent of the code that controls what commits are inspected
+ * to determine the version number.
  */
 export class ReleasableCommits {
   /**
