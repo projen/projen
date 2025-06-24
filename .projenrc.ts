@@ -199,7 +199,7 @@ setupBiomeTypesGeneration(project);
 new WindowsBuild(project);
 
 // we are projen, so re-synth after compiling.
-// fixes feedback loop where projen contibutors run "build"
+// fixes feedback loop where projen contributors run "build"
 // but not all files are updated
 if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);

@@ -159,6 +159,7 @@ export class PullRequestBackport extends Component {
         {
           id: checkStep,
           name: "Check for backport labels",
+          shell: "bash",
           run: [
             "labels='${{ toJSON(github.event.pull_request.labels.*.name) }}'",
             `matched=$(echo $labels | jq '.|map(select(startswith("${labelPrefixEscaped}"))) | length')`,
