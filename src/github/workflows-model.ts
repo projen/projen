@@ -420,6 +420,15 @@ export interface StepConfiguration {
    * Overrides a job's working directory.
    */
   readonly workingDirectory?: string;
+
+  /**
+   * Overrides the default shell settings in the runner's operating system and the job's default.
+   *
+   * Refer to GitHub documentation for allowed values.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+   */
+  readonly shell?: string;
 }
 
 /**

@@ -14,6 +14,7 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
+  setupBiomeTypesGeneration,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -61,7 +62,7 @@ const project = new JsiiProject({
     "yaml@^2.2.2",
     "yargs",
     "case",
-    "glob@^8",
+    "fast-glob",
     "semver",
     "chalk",
     "@iarna/toml",
@@ -83,6 +84,9 @@ const project = new JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "json-schema-to-typescript",
+    // Can be removed if linting and formating is done with Biome
+    "@biomejs/biome",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -138,9 +142,9 @@ const project = new JsiiProject({
 
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
+    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
-    mavenEndpoint: "https://s01.oss.sonatype.org",
   },
   publishToPypi: {
     distName: "projen",
@@ -189,6 +193,8 @@ setupNpmignore(project);
 
 setupIntegTest(project);
 setupBundleTaskRunner(project);
+
+setupBiomeTypesGeneration(project);
 
 new WindowsBuild(project);
 

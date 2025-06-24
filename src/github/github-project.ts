@@ -8,6 +8,7 @@ import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions, ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
+import { normalizePersistedPath } from "../util";
 import { DevContainer, VsCode } from "../vscode";
 
 /**
@@ -246,6 +247,9 @@ export class GitHubProject extends Project {
    * @see https://github.com/github/linguist/blob/master/docs/overrides.md
    */
   public annotateGenerated(glob: string): void {
-    this.gitattributes.addAttributes(glob, "linguist-generated");
+    this.gitattributes.addAttributes(
+      normalizePersistedPath(glob),
+      "linguist-generated"
+    );
   }
 }

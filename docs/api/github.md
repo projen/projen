@@ -4838,6 +4838,7 @@ const checkoutOptions: github.CheckoutOptions = { ... }
 | <code><a href="#projen.github.CheckoutOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.CheckoutOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.CheckoutOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.CheckoutOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.CheckoutOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.CheckoutOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.CheckoutOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -4898,6 +4899,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.CheckoutOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -5955,6 +5972,7 @@ const downloadArtifactOptions: github.DownloadArtifactOptions = { ... }
 | <code><a href="#projen.github.DownloadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -6015,6 +6033,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.DownloadArtifactOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -8158,6 +8192,7 @@ const setupGitIdentityOptions: github.SetupGitIdentityOptions = { ... }
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -8218,6 +8253,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.SetupGitIdentityOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -8989,6 +9040,7 @@ const uploadArtifactOptions: github.UploadArtifactOptions = { ... }
 | <code><a href="#projen.github.UploadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -9049,6 +9101,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.UploadArtifactOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 

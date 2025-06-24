@@ -196,6 +196,7 @@ export class Circleci extends Component {
       "resourceClass",
       "dockerLayerCaching",
       "noOutputTimeout",
+      "circleciIpRanges",
     ];
     return snakeCaseKeys(input, true, snakeCaseKeyWords);
   };
