@@ -10493,16 +10493,16 @@ Force` ts-jest` to use its built-in defaults even if there is a `tsconfig.json` 
 ```typescript
 import { typescript } from 'projen'
 
-typescript.TsJestTsconfig.custom(config: TypescriptConfigOptions)
+typescript.TsJestTsconfig.custom(config: TypeScriptCompilerOptions)
 ```
 
 Inline compiler options.
 
-> [TypescriptConfigOptions](TypescriptConfigOptions)
+> [TypeScriptCompilerOptions](TypeScriptCompilerOptions)
 
 ###### `config`<sup>Required</sup> <a name="config" id="projen.typescript.TsJestTsconfig.custom.parameter.config"></a>
 
-- *Type:* projen.javascript.TypescriptConfigOptions
+- *Type:* projen.javascript.TypeScriptCompilerOptions
 
 ---
 

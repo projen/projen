@@ -144,21 +144,21 @@ export class TsJestTsconfig {
   /**
    * Inline compiler options
    *
-   * @see TypescriptConfigOptions
+   * @see TypeScriptCompilerOptions
    */
-  public static custom(config: TypescriptConfigOptions) {
+  public static custom(config: TypeScriptCompilerOptions) {
     return new TsJestTsconfig(config);
   }
 
   private constructor(
-    private readonly config: boolean | string | TypescriptConfigOptions
+    private readonly config: boolean | string | TypeScriptCompilerOptions
   ) {}
 
   /**
    * @jsii ignore
    * @internal
    */
-  public toJSON(): boolean | string | TypescriptConfigOptions {
+  public toJSON(): boolean | string | TypeScriptCompilerOptions {
     return this.config;
   }
 }
