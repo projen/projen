@@ -85,7 +85,7 @@ export class AutoMerge extends Component {
     mergify.addQueue({
       name: queueName,
       updateMethod: "merge",
-      conditions: (() => this.renderConditions()) as any,
+      queueConditions: (() => this.renderConditions()) as any,
       // squash all commits into a single commit when merging
       mergeMethod: "squash",
       // use PR title+body as the commit message
