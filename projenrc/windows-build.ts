@@ -81,6 +81,15 @@ export class WindowsBuild extends Component {
       ...onlyPrimaryStepsPatches
     );
 
+    // speed up windows build
+    buildWorkflowFile?.patch(
+      JsonPatch.add(buildJobPath("/steps/2"), {
+        if: "runner.os == 'Windows'",
+        name: "Set yarn cache-folder",
+        run: "yarn config set cache-folder D:\\a\\_temp\\yarn",
+      })
+    );
+
     // Add the join target job for branch protection
     buildWorkflowFile?.patch(
       // Rename old workflow
