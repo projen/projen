@@ -10,10 +10,6 @@
       "type": "build"
     },
     {
-      "name": "@types/glob",
-      "type": "build"
-    },
-    {
       "name": "@types/ini",
       "type": "build"
     },

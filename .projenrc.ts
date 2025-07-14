@@ -78,7 +78,6 @@ const project = new JsiiProject({
   devDeps: [
     "@types/conventional-changelog-config-spec",
     "@types/yargs",
-    "@types/glob",
     "@types/semver",
     "@types/ini",
     "@types/parse-conflict-json",
