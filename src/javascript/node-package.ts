@@ -681,7 +681,7 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
-    this.pnpmVersion = options.pnpmVersion ?? "9";
+    this.pnpmVersion = options.pnpmVersion ?? "10";
     this.bunVersion = options.bunVersion ?? "latest";
     this.addNodeEngine();
 
