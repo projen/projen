@@ -409,6 +409,39 @@ describe("jestConfig", () => {
       });
     });
 
+    test("allows overriding of ts-jest compiler options inline", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {},
+        },
+        tsJestOptions: {
+          transformOptions: {
+            tsconfig: TsJestTsconfig.custom({
+              isolatedModules: true,
+            }),
+          },
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jestConfig = snapshot["package.json"].jest;
+      const transformConfig =
+        jestConfig.transform[
+          TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN
+        ];
+
+      expect(transformConfig).toBeDefined();
+      expect(transformConfig[0]).toStrictEqual("ts-jest");
+      expect(transformConfig[1]).toStrictEqual({
+        tsconfig: {
+          // inline compiler options without extra compilerOptions property
+          isolatedModules: true,
+        },
+      });
+    });
+
     test("sets testMatch to include src and test dirs by default", () => {
       const prj = new TypeScriptProject({
         defaultReleaseBranch: "main",
@@ -683,6 +716,6 @@ describe("only one of components can be enabled", () => {
           defaultReleaseBranch: "main",
           name: "test",
         })
-    ).toThrowError("Only one of biome, and eslint can be enabled.");
+    ).toThrowError("Only one of biome and eslint can be enabled.");
   });
 });

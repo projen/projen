@@ -235,7 +235,7 @@ export function isObject(x: any): x is Obj<any> {
 }
 
 /**
- * Influence the behavior of `deepMerge`.
+ * Configure the behavior of `deepMerge`.
  */
 interface MergeOptions {
   /**
@@ -255,12 +255,12 @@ interface MergeOptions {
 /**
  * Recursively merge objects together
  *
- * The leftmost object is mutated and returned. Arrays are not merged
- * but overwritten just like scalars.
+ * The leftmost object is mutated and returned.
  *
- * If an object is merged into a non-object, the non-object is lost.
- *
- * `undefined`s will cause a value to be deleted if destructive is enabled.
+ * If an object is merged into something other than an object, the non-object is lost.
+ * Arrays are overwritten not merged; set `mergeArrays: true` to merge arrays and deduplicate the result.
+ * An `undefined` key in a source object will persist; set `destructive: true` to fully remove the key instead.
+ * Empty objects as values are preserved in the output; set `destructive: true` to remove them instead.
  */
 export function deepMerge(
   objects: Array<Obj<any> | undefined>,
@@ -293,11 +293,10 @@ export function deepMerge(
         // if the result of the merge is an empty object, it's because the
         // eventual value we assigned is `undefined`, and there are no
         // sibling concrete values alongside, so we can delete this tree.
-        const output = target[key];
         if (
           destructive &&
-          typeof output === "object" &&
-          Object.keys(output).length === 0
+          typeof target[key] === "object" &&
+          Object.keys(target[key]).length === 0
         ) {
           delete target[key];
         }
@@ -319,6 +318,7 @@ export function deepMerge(
       // all other values are simply overwritten by overriding object
       if (typeof value !== "undefined") {
         target[key] = value;
+        continue;
       }
     }
   }

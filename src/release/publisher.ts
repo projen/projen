@@ -728,6 +728,7 @@ export class Publisher extends Component {
               name: "Extract Version",
               if: "${{ failure() }}",
               id: "extract-version",
+              shell: "bash",
               run: 'echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT',
             },
             {

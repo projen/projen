@@ -144,21 +144,21 @@ export class TsJestTsconfig {
   /**
    * Inline compiler options
    *
-   * @see TypescriptConfigOptions
+   * @see TypeScriptCompilerOptions
    */
-  public static custom(config: TypescriptConfigOptions) {
+  public static custom(config: TypeScriptCompilerOptions) {
     return new TsJestTsconfig(config);
   }
 
   private constructor(
-    private readonly config: boolean | string | TypescriptConfigOptions
+    private readonly config: boolean | string | TypeScriptCompilerOptions
   ) {}
 
   /**
    * @jsii ignore
    * @internal
    */
-  public toJSON(): boolean | string | TypescriptConfigOptions {
+  public toJSON(): boolean | string | TypeScriptCompilerOptions {
     return this.config;
   }
 }
@@ -265,7 +265,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Setup eslint.
    *
-   * @default true
+   * @default - true, unless biome is enabled
    */
   readonly eslint?: boolean;
 
@@ -534,11 +534,16 @@ export class TypeScriptProject extends NodeProject {
       }
     }
 
-    if (multipleSelected([options.biome, options.eslint])) {
-      throw new Error("Only one of biome, and eslint can be enabled.");
+    // Linter tool selection
+    // eslint is the default, but if biome has been enabled in the parent class and eslint unset, we default to biome
+    const biomeEnabled = this.biome != null;
+    const eslintEnabled = options.eslint ?? !biomeEnabled; // eslint defaults to the opposite of biome
+
+    if (multipleSelected([biomeEnabled, eslintEnabled])) {
+      throw new Error("Only one of biome and eslint can be enabled.");
     }
 
-    if (options.eslint ?? true) {
+    if (eslintEnabled) {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${this.tsconfigDev.fileName}`,
         dirs: [this.srcdir],
@@ -551,9 +556,10 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    this.biome?.addLintPattern(this.srcdir);
-    this.biome?.addLintPattern(this.testdir);
-    this.biome?.addLintPattern("build-tools");
+    // Add the src and test directories
+    // no need to exclude build artifacts: biome ignores files in .gitignore
+    this.biome?.addFilePattern(`${this.srcdir}/**`);
+    this.biome?.addFilePattern(`${this.testdir}/**`);
 
     // when this is a root project
     if (!this.parent) {

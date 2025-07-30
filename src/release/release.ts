@@ -691,6 +691,7 @@ export class Release extends Component {
     postBuildSteps.push({
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
+      shell: "bash",
       run: [
         `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
         "cat $GITHUB_OUTPUT",

@@ -230,6 +230,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.9.0
+      - if: runner.os == 'Windows'
+        name: Windows performance improvements
+        run: |-
+          yarn config set cache-folder D:\a\_temp\yarn
+          echo "TEMP=D:\a\_temp" >> $env:GITHUB_ENV
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
@@ -244,6 +249,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build

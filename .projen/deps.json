@@ -2,14 +2,11 @@
   "dependencies": [
     {
       "name": "@biomejs/biome",
+      "version": "^2",
       "type": "build"
     },
     {
       "name": "@types/conventional-changelog-config-spec",
-      "type": "build"
-    },
-    {
-      "name": "@types/glob",
       "type": "build"
     },
     {
@@ -114,7 +111,7 @@
       "type": "build"
     },
     {
-      "name": "json-schema-to-typescript",
+      "name": "json2jsii",
       "type": "build"
     },
     {

@@ -1,3 +1,4 @@
+import * as path from "path";
 import {
   setupAllContributors,
   setupProjenBootstrap,
@@ -14,7 +15,7 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
-  setupBiomeTypesGeneration,
+  JsiiFromJsonSchema,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -77,16 +78,15 @@ const project = new JsiiProject({
   devDeps: [
     "@types/conventional-changelog-config-spec",
     "@types/yargs",
-    "@types/glob",
     "@types/semver",
     "@types/ini",
     "@types/parse-conflict-json",
     "markmac",
     "esbuild",
     "all-contributors-cli",
-    "json-schema-to-typescript",
-    // Can be removed if linting and formating is done with Biome
-    "@biomejs/biome",
+    "json2jsii",
+    // Needed to generate biome config
+    "@biomejs/biome@^2",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -194,12 +194,15 @@ setupNpmignore(project);
 setupIntegTest(project);
 setupBundleTaskRunner(project);
 
-setupBiomeTypesGeneration(project);
+new JsiiFromJsonSchema(project, {
+  schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
+  filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
 
 new WindowsBuild(project);
 
 // we are projen, so re-synth after compiling.
-// fixes feedback loop where projen contibutors run "build"
+// fixes feedback loop where projen contributors run "build"
 // but not all files are updated
 if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);

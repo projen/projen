@@ -4838,6 +4838,7 @@ const checkoutOptions: github.CheckoutOptions = { ... }
 | <code><a href="#projen.github.CheckoutOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.CheckoutOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.CheckoutOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.CheckoutOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.CheckoutOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.CheckoutOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.CheckoutOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -4898,6 +4899,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.CheckoutOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -5955,6 +5972,7 @@ const downloadArtifactOptions: github.DownloadArtifactOptions = { ... }
 | <code><a href="#projen.github.DownloadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -6015,6 +6033,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.DownloadArtifactOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -7226,6 +7260,12 @@ public readonly or: string | MergifyConditionalOperator[];
 
 ### MergifyOptions <a name="MergifyOptions" id="projen.github.MergifyOptions"></a>
 
+Configure Mergify.
+
+This currently only offers a subset of options available.
+
+> [https://docs.mergify.com/configuration/file-format/](https://docs.mergify.com/configuration/file-format/)
+
 #### Initializer <a name="Initializer" id="projen.github.MergifyOptions.Initializer"></a>
 
 ```typescript
@@ -7238,8 +7278,8 @@ const mergifyOptions: github.MergifyOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyOptions.property.queues">queues</a></code> | <code><a href="#projen.github.MergifyQueue">MergifyQueue</a>[]</code> | *No description.* |
-| <code><a href="#projen.github.MergifyOptions.property.rules">rules</a></code> | <code><a href="#projen.github.MergifyRule">MergifyRule</a>[]</code> | *No description.* |
+| <code><a href="#projen.github.MergifyOptions.property.queues">queues</a></code> | <code><a href="#projen.github.MergifyQueue">MergifyQueue</a>[]</code> | The available merge queues. |
+| <code><a href="#projen.github.MergifyOptions.property.rules">rules</a></code> | <code><a href="#projen.github.MergifyRule">MergifyRule</a>[]</code> | Pull request automation rules. |
 
 ---
 
@@ -7251,6 +7291,8 @@ public readonly queues: MergifyQueue[];
 
 - *Type:* <a href="#projen.github.MergifyQueue">MergifyQueue</a>[]
 
+The available merge queues.
+
 ---
 
 ##### `rules`<sup>Optional</sup> <a name="rules" id="projen.github.MergifyOptions.property.rules"></a>
@@ -7260,6 +7302,8 @@ public readonly rules: MergifyRule[];
 ```
 
 - *Type:* <a href="#projen.github.MergifyRule">MergifyRule</a>[]
+
+Pull request automation rules.
 
 ---
 
@@ -7278,9 +7322,11 @@ const mergifyQueue: github.MergifyQueue = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
-| <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue. |
 | <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
+| <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
+| <code><a href="#projen.github.MergifyQueue.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
+| <code><a href="#projen.github.MergifyQueue.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
 | <code><a href="#projen.github.MergifyQueue.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
 
 ---
@@ -7297,20 +7343,6 @@ Template to use as the commit message when using the merge or squash merge metho
 
 ---
 
-##### `conditions`<sup>Required</sup> <a name="conditions" id="projen.github.MergifyQueue.property.conditions"></a>
-
-```typescript
-public readonly conditions: string | MergifyConditionalOperator[];
-```
-
-- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
-
-A list of Conditions string that must match against the pull request for the pull request to be added to the queue.
-
-> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
-
----
-
 ##### `name`<sup>Required</sup> <a name="name" id="projen.github.MergifyQueue.property.name"></a>
 
 ```typescript
@@ -7320,6 +7352,39 @@ public readonly name: string;
 - *Type:* string
 
 The name of the queue.
+
+---
+
+##### ~~`conditions`~~<sup>Optional</sup> <a name="conditions" id="projen.github.MergifyQueue.property.conditions"></a>
+
+- *Deprecated:* use `queueConditions` instead
+
+```typescript
+public readonly conditions: string | MergifyConditionalOperator[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions that needs to match to queue the pull request.
+
+> [https://docs.mergify.com/configuration/file-format/#queue-rules](https://docs.mergify.com/configuration/file-format/#queue-rules)
+
+---
+
+##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueue.property.mergeConditions"></a>
+
+```typescript
+public readonly mergeConditions: string | MergifyConditionalOperator[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions to match to get the queued pull request merged.
+
+This automatically includes the queueConditions.
+In case of speculative merge pull request, the merge conditions are evaluated against the temporary pull request instead of the original one.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
 
 ---
 
@@ -7336,6 +7401,20 @@ Merge method to use.
 
 Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
 `fast-forward` is not supported on queues with `speculative_checks` > 1, `batch_size` > 1, or with `allow_inplace_checks` set to false.
+
+---
+
+##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueue.property.queueConditions"></a>
+
+```typescript
+public readonly queueConditions: string | MergifyConditionalOperator[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions that needs to match to queue the pull request.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
 
 ---
 
@@ -8158,6 +8237,7 @@ const setupGitIdentityOptions: github.SetupGitIdentityOptions = { ... }
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -8218,6 +8298,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.SetupGitIdentityOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -8989,6 +9085,7 @@ const uploadArtifactOptions: github.UploadArtifactOptions = { ... }
 | <code><a href="#projen.github.UploadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -9049,6 +9146,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.UploadArtifactOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 

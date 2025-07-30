@@ -1,20 +1,28 @@
+import * as path from "node:path";
 import { deepClone } from "fast-json-patch";
-import type { IConfiguration } from "./biome-config";
+import {
+  IndentStyle,
+  QuoteStyle,
+  toJson_BiomeConfiguration,
+  VcsClientKind,
+  type BiomeConfiguration,
+} from "./biome-config";
 import { Component } from "../../component";
 import type { NodeProject } from "../../javascript/node-project";
 import { JsonFile } from "../../json";
 import type { Project } from "../../project";
 import type { Task } from "../../task";
-import { deepMerge } from "../../util";
+import { deepMerge, normalizePersistedPath } from "../../util";
+import { tryResolveModule } from "../util";
 
 /**
  * Enabling VCS configuration by default.
  *
  * Note that this differs from `biome init`, as projen can be presumed to use version control
  */
-const DEFAULT_CONFIG: Pick<IConfiguration, "vcs" | "files"> = {
+const DEFAULT_CONFIG: Pick<BiomeConfiguration, "vcs" | "files"> = {
   vcs: {
-    clientKind: "git",
+    clientKind: VcsClientKind.GIT,
     enabled: true,
     useIgnoreFile: true,
   },
@@ -28,44 +36,40 @@ const DEFAULT_CONFIG: Pick<IConfiguration, "vcs" | "files"> = {
  *
  * Ignores by default following patterns: '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage'.
  */
-const DEFAULT_LINTER: Pick<IConfiguration, "linter"> = {
+const DEFAULT_LINTER: Pick<BiomeConfiguration, "linter"> = {
   linter: {
     enabled: true,
     rules: {
       recommended: true,
     },
-    // Default ignore's from Projen
-    ignore: [
-      "**/*.js",
-      "**/*.d.ts",
-      "**/node_modules/",
-      "**/*.generated.ts",
-      "**/coverage",
-    ],
   },
 };
 
 /**
  * Default formatting configuration if formatter is enabled.
  */
-const DEFAULT_FORMATTER: Pick<IConfiguration, "formatter" | "javascript"> = {
-  formatter: {
-    enabled: true,
-    indentStyle: "tab",
-  },
-  javascript: {
+const DEFAULT_FORMATTER: Pick<BiomeConfiguration, "formatter" | "javascript"> =
+  {
     formatter: {
-      quoteStyle: "double",
+      enabled: true,
+      indentStyle: IndentStyle.TAB,
     },
-  },
-};
+    javascript: {
+      formatter: {
+        quoteStyle: QuoteStyle.DOUBLE,
+      },
+    },
+  };
 
 /**
- * Default formatting configuration if organize imports is enabled.
+ * Default code assist actions
  */
-const DEFAULT_ORGANIZE_IMPORTS: Pick<IConfiguration, "organizeImports"> = {
-  organizeImports: {
+const DEFAULT_ASSIST: Pick<BiomeConfiguration, "assist"> = {
+  assist: {
     enabled: true,
+    actions: {
+      recommended: true,
+    },
   },
 };
 
@@ -73,27 +77,27 @@ export interface BiomeOptions {
   /**
    * Version of Biome to use
    *
-   * @default "^1"
+   * @default "^2"
    */
   readonly version?: string;
   /**
-   * Enable linting. Replaces Eslint.
+   * Enable linting with recommended rules.
    *
    * @default true
    */
   readonly linter?: boolean;
   /**
-   * Enable code formatter. Replaces mainly Prettier
+   * Enable code formatter with recommended settings.
    *
-   * @default false
+   * @default true
    */
   readonly formatter?: boolean;
   /**
-   * Enable import sorting/organizing. Replaces mainly Prettier
+   * Enable code assist with recommended actions.
    *
-   * @default false
+   * @default true
    */
-  readonly organizeImports?: boolean;
+  readonly assist?: boolean;
   /**
    * Should arrays be merged or overwritten when creating Biome configuration
    *
@@ -103,22 +107,28 @@ export interface BiomeOptions {
    */
   readonly mergeArraysInConfiguration?: boolean;
   /**
-   * Full Biome configuration. Note that this configuration dictates the final outcome if value is set.
+   * Full Biome configuration.
    *
-   * @example if linter is disabled on main level, it can be enabled on fullConfiguration.formatter.enabled.
+   * This configuration dictates the final outcome if value is set.
+   * For example, if the linter is disabled at the top-level, it can be enabled with `biomeConfig.linter.enabled`.
    */
-  readonly biomeConfig?: IConfiguration;
+  readonly biomeConfig?: BiomeConfiguration;
 }
 
+/**
+ * Biome component.
+ */
 export class Biome extends Component {
   public static of(project: Project): Biome | undefined {
     const isBiome = (c: Component): c is Biome => c instanceof Biome;
     return project.components.find(isBiome);
   }
 
-  private readonly biomeConfiguration: IConfiguration;
-  private readonly _lintPatterns: Set<string>;
-  private readonly biomeCommand = "biome check --write";
+  private readonly biomeConfiguration: Record<string, any>;
+  private readonly _filePatterns: Set<string>;
+  private readonly biomeCommand =
+    "biome check --no-errors-on-unmatched --write";
+
   /**
    * Biome task.
    */
@@ -130,58 +140,72 @@ export class Biome extends Component {
 
   constructor(project: NodeProject, options: BiomeOptions = {}) {
     super(project);
-    project.addDevDeps(`@biomejs/biome@${options.version ?? "^1"}`);
 
-    const defaultConfig: IConfiguration = {
+    const biomejs = `@biomejs/biome`;
+    project.addDevDeps(`${biomejs}@${options.version ?? "^2"}`);
+
+    const defaultConfig: BiomeConfiguration = {
       ...DEFAULT_CONFIG,
       ...(options.linter ?? true ? DEFAULT_LINTER : {}),
-      ...(options.formatter ?? false ? DEFAULT_FORMATTER : {}),
-      ...(options.organizeImports ?? false ? DEFAULT_ORGANIZE_IMPORTS : {}),
+      ...(options.formatter ?? true ? DEFAULT_FORMATTER : {}),
+      ...(options.assist ?? true ? DEFAULT_ASSIST : {}),
     };
 
+    this._filePatterns = new Set([
+      ...deepClone(options.biomeConfig?.files?.includes ?? []),
+      ...deepClone(defaultConfig.files?.includes ?? []),
+    ]);
+
     this.biomeConfiguration = deepMerge(
-      [deepClone(defaultConfig), deepClone(options.biomeConfig ?? {})],
+      [
+        toJson_BiomeConfiguration(deepClone(defaultConfig)),
+        toJson_BiomeConfiguration(deepClone(options.biomeConfig ?? {})),
+        {
+          $schema: () => {
+            const resolvedSchema = tryResolveModule(
+              `${biomejs}/configuration_schema.json`,
+              { paths: [this.project.outdir] }
+            );
+            if (
+              // not found
+              !resolvedSchema ||
+              // not within the project dir
+              !path
+                .resolve(resolvedSchema)
+                .startsWith(path.resolve(this.project.outdir))
+            ) {
+              return "https://biomejs.dev/schemas/latest/schema.json";
+            }
+
+            return normalizePersistedPath(
+              path.relative(this.project.outdir, resolvedSchema)
+            );
+          },
+          files: {
+            includes: () => Array.from(this._filePatterns),
+          },
+        },
+      ],
       { mergeArrays: options.mergeArraysInConfiguration ?? true }
     );
 
-    this.file = new JsonFile(this, "biome.jsonc", {
+    this.file = new (class extends JsonFile {
+      public get marker(): string | undefined {
+        return `biome-ignore-all format: ${super.marker ?? "generated file"}`;
+      }
+    })(this, "biome.jsonc", {
       obj: this.biomeConfiguration,
       allowComments: true,
       marker: true,
+      readonly: false, // biome will always re-write the config file
     });
-
-    this._lintPatterns = new Set([]);
 
     this.task = this.createLocalBiomeTask();
     project.testTask.spawn(this.task);
   }
 
-  /**
-   * Update the task with the current list of lint patterns and file extensions
-   */
-  private updateTask() {
-    const args = new Set<string>();
-
-    for (const arg of this._lintPatterns) {
-      args.add(arg);
-    }
-
-    this.task.reset(
-      [
-        this.biomeCommand,
-        // Allow also external arguments
-        "$@",
-        ...args,
-      ].join(" "),
-      {
-        args: this.task.steps[0].args,
-      }
-    );
-  }
-
-  public addLintPattern(pattern: string) {
-    this._lintPatterns.add(pattern);
-    this.updateTask();
+  public addFilePattern(pattern: string) {
+    this._filePatterns.add(pattern);
   }
 
   private createLocalBiomeTask() {
@@ -190,6 +214,7 @@ export class Biome extends Component {
       steps: [
         {
           exec: this.biomeCommand,
+          receiveArgs: true,
         },
       ],
     });
