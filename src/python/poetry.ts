@@ -1,3 +1,4 @@
+import { join } from "path";
 import * as TOML from "@iarna/toml";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
@@ -6,10 +7,16 @@ import { PythonExecutableOptions } from "./python-project";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
+import { createVersionHandler } from "../release/version-handlers";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
-import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+import {
+  decamelizeKeysRecursively,
+  exec,
+  execOrUndefined,
+  isTruthy,
+} from "../util";
 
 export interface PoetryOptions
   extends PythonPackagingOptions,
@@ -54,9 +61,17 @@ export class Poetry
    */
   private readonly pyProject: PoetryPyproject;
 
+  /**
+   * Version handler for reading pyproject.toml.
+   */
+  private readonly versionHandler: any;
+
   constructor(project: Project, options: PoetryOptions) {
     super(project);
     this.pythonExec = options.pythonExec ?? "python";
+    this.versionHandler = createVersionHandler(
+      join(project.outdir, "pyproject.toml")
+    );
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
@@ -92,7 +107,7 @@ export class Poetry
 
     this.pyProject = new PoetryPyproject(project, {
       name: project.name,
-      version: options.version,
+      version: this.determineVersion(options.version),
       description: options.description ?? "",
       license: options.license,
       authors: [`${options.authorName} <${options.authorEmail}>`],
@@ -249,6 +264,31 @@ export class Poetry
     } else {
       runtime.runTask(this.installCiTask.name);
     }
+  }
+
+  /**
+   * Determines the version to use for the project.
+   * During release builds (RELEASE=true), preserves the existing version from pyproject.toml.
+   * Otherwise, returns the configured version or "0.0.0".
+   */
+  private determineVersion(configuredVersion?: string): string {
+    if (!this.isReleaseBuild) {
+      return "0.0.0";
+    }
+
+    // During release builds, try to preserve the existing version from the file
+    try {
+      return this.versionHandler.readVersion();
+    } catch {
+      return configuredVersion ?? "0.0.0";
+    }
+  }
+
+  /**
+   * Checks if this is a release build based on the RELEASE environment variable.
+   */
+  private get isReleaseBuild(): boolean {
+    return isTruthy(process.env.RELEASE);
   }
 }
 
@@ -435,6 +475,7 @@ export class PoetryPyproject extends Component {
     this.file = new TomlFile(project, "pyproject.toml", {
       omitEmpty: false,
       obj: tomlStructure,
+      readonly: false, // allow poetry and release tools to modify
     });
   }
 }
