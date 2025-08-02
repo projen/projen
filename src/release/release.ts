@@ -150,6 +150,19 @@ export interface ReleaseProjectOptions {
   readonly releaseWorkflowName?: string;
 
   /**
+   * The GitHub Actions environment used for the release.
+   *
+   * This can be used to add an explicit approval step to the release
+   * or limit who can initiate a release through environment protection rules.
+   *
+   * When multiple artifacts are released, the environment can be overwritten
+   * on a per artifact basis,
+   *
+   * @default - no environment used, unless set at the artifact level
+   */
+  readonly releaseEnvironment?: string;
+
+  /**
    * Defines additional release branches. A workflow will be created for each
    * release branch which will publish releases from commits in this branch.
    * Each release branch _must_ be assigned a major version number which is used
@@ -488,12 +501,16 @@ export class Release extends Component {
       workflowName:
         options.releaseWorkflowName ??
         workflowNameForProject("release", this.project),
+      environment: options.releaseEnvironment,
       tagPrefix: options.releaseTagPrefix,
       npmDistTag: options.npmDistTag,
     });
 
     for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
-      this.addBranch(name, opts);
+      this.addBranch(name, {
+        environment: options.releaseEnvironment,
+        ...opts,
+      });
     }
   }
 
@@ -799,6 +816,19 @@ export interface BranchOptions {
    * @default "release-BRANCH"
    */
   readonly workflowName?: string;
+
+  /**
+   * The GitHub Actions environment used for the release.
+   *
+   * This can be used to add an explicit approval step to the release
+   * or limit who can initiate a release through environment protection rules.
+   *
+   * When multiple artifacts are released, the environment can be overwritten
+   * on a per artifact basis,
+   *
+   * @default - no environment used, unless set at the artifact level
+   */
+  readonly environment?: string;
 
   /**
    * The major versions released from this branch.

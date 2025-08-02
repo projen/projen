@@ -6682,6 +6682,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -7970,6 +7971,25 @@ be provided for the default branch.
 
 ---
 
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.web.NextJsProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis,
+
+---
+
 ##### ~~`releaseEveryCommit`~~<sup>Optional</sup> <a name="releaseEveryCommit" id="projen.web.NextJsProjectOptions.property.releaseEveryCommit"></a>
 
 - *Deprecated:* Use `releaseTrigger: ReleaseTrigger.continuous()` instead
@@ -8810,6 +8830,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -10114,6 +10135,25 @@ be provided for the default branch.
 
 ---
 
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.web.NextJsTypeScriptProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis,
+
+---
+
 ##### ~~`releaseEveryCommit`~~<sup>Optional</sup> <a name="releaseEveryCommit" id="projen.web.NextJsTypeScriptProjectOptions.property.releaseEveryCommit"></a>
 
 - *Deprecated:* Use `releaseTrigger: ReleaseTrigger.continuous()` instead
@@ -11293,6 +11333,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.web.ReactProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -12554,6 +12595,25 @@ be provided for the default branch.
 
 ---
 
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.web.ReactProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis,
+
+---
+
 ##### ~~`releaseEveryCommit`~~<sup>Optional</sup> <a name="releaseEveryCommit" id="projen.web.ReactProjectOptions.property.releaseEveryCommit"></a>
 
 - *Deprecated:* Use `releaseTrigger: ReleaseTrigger.continuous()` instead
@@ -13589,6 +13649,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -14863,6 +14924,25 @@ Each release branch _must_ be assigned a major version number which is used
 to enforce that versions published from that branch always use that major
 version. If multiple branches are used, the `majorVersion` field must also
 be provided for the default branch.
+
+---
+
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.web.ReactTypeScriptProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis,
 
 ---
 

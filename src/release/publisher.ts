@@ -297,10 +297,11 @@ export class Publisher extends Component {
         needs: Object.entries(this.publishJobs)
           .filter(([name, _]) => name != jobName)
           .map(([_, job]) => job),
+        environment: options.githubEnvironment ?? branchOptions.environment,
+        run: this.githubReleaseCommand(options, branchOptions),
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
         },
-        run: this.githubReleaseCommand(options, branchOptions),
       };
     });
   }
@@ -366,6 +367,7 @@ export class Publisher extends Component {
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
@@ -415,10 +417,11 @@ export class Publisher extends Component {
 
     this.addPublishJob(
       "nuget",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         publishTools: PUBLIB_TOOLCHAIN.dotnet,
         prePublishSteps: options.prePublishSteps ?? [],
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-nuget"),
         registryName: "NuGet Gallery",
         permissions: {
@@ -464,11 +467,12 @@ export class Publisher extends Component {
 
     this.addPublishJob(
       "maven",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         registryName: "Maven Central",
         publishTools: PUBLIB_TOOLCHAIN.java,
         prePublishSteps: options.prePublishSteps ?? [],
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-maven"),
         env: {
           MAVEN_ENDPOINT: options.mavenEndpoint,
@@ -570,12 +574,13 @@ export class Publisher extends Component {
 
     this.addPublishJob(
       "pypi",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         registryName: "PyPI",
         publishTools: PUBLIB_TOOLCHAIN.python,
         permissions,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-pypi"),
         env: {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
@@ -613,10 +618,11 @@ export class Publisher extends Component {
 
     this.addPublishJob(
       "golang",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         publishTools: PUBLIB_TOOLCHAIN.go,
         prePublishSteps: prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
@@ -751,6 +757,7 @@ export class Publisher extends Component {
 
       return {
         [jobname]: {
+          ...(opts.environment ? { environment: opts.environment } : {}),
           tools: {
             node: { version: this.workflowNodeVersion },
             ...opts.publishTools,
@@ -858,6 +865,12 @@ interface PublishJobOptions {
    * Additional jobs the publish jobs depends on.
    */
   readonly needs?: string[];
+
+  /**
+   * The GitHub Actions environment used for publishing.
+   * @default - no environment used
+   */
+  readonly environment?: string;
 }
 
 /**
@@ -889,6 +902,18 @@ export interface CommonPublishOptions {
    * @default - no additional tools are installed
    */
   readonly publishTools?: Tools;
+
+  /**
+   * The GitHub Actions environment used for publishing.
+   *
+   * This can be used to add an explicit approval step to the release
+   * or limit who can initiate a release through environment protection rules.
+   *
+   * Set this to overwrite a package level publishing environment just for this artifact.
+   *
+   * @default - no environment used, unless set at the package level
+   */
+  readonly githubEnvironment?: string;
 }
 
 /**
