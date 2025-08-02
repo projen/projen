@@ -319,7 +319,11 @@ export class Publisher extends Component {
       isAwsCodeArtifact &&
       options.codeArtifactOptions?.authProvider ===
         CodeArtifactAuthProvider.GITHUB_OIDC;
-    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
+    const npmToken = defaultNpmToken(
+      options.npmTokenSecret,
+      options.registry,
+      options.npmTrustedPublishing
+    );
 
     if (options.distTag) {
       this.project.logger.warn(
@@ -362,7 +366,10 @@ export class Publisher extends Component {
       }
 
       const npmProvenance = options.npmProvenance ? "true" : undefined;
-      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
+      const needsIdTokenWrite =
+        isAwsCodeArtifactWithOidc ||
+        npmProvenance ||
+        options.npmTrustedPublishing;
       return {
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
@@ -1008,6 +1015,16 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * @default - undefined
    */
   readonly npmProvenance?: boolean;
+
+  /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * @see
+   *
+   * @default - false
+   */
+  readonly npmTrustedPublishing?: boolean;
 
   /**
    * Options for publishing npm package to AWS CodeArtifact.

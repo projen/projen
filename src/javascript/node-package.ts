@@ -335,6 +335,16 @@ export interface NodePackageOptions {
   readonly npmTokenSecret?: string;
 
   /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * @see
+   *
+   * @default - false
+   */
+  readonly npmTrustedPublishing?: boolean;
+
+  /**
    * Options for npm packages using AWS CodeArtifact.
    * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *
@@ -1067,7 +1077,11 @@ export class NodePackage extends Component {
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
-      npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
+      npmTokenSecret: defaultNpmToken(
+        options.npmTokenSecret,
+        npmr.hostname,
+        options.npmTrustedPublishing
+      ),
       codeArtifactOptions,
       scopedPackagesOptions: this.parseScopedPackagesOptions(
         options.scopedPackagesOptions
@@ -1767,9 +1781,15 @@ function defaultNpmAccess(packageName: string) {
 
 export function defaultNpmToken(
   npmToken: string | undefined,
-  registry: string | undefined
+  registry: string | undefined,
+  npmTrustedPublishing: boolean | undefined
 ) {
-  // if we are publishing to AWS CdodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
+  // npm trusted publishing does not use tokens
+  if (npmTrustedPublishing) {
+    return undefined;
+  }
+
+  // if we are publishing to AWS CodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
   if (isAwsCodeArtifactRegistry(registry)) {
     return undefined;
   }
