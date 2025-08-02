@@ -566,10 +566,40 @@ export class Publisher extends Component {
       });
       workflowEnv = { TWINE_USERNAME: "aws" };
     } else {
-      workflowEnv = {
-        TWINE_USERNAME: secret(options.twineUsernameSecret ?? "TWINE_USERNAME"),
-        TWINE_PASSWORD: secret(options.twinePasswordSecret ?? "TWINE_PASSWORD"),
-      };
+      if (options.trustedPublishing) {
+        permissions = { ...permissions, idToken: JobPermission.WRITE };
+        prePublishSteps.push({
+          name: "Mint API Token",
+          id: "mint-token",
+          shell: "bash",
+          // @see https://docs.pypi.org/trusted-publishers/using-a-publisher/#github-actions
+          run: [
+            "# retrieve the ambient OIDC token",
+            `resp=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=pypi")`,
+            `oidc_token=$(jq -r '.value' <<< "\${resp}")`,
+            "# exchange the OIDC token for an API token",
+            `resp=$(curl -X POST https://pypi.org/_/oidc/mint-token -d "{\\"token\\": \\"\${oidc_token}\\"}")`,
+            `api_token=$(jq -r '.token' <<< "\${resp}")`,
+            "# mask the newly minted token",
+            'echo "::add-mask::${api_token}"',
+            "# set the token as output",
+            'echo "api-token=${api_token}" >> "${GITHUB_OUTPUT}"',
+          ].join("\n"),
+        });
+        workflowEnv = {
+          TWINE_USERNAME: "__token__",
+          TWINE_PASSWORD: output("mint-token", "api-token"),
+        };
+      } else {
+        workflowEnv = {
+          TWINE_USERNAME: secret(
+            options.twineUsernameSecret ?? "TWINE_USERNAME"
+          ),
+          TWINE_PASSWORD: secret(
+            options.twinePasswordSecret ?? "TWINE_PASSWORD"
+          ),
+        };
+      }
     }
 
     this.addPublishJob(
@@ -817,6 +847,10 @@ export class Publisher extends Component {
 
 function secret(secretName: string) {
   return `\${{ secrets.${secretName} }}`;
+}
+
+function output(step: string, name: string) {
+  return `\${{ steps.${step}.outputs.${name} }}`;
 }
 
 interface PublishJobOptions {
@@ -1070,6 +1104,15 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
    * @default "TWINE_PASSWORD"
    */
   readonly twinePasswordSecret?: string;
+
+  /**
+   * Use PyPI trusted publishing instead of tokens or username & password.
+   *
+   * Needs to be setup in PyPI.
+   *
+   * @see https://docs.pypi.org/trusted-publishers/adding-a-publisher/
+   */
+  readonly trustedPublishing?: boolean;
 
   /**
    * Options for publishing to AWS CodeArtifact.

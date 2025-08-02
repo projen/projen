@@ -1184,3 +1184,45 @@ describe("Subproject", () => {
     expect(outdir[".github/workflows/release_my-project.yml"]).toBeUndefined();
   });
 });
+
+describe("python", () => {
+  test("if trustedPublishing is enabled, api token is minted and id-token write permission is granted", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    release.publisher.publishToPyPi({
+      trustedPublishing: true,
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+
+    expect(releaseWorkflow.jobs.release_pypi.steps[4]).toStrictEqual({
+      id: "mint-token",
+      name: "Mint API Token",
+      run: expect.any(String),
+      shell: "bash",
+    });
+
+    expect(releaseWorkflow.jobs.release_pypi.steps[5].env).toStrictEqual({
+      TWINE_USERNAME: "__token__",
+      TWINE_PASSWORD: "${{ steps.mint-token.outputs.api-token }}",
+    });
+
+    expect(releaseWorkflow.jobs.release_pypi.permissions).toStrictEqual({
+      contents: "read",
+      "id-token": "write",
+    });
+  });
+});

@@ -9870,6 +9870,7 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.release.CodeArtifactOptions</code> | Options for publishing to AWS CodeArtifact. |
+| <code><a href="#projen.cdk.JsiiPythonTarget.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use PyPI trusted publishing instead of tokens or username & password. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -9954,6 +9955,22 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 - *Default:* undefined
 
 Options for publishing to AWS CodeArtifact.
+
+---
+
+##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.cdk.JsiiPythonTarget.property.trustedPublishing"></a>
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use PyPI trusted publishing instead of tokens or username & password.
+
+Needs to be setup in PyPI.
+
+> [https://docs.pypi.org/trusted-publishers/adding-a-publisher/](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
 
 ---
 

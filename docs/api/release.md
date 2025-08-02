@@ -2296,6 +2296,7 @@ const jsiiReleasePyPi: release.JsiiReleasePyPi = { ... }
 | <code><a href="#projen.release.JsiiReleasePyPi.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing to AWS CodeArtifact. |
+| <code><a href="#projen.release.JsiiReleasePyPi.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use PyPI trusted publishing instead of tokens or username & password. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -2388,6 +2389,24 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 - *Default:* undefined
 
 Options for publishing to AWS CodeArtifact.
+
+---
+
+##### ~~`trustedPublishing`~~<sup>Optional</sup> <a name="trustedPublishing" id="projen.release.JsiiReleasePyPi.property.trustedPublishing"></a>
+
+- *Deprecated:* Use `PyPiPublishOptions` instead.
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use PyPI trusted publishing instead of tokens or username & password.
+
+Needs to be setup in PyPI.
+
+> [https://docs.pypi.org/trusted-publishers/adding-a-publisher/](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
 
 ---
 
@@ -3263,6 +3282,7 @@ const pyPiPublishOptions: release.PyPiPublishOptions = { ... }
 | <code><a href="#projen.release.PyPiPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing to AWS CodeArtifact. |
+| <code><a href="#projen.release.PyPiPublishOptions.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use PyPI trusted publishing instead of tokens or username & password. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -3345,6 +3365,22 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 - *Default:* undefined
 
 Options for publishing to AWS CodeArtifact.
+
+---
+
+##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.release.PyPiPublishOptions.property.trustedPublishing"></a>
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use PyPI trusted publishing instead of tokens or username & password.
+
+Needs to be setup in PyPI.
+
+> [https://docs.pypi.org/trusted-publishers/adding-a-publisher/](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
 
 ---
 
