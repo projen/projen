@@ -337,3 +337,5 @@ public readonly version: string;
 Version of Biome to use.
 
 ---
+
+
