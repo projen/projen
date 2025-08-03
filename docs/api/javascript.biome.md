@@ -9,13 +9,13 @@
 ```typescript
 import { javascript } from 'projen'
 
-new javascript.biome.Biome(project: NodeProject, options?: BiomeOptions)
+new javascript.Biome(project: NodeProject, options?: BiomeOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome.Biome.Initializer.parameter.project">project</a></code> | <code>projen.javascript.NodeProject</code> | *No description.* |
-| <code><a href="#projen.javascript.biome.Biome.Initializer.parameter.options">options</a></code> | <code>projen.javascript.biome.BiomeOptions</code> | *No description.* |
+| <code><a href="#projen.javascript.biome.Biome.Initializer.parameter.options">options</a></code> | <code>projen.javascript.BiomeOptions</code> | *No description.* |
 
 ---
 
@@ -27,7 +27,7 @@ new javascript.biome.Biome(project: NodeProject, options?: BiomeOptions)
 
 ##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.biome.Biome.Initializer.parameter.options"></a>
 
-- *Type:* projen.javascript.biome.BiomeOptions
+- *Type:* projen.javascript.BiomeOptions
 
 ---
 
@@ -104,7 +104,7 @@ public addLintPattern(pattern: string): void
 ```typescript
 import { javascript } from 'projen'
 
-javascript.biome.Biome.isConstruct(x: any)
+javascript.Biome.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
@@ -136,7 +136,7 @@ Any object.
 ```typescript
 import { javascript } from 'projen'
 
-javascript.biome.Biome.isComponent(x: any)
+javascript.Biome.isComponent(x: any)
 ```
 
 Test whether the given construct is a component.
@@ -152,7 +152,7 @@ Test whether the given construct is a component.
 ```typescript
 import { javascript } from 'projen'
 
-javascript.biome.Biome.of(project: Project)
+javascript.Biome.of(project: Project)
 ```
 
 ###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.biome.Biome.of.parameter.project"></a>
@@ -228,14 +228,14 @@ Biome task.
 ```typescript
 import { javascript } from 'projen'
 
-const biomeOptions: javascript.biome.BiomeOptions = { ... }
+const biomeOptions: javascript.BiomeOptions = { ... }
 ```
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code>projen.javascript.biome.biome_config.IConfiguration</code> | Full Biome configuration. |
+| <code><a href="#projen.javascript.biome.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code>projen.javascript.biome_config.IConfiguration</code> | Full Biome configuration. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting. |
 | <code><a href="#projen.javascript.biome.BiomeOptions.property.mergeArraysInConfiguration">mergeArraysInConfiguration</a></code> | <code>boolean</code> | Should arrays be merged or overwritten when creating Biome configuration. |
@@ -250,7 +250,7 @@ const biomeOptions: javascript.biome.BiomeOptions = { ... }
 public readonly biomeConfig: IConfiguration;
 ```
 
-- *Type:* projen.javascript.biome.biome_config.IConfiguration
+- *Type:* projen.javascript.biome_config.IConfiguration
 
 Full Biome configuration.
 
@@ -337,6 +337,3 @@ public readonly version: string;
 Version of Biome to use.
 
 ---
-
-
-
