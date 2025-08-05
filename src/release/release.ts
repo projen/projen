@@ -156,7 +156,7 @@ export interface ReleaseProjectOptions {
    * or limit who can initiate a release through environment protection rules.
    *
    * When multiple artifacts are released, the environment can be overwritten
-   * on a per artifact basis,
+   * on a per artifact basis.
    *
    * @default - no environment used, unless set at the artifact level
    */
@@ -824,7 +824,7 @@ export interface BranchOptions {
    * or limit who can initiate a release through environment protection rules.
    *
    * When multiple artifacts are released, the environment can be overwritten
-   * on a per artifact basis,
+   * on a per artifact basis.
    *
    * @default - no environment used, unless set at the artifact level
    */

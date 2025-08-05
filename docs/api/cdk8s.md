@@ -8001,7 +8001,7 @@ This can be used to add an explicit approval step to the release
 or limit who can initiate a release through environment protection rules.
 
 When multiple artifacts are released, the environment can be overwritten
-on a per artifact basis,
+on a per artifact basis.
 
 ---
 
@@ -10566,7 +10566,7 @@ This can be used to add an explicit approval step to the release
 or limit who can initiate a release through environment protection rules.
 
 When multiple artifacts are released, the environment can be overwritten
-on a per artifact basis,
+on a per artifact basis.
 
 ---
 
