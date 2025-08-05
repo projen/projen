@@ -288,6 +288,11 @@ describe("Publisher Environment Support", () => {
       outdir[".github/workflows/release-alpha.yml"]
     );
 
+    // The release job should NOT get environment - only publish jobs should
+    // This is because the release job just builds artifacts and doesn't need approval
+    expect(mainWorkflow.jobs.release.environment).toBeUndefined();
+    expect(betaWorkflow.jobs.release.environment).toBeUndefined();
+    expect(alphaWorkflow.jobs.release.environment).toBeUndefined();
     expect(mainWorkflow.jobs.release_npm.environment).toBe("main-env");
     expect(betaWorkflow.jobs.release_npm.environment).toBe("beta-env");
     expect(alphaWorkflow.jobs.release_npm.environment).toBe("alpha-env");

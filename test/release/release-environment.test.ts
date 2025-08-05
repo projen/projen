@@ -20,6 +20,9 @@ describe("Release Environment Support", () => {
     // THEN
     const outdir = synthSnapshot(project);
     const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    // The release job should NOT get environment - only publish jobs should
+    // This is because the release job just builds artifacts and doesn't need approval
+    expect(workflow.jobs.release.environment).toBeUndefined();
     expect(workflow.jobs.release_npm.environment).toBe("release-env");
   });
 
@@ -49,6 +52,9 @@ describe("Release Environment Support", () => {
       outdir[".github/workflows/release-staging.yml"]
     );
 
+    // The release job should NOT get environment - only publish jobs should
+    expect(mainWorkflow.jobs.release.environment).toBeUndefined();
+    expect(stagingWorkflow.jobs.release.environment).toBeUndefined();
     expect(mainWorkflow.jobs.release_npm.environment).toBe(
       "default-release-env"
     );
@@ -80,6 +86,10 @@ describe("Release Environment Support", () => {
     const v2Workflow = YAML.parse(outdir[".github/workflows/release-v2.yml"]);
     const v3Workflow = YAML.parse(outdir[".github/workflows/release-v3.yml"]);
 
+    // The release job should NOT get environment - only publish jobs should
+    expect(mainWorkflow.jobs.release.environment).toBeUndefined();
+    expect(v2Workflow.jobs.release.environment).toBeUndefined();
+    expect(v3Workflow.jobs.release.environment).toBeUndefined();
     expect(mainWorkflow.jobs.release_npm.environment).toBe("inherited-env");
     expect(v2Workflow.jobs.release_npm.environment).toBe("inherited-env");
     expect(v3Workflow.jobs.release_npm.environment).toBe("v3-specific-env");
@@ -101,6 +111,7 @@ describe("Release Environment Support", () => {
     // THEN
     const outdir = synthSnapshot(project);
     const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow.jobs.release.environment).toBeUndefined();
     expect(workflow.jobs.release_npm.environment).toBeUndefined();
   });
 
@@ -126,7 +137,8 @@ describe("Release Environment Support", () => {
     // THEN
     const outdir = synthSnapshot(project);
     const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
-    // Release job doesn't get environment, only publisher jobs do
+    // The release job should NOT get environment - only publish jobs should
+    expect(workflow.jobs.release.environment).toBeUndefined();
     expect(workflow.jobs.release_npm.environment).toBe("shared-env");
     expect(workflow.jobs.release_github.environment).toBe("shared-env");
   });
@@ -155,7 +167,8 @@ describe("Release Environment Support", () => {
     // THEN
     const outdir = synthSnapshot(project);
     const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
-    // Release job doesn't get environment, only publisher jobs do
+    // The release job should NOT get environment - only publish jobs should
+    expect(workflow.jobs.release.environment).toBeUndefined();
     expect(workflow.jobs.release_npm.environment).toBe("npm-specific-env");
     expect(workflow.jobs.release_github.environment).toBe("release-env");
   });
