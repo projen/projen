@@ -50,9 +50,9 @@ a Python project. You can get a complete list of available project types by runn
 Projen projects are configured using a `.projenrc.ts` file. Here's a basic example for a TypeScript project:
 
 ```ts
-import { TypeScriptProject } from 'projen';
+import { typescript } from 'projen';
 
-const project = new TypeScriptProject({
+const project = new typescript.TypeScriptProject({
   name: 'my-projen-project',
   defaultReleaseBranch: 'main',
   packageManager: NodePackageManager.NPM,
