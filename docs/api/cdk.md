@@ -6376,7 +6376,7 @@ public readonly jsiiVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "~5.6.0"
+- *Default:* "~5.8.0"
 
 Version of the jsii compiler to use.
 
@@ -9791,7 +9791,7 @@ public readonly jsiiVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "~5.6.0"
+- *Default:* "~5.8.0"
 
 Version of the jsii compiler to use.
 
