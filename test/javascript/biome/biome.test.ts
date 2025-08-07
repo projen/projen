@@ -105,6 +105,46 @@ describe("biome", () => {
       const config = snapshotBiomeConfig(project);
       expect(config.files?.includes).toContain("bar");
     });
+
+    test("ignoreGeneratedFiles option disabled", () => {
+      // GIVEN
+      const project = new NodeProject({
+        name: "test",
+        defaultReleaseBranch: "master",
+        prettier: false,
+      });
+
+      // WHEN
+      new Biome(project, {
+        ignoreGeneratedFiles: false,
+      });
+
+      // THEN
+      const config = snapshotBiomeConfig(project);
+      const ignorePatterns =
+        config.files?.includes?.filter((pattern) => pattern.startsWith("!")) ??
+        [];
+      expect(ignorePatterns.length).toBe(0);
+    });
+
+    test("ignoreGeneratedFiles option enabled by default", () => {
+      // GIVEN
+      const project = new NodeProject({
+        name: "test",
+        defaultReleaseBranch: "master",
+        prettier: false,
+      });
+
+      // WHEN
+      new Biome(project);
+
+      // THEN
+      const config = snapshotBiomeConfig(project);
+      const ignorePatterns =
+        config.files?.includes?.filter((pattern) => pattern.startsWith("!")) ??
+        [];
+      expect(ignorePatterns.length).toBeGreaterThan(0);
+    });
   });
 
   describe("of", () => {
@@ -205,6 +245,8 @@ describe("Configuration", () => {
         });
         const mergedConfig = snapshotBiomeConfig(project2);
 
+        // The merged config should have the same length since duplicates should be removed
+        // This tests that the merge logic properly deduplicates entries
         expect(mergedConfig.files!.includes!.length).toBe(
           config.files!.includes!.length
         );

@@ -5529,6 +5529,7 @@ const biomeOptions: javascript.BiomeOptions = { ... }
 | <code><a href="#projen.javascript.BiomeOptions.property.assist">assist</a></code> | <code>boolean</code> | Enable code assist with recommended actions. |
 | <code><a href="#projen.javascript.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code><a href="#projen.javascript.biome_config.BiomeConfiguration">BiomeConfiguration</a></code> | Full Biome configuration. |
 | <code><a href="#projen.javascript.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter with recommended settings. |
+| <code><a href="#projen.javascript.BiomeOptions.property.ignoreGeneratedFiles">ignoreGeneratedFiles</a></code> | <code>boolean</code> | Automatically ignore all generated files. |
 | <code><a href="#projen.javascript.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting with recommended rules. |
 | <code><a href="#projen.javascript.BiomeOptions.property.mergeArraysInConfiguration">mergeArraysInConfiguration</a></code> | <code>boolean</code> | Should arrays be merged or overwritten when creating Biome configuration. |
 | <code><a href="#projen.javascript.BiomeOptions.property.version">version</a></code> | <code>string</code> | Version of Biome to use. |
@@ -5573,6 +5574,22 @@ public readonly formatter: boolean;
 - *Default:* true
 
 Enable code formatter with recommended settings.
+
+---
+
+##### `ignoreGeneratedFiles`<sup>Optional</sup> <a name="ignoreGeneratedFiles" id="projen.javascript.BiomeOptions.property.ignoreGeneratedFiles"></a>
+
+```typescript
+public readonly ignoreGeneratedFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically ignore all generated files.
+
+This prevents Biome from trying to format or lint files that are marked as generated,
+which would fail since generated files are typically read-only.
 
 ---
 

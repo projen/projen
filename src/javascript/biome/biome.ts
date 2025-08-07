@@ -107,6 +107,15 @@ export interface BiomeOptions {
    */
   readonly mergeArraysInConfiguration?: boolean;
   /**
+   * Automatically ignore all generated files.
+   *
+   * This prevents Biome from trying to format or lint files that are marked as generated,
+   * which would fail since generated files are typically read-only.
+   *
+   * @default true
+   */
+  readonly ignoreGeneratedFiles?: boolean;
+  /**
    * Full Biome configuration.
    *
    * This configuration dictates the final outcome if value is set.
@@ -156,6 +165,19 @@ export class Biome extends Component {
       ...deepClone(defaultConfig.files?.includes ?? []),
     ]);
 
+    // Get generated file patterns to ignore
+    const getGeneratedIgnorePatterns = () => {
+      if (options.ignoreGeneratedFiles === false) {
+        return [];
+      }
+
+      const generatedFiles = this.project.files
+        .filter((file) => file.readonly && file.marker)
+        .map((file) => `!${file.path}`);
+
+      return generatedFiles;
+    };
+
     this.biomeConfiguration = deepMerge(
       [
         toJson_BiomeConfiguration(deepClone(defaultConfig)),
@@ -182,7 +204,12 @@ export class Biome extends Component {
             );
           },
           files: {
-            includes: () => Array.from(this._filePatterns),
+            includes: () => {
+              const patterns = Array.from(this._filePatterns);
+              const generatedPatterns = getGeneratedIgnorePatterns();
+              // Use Set to deduplicate patterns
+              return [...new Set([...patterns, ...generatedPatterns])];
+            },
           },
         },
       ],
