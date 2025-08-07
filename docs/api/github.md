@@ -4297,7 +4297,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflowJob.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.defaults">defaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
-| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.if">if</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
@@ -4406,10 +4406,10 @@ public readonly env: {[ key: string ]: string};
 ##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJob.property.environment"></a>
 
 ```typescript
-public readonly environment: any;
+public readonly environment: string;
 ```
 
-- *Type:* any
+- *Type:* string
 
 ---
 
@@ -8592,6 +8592,7 @@ const taskWorkflowJobOptions: github.TaskWorkflowJobOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the job. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.jobDefaults">jobDefaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | Default settings for all steps in the TaskWorkflow Job. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | Mapping of job output names to values/expressions. |
@@ -8687,6 +8688,19 @@ public readonly env: {[ key: string ]: string};
 - *Default:* {}
 
 Workflow environment variables.
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJobOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used
+
+The GitHub Actions environment used for the job.
 
 ---
 
@@ -8814,6 +8828,7 @@ const taskWorkflowOptions: github.TaskWorkflowOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.jobDefaults">jobDefaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | Default settings for all steps in the TaskWorkflow Job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | Mapping of job output names to values/expressions. |
@@ -8913,6 +8928,19 @@ public readonly env: {[ key: string ]: string};
 - *Default:* {}
 
 Workflow environment variables.
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used
+
+The GitHub Actions environment used for the job.
 
 ---
 

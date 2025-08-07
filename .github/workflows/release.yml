@@ -75,6 +75,7 @@ jobs:
     permissions:
       contents: write
       issues: write
+    environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v4
@@ -114,6 +115,7 @@ jobs:
       id-token: write
       contents: read
       issues: write
+    environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v4
@@ -169,6 +171,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+    environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-java@v4
@@ -230,6 +233,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+    environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v4
@@ -286,6 +290,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+    environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v4

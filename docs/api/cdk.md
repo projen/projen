@@ -3959,6 +3959,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -5249,6 +5250,25 @@ Each release branch _must_ be assigned a major version number which is used
 to enforce that versions published from that branch always use that major
 version. If multiple branches are used, the `majorVersion` field must also
 be provided for the default branch.
+
+---
+
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.cdk.ConstructLibraryOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
 
 ---
 
@@ -6615,6 +6635,7 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiDotNetTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -6623,6 +6644,24 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.dotNetNamespace">dotNetNamespace</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.packageId">packageId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.iconUrl">iconUrl</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiDotNetTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -6745,6 +6784,7 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -6758,6 +6798,24 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 | <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target repository in which this module will be published (e.g. github.com/owner/repo). |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the Go package name. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.versionSuffix">versionSuffix</a></code> | <code>string</code> | A suffix appended at the end of the module version (e.g `"-devprefix"`). |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiGoTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -6969,6 +7027,7 @@ const jsiiJavaTarget: cdk.JsiiJavaTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiJavaTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -6983,6 +7042,24 @@ const jsiiJavaTarget: cdk.JsiiJavaTarget = { ... }
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.javaPackage">javaPackage</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenArtifactId">mavenArtifactId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenGroupId">mavenGroupId</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiJavaTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -7284,6 +7361,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -8576,6 +8654,25 @@ be provided for the default branch.
 
 ---
 
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.cdk.JsiiProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
+
+---
+
 ##### ~~`releaseEveryCommit`~~<sup>Optional</sup> <a name="releaseEveryCommit" id="projen.cdk.JsiiProjectOptions.property.releaseEveryCommit"></a>
 
 - *Deprecated:* Use `releaseTrigger: ReleaseTrigger.continuous()` instead
@@ -9768,6 +9865,7 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiPythonTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -9777,6 +9875,24 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.distName">distName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.module">module</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiPythonTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 

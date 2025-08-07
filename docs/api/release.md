@@ -707,6 +707,7 @@ const branchOptions: release.BranchOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.release.BranchOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | The major versions released from this branch. |
+| <code><a href="#projen.release.BranchOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.release.BranchOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | The minimum major version to release. |
 | <code><a href="#projen.release.BranchOptions.property.minorVersion">minorVersion</a></code> | <code>number</code> | The minor versions released from this branch. |
 | <code><a href="#projen.release.BranchOptions.property.npmDistTag">npmDistTag</a></code> | <code>string</code> | The npm distribution tag to use for this branch. |
@@ -725,6 +726,25 @@ public readonly majorVersion: number;
 - *Type:* number
 
 The major versions released from this branch.
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.release.BranchOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
 
 ---
 
@@ -906,9 +926,28 @@ const commonPublishOptions: release.CommonPublishOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.CommonPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.CommonPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.CommonPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.CommonPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.CommonPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -1006,12 +1045,31 @@ const gitHubReleasesPublishOptions: release.GitHubReleasesPublishOptions = { ...
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.GitHubReleasesPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.changelogFile">changelogFile</a></code> | <code>string</code> | The location of an .md file (relative to `dist/`) that includes the changelog for the release. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.releaseTagFile">releaseTagFile</a></code> | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.versionFile">versionFile</a></code> | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number. |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.GitHubReleasesPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -1257,6 +1315,7 @@ const goPublishOptions: release.GoPublishOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.GoPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.GoPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.GoPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.GoPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -1267,6 +1326,24 @@ const goPublishOptions: release.GoPublishOptions = { ... }
 | <code><a href="#projen.release.GoPublishOptions.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
 | <code><a href="#projen.release.GoPublishOptions.property.gitUserEmail">gitUserEmail</a></code> | <code>string</code> | The email to use in the release git commit. |
 | <code><a href="#projen.release.GoPublishOptions.property.gitUserName">gitUserName</a></code> | <code>string</code> | The user name to use for the release git commit. |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.GoPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -1427,6 +1504,7 @@ const jsiiReleaseGo: release.JsiiReleaseGo = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.JsiiReleaseGo.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -1437,6 +1515,26 @@ const jsiiReleaseGo: release.JsiiReleaseGo = { ... }
 | <code><a href="#projen.release.JsiiReleaseGo.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.gitUserEmail">gitUserEmail</a></code> | <code>string</code> | The email to use in the release git commit. |
 | <code><a href="#projen.release.JsiiReleaseGo.property.gitUserName">gitUserName</a></code> | <code>string</code> | The user name to use for the release git commit. |
+
+---
+
+##### ~~`githubEnvironment`~~<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.JsiiReleaseGo.property.githubEnvironment"></a>
+
+- *Deprecated:* Use `GoPublishOptions` instead.
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -1617,6 +1715,7 @@ const jsiiReleaseMaven: release.JsiiReleaseMaven = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.JsiiReleaseMaven.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.JsiiReleaseMaven.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.JsiiReleaseMaven.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleaseMaven.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -1628,6 +1727,26 @@ const jsiiReleaseMaven: release.JsiiReleaseMaven = { ... }
 | <code><a href="#projen.release.JsiiReleaseMaven.property.mavenServerId">mavenServerId</a></code> | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub). |
 | <code><a href="#projen.release.JsiiReleaseMaven.property.mavenStagingProfileId">mavenStagingProfileId</a></code> | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521). |
 | <code><a href="#projen.release.JsiiReleaseMaven.property.mavenUsername">mavenUsername</a></code> | <code>string</code> | GitHub secret name which contains the Username for maven repository. |
+
+---
+
+##### ~~`githubEnvironment`~~<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.JsiiReleaseMaven.property.githubEnvironment"></a>
+
+- *Deprecated:* Use `MavenPublishOptions` instead.
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -1842,6 +1961,7 @@ const jsiiReleaseNpm: release.JsiiReleaseNpm = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.JsiiReleaseNpm.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -1850,6 +1970,26 @@ const jsiiReleaseNpm: release.JsiiReleaseNpm = { ... }
 | <code><a href="#projen.release.JsiiReleaseNpm.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when package is published. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
+
+---
+
+##### ~~`githubEnvironment`~~<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.JsiiReleaseNpm.property.githubEnvironment"></a>
+
+- *Deprecated:* Use `NpmPublishOptions` instead.
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -2025,11 +2165,32 @@ const jsiiReleaseNuget: release.JsiiReleaseNuget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.JsiiReleaseNuget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
+
+---
+
+##### ~~`githubEnvironment`~~<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.JsiiReleaseNuget.property.githubEnvironment"></a>
+
+- *Deprecated:* Use `NugetPublishOptions` instead.
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -2130,6 +2291,7 @@ const jsiiReleasePyPi: release.JsiiReleasePyPi = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.JsiiReleasePyPi.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -2137,6 +2299,26 @@ const jsiiReleasePyPi: release.JsiiReleasePyPi = { ... }
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
+
+---
+
+##### ~~`githubEnvironment`~~<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.JsiiReleasePyPi.property.githubEnvironment"></a>
+
+- *Deprecated:* Use `PyPiPublishOptions` instead.
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -2332,6 +2514,7 @@ const mavenPublishOptions: release.MavenPublishOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.MavenPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.MavenPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.MavenPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.MavenPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -2343,6 +2526,24 @@ const mavenPublishOptions: release.MavenPublishOptions = { ... }
 | <code><a href="#projen.release.MavenPublishOptions.property.mavenServerId">mavenServerId</a></code> | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub). |
 | <code><a href="#projen.release.MavenPublishOptions.property.mavenStagingProfileId">mavenStagingProfileId</a></code> | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521). |
 | <code><a href="#projen.release.MavenPublishOptions.property.mavenUsername">mavenUsername</a></code> | <code>string</code> | GitHub secret name which contains the Username for maven repository. |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.MavenPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -2537,6 +2738,7 @@ const npmPublishOptions: release.NpmPublishOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.NpmPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.NpmPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.NpmPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.NpmPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -2545,6 +2747,24 @@ const npmPublishOptions: release.NpmPublishOptions = { ... }
 | <code><a href="#projen.release.NpmPublishOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when package is published. |
 | <code><a href="#projen.release.NpmPublishOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.release.NpmPublishOptions.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.NpmPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -2708,11 +2928,30 @@ const nugetPublishOptions: release.NugetPublishOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.NugetPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.NugetPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.NugetPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.NugetPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.NugetPublishOptions.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.release.NugetPublishOptions.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.NugetPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -3019,6 +3258,7 @@ const pyPiPublishOptions: release.PyPiPublishOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.release.PyPiPublishOptions.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -3026,6 +3266,24 @@ const pyPiPublishOptions: release.PyPiPublishOptions = { ... }
 | <code><a href="#projen.release.PyPiPublishOptions.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.release.PyPiPublishOptions.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -3157,6 +3415,7 @@ const releaseOptions: release.ReleaseOptions = { ... }
 | <code><a href="#projen.release.ReleaseOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.release.ReleaseOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.release.ReleaseOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: <a href="#projen.release.BranchOptions">BranchOptions</a>}</code> | Defines additional release branches. |
+| <code><a href="#projen.release.ReleaseOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.release.ReleaseOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.release.ReleaseOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.release.ReleaseOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -3374,6 +3633,25 @@ Each release branch _must_ be assigned a major version number which is used
 to enforce that versions published from that branch always use that major
 version. If multiple branches are used, the `majorVersion` field must also
 be provided for the default branch.
+
+---
+
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.release.ReleaseOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
 
 ---
 
@@ -3679,6 +3957,7 @@ const releaseProjectOptions: release.ReleaseProjectOptions = { ... }
 | <code><a href="#projen.release.ReleaseProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: <a href="#projen.release.BranchOptions">BranchOptions</a>}</code> | Defines additional release branches. |
+| <code><a href="#projen.release.ReleaseProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -3889,6 +4168,25 @@ Each release branch _must_ be assigned a major version number which is used
 to enforce that versions published from that branch always use that major
 version. If multiple branches are used, the `majorVersion` field must also
 be provided for the default branch.
+
+---
+
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.release.ReleaseProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
 
 ---
 
