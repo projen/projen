@@ -319,7 +319,11 @@ export class Publisher extends Component {
       isAwsCodeArtifact &&
       options.codeArtifactOptions?.authProvider ===
         CodeArtifactAuthProvider.GITHUB_OIDC;
-    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
+    const npmToken = defaultNpmToken(
+      options.npmTokenSecret,
+      options.registry,
+      options.npmTrustedPublishing
+    );
 
     if (options.distTag) {
       this.project.logger.warn(
@@ -362,7 +366,10 @@ export class Publisher extends Component {
       }
 
       const npmProvenance = options.npmProvenance ? "true" : undefined;
-      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
+      const needsIdTokenWrite =
+        isAwsCodeArtifactWithOidc ||
+        npmProvenance ||
+        options.npmTrustedPublishing;
       return {
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
@@ -566,10 +573,40 @@ export class Publisher extends Component {
       });
       workflowEnv = { TWINE_USERNAME: "aws" };
     } else {
-      workflowEnv = {
-        TWINE_USERNAME: secret(options.twineUsernameSecret ?? "TWINE_USERNAME"),
-        TWINE_PASSWORD: secret(options.twinePasswordSecret ?? "TWINE_PASSWORD"),
-      };
+      if (options.trustedPublishing) {
+        permissions = { ...permissions, idToken: JobPermission.WRITE };
+        prePublishSteps.push({
+          name: "Mint API Token",
+          id: "mint-token",
+          shell: "bash",
+          // @see https://docs.pypi.org/trusted-publishers/using-a-publisher/#github-actions
+          run: [
+            "# retrieve the ambient OIDC token",
+            `resp=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=pypi")`,
+            `oidc_token=$(jq -r '.value' <<< "\${resp}")`,
+            "# exchange the OIDC token for an API token",
+            `resp=$(curl -X POST https://pypi.org/_/oidc/mint-token -d "{\\"token\\": \\"\${oidc_token}\\"}")`,
+            `api_token=$(jq -r '.token' <<< "\${resp}")`,
+            "# mask the newly minted token",
+            'echo "::add-mask::${api_token}"',
+            "# set the token as output",
+            'echo "api-token=${api_token}" >> "${GITHUB_OUTPUT}"',
+          ].join("\n"),
+        });
+        workflowEnv = {
+          TWINE_USERNAME: "__token__",
+          TWINE_PASSWORD: output("mint-token", "api-token"),
+        };
+      } else {
+        workflowEnv = {
+          TWINE_USERNAME: secret(
+            options.twineUsernameSecret ?? "TWINE_USERNAME"
+          ),
+          TWINE_PASSWORD: secret(
+            options.twinePasswordSecret ?? "TWINE_PASSWORD"
+          ),
+        };
+      }
     }
 
     this.addPublishJob(
@@ -819,6 +856,10 @@ function secret(secretName: string) {
   return `\${{ secrets.${secretName} }}`;
 }
 
+function output(step: string, name: string) {
+  return `\${{ steps.${step}.outputs.${name} }}`;
+}
+
 interface PublishJobOptions {
   /**
    * The command to execute.
@@ -976,6 +1017,16 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly npmProvenance?: boolean;
 
   /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * @see
+   *
+   * @default - false
+   */
+  readonly npmTrustedPublishing?: boolean;
+
+  /**
    * Options for publishing npm package to AWS CodeArtifact.
    *
    * @default - undefined
@@ -1070,6 +1121,15 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
    * @default "TWINE_PASSWORD"
    */
   readonly twinePasswordSecret?: string;
+
+  /**
+   * Use PyPI trusted publishing instead of tokens or username & password.
+   *
+   * Needs to be setup in PyPI.
+   *
+   * @see https://docs.pypi.org/trusted-publishers/adding-a-publisher/
+   */
+  readonly trustedPublishing?: boolean;
 
   /**
    * Options for publishing to AWS CodeArtifact.
