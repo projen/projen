@@ -4382,6 +4382,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -7618,6 +7635,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -11994,6 +12028,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -15000,6 +15051,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -18067,6 +18135,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -21938,6 +22023,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -24672,6 +24774,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -27291,6 +27410,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -29896,6 +30032,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -33584,6 +33737,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -36189,6 +36359,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -38941,6 +39128,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -41667,6 +41871,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
