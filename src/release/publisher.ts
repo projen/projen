@@ -311,6 +311,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
+    const trustedPublisher = options.trustedPublishing ? "true" : undefined;
+    const npmProvenance = options.npmProvenance ? "true" : undefined;
+
     const isGitHubPackages = options.registry?.startsWith(
       GITHUB_PACKAGES_REGISTRY
     );
@@ -319,13 +322,11 @@ export class Publisher extends Component {
       isAwsCodeArtifact &&
       options.codeArtifactOptions?.authProvider ===
         CodeArtifactAuthProvider.GITHUB_OIDC;
-    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
-
-    if (options.distTag) {
-      this.project.logger.warn(
-        "The `distTag` option is deprecated. Use the npmDistTag option instead."
-      );
-    }
+    const npmToken = trustedPublisher
+      ? undefined
+      : defaultNpmToken(options.npmTokenSecret, options.registry);
+    const needsIdTokenWrite =
+      isAwsCodeArtifactWithOidc || trustedPublisher || npmProvenance;
 
     const prePublishSteps: JobStep[] = options.prePublishSteps ?? [];
 
@@ -355,14 +356,6 @@ export class Publisher extends Component {
     }
 
     this.addPublishJob("npm", (_branch, branchOptions): PublishJobOptions => {
-      if (branchOptions.npmDistTag && options.distTag) {
-        throw new Error(
-          "cannot set branch-level npmDistTag and npmDistTag in publishToNpm()"
-        );
-      }
-
-      const npmProvenance = options.npmProvenance ? "true" : undefined;
-      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
       return {
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
@@ -374,6 +367,7 @@ export class Publisher extends Component {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
           NPM_CONFIG_PROVENANCE: npmProvenance,
+          NPM_TRUSTED_PUBLISHER: trustedPublisher,
         },
         permissions: {
           idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
@@ -565,6 +559,15 @@ export class Publisher extends Component {
             },
       });
       workflowEnv = { TWINE_USERNAME: "aws" };
+    } else if (options.trustedPublishing) {
+      permissions = { ...permissions, idToken: JobPermission.WRITE };
+      workflowEnv = {
+        PYPI_TRUSTED_PUBLISHER: "true",
+      };
+      // attestations default to true, only disable when explicitly requested
+      if (options.attestations === false) {
+        workflowEnv.PYPI_DISABLE_ATTESTATIONS = "true";
+      }
     } else {
       workflowEnv = {
         TWINE_USERNAME: secret(options.twineUsernameSecret ?? "TWINE_USERNAME"),
@@ -940,7 +943,6 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * The `next` tag is used by some projects to identify the upcoming version.
    *
    * @default "latest"
-   * @deprecated Use `npmDistTag` for each release branch instead.
    */
   readonly distTag?: string;
 
@@ -959,10 +961,24 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly registry?: string;
 
   /**
-   * GitHub secret which contains the NPM token to use when publishing packages.
+   * GitHub secret which contains the NPM token to use for publishing packages.
+   *
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * Requires npm CLI version 11.5.1 or later, this is NOT ensured automatically.
+   * When used, `npmTokenSecret` will be ignored.
+   *
+   * @see https://docs.npmjs.com/trusted-publishers
+   *
+   * @default - false
+   */
+  readonly trustedPublishing?: boolean;
 
   /**
    * Should provenance statements be generated when package is published.
@@ -970,15 +986,27 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * Note that this component is using `publib` to publish packages,
    * which is using npm internally and supports provenance statements independently of the package manager used.
    *
+   * Only works in supported CI/CD environments.
+   *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - undefined
+   * @default - enabled for for public packages using trusted publishing, disabled otherwise
    */
   readonly npmProvenance?: boolean;
 
   /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * @see
+   *
+   * @default - false
+   */
+  readonly npmTrustedPublishing?: boolean;
+
+  /**
    * Options for publishing npm package to AWS CodeArtifact.
    *
-   * @default - undefined
+   * @default - package is not published to
    */
   readonly codeArtifactOptions?: CodeArtifactOptions;
 }
@@ -1070,6 +1098,26 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
    * @default "TWINE_PASSWORD"
    */
   readonly twinePasswordSecret?: string;
+
+  /**
+   * Use PyPI trusted publishing instead of tokens or username & password.
+   *
+   * Needs to be setup in PyPI.
+   *
+   * @see https://docs.pypi.org/trusted-publishers/adding-a-publisher/
+   */
+  readonly trustedPublishing?: boolean;
+
+  /**
+   * Generate and publish cryptographic attestations for files uploaded to PyPI.
+   *
+   * Attestations provide package provenance and integrity an can be viewed on PyPI.
+   * They are only available when using a Trusted Publisher for publishing.
+   *
+   * @see https://docs.pypi.org/attestations/producing-attestations/
+   * @default - enabled when using trusted publishing, otherwise not applicable
+   */
+  readonly attestations?: boolean;
 
   /**
    * Options for publishing to AWS CodeArtifact.

@@ -361,6 +361,24 @@ describe("npm publishing options", () => {
       ).toBeUndefined();
     });
 
+    test("defaults with npmTrustedPublishing enabled", () => {
+      // GIVEN
+      const project = new TestProject();
+
+      // WHEN
+      const npm = new NodePackage(project, {
+        packageName: "my-package",
+        npmTrustedPublishing: true,
+        npmProvenance: false,
+      });
+
+      // THEN
+      expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+      expect(npm.npmRegistry).toStrictEqual("registry.npmjs.org");
+      expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
+      expect(npm.npmTokenSecret).toStrictEqual(undefined);
+    });
+
     test("unscoped package cannot be RESTRICTED", () => {
       // GIVEN
       const project = new TestProject();
