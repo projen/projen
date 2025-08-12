@@ -1,8 +1,10 @@
-import { FEATURE_FLAGS } from "./internal";
+import * as fs from "fs";
+import * as path from "path";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
-
+import { AwsCdkTypeScriptApp } from "./awscdk-app-ts";
+import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "./internal";
 /**
  * Common options for `cdk.json`.
  */
@@ -20,6 +22,11 @@ export interface CdkConfigCommonOptions {
    * @default true
    */
   readonly featureFlags?: boolean;
+
+  /**
+   * The major version of the AWS CDK (e.g. 1, 2, ...)
+   */
+  readonly cdkMajorVersion?: number;
 
   /**
    * To protect you against unintended changes that affect your security posture,
@@ -95,6 +102,11 @@ export class CdkConfig extends Component {
    */
   private readonly _exclude: string[];
 
+  /**
+   * The context to write to cdk.json.
+   */
+  private readonly _context: Record<string, any>;
+
   constructor(project: Project, options: CdkConfigOptions) {
     super(project);
 
@@ -102,19 +114,19 @@ export class CdkConfig extends Component {
     this._include = options.watchIncludes ?? [];
     this._exclude = options.watchExcludes ?? [];
 
-    const context: Record<string, any> = { ...options.context };
-    const fflags = options.featureFlags ?? true;
-    if (fflags) {
-      for (const flag of FEATURE_FLAGS) {
-        context[flag] = true;
-      }
-    }
+    this._context = { ...options.context };
+
+    this._context = this.setFeatureFlags(
+      this._context,
+      options.featureFlags,
+      options.cdkMajorVersion
+    );
 
     this.json = new JsonFile(project, "cdk.json", {
       omitEmpty: true,
       obj: {
         app: options.app,
-        context: context,
+        context: this._context,
         requireApproval: options.requireApproval,
         output: this.cdkout,
         build: options.buildCommand,
@@ -157,6 +169,78 @@ export class CdkConfig extends Component {
    */
   public get exclude(): string[] {
     return [...this._exclude];
+  }
+
+  /**
+   * The context to write to cdk.json.
+   */
+  public get context(): Record<string, any> {
+    return { ...this._context };
+  }
+
+  /**
+   * Set CDK feature flags based on the given version in the `cdk.json`.
+   *
+   * @param context The context to add the feature flags to.
+   * @param fflagsEnabled Include all feature flags. Defaults to `true`.
+   * @param cdkMajorVersion The major version of the CDK to include the feature flags for.
+   *     Defaults to 1.
+   * @returns The updated context.
+   */
+  private setFeatureFlags(
+    context: Record<string, any>,
+    fflagsEnabled: boolean = true,
+    cdkMajorVersion: number = 1
+  ) {
+    if (!fflagsEnabled) {
+      return context;
+    }
+
+    switch (cdkMajorVersion) {
+      case 1:
+        for (const flag of FEATURE_FLAGS) {
+          context[flag] = true;
+        }
+        break;
+      case 2:
+        const featureFlags = this.tryLoadFeatureFlags(this.project);
+        if (featureFlags) {
+          Object.assign(context, featureFlags);
+        } else {
+          Object.assign(context, FEATURE_FLAGS_V2);
+        }
+        break;
+    }
+
+    return context;
+  }
+
+  /**
+   * Attempt to load the feature flags from the `recommended-feature-flags.json` in the CDK package.
+   *
+   * This file is only present in the CDK package for TypeScript projects.
+   *
+   * @param project The project to load the feature flags for.
+   * @returns The feature flags, or `undefined` if they could not be loaded.
+   */
+  private tryLoadFeatureFlags(project: Project) {
+    if (project instanceof AwsCdkTypeScriptApp) {
+      try {
+        const jsonFile = fs.readFileSync(
+          path.join(
+            process.cwd(),
+            "node_modules",
+            "aws-cdk-lib",
+            "recommended-feature-flags.json"
+          ),
+          "utf-8"
+        );
+
+        return JSON.parse(jsonFile);
+      } catch (e) {
+        return undefined;
+      }
+    }
   }
 }
 
