@@ -6,7 +6,7 @@ import {
   workflows,
 } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
-import { Job, JobStep } from "./workflows-model";
+import { Job, JobPermission, JobStep } from "./workflows-model";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 
 /**
@@ -34,13 +34,21 @@ export class WorkflowJobs {
       }),
     ];
 
+    const permissions =
+      options.credentials?.tokenRef == "${{ secrets.GITHUB_TOKEN }}"
+        ? {
+            contents: JobPermission.WRITE,
+            pullRequests: JobPermission.WRITE,
+          }
+        : {
+            contents: workflows.JobPermission.READ,
+          };
+
     return {
       name: jobName,
       if: `\${{ needs.${options.patch.jobId}.outputs.${options.patch.outputName} }}`,
       needs: [options.patch.jobId],
-      permissions: {
-        contents: workflows.JobPermission.READ,
-      },
+      permissions,
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       steps,
     };

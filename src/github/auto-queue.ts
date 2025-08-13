@@ -53,6 +53,38 @@ export interface AutoQueueOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   * The branch names that we should auto-queue for
+   *
+   * This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
+   *
+   * Be sure not to enable `autoQueue` for branches that don't have branch rules
+   * with merge requirements set up, otherwise new PRs will be merged
+   * immediately after creating without a chance for review.
+   *
+   * ## Automatically merging a set of Stacked PRs
+   *
+   * If you set this to `['main']` you can automatically merge a set of Stacked PRs
+   * in the right order. It works like this:
+   *
+   * - Create PR #1 from branch `a`, targeting `main`.
+   * - Create PR #2 from branch `b`, targeting branch `a`.
+   * - Create PR #3 from branch `c`, targeting branch `b`.
+   *
+   * Initially, PR #1 will be set to auto-merge, PRs #2 and #3 will not.
+   *
+   * Once PR #1 passes all of its requirements it will merge. That will delete
+   * branch `a` and change  the target branch of PR #2 change to `main`. At that
+   * point, auto-queueing will switch on for PR #2 and it gets merged, etc.
+   *
+   * > [!IMPORTANT]
+   * > This component will never disable AutoMerge, only enable it. So if a PR is
+   * > initially targeted at one of the branches in this list, and then
+   * > subsequently retargeted to another branch, *AutoMerge is not
+   * > automatically turned off*.
+   */
+  readonly targetBranches?: string[];
 }
 
 /**
@@ -97,6 +129,20 @@ export class AutoQueue extends Component {
       );
     }
 
+    let needsEditedEvent = false;
+    if (options.targetBranches) {
+      // Branch conditions, based off the 'opened' or 'edited' events.
+      //
+      // The current workflow will only run if the target branch is one of the intended
+      // ones, so we only need to check if the event type is correct.
+      needsEditedEvent = true;
+
+      const isOpened = `github.event.action == 'opened'`;
+      const isBranchChanged = `(github.event.action == 'edited' && github.event.changes.base)`;
+
+      conditions.push(`(${isOpened} || ${isBranchChanged})`);
+    }
+
     const credentials =
       options.projenCredentials ?? workflowEngine.projenCredentials;
     const mergeMethod = options.mergeMethod ?? MergeMethod.SQUASH;
@@ -135,11 +181,19 @@ export class AutoQueue extends Component {
       // 'read-write' permissions. This is safe because, this event, unlike the 'pull request'
       // event references the BASE commit of the pull request and not the HEAD commit.
       //
-      // We only enable auto-queue when a PR is opened, reopened or moving from Draft to Ready.
-      // That way a user can always disable auto-queue if they want to and the workflow will
-      // not automatically re-enable it, unless one of the events occurs.
+      // We only enable auto-queue when a PR is opened, reopened or moving from Draft to Ready,
+      // or retargeted to a different branch. Specifically, if a user disables auto-queue we try very hard to avoid
+      // accidentally re-enabling it.
+      //
+      // The 'edited' trigger is only used to detect base branch changes.
       pullRequestTarget: {
-        types: ["opened", "reopened", "ready_for_review"],
+        types: [
+          "opened",
+          "reopened",
+          "ready_for_review",
+          ...(needsEditedEvent ? ["edited" as const] : []),
+        ],
+        branches: options.targetBranches,
       },
     });
     workflow.addJobs({ enableAutoQueue: autoQueueJob });

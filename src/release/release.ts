@@ -150,6 +150,19 @@ export interface ReleaseProjectOptions {
   readonly releaseWorkflowName?: string;
 
   /**
+   * The GitHub Actions environment used for the release.
+   *
+   * This can be used to add an explicit approval step to the release
+   * or limit who can initiate a release through environment protection rules.
+   *
+   * When multiple artifacts are released, the environment can be overwritten
+   * on a per artifact basis.
+   *
+   * @default - no environment used, unless set at the artifact level
+   */
+  readonly releaseEnvironment?: string;
+
+  /**
    * Defines additional release branches. A workflow will be created for each
    * release branch which will publish releases from commits in this branch.
    * Each release branch _must_ be assigned a major version number which is used
@@ -258,6 +271,7 @@ export interface ReleaseProjectOptions {
    * - Working directory: the project directory.
    * - `$VERSION`: the current version. Looks like `1.2.3`.
    * - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+   * - `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
    *
    * The command should print one of the following to `stdout`:
    *
@@ -487,12 +501,16 @@ export class Release extends Component {
       workflowName:
         options.releaseWorkflowName ??
         workflowNameForProject("release", this.project),
+      environment: options.releaseEnvironment,
       tagPrefix: options.releaseTagPrefix,
       npmDistTag: options.npmDistTag,
     });
 
     for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
-      this.addBranch(name, opts);
+      this.addBranch(name, {
+        environment: options.releaseEnvironment,
+        ...opts,
+      });
     }
   }
 
@@ -690,6 +708,7 @@ export class Release extends Component {
     postBuildSteps.push({
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
+      shell: "bash",
       run: [
         `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
         "cat $GITHUB_OUTPUT",
@@ -797,6 +816,19 @@ export interface BranchOptions {
    * @default "release-BRANCH"
    */
   readonly workflowName?: string;
+
+  /**
+   * The GitHub Actions environment used for the release.
+   *
+   * This can be used to add an explicit approval step to the release
+   * or limit who can initiate a release through environment protection rules.
+   *
+   * When multiple artifacts are released, the environment can be overwritten
+   * on a per artifact basis.
+   *
+   * @default - no environment used, unless set at the artifact level
+   */
+  readonly environment?: string;
 
   /**
    * The major versions released from this branch.

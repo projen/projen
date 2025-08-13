@@ -3,8 +3,9 @@ import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
+import { Biome } from "./biome/biome";
 
 export interface ProjenrcOptions {
   /**
@@ -47,6 +48,9 @@ export class Projenrc extends ProjenrcFile {
         "import/no-extraneous-dependencies": "off",
       },
     });
+
+    const biome = Biome.of(this.project);
+    biome?.addFilePattern(this.filePath);
   }
 
   private generateProjenrc() {

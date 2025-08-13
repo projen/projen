@@ -1,0 +1,304 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Configuration should match snapshot without overrides with all features 1`] = `
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "recommended": true,
+    },
+    "enabled": true,
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      ".projenrc.js",
+      "!.gitattributes",
+      "!.github/workflows/build.yml",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release.yml",
+      "!.github/workflows/upgrade-main.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json",
+    ],
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+    },
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;
+
+exports[`Configuration should match snapshot without overrides with assist 1`] = `
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "recommended": true,
+    },
+    "enabled": true,
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      ".projenrc.js",
+      "!.gitattributes",
+      "!.github/workflows/build.yml",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release.yml",
+      "!.github/workflows/upgrade-main.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json",
+    ],
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+    },
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;
+
+exports[`Configuration should match snapshot without overrides with formatter 1`] = `
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "recommended": true,
+    },
+    "enabled": true,
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      ".projenrc.js",
+      "!.gitattributes",
+      "!.github/workflows/build.yml",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release.yml",
+      "!.github/workflows/upgrade-main.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json",
+    ],
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+    },
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;
+
+exports[`Configuration should match snapshot without overrides with linter 1`] = `
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "recommended": true,
+    },
+    "enabled": true,
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      ".projenrc.js",
+      "!.gitattributes",
+      "!.github/workflows/build.yml",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release.yml",
+      "!.github/workflows/upgrade-main.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json",
+    ],
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+    },
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;
+
+exports[`Configuration should match snapshot without overrides without options 1`] = `
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "recommended": true,
+    },
+    "enabled": true,
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      ".projenrc.js",
+      "!.gitattributes",
+      "!.github/workflows/build.yml",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release.yml",
+      "!.github/workflows/upgrade-main.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json",
+    ],
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+    },
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;
+
+exports[`biome with default configuration generates correct snapshot for biome.jsonc 1`] = `
+{
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
+  "assist": {
+    "actions": {
+      "recommended": true,
+    },
+    "enabled": true,
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**",
+      "test/**",
+      ".projenrc.ts",
+      "projenrc/**",
+      "!.gitattributes",
+      "!.github/workflows/build.yml",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release.yml",
+      "!.github/workflows/upgrade-main.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json",
+    ],
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+    },
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+    },
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+  },
+}
+`;

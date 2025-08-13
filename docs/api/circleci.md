@@ -567,6 +567,7 @@ const job: circleci.Job = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.circleci.Job.property.identifier">identifier</a></code> | <code>string</code> | name of dynamic key *. |
+| <code><a href="#projen.circleci.Job.property.circleciIpRanges">circleciIpRanges</a></code> | <code>boolean</code> | Enables jobs to go through a set of well-defined IP address ranges. |
 | <code><a href="#projen.circleci.Job.property.docker">docker</a></code> | <code><a href="#projen.circleci.Docker">Docker</a>[]</code> | *No description.* |
 | <code><a href="#projen.circleci.Job.property.environment">environment</a></code> | <code>{[ key: string ]: string \| number \| boolean}</code> | A map of environment variable names and values. |
 | <code><a href="#projen.circleci.Job.property.machine">machine</a></code> | <code><a href="#projen.circleci.Machine">Machine</a></code> | *No description.* |
@@ -589,6 +590,18 @@ public readonly identifier: string;
 - *Type:* string
 
 name of dynamic key *.
+
+---
+
+##### `circleciIpRanges`<sup>Optional</sup> <a name="circleciIpRanges" id="projen.circleci.Job.property.circleciIpRanges"></a>
+
+```typescript
+public readonly circleciIpRanges: boolean;
+```
+
+- *Type:* boolean
+
+Enables jobs to go through a set of well-defined IP address ranges.
 
 ---
 

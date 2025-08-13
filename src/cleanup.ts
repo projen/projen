@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import * as glob from "glob";
+import * as glob from "fast-glob";
 import { PROJEN_DIR, PROJEN_MARKER } from "./common";
 import * as logging from "./logging";
 
@@ -39,7 +39,8 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
     ignore,
     cwd: dir,
     dot: true,
-    nodir: true,
+    onlyFiles: true,
+    followSymbolicLinks: false,
     absolute: true,
   });
 

@@ -67,11 +67,26 @@ export interface MergifyQueue {
   readonly updateMethod?: string;
 
   /**
-   * A list of Conditions string that must match against the
-   * pull request for the pull request to be added to the queue.
+   * The list of conditions that needs to match to queue the pull request.
+   * @see https://docs.mergify.com/configuration/file-format/#queue-rules
+   *
+   * @deprecated use `queueConditions` instead
+   */
+  readonly conditions?: MergifyCondition[];
+
+  /**
+   * The list of conditions that needs to match to queue the pull request.
    * @see https://docs.mergify.com/conditions/#conditions
    */
-  readonly conditions: MergifyCondition[];
+  readonly queueConditions?: MergifyCondition[];
+
+  /**
+   * The list of conditions to match to get the queued pull request merged.
+   * This automatically includes the queueConditions.
+   * In case of speculative merge pull request, the merge conditions are evaluated against the temporary pull request instead of the original one.
+   * @see https://docs.mergify.com/conditions/#conditions
+   */
+  readonly mergeConditions?: MergifyCondition[];
 
   /**
    * Template to use as the commit message when using the merge or squash merge method.
@@ -79,8 +94,20 @@ export interface MergifyQueue {
   readonly commitMessageTemplate: string;
 }
 
+/**
+ * Configure Mergify.
+ *
+ * This currently only offers a subset of options available.
+ * @see https://docs.mergify.com/configuration/file-format/
+ */
 export interface MergifyOptions {
+  /**
+   * Pull request automation rules.
+   */
   readonly rules?: MergifyRule[];
+  /**
+   * The available merge queues.
+   */
   readonly queues?: MergifyQueue[];
 }
 
@@ -108,6 +135,9 @@ export class Mergify extends Component {
         obj: {
           queue_rules: () => this.queues.map((q) => snakeCaseKeys(q, false)),
           pull_request_rules: this.rules,
+          merge_queue: {
+            max_parallel_checks: 1,
+          },
         },
         // Mergify needs to read the file from the repository in order to work.
         committed: true,
@@ -121,6 +151,13 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
+    if (queue.conditions && !queue.queueConditions) {
+      queue = {
+        ...queue,
+        queueConditions: queue.conditions,
+        conditions: undefined,
+      };
+    }
     this.queues.push(queue);
     this.createYamlFile();
   }

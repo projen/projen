@@ -65,6 +65,12 @@ export interface BuildWorkflowCommonOptions {
    * @default `{ contents: JobPermission.WRITE }`
    */
   readonly permissions?: JobPermissions;
+
+  /**
+   * Build environment variables.
+   * @default {}
+   */
+  readonly env?: { [key: string]: string };
 }
 
 export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
@@ -111,12 +117,6 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default - default identity
    */
   readonly gitIdentity?: GitIdentity;
-
-  /**
-   * Build environment variables.
-   * @default {}
-   */
-  readonly env?: { [key: string]: string };
 
   /**
    * Github Runner selection labels

@@ -8,6 +8,7 @@ import {
 } from "../src/javascript";
 
 export * from "./windows-build";
+export * from "./json2jsii";
 
 /**
  * Add integration tests tasks to a project

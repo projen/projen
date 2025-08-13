@@ -48,6 +48,7 @@ test("full spec of api should be provided", () => {
             default: "job1Param default",
           },
         },
+        circleciIpRanges: true,
       },
     ],
     workflows: [
@@ -114,6 +115,7 @@ test("full spec of api should be provided", () => {
   const customJob = yaml.jobs["custom-job-1"];
   expect(customJob.docker[0].image).toEqual("golang:alpine");
   expect(customJob.machine.image).toEqual("node:alpine");
+  expect(customJob.circleci_ip_ranges).toEqual(true);
   expect(customJob.steps).toHaveLength(2);
   expect(customJob.steps).toContain("checkout");
   expect(customJob).toEqual(

@@ -2585,6 +2585,22 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
       },
       {
+        "docs": "The command line to execute in order to synthesize the CDK application (language specific).",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "app",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": [
+          "app",
+        ],
+        "simpleType": "string",
+        "switch": "app",
+      },
+      {
         "default": ""main.ts"",
         "docs": "The CDK app's entrypoint (relative to the source directory, which is "src" by default).",
         "featured": false,
@@ -2791,6 +2807,42 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
       },
       {
         "docs": "The email address to which issues should be reported.",
@@ -3599,7 +3651,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -4917,6 +4969,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -5907,6 +5976,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -6762,7 +6867,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -7038,7 +7143,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.7.0"",
+        "initialValue": ""~5.8.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -8194,6 +8299,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",
@@ -10415,6 +10537,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -11158,7 +11316,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -12423,6 +12581,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -13350,6 +13525,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -14108,7 +14319,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -14367,7 +14578,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.7.0"",
+        "initialValue": ""~5.8.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -15470,6 +15681,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",
@@ -16432,6 +16660,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -17139,7 +17403,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -17381,7 +17645,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.7.0"",
+        "initialValue": ""~5.8.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -18484,6 +18748,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",
@@ -20301,6 +20582,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -20955,7 +21272,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -21197,7 +21514,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.7.0"",
+        "initialValue": ""~5.8.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -22302,6 +22619,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -23243,6 +23577,42 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
       },
       {
         "docs": "The email address to which issues should be reported.",
@@ -24853,6 +25223,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -25673,6 +26060,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -26241,7 +26664,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -27455,6 +27878,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -28363,6 +28803,42 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
       },
       {
         "docs": "The email address to which issues should be reported.",
@@ -29971,6 +30447,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",
@@ -31998,6 +32491,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -33606,6 +34135,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -34414,6 +34960,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -34982,7 +35564,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -36194,6 +36776,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",
@@ -37111,6 +37710,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -37679,7 +38314,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -38891,6 +39526,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",
@@ -39786,6 +40438,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -40354,7 +41042,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -41566,6 +42254,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "release-branches",
+      },
+      {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
       },
       {
         "default": "true",

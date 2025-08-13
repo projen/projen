@@ -880,6 +880,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.ConstructLibrary.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.cdk.ConstructLibrary.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.cdk.ConstructLibrary.property.biome">biome</a></code> | <code>projen.javascript.Biome</code> | *No description.* |
 | <code><a href="#projen.cdk.ConstructLibrary.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -1411,6 +1412,16 @@ public readonly autoMerge: AutoMerge;
 - *Type:* projen.github.AutoMerge
 
 Component that sets up mergify for merging approved pull requests.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.cdk.ConstructLibrary.property.biome"></a>
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* projen.javascript.Biome
 
 ---
 
@@ -2932,6 +2943,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.JsiiProject.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The package manager to use. |
 | <code><a href="#projen.cdk.JsiiProject.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.cdk.JsiiProject.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.cdk.JsiiProject.property.biome">biome</a></code> | <code>projen.javascript.Biome</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.cdk.JsiiProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.cdk.JsiiProject.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
@@ -3466,6 +3478,16 @@ Component that sets up mergify for merging approved pull requests.
 
 ---
 
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.cdk.JsiiProject.property.biome"></a>
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* projen.javascript.Biome
+
+---
+
 ##### `buildWorkflow`<sup>Optional</sup> <a name="buildWorkflow" id="projen.cdk.JsiiProject.property.buildWorkflow"></a>
 
 ```typescript
@@ -3937,6 +3959,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -3952,6 +3975,8 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -5110,6 +5135,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
@@ -5224,6 +5250,25 @@ Each release branch _must_ be assigned a major version number which is used
 to enforce that versions published from that branch always use that major
 version. If multiple branches are used, the `majorVersion` field must also
 be provided for the default branch.
+
+---
+
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.cdk.ConstructLibraryOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
 
 ---
 
@@ -5432,6 +5477,32 @@ public readonly autoApproveUpgrades: boolean;
 Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).
 
 Throw if set to true but `autoApproveOptions` are not defined.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.cdk.ConstructLibraryOptions.property.biome"></a>
+
+```typescript
+public readonly biome: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup Biome.
+
+---
+
+##### `biomeOptions`<sup>Optional</sup> <a name="biomeOptions" id="projen.cdk.ConstructLibraryOptions.property.biomeOptions"></a>
+
+```typescript
+public readonly biomeOptions: BiomeOptions;
+```
+
+- *Type:* projen.javascript.BiomeOptions
+- *Default:* default options
+
+Biome options.
 
 ---
 
@@ -5992,7 +6063,7 @@ public readonly eslint: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true
+- *Default:* true, unless biome is enabled
 
 Setup eslint.
 
@@ -6564,6 +6635,7 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiDotNetTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -6572,6 +6644,24 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.dotNetNamespace">dotNetNamespace</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.packageId">packageId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.iconUrl">iconUrl</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiDotNetTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -6694,6 +6784,7 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -6707,6 +6798,24 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 | <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target repository in which this module will be published (e.g. github.com/owner/repo). |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the Go package name. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.versionSuffix">versionSuffix</a></code> | <code>string</code> | A suffix appended at the end of the module version (e.g `"-devprefix"`). |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiGoTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -6918,6 +7027,7 @@ const jsiiJavaTarget: cdk.JsiiJavaTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiJavaTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -6932,6 +7042,24 @@ const jsiiJavaTarget: cdk.JsiiJavaTarget = { ... }
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.javaPackage">javaPackage</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenArtifactId">mavenArtifactId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiJavaTarget.property.mavenGroupId">mavenGroupId</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiJavaTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 
@@ -6990,7 +7118,7 @@ public readonly mavenEndpoint: string;
 ```
 
 - *Type:* string
-- *Default:* "https://oss.sonatype.org"
+- *Default:* "https://oss.sonatype.org" or none when publishing to Maven Central
 
 URL of Nexus repository.
 
@@ -7074,6 +7202,8 @@ public readonly mavenServerId: string;
 - *Default:* "ossrh" (Maven Central) or "github" when using GitHub Packages
 
 Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+
+Set to `central-ossrh` to publish to Maven Central.
 
 ---
 
@@ -7231,6 +7361,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
@@ -7246,6 +7377,8 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
@@ -8403,6 +8536,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
@@ -8517,6 +8651,25 @@ Each release branch _must_ be assigned a major version number which is used
 to enforce that versions published from that branch always use that major
 version. If multiple branches are used, the `majorVersion` field must also
 be provided for the default branch.
+
+---
+
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.cdk.JsiiProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
 
 ---
 
@@ -8725,6 +8878,32 @@ public readonly autoApproveUpgrades: boolean;
 Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).
 
 Throw if set to true but `autoApproveOptions` are not defined.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.cdk.JsiiProjectOptions.property.biome"></a>
+
+```typescript
+public readonly biome: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup Biome.
+
+---
+
+##### `biomeOptions`<sup>Optional</sup> <a name="biomeOptions" id="projen.cdk.JsiiProjectOptions.property.biomeOptions"></a>
+
+```typescript
+public readonly biomeOptions: BiomeOptions;
+```
+
+- *Type:* projen.javascript.BiomeOptions
+- *Default:* default options
+
+Biome options.
 
 ---
 
@@ -9285,7 +9464,7 @@ public readonly eslint: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true
+- *Default:* true, unless biome is enabled
 
 Setup eslint.
 
@@ -9686,6 +9865,7 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiPythonTarget.property.githubEnvironment">githubEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for publishing. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.postPublishSteps">postPublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after executing the publishing command. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
@@ -9695,6 +9875,24 @@ const jsiiPythonTarget: cdk.JsiiPythonTarget = { ... }
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.distName">distName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiPythonTarget.property.module">module</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `githubEnvironment`<sup>Optional</sup> <a name="githubEnvironment" id="projen.cdk.JsiiPythonTarget.property.githubEnvironment"></a>
+
+```typescript
+public readonly githubEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the package level
+
+The GitHub Actions environment used for publishing.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+Set this to overwrite a package level publishing environment just for this artifact.
 
 ---
 

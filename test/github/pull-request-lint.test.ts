@@ -21,7 +21,7 @@ test("default", () => {
 });
 
 describe("semantic titles", () => {
-  test("configure scopes", () => {
+  test("configure types", () => {
     // GIVEN
     const project = createProject();
 
@@ -49,6 +49,25 @@ describe("semantic titles", () => {
       semanticTitle: true,
       semanticTitleOptions: {
         requireScope: true,
+      },
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(
+      snapshot[".github/workflows/pull-request-lint.yml"]
+    ).toMatchSnapshot();
+  });
+
+  test("configure scopes", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      semanticTitle: true,
+      semanticTitleOptions: {
+        scopes: ["cli", "api"],
       },
     });
 

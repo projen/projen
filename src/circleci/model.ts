@@ -192,6 +192,8 @@ export interface Job {
   readonly environment?: Record<string, string | number | boolean>;
   /** {@link ResourceClass} */
   readonly resourceClass?: ResourceClass | string;
+  /** Enables jobs to go through a set of well-defined IP address ranges */
+  readonly circleciIpRanges?: boolean;
 }
 
 /**

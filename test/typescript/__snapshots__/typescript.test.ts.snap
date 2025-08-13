@@ -42,11 +42,101 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
     ],
     "root": true,
     "rules": {
+      "@stylistic/array-bracket-newline": [
+        "error",
+        "consistent",
+      ],
+      "@stylistic/array-bracket-spacing": [
+        "error",
+        "never",
+      ],
+      "@stylistic/brace-style": [
+        "error",
+        "1tbs",
+        {
+          "allowSingleLine": true,
+        },
+      ],
+      "@stylistic/comma-dangle": [
+        "error",
+        "always-multiline",
+      ],
+      "@stylistic/comma-spacing": [
+        "error",
+        {
+          "after": true,
+          "before": false,
+        },
+      ],
       "@stylistic/indent": [
         "error",
         2,
       ],
+      "@stylistic/key-spacing": [
+        "error",
+      ],
+      "@stylistic/keyword-spacing": [
+        "error",
+      ],
+      "@stylistic/max-len": [
+        "error",
+        {
+          "code": 150,
+          "ignoreComments": true,
+          "ignoreRegExpLiterals": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true,
+          "ignoreUrls": true,
+        },
+      ],
       "@stylistic/member-delimiter-style": [
+        "error",
+      ],
+      "@stylistic/no-multi-spaces": [
+        "error",
+        {
+          "ignoreEOLComments": false,
+        },
+      ],
+      "@stylistic/no-multiple-empty-lines": [
+        "error",
+      ],
+      "@stylistic/no-trailing-spaces": [
+        "error",
+      ],
+      "@stylistic/object-curly-newline": [
+        "error",
+        {
+          "consistent": true,
+          "multiline": true,
+        },
+      ],
+      "@stylistic/object-curly-spacing": [
+        "error",
+        "always",
+      ],
+      "@stylistic/object-property-newline": [
+        "error",
+        {
+          "allowAllPropertiesOnSameLine": true,
+        },
+      ],
+      "@stylistic/quote-props": [
+        "error",
+        "consistent-as-needed",
+      ],
+      "@stylistic/quotes": [
+        "error",
+        "single",
+        {
+          "avoidEscape": true,
+        },
+      ],
+      "@stylistic/semi": [
+        "error",
+        "always",
+      ],
+      "@stylistic/space-before-blocks": [
         "error",
       ],
       "@typescript-eslint/member-ordering": [
@@ -65,44 +155,10 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-      ],
-      "@typescript-eslint/no-require-imports": [
-        "error",
-      ],
-      "@typescript-eslint/no-shadow": [
-        "error",
-      ],
-      "@typescript-eslint/return-await": [
-        "error",
-      ],
-      "array-bracket-newline": [
-        "error",
-        "consistent",
-      ],
-      "array-bracket-spacing": [
-        "error",
-        "never",
-      ],
-      "brace-style": [
-        "error",
-        "1tbs",
-        {
-          "allowSingleLine": true,
-        },
-      ],
-      "comma-dangle": [
-        "error",
-        "always-multiline",
-      ],
-      "comma-spacing": [
-        "error",
-        {
-          "after": true,
-          "before": false,
-        },
-      ],
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-require-imports": "error",
+      "@typescript-eslint/no-shadow": "error",
+      "@typescript-eslint/return-await": "error",
       "curly": [
         "error",
         "multi-line",
@@ -141,36 +197,7 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
           ],
         },
       ],
-      "indent": [
-        "off",
-      ],
-      "key-spacing": [
-        "error",
-      ],
-      "keyword-spacing": [
-        "error",
-      ],
-      "max-len": [
-        "error",
-        {
-          "code": 150,
-          "ignoreComments": true,
-          "ignoreRegExpLiterals": true,
-          "ignoreStrings": true,
-          "ignoreTemplateLiterals": true,
-          "ignoreUrls": true,
-        },
-      ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-multi-spaces": [
-        "error",
-        {
-          "ignoreEOLComments": false,
-        },
-      ],
-      "no-multiple-empty-lines": [
         "error",
       ],
       "no-return-await": [
@@ -178,44 +205,6 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
       ],
       "no-shadow": [
         "off",
-      ],
-      "no-trailing-spaces": [
-        "error",
-      ],
-      "object-curly-newline": [
-        "error",
-        {
-          "consistent": true,
-          "multiline": true,
-        },
-      ],
-      "object-curly-spacing": [
-        "error",
-        "always",
-      ],
-      "object-property-newline": [
-        "error",
-        {
-          "allowAllPropertiesOnSameLine": true,
-        },
-      ],
-      "quote-props": [
-        "error",
-        "consistent-as-needed",
-      ],
-      "quotes": [
-        "error",
-        "single",
-        {
-          "avoidEscape": true,
-        },
-      ],
-      "semi": [
-        "error",
-        "always",
-      ],
-      "space-before-blocks": [
-        "error",
       ],
     },
     "settings": {
@@ -288,6 +277,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
@@ -410,6 +400,7 @@ jobs:
         run: |-
           echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+        shell: bash
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -443,9 +434,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_SHA 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
 ",
   ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -476,6 +465,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -592,7 +582,7 @@ junit.xml
 queue_rules:
   - name: default
     update_method: merge
-    conditions:
+    queue_conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
@@ -611,6 +601,8 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
+merge_queue:
+  max_parallel_checks: 1
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
@@ -1307,7 +1299,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": [
-        "es2019",
+        "es2020",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1322,7 +1314,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2019",
+      "target": "ES2020",
     },
     "exclude": [
       "node_modules",
@@ -1342,7 +1334,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": [
-        "es2019",
+        "es2020",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1359,7 +1351,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2019",
+      "target": "ES2020",
     },
     "exclude": [],
     "include": [

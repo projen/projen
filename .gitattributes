@@ -30,5 +30,6 @@
 /LICENSE linguist-generated
 /package.json linguist-generated
 /projen.js linguist-generated
+/src/javascript/biome/biome-config.ts linguist-generated
 /tsconfig.dev.json linguist-generated
 /yarn.lock linguist-generated

@@ -134,7 +134,7 @@ export abstract class ObjectFile extends FileBase {
    * ```json
    * "compilerOptions": {
    *   "exclude": ["node_modules"],
-   *   "lib": ["es2019"]
+   *   "lib": ["es2020"]
    *   ...
    * }
    * ...
@@ -148,7 +148,7 @@ export abstract class ObjectFile extends FileBase {
    * ```json
    * "compilerOptions": {
    *   "exclude": ["node_modules", "coverage"],
-   *   "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+   *   "lib": ["es2020", "dom", "dom.iterable", "esnext"]
    *   ...
    * }
    * ...
@@ -197,7 +197,7 @@ export abstract class ObjectFile extends FileBase {
    * ```json
    * "compilerOptions": {
    *   "exclude": ["node_modules"],
-   *   "lib": ["es2019"]
+   *   "lib": ["es2020"]
    *   ...
    * }
    * ...
@@ -240,7 +240,7 @@ export abstract class ObjectFile extends FileBase {
       }) ?? undefined;
 
     if (resolved) {
-      deepMerge([resolved, this.rawOverrides], true);
+      deepMerge([resolved, this.rawOverrides], { destructive: true });
     }
 
     let patched = resolved;

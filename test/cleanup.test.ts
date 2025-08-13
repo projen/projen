@@ -29,7 +29,7 @@ test("cleanup uses cache file", () => {
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
-  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f)).sort();
 
   // THEN
   expect(deletedFiles).toEqual(fileList);
@@ -63,7 +63,7 @@ test("cleanup falls back to greedy method", () => {
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
-  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f)).sort();
 
   // THEN
   expect(postFiles).not.toContain("delete.txt");
@@ -91,7 +91,7 @@ test("cleanup only orphaned files", () => {
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
-  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f)).sort();
 
   // THEN
   expect(deletedFiles).not.toEqual(fileList);

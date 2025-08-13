@@ -15,6 +15,7 @@ The following submodules are available:
 - [gitlab](./gitlab.md)
 - [java](./java.md)
 - [javascript](./javascript.md)
+- [javascript.biome_config](./javascript.biome_config.md)
 - [python](./python.md)
 - [release](./release.md)
 - [typescript](./typescript.md)
@@ -2316,7 +2317,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -2330,7 +2331,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -2369,7 +2370,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -2760,7 +2761,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -2774,7 +2775,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -2813,7 +2814,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -4069,7 +4070,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -4083,7 +4084,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -4122,7 +4123,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -7760,7 +7761,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -7774,7 +7775,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -7813,7 +7814,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8487,7 +8488,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8501,7 +8502,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -8540,7 +8541,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8931,7 +8932,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -8945,7 +8946,7 @@ would result in the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules", "coverage"],
-  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
   ...
 }
 ...
@@ -8984,7 +8985,7 @@ For example, with the following object file
 ```json
 "compilerOptions": {
   "exclude": ["node_modules"],
-  "lib": ["es2019"]
+  "lib": ["es2020"]
   ...
 }
 ...
@@ -13706,6 +13707,7 @@ environment:
 - Working directory: the project directory.
 - `$VERSION`: the current version. Looks like `1.2.3`.
 - `$LATEST_TAG`: the most recent tag. Looks like `prefix-v1.2.3`, or may be unset.
+- `$SUGGESTED_BUMP`: the suggested bump action based on commits. One of `major|minor|patch|none`.
 
 The command should print one of the following to `stdout`:
 
@@ -14785,6 +14787,10 @@ result of a new project creation (and take additional steps accordingly)
 
 Find commits that should be considered releasable to decide if a release is required.
 
+This setting only controls whether a release is triggered, yes or no. The
+paths used here are independent of the code that controls what commits are inspected
+to determine the version number.
+
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -15106,6 +15112,7 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
+| <code><a href="#projen.Task.insertStep">insertStep</a></code> | Insert one or more steps at a given index. |
 | <code><a href="#projen.Task.lock">lock</a></code> | Forbid additional changes to this task. |
 | <code><a href="#projen.Task.prepend">prepend</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
@@ -15209,6 +15216,33 @@ Shell command.
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
 
 Options.
+
+---
+
+##### `insertStep` <a name="insertStep" id="projen.Task.insertStep"></a>
+
+```typescript
+public insertStep(index: number, steps: ...TaskStep[]): void
+```
+
+Insert one or more steps at a given index.
+
+###### `index`<sup>Required</sup> <a name="index" id="projen.Task.insertStep.parameter.index"></a>
+
+- *Type:* number
+
+Steps will be inserted before this index.
+
+May be negative to
+count backwards from the end, or may be `== steps().length` to insert at the end.
+
+---
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.Task.insertStep.parameter.steps"></a>
+
+- *Type:* ...<a href="#projen.TaskStep">TaskStep</a>[]
+
+The steps to insert.
 
 ---
 

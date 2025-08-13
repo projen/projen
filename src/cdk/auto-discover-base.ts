@@ -1,5 +1,5 @@
 import * as path from "path";
-import * as glob from "glob";
+import * as glob from "fast-glob";
 import { TYPESCRIPT_INTEG_EXT } from "./internal";
 import { Component } from "../component";
 import { Project } from "../project";

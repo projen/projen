@@ -12,16 +12,16 @@ test("create cdk python project", () => {
   });
 
   const snapshot = synthSnapshot(p);
-  expect(Object.keys(snapshot)).toStrictEqual([
+  expect(Object.keys(snapshot).sort()).toStrictEqual([
     ".gitattributes",
     ".github/workflows/pull-request-lint.yml",
     ".gitignore",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
+    "README.md",
     "app.py",
     "cdk.json",
-    "README.md",
     "requirements-dev.txt",
     "requirements.txt",
     "test_cdk_python_app_project/__init__.py",

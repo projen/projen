@@ -101,7 +101,7 @@ test("isTruthy", () => {
   expect(isTruthy("enabled")).toEqual(true);
 });
 
-describe("deepMerge (destructive: false)", () => {
+describe("deepMerge (defaults)", () => {
   test("merges objects", () => {
     // GIVEN
     const original = { a: { b: 3 } };
@@ -122,6 +122,17 @@ describe("deepMerge (destructive: false)", () => {
 
     // THEN
     expect(original).toEqual({ a: { b: 3 } });
+  });
+
+  test("overwrites arrays", () => {
+    // GIVEN
+    const original = { a: ["foo"] };
+
+    // WHEN
+    deepMerge([original, { a: ["bar"] }]);
+
+    // THEN
+    expect(original).toEqual({ a: ["bar"] });
   });
 
   test('does not overwrite if rightmost is "undefined"', () => {
@@ -171,7 +182,7 @@ describe("deepMerge (destructive: true)", () => {
     const original = { a: { b: 3 } };
 
     // WHEN
-    deepMerge([original, { a: { c: 4 } }], true);
+    deepMerge([original, { a: { c: 4 } }], { destructive: true });
 
     // THEN
     expect(original).toEqual({ a: { b: 3, c: 4 } });
@@ -182,7 +193,7 @@ describe("deepMerge (destructive: true)", () => {
     const original = { a: "foo" };
 
     // WHEN
-    deepMerge([original, { a: { b: 3 } }], true);
+    deepMerge([original, { a: { b: 3 } }], { destructive: true });
 
     // THEN
     expect(original).toEqual({ a: { b: 3 } });
@@ -193,7 +204,7 @@ describe("deepMerge (destructive: true)", () => {
     const original = { a: 1 };
 
     // WHEN
-    deepMerge([original, { a: undefined }], true);
+    deepMerge([original, { a: undefined }], { destructive: true });
 
     // THEN
     expect(original).toEqual({}); // ! different from the non-destructive case
@@ -207,7 +218,7 @@ describe("deepMerge (destructive: true)", () => {
     const objB = { a: proj2 };
 
     // WHEN
-    deepMerge([objA, objB], true);
+    deepMerge([objA, objB], { destructive: true });
 
     // THEN
     expect(objA).toEqual(objB);
@@ -222,10 +233,34 @@ describe("deepMerge (destructive: true)", () => {
     const objB = { a: comp2 };
 
     // WHEN
-    deepMerge([objA, objB], true);
+    deepMerge([objA, objB], { destructive: true });
 
     // THEN
     expect(objA).toEqual(objB);
+  });
+});
+
+describe("deepMerge (mergeArray: true)", () => {
+  test("merges arrays", () => {
+    // GIVEN
+    const original = { a: ["foo"] };
+
+    // WHEN
+    deepMerge([original, { a: ["bar"] }], { mergeArrays: true });
+
+    // THEN
+    expect(original).toEqual({ a: ["foo", "bar"] });
+  });
+
+  test("deduplicates when merging arrays", () => {
+    // GIVEN
+    const original = { a: ["foo"] };
+
+    // WHEN
+    deepMerge([original, { a: ["foo", "bar"] }], { mergeArrays: true });
+
+    // THEN
+    expect(original).toEqual({ a: ["foo", "bar"] });
   });
 });
 

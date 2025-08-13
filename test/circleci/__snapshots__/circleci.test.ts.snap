@@ -48,6 +48,7 @@ jobs:
         description: job1Param description
         type: string
         default: job1Param default
+    circleci_ip_ranges: true
 workflows:
   workflow1:
     when:

@@ -1,10 +1,18 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import { compare, inc, ReleaseType } from "semver";
+import { compare } from "semver";
 import * as logging from "../logging";
-import { exec, execCapture, execOrUndefined } from "../util";
+import { execCapture, execOrUndefined } from "../util";
 import { ReleasableCommits } from "../version";
+import {
+  BumpType,
+  parseBumpType,
+  performBump,
+  relativeBumpType,
+  renderBumpType,
+} from "./bump-type";
+import { CommitAndTagVersion } from "./commit-tag-version";
 
 export interface BumpOptions {
   /**
@@ -144,11 +152,10 @@ export async function bump(cwd: string, options: BumpOptions) {
   const major = options.majorVersion;
   const minor = options.minorVersion;
   const minMajorVersion = options.minMajorVersion;
-  const prefix = options.tagPrefix ?? "";
+  const tagPrefix = options.tagPrefix ?? "";
   const bumpFile = join(cwd, options.bumpFile);
   const changelogFile = join(cwd, options.changelog);
   const releaseTagFile = join(cwd, options.releaseTagFile);
-  const bumpPackage = options.bumpPackage ?? "commit-and-tag-version@^12";
 
   if (major && minMajorVersion) {
     throw new Error(
@@ -173,14 +180,12 @@ export async function bump(cwd: string, options: BumpOptions) {
     major,
     minor,
     prerelease,
-    prefix,
+    prefix: tagPrefix,
   });
 
+  // Write the current version into the version file so that CATV will know the current version
   const { contents, newline } = await tryReadVersionFile(versionFile);
-
-  // update version
   contents.version = latestVersion;
-
   logging.info(
     `Update ${versionFile} to latest resolved version: ${latestVersion}`
   );
@@ -189,48 +194,42 @@ export async function bump(cwd: string, options: BumpOptions) {
     JSON.stringify(contents, undefined, 2) + (newline ? "\n" : "")
   );
 
-  // check for commits since the last release tag
-  let skipBump = false;
-  let restoreTag = false;
+  // Determine the initial bump status. CATV will always do a patch even if
+  // there are no commits, so look at commits ourselves first to decide
+  // if we even should do nothing at all.
+  const shouldRelease = isFirstRelease
+    ? true
+    : hasNewInterestingCommits({
+        cwd,
+        latestTag,
+        releasableCommits: options.releasableCommits,
+      });
 
-  // First Release is never skipping bump
-  if (!isFirstRelease) {
-    const findCommits = (
-      options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
-    ).replace("$LATEST_TAG", latestTag);
-    const commitsSinceLastTag = execOrUndefined(findCommits, { cwd })?.split(
-      "\n"
-    );
-    const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;
-    logging.info(
-      `Number of commits since ${latestTag}: ${numCommitsSinceLastTag}`
-    );
+  const catv = new CommitAndTagVersion(options.bumpPackage, cwd, {
+    versionFile,
+    changelogFile,
+    prerelease,
+    configOptions: options.versionrcOptions,
+    tagPrefix,
+  });
 
-    // Nothing to release right now
-    if (numCommitsSinceLastTag === 0) {
-      logging.info("Skipping bump...");
-      skipBump = true;
-      restoreTag = true;
+  // We used to translate `isFirstRelease` to the `--first-release` flag of CATV.
+  // What that does is skip a bump, only generate the changelog.
+  //
+  // Our `{ bump: none }` does the same, so we don't need to carry over this
+  // flag anymore.
+  let bumpType: BumpType =
+    shouldRelease && !isFirstRelease
+      ? relativeBumpType(latestVersion, await catv.dryRun())
+      : { bump: "none" };
 
-      // delete the existing tag (locally)
-      // if we don't do this, commit-and-tag-version generates an empty changelog
-      exec(`git tag --delete ${latestTag}`, { cwd });
-    }
-  }
-
-  // Determine what version to release as
-  let releaseAs: string | undefined;
-  if (minMajorVersion) {
-    const [majorVersion] = latestVersion.split(".");
-    const majorVersionNumber = parseInt(majorVersion, 10);
-    if (majorVersionNumber < minMajorVersion) {
-      releaseAs = `${minMajorVersion}.0.0`;
-    }
-  } else if (options.nextVersionCommand) {
+  logging.info(`Bump from commits: ${renderBumpType(bumpType)}`);
+  if (options.nextVersionCommand) {
     const nextVersion = execCapture(options.nextVersionCommand, {
       cwd,
       modEnv: {
         VERSION: latestVersion,
+        SUGGESTED_BUMP: renderBumpType(bumpType),
         ...(latestTag ? { LATEST_TAG: latestTag } : {}),
       },
     })
@@ -238,68 +237,52 @@ export async function bump(cwd: string, options: BumpOptions) {
       .trim();
 
     if (nextVersion) {
-      // Calculate the next version
-      if (isReleaseType(nextVersion)) {
-        releaseAs = inc(latestVersion, nextVersion)?.toString();
-      } else if (
-        isFullVersionString(nextVersion) &&
-        nextVersion !== latestVersion
-      ) {
-        releaseAs = nextVersion;
-      } else {
+      try {
+        bumpType = parseBumpType(nextVersion);
+        logging.info(
+          `Bump from nextVersionCommand: ${renderBumpType(bumpType)}`
+        );
+      } catch (e) {
         throw new Error(
-          `nextVersionCommand "${options.nextVersionCommand}" returned invalid version: ${nextVersion}`
+          `nextVersionCommand "${options.nextVersionCommand}" returned invalid output: ${e}`
         );
       }
-
-      // Don't need to validate if the final version is within the expected declared major.minor range,
-      // if given. That is done below after bumping.
     }
   }
 
-  // If the nextVersionCommand forced a specific release version, we shouldn't
-  // skip the bump action.
-  if (releaseAs) {
-    skipBump = false;
+  // Respect minMajorVersion to correct the result of the nextVersionCommand
+  if (minMajorVersion) {
+    const bumpedVersion = performBump(latestVersion, bumpType);
+    const [majorVersion] = bumpedVersion.split(".");
+    const majorVersionNumber = parseInt(majorVersion, 10);
+    if (majorVersionNumber < minMajorVersion) {
+      bumpType = { bump: "absolute", absolute: `${minMajorVersion}.0.0` };
+    }
   }
 
-  // create a commit-and-tag-version configuration file
-  const rcfile = join(cwd, ".versionrc.json");
-  await generateVersionrcFile(
-    rcfile,
-    versionFile,
-    changelogFile,
-    skipBump,
-    prerelease,
-    options.versionrcOptions
-  );
+  // Invoke CATV with the options we landed on. If we decided not to do a bump,
+  // we will use this to regenerate the changelog of the most recent version.
+  const newRelease = bumpType.bump !== "none";
 
-  const cmd = ["npx", bumpPackage];
-  if (isFirstRelease && !minMajorVersion) {
-    cmd.push("--first-release");
-  }
-  if (prefix) {
-    cmd.push(`--tag-prefix ${prefix}v`);
-  }
-  if (releaseAs) {
-    cmd.push(`--release-as ${releaseAs}`);
+  // If we're not doing a new release and this is not the
+  // first release, we're just regenerating the previous changelog again.
+  if (!newRelease && !isFirstRelease) {
+    await catv.regeneratePreviousChangeLog(latestVersion, latestTag);
+  } else {
+    // Otherwise we're either doing a bump + release, or we're releasing the
+    // first version as 0.0.0 (which is already the number in the file so we
+    // skip bumping).
+    await catv.invoke({
+      releaseAs: newRelease ? renderBumpType(bumpType) : undefined,
+      skipBump: !newRelease,
+    });
   }
 
-  exec(cmd.join(" "), { cwd });
-
-  // add the tag back if it was previously removed
-  if (restoreTag) {
-    exec(`git tag ${latestTag}`, { cwd });
-  }
-
-  await fs.rm(rcfile, { force: true, recursive: true });
-
+  // Validate the version that we ended up with
   const newVersion = (await tryReadVersionFile(versionFile)).version;
   if (!newVersion) {
     throw new Error(`bump failed: ${versionFile} does not have a version set`);
   }
-
-  // if MAJOR is defined, ensure that the new version is within the same major version
   if (major) {
     if (!newVersion.startsWith(`${major}.`)) {
       throw new Error(
@@ -315,10 +298,39 @@ export async function bump(cwd: string, options: BumpOptions) {
     }
   }
 
+  // Report curent status into the dist/ directory
+  const newTag = `${tagPrefix}v${newVersion}`;
   await fs.writeFile(bumpFile, newVersion);
-
-  const newTag = `${prefix}v${newVersion}`;
   await fs.writeFile(releaseTagFile, newTag);
+}
+
+/**
+ * Determine based on releaseable commits whether we should release or not
+ */
+function hasNewInterestingCommits(options: {
+  releasableCommits?: string;
+  latestTag: string;
+  cwd: string;
+}) {
+  const findCommits = (
+    options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
+  ).replace("$LATEST_TAG", options.latestTag);
+
+  const commitsSinceLastTag = execOrUndefined(findCommits, {
+    cwd: options.cwd,
+  })?.split("\n");
+  const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;
+  logging.info(
+    `Number of commits since ${options.latestTag}: ${numCommitsSinceLastTag}`
+  );
+
+  // Nothing to release right now
+  if (numCommitsSinceLastTag === 0) {
+    logging.info("No new interesting commits.");
+    return false;
+  }
+
+  return true;
 }
 
 async function tryReadVersionFile(
@@ -358,49 +370,6 @@ interface LatestTagOptions {
    * A prefix applied to all tags.
    */
   readonly prefix: string;
-}
-
-function generateVersionrcFile(
-  rcfile: string,
-  versionFile: string,
-  changelogFile: string,
-  skipBump: boolean,
-  prerelease?: string,
-  configOptions?: Config
-) {
-  return fs.writeFile(
-    rcfile,
-    JSON.stringify(
-      {
-        ...{
-          packageFiles: [
-            {
-              filename: versionFile,
-              type: "json",
-            },
-          ],
-          bumpFiles: [
-            {
-              filename: versionFile,
-              type: "json",
-            },
-          ],
-          commitAll: false,
-          infile: changelogFile,
-          prerelease: prerelease,
-          header: "",
-          skip: {
-            commit: true,
-            tag: true,
-            bump: skipBump,
-          },
-          ...configOptions,
-        },
-      },
-      undefined,
-      2
-    )
-  );
 }
 
 /**
@@ -492,13 +461,4 @@ function determineLatestTag(options: LatestTagOptions): {
   }
 
   return { latestVersion, latestTag, isFirstRelease };
-}
-
-function isReleaseType(nextVersion: string): nextVersion is ReleaseType {
-  // We are not recognizing all of them yet. That's fine for now.
-  return !!nextVersion.match(/^(major|minor|patch)$/);
-}
-
-function isFullVersionString(nextVersion: string) {
-  return nextVersion.match(/^\d+\.\d+\.\d+(-[^\s]+)?$/);
 }

@@ -456,6 +456,13 @@
           "path": ".vscode/launch.json"
         }
       },
+      "JsiiFromJsonSchema@src--javascript--biome--biome-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/javascript/biome/biome-config.ts"
+        }
+      },
       "WindowsBuild": {
         "metadata": {
           "type": "component",

@@ -1,5 +1,5 @@
+import * as Case from "case";
 import { JobStep, AppPermissions } from "./workflows-model";
-import { snakeCaseKeys } from "../util";
 
 /**
  * Options for `GithubCredentials.fromPersonalAccessToken`
@@ -12,8 +12,37 @@ export interface GithubCredentialsPersonalAccessTokenOptions {
  * Options for `GithubCredentials.fromApp`
  */
 export interface GithubCredentialsAppOptions {
+  /**
+   * The secret containing the GitHub App ID
+   *
+   * @default "PROJEN_APP_ID"
+   */
   readonly appIdSecret?: string;
+
+  /**
+   * The secret containing the GitHub App private key
+   *
+   * Escaped newlines (\\n) will be automatically replaced with actual newlines.
+   *
+   * @default "PROJEN_APP_PRIVATE_KEY"
+   */
   readonly privateKeySecret?: string;
+
+  /**
+   * The owner of the GitHub App installation
+   *
+   * @default - if empty, defaults to the current repository owner
+   */
+  readonly owner?: string;
+
+  /**
+   * List of repositories to grant access to
+   *
+   * @default - if owner is set and repositories is empty, access will be scoped to all repositories in the provided repository owner's installation.
+   * If owner and repositories are empty, access will be scoped to only the current repository.
+   */
+  readonly repositories?: string[];
+
   /**
    * The permissions granted to the token.
    *
@@ -60,18 +89,34 @@ export class GithubCredentials {
     const privateKeySecret =
       options.privateKeySecret ?? "PROJEN_APP_PRIVATE_KEY";
 
+    const actionConfig: Record<string, string> = {
+      "app-id": `\${{ secrets.${appIdSecret} }}`,
+      "private-key": `\${{ secrets.${privateKeySecret} }}`,
+    };
+
+    if (options.owner) {
+      actionConfig.owner = options.owner;
+    }
+    if (options.repositories) {
+      actionConfig.repositories = options.repositories.join(",");
+    }
+
+    const permissions = Object.entries(options.permissions ?? {}).reduce<
+      Record<string, string>
+    >((map, [name, val]) => {
+      map[`permission-${Case.kebab(name)}`] = val;
+      return map;
+    }, {});
+
     return new GithubCredentials({
       setupSteps: [
         {
           name: "Generate token",
           id: "generate_token",
-          uses: "tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a",
+          uses: "actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5",
           with: {
-            app_id: `\${{ secrets.${appIdSecret} }}`,
-            private_key: `\${{ secrets.${privateKeySecret} }}`,
-            permissions: options.permissions
-              ? JSON.stringify(snakeCaseKeys(options.permissions))
-              : undefined,
+            ...actionConfig,
+            ...permissions,
           },
         },
       ],

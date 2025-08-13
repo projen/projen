@@ -1,6 +1,6 @@
 import { copyFileSync, mkdirSync, readdirSync, statSync } from "fs";
 import { join, dirname, basename } from "path";
-import { glob } from "glob";
+import * as glob from "fast-glob";
 import {
   mkdtemp,
   directorySnapshot,

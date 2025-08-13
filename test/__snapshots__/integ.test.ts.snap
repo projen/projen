@@ -47,88 +47,80 @@ exports[`cdk-watchful 1`] = `
     "!.projenrc.js"
   ],
   "rules": {
-    "indent": [
-      "off"
-    ],
     "@stylistic/indent": [
       "error",
       2
     ],
-    "quotes": [
+    "@stylistic/quotes": [
       "error",
       "single",
       {
         "avoidEscape": true
       }
     ],
-    "comma-dangle": [
+    "@stylistic/comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "comma-spacing": [
+    "@stylistic/comma-spacing": [
       "error",
       {
         "before": false,
         "after": true
       }
     ],
-    "no-multi-spaces": [
+    "@stylistic/no-multi-spaces": [
       "error",
       {
         "ignoreEOLComments": false
       }
     ],
-    "array-bracket-spacing": [
+    "@stylistic/array-bracket-spacing": [
       "error",
       "never"
     ],
-    "array-bracket-newline": [
+    "@stylistic/array-bracket-newline": [
       "error",
       "consistent"
     ],
-    "object-curly-spacing": [
+    "@stylistic/object-curly-spacing": [
       "error",
       "always"
     ],
-    "object-curly-newline": [
+    "@stylistic/object-curly-newline": [
       "error",
       {
         "multiline": true,
         "consistent": true
       }
     ],
-    "object-property-newline": [
+    "@stylistic/object-property-newline": [
       "error",
       {
         "allowAllPropertiesOnSameLine": true
       }
     ],
-    "keyword-spacing": [
+    "@stylistic/keyword-spacing": [
       "error"
     ],
-    "brace-style": [
+    "@stylistic/brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
-    "space-before-blocks": [
+    "@stylistic/space-before-blocks": [
       "error"
-    ],
-    "curly": [
-      "error",
-      "multi-line",
-      "consistent"
     ],
     "@stylistic/member-delimiter-style": [
       "error"
     ],
-    "semi": [
+    "@stylistic/semi": [
       "error",
       "always"
     ],
-    "max-len": [
+    "@stylistic/max-len": [
       "error",
       {
         "code": 150,
@@ -139,13 +131,25 @@ exports[`cdk-watchful 1`] = `
         "ignoreRegExpLiterals": true
       }
     ],
-    "quote-props": [
+    "@stylistic/quote-props": [
       "error",
       "consistent-as-needed"
     ],
-    "@typescript-eslint/no-require-imports": [
+    "@stylistic/key-spacing": [
       "error"
     ],
+    "@stylistic/no-multiple-empty-lines": [
+      "error"
+    ],
+    "@stylistic/no-trailing-spaces": [
+      "error"
+    ],
+    "curly": [
+      "error",
+      "multi-line",
+      "consistent"
+    ],
+    "@typescript-eslint/no-require-imports": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -179,27 +183,12 @@ exports[`cdk-watchful 1`] = `
     "no-shadow": [
       "off"
     ],
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
-    "key-spacing": [
-      "error"
-    ],
-    "no-multiple-empty-lines": [
-      "error"
-    ],
-    "@typescript-eslint/no-floating-promises": [
-      "error"
-    ],
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-floating-promises": "error",
     "no-return-await": [
       "off"
     ],
-    "@typescript-eslint/return-await": [
-      "error"
-    ],
-    "no-trailing-spaces": [
-      "error"
-    ],
+    "@typescript-eslint/return-await": "error",
     "dot-notation": [
       "error"
     ],
@@ -294,6 +283,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
@@ -538,6 +528,7 @@ jobs:
         run: |-
           echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+        shell: bash
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -575,9 +566,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_SHA 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
   release_npm:
     name: Publish to npm
     needs: release
@@ -739,6 +728,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -861,7 +851,7 @@ example/*.d.ts
 queue_rules:
   - name: default
     update_method: merge
-    conditions:
+    queue_conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
@@ -886,6 +876,8 @@ pull_request_rules:
       - status-success=package-js
       - status-success=package-java
       - status-success=package-python
+merge_queue:
+  max_parallel_checks: 1
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
@@ -1555,7 +1547,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2019"
+      "es2020"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -1570,7 +1562,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2019"
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts",
@@ -1632,88 +1624,80 @@ exports[`cdk8s 1`] = `
     "!.projenrc.js"
   ],
   "rules": {
-    "indent": [
-      "off"
-    ],
     "@stylistic/indent": [
       "error",
       2
     ],
-    "quotes": [
+    "@stylistic/quotes": [
       "error",
       "single",
       {
         "avoidEscape": true
       }
     ],
-    "comma-dangle": [
+    "@stylistic/comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "comma-spacing": [
+    "@stylistic/comma-spacing": [
       "error",
       {
         "before": false,
         "after": true
       }
     ],
-    "no-multi-spaces": [
+    "@stylistic/no-multi-spaces": [
       "error",
       {
         "ignoreEOLComments": false
       }
     ],
-    "array-bracket-spacing": [
+    "@stylistic/array-bracket-spacing": [
       "error",
       "never"
     ],
-    "array-bracket-newline": [
+    "@stylistic/array-bracket-newline": [
       "error",
       "consistent"
     ],
-    "object-curly-spacing": [
+    "@stylistic/object-curly-spacing": [
       "error",
       "always"
     ],
-    "object-curly-newline": [
+    "@stylistic/object-curly-newline": [
       "error",
       {
         "multiline": true,
         "consistent": true
       }
     ],
-    "object-property-newline": [
+    "@stylistic/object-property-newline": [
       "error",
       {
         "allowAllPropertiesOnSameLine": true
       }
     ],
-    "keyword-spacing": [
+    "@stylistic/keyword-spacing": [
       "error"
     ],
-    "brace-style": [
+    "@stylistic/brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
-    "space-before-blocks": [
+    "@stylistic/space-before-blocks": [
       "error"
-    ],
-    "curly": [
-      "error",
-      "multi-line",
-      "consistent"
     ],
     "@stylistic/member-delimiter-style": [
       "error"
     ],
-    "semi": [
+    "@stylistic/semi": [
       "error",
       "always"
     ],
-    "max-len": [
+    "@stylistic/max-len": [
       "error",
       {
         "code": 150,
@@ -1724,13 +1708,25 @@ exports[`cdk8s 1`] = `
         "ignoreRegExpLiterals": true
       }
     ],
-    "quote-props": [
+    "@stylistic/quote-props": [
       "error",
       "consistent-as-needed"
     ],
-    "@typescript-eslint/no-require-imports": [
+    "@stylistic/key-spacing": [
       "error"
     ],
+    "@stylistic/no-multiple-empty-lines": [
+      "error"
+    ],
+    "@stylistic/no-trailing-spaces": [
+      "error"
+    ],
+    "curly": [
+      "error",
+      "multi-line",
+      "consistent"
+    ],
+    "@typescript-eslint/no-require-imports": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -1764,27 +1760,12 @@ exports[`cdk8s 1`] = `
     "no-shadow": [
       "off"
     ],
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
-    "key-spacing": [
-      "error"
-    ],
-    "no-multiple-empty-lines": [
-      "error"
-    ],
-    "@typescript-eslint/no-floating-promises": [
-      "error"
-    ],
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-floating-promises": "error",
     "no-return-await": [
       "off"
     ],
-    "@typescript-eslint/return-await": [
-      "error"
-    ],
-    "no-trailing-spaces": [
-      "error"
-    ],
+    "@typescript-eslint/return-await": "error",
     "dot-notation": [
       "error"
     ],
@@ -1902,6 +1883,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -2763,7 +2745,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2019"
+      "es2020"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -2778,7 +2760,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2019"
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts",
@@ -2841,88 +2823,80 @@ exports[`cdk8s-cli 1`] = `
     "!.projenrc.js"
   ],
   "rules": {
-    "indent": [
-      "off"
-    ],
     "@stylistic/indent": [
       "error",
       2
     ],
-    "quotes": [
+    "@stylistic/quotes": [
       "error",
       "single",
       {
         "avoidEscape": true
       }
     ],
-    "comma-dangle": [
+    "@stylistic/comma-dangle": [
       "error",
       "always-multiline"
     ],
-    "comma-spacing": [
+    "@stylistic/comma-spacing": [
       "error",
       {
         "before": false,
         "after": true
       }
     ],
-    "no-multi-spaces": [
+    "@stylistic/no-multi-spaces": [
       "error",
       {
         "ignoreEOLComments": false
       }
     ],
-    "array-bracket-spacing": [
+    "@stylistic/array-bracket-spacing": [
       "error",
       "never"
     ],
-    "array-bracket-newline": [
+    "@stylistic/array-bracket-newline": [
       "error",
       "consistent"
     ],
-    "object-curly-spacing": [
+    "@stylistic/object-curly-spacing": [
       "error",
       "always"
     ],
-    "object-curly-newline": [
+    "@stylistic/object-curly-newline": [
       "error",
       {
         "multiline": true,
         "consistent": true
       }
     ],
-    "object-property-newline": [
+    "@stylistic/object-property-newline": [
       "error",
       {
         "allowAllPropertiesOnSameLine": true
       }
     ],
-    "keyword-spacing": [
+    "@stylistic/keyword-spacing": [
       "error"
     ],
-    "brace-style": [
+    "@stylistic/brace-style": [
       "error",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
-    "space-before-blocks": [
+    "@stylistic/space-before-blocks": [
       "error"
-    ],
-    "curly": [
-      "error",
-      "multi-line",
-      "consistent"
     ],
     "@stylistic/member-delimiter-style": [
       "error"
     ],
-    "semi": [
+    "@stylistic/semi": [
       "error",
       "always"
     ],
-    "max-len": [
+    "@stylistic/max-len": [
       "error",
       {
         "code": 150,
@@ -2933,13 +2907,25 @@ exports[`cdk8s-cli 1`] = `
         "ignoreRegExpLiterals": true
       }
     ],
-    "quote-props": [
+    "@stylistic/quote-props": [
       "error",
       "consistent-as-needed"
     ],
-    "@typescript-eslint/no-require-imports": [
+    "@stylistic/key-spacing": [
       "error"
     ],
+    "@stylistic/no-multiple-empty-lines": [
+      "error"
+    ],
+    "@stylistic/no-trailing-spaces": [
+      "error"
+    ],
+    "curly": [
+      "error",
+      "multi-line",
+      "consistent"
+    ],
+    "@typescript-eslint/no-require-imports": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -2973,27 +2959,12 @@ exports[`cdk8s-cli 1`] = `
     "no-shadow": [
       "off"
     ],
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
-    "key-spacing": [
-      "error"
-    ],
-    "no-multiple-empty-lines": [
-      "error"
-    ],
-    "@typescript-eslint/no-floating-promises": [
-      "error"
-    ],
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-floating-promises": "error",
     "no-return-await": [
       "off"
     ],
-    "@typescript-eslint/return-await": [
-      "error"
-    ],
-    "no-trailing-spaces": [
-      "error"
-    ],
+    "@typescript-eslint/return-await": "error",
     "dot-notation": [
       "error"
     ],
@@ -3111,6 +3082,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -3870,7 +3842,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2019"
+      "es2020"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -3885,7 +3857,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2019"
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts",
@@ -3909,7 +3881,7 @@ test('hello', () => {
     "inlineSourceMap": true,
     "inlineSources": true,
     "lib": [
-      "es2019"
+      "es2020"
     ],
     "module": "CommonJS",
     "noEmitOnError": false,
@@ -3924,7 +3896,7 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2019"
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts"
@@ -3983,7 +3955,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "9"
+          version: "10"
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
       - name: build
@@ -3993,6 +3965,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
@@ -4103,7 +4076,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "9"
+          version: "10"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
@@ -4119,6 +4092,7 @@ jobs:
         run: |-
           echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+        shell: bash
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4152,9 +4126,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_SHA 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
 ",
   ".github/workflows/upgrade-master.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -4179,7 +4151,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "9"
+          version: "10"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
@@ -4189,6 +4161,7 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -4299,7 +4272,7 @@ junit.xml
 queue_rules:
   - name: default
     update_method: merge
-    conditions:
+    queue_conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
@@ -4318,6 +4291,8 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
+merge_queue:
+  max_parallel_checks: 1
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/

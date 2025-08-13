@@ -1,3 +1,4 @@
+import * as path from "path";
 import {
   setupAllContributors,
   setupProjenBootstrap,
@@ -14,6 +15,7 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
+  JsiiFromJsonSchema,
 } from "./projenrc";
 import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -51,8 +53,8 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.7.x",
-  typescriptVersion: "5.7.x",
+  jsiiVersion: "5.8.x",
+  typescriptVersion: "5.8.x",
 
   deps: ["constructs@^10.0.0"],
 
@@ -61,7 +63,7 @@ const project = new JsiiProject({
     "yaml@^2.2.2",
     "yargs",
     "case",
-    "glob@^8",
+    "fast-glob",
     "semver",
     "chalk",
     "@iarna/toml",
@@ -70,17 +72,21 @@ const project = new JsiiProject({
     "shx",
     "fast-json-patch",
     "comment-json@4.2.2",
+    "parse-conflict-json",
   ],
 
   devDeps: [
     "@types/conventional-changelog-config-spec",
     "@types/yargs",
-    "@types/glob",
     "@types/semver",
     "@types/ini",
+    "@types/parse-conflict-json",
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "json2jsii",
+    // Needed to generate biome config
+    "@biomejs/biome@^2",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -134,11 +140,12 @@ const project = new JsiiProject({
   // This is important because PyPI has limits on the total storage amount used, and extensions need to be manually requested
   releasableCommits: ReleasableCommits.featuresAndFixes(),
 
+  releaseEnvironment: "release",
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
+    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
-    mavenEndpoint: "https://s01.oss.sonatype.org",
   },
   publishToPypi: {
     distName: "projen",
@@ -188,10 +195,15 @@ setupNpmignore(project);
 setupIntegTest(project);
 setupBundleTaskRunner(project);
 
+new JsiiFromJsonSchema(project, {
+  schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
+  filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
+
 new WindowsBuild(project);
 
 // we are projen, so re-synth after compiling.
-// fixes feedback loop where projen contibutors run "build"
+// fixes feedback loop where projen contributors run "build"
 // but not all files are updated
 if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);
