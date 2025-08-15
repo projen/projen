@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as vm from "vm";
+import { cliPrompts } from "./cli/prompts";
 import { resolveProjectType } from "./inventory";
 import { renderJavaScriptOptions } from "./javascript/render-options";
 import { InitProjectOptionHints } from "./option-hints";
@@ -69,8 +70,8 @@ export class Projects {
    * so that custom project types can detect whether the current synthesis is the
    * result of a new project creation (and take additional steps accordingly)
    */
-  public static createProject(options: CreateProjectOptions) {
-    createProject(options);
+  public static async createProject(options: CreateProjectOptions) {
+    await createProject(options);
   }
 
   private constructor() {}
@@ -96,7 +97,7 @@ function resolveModulePath(moduleName: string) {
   }
 }
 
-function createProject(opts: CreateProjectOptions) {
+async function createProject(opts: CreateProjectOptions) {
   const projectType = resolveProjectType(opts.projectFqn);
   const mod = resolveModulePath(projectType.moduleName);
 
@@ -107,13 +108,18 @@ function createProject(opts: CreateProjectOptions) {
   // This is so we can keep the top-level namespace as clean as possible
   const optionsImports = "_options" + Math.random().toString(36).slice(2);
 
+  const jsTools = await cliPrompts.selectJsTools(projectType.typename);
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
   const { renderedOptions, imports } = renderJavaScriptOptions({
     bootstrap: true,
     comments: opts.optionHints ?? InitProjectOptionHints.FEATURED,
     type: projectType,
-    args: opts.projectOptions,
+    args: {
+      ...opts.projectOptions,
+      biome: jsTools?.linter === "biome",
+      eslint: jsTools?.linter === "eslint",
+    },
     omitFromBootstrap: ["outdir"],
     prefixImports: optionsImports,
   });

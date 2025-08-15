@@ -1,4 +1,5 @@
 import { consola } from "consola";
+import { CliError } from "../../util";
 import { InteractiveCliPrompt, SelectItemValue } from "../core/interactive-cli-prompt";
 
 export const interactiveCliPrompt: InteractiveCliPrompt = {
@@ -23,7 +24,7 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
     });
 
     const selected = args.items.find((item) => String(item.value) === res);
-    if (!selected) throw new Error("No item selected.");
+    if (!selected) throw new CliError("No item selected.");
     return selected.value;
   },
 };
