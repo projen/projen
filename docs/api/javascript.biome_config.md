@@ -1378,7 +1378,7 @@ const htmlConfiguration: javascript.biome_config.HtmlConfiguration = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.HtmlFormatterConfiguration</code> | HTML formatter options. |
-| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.parser">parser</a></code> | <code>any</code> | HTML parsing options. |
+| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.parser">parser</a></code> | <code>projen.javascript.biome_config.HtmlParserConfiguration</code> | HTML parsing options. |
 
 ---
 
@@ -1397,10 +1397,10 @@ HTML formatter options.
 ##### `parser`<sup>Optional</sup> <a name="parser" id="projen.javascript.biome_config.HtmlConfiguration.property.parser"></a>
 
 ```typescript
-public readonly parser: any;
+public readonly parser: HtmlParserConfiguration;
 ```
 
-- *Type:* any
+- *Type:* projen.javascript.biome_config.HtmlParserConfiguration
 
 HTML parsing options.
 
@@ -1576,6 +1576,38 @@ Defaults to "css".
 
 ---
 
+### HtmlParserConfiguration <a name="HtmlParserConfiguration" id="projen.javascript.biome_config.HtmlParserConfiguration"></a>
+
+Options that changes how the HTML parser behaves.
+
+#### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlParserConfiguration.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const htmlParserConfiguration: javascript.biome_config.HtmlParserConfiguration = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.interpolation">interpolation</a></code> | <code>boolean</code> | Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files. |
+
+---
+
+##### `interpolation`<sup>Optional</sup> <a name="interpolation" id="projen.javascript.biome_config.HtmlParserConfiguration.property.interpolation"></a>
+
+```typescript
+public readonly interpolation: boolean;
+```
+
+- *Type:* boolean
+
+Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files.
+
+---
+
 ### JsAssistConfiguration <a name="JsAssistConfiguration" id="projen.javascript.biome_config.JsAssistConfiguration"></a>
 
 Assist options specific to the JavaScript assist.
@@ -1734,6 +1766,7 @@ const jsFormatterConfiguration: javascript.biome_config.JsFormatterConfiguration
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.jsxQuoteStyle">jsxQuoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in JSX. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to JavaScript (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to JavaScript (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.operatorLinebreak">operatorLinebreak</a></code> | <code>projen.javascript.biome_config.OperatorLinebreak</code> | When breaking binary expressions into multiple lines, whether to break them before or after the binary operator. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteProperties">quoteProperties</a></code> | <code>projen.javascript.biome_config.QuoteProperties</code> | When properties in objects are quoted. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in JavaScript code. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.semicolons">semicolons</a></code> | <code>projen.javascript.biome_config.Semicolons</code> | Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI. |
@@ -1894,6 +1927,21 @@ public readonly lineWidth: number;
 What's the max width of a line applied to JavaScript (and its super languages) files.
 
 Defaults to 80.
+
+---
+
+##### `operatorLinebreak`<sup>Optional</sup> <a name="operatorLinebreak" id="projen.javascript.biome_config.JsFormatterConfiguration.property.operatorLinebreak"></a>
+
+```typescript
+public readonly operatorLinebreak: OperatorLinebreak;
+```
+
+- *Type:* projen.javascript.biome_config.OperatorLinebreak
+- *Default:* after".
+
+When breaking binary expressions into multiple lines, whether to break them before or after the binary operator.
+
+Defaults to "after".
 
 ---
 
@@ -3378,6 +3426,31 @@ crlf.
 ##### `CR` <a name="CR" id="projen.javascript.biome_config.LineEnding.CR"></a>
 
 cr.
+
+---
+
+
+### OperatorLinebreak <a name="OperatorLinebreak" id="projen.javascript.biome_config.OperatorLinebreak"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.biome_config.OperatorLinebreak.AFTER">AFTER</a></code> | after. |
+| <code><a href="#projen.javascript.biome_config.OperatorLinebreak.BEFORE">BEFORE</a></code> | before. |
+
+---
+
+##### `AFTER` <a name="AFTER" id="projen.javascript.biome_config.OperatorLinebreak.AFTER"></a>
+
+after.
+
+---
+
+
+##### `BEFORE` <a name="BEFORE" id="projen.javascript.biome_config.OperatorLinebreak.BEFORE"></a>
+
+before.
 
 ---
 
