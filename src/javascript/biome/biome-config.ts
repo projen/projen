@@ -549,7 +549,7 @@ export interface HtmlConfiguration {
    *
    * @schema HtmlConfiguration#parser
    */
-  readonly parser?: any;
+  readonly parser?: HtmlParserConfiguration;
 }
 
 /**
@@ -561,7 +561,7 @@ export function toJson_HtmlConfiguration(obj: HtmlConfiguration | undefined): Re
   if (obj === undefined) { return undefined; }
   const result = {
     'formatter': toJson_HtmlFormatterConfiguration(obj.formatter),
-    'parser': obj.parser,
+    'parser': toJson_HtmlParserConfiguration(obj.parser),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1528,6 +1528,35 @@ export function toJson_HtmlFormatterConfiguration(obj: HtmlFormatterConfiguratio
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * Options that changes how the HTML parser behaves
+ *
+ * @schema HtmlParserConfiguration
+ */
+export interface HtmlParserConfiguration {
+  /**
+   * Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files
+   *
+   * @schema HtmlParserConfiguration#interpolation
+   */
+  readonly interpolation?: boolean;
+}
+
+/**
+ * Converts an object of type 'HtmlParserConfiguration' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_HtmlParserConfiguration(obj: HtmlParserConfiguration | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'interpolation': obj.interpolation,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * Assist options specific to the JavaScript assist
  *
  * @schema JsAssistConfiguration
@@ -1648,6 +1677,14 @@ export interface JsFormatterConfiguration {
   readonly lineWidth?: number;
 
   /**
+   * When breaking binary expressions into multiple lines, whether to break them before or after the binary operator. Defaults to "after".
+   *
+   * @default after".
+   * @schema JsFormatterConfiguration#operatorLinebreak
+   */
+  readonly operatorLinebreak?: OperatorLinebreak;
+
+  /**
    * When properties in objects are quoted. Defaults to asNeeded.
    *
    * @default asNeeded.
@@ -1698,6 +1735,7 @@ export function toJson_JsFormatterConfiguration(obj: JsFormatterConfiguration | 
     'jsxQuoteStyle': obj.jsxQuoteStyle,
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
+    'operatorLinebreak': obj.operatorLinebreak,
     'quoteProperties': obj.quoteProperties,
     'quoteStyle': obj.quoteStyle,
     'semicolons': obj.semicolons,
@@ -2408,6 +2446,16 @@ export enum ArrowParentheses {
   ALWAYS = "always",
   /** asNeeded */
   AS_NEEDED = "asNeeded",
+}
+
+/**
+ * @schema OperatorLinebreak
+ */
+export enum OperatorLinebreak {
+  /** after */
+  AFTER = "after",
+  /** before */
+  BEFORE = "before",
 }
 
 /**
