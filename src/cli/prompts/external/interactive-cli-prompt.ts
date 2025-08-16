@@ -1,10 +1,13 @@
 import { consola } from "consola";
 import { CliError } from "../../util";
-import { InteractiveCliPrompt, SelectItemValue } from "../core/interactive-cli-prompt";
+import {
+  InteractiveCliPrompt,
+  SelectItemValue,
+} from "../core/interactive-cli-prompt";
 
 export const interactiveCliPrompt: InteractiveCliPrompt = {
   async inputText(args) {
-    return await consola.prompt(args.message, {
+    return consola.prompt(args.message, {
       type: "text",
       placeholder: args.placeholder,
       default: args.defaultVal,
