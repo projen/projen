@@ -1,6 +1,11 @@
-import { interactiveCliPrompt } from "./external/interactive-cli-prompt";
+import {
+  interactiveCliPrompt,
+  interactiveCliPromptForCI,
+} from "./external/interactive-cli-prompt";
 import { selectJsTools } from "./usecase/select-js-tools";
 
 export const cliPrompts = {
-  selectJsTools: selectJsTools(interactiveCliPrompt),
+  selectJsTools: selectJsTools(
+    process.env.CI ? interactiveCliPromptForCI : interactiveCliPrompt
+  ),
 };

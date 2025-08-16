@@ -26,12 +26,6 @@ const EXCLUDE_FROM_SNAPSHOT_EXTENDED = [
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
-    jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-      linter: "eslint",
-      formatter: "prettier",
-      testTool: "jest",
-    });
-
     withProjectDirSync((projectdir) => {
       // execute `projen new PJID --no-synth` in the project directory
       execProjenCLI(projectdir, ["new", "--no-synth", type.pjid]);
@@ -47,12 +41,6 @@ for (const type of inventory.discover()) {
 }
 
 describe("projen new --from", () => {
-  jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-    linter: "eslint",
-    formatter: "prettier",
-    testTool: "jest",
-  });
-
   describe("using registry", () => {
     test("existing package", () => {
       withProjectDirSync((projectdir) => {
@@ -526,12 +514,6 @@ describe("projen new --from", () => {
 });
 
 describe("typescript project", () => {
-  jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-    linter: "eslint",
-    formatter: "prettier",
-    testTool: "jest",
-  });
-
   test("projenrc-ts creates typescript projenrc", () => {
     withProjectDirSync((projectdir) => {
       execProjenCLI(projectdir, [
@@ -611,12 +593,6 @@ describe("python project", () => {
 });
 
 describe("initial values", () => {
-  jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-    linter: "eslint",
-    formatter: "prettier",
-    testTool: "jest",
-  });
-
   test("cli can override initial values", () => {
     withProjectDirSync((projectdir) => {
       execProjenCLI(projectdir, [
@@ -687,12 +663,6 @@ describe("git", () => {
 });
 
 describe("regressions", () => {
-  jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-    linter: "eslint",
-    formatter: "prettier",
-    testTool: "jest",
-  });
-
   // https://github.com/projen/projen/issues/2837
   test("projen new --from does not fail when save=false in npm config", () => {
     withProjectDirSync((projectdir) => {

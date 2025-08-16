@@ -31,3 +31,15 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
     return selected.value;
   },
 };
+
+export const interactiveCliPromptForCI: InteractiveCliPrompt = {
+  async inputText(_args) {
+    return Promise.resolve("sample");
+  },
+  async selectItem<T extends SelectItemValue>(args: {
+    message: string;
+    items: { label: string; value: T }[];
+  }): Promise<T> {
+    return Promise.resolve(args.items[0].value as T);
+  },
+};
