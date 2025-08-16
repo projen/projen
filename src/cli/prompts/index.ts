@@ -1,11 +1,12 @@
+import { IS_TEST_RUN } from "../../common";
 import {
   interactiveCliPrompt,
-  interactiveCliPromptForCI,
+  interactiveCliPromptForTest,
 } from "./external/interactive-cli-prompt";
 import { selectJsTools } from "./usecase/select-js-tools";
 
 export const cliPrompts = {
   selectJsTools: selectJsTools(
-    process.env.CI ? interactiveCliPromptForCI : interactiveCliPrompt
+    IS_TEST_RUN ? interactiveCliPromptForTest : interactiveCliPrompt
   ),
 };

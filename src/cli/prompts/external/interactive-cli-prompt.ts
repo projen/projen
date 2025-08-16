@@ -32,7 +32,7 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
   },
 };
 
-export const interactiveCliPromptForCI: InteractiveCliPrompt = {
+export const interactiveCliPromptForTest: InteractiveCliPrompt = {
   async inputText(_args) {
     return Promise.resolve("sample");
   },
