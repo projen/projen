@@ -1,16 +1,9 @@
 import { directorySnapshot, withProjectDirAsync } from "./util";
-import { cliPrompts } from "../src/cli/prompts";
 import { installPackage } from "../src/cli/util";
 import { InitProjectOptionHints } from "../src/option-hints";
 import { Projects } from "../src/projects";
 
 describe("createProject", () => {
-  jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-    linter: "eslint",
-    formatter: "prettier",
-    testTool: "jest",
-  });
-
   test("creates a project in a directory", async () => {
     await withProjectDirAsync(
       async (projectdir) => {
