@@ -97,7 +97,9 @@ class Command implements yargs.CommandModule {
 
           return cargs;
         },
-        handler: (argv) => initProject(process.cwd(), type, argv),
+        handler: async (argv) => {
+          await initProject(process.cwd(), type, argv);
+        },
       });
     }
 
