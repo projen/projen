@@ -4,8 +4,11 @@ exports[`createProject creates a project and passes in JSON-like project options
 "const { typescript } = require("projen");
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
   eslintOptions: {"dirs":["src","test"],"prettier":true,"aliasMap":{"@src":"./src","@foo":"./src/foo"}},
+  jest: true,
   name: "test-project",
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -20,8 +23,11 @@ exports[`createProject creates a project from an external project type, if it's 
 const { CdklabsTypeScriptProject } = require("cdklabs-projen-project-types");
 const project = new CdklabsTypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "test-project",
   packageManager: javascript.NodePackageManager.NPM,
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -35,7 +41,10 @@ exports[`createProject creates a project in a directory 1`] = `
 "const { typescript } = require("projen");
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "test-project",
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */

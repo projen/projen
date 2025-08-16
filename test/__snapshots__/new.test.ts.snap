@@ -4,7 +4,9 @@ exports[`projen new --from project options --outdir path/to/mydir 1`] = `
 "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
+  jest: true,
   name: "my-project",
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -28,6 +30,9 @@ public class projenrc {
             .projectType(ProjectType.LIB)
             .projenrcJava(true)
             .version("0.1.0")
+            .eslint(false)
+            .prettier(false)
+            .jest(false)
             .build());
         project.synth();
     }
@@ -38,8 +43,10 @@ exports[`projen new --from project options creating node project with enum-typed
 "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
+  jest: true,
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -61,6 +68,9 @@ project = PythonProject(
     project_type=ProjectType.LIB,
     projenrc_python=True,
     version="0.1.0",
+    eslint=False,
+    prettier=False,
+    jest=False,
 )
 
 project.synth()"
@@ -70,7 +80,9 @@ exports[`projen new --from project options projen new with unknown option works 
 "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
+  jest: true,
   name: "my-project",
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -87,7 +99,10 @@ exports[`projen new --from project options projenrc-json creates external projec
   "devDeps": [
     "@pepperize/projen-awscdk-app-ts@0.0.333",
   ],
+  "eslint": true,
+  "jest": true,
   "name": "my-project",
+  "prettier": true,
   "projenrcJson": true,
   "projenrcTs": true,
   "type": "@pepperize/projen-awscdk-app-ts.AwsCdkTypeScriptApp",
@@ -98,8 +113,11 @@ exports[`projen new --from project options projenrc-json creates java project 1`
 {
   ".projenrc.json": {
     "artifactId": "my-app",
+    "eslint": false,
     "groupId": "org.acme",
+    "jest": false,
     "name": "my-project",
+    "prettier": false,
     "projenrcJson": true,
     "type": "projen.java.JavaProject",
     "version": "0.1.0",
@@ -110,7 +128,10 @@ exports[`projen new --from project options projenrc-json creates java project 1`
 exports[`projen new --from project options projenrc-json creates node-project 1`] = `
 {
   "defaultReleaseBranch": "main",
+  "eslint": true,
+  "jest": true,
   "name": "my-project",
+  "prettier": true,
   "projenrcJson": true,
   "type": "projen.javascript.NodeProject",
 }
@@ -237,7 +258,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -368,7 +392,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -499,7 +526,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -630,7 +660,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -654,6 +687,9 @@ public class projenrc {
             .mainClass("org.acme.MyApp")
             .name("my-project")
             .version("0.1.0")
+            .eslint(false)
+            .prettier(false)
+            .jest(false)
             .build());
         project.synth();
     }
@@ -672,6 +708,9 @@ project = AwsCdkPythonApp(
     module_name="my_project",
     name="my-project",
     version="0.1.0",
+    eslint=False,
+    prettier=False,
+    jest=False,
 )
 
 project.synth()",
@@ -684,7 +723,10 @@ exports[`projen new awscdk-app-ts 1`] = `
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -704,8 +746,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: "my@user.email.com",
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
+  eslint: false,
+  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
+  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -729,6 +774,9 @@ project = Cdk8sPythonApp(
     module_name="my_project",
     name="my-project",
     version="0.1.0",
+    eslint=False,
+    prettier=False,
+    jest=False,
 )
 
 project.synth()",
@@ -741,7 +789,10 @@ exports[`projen new cdk8s-app-ts 1`] = `
 const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: "2.3.33",
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -761,8 +812,11 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   authorAddress: "my@user.email.com",
   cdk8sVersion: "1.4.10",
   defaultReleaseBranch: "main",
+  eslint: false,
+  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
+  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -783,8 +837,11 @@ const project = new cdktf.ConstructLibraryCdktf({
   authorAddress: "my@user.email.com",
   cdktfVersion: "^0.13.0",
   defaultReleaseBranch: "main",
+  eslint: false,
+  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
+  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -809,6 +866,9 @@ public class projenrc {
             .groupId("org.acme")
             .name("my-project")
             .version("0.1.0")
+            .eslint(false)
+            .prettier(false)
+            .jest(false)
             .build());
         project.synth();
     }
@@ -823,8 +883,11 @@ const project = new cdk.JsiiProject({
   author: "My User Name",
   authorAddress: "my@user.email.com",
   defaultReleaseBranch: "main",
+  eslint: false,
+  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
+  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -842,7 +905,9 @@ exports[`projen new nextjs 1`] = `
   ".projenrc.js": "const { web } = require("projen");
 const project = new web.NextJsProject({
   defaultReleaseBranch: "main",
+  jest: false,
   name: "my-project",
+  prettier: false,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -859,7 +924,10 @@ exports[`projen new nextjs-ts 1`] = `
   ".projenrc.ts": "import { web } from "projen";
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -877,7 +945,9 @@ exports[`projen new node 1`] = `
   ".projenrc.js": "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
+  jest: true,
   name: "my-project",
+  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -900,6 +970,9 @@ project = PythonProject(
     module_name="my_project",
     name="my-project",
     version="0.1.0",
+    eslint=False,
+    prettier=False,
+    jest=False,
 )
 
 project.synth()",
@@ -911,7 +984,9 @@ exports[`projen new react 1`] = `
   ".projenrc.js": "const { web } = require("projen");
 const project = new web.ReactProject({
   defaultReleaseBranch: "main",
+  jest: false,
   name: "my-project",
+  prettier: false,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -927,7 +1002,10 @@ exports[`projen new react-ts 1`] = `
   ".projenrc.ts": "import { web } from "projen";
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -944,7 +1022,10 @@ exports[`projen new typescript 1`] = `
   ".projenrc.ts": "import { typescript } from "projen";
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -961,7 +1042,10 @@ exports[`projen new typescript-app 1`] = `
   ".projenrc.ts": "import { typescript } from "projen";
 const project = new typescript.TypeScriptAppProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -977,7 +1061,10 @@ exports[`typescript project projenrc-ts creates typescript projenrc 1`] = `
 "import { typescript } from "projen";
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
+  eslint: true,
+  jest: true,
   name: "my-project",
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
