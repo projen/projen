@@ -1,9 +1,9 @@
-import { synthSnapshot, TestProject, withProjectDir } from "./util";
+import { synthSnapshot, TestProject, withProjectDirSync } from "./util";
 import { EndOfLine } from "../src/gitattributes";
 
 describe("GitAttributesFile", () => {
   test("should set endOfLine to LF by default", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -21,7 +21,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("does not at the endOfLine configuration when disabled", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -41,7 +41,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("applies the endOfLine option when defined", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -62,7 +62,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should add attributes to files", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -83,7 +83,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should add a LFS pattern", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
