@@ -108,6 +108,7 @@
     "case",
     "chalk",
     "comment-json",
+    "consola",
     "conventional-changelog-config-spec",
     "fast-glob",
     "fast-json-patch",
