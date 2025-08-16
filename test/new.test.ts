@@ -13,7 +13,6 @@ import {
   TestProject,
   withProjectDirSync,
 } from "./util";
-import { cliPrompts } from "../src/cli/prompts";
 import * as inventory from "../src/inventory";
 import { execCapture, normalizePersistedPath } from "../src/util";
 
@@ -251,12 +250,6 @@ describe("projen new --from", () => {
   });
 
   describe("project options", () => {
-    jest.spyOn(cliPrompts, "selectJsTools").mockResolvedValue({
-      linter: "eslint",
-      formatter: "prettier",
-      testTool: "jest",
-    });
-
     describe("post-synthesis option", () => {
       test("is enabled", () => {
         const project = new TestProject();

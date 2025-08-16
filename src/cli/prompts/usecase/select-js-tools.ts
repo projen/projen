@@ -15,8 +15,11 @@ export const selectJsTools =
     formatter: Formatter;
     testTool: TestTool;
   } | null> => {
-    const projectType = projectTypeName.split(".")[0];
-    if (!["typescript", "javascript"].includes(projectType)) {
+    const projectType = projectTypeName.toLowerCase();
+    if (
+      !projectType.includes("typescript") &&
+      !projectType.includes("javascript")
+    ) {
       return null;
     }
 

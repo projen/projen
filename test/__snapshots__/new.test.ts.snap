@@ -99,10 +99,10 @@ exports[`projen new --from project options projenrc-json creates external projec
   "devDeps": [
     "@pepperize/projen-awscdk-app-ts@0.0.333",
   ],
-  "eslint": false,
-  "jest": false,
+  "eslint": true,
+  "jest": true,
   "name": "my-project",
-  "prettier": false,
+  "prettier": true,
   "projenrcJson": true,
   "projenrcTs": true,
   "type": "@pepperize/projen-awscdk-app-ts.AwsCdkTypeScriptApp",
@@ -152,6 +152,7 @@ exports[`projen new --from using registry existing package 1`] = `
   },
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "0.0.333",
+    "@types/jest": "*",
     "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -163,10 +164,59 @@ exports[`projen new --from using registry existing package 1`] = `
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
+    "jest": "*",
+    "jest-junit": "^16",
     "prettier": "*",
     "projen": "*",
+    "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "coverageProvider": "v8",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "cobertura",
+      "text",
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": [
+      "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
+      "<rootDir>/@(projenrc)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+    ],
   },
   "license": "MIT",
   "name": "my-project",
@@ -194,6 +244,7 @@ exports[`projen new --from using registry existing package 1`] = `
     "synth": "npx projen synth",
     "synth:silent": "npx projen synth:silent",
     "test": "npx projen test",
+    "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "watch": "npx projen watch",
   },
@@ -207,10 +258,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -235,6 +286,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
   },
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
+    "@types/jest": "*",
     "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -246,10 +298,59 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
+    "jest": "*",
+    "jest-junit": "^16",
     "prettier": "*",
     "projen": "*",
+    "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "coverageProvider": "v8",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "cobertura",
+      "text",
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": [
+      "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
+      "<rootDir>/@(projenrc)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+    ],
   },
   "license": "MIT",
   "name": "my-project",
@@ -277,6 +378,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "synth": "npx projen synth",
     "synth:silent": "npx projen synth:silent",
     "test": "npx projen test",
+    "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "watch": "npx projen watch",
   },
@@ -290,10 +392,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -318,6 +420,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
   },
   "devDependencies": {
     "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
+    "@types/jest": "*",
     "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -329,10 +432,59 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
+    "jest": "*",
+    "jest-junit": "^16",
     "prettier": "*",
     "projen": "*",
+    "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "coverageProvider": "v8",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "cobertura",
+      "text",
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": [
+      "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
+      "<rootDir>/@(projenrc)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+    ],
   },
   "license": "MIT",
   "name": "my-project",
@@ -360,6 +512,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "synth": "npx projen synth",
     "synth:silent": "npx projen synth:silent",
     "test": "npx projen test",
+    "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "watch": "npx projen watch",
   },
@@ -373,10 +526,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -400,6 +553,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "constructs": "^10.0.5",
   },
   "devDependencies": {
+    "@types/jest": "*",
     "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -411,11 +565,60 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
+    "jest": "*",
+    "jest-junit": "^16",
     "pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "prettier": "*",
     "projen": "*",
+    "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "coverageProvider": "v8",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "cobertura",
+      "text",
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": [
+      "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/**/?(*.)@(spec|test).[tj]s?(x)",
+      "<rootDir>/@(projenrc)/**/*(*.)@(spec|test).ts?(x)",
+      "<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)",
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+    ],
+    "transform": {
+      "^.+\\.[t]sx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.dev.json",
+        },
+      ],
+    },
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+    ],
   },
   "license": "MIT",
   "name": "my-project",
@@ -443,6 +646,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "synth": "npx projen synth",
     "synth:silent": "npx projen synth:silent",
     "test": "npx projen test",
+    "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "watch": "npx projen watch",
   },
@@ -456,10 +660,10 @@ const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -519,10 +723,10 @@ exports[`projen new awscdk-app-ts 1`] = `
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -585,10 +789,10 @@ exports[`projen new cdk8s-app-ts 1`] = `
 const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: "2.3.33",
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -720,10 +924,10 @@ exports[`projen new nextjs-ts 1`] = `
   ".projenrc.ts": "import { web } from "projen";
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -798,10 +1002,10 @@ exports[`projen new react-ts 1`] = `
   ".projenrc.ts": "import { web } from "projen";
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
+  eslint: true,
+  jest: true,
   name: "my-project",
-  prettier: false,
+  prettier: true,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
