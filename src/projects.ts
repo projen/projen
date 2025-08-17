@@ -108,7 +108,11 @@ async function createProject(opts: CreateProjectOptions) {
   // This is so we can keep the top-level namespace as clean as possible
   const optionsImports = "_options" + Math.random().toString(36).slice(2);
 
-  const jsTools = await cliPrompts.selectJsTools(projectType.typename);
+  const jsTools = await cliPrompts.selectJsTools({
+    projectTypeName: projectType.typename,
+    defaultProjectName: opts.projectOptions.name,
+  });
+
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
   const { renderedOptions, imports } = renderJavaScriptOptions({
@@ -117,9 +121,11 @@ async function createProject(opts: CreateProjectOptions) {
     type: projectType,
     args: {
       ...opts.projectOptions,
+      name: jsTools ? jsTools.projectName : opts.projectOptions.name,
       eslint: jsTools && jsTools.linter === "eslint",
       prettier: jsTools && jsTools.formatter === "prettier",
       jest: jsTools && jsTools.testTool === "jest",
+      packageManager: jsTools && jsTools.packageManager,
     },
     omitFromBootstrap: ["outdir"],
     prefixImports: optionsImports,

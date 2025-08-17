@@ -1,6 +1,7 @@
 import { consola } from "consola";
-import { interactiveCliPrompt } from "../src/cli/prompts/external/interactive-cli-prompt";
-import { selectJsTools } from "../src/cli/prompts/usecase/select-js-tools";
+import { interactiveCliPrompt } from "../src/cli/prompts/core/interactive-cli-prompt";
+import { selectJsTools } from "../src/cli/prompts/operations/select-js-tools";
+import { NodePackageManager } from "../src/javascript";
 
 jest.mock("consola", () => ({
   consola: {
@@ -15,30 +16,61 @@ describe("selectJsTools", () => {
 
   const mockedConsola = consola as jest.Mocked<typeof consola>;
 
-  test("prompts user for linter, formatter, and test tool choices", async () => {
+  test("prompts user for project name, package manager, linter, formatter, and test tool choices", async () => {
     // GIVEN
     mockedConsola.prompt
-      .mockResolvedValueOnce("eslint")
-      .mockResolvedValueOnce("prettier")
-      .mockResolvedValueOnce("jest");
+      .mockResolvedValueOnce("sample") // project name
+      .mockResolvedValueOnce("npm") // package manager
+      .mockResolvedValueOnce("eslint") // linter
+      .mockResolvedValueOnce("prettier") // formatter
+      .mockResolvedValueOnce("jest"); // test tool
 
     const cliPrompts = {
       selectJsTools: selectJsTools(interactiveCliPrompt),
     };
 
     // WHEN
-    const result = await cliPrompts.selectJsTools(
-      "projen.javascript.NodeProject"
-    );
+    const result = await cliPrompts.selectJsTools({
+      projectTypeName: "projen.javascript.NodeProject",
+      defaultProjectName: "my-js-project",
+    });
 
     // THEN
     expect(result).toEqual({
+      projectName: "sample",
+      packageManager: "npm",
       linter: "eslint",
       formatter: "prettier",
       testTool: "jest",
     });
-    expect(mockedConsola.prompt).toHaveBeenCalledTimes(3);
-    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(1, "Choose a linter", {
+    expect(mockedConsola.prompt).toHaveBeenCalledTimes(5);
+    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(1, "Project name", {
+      type: "text",
+      placeholder: "my-js-project",
+    });
+    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
+      2,
+      "Choose a package manager",
+      {
+        type: "select",
+        options: [
+          { label: NodePackageManager.YARN, value: NodePackageManager.YARN },
+          { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
+          {
+            label: NodePackageManager.YARN_CLASSIC,
+            value: NodePackageManager.YARN_CLASSIC,
+          },
+          {
+            label: NodePackageManager.YARN_BERRY,
+            value: NodePackageManager.YARN_BERRY,
+          },
+          { label: NodePackageManager.NPM, value: NodePackageManager.NPM },
+          { label: NodePackageManager.PNPM, value: NodePackageManager.PNPM },
+          { label: NodePackageManager.BUN, value: NodePackageManager.BUN },
+        ],
+      }
+    );
+    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(3, "Choose a linter", {
       type: "select",
       options: [
         { label: "ESLint", value: "eslint" },
@@ -46,7 +78,7 @@ describe("selectJsTools", () => {
       ],
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
-      2,
+      4,
       "Choose a formatter",
       {
         type: "select",
@@ -57,7 +89,7 @@ describe("selectJsTools", () => {
       }
     );
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
-      3,
+      5,
       "Choose a test tool",
       {
         type: "select",
@@ -72,6 +104,8 @@ describe("selectJsTools", () => {
   test("handles user selecting 'none' for all tools", async () => {
     // GIVEN
     mockedConsola.prompt
+      .mockResolvedValueOnce("sample") // project name
+      .mockResolvedValueOnce("npm") // package manager
       .mockResolvedValueOnce("none") // linter selection
       .mockResolvedValueOnce("none") // formatter selection
       .mockResolvedValueOnce("none"); // test tool selection
@@ -81,12 +115,15 @@ describe("selectJsTools", () => {
     };
 
     // WHEN
-    const result = await cliPrompts.selectJsTools(
-      "projen.typescript.TypeScriptProject"
-    );
+    const result = await cliPrompts.selectJsTools({
+      projectTypeName: "projen.typescript.TypeScriptProject",
+      defaultProjectName: "my-js-project",
+    });
 
     // THEN
     expect(result).toEqual({
+      projectName: "sample",
+      packageManager: "npm",
       linter: "none",
       formatter: "none",
       testTool: "none",
@@ -100,9 +137,10 @@ describe("selectJsTools", () => {
     };
 
     // WHEN
-    const result = await cliPrompts.selectJsTools(
-      "projen.python.PythonProject"
-    );
+    const result = await cliPrompts.selectJsTools({
+      projectTypeName: "projen.python.PythonProject",
+      defaultProjectName: "my-python-project",
+    });
 
     // THEN
     expect(result).toBeUndefined();
@@ -119,7 +157,10 @@ describe("selectJsTools", () => {
     // WHEN
     // THEN
     await expect(
-      cliPrompts.selectJsTools("projen.javascript.NodeProject")
+      cliPrompts.selectJsTools({
+        projectTypeName: "projen.javascript.NodeProject",
+        defaultProjectName: "my-js-project",
+      })
     ).rejects.toThrow("No item selected.");
   });
 });

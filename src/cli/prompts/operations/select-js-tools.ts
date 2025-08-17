@@ -1,3 +1,4 @@
+import { NodePackageManager } from "../../../javascript";
 import { InteractiveCliPrompt } from "../core/interactive-cli-prompt";
 
 type Linter = "eslint" | "none";
@@ -8,16 +9,21 @@ type TestTool = "jest" | "none";
 
 export const selectJsTools =
   (interactiveCliPrompt: InteractiveCliPrompt) =>
-  async (
-    projectTypeName: string
-  ): Promise<
+  async (args: {
+    projectTypeName: string;
+    defaultProjectName: string;
+  }): Promise<
     | {
+        projectName: string;
         linter: Linter;
         formatter: Formatter;
         testTool: TestTool;
+        packageManager: NodePackageManager;
       }
     | undefined
   > => {
+    const { projectTypeName, defaultProjectName } = args;
+
     const projectType = projectTypeName.toLowerCase();
     if (
       !projectType.includes("typescript") &&
@@ -25,6 +31,19 @@ export const selectJsTools =
     ) {
       return undefined;
     }
+
+    const projectName = await interactiveCliPrompt.inputText({
+      message: "Project name",
+      placeholder: defaultProjectName,
+    });
+
+    const packageManager = await interactiveCliPrompt.selectItem({
+      message: "Choose a package manager",
+      items: Object.entries(NodePackageManager).map(([_, val]) => ({
+        label: val,
+        value: val,
+      })),
+    });
 
     const linter = await interactiveCliPrompt.selectItem({
       message: "Choose a linter",
@@ -60,6 +79,8 @@ export const selectJsTools =
     });
 
     return {
+      projectName,
+      packageManager,
       linter,
       formatter,
       testTool,
