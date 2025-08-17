@@ -136,7 +136,6 @@ describe("selectJsTools", () => {
   });
 
   test("handles user selecting 'None' for all tools", async () => {
-    // GIVEN
     mockedConsola.prompt
       .mockResolvedValueOnce("sample") // project name
       .mockResolvedValueOnce(NodePackageManager.NPM) // package manager
@@ -144,6 +143,7 @@ describe("selectJsTools", () => {
       .mockResolvedValueOnce("undefined") // formatter selection
       .mockResolvedValueOnce("undefined"); // test tool selection
 
+    // GIVEN
     const cliPrompts = {
       selectJsTools: selectJsTools(interactiveCliPrompt),
     };
@@ -179,9 +179,9 @@ describe("selectJsTools", () => {
   });
 
   test("throws error when user cancels prompt", async () => {
-    // GIVEN
     mockedConsola.prompt.mockResolvedValueOnce(undefined as any);
 
+    // GIVEN
     const cliPrompts = {
       selectJsTools: selectJsTools(interactiveCliPrompt),
     };
