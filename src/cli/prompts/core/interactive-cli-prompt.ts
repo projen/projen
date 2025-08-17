@@ -1,7 +1,7 @@
 import { consola } from "consola";
 import { CliError } from "../../util";
 
-export type SelectItemValue = string | number | boolean;
+type SelectItemValue = string | number | boolean;
 
 export interface InteractiveCliPrompt {
   inputText: (args: {
