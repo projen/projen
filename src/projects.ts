@@ -119,14 +119,18 @@ async function createProject(opts: CreateProjectOptions) {
     bootstrap: true,
     comments: opts.optionHints ?? InitProjectOptionHints.FEATURED,
     type: projectType,
-    args: {
-      ...opts.projectOptions,
-      name: jsTools ? jsTools.projectName : opts.projectOptions.name,
-      eslint: jsTools && jsTools.linter === "eslint",
-      prettier: jsTools && jsTools.formatter === "prettier",
-      jest: jsTools && jsTools.testTool === "jest",
-      packageManager: jsTools && jsTools.packageManager,
-    },
+    args: jsTools
+      ? {
+          ...opts.projectOptions,
+          name: jsTools.projectName,
+          eslint: opts.projectOptions.eslint || jsTools.linter === "eslint",
+          prettier:
+            opts.projectOptions.prettier || jsTools.formatter === "prettier",
+          jest: opts.projectOptions.jest || jsTools.testTool === "jest",
+          packageManager:
+            opts.projectOptions.packageManager || jsTools.packageManager,
+        }
+      : opts.projectOptions,
     omitFromBootstrap: ["outdir"],
     prefixImports: optionsImports,
   });

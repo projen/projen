@@ -5,7 +5,8 @@ exports[`projen new --from project options --outdir path/to/mydir 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -41,7 +42,7 @@ exports[`projen new --from project options creating node project with enum-typed
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   jest: true,
-  name: "my-project",
+  name: "sample",
   packageManager: javascript.NodePackageManager.NPM,
   prettier: true,
 
@@ -75,7 +76,8 @@ exports[`projen new --from project options projen new with unknown option works 
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -95,7 +97,8 @@ exports[`projen new --from project options projenrc-json creates external projec
   ],
   "eslint": true,
   "jest": true,
-  "name": "my-project",
+  "name": "sample",
+  "packageManager": "yarn",
   "prettier": true,
   "projenrcJson": true,
   "projenrcTs": true,
@@ -121,7 +124,8 @@ exports[`projen new --from project options projenrc-json creates node-project 1`
   "defaultReleaseBranch": "main",
   "eslint": true,
   "jest": true,
-  "name": "my-project",
+  "name": "sample",
+  "packageManager": "yarn",
   "prettier": true,
   "projenrcJson": true,
   "type": "projen.javascript.NodeProject",
@@ -210,7 +214,7 @@ exports[`projen new --from using registry existing package 1`] = `
     ],
   },
   "license": "MIT",
-  "name": "my-project",
+  "name": "sample",
   "publishConfig": {
     "access": "public",
   },
@@ -244,14 +248,16 @@ exports[`projen new --from using registry existing package 1`] = `
 `;
 
 exports[`projen new --from using registry existing package 2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -344,7 +350,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     ],
   },
   "license": "MIT",
-  "name": "my-project",
+  "name": "sample",
   "publishConfig": {
     "access": "public",
   },
@@ -378,14 +384,16 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
 `;
 
 exports[`projen new --from using tarball projen new --from named tarball  2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -478,7 +486,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     ],
   },
   "license": "MIT",
-  "name": "my-project",
+  "name": "sample",
   "publishConfig": {
     "access": "public",
   },
@@ -512,14 +520,16 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
 `;
 
 exports[`projen new --from using tarball projen new --from relative path  2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -612,7 +622,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     ],
   },
   "license": "MIT",
-  "name": "my-project",
+  "name": "sample",
   "publishConfig": {
     "access": "public",
   },
@@ -646,14 +656,16 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
 `;
 
 exports[`projen new --from using tarball projen new --from tarball  2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -704,13 +716,14 @@ project.synth()",
 
 exports[`projen new awscdk-app-ts 1`] = `
 {
-  ".projenrc.ts": "import { awscdk } from "projen";
+  ".projenrc.ts": "import { awscdk, javascript } from "projen";
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -764,13 +777,14 @@ project.synth()",
 
 exports[`projen new cdk8s-app-ts 1`] = `
 {
-  ".projenrc.ts": "import { cdk8s } from "projen";
+  ".projenrc.ts": "import { cdk8s, javascript } from "projen";
 const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: "2.3.33",
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -886,12 +900,13 @@ project.synth();",
 
 exports[`projen new nextjs-ts 1`] = `
 {
-  ".projenrc.ts": "import { web } from "projen";
+  ".projenrc.ts": "import { javascript, web } from "projen";
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -911,7 +926,8 @@ exports[`projen new node 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -959,12 +975,13 @@ project.synth();",
 
 exports[`projen new react-ts 1`] = `
 {
-  ".projenrc.ts": "import { web } from "projen";
+  ".projenrc.ts": "import { javascript, web } from "projen";
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -979,12 +996,13 @@ project.synth();",
 
 exports[`projen new typescript 1`] = `
 {
-  ".projenrc.ts": "import { typescript } from "projen";
+  ".projenrc.ts": "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -999,12 +1017,13 @@ project.synth();",
 
 exports[`projen new typescript-app 1`] = `
 {
-  ".projenrc.ts": "import { typescript } from "projen";
+  ".projenrc.ts": "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptAppProject({
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
@@ -1018,12 +1037,13 @@ project.synth();",
 `;
 
 exports[`typescript project projenrc-ts creates typescript projenrc 1`] = `
-"import { typescript } from "projen";
+"import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   eslint: true,
   jest: true,
-  name: "my-project",
+  name: "sample",
+  packageManager: javascript.NodePackageManager.YARN,
   prettier: true,
   projenrcTs: true,
 
