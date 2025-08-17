@@ -30,9 +30,6 @@ public class projenrc {
             .projectType(ProjectType.LIB)
             .projenrcJava(true)
             .version("0.1.0")
-            .eslint(false)
-            .prettier(false)
-            .jest(false)
             .build());
         project.synth();
     }
@@ -68,9 +65,6 @@ project = PythonProject(
     project_type=ProjectType.LIB,
     projenrc_python=True,
     version="0.1.0",
-    eslint=False,
-    prettier=False,
-    jest=False,
 )
 
 project.synth()"
@@ -113,11 +107,8 @@ exports[`projen new --from project options projenrc-json creates java project 1`
 {
   ".projenrc.json": {
     "artifactId": "my-app",
-    "eslint": false,
     "groupId": "org.acme",
-    "jest": false,
     "name": "my-project",
-    "prettier": false,
     "projenrcJson": true,
     "type": "projen.java.JavaProject",
     "version": "0.1.0",
@@ -687,9 +678,6 @@ public class projenrc {
             .mainClass("org.acme.MyApp")
             .name("my-project")
             .version("0.1.0")
-            .eslint(false)
-            .prettier(false)
-            .jest(false)
             .build());
         project.synth();
     }
@@ -708,9 +696,6 @@ project = AwsCdkPythonApp(
     module_name="my_project",
     name="my-project",
     version="0.1.0",
-    eslint=False,
-    prettier=False,
-    jest=False,
 )
 
 project.synth()",
@@ -746,11 +731,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: "my@user.email.com",
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
-  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -774,9 +756,6 @@ project = Cdk8sPythonApp(
     module_name="my_project",
     name="my-project",
     version="0.1.0",
-    eslint=False,
-    prettier=False,
-    jest=False,
 )
 
 project.synth()",
@@ -812,11 +791,8 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   authorAddress: "my@user.email.com",
   cdk8sVersion: "1.4.10",
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
-  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -837,11 +813,8 @@ const project = new cdktf.ConstructLibraryCdktf({
   authorAddress: "my@user.email.com",
   cdktfVersion: "^0.13.0",
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
-  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -866,9 +839,6 @@ public class projenrc {
             .groupId("org.acme")
             .name("my-project")
             .version("0.1.0")
-            .eslint(false)
-            .prettier(false)
-            .jest(false)
             .build());
         project.synth();
     }
@@ -883,11 +853,8 @@ const project = new cdk.JsiiProject({
   author: "My User Name",
   authorAddress: "my@user.email.com",
   defaultReleaseBranch: "main",
-  eslint: false,
-  jest: false,
   jsiiVersion: "~5.8.0",
   name: "my-project",
-  prettier: false,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -905,9 +872,7 @@ exports[`projen new nextjs 1`] = `
   ".projenrc.js": "const { web } = require("projen");
 const project = new web.NextJsProject({
   defaultReleaseBranch: "main",
-  jest: false,
   name: "my-project",
-  prettier: false,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -970,9 +935,6 @@ project = PythonProject(
     module_name="my_project",
     name="my-project",
     version="0.1.0",
-    eslint=False,
-    prettier=False,
-    jest=False,
 )
 
 project.synth()",
@@ -984,9 +946,7 @@ exports[`projen new react 1`] = `
   ".projenrc.js": "const { web } = require("projen");
 const project = new web.ReactProject({
   defaultReleaseBranch: "main",
-  jest: false,
   name: "my-project",
-  prettier: false,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */

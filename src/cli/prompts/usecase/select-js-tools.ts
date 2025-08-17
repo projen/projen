@@ -10,17 +10,20 @@ export const selectJsTools =
   (interactiveCliPrompt: InteractiveCliPrompt) =>
   async (
     projectTypeName: string
-  ): Promise<{
-    linter: Linter;
-    formatter: Formatter;
-    testTool: TestTool;
-  } | null> => {
+  ): Promise<
+    | {
+        linter: Linter;
+        formatter: Formatter;
+        testTool: TestTool;
+      }
+    | undefined
+  > => {
     const projectType = projectTypeName.toLowerCase();
     if (
       !projectType.includes("typescript") &&
       !projectType.includes("javascript")
     ) {
-      return null;
+      return undefined;
     }
 
     const linter = await interactiveCliPrompt.selectItem({

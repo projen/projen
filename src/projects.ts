@@ -117,9 +117,9 @@ async function createProject(opts: CreateProjectOptions) {
     type: projectType,
     args: {
       ...opts.projectOptions,
-      eslint: jsTools?.linter === "eslint",
-      prettier: jsTools?.formatter === "prettier",
-      jest: jsTools?.testTool === "jest",
+      eslint: jsTools && jsTools.linter === "eslint",
+      prettier: jsTools && jsTools.formatter === "prettier",
+      jest: jsTools && jsTools.testTool === "jest",
     },
     omitFromBootstrap: ["outdir"],
     prefixImports: optionsImports,
