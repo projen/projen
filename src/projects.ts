@@ -110,7 +110,13 @@ async function createProject(opts: CreateProjectOptions) {
 
   const jsTools = await cliPrompts.selectJsTools({
     projectTypeName: projectType.typename,
-    defaultProjectName: opts.projectOptions.name,
+    projectOptions: {
+      packageName: opts.projectOptions.name,
+      linter: opts.projectOptions.eslint && "eslint",
+      formatter: opts.projectOptions.prettier && "prettier",
+      testTool: opts.projectOptions.jest && "jest",
+      packageManager: opts.projectOptions.packageManager,
+    },
   });
 
   // pass the FQN of the project type to the project initializer so it can
@@ -123,12 +129,10 @@ async function createProject(opts: CreateProjectOptions) {
       ? {
           ...opts.projectOptions,
           name: jsTools.projectName,
-          eslint: opts.projectOptions.eslint || jsTools.linter === "eslint",
-          prettier:
-            opts.projectOptions.prettier || jsTools.formatter === "prettier",
-          jest: opts.projectOptions.jest || jsTools.testTool === "jest",
-          packageManager:
-            opts.projectOptions.packageManager || jsTools.packageManager,
+          eslint: jsTools.linter && jsTools.linter === "eslint",
+          prettier: jsTools.formatter && jsTools.formatter === "prettier",
+          jest: jsTools.testTool && jsTools.testTool === "jest",
+          packageManager: jsTools.packageManager,
         }
       : opts.projectOptions,
     omitFromBootstrap: ["outdir"],
