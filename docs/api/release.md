@@ -1969,6 +1969,7 @@ const jsiiReleaseNpm: release.JsiiReleaseNpm = { ... }
 | <code><a href="#projen.release.JsiiReleaseNpm.property.distTag">distTag</a></code> | <code>string</code> | Tags can be used to provide an alias instead of version numbers. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when package is published. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
+| <code><a href="#projen.release.JsiiReleaseNpm.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
 | <code><a href="#projen.release.JsiiReleaseNpm.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
 
 ---
@@ -2120,6 +2121,21 @@ public readonly npmTokenSecret: string;
 - *Default:* "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
 
 GitHub secret which contains the NPM token to use when publishing packages.
+
+---
+
+##### ~~`npmTrustedPublishing`~~<sup>Optional</sup> <a name="npmTrustedPublishing" id="projen.release.JsiiReleaseNpm.property.npmTrustedPublishing"></a>
+
+- *Deprecated:* Use `NpmPublishOptions` instead.
+
+```typescript
+public readonly npmTrustedPublishing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
 
 ---
 
@@ -2296,6 +2312,7 @@ const jsiiReleasePyPi: release.JsiiReleasePyPi = { ... }
 | <code><a href="#projen.release.JsiiReleasePyPi.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing to AWS CodeArtifact. |
+| <code><a href="#projen.release.JsiiReleasePyPi.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use PyPI trusted publishing instead of tokens or username & password. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.JsiiReleasePyPi.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -2388,6 +2405,24 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 - *Default:* undefined
 
 Options for publishing to AWS CodeArtifact.
+
+---
+
+##### ~~`trustedPublishing`~~<sup>Optional</sup> <a name="trustedPublishing" id="projen.release.JsiiReleasePyPi.property.trustedPublishing"></a>
+
+- *Deprecated:* Use `PyPiPublishOptions` instead.
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use PyPI trusted publishing instead of tokens or username & password.
+
+Needs to be setup in PyPI.
+
+> [https://docs.pypi.org/trusted-publishers/adding-a-publisher/](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
 
 ---
 
@@ -2746,6 +2781,7 @@ const npmPublishOptions: release.NpmPublishOptions = { ... }
 | <code><a href="#projen.release.NpmPublishOptions.property.distTag">distTag</a></code> | <code>string</code> | Tags can be used to provide an alias instead of version numbers. |
 | <code><a href="#projen.release.NpmPublishOptions.property.npmProvenance">npmProvenance</a></code> | <code>boolean</code> | Should provenance statements be generated when package is published. |
 | <code><a href="#projen.release.NpmPublishOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
+| <code><a href="#projen.release.NpmPublishOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
 | <code><a href="#projen.release.NpmPublishOptions.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
 
 ---
@@ -2883,6 +2919,19 @@ public readonly npmTokenSecret: string;
 - *Default:* "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
 
 GitHub secret which contains the NPM token to use when publishing packages.
+
+---
+
+##### `npmTrustedPublishing`<sup>Optional</sup> <a name="npmTrustedPublishing" id="projen.release.NpmPublishOptions.property.npmTrustedPublishing"></a>
+
+```typescript
+public readonly npmTrustedPublishing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
 
 ---
 
@@ -3263,6 +3312,7 @@ const pyPiPublishOptions: release.PyPiPublishOptions = { ... }
 | <code><a href="#projen.release.PyPiPublishOptions.property.prePublishSteps">prePublishSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if needed. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.release.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for publishing to AWS CodeArtifact. |
+| <code><a href="#projen.release.PyPiPublishOptions.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use PyPI trusted publishing instead of tokens or username & password. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twinePasswordSecret">twinePasswordSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI password. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineRegistryUrl">twineRegistryUrl</a></code> | <code>string</code> | The registry url to use when releasing packages. |
 | <code><a href="#projen.release.PyPiPublishOptions.property.twineUsernameSecret">twineUsernameSecret</a></code> | <code>string</code> | The GitHub secret which contains PyPI user name. |
@@ -3345,6 +3395,22 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 - *Default:* undefined
 
 Options for publishing to AWS CodeArtifact.
+
+---
+
+##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.release.PyPiPublishOptions.property.trustedPublishing"></a>
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use PyPI trusted publishing instead of tokens or username & password.
+
+Needs to be setup in PyPI.
+
+> [https://docs.pypi.org/trusted-publishers/adding-a-publisher/](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
 
 ---
 
