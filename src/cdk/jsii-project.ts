@@ -7,7 +7,7 @@ import {
 } from "../build/private/consts";
 import { WorkflowSteps } from "../github/workflow-steps";
 import { Job, JobPermission, Step, Tools } from "../github/workflows-model";
-import { NodePackageManager } from "../javascript";
+import { NodePackageManager, npmPublishOptions } from "../javascript";
 import {
   CommonPublishOptions,
   GoPublishOptions,
@@ -218,7 +218,7 @@ export class JsiiProject extends TypeScriptProject {
     };
 
     const forcedOptions = {
-      releaseToNpm: false, // we have a jsii release workflow
+      publishToNpm: undefined, // we have a jsii release workflow
       disableTsconfig: true, // jsii generates its own tsconfig.json
       docgen: false, // we use jsii-docgen here so disable typescript docgen
     };
@@ -311,13 +311,8 @@ export class JsiiProject extends TypeScriptProject {
         : {}),
     };
 
-    if (options.releaseToNpm != false) {
-      const npmjs: NpmPublishOptions = {
-        registry: this.package.npmRegistry,
-        npmTokenSecret: this.package.npmTokenSecret,
-        npmProvenance: this.package.npmProvenance,
-        codeArtifactOptions: options.codeArtifactOptions,
-      };
+    const npmjs = npmPublishOptions(this.package, options);
+    if (npmjs != null) {
       this.addTargetToBuild("js", this.packageJsTask, extraJobOptions);
       this.addTargetToRelease("js", this.packageJsTask, npmjs);
     }

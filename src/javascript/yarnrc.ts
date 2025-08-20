@@ -2,6 +2,11 @@ import * as semver from "semver";
 import { Component } from "../component";
 import { Project } from "../project";
 import { YamlFile } from "../yaml";
+import {
+  NodePackage,
+  NodePackageManager,
+  YarnBerryOptions,
+} from "./node-package";
 
 /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */
 export enum YarnChecksumBehavior {
@@ -360,14 +365,16 @@ export class Yarnrc extends Component {
     super(project);
 
     this.validateOptionsForVersion(semver.major(version), options);
-    this.updateGitAttributes();
+    this.validateConflictingOptions(options);
+    this.updateGitignore();
+    this.updateGitattributes();
 
     new YamlFile(project, ".yarnrc.yml", {
       obj: options,
     });
   }
 
-  private updateGitAttributes() {
+  private updateGitattributes() {
     const { project } = this;
 
     project.gitattributes.addAttributes("/.yarn/**", "linguist-vendored");
@@ -377,6 +384,23 @@ export class Yarnrc extends Component {
       "/.pnp.*",
       "binary",
       "linguist-vendored"
+    );
+  }
+
+  /**
+   * @see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+   **/
+  private updateGitignore() {
+    const { gitignore } = this.project;
+
+    // These patterns are the same whether or not you're using zero-installs
+    gitignore.exclude(".yarn/*");
+    gitignore.include(
+      ".yarn/patches",
+      ".yarn/plugins",
+      ".yarn/releases",
+      ".yarn/sdks",
+      ".yarn/versions"
     );
   }
 
@@ -439,5 +463,68 @@ export class Yarnrc extends Component {
         );
       }
     }
+  }
+
+  private validateConflictingOptions(yarnRcOptions: YarnrcOptions): void {
+    const pkg = NodePackage.of(this.project);
+    if (!pkg) {
+      return;
+    }
+
+    if (
+      pkg.npmAccess &&
+      yarnRcOptions.npmPublishAccess &&
+      pkg.npmAccess.toString() !== yarnRcOptions.npmPublishAccess.toString()
+    ) {
+      throw new Error(
+        `Cannot set npmAccess (${pkg.npmAccess}) and yarnRcOptions.npmPublishAccess (${yarnRcOptions.npmPublishAccess}) to different values.`
+      );
+    }
+
+    if (
+      pkg.npmRegistryUrl &&
+      yarnRcOptions.npmRegistryServer &&
+      pkg.npmRegistryUrl !== yarnRcOptions.npmRegistryServer
+    ) {
+      throw new Error(
+        `Cannot set npmRegistryUrl (${pkg.npmRegistryUrl}) and yarnRcOptions.npmRegistryServer (${yarnRcOptions.npmRegistryServer}) to different values.`
+      );
+    }
+  }
+}
+
+/**
+ * @internal
+ */
+export function isYarnBerryPackage(pkg: NodePackage): boolean {
+  return (
+    pkg.packageManager === NodePackageManager.YARN_BERRY ||
+    pkg.packageManager === NodePackageManager.YARN2
+  );
+}
+
+/**
+ * @internal
+ */
+export function configureYarnBerry(
+  pkg: NodePackage,
+  options: YarnBerryOptions = {}
+) {
+  const {
+    version = "4.0.1",
+    yarnRcOptions = {},
+    zeroInstalls = false,
+  } = options;
+
+  // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
+  // of `yarn` to use.
+  pkg.addField("packageManager", `yarn@${version}`);
+
+  new Yarnrc(pkg.project, version, yarnRcOptions);
+
+  if (zeroInstalls) {
+    pkg.project.gitignore.include("!.yarn/cache");
+  } else {
+    pkg.project.gitignore.exclude(".pnp.*");
   }
 }

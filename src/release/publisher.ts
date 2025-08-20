@@ -12,7 +12,7 @@ import {
   JobStep,
   Tools,
 } from "../github/workflows-model";
-import { defaultNpmToken } from "../javascript/node-package";
+import { defaultNpmToken, NpmAccess } from "../javascript/node-package";
 import { Project } from "../project";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
@@ -361,8 +361,9 @@ export class Publisher extends Component {
         );
       }
 
-      const npmProvenance = options.npmProvenance ? "true" : undefined;
-      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
+      const provenance =
+        options.provenance ?? options.npmProvenance ? "true" : undefined;
+      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || provenance;
       return {
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
@@ -373,7 +374,8 @@ export class Publisher extends Component {
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
-          NPM_CONFIG_PROVENANCE: npmProvenance,
+          NPM_CONFIG_PROVENANCE: provenance,
+          NPM_ACCESS_LEVEL: options.access,
         },
         permissions: {
           idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
@@ -965,13 +967,35 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly npmTokenSecret?: string;
 
   /**
-   * Should provenance statements be generated when package is published.
+   * Override the access level for the npm package.
    *
-   * Note that this component is using `publib` to publish packages,
+   * @todo
+   * Default: 'public' for new packages, existing packages it will not change the current level
+   * @default - your project will pass in the correct level,
+   *
+   * for scoped packages (e.g. `foo@bar`), the default is
+   * `NpmAccess.RESTRICTED`, for non-scoped packages, the default is
+   * `NpmAccess.PUBLIC`.
+   */
+  readonly access?: NpmAccess;
+
+  /**
+   * Should provenance statements be generated when the package is published.
+   *
+   * You will need to use a supported CI/CD provider.
+   *
+   * Because this component is using `publib` to publish packages,
    * which is using npm internally and supports provenance statements independently of the package manager used.
    *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - undefined
+   * @default - true for public packages, false otherwise
+   */
+  readonly provenance?: boolean;
+
+  /**
+   * Should provenance statements be generated when the package is published.
+   *
+   * @deprecated use `provenance` instead
    */
   readonly npmProvenance?: boolean;
 

@@ -12,7 +12,11 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
-import { Yarnrc, YarnrcOptions } from "./yarnrc";
+import {
+  configureYarnBerry,
+  isYarnBerryPackage,
+  YarnrcOptions,
+} from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -316,12 +320,7 @@ export interface NodePackageOptions {
   /**
    * Should provenance statements be generated when the package is published.
    *
-   * A supported package manager is required to publish a package with npm provenance statements and
-   * you will need to use a supported CI/CD provider.
-   *
-   * Note that the projen `Release` and `Publisher` components are using `publib` to publish packages,
-   * which is using npm internally and supports provenance statements independently of the package manager used.
-   *
+   * @deprecated  use `publishToNpm.provenance` instead
    * @see https://docs.npmjs.com/generating-provenance-statements
    * @default - true for public packages, false otherwise
    */
@@ -329,14 +328,15 @@ export interface NodePackageOptions {
 
   /**
    * GitHub secret which contains the NPM token to use when publishing packages.
-   *
+   * @deprecated  use `publishToNpm.npmTokenSecret` instead
    * @default "NPM_TOKEN"
    */
   readonly npmTokenSecret?: string;
 
   /**
    * Options for npm packages using AWS CodeArtifact.
-   * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
+   *
+   * Used for installing scoped packages from AWS CodeArtifact
    *
    * @default - undefined
    */
@@ -505,17 +505,21 @@ export class NodePackage extends Component {
   public readonly license?: string;
 
   /**
-   * npm registry (e.g. `https://registry.npmjs.org`). Use `npmRegistryHost` to get just the host name.
+   * npm registry (e.g. `https://registry.npmjs.org`) used to publish this package.
+   *
+   * @deprecated use `publishToNpm.registry` on `NodeProject`
    */
   public readonly npmRegistryUrl: string;
 
   /**
    * The npm registry host (e.g. `registry.npmjs.org`).
+   * @deprecated
    */
   public readonly npmRegistry: string;
 
   /**
    * GitHub secret which contains the NPM token to use when publishing packages.
+   * @deprecated value is only used at publish time to publish a specific release branch and cannot be relied upon
    */
   public readonly npmTokenSecret?: string;
 
@@ -523,7 +527,7 @@ export class NodePackage extends Component {
    * Options for npm packages using AWS CodeArtifact.
    * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *
-   * @default - undefined
+   * @deprecated
    */
   readonly codeArtifactOptions?: CodeArtifactOptions;
 
@@ -536,11 +540,14 @@ export class NodePackage extends Component {
 
   /**
    * npm package access level.
+   *
+   * @deprecated
    */
   public readonly npmAccess: NpmAccess;
 
   /**
    * Should provenance statements be generated when package is published.
+   * @deprecated value is only used at publish time to publish a specific release branch and cannot be relied upon
    */
   public readonly npmProvenance: boolean;
 
@@ -599,12 +606,14 @@ export class NodePackage extends Component {
       npmProvenance,
     } = this.parseNpmOptions(options);
     this.npmAccess = npmAccess;
-    this.npmRegistry = npmRegistry;
+    this.scopedPackagesOptions = scopedPackagesOptions;
+
+    // Deprecated options
     this.npmRegistryUrl = npmRegistryUrl;
+    this.npmProvenance = npmProvenance;
+    this.npmRegistry = npmRegistry;
     this.npmTokenSecret = npmTokenSecret;
     this.codeArtifactOptions = codeArtifactOptions;
-    this.scopedPackagesOptions = scopedPackagesOptions;
-    this.npmProvenance = npmProvenance;
 
     this.processDeps(options);
 
@@ -649,12 +658,12 @@ export class NodePackage extends Component {
           : undefined,
     };
 
-    // Configure Yarn Berry if using
-    if (
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2
-    ) {
-      this.configureYarnBerry(project, options);
+    // @deprecated - Configure Yarn Berry if provided here
+    if (isYarnBerryPackage(this) && options.yarnBerryOptions != null) {
+      this.project.logger.warn(
+        "Setting 'yarnBerryOptions' on a 'NodePackage' is deprecated. Please set on 'NodeProject' instead."
+      );
+      configureYarnBerry(this, options.yarnBerryOptions);
     }
 
     // add tasks for scripts from options (if specified)
@@ -1593,65 +1602,6 @@ export class NodePackage extends Component {
       : this.installTask;
     runtime.runTask(taskToRun.name);
   }
-
-  private configureYarnBerry(project: Project, options: NodePackageOptions) {
-    const {
-      version = "4.0.1",
-      yarnRcOptions = {},
-      zeroInstalls = false,
-    } = options.yarnBerryOptions || {};
-    this.checkForConflictingYarnOptions(yarnRcOptions);
-
-    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
-    // of `yarn` to use.
-    this.addField("packageManager", `yarn@${version}`);
-    this.configureYarnBerryGitignore(zeroInstalls);
-
-    new Yarnrc(project, version, yarnRcOptions);
-  }
-
-  private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
-    if (
-      this.npmAccess &&
-      yarnRcOptions.npmPublishAccess &&
-      this.npmAccess.toString() !== yarnRcOptions.npmPublishAccess.toString()
-    ) {
-      throw new Error(
-        `Cannot set npmAccess (${this.npmAccess}) and yarnRcOptions.npmPublishAccess (${yarnRcOptions.npmPublishAccess}) to different values.`
-      );
-    }
-
-    if (
-      this.npmRegistryUrl &&
-      yarnRcOptions.npmRegistryServer &&
-      this.npmRegistryUrl !== yarnRcOptions.npmRegistryServer
-    ) {
-      throw new Error(
-        `Cannot set npmRegistryUrl (${this.npmRegistryUrl}) and yarnRcOptions.npmRegistryServer (${yarnRcOptions.npmRegistryServer}) to different values.`
-      );
-    }
-  }
-
-  /** See https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored */
-  private configureYarnBerryGitignore(zeroInstalls: boolean) {
-    const { gitignore } = this.project;
-
-    // These patterns are the same whether or not you're using zero-installs
-    gitignore.exclude(".yarn/*");
-    gitignore.include(
-      ".yarn/patches",
-      ".yarn/plugins",
-      ".yarn/releases",
-      ".yarn/sdks",
-      ".yarn/versions"
-    );
-
-    if (zeroInstalls) {
-      gitignore.include("!.yarn/cache");
-    } else {
-      gitignore.exclude(".pnp.*");
-    }
-  }
 }
 
 export interface PeerDependencyOptions {
@@ -1765,6 +1715,22 @@ function defaultNpmAccess(packageName: string) {
   return isScoped(packageName) ? NpmAccess.RESTRICTED : NpmAccess.PUBLIC;
 }
 
+/**
+ * @internal
+ */
+export function s(access: NpmAccess, pkg: NodePackage) {
+  const npmAccess = access ?? defaultNpmAccess(pkg.packageName);
+  if (!isScoped(pkg.packageName) && npmAccess === NpmAccess.RESTRICTED) {
+    throw new Error(
+      `"npmAccess" cannot be RESTRICTED for non-scoped npm package "${pkg.packageName}"`
+    );
+  }
+  return npmAccess;
+}
+
+/**
+ * @internal
+ */
 export function defaultNpmToken(
   npmToken: string | undefined,
   registry: string | undefined

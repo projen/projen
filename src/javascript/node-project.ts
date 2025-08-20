@@ -1,4 +1,5 @@
 import { relative, posix } from "path";
+import { Biome, BiomeOptions } from "./biome/biome";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -10,6 +11,7 @@ import {
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
+import { configureYarnBerry, isYarnBerryPackage } from "./yarnrc";
 import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
@@ -22,7 +24,6 @@ import {
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
-import { Biome, BiomeOptions } from "./biome/biome";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
@@ -167,8 +168,16 @@ export interface NodeProjectOptions
   /**
    * Automatically release to npm when new versions are introduced.
    * @default false
+   * @deprecated use publishToNpm instead
    */
   readonly releaseToNpm?: boolean;
+
+  /**
+   * Publish to npmjs.com or a compatible registry when a new version is released.
+   *
+   * @default - no publishing
+   */
+  readonly publishToNpm?: NpmPublishOptions;
 
   /**
    * The node version used in GitHub Actions workflows.
@@ -527,7 +536,10 @@ export class NodeProject extends GitHubProject {
       projenCommand: options.projenCommand ?? "npx projen",
     });
 
-    this.package = new NodePackage(this, options);
+    this.package = new NodePackage(this, {
+      ...options,
+      yarnBerryOptions: undefined, // do not pass @deprecated option on
+    });
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -542,6 +554,11 @@ export class NodeProject extends GitHubProject {
       normalizedArtifactsDirectory,
       "js"
     );
+
+    // Configure Yarn Berry if provided
+    if (isYarnBerryPackage(this.package)) {
+      configureYarnBerry(this.package, options.yarnBerryOptions);
+    }
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -685,11 +702,13 @@ export class NodeProject extends GitHubProject {
       );
     }
 
-    const release =
+    const releaseEnabled =
       options.release ??
       options.releaseWorkflow ??
       (this.parent ? false : true);
-    if (release) {
+    checkReleaseOptions(releaseEnabled, options);
+
+    if (releaseEnabled) {
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,
@@ -715,59 +734,12 @@ export class NodeProject extends GitHubProject {
         workflowPermissions,
       });
 
+      // @deprecated still support this for now
       this.publisher = this.release.publisher;
 
-      const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
-        NodePackageCodeArtifactAuthProvider,
-        ReleaseCodeArtifactAuthProvider
-      > = {
-        [NodePackageCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR]:
-          ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
-        [NodePackageCodeArtifactAuthProvider.GITHUB_OIDC]:
-          ReleaseCodeArtifactAuthProvider.GITHUB_OIDC,
-      };
-
-      if (options.releaseToNpm ?? false) {
-        const codeArtifactOptions: NpmPublishOptions["codeArtifactOptions"] =
-          isAwsCodeArtifactRegistry(this.package.npmRegistry)
-            ? {
-                accessKeyIdSecret:
-                  options.codeArtifactOptions?.accessKeyIdSecret,
-                secretAccessKeySecret:
-                  options.codeArtifactOptions?.secretAccessKeySecret,
-                roleToAssume: options.codeArtifactOptions?.roleToAssume,
-                authProvider: options.codeArtifactOptions?.authProvider
-                  ? nodePackageToReleaseCodeArtifactAuthProviderMapping[
-                      options.codeArtifactOptions.authProvider
-                    ]
-                  : ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
-              }
-            : {};
-        this.release.publisher.publishToNpm({
-          registry: this.package.npmRegistry,
-          npmTokenSecret: this.package.npmTokenSecret,
-          npmProvenance: this.package.npmProvenance,
-          codeArtifactOptions,
-        });
-      }
-    } else {
-      // validate that no release options are selected if the release workflow is disabled.
-      if (options.releaseToNpm) {
-        throw new Error(
-          '"releaseToNpm" is not supported if "release" is not set'
-        );
-      }
-
-      if (options.releaseEveryCommit) {
-        throw new Error(
-          '"releaseEveryCommit" is not supported if "release" is not set'
-        );
-      }
-
-      if (options.releaseSchedule) {
-        throw new Error(
-          '"releaseSchedule" is not supported if "release" is not set'
-        );
+      const npmjs = npmPublishOptions(this.package, options);
+      if (npmjs) {
+        this.release.publisher.publishToNpm(npmjs);
       }
     }
 
@@ -856,12 +828,12 @@ export class NodeProject extends GitHubProject {
     this.bundler = new Bundler(this, options.bundlerOptions);
 
     const shouldPackage = options.package ?? true;
-    if (release && !shouldPackage) {
+    if (releaseEnabled && !shouldPackage) {
       this.logger.warn(
         "When `release` is enabled, `package` must also be enabled as it is required by release. Force enabling `package`."
       );
     }
-    if (release || shouldPackage) {
+    if (releaseEnabled || shouldPackage) {
       this.packageTask.exec(`mkdir -p ${this.artifactsJavascriptDirectory}`);
 
       const pkgMgr =
@@ -1334,4 +1306,129 @@ export interface RenderWorkflowSetupOptions {
    * @default false
    */
   readonly mutable?: boolean;
+}
+
+/**
+ * Check for incompatible release options and throw if any are found
+ */
+function checkReleaseOptions(
+  releaseEnabled: boolean,
+  options: NodeProjectOptions
+): void {
+  // we only throw if release is disabled
+  if (releaseEnabled) {
+    return;
+  }
+
+  // validate that no release options are selected if the release workflow is disabled.
+  if (options.releaseToNpm) {
+    throw new Error('"releaseToNpm" is not supported if "release" is not set');
+  }
+
+  if (options.releaseEveryCommit) {
+    throw new Error(
+      '"releaseEveryCommit" is not supported if "release" is not set'
+    );
+  }
+
+  if (options.releaseSchedule) {
+    throw new Error(
+      '"releaseSchedule" is not supported if "release" is not set'
+    );
+  }
+}
+
+/**
+ * Compute the options for npm publishing, using defaults and deprecated options as appropriate.
+ *
+ * @internal
+ */
+export function npmPublishOptions(
+  pkg: NodePackage,
+  options: NodeProjectOptions
+): NpmPublishOptions | undefined {
+  // @deprecated honor disabling via deprecated options for now
+  if (options.releaseToNpm === false) {
+    if (options.publishToNpm != null) {
+      throw new Error(
+        "Cannot use 'publishToNpm' when deprecated 'releaseToNpm' is false. Please remove 'releaseToNpm' in favor of 'publishToNpm'."
+      );
+    }
+    return undefined;
+  }
+
+  // both modern and deprecated are unset => no publishing
+  if (options.publishToNpm == null && options.releaseToNpm == null) {
+    return undefined;
+  }
+
+  const registry = options.publishToNpm?.registry ?? pkg.npmRegistry;
+
+  // determine default CodeArtifact options
+  const codeArtifactAuthProvider = (
+    provider?: NodePackageCodeArtifactAuthProvider
+  ): ReleaseCodeArtifactAuthProvider => {
+    switch (provider) {
+      case NodePackageCodeArtifactAuthProvider.GITHUB_OIDC:
+        return ReleaseCodeArtifactAuthProvider.GITHUB_OIDC;
+      case ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR:
+      default:
+        return ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR;
+    }
+  };
+
+  // deprecated option is true, and modern options are not set => use defaults
+  if (options.releaseToNpm === true && options.publishToNpm == null) {
+    // uses top-level code artifact options, which really are supposed to be used for installing packages only
+    // this is just copied from current code, better not to change it
+    const deprecatedCodeArtifactOptions: NpmPublishOptions["codeArtifactOptions"] =
+      isAwsCodeArtifactRegistry(registry)
+        ? {
+            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+            secretAccessKeySecret:
+              options.codeArtifactOptions?.secretAccessKeySecret,
+            roleToAssume: options.codeArtifactOptions?.roleToAssume,
+            authProvider: codeArtifactAuthProvider(
+              options.codeArtifactOptions?.authProvider
+            ),
+          }
+        : {};
+
+    return {
+      registry,
+      npmTokenSecret: pkg.npmTokenSecret,
+      provenance: pkg.npmProvenance,
+      access: pkg.npmAccess,
+      // trustedPublishing: false, @todo coming soon
+      codeArtifactOptions: deprecatedCodeArtifactOptions,
+    };
+  }
+
+  // ↑ Above this is implementation for deprecated options (remove when removing the option)
+  // ↓ Below this is implementation for modern options
+
+  // options are unset => no publishing
+  if (options.publishToNpm == null) {
+    return undefined;
+  }
+
+  // use specific code artifact options for publishing
+  const codeArtifactOptions: NpmPublishOptions["codeArtifactOptions"] = {
+    ...options.publishToNpm?.codeArtifactOptions,
+    // convert the auth provider type
+    authProvider: codeArtifactAuthProvider(
+      options.publishToNpm?.codeArtifactOptions?.authProvider
+    ),
+  };
+
+  return {
+    registry,
+    access: pkg.npmAccess,
+    ...options.publishToNpm,
+    codeArtifactOptions: isAwsCodeArtifactRegistry(registry)
+      ? codeArtifactOptions
+      : undefined,
+  };
+
+  //////////////
 }
