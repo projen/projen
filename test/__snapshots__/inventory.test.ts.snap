@@ -7137,13 +7137,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -14572,13 +14572,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -17639,13 +17639,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -21508,13 +21508,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,

@@ -135,8 +135,8 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * and should remain on the same minor, so we recommend using a `~` dependency
    * (e.g. `~5.0.0`).
    *
-   * @default "~5.6.0"
-   * @pjnew "~5.8.0"
+   * @default "~5.8.0"
+   * @pjnew "~5.9.0"
    */
   readonly jsiiVersion?: string;
 }
@@ -208,7 +208,7 @@ export class JsiiProject extends TypeScriptProject {
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
 
-    const jsiiVersion = options.jsiiVersion ?? "~5.6.0";
+    const jsiiVersion = options.jsiiVersion ?? "~5.8.0";
 
     const defaultOptions: Partial<TypeScriptProjectOptions> = {
       repository: options.repositoryUrl,
