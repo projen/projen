@@ -2,7 +2,7 @@ import * as path from "path";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { ProjectType } from "../../src/project";
 import { Projenrc, resolvePythonImportName } from "../../src/python/projenrc";
-import { synthSnapshot, TestProject, withProjectDir } from "../util";
+import { synthSnapshot, TestProject, withProjectDirSync } from "../util";
 
 test("projenrc.py support", () => {
   // GIVEN
@@ -92,7 +92,7 @@ test("ensure python import is correctly resolved to jsiiFqn when python module i
 });
 
 test("generate projenrc in python with a given outdir", () => {
-  withProjectDir((projectdir) => {
+  withProjectDirSync((projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TestProject(
       renderProjenInitOptions("projen.python.PythonProject", {
