@@ -82,6 +82,39 @@ describe("GitAttributesFile", () => {
     });
   });
 
+  test("should remove attributes", () => {
+    withProjectDir((outdir) => {
+      const project = new TestProject({
+        outdir,
+      });
+
+      project.gitattributes.addAttributes("*.txt", "text");
+      project.gitattributes.addAttributes("*.md", "text", "markdown");
+      project.gitattributes.removeAttributes("*.txt");
+
+      const snap = synthSnapshot(project);
+
+      const lines: string[] = snap[".gitattributes"]
+        .split("\n")
+        .map((line: string) => line.trim());
+
+      expect(lines).toContain("*.md text markdown");
+      expect(lines).not.toContain("*.txt text");
+    });
+  });
+
+  test("should fail when removing nonexistent attribute", () => {
+    withProjectDir((outdir) => {
+      const project = new TestProject({
+        outdir,
+      });
+
+      expect(() => project.gitattributes.removeAttributes("*.txt")).toThrow(
+        "attribute mapping '*.txt' does not exist in .gitattributes"
+      );
+    });
+  });
+
   test("should add a LFS pattern", () => {
     withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
