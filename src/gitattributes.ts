@@ -90,6 +90,20 @@ export class GitAttributesFile extends FileBase {
   }
 
   /**
+   * Removes an existing mapping from the file.
+   * @param key file pattern to remove.
+   */
+  public removeAttributes(key: string): void {
+    if (!this.attributes.has(key)) {
+      throw new Error(
+        `attribute mapping '${key}' does not exist in .gitattributes`
+      );
+    }
+
+    this.attributes.delete(key);
+  }
+
+  /**
    * Add attributes necessary to mark these files as stored in LFS
    */
   public addLfsPattern(glob: string) {
