@@ -1794,9 +1794,9 @@ comment-json@4.2.2:
     repeat-string "^1.6.1"
 
 commit-and-tag-version@^12:
-  version "12.5.2"
-  resolved "https://registry.yarnpkg.com/commit-and-tag-version/-/commit-and-tag-version-12.5.2.tgz#e5112dba749c123234ebfed1c6ff8c040a72dcdd"
-  integrity sha512-ipRkoRPbDk6/d8Swc3frFCrE9p0z3X6RExUeJfbmnqypR7xPXWgwJnyQz4GGkP1grrIgTDdwXBfcBb/1DOwJ6A==
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/commit-and-tag-version/-/commit-and-tag-version-12.6.0.tgz#3d80302463742cce09460c85779f43d878868576"
+  integrity sha512-/x9+InrMz4G0GzDh1/ddrCsq4SKxRPS3vO5ShhZFG9EEr0GCZ3IrQPFpnBEgnIzm1XqwbkMYpIxFml7HuVs6mQ==
   dependencies:
     chalk "^2.4.2"
     conventional-changelog "4.0.0"
@@ -2265,9 +2265,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.204:
-  version "1.5.209"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.209.tgz#403e7a84933b7206bb2e737d897042b2a6ef8d3e"
-  integrity sha512-Xoz0uMrim9ZETCQt8UgM5FxQF9+imA7PBpokoGcZloA1uw2LeHzTlip5cb5KOAsXZLjh/moN2vReN3ZjJmjI9A==
+  version "1.5.211"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.211.tgz#749317bf9cf894c06f67980940cf8074e5eb08ca"
+  integrity sha512-IGBvimJkotaLzFnwIVgW9/UD/AOJ2tByUmeOrtqBfACSbAw5b1G0XpvdaieKyc7ULmbwXVx+4e4Be8pOPBrYkw==
 
 emittery@^0.13.1:
   version "0.13.1"
