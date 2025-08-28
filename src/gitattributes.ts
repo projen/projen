@@ -80,27 +80,33 @@ export class GitAttributesFile extends FileBase {
    * @param attributes Attributes to assign to these files.
    */
   public addAttributes(glob: string, ...attributes: string[]) {
-    if (!this.attributes.has(glob)) {
+    if (!this.hasMapping(glob)) {
       this.attributes.set(glob, new Set());
     }
-    const set = this.attributes.get(glob)!;
+
+    const set = this.getMapping(glob);
     for (const attribute of attributes) {
       set.add(attribute);
     }
   }
 
   /**
-   * Removes an existing mapping from the file.
-   * @param key file pattern to remove.
+   * Removes existing mappings from the file.
+   * @param glob Glob pattern to modify.
+   * @param attributes Attributes to remove from the glob.
    */
-  public removeAttributes(key: string): void {
-    if (!this.attributes.has(key)) {
+  public removeAttributes(glob: string, ...attributes: string[]): void {
+    if (!this.hasMapping(glob)) {
       throw new Error(
-        `attribute mapping '${key}' does not exist in .gitattributes`
+        `attribute mapping '${glob}' does not exist in .gitattributes`
       );
     }
 
-    this.attributes.delete(key);
+    if (attributes.length === 0) {
+      return this.removeMapping(glob);
+    }
+
+    this.removeSelectedAttributes(glob, attributes);
   }
 
   /**
@@ -142,5 +148,29 @@ export class GitAttributesFile extends FileBase {
         ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`
       ),
     ].join("\n");
+  }
+
+  private removeSelectedAttributes(glob: string, attributes: string[]): void {
+    const mapping = this.getMapping(glob);
+
+    if (mapping.size === attributes.length) {
+      this.removeMapping(glob);
+    }
+
+    for (const attribute of attributes) {
+      mapping.delete(attribute);
+    }
+  }
+
+  private removeMapping(glob: string): void {
+    this.attributes.delete(glob);
+  }
+
+  private getMapping(glob: string): Set<string> {
+    return this.attributes.get(glob) || new Set();
+  }
+
+  private hasMapping(glob: string): boolean {
+    return this.attributes.has(glob);
   }
 }
