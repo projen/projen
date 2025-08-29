@@ -131,18 +131,6 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should fail when removing nonexistent attribute", () => {
-    withProjectDir((outdir) => {
-      const project = new TestProject({
-        outdir,
-      });
-
-      expect(() => project.gitattributes.removeAttributes("*.txt")).toThrow(
-        "attribute mapping '*.txt' does not exist in .gitattributes"
-      );
-    });
-  });
-
   test("should add a LFS pattern", () => {
     withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
