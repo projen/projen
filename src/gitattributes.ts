@@ -96,12 +96,6 @@ export class GitAttributesFile extends FileBase {
    * @param attributes Attributes to remove from the glob.
    */
   public removeAttributes(glob: string, ...attributes: string[]): void {
-    if (!this.hasMapping(glob)) {
-      throw new Error(
-        `attribute mapping '${glob}' does not exist in .gitattributes`
-      );
-    }
-
     if (attributes.length === 0) {
       return this.removeMapping(glob);
     }
