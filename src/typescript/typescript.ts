@@ -712,9 +712,13 @@ export class TypeScriptProject extends NodeProject {
     jest: Jest,
     tsJestOptions: TsJestOptions | undefined
   ) {
+    // Ts-jest doesn't follow semver, but major should match to Jest's major.
+    // For some reason this is not the case with Jest 30 anymore.
+    const jestMajor = semver.coerce(jest.jestVersion)?.major ?? 0;
+    const tsJestVersion = jestMajor > 29 ? "@^29" : jest.jestVersion;
     this.addDevDeps(
       `@types/jest${jest.jestVersion}`,
-      `ts-jest${jest.jestVersion}`
+      `ts-jest${tsJestVersion}`
     );
 
     jest.discoverTestMatchPatternsForDirs([this.srcdir, this.testdir], {

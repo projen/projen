@@ -458,6 +458,21 @@ describe("jestConfig", () => {
         "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ]);
     });
+
+    test("allows using Jest 30", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          jestVersion: "30",
+          jestConfig: {},
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const devDeps = snapshot["package.json"].devDependencies;
+      expect(devDeps.jest).toMatch("30");
+      expect(devDeps["ts-jest"]).toMatch("29");
+    });
   });
 
   describe("Legacy", () => {
