@@ -130,7 +130,7 @@ export class GithubWorkflow extends Component {
 
   private actions: GitHubActionsProvider;
   private events: workflows.Triggers = {};
-  private jobs: Record<
+  public jobs: Record<
     string,
     workflows.Job | workflows.JobCallingReusableWorkflow
   > = {};

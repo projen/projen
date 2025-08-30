@@ -35,6 +35,99 @@ describe("renovatebot", () => {
     expect(snapshot["renovate.json5"]).toHaveProperty("ignoreDeps", [
       "test",
       "projen",
+      "amannn/action-semantic-pull-request",
+    ]);
+  });
+
+  test("renovatebot: will ignore workflow actions", () => {
+    // GIVEN
+    const p = new TestProject({
+      renovatebot: true,
+      renovatebotOptions: {
+        labels: ["renotate", "dependencies"],
+      },
+      github: true,
+      githubOptions: {
+        workflows: true,
+      },
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(p);
+
+    // THEN
+    expect(snapshot["renovate.json5"]).toHaveProperty("ignoreDeps", [
+      "projen",
+      "amannn/action-semantic-pull-request",
+    ]);
+  });
+
+  test("renovatebot: will ignore reusable workflow versions", () => {
+    // GIVEN
+    const p = new TestProject({
+      renovatebot: true,
+      renovatebotOptions: {
+        labels: ["renotate", "dependencies"],
+      },
+      github: true,
+      githubOptions: {
+        workflows: true,
+      },
+    });
+
+    const workflow = p.github?.addWorkflow("self-added");
+    workflow?.addJob("actions", {
+      permissions: {},
+      uses: "own-org/reusable-workflows/.github/workflows/testing.yaml@v1",
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(p);
+
+    // THEN
+    expect(snapshot["renovate.json5"]).toHaveProperty("ignoreDeps", [
+      "projen",
+      "amannn/action-semantic-pull-request",
+      "own-org/reusable-workflows/.github/workflows/testing.yaml",
+    ]);
+  });
+
+  test("renovatebot: will ignore workflow actions created manually", () => {
+    // GIVEN
+    const p = new TestProject({
+      renovatebot: true,
+      renovatebotOptions: {
+        labels: ["renotate", "dependencies"],
+      },
+      github: true,
+      githubOptions: {
+        workflows: true,
+      },
+    });
+
+    const workflow = p.github?.addWorkflow("self-added");
+    workflow?.addJob("actions", {
+      permissions: {},
+      steps: [
+        {
+          name: "checkout",
+          uses: "actions/checkout@v4",
+        },
+        {
+          name: "cache",
+          uses: "actions/cache@v4",
+        },
+      ],
+    });
+    // WHEN
+    const snapshot = synthSnapshot(p);
+
+    // THEN
+    expect(snapshot["renovate.json5"]).toHaveProperty("ignoreDeps", [
+      "projen",
+      "amannn/action-semantic-pull-request",
+      "actions/checkout",
+      "actions/cache",
     ]);
   });
 

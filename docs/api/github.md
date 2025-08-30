@@ -2439,6 +2439,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
+| <code><a href="#projen.github.GithubWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | *No description.* |
 | <code><a href="#projen.github.GithubWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 
 ---
@@ -2531,6 +2532,16 @@ public readonly file: YamlFile;
 The workflow YAML file.
 
 May not exist if `workflowsEnabled` is false on `GitHub`.
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
 
 ---
 
@@ -3998,6 +4009,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
+| <code><a href="#projen.github.TaskWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.jobId">jobId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflow.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | *No description.* |
@@ -4092,6 +4104,16 @@ public readonly file: YamlFile;
 The workflow YAML file.
 
 May not exist if `workflowsEnabled` is false on `GitHub`.
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
 
 ---
 

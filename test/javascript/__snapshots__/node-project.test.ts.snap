@@ -127,6 +127,11 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
     "constructs",
     "jest-junit",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ],
   "packageRules": [
     {
@@ -395,6 +400,11 @@ exports[`renovatebot ignored dependency overrides 1`] = `
     "axios",
     "some-overriden-package",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ],
   "packageRules": [
     {
