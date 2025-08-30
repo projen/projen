@@ -997,6 +997,40 @@ describe("Single Project", () => {
     });
   });
 
+  test("if npmTrustedPublishing is enabled, no token is set and id-token write permission is granted", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    release.publisher.publishToNpm({
+      trustedPublishing: true,
+      npmProvenance: false,
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+
+    expect(releaseWorkflow.jobs.release_npm.steps[3].env).toStrictEqual({
+      NPM_DIST_TAG: "latest",
+      NPM_TRUSTED_PUBLISHER: "true",
+    });
+
+    expect(releaseWorkflow.jobs.release_npm.permissions).toStrictEqual({
+      contents: "read",
+      "id-token": "write",
+    });
+  });
+
   test("if publishTasks is disabled, no publish tasks are created", () => {
     // GIVEN
     const project = new TestProject();
@@ -1182,5 +1216,47 @@ describe("Subproject", () => {
     const outdir = synthSnapshot(project);
     expect(outdir[".github/workflows/pull-request-lint.yml"]).toBeUndefined();
     expect(outdir[".github/workflows/release_my-project.yml"]).toBeUndefined();
+  });
+});
+
+describe("python", () => {
+  test("if trustedPublishing is enabled, api token is minted and id-token write permission is granted", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    release.publisher.publishToPyPi({
+      trustedPublishing: true,
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+
+    // Find the Release step (it should be the step with name "Release")
+    const releaseStep = releaseWorkflow.jobs.release_pypi.steps.find(
+      (step: any) => step.name === "Release"
+    );
+    expect(releaseStep).toMatchObject({
+      name: "Release",
+      run: expect.any(String),
+      env: {
+        PYPI_TRUSTED_PUBLISHER: "true",
+      },
+    });
+
+    expect(releaseWorkflow.jobs.release_pypi.permissions).toStrictEqual({
+      contents: "read",
+      "id-token": "write",
+    });
   });
 });

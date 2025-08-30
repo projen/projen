@@ -747,6 +747,7 @@ export class NodeProject extends GitHubProject {
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
           npmProvenance: this.package.npmProvenance,
+          trustedPublishing: options.npmTrustedPublishing ?? false,
           codeArtifactOptions,
         });
       }

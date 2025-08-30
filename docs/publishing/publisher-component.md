@@ -73,6 +73,30 @@ publisher.publishToNuGet({
 });
 ```
 
+## Trusted Publishing
+
+Trusted publishing eliminates the need for long-lived API tokens by using OpenID Connect (OIDC) to authenticate with package repositories. This is more secure and easier to maintain.
+
+**npm**
+
+```ts
+publisher.publishToNpm({
+  trustedPublishing: true,
+  npmProvenance: true, // optional, enables provenance statements
+});
+```
+
+**PyPI**
+
+```ts
+publisher.publishToPyPi({
+  trustedPublishing: true,
+  attestations: true, // optional, enabled by default with trusted publishing
+});
+```
+
+Before using trusted publishing, you must configure your package on the respective registry to accept tokens from your GitHub repository. See the [Trusted Publishing guide](./trusted-publishing.md) for detailed setup instructions.
+
 ## Publishing to GitHub Packages
 
 Some targets come with dynamic defaults that support GitHub Packages.
