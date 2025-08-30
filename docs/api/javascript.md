@@ -7789,6 +7789,8 @@ The version of jest to use.
 
 Note that same version is used as version of `@types/jest` and `ts-jest` (if Typescript in use), so given version should work also for those.
 
+With Jest 30 ts-jest version 29 is used (if Typescript in use)
+
 ---
 
 ##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JestOptions.property.junitReporting"></a>
