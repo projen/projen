@@ -3242,7 +3242,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -3258,8 +3258,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -6411,7 +6411,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6427,8 +6427,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -10964,7 +10964,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -10980,8 +10980,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -13898,7 +13898,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -13914,8 +13914,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -17016,7 +17016,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17032,8 +17032,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -20919,7 +20919,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -20935,8 +20935,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -23933,7 +23933,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -23949,8 +23949,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -26431,7 +26431,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -26447,8 +26447,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -29193,7 +29193,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -29209,8 +29209,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -32896,7 +32896,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -32912,8 +32912,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -35382,7 +35382,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -35398,8 +35398,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -38149,7 +38149,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -38165,8 +38165,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -40894,7 +40894,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -40910,8 +40910,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
