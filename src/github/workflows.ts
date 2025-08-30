@@ -224,6 +224,17 @@ export class GithubWorkflow extends Component {
     };
   }
 
+  // Can't be getJobs due to JSII5000
+  /**
+   * Get all jobs defined in workflow
+   */
+  public fetchJobs(): Record<
+    string,
+    workflows.Job | workflows.JobCallingReusableWorkflow
+  > {
+    return this.jobs;
+  }
+
   /**
    * Get a single job from the workflow.
    * @param id The job name (unique within the workflow)

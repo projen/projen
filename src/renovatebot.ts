@@ -1,7 +1,9 @@
 import { Component } from "./component";
 import { DependencyType } from "./dependencies";
+import type { GitHub } from "./github";
+import type { Job, JobStep } from "./github/workflows-model";
 import { JsonFile } from "./json";
-import { Project } from "./project";
+import type { Project } from "./project";
 
 /**
  * Options for Renovatebot
@@ -119,6 +121,7 @@ export class Renovatebot extends Component {
 
   private readonly marker?: boolean;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Renovate configuration is not typed
   private readonly overrideConfig?: any;
 
   constructor(project: Project, options: RenovatebotOptions = {}) {
@@ -150,6 +153,30 @@ export class Renovatebot extends Component {
           .concat(this.explicitIgnores)
       ),
     ];
+
+    // Ignore GitHub Action updates
+    const gitHub: GitHub = (this._project as any).github;
+    if (gitHub?.workflowsEnabled) {
+      const actions: string[] = [];
+      for (const workflow of gitHub.workflows) {
+        this._project.logger.debug(`Handling workflow ${workflow.name}`);
+        for (const job of Object.values(workflow.fetchJobs())) {
+          this._project.logger.debug(`Handling job ${job.name}`);
+          const steps = (job as Job).steps;
+          if (steps.length === 0) {
+            continue;
+          }
+          for (const step of steps) {
+            this._project.logger.debug(
+              `Handling step ${step.name} that uses action ${step.uses}`
+            );
+            const actionName = (step as JobStep).uses?.split("@")[0];
+            actionName && actions.push(actionName);
+          }
+        }
+      }
+      renovateIgnore.push(...new Set(actions));
+    }
 
     return {
       labels: this.labels,

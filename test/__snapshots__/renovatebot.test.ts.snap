@@ -24,6 +24,7 @@ exports[`renovatebot renovatebot: true creates renovatebot configuration 1`] = `
   ],
   "ignoreDeps": [
     "projen",
+    "amannn/action-semantic-pull-request",
   ],
   "labels": [
     "renotate",

@@ -954,6 +954,11 @@ test("enabling renovatebot does not overturn mergify: false", () => {
     "constructs",
     "jest-junit",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
@@ -982,6 +987,11 @@ test("renovatebot ignored dependency overrides", () => {
     "axios",
     "some-overriden-package",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
