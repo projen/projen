@@ -2203,6 +2203,7 @@ Additional options to configure the workflow.
 | <code><a href="#projen.github.GithubWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.GithubWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.fetchJobs">fetchJobs</a></code> | Get all jobs defined in workflow. |
 | <code><a href="#projen.github.GithubWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
@@ -2284,6 +2285,14 @@ Add jobs to the workflow.
 Jobs to add.
 
 ---
+
+##### `fetchJobs` <a name="fetchJobs" id="projen.github.GithubWorkflow.fetchJobs"></a>
+
+```typescript
+public fetchJobs(): {[ key: string ]: JobCallingReusableWorkflow | Job}
+```
+
+Get all jobs defined in workflow.
 
 ##### `getJob` <a name="getJob" id="projen.github.GithubWorkflow.getJob"></a>
 
@@ -3762,6 +3771,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | <code><a href="#projen.github.TaskWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.TaskWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.fetchJobs">fetchJobs</a></code> | Get all jobs defined in workflow. |
 | <code><a href="#projen.github.TaskWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
@@ -3843,6 +3853,14 @@ Add jobs to the workflow.
 Jobs to add.
 
 ---
+
+##### `fetchJobs` <a name="fetchJobs" id="projen.github.TaskWorkflow.fetchJobs"></a>
+
+```typescript
+public fetchJobs(): {[ key: string ]: JobCallingReusableWorkflow | Job}
+```
+
+Get all jobs defined in workflow.
 
 ##### `getJob` <a name="getJob" id="projen.github.TaskWorkflow.getJob"></a>
 
