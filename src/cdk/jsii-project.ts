@@ -317,6 +317,7 @@ export class JsiiProject extends TypeScriptProject {
         npmTokenSecret: this.package.npmTokenSecret,
         npmProvenance: this.package.npmProvenance,
         codeArtifactOptions: options.codeArtifactOptions,
+        trustedPublishing: options.npmTrustedPublishing ?? false,
       };
       this.addTargetToBuild("js", this.packageJsTask, extraJobOptions);
       this.addTargetToRelease("js", this.packageJsTask, npmjs);

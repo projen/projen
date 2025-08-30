@@ -4,11 +4,14 @@ import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
 import { gray, underline } from "chalk";
-import * as parseConflictJSON from "parse-conflict-json";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 import { makeCrossPlatform } from "./util/tasks";
+
+// avoids a (false positive) esbuild warning about incorrect imports
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const parseConflictJSON = require("parse-conflict-json");
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
