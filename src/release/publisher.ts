@@ -23,7 +23,7 @@ const ARTIFACTS_DOWNLOAD_DIR = "dist";
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = "https://maven.pkg.github.com";
 const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
-const PUBLIB_TOOLCHAIN = {
+const PUBLIB_TOOLCHAIN: Record<string, Tools> = {
   js: {},
   java: { java: { version: "11" } },
   python: { python: { version: "3.x" } },
