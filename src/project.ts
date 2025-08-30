@@ -172,7 +172,7 @@ export class Project extends Construct {
    * @throws when no project is found in the path to the root
    */
   public static of(construct: IConstruct): Project {
-    return findClosestProject(construct);
+    return findClosestProject(construct, this.name);
   }
 
   /**
