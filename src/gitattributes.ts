@@ -147,12 +147,12 @@ export class GitAttributesFile extends FileBase {
   private removeSelectedAttributes(glob: string, attributes: string[]): void {
     const mapping = this.getMapping(glob);
 
-    if (mapping.size === attributes.length) {
-      this.removeMapping(glob);
-    }
-
     for (const attribute of attributes) {
       mapping.delete(attribute);
+    }
+
+    if (mapping.size === 0) {
+      this.removeMapping(glob);
     }
   }
 

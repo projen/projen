@@ -131,6 +131,30 @@ describe("GitAttributesFile", () => {
     });
   });
 
+  test("should leave mapping unchanged when non-existent attributes are removed", () => {
+    withProjectDir((outdir) => {
+      const project = new TestProject({
+        outdir,
+      });
+
+      project.gitattributes.addAttributes(
+        "*.txt",
+        "text",
+        "linguist-generated"
+      );
+      project.gitattributes.removeAttributes(
+        "*.txt",
+        "some-attribute-1",
+        "some-attribute-2"
+      );
+
+      const snap = synthSnapshot(project);
+      const lines = retrieveLines(snap);
+
+      expect(lines).toContain("*.txt text linguist-generated");
+    });
+  });
+
   test("should add a LFS pattern", () => {
     withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
