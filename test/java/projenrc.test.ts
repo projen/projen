@@ -4,7 +4,7 @@ import { generateJavaOptionNames } from "../../lib/java";
 import { Pom } from "../../src/java";
 import { Projenrc, getJavaImport } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
-import { synthSnapshot, TestProject, withProjectDir } from "../util";
+import { synthSnapshot, TestProject, withProjectDirSync } from "../util";
 
 test("projenrc.java support", () => {
   // GIVEN
@@ -183,7 +183,7 @@ test("assert getJavaImport returns the correct import with no submodules", () =>
 });
 
 test("assert generateProjenrc returns the correct projenrc with correct outdir", () => {
-  withProjectDir((projectdir) => {
+  withProjectDirSync((projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TestProject(
       renderProjenInitOptions("projen.java.JavaProject", {
