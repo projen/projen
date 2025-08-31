@@ -67,7 +67,7 @@ describe("license checker", () => {
     // THEN
     expect(() =>
       execProjenCLI(project.outdir, ["check-licenses"])
-    ).toThrowError(`Found license defined by the --failOn flag: "Apache-2.0"`);
+    ).toThrow(`Found license defined by the --failOn flag: "Apache-2.0"`);
   });
 
   test("will pass if only allowed licenses are found", () => {

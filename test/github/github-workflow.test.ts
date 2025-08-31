@@ -112,7 +112,7 @@ describe("github-workflow", () => {
       new GithubWorkflow(project.github!, workflowName, {
         fileName,
       });
-    }).toThrowError(
+    }).toThrow(
       "GitHub Workflow files must have either a .yml or .yaml file extension, got: foobar.txt"
     );
   });

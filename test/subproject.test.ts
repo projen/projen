@@ -65,7 +65,7 @@ test("errors when paths overlap", () => {
         parent: comp,
         outdir: path.join("packages", "foo"),
       })
-  ).toThrowError(/There is already a subproject with/i);
+  ).toThrow(/There is already a subproject with/i);
 });
 
 test("multiple levels", () => {

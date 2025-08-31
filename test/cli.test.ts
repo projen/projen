@@ -120,7 +120,7 @@ test('running "projen" with task if there is no tasks.json', () => {
   const t = () => {
     execProjenCLI(dir, ["build"]);
   };
-  expect(t).toThrowError("Unknown command: build");
+  expect(t).toThrow("Unknown command: build");
 });
 
 test('running "projen" with task in root of a project that receives args will respect whitespaces', () => {

@@ -35,7 +35,7 @@ test("poetry and venv fails", () => {
         license: "Apache-2.0",
         classifiers: ["Development Status :: 4 - Beta"],
       })
-  ).toThrowError();
+  ).toThrow();
 });
 
 test("poetry and pip fails", () => {
@@ -49,7 +49,7 @@ test("poetry and pip fails", () => {
         license: "Apache-2.0",
         classifiers: ["Development Status :: 4 - Beta"],
       })
-  ).toThrowError();
+  ).toThrow();
 });
 
 test("poetry and setuptools fails", () => {
@@ -63,7 +63,7 @@ test("poetry and setuptools fails", () => {
         license: "Apache-2.0",
         classifiers: ["Development Status :: 4 - Beta"],
       })
-  ).toThrowError();
+  ).toThrow();
 });
 
 test("poetry enabled", () => {
@@ -237,7 +237,7 @@ test("poetry environment is setup with pythonExec", () => {
   }
 
   // THEN
-  expect(debug).toBeCalledWith(
+  expect(debug).toHaveBeenCalledWith(
     expect.stringContaining("poetry env use python-exec-test-path")
   );
 

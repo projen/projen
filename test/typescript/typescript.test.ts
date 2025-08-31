@@ -731,6 +731,6 @@ describe("only one of components can be enabled", () => {
           defaultReleaseBranch: "main",
           name: "test",
         })
-    ).toThrowError("Only one of biome and eslint can be enabled.");
+    ).toThrow("Only one of biome and eslint can be enabled.");
   });
 });

@@ -191,7 +191,7 @@ test('lockfile updated (install twice) after "*"s are resolved', () => {
   const yarnLock: string | undefined = readFileSync(yarnLockPath, "utf8");
 
   expect(yarnLock).toStrictEqual('"ms@^2.1.3": version "2.1.3"\n');
-  expect(taskMock).toBeCalledTimes(2);
+  expect(taskMock). toHaveBeenCalledTimes(2);
 });
 
 test("install only once if all versions are resolved", () => {
@@ -205,7 +205,7 @@ test("install only once if all versions are resolved", () => {
 
   project.synth();
 
-  expect(taskMock).toBeCalledTimes(1);
+  expect(taskMock). toHaveBeenCalledTimes(1);
 });
 
 test("no install if package.json did not change at all", () => {
@@ -248,7 +248,7 @@ test("no install if package.json did not change at all", () => {
   pkg.addDeps("ms@^2");
 
   project.synth();
-  expect(taskMock).not.toBeCalled();
+  expect(taskMock).not.toHaveBeenCalled();
 });
 
 test('"*" peer dependencies are pinned in devDependencies', () => {
@@ -961,6 +961,6 @@ describe("npm provenance", () => {
           npmAccess: NpmAccess.RESTRICTED,
           npmProvenance: true,
         })
-    ).toThrowError(`"npmProvenance" can only be enabled for public packages`);
+    ).toThrow(`"npmProvenance" can only be enabled for public packages`);
   });
 });

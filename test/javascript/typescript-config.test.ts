@@ -140,7 +140,7 @@ describe("TypescriptConfig", () => {
         // No compilerOptions
         // No extends
       });
-    }).toThrowError(/Must provide either `extends` or `compilerOptions`/);
+    }).toThrow(/Must provide either `extends` or `compilerOptions`/);
   });
 
   test("TypeScript should parse generated config with multiple extensions", () => {

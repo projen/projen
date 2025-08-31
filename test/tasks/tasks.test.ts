@@ -74,7 +74,7 @@ test("throw when removing a dependent task", () => {
   primary.spawn(dependent);
 
   // THEN
-  expect(() => p.removeTask("dependent")).toThrowError(
+  expect(() => p.removeTask("dependent")).toThrow(
     'Unable to remove task "dependent" because the following tasks depend on it: primary'
   );
 });

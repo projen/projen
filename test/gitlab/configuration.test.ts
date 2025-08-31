@@ -10,12 +10,12 @@ test("throws when adding an existing service with same name and alias", () => {
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "bar" });
   // THEN
-  expect(() => c.addServices({ name: "bar" })).toThrowError(
+  expect(() => c.addServices({ name: "bar" })).toThrow(
     /GitLab CI already contains/
   );
   expect(() =>
     c.addServices({ name: "foobar" }, { name: "foobar" })
-  ).toThrowError(/GitLab CI already contains/);
+  ).toThrow(/GitLab CI already contains/);
 });
 
 test("does not throw when adding an services with same name and different alias", () => {
@@ -26,7 +26,7 @@ test("does not throw when adding an services with same name and different alias"
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "foo", alias: "foobar" });
   // THEN
-  expect(() => c.addServices({ name: "foo", alias: "baz" })).not.toThrowError(
+  expect(() => c.addServices({ name: "foo", alias: "baz" })).not.toThrow(
     /GitLab CI already contains/
   );
 });
@@ -38,16 +38,16 @@ test("does not throw when adding an valid include", () => {
   });
   const c = new CiConfiguration(p, "foo");
   // THEN
-  expect(() => c.addIncludes({ local: "foo" })).not.toThrowError(
+  expect(() => c.addIncludes({ local: "foo" })).not.toThrow(
     /A valid include configuration specifies/
   );
   expect(() =>
     c.addIncludes({ file: ["foo"], project: "foo" })
-  ).not.toThrowError(/A valid include configuration specifies/);
-  expect(() => c.addIncludes({ remote: "foo" })).not.toThrowError(
+  ).not.toThrow(/A valid include configuration specifies/);
+  expect(() => c.addIncludes({ remote: "foo" })).not.toThrow(
     /A valid include configuration specifies/
   );
-  expect(() => c.addIncludes({ template: "foo" })).not.toThrowError(
+  expect(() => c.addIncludes({ template: "foo" })).not.toThrow(
     /A valid include configuration specifies/
   );
 });
@@ -80,16 +80,16 @@ test("throws when adding an existing includes", () => {
     { template: "foo" }
   );
   // THEN
-  expect(() => c.addIncludes({ local: "foo" })).toThrowError(
+  expect(() => c.addIncludes({ local: "foo" })).toThrow(
     /already contains one or more templates specified in/
   );
-  expect(() => c.addIncludes({ file: ["foo"], project: "foo" })).toThrowError(
+  expect(() => c.addIncludes({ file: ["foo"], project: "foo" })).toThrow(
     /already contains one or more templates specified in/
   );
-  expect(() => c.addIncludes({ remote: "foo" })).toThrowError(
+  expect(() => c.addIncludes({ remote: "foo" })).toThrow(
     /already contains one or more templates specified in/
   );
-  expect(() => c.addIncludes({ template: "foo" })).toThrowError(
+  expect(() => c.addIncludes({ template: "foo" })).toThrow(
     /already contains one or more templates specified in/
   );
 });
@@ -139,7 +139,7 @@ test("throws when adding a job with more than 4 caches configured", () => {
           },
         },
       })
-  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
+  ).toThrow("foo: GitLab CI can only define up to 4 caches, got: 5");
 });
 
 test("throws when adding more than 4 default caches", () => {
@@ -176,7 +176,7 @@ test("throws when adding more than 4 default caches", () => {
           ],
         },
       })
-  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
+  ).toThrow("foo: GitLab CI can only define up to 4 caches, got: 5");
 });
 
 test("respected the original format when variables are added to jobs", () => {

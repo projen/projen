@@ -115,7 +115,7 @@ describe("cdk.json", () => {
         app: "bun --smol my-app.ts",
         appEntrypoint: "my-app.ts",
       });
-    }).toThrowError("Only one of 'app' or 'appEntrypoint' can be specified");
+    }).toThrow("Only one of 'app' or 'appEntrypoint' can be specified");
   });
 });
 

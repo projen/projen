@@ -190,7 +190,7 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
-    expect(warn).toBeCalledWith(
+    expect(warn).toHaveBeenCalledWith(
       "Received non-string value for environment variable VALUE. Value will be stringified."
     );
     warn.mockRestore();
@@ -211,7 +211,7 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
-    expect(warn).toBeCalledWith(
+    expect(warn).toHaveBeenCalledWith(
       "Received non-string value for environment variable VALUE. Value will be stringified."
     );
     warn.mockRestore();

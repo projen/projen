@@ -474,7 +474,7 @@ describe("patch", () => {
     );
 
     // THEN
-    expect(() => synthSnapshot(prj)["my/object/file.json"]).toThrowError(
+    expect(() => synthSnapshot(prj)["my/object/file.json"]).toThrow(
       "Test operation failed"
     );
   });

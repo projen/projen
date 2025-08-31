@@ -203,7 +203,7 @@ test("orb with the same id can not be added", () => {
     ],
   };
   const circle = new Circleci(p, options);
-  expect(() => circle.addOrb("hello", "world:3.0")).toThrowError(
+  expect(() => circle.addOrb("hello", "world:3.0")).toThrow(
     "Circleci Config already contains an orb named hello."
   );
 

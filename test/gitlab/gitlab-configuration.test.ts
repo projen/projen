@@ -9,7 +9,7 @@ test("throws when adding an adding a job to a non-existent nested template", () 
   const c = new GitlabConfiguration(p);
   c.createNestedTemplates({ foo: {} });
   // THEN
-  expect(() => c.nestedTemplates.bar.addStages("baz")).toThrowError;
+  expect(() => c.nestedTemplates.bar.addStages("baz")).toThrow;
 });
 
 test("does not throw when adding an services with an existing nested template", () => {
@@ -20,7 +20,7 @@ test("does not throw when adding an services with an existing nested template", 
   const c = new GitlabConfiguration(p);
   c.createNestedTemplates({ foo: {} });
   // THEN
-  expect(() => c.nestedTemplates.foo.addStages("baz")).not.toThrowError;
+  expect(() => c.nestedTemplates.foo.addStages("baz")).not.toThrow;
 });
 
 test("main configuration inherits child configuration stages", () => {

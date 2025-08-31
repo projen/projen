@@ -116,6 +116,7 @@ const project = new JsiiProject({
   },
 
   jestOptions: {
+    jestVersion: '30',
     // makes it very hard to iterate with jest --watch
     coverageText: false,
     jestConfig: {
