@@ -2207,7 +2207,7 @@ Additional options to configure the workflow.
 | <code><a href="#projen.github.GithubWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
-| <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs. |
+| <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
 ---
 
@@ -2361,7 +2361,7 @@ The job name (unique within the workflow).
 public updateJobs(jobs: {[ key: string ]: JobCallingReusableWorkflow | Job}): void
 ```
 
-Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs.
 
 ###### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.updateJobs.parameter.jobs"></a>
 
@@ -2434,12 +2434,12 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.GithubWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.GithubWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | All current jobs of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
-| <code><a href="#projen.github.GithubWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | *No description.* |
 | <code><a href="#projen.github.GithubWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 
 ---
@@ -2463,6 +2463,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
+
+All current jobs of the workflow.
+
+This is a read-only copy, use the respective helper methods to add, update or remove jobs.
 
 ---
 
@@ -2532,16 +2546,6 @@ public readonly file: YamlFile;
 The workflow YAML file.
 
 May not exist if `workflowsEnabled` is false on `GitHub`.
-
----
-
-##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.property.jobs"></a>
-
-```typescript
-public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
-```
-
-- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
 
 ---
 
@@ -3777,7 +3781,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | <code><a href="#projen.github.TaskWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
-| <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs. |
+| <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
 ---
 
@@ -3931,7 +3935,7 @@ The job name (unique within the workflow).
 public updateJobs(jobs: {[ key: string ]: JobCallingReusableWorkflow | Job}): void
 ```
 
-Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs.
 
 ###### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.updateJobs.parameter.jobs"></a>
 
@@ -4004,12 +4008,12 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.github.TaskWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.TaskWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | All current jobs of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Additional environment variables to set for the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.file">file</a></code> | <code>projen.YamlFile</code> | The workflow YAML file. |
-| <code><a href="#projen.github.TaskWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflow.property.runName">runName</a></code> | <code>string</code> | The name for workflow runs generated from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.jobId">jobId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflow.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | *No description.* |
@@ -4035,6 +4039,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
+
+All current jobs of the workflow.
+
+This is a read-only copy, use the respective helper methods to add, update or remove jobs.
 
 ---
 
@@ -4104,16 +4122,6 @@ public readonly file: YamlFile;
 The workflow YAML file.
 
 May not exist if `workflowsEnabled` is false on `GitHub`.
-
----
-
-##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.property.jobs"></a>
-
-```typescript
-public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
-```
-
-- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
 
 ---
 
