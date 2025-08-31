@@ -54,6 +54,44 @@ const project = new JsiiProject({
 });
 ```
 
+### Meeting the npm Version Requirement
+
+Trusted publishing requires npm CLI version 11.5.1 or later. By default, this is available with Node.js 24+. You have two options to meet this requirement:
+
+#### Option 1: Update Node.js version for all workflows
+
+```typescript
+const project = new NodeProject({
+  // ... other options
+  workflowNodeVersion: "24.x",
+  publishToNpm: true,
+  npmPublishOptions: {
+    trustedPublishing: true,
+  },
+});
+```
+
+#### Option 2: Manual workflow patching (advanced)
+
+For more granular control, you can manually patch the workflow:
+
+```typescript
+// Update Node.js version for npm publishing job only
+project.github?.tryFindWorkflow("release")?.file?.patch(
+  JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
+);
+
+// Or add a step to update npm
+project.github?.tryFindWorkflow("release")?.file?.patch(
+  JsonPatch.add("/jobs/release_npm/steps/1", {
+    name: "Update npm",
+    run: "npm i -g npm@latest",
+  })
+);
+```
+
+**Recommendation**: Option 1 is recommended for most users. Option 2 provides more granular control if you need to keep other workflows on an older Node.js version.
+
 ### npm Configuration
 
 Before using trusted publishing, you must configure your npm package:
@@ -70,7 +108,9 @@ Or follow the [official npm documentation](https://docs.npmjs.com/trusted-publis
 
 ### Requirements
 
-- npm CLI version 11.5.1 or later (this is NOT ensured automatically by projen)
+- **npm CLI version 11.5.1 or later** (this is NOT ensured automatically by projen)
+  - Available by default with Node.js 24+
+  - See "Meeting the npm Version Requirement" section above for solutions
 - Package must be configured for trusted publishing on npmjs.com
 - GitHub Actions workflow must run from the configured repository and branch
 
