@@ -115,16 +115,16 @@ export interface NodeProjectOptions
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
-   * Uses codecov/codecov-action@v4
-   * A secret is required for private repos. Configured with `@codeCovTokenSecret`
+   * Uses codecov/codecov-action@v5
+   * By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
    * @default false
    */
   readonly codeCov?: boolean;
 
   /**
    * Define the secret name for a specified https://codecov.io/ token
-   * A secret is required to send coverage for private repositories
-   * @default - if this option is not specified, only public repositories are supported
+
+   * @default - OIDC auth is used
    */
   readonly codeCovTokenSecret?: string;
 
@@ -644,13 +644,8 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    const requiresIdTokenPermission =
-      (options.scopedPackagesOptions ?? []).length > 0 &&
-      options.codeArtifactOptions?.authProvider ===
-        CodeArtifactAuthProvider.GITHUB_OIDC;
-
     const workflowPermissions: JobPermissions = {
-      idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
+      idToken: this.determineIdTokenPermissions(options),
     };
 
     const buildWorkflowOptions: BuildWorkflowOptions =
@@ -683,6 +678,7 @@ export class NodeProject extends GitHubProject {
       this.buildWorkflow.addPostBuildSteps(
         ...this.renderUploadCoverageJobStep(options)
       );
+      this.maybeAddCodecovIgnores(options);
     }
 
     const release =
@@ -715,6 +711,7 @@ export class NodeProject extends GitHubProject {
         workflowPermissions,
       });
 
+      this.maybeAddCodecovIgnores(options);
       this.publisher = this.release.publisher;
 
       const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
@@ -905,21 +902,54 @@ export class NodeProject extends GitHubProject {
     return;
   }
 
+  private determineIdTokenPermissions(
+    options: NodeProjectOptions
+  ): JobPermission | undefined {
+    const { codeCovTokenSecret, scopedPackagesOptions, codeArtifactOptions } =
+      options;
+
+    const useCodeCoveOidc = this.useCodecov(options) && !codeCovTokenSecret;
+    const hasScopedPackages = (scopedPackagesOptions ?? []).length > 0;
+    const useCodeArtifactOidc =
+      codeArtifactOptions?.authProvider ===
+      CodeArtifactAuthProvider.GITHUB_OIDC;
+
+    if (useCodeCoveOidc || (useCodeArtifactOidc && hasScopedPackages)) {
+      return JobPermission.WRITE;
+    }
+
+    return undefined;
+  }
+
+  private useCodecov(options: NodeProjectOptions): boolean {
+    // Use Codecov when it is enabled or if or a secret token name is passed in
+    // AND jest must be configured
+    return (options.codeCov || options.codeCovTokenSecret) && this.jest?.config;
+  }
+
+  private maybeAddCodecovIgnores(options: NodeProjectOptions) {
+    if (this.useCodecov(options)) {
+      this.addGitIgnore("codecov");
+      this.addGitIgnore("codecov.*");
+    }
+  }
+
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
     // run codecov if enabled or a secret token name is passed in
     // AND jest must be configured
-    if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
+    if (this.useCodecov(options)) {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v4",
+          uses: "codecov/codecov-action@v5",
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest.config.coverageDirectory,
+                directory: this.jest?.config.coverageDirectory,
               }
             : {
-                directory: this.jest.config.coverageDirectory,
+                directory: this.jest?.config.coverageDirectory,
+                use_oidc: true,
               },
         },
       ];

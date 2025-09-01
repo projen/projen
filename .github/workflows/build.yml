@@ -216,6 +216,7 @@ jobs:
     runs-on: ${{ matrix.runner.os }}
     permissions:
       contents: write
+      id-token: write
     outputs:
       self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
@@ -240,9 +241,10 @@ jobs:
       - name: build
         run: node ./projen.js build
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           directory: coverage
+          use_oidc: true
         if: matrix.runner.primary_build
       - name: Find mutations
         id: self_mutation
