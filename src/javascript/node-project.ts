@@ -678,6 +678,7 @@ export class NodeProject extends GitHubProject {
       this.buildWorkflow.addPostBuildSteps(
         ...this.renderUploadCoverageJobStep(options)
       );
+      this.maybeAddCodecovIgnores(options);
     }
 
     const release =
@@ -710,6 +711,7 @@ export class NodeProject extends GitHubProject {
         workflowPermissions,
       });
 
+      this.maybeAddCodecovIgnores(options);
       this.publisher = this.release.publisher;
 
       const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
@@ -923,6 +925,13 @@ export class NodeProject extends GitHubProject {
     // Use Codecov when it is enabled or if or a secret token name is passed in
     // AND jest must be configured
     return (options.codeCov || options.codeCovTokenSecret) && this.jest?.config;
+  }
+
+  private maybeAddCodecovIgnores(options: NodeProjectOptions) {
+    if (this.useCodecov(options)) {
+      this.addGitIgnore("codecov");
+      this.addGitIgnore("codecov.*");
+    }
   }
 
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
