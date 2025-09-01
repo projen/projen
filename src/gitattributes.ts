@@ -76,31 +76,46 @@ export class GitAttributesFile extends FileBase {
 
   /**
    * Maps a set of attributes to a set of files.
-   * @param glob Glob pattern to match files in the repo
+   * @param glob Glob pattern to match files in the repo.
    * @param attributes Attributes to assign to these files.
    */
   public addAttributes(glob: string, ...attributes: string[]) {
-    if (!this.hasMapping(glob)) {
+    if (!this.attributes.has(glob)) {
       this.attributes.set(glob, new Set());
     }
 
-    const set = this.getMapping(glob);
+    const set = this.attributes.get(glob)!;
     for (const attribute of attributes) {
       set.add(attribute);
     }
   }
 
   /**
-   * Removes existing mappings from the file.
+   * Removes attributes from a set of files.
+   *
+   * If no attributes are provided, the glob pattern will be removed completely.
+   *
    * @param glob Glob pattern to modify.
-   * @param attributes Attributes to remove from the glob.
+   * @param attributes Attributes to remove from matched files.
    */
   public removeAttributes(glob: string, ...attributes: string[]): void {
     if (attributes.length === 0) {
-      return this.removeMapping(glob);
+      this.attributes.delete(glob);
+      return;
     }
 
-    this.removeSelectedAttributes(glob, attributes);
+    const mapping = this.attributes.get(glob);
+    if (!mapping) {
+      return;
+    }
+
+    for (const attribute of attributes) {
+      mapping.delete(attribute);
+    }
+
+    if (mapping.size === 0) {
+      this.attributes.delete(glob);
+    }
   }
 
   /**
@@ -142,29 +157,5 @@ export class GitAttributesFile extends FileBase {
         ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`
       ),
     ].join("\n");
-  }
-
-  private removeSelectedAttributes(glob: string, attributes: string[]): void {
-    const mapping = this.getMapping(glob);
-
-    for (const attribute of attributes) {
-      mapping.delete(attribute);
-    }
-
-    if (mapping.size === 0) {
-      this.removeMapping(glob);
-    }
-  }
-
-  private removeMapping(glob: string): void {
-    this.attributes.delete(glob);
-  }
-
-  private getMapping(glob: string): Set<string> {
-    return this.attributes.get(glob) || new Set();
-  }
-
-  private hasMapping(glob: string): boolean {
-    return this.attributes.has(glob);
   }
 }

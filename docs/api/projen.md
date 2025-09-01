@@ -1210,7 +1210,7 @@ new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 | <code><a href="#projen.GitAttributesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.GitAttributesFile.addAttributes">addAttributes</a></code> | Maps a set of attributes to a set of files. |
 | <code><a href="#projen.GitAttributesFile.addLfsPattern">addLfsPattern</a></code> | Add attributes necessary to mark these files as stored in LFS. |
-| <code><a href="#projen.GitAttributesFile.removeAttributes">removeAttributes</a></code> | Removes existing mappings from the file. |
+| <code><a href="#projen.GitAttributesFile.removeAttributes">removeAttributes</a></code> | Removes attributes from a set of files. |
 
 ---
 
@@ -1292,7 +1292,9 @@ Add attributes necessary to mark these files as stored in LFS.
 public removeAttributes(glob: string, attributes: ...string[]): void
 ```
 
-Removes existing mappings from the file.
+Removes attributes from a set of files.
+
+If no attributes are provided, the glob pattern will be removed completely.
 
 ###### `glob`<sup>Required</sup> <a name="glob" id="projen.GitAttributesFile.removeAttributes.parameter.glob"></a>
 
@@ -1306,7 +1308,7 @@ Glob pattern to modify.
 
 - *Type:* ...string[]
 
-Attributes to remove from the glob.
+Attributes to remove from matched files.
 
 ---
 
