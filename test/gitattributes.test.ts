@@ -155,13 +155,13 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should do nothing when trying to remove a non existent mapping", () => {
+  test("should do nothing when trying to remove attributes from a non-existent mapping", () => {
     withProjectDir((outdir) => {
       const project = new TestProject({
         outdir,
       });
 
-      project.gitattributes.removeAttributes("foobar");
+      project.gitattributes.removeAttributes("foobar", "linguist-generated");
 
       const snap = synthSnapshot(project);
       const lines = retrieveLines(snap);
