@@ -155,6 +155,21 @@ describe("GitAttributesFile", () => {
     });
   });
 
+  test("should do nothing when trying to remove a non existent mapping", () => {
+    withProjectDir((outdir) => {
+      const project = new TestProject({
+        outdir,
+      });
+
+      project.gitattributes.removeAttributes("foobar");
+
+      const snap = synthSnapshot(project);
+      const lines = retrieveLines(snap);
+
+      expect(lines).not.toContain("foobar");
+    });
+  });
+
   test("should add a LFS pattern", () => {
     withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
