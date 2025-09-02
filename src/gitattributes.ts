@@ -76,16 +76,45 @@ export class GitAttributesFile extends FileBase {
 
   /**
    * Maps a set of attributes to a set of files.
-   * @param glob Glob pattern to match files in the repo
+   * @param glob Glob pattern to match files in the repo.
    * @param attributes Attributes to assign to these files.
    */
   public addAttributes(glob: string, ...attributes: string[]) {
     if (!this.attributes.has(glob)) {
       this.attributes.set(glob, new Set());
     }
+
     const set = this.attributes.get(glob)!;
     for (const attribute of attributes) {
       set.add(attribute);
+    }
+  }
+
+  /**
+   * Removes attributes from a set of files.
+   *
+   * If no attributes are provided, the glob pattern will be removed completely.
+   *
+   * @param glob Glob pattern to modify.
+   * @param attributes Attributes to remove from matched files.
+   */
+  public removeAttributes(glob: string, ...attributes: string[]): void {
+    if (attributes.length === 0) {
+      this.attributes.delete(glob);
+      return;
+    }
+
+    const mapping = this.attributes.get(glob);
+    if (!mapping) {
+      return;
+    }
+
+    for (const attribute of attributes) {
+      mapping.delete(attribute);
+    }
+
+    if (mapping.size === 0) {
+      this.attributes.delete(glob);
     }
   }
 
