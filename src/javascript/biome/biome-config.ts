@@ -2345,7 +2345,7 @@ export interface Source {
   readonly organizeImports?: any;
 
   /**
-   * It enables the recommended rules for this group
+   * Enables the recommended rules for this group
    *
    * @schema Source#recommended
    */
@@ -2359,7 +2359,7 @@ export interface Source {
   readonly useSortedAttributes?: any;
 
   /**
-   * Sorts the keys of a JSON object in natural order
+   * Sort the keys of a JSON object in natural order.
    *
    * @schema Source#useSortedKeys
    */
