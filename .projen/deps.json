@@ -6,6 +6,10 @@
       "type": "build"
     },
     {
+      "name": "@jsii/check-node",
+      "type": "build"
+    },
+    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
@@ -102,12 +106,12 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.8.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.8.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
@@ -136,7 +140,7 @@
     },
     {
       "name": "typescript",
-      "version": "5.8.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
