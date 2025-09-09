@@ -53,8 +53,8 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.8.x",
-  typescriptVersion: "5.8.x",
+  jsiiVersion: "5.9.x",
+  typescriptVersion: "5.9.x",
 
   deps: ["constructs@^10.0.0"],
 
