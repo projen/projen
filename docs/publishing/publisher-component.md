@@ -82,9 +82,12 @@ Trusted publishing eliminates the need for long-lived API tokens by using OpenID
 ```ts
 publisher.publishToNpm({
   trustedPublishing: true,
-  npmProvenance: true, // optional, enables provenance statements
+  npmProvenance: true, // optional, enabled by default with trusted publishing
 });
 ```
+
+> **Note**: npm trusted publishing requires npm CLI version 11.5.1 or later (available with Node.js 24+).
+> You must update the Node.js version globally with `workflowNodeVersion: "24.x"` or use manual workflow patching.
 
 **PyPI**
 

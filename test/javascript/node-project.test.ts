@@ -780,7 +780,7 @@ test("codecov upload added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).toContain("uses: codecov/codecov-action@v4");
+  expect(workflow).toContain("uses: codecov/codecov-action@v5");
 });
 
 test("codecov upload not added to github release workflow", () => {
@@ -789,7 +789,7 @@ test("codecov upload not added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).not.toContain("uses: codecov/codecov-action@v4");
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v5");
 });
 
 describe("scripts", () => {
@@ -954,6 +954,11 @@ test("enabling renovatebot does not overturn mergify: false", () => {
     "constructs",
     "jest-junit",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
@@ -982,6 +987,11 @@ test("renovatebot ignored dependency overrides", () => {
     "axios",
     "some-overriden-package",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
