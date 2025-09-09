@@ -15,6 +15,6 @@ There are a couple of specific examples:
 * A team at an enterprise that wants all of their repositories to have the same microservice architecture, husky hooks, and Swagger documentation.
 
 If you've ever had to maintain common configuration across multiple repositories, then projen is for you.
-You can use as much, or as little, or projen as you want. 
+You can use as much, or as little, of projen as you want. 
 A completely valid projen project type would only have a single file under management.
 
