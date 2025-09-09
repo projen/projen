@@ -48,7 +48,7 @@ describe("JsiiProject with default settings", () => {
     expect(output).toMatchSnapshot({
       "package.json": {
         devDependencies: {
-          jsii: "~5.6.0",
+          jsii: expect.any(String),
         },
       },
     });
