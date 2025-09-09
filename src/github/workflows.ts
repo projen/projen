@@ -445,35 +445,35 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v4",
+      uses: "actions/setup-java@v5",
       with: { distribution: "corretto", "java-version": tools.java.version },
     });
   }
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v4",
+      uses: "actions/setup-node@v5",
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v5",
+      uses: "actions/setup-python@v6",
       with: { "python-version": tools.python.version },
     });
   }
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v5",
+      uses: "actions/setup-go@v6",
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v4",
+      uses: "actions/setup-dotnet@v5",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

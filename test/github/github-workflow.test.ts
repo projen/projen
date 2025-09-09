@@ -419,7 +419,7 @@ describe("github-workflow", () => {
             permissions: {}
             steps:
               - name: Download artifact
-                uses: actions/download-artifact@v4
+                uses: actions/download-artifact@v5
         "
       `);
     });
@@ -453,7 +453,7 @@ describe("github-workflow", () => {
             permissions: {}
             steps:
               - name: Download artifact
-                uses: actions/download-artifact@v4
+                uses: actions/download-artifact@v5
                 with:
                   name: foobar
         "

@@ -1062,7 +1062,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1080,7 +1080,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret
@@ -1134,7 +1134,7 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v3",
+        uses: "pnpm/action-setup@v4",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
@@ -1163,7 +1163,7 @@ export class NodeProject extends GitHubProject {
             : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: "actions/setup-node@v4",
+          uses: "actions/setup-node@v5",
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,
