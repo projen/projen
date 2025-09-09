@@ -353,7 +353,7 @@ export class Publisher extends Component {
       const region = options.registry?.match(regionCaptureRegex)?.[1];
       prePublishSteps.push({
         name: "Configure AWS Credentials via GitHub OIDC Provider",
-        uses: "aws-actions/configure-aws-credentials@v4",
+        uses: "aws-actions/configure-aws-credentials@v5",
         with: {
           "role-to-assume": options.codeArtifactOptions.roleToAssume,
           "aws-region": region,
@@ -549,7 +549,7 @@ export class Publisher extends Component {
         permissions = { ...permissions, idToken: JobPermission.WRITE };
         prePublishSteps.push({
           name: "Configure AWS Credentials via GitHub OIDC Provider",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "role-to-assume": roleToAssume,
             "aws-region": region,
@@ -712,7 +712,7 @@ export class Publisher extends Component {
       const steps: JobStep[] = [
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v4",
+          uses: "actions/download-artifact@v5",
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib

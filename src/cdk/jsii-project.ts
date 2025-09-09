@@ -531,7 +531,7 @@ export class JsiiProject extends TypeScriptProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       bootstrapSteps.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v3",
+        uses: "pnpm/action-setup@v4",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {

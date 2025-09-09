@@ -83,7 +83,7 @@ export class WorkflowActions {
       WorkflowSteps.checkout({ with: restOfOptions }),
       {
         name: "Download patch",
-        uses: "actions/download-artifact@v4",
+        uses: "actions/download-artifact@v5",
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {
@@ -129,7 +129,7 @@ export class WorkflowActions {
       {
         name: stepName,
         id: stepId,
-        uses: "peter-evans/create-pull-request@v6",
+        uses: "peter-evans/create-pull-request@v7",
         with: {
           token: options.credentials?.tokenRef,
           "commit-message": `${title}\n\n${description}`,
