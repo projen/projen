@@ -3101,9 +3101,9 @@ const source: javascript.biome_config.Source = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.Source.property.organizeImports">organizeImports</a></code> | <code>any</code> | Provides a code action to sort the imports and exports in the file using a built-in or custom order. |
-| <code><a href="#projen.javascript.biome_config.Source.property.recommended">recommended</a></code> | <code>boolean</code> | It enables the recommended rules for this group. |
+| <code><a href="#projen.javascript.biome_config.Source.property.recommended">recommended</a></code> | <code>boolean</code> | Enables the recommended rules for this group. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedAttributes">useSortedAttributes</a></code> | <code>any</code> | Enforce attribute sorting in JSX elements. |
-| <code><a href="#projen.javascript.biome_config.Source.property.useSortedKeys">useSortedKeys</a></code> | <code>any</code> | Sorts the keys of a JSON object in natural order. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedKeys">useSortedKeys</a></code> | <code>any</code> | Sort the keys of a JSON object in natural order. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedProperties">useSortedProperties</a></code> | <code>any</code> | Enforce ordering of CSS properties and nested rules. |
 
 ---
@@ -3128,7 +3128,7 @@ public readonly recommended: boolean;
 
 - *Type:* boolean
 
-It enables the recommended rules for this group.
+Enables the recommended rules for this group.
 
 ---
 
@@ -3152,7 +3152,7 @@ public readonly useSortedKeys: any;
 
 - *Type:* any
 
-Sorts the keys of a JSON object in natural order.
+Sort the keys of a JSON object in natural order.
 
 ---
 
