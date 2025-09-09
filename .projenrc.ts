@@ -87,6 +87,8 @@ const project = new JsiiProject({
     "json2jsii",
     // Needed to generate biome config
     "@biomejs/biome@^2",
+    // used to get current node versions in tests
+    "@jsii/check-node",
   ],
 
   peerDeps: ["constructs@^10.0.0"],

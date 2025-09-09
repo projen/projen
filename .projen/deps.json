@@ -6,6 +6,10 @@
       "type": "build"
     },
     {
+      "name": "@jsii/check-node",
+      "type": "build"
+    },
+    {
       "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
