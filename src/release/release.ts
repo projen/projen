@@ -798,12 +798,12 @@ export class Release extends Component {
         jobDefaults:
           normalizedProjectPathRelativeToRoot.length > 0 // is subproject
             ? {
-              run: {
-                workingDirectory: ensureRelativePathStartsWithDot(
-                  normalizedProjectPathRelativeToRoot
-                ),
-              },
-            }
+                run: {
+                  workingDirectory: ensureRelativePathStartsWithDot(
+                    normalizedProjectPathRelativeToRoot
+                  ),
+                },
+              }
             : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
