@@ -1544,9 +1544,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 baseline-browser-mapping@^2.8.2:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.2.tgz#1cfd362e07d8f2eadff369461ae847d40fefe578"
-  integrity sha512-NvcIedLxrs9llVpX7wI+Jz4Hn9vJQkCPKrTaHIE0sW/Rj1iq6Fzby4NbyTZjQJNoypBXNaG7tEHkTgONZpwgxQ==
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.3.tgz#e52e1d836fd242384ee152dce7b62952e4442619"
+  integrity sha512-mcE+Wr2CAhHNWxXN/DdTI+n4gsPc5QpXpWnyCQWiQYIYZX+ZMJ8juXZgjRa/0/YPJo/NSsgW15/YgmI4nbysYw==
 
 brace-expansion@^1.1.7:
   version "1.1.12"
@@ -2107,9 +2107,9 @@ dateformat@^3.0.3:
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
 debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.1.tgz#e5a8bc6cbc4c6cd3e64308b0693a3d4fa550189b"
-  integrity sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.3.tgz#c6ae432d9bd9662582fce08709b038c58e9e3d6a"
+  integrity sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==
   dependencies:
     ms "^2.1.3"
 
