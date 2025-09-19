@@ -1544,9 +1544,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 baseline-browser-mapping@^2.8.3:
-  version "2.8.5"
-  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.5.tgz#3147fe6b01a0c49ce1952daebcfc2057fc43fedb"
-  integrity sha512-TiU4qUT9jdCuh4aVOG7H1QozyeI2sZRqoRPdqBIaslfNt4WUSanRBueAwl2x5jt4rXBMim3lIN2x6yT8PDi24Q==
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.6.tgz#c37dea4291ed8d01682f85661dbe87967028642e"
+  integrity sha512-wrH5NNqren/QMtKUEEJf7z86YjfqW/2uw3IL3/xpqZUC95SSVIFXYQeeGjL6FT/X68IROu6RMehZQS5foy2BXw==
 
 brace-expansion@^1.1.7:
   version "1.1.12"
@@ -2274,9 +2274,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.218:
-  version "1.5.221"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.221.tgz#bd98014b2a247701c4ebd713080448d539545d79"
-  integrity sha512-/1hFJ39wkW01ogqSyYoA4goOXOtMRy6B+yvA1u42nnsEGtHzIzmk93aPISumVQeblj47JUHLC9coCjUxb1EvtQ==
+  version "1.5.222"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.222.tgz#965c93783ad989116b74593ae3068b9466fdb237"
+  integrity sha512-gA7psSwSwQRE60CEoLz6JBCQPIxNeuzB2nL8vE03GK/OHxlvykbLyeiumQy1iH5C2f3YbRAZpGCMT12a/9ih9w==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -5800,9 +5800,9 @@ ts-api-utils@^2.1.0:
   integrity sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==
 
 ts-jest@^29:
-  version "29.4.2"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.4.2.tgz#095fe8770df81f2e39f2c34a6bcafac58b834423"
-  integrity sha512-pBNOkn4HtuLpNrXTMVRC9b642CBaDnKqWXny4OzuoULT9S7Kf8MMlaRe2veKax12rjf5WcpMBhVPbQurlWGNxA==
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.4.3.tgz#23264489bebb5b3e2c7966dbf6788e960f244f7c"
+  integrity sha512-KTWbK2Wot8VXargsLoxhSoEQ9OyMdzQXQoUDeIulWu2Tf7gghuBHeg+agZqVLdTOHhQHVKAaeuctBDRkhWE7hg==
   dependencies:
     bs-logger "^0.2.6"
     fast-json-stable-stringify "^2.1.0"
