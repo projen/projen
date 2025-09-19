@@ -5144,6 +5144,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -8491,6 +8513,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -12790,6 +12834,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -15909,6 +15975,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -18991,6 +19079,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -22879,6 +22989,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -25498,6 +25630,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -28172,6 +28326,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -30758,6 +30934,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -34463,6 +34661,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -37121,6 +37341,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -39890,6 +40132,28 @@ exports[`inventory 1`] = `
         "switch": "release-workflow",
       },
       {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
+      },
+      {
         "default": ""release"",
         "docs": "The name of the default release workflow.",
         "featured": false,
@@ -42633,6 +42897,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",

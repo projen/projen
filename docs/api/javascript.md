@@ -8702,6 +8702,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseSchedule">releaseSchedule</a></code> | <code>string</code> | CRON schedule to trigger new releases. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseTagPrefix">releaseTagPrefix</a></code> | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowEnv">releaseWorkflowEnv</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables for release workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
@@ -10072,6 +10073,19 @@ public readonly releaseTrigger: ReleaseTrigger;
 - *Default:* Continuous releases (`ReleaseTrigger.continuous()`)
 
 The release trigger to use.
+
+---
+
+##### `releaseWorkflowEnv`<sup>Optional</sup> <a name="releaseWorkflowEnv" id="projen.javascript.NodeProjectOptions.property.releaseWorkflowEnv"></a>
+
+```typescript
+public readonly releaseWorkflowEnv: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables for release workflows.
 
 ---
 
@@ -12724,6 +12738,7 @@ const upgradeDependenciesWorkflowOptions: javascript.UpgradeDependenciesWorkflow
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Assignees to add on the PR. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.branches">branches</a></code> | <code>string[]</code> | List of branches to create PR's for. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.container">container</a></code> | <code>projen.github.workflows.ContainerOptions</code> | Job container options. |
+| <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables for the upgrade job. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use for commits. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the upgrade job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
@@ -12770,6 +12785,19 @@ public readonly container: ContainerOptions;
 - *Default:* defaults
 
 Job container options.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.javascript.UpgradeDependenciesWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables for the upgrade job.
 
 ---
 
