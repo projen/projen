@@ -261,8 +261,22 @@ export interface DependabotIgnore {
 
 /**
  * Defines a single group for dependency updates
+ * @see https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#groups--
  */
 export interface DependabotGroup {
+  /**
+   * Specify which type of update the group applies to.
+   * @default - version updates
+   */
+  readonly appliesTo?: DependabotGroupAppliesTo;
+
+  /**
+   * Limit the group to a type of dependency.
+   * @see https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#dependency-type-groups
+   * @default - all types of dependencies
+   */
+  readonly dependencyType?: DependabotGroupDependencyType;
+
   /**
    * Define a list of strings (with or without wildcards) that will match
    * package names to form this dependency group.
@@ -274,6 +288,66 @@ export interface DependabotGroup {
    * group.
    */
   readonly excludePatterns?: string[];
+
+  /**
+   * Limit the group to one or more semantic versioning levels.
+   *
+   * If specified, must contain at least one element and elements must be unique.
+   *
+   * @see https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#update-types-groups
+   * @default - all semantic versioning levels
+   */
+  readonly updateTypes?: DependabotGroupUpdateType[];
+}
+
+/**
+ * The type of update a group applies to.
+ */
+export enum DependabotGroupAppliesTo {
+  /**
+   * Apply only to version updates.
+   */
+  VERSION_UPDATES = "version-updates",
+
+  /**
+   * Apply only to security updates.
+   */
+  SECURITY_UPDATES = "security-updates",
+}
+
+/**
+ * The type of dependency a group may be limited to.
+ */
+export enum DependabotGroupDependencyType {
+  /**
+   * Include only dependencies in the "Development dependency group".
+   */
+  DEVELOPMENT = "development",
+
+  /**
+   * Include only dependencies in the "Production dependency group".
+   */
+  PRODUCTION = "production",
+}
+
+/**
+ * The semantic versioning levels a group may be limited to.
+ */
+export enum DependabotGroupUpdateType {
+  /**
+   * Include major releases.
+   */
+  MAJOR = "major",
+
+  /**
+   * Include minor releases.
+   */
+  MINOR = "minor",
+
+  /**
+   * Include patch releases.
+   */
+  PATCH = "patch",
 }
 
 /**
@@ -365,6 +439,9 @@ export class Dependabot extends Component {
       ? kebabCaseKeys(options.registries)
       : undefined;
 
+    for (const [name, group] of Object.entries(options.groups ?? {})) {
+      validateGroup(name, group);
+    }
     const groups = options.groups ? kebabCaseKeys(options.groups) : undefined;
 
     this.config = {
@@ -445,5 +522,21 @@ export class Dependabot extends Component {
       "dependency-name": dependencyName,
       versions: () => (versions.length > 0 ? versions : undefined),
     });
+  }
+}
+
+function validateGroup(name: string, group: DependabotGroup) {
+  // update types
+  if (group.updateTypes !== undefined) {
+    if (group.updateTypes.length < 1) {
+      throw new Error(
+        `Dependabot group "${name}" must not have an empty array of update types.`
+      );
+    }
+    if (new Set(group.updateTypes).size !== group.updateTypes.length) {
+      throw new Error(
+        `Dependabot group "${name}" must not have duplicate update types.`
+      );
+    }
   }
 }

@@ -1,4 +1,10 @@
-import { Dependabot, DependabotRegistryType } from "../../src/github";
+import {
+  Dependabot,
+  DependabotGroupAppliesTo,
+  DependabotGroupDependencyType,
+  DependabotGroupUpdateType,
+  DependabotRegistryType,
+} from "../../src/github";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
@@ -71,6 +77,93 @@ describe("dependabot", () => {
       expect(dependabot).toContain("groups:");
       expect(dependabot).toContain("patterns:");
       expect(dependabot).toContain("exclude-patterns:");
+    });
+
+    test("applies-to", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        groups: {
+          groupOne: {
+            appliesTo: DependabotGroupAppliesTo.SECURITY_UPDATES,
+            patterns: ["*"],
+          },
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("groups:");
+      expect(dependabot).toContain("applies-to: security-updates");
+    });
+
+    test("dependency-type", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        groups: {
+          groupOne: {
+            dependencyType: DependabotGroupDependencyType.DEVELOPMENT,
+            patterns: ["*"],
+          },
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("groups:");
+      expect(dependabot).toContain("dependency-type: development");
+    });
+
+    test("update-types", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        groups: {
+          groupOne: {
+            updateTypes: [
+              DependabotGroupUpdateType.MINOR,
+              DependabotGroupUpdateType.PATCH,
+            ],
+            patterns: ["*"],
+          },
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("groups:");
+      expect(dependabot).toContain("update-types:");
+      expect(dependabot).toContain("- minor");
+      expect(dependabot).toContain("- patch");
+    });
+
+    test("explicitly empty update-types", () => {
+      const project = createProject();
+      expect(() => {
+        new Dependabot(project.github!, {
+          groups: {
+            groupOne: {
+              updateTypes: [],
+              patterns: ["*"],
+            },
+          },
+        });
+      }).toThrow("empty");
+    });
+
+    test("duplicate update-types", () => {
+      const project = createProject();
+      expect(() => {
+        new Dependabot(project.github!, {
+          groups: {
+            groupOne: {
+              updateTypes: [
+                DependabotGroupUpdateType.MAJOR,
+                DependabotGroupUpdateType.MAJOR,
+              ],
+              patterns: ["*"],
+            },
+          },
+        });
+      }).toThrow("duplicate");
     });
   });
 
