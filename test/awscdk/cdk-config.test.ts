@@ -1,4 +1,5 @@
 import { CdkConfig } from "../../src/awscdk/cdk-config";
+import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "../../src/awscdk/internal";
 import { TestProject } from "../util";
 
 describe("context values", () => {
@@ -90,5 +91,25 @@ describe("excludes", () => {
     config.addExcludes(...newExcludes);
 
     expect(config.exclude).toEqual(newExcludes);
+  });
+});
+
+describe("feature flags", () => {
+  test("should be set for cdk v1", () => {
+    const config = new CdkConfig(new TestProject(), {
+      app: "test feature flags",
+      cdkMajorVersion: 1,
+    });
+
+    expect(Object.keys(config.context)).toEqual(FEATURE_FLAGS);
+  });
+
+  test("should be set for cdk v2", () => {
+    const config = new CdkConfig(new TestProject(), {
+      app: "test feature flags",
+      cdkMajorVersion: 2,
+    });
+
+    expect(config.context).toEqual(expect.objectContaining(FEATURE_FLAGS_V2));
   });
 });
