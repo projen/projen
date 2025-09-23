@@ -1,7 +1,8 @@
 // a builtin task that sets the "version" field of the file
 // specified in OUTFILE to "0.0.0"
 
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync } from "fs";
+import { createVersionHandler } from "./version-handlers";
 
 const outfile = process.env.OUTFILE;
 if (!outfile) {
@@ -12,6 +13,5 @@ if (!existsSync(outfile)) {
   process.exit(0); // nothing to do
 }
 
-const content = JSON.parse(readFileSync(outfile, "utf8"));
-content.version = "0.0.0";
-writeFileSync(outfile, JSON.stringify(content, undefined, 2) + "\n");
+const handler = createVersionHandler(outfile!);
+handler.writeVersion("0.0.0");
