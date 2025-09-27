@@ -8,7 +8,7 @@ import {
   TypescriptConfigExtends,
   TypeScriptModuleResolution,
 } from "../../src/javascript";
-import { withProjectDir } from "../util";
+import { withProjectDirSync } from "../util";
 
 describe("TypescriptConfig", () => {
   const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
@@ -20,7 +20,7 @@ describe("TypescriptConfig", () => {
   });
 
   test("TypeScript should parse generated config without warnings", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -45,7 +45,7 @@ describe("TypescriptConfig", () => {
   });
 
   test("TypeScript should parse generated config with extensions without warnings", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -77,7 +77,7 @@ describe("TypescriptConfig", () => {
   });
 
   test("TypeScript should allow parse package for extends.", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -104,7 +104,7 @@ describe("TypescriptConfig", () => {
   });
 
   test("TypeScript should allow parse package for extends witout compilerOptions.", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -144,7 +144,7 @@ describe("TypescriptConfig", () => {
   });
 
   test("TypeScript should parse generated config with multiple extensions", () => {
-    withProjectDir((outdir) => {
+    withProjectDirSync((outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -283,7 +283,7 @@ describe("TypescriptConfig", () => {
   ])(
     "Should warn when using extends with %p",
     ({ tsVersion, manifestVersion, extends: extendsPaths, expectWarn }) => {
-      withProjectDir((outdir) => {
+      withProjectDirSync((outdir) => {
         const project = new NodeProject({
           name: "project",
           defaultReleaseBranch: "main",
