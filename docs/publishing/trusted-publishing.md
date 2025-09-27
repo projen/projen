@@ -11,12 +11,13 @@ Trusted Publishers ensures packages come from specific CI systems or build pipel
 
 ## How Trusted Publishers Work
 
-Trusted Publishers leverage OpenID Connect (OIDC) to establish trust between your CI/CD system and package repositories:
+When publishing with trusted publishing enabled:
 
-1. **Identity Provider**: Your CI system (GitHub Actions) acts as an OIDC identity provider
-2. **Token Exchange**: The CI system generates a short-lived OIDC token containing metadata about the workflow
-3. **Verification**: The package repository verifies the token and checks it against configured trusted publishers
-4. **API Token**: If verification succeeds, the repository issues a temporary API token for publishing
+1. **Your CI system generates an OIDC token** containing metadata about your workflow and repository (this "ambient identity" is automatically provided by the CI environment)
+2. **The publishing job uses this token** to authenticate with the package repository
+3. **The package repository verifies the token** against your configured trusted publisher settings
+4. **A temporary API token is issued** for publishing your package
+5. **No long-lived secrets** are stored in your repository
 
 This eliminates the need to store long-lived secrets in your repository.
 
@@ -26,6 +27,7 @@ Projen currently supports trusted publishing for:
 
 - **npmjs.com** - Node.js packages with trusted publishing and provenance statements
 - **PyPI** - Python Package Index with attestations
+- **NuGet.org** - .NET packages with trusted publishing
 
 ## npm Trusted Publishing
 
@@ -114,15 +116,6 @@ Or follow the [official npm documentation](https://docs.npmjs.com/trusted-publis
 - Package must be configured for trusted publishing on npmjs.com
 - GitHub Actions workflow must run from the configured repository and branch
 
-### How It Works
-
-When publishing with trusted publishing enabled:
-
-1. GitHub Actions generates an OIDC token containing workflow metadata
-2. The publishing job uses this token to authenticate with npm
-3. npm verifies the token against your configured trusted publisher settings
-4. No long-lived NPM_TOKEN secrets are needed in your repository
-
 ### Provenance Statements
 
 By default, when using trusted publishing, npm will generate provenance statements that:
@@ -161,14 +154,38 @@ Before using trusted publishing, you must configure your PyPI project:
 
 Or follow the [official PyPI documentation](https://docs.pypi.org/trusted-publishers/adding-a-publisher/).
 
-### How It Works
+## NuGet Trusted Publishing
 
-When publishing with trusted publishing enabled:
+### Setup
 
-1. GitHub Actions generates an OIDC token containing workflow metadata
-2. The publishing job exchanges this token for a PyPI API token
-3. The temporary API token is used to publish your package
-4. No long-lived secrets are stored in your repository
+To enable NuGet trusted publishing in your projen project:
+
+```typescript
+const project = new CsharpProject({
+  // ... other options
+  publishToNuget: {
+    trustedPublishing: true,
+  },
+});
+```
+
+### NuGet Configuration
+
+Before using trusted publishing, you must configure your NuGet.org project:
+
+1. **Go to NuGet.org**: Navigate to your account settings on [NuGet.org](https://www.nuget.org)
+2. **Add Publisher**: Under "Trusted Publishing", click "Add a new trusted publisher"
+3. **Configure GitHub Actions**:
+   - **Repository Owner**: Your GitHub username or organization
+   - **Repository**: Your repository name
+   - **Workflow File**: `release.yml` (filename only, not the full path)
+   - **Environment**: Leave empty unless using GitHub environments
+
+Or follow the [official NuGet documentation](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing).
+
+### GitHub Secrets
+
+You must configure the `NUGET_USERNAME` secret (or a different secret name if customized) with your NuGet.org username (profile name, not email address).
 
 ## Migration Guide
 
@@ -222,3 +239,30 @@ When publishing with trusted publishing enabled:
 
 5. **Clean up**:
    - Delete old API tokens in PyPI once you are confident with the new setup
+
+#### For NuGet packages
+
+1. **Update your projen configuration**:
+
+   ```typescript
+   publishToNuget: {
+     trustedPublishing: true,
+     // Remove nugetApiKeySecret if present
+   }
+   ```
+
+2. **Configure NuGet trusted publisher** (see NuGet Configuration above)
+
+3. **Add GitHub secret**:
+   - Add `NUGET_USERNAME` secret with your NuGet.org username (profile name, not email)
+
+4. **Remove old secrets from GitHub**:
+   - You can safely remove `NUGET_API_KEY` secrets
+   - Keep them temporarily during transition for rollback capability
+
+5. **Test the setup**:
+   - Create a test release to verify trusted publishing works
+   - Monitor the workflow logs for successful authentication
+
+6. **Clean up**:
+   - Delete old API keys in NuGet.org once you are confident with the new setup
