@@ -17,7 +17,7 @@ import {
   WindowsBuild,
   JsiiFromJsonSchema,
 } from "./projenrc";
-import { ProjectTree, ReleasableCommits } from "./src";
+import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
 
 const bootstrapScriptFile = "projen.js";
@@ -53,8 +53,8 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.8.x",
-  typescriptVersion: "5.8.x",
+  jsiiVersion: "5.9.x",
+  typescriptVersion: "5.9.x",
 
   deps: ["constructs@^10.0.0"],
 
@@ -88,6 +88,8 @@ const project = new JsiiProject({
     "json2jsii",
     // Needed to generate biome config
     "@biomejs/biome@^2",
+    // used to get current node versions in tests
+    "@jsii/check-node",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -151,10 +153,12 @@ const project = new JsiiProject({
   publishToPypi: {
     distName: "projen",
     module: "projen",
+    trustedPublishing: true,
   },
   publishToGo: {
     moduleName: "github.com/projen/projen-go",
   },
+  npmTrustedPublishing: true,
   npmProvenance: true,
 
   releaseFailureIssue: true,
@@ -165,6 +169,12 @@ const project = new JsiiProject({
     allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
   },
 });
+
+project.github
+  ?.tryFindWorkflow("release")
+  ?.file?.patch(
+    JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
+  );
 
 setupCheckLicenses(project);
 

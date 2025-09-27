@@ -12,7 +12,7 @@ jobs:
     permissions: {}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set git identity
         run: |-
           git config user.name "github-actions"
@@ -34,7 +34,7 @@ jobs:
     permissions: {}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set git identity
         run: |-
           git config user.name "github-actions"
@@ -43,7 +43,7 @@ jobs:
         run: projen gh-workflow-test
       - name: Upload artifact
         if: always()
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: ./artifacts/
           path: ./artifacts/

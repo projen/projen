@@ -150,7 +150,7 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "amannn/action-semantic-pull-request@v5.4.0",
+            uses: "amannn/action-semantic-pull-request@v6",
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
@@ -210,7 +210,7 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "actions/github-script@v6",
+            uses: "actions/github-script@v8",
             with: {
               script: fnBody(script),
             },

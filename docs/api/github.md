@@ -2207,7 +2207,7 @@ Additional options to configure the workflow.
 | <code><a href="#projen.github.GithubWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
-| <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs. |
+| <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
 ---
 
@@ -2361,7 +2361,7 @@ The job name (unique within the workflow).
 public updateJobs(jobs: {[ key: string ]: JobCallingReusableWorkflow | Job}): void
 ```
 
-Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs.
 
 ###### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.updateJobs.parameter.jobs"></a>
 
@@ -2434,6 +2434,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.GithubWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.GithubWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | All current jobs of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
@@ -2462,6 +2463,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
+
+All current jobs of the workflow.
+
+This is a read-only copy, use the respective helper methods to add, update or remove jobs.
 
 ---
 
@@ -3766,7 +3781,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | <code><a href="#projen.github.TaskWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
-| <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs. |
+| <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
 ---
 
@@ -3920,7 +3935,7 @@ The job name (unique within the workflow).
 public updateJobs(jobs: {[ key: string ]: JobCallingReusableWorkflow | Job}): void
 ```
 
-Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs.
 
 ###### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.updateJobs.parameter.jobs"></a>
 
@@ -3993,6 +4008,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.github.TaskWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.TaskWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | All current jobs of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
@@ -4023,6 +4039,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
+
+All current jobs of the workflow.
+
+This is a read-only copy, use the respective helper methods to add, update or remove jobs.
 
 ---
 
@@ -5528,6 +5558,8 @@ For Java dependencies, the format of the dependency-name attribute is:
 
 Defines a single group for dependency updates.
 
+> [https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#groups--](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#groups--)
+
 #### Initializer <a name="Initializer" id="projen.github.DependabotGroup.Initializer"></a>
 
 ```typescript
@@ -5541,7 +5573,10 @@ const dependabotGroup: github.DependabotGroup = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.DependabotGroup.property.patterns">patterns</a></code> | <code>string[]</code> | Define a list of strings (with or without wildcards) that will match package names to form this dependency group. |
+| <code><a href="#projen.github.DependabotGroup.property.appliesTo">appliesTo</a></code> | <code><a href="#projen.github.DependabotGroupAppliesTo">DependabotGroupAppliesTo</a></code> | Specify which type of update the group applies to. |
+| <code><a href="#projen.github.DependabotGroup.property.dependencyType">dependencyType</a></code> | <code><a href="#projen.github.DependabotGroupDependencyType">DependabotGroupDependencyType</a></code> | Limit the group to a type of dependency. |
 | <code><a href="#projen.github.DependabotGroup.property.excludePatterns">excludePatterns</a></code> | <code>string[]</code> | Optionally you can use this to exclude certain dependencies from the group. |
+| <code><a href="#projen.github.DependabotGroup.property.updateTypes">updateTypes</a></code> | <code><a href="#projen.github.DependabotGroupUpdateType">DependabotGroupUpdateType</a>[]</code> | Limit the group to one or more semantic versioning levels. |
 
 ---
 
@@ -5557,6 +5592,34 @@ Define a list of strings (with or without wildcards) that will match package nam
 
 ---
 
+##### `appliesTo`<sup>Optional</sup> <a name="appliesTo" id="projen.github.DependabotGroup.property.appliesTo"></a>
+
+```typescript
+public readonly appliesTo: DependabotGroupAppliesTo;
+```
+
+- *Type:* <a href="#projen.github.DependabotGroupAppliesTo">DependabotGroupAppliesTo</a>
+- *Default:* version updates
+
+Specify which type of update the group applies to.
+
+---
+
+##### `dependencyType`<sup>Optional</sup> <a name="dependencyType" id="projen.github.DependabotGroup.property.dependencyType"></a>
+
+```typescript
+public readonly dependencyType: DependabotGroupDependencyType;
+```
+
+- *Type:* <a href="#projen.github.DependabotGroupDependencyType">DependabotGroupDependencyType</a>
+- *Default:* all types of dependencies
+
+Limit the group to a type of dependency.
+
+> [https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#dependency-type-groups](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#dependency-type-groups)
+
+---
+
 ##### `excludePatterns`<sup>Optional</sup> <a name="excludePatterns" id="projen.github.DependabotGroup.property.excludePatterns"></a>
 
 ```typescript
@@ -5566,6 +5629,23 @@ public readonly excludePatterns: string[];
 - *Type:* string[]
 
 Optionally you can use this to exclude certain dependencies from the group.
+
+---
+
+##### `updateTypes`<sup>Optional</sup> <a name="updateTypes" id="projen.github.DependabotGroup.property.updateTypes"></a>
+
+```typescript
+public readonly updateTypes: DependabotGroupUpdateType[];
+```
+
+- *Type:* <a href="#projen.github.DependabotGroupUpdateType">DependabotGroupUpdateType</a>[]
+- *Default:* all semantic versioning levels
+
+Limit the group to one or more semantic versioning levels.
+
+If specified, must contain at least one element and elements must be unique.
+
+> [https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#update-types-groups](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#update-types-groups)
 
 ---
 
@@ -9949,6 +10029,95 @@ public render(): string[]
 
 
 ## Enums <a name="Enums" id="Enums"></a>
+
+### DependabotGroupAppliesTo <a name="DependabotGroupAppliesTo" id="projen.github.DependabotGroupAppliesTo"></a>
+
+The type of update a group applies to.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependabotGroupAppliesTo.VERSION_UPDATES">VERSION_UPDATES</a></code> | Apply only to version updates. |
+| <code><a href="#projen.github.DependabotGroupAppliesTo.SECURITY_UPDATES">SECURITY_UPDATES</a></code> | Apply only to security updates. |
+
+---
+
+##### `VERSION_UPDATES` <a name="VERSION_UPDATES" id="projen.github.DependabotGroupAppliesTo.VERSION_UPDATES"></a>
+
+Apply only to version updates.
+
+---
+
+
+##### `SECURITY_UPDATES` <a name="SECURITY_UPDATES" id="projen.github.DependabotGroupAppliesTo.SECURITY_UPDATES"></a>
+
+Apply only to security updates.
+
+---
+
+
+### DependabotGroupDependencyType <a name="DependabotGroupDependencyType" id="projen.github.DependabotGroupDependencyType"></a>
+
+The type of dependency a group may be limited to.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependabotGroupDependencyType.DEVELOPMENT">DEVELOPMENT</a></code> | Include only dependencies in the "Development dependency group". |
+| <code><a href="#projen.github.DependabotGroupDependencyType.PRODUCTION">PRODUCTION</a></code> | Include only dependencies in the "Production dependency group". |
+
+---
+
+##### `DEVELOPMENT` <a name="DEVELOPMENT" id="projen.github.DependabotGroupDependencyType.DEVELOPMENT"></a>
+
+Include only dependencies in the "Development dependency group".
+
+---
+
+
+##### `PRODUCTION` <a name="PRODUCTION" id="projen.github.DependabotGroupDependencyType.PRODUCTION"></a>
+
+Include only dependencies in the "Production dependency group".
+
+---
+
+
+### DependabotGroupUpdateType <a name="DependabotGroupUpdateType" id="projen.github.DependabotGroupUpdateType"></a>
+
+The semantic versioning levels a group may be limited to.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependabotGroupUpdateType.MAJOR">MAJOR</a></code> | Include major releases. |
+| <code><a href="#projen.github.DependabotGroupUpdateType.MINOR">MINOR</a></code> | Include minor releases. |
+| <code><a href="#projen.github.DependabotGroupUpdateType.PATCH">PATCH</a></code> | Include patch releases. |
+
+---
+
+##### `MAJOR` <a name="MAJOR" id="projen.github.DependabotGroupUpdateType.MAJOR"></a>
+
+Include major releases.
+
+---
+
+
+##### `MINOR` <a name="MINOR" id="projen.github.DependabotGroupUpdateType.MINOR"></a>
+
+Include minor releases.
+
+---
+
+
+##### `PATCH` <a name="PATCH" id="projen.github.DependabotGroupUpdateType.PATCH"></a>
+
+Include patch releases.
+
+---
+
 
 ### DependabotRegistryType <a name="DependabotRegistryType" id="projen.github.DependabotRegistryType"></a>
 

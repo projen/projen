@@ -253,6 +253,13 @@ export interface ReleaseProjectOptions {
   readonly releasableCommits?: ReleasableCommits;
 
   /**
+   * Build environment variables for release workflows.
+   *
+   * @default {}
+   */
+  readonly releaseWorkflowEnv?: { [key: string]: string };
+
+  /**
    * The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
    *
    * This can be any compatible package version, including the deprecated `standard-version@9`.
@@ -388,6 +395,7 @@ export class Release extends Component {
   private readonly workflowRunsOn?: string[];
   private readonly workflowRunsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
+  private readonly releaseWorkflowEnv?: { [key: string]: string };
   private readonly releaseTagFilePath: string;
   private readonly _branchHooks: BranchHook[];
 
@@ -420,6 +428,7 @@ export class Release extends Component {
       contents: JobPermission.WRITE,
       ...options.workflowPermissions,
     };
+    this.releaseWorkflowEnv = options.releaseWorkflowEnv;
     this._branchHooks = [];
 
     /**
@@ -775,6 +784,7 @@ export class Release extends Component {
           : undefined,
         env: {
           CI: "true",
+          ...this.releaseWorkflowEnv,
         },
         permissions: this.workflowPermissions,
         checkoutWith: {

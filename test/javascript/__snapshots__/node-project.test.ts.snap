@@ -12,14 +12,14 @@ exports[`deps upgrade commit can be signed 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v4",
+      "uses": "actions/checkout@v5",
       "with": {
         "ref": "main",
       },
     },
     {
       "name": "Download patch",
-      "uses": "actions/download-artifact@v4",
+      "uses": "actions/download-artifact@v5",
       "with": {
         "name": "repo.patch",
         "path": "\${{ runner.temp }}",
@@ -37,7 +37,7 @@ git config user.email "github-actions@github.com"",
     {
       "id": "create-pr",
       "name": "Create Pull Request",
-      "uses": "peter-evans/create-pull-request@v6",
+      "uses": "peter-evans/create-pull-request@v7",
       "with": {
         "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
@@ -71,7 +71,7 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v4",
+    "uses": "actions/checkout@v5",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -96,7 +96,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v4.4.0",
+    "uses": "actions/upload-artifact@v4.6.2",
     "with": {
       "name": "repo.patch",
       "overwrite": true,
@@ -127,6 +127,11 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
     "constructs",
     "jest-junit",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ],
   "packageRules": [
     {
@@ -150,7 +155,7 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v4",
+    "uses": "actions/checkout@v5",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -175,7 +180,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v4.4.0",
+    "uses": "actions/upload-artifact@v4.6.2",
     "with": {
       "name": "repo.patch",
       "overwrite": true,
@@ -196,7 +201,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v4",
+    "uses": "actions/checkout@v5",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -205,7 +210,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
   },
   {
     "name": "Download patch",
-    "uses": "actions/download-artifact@v4",
+    "uses": "actions/download-artifact@v5",
     "with": {
       "name": "repo.patch",
       "path": "\${{ runner.temp }}",
@@ -227,7 +232,7 @@ git config user.email "github-actions@github.com"",
     "name": "Push changes",
     "run": "git add .
 git commit -s -m "chore: self mutation"
-git push origin HEAD:$PULL_REQUEST_REF",
+git push origin "HEAD:$PULL_REQUEST_REF"",
   },
 ]
 `;
@@ -333,7 +338,7 @@ exports[`provided preBuildSteps for build workflow get combined with setup steps
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v4",
+    "uses": "actions/checkout@v5",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -362,7 +367,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
   {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v4.4.0",
+    "uses": "actions/upload-artifact@v4.6.2",
     "with": {
       "name": "repo.patch",
       "overwrite": true,
@@ -395,6 +400,11 @@ exports[`renovatebot ignored dependency overrides 1`] = `
     "axios",
     "some-overriden-package",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ],
   "packageRules": [
     {
