@@ -1536,9 +1536,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 baseline-browser-mapping@^2.8.3:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.8.tgz#ca0de7b23bf9c49d72e21dcbfba26f2bb223ea2e"
-  integrity sha512-be0PUaPsQX/gPWWgFsdD+GFzaoig5PXaUC1xLkQiYdDnANU8sMnHoQd8JhbJQuvTWrWLyeFN9Imb5Qtfvr4RrQ==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.8.9.tgz#fd0b8543c4f172595131e94965335536b3101b75"
+  integrity sha512-hY/u2lxLrbecMEWSB0IpGzGyDyeoMFQhCvZd2jGFSE5I17Fh01sYUBPCJtkWERw7zrac9+cIghxm/ytJa2X8iA==
 
 brace-expansion@^1.1.7:
   version "1.1.12"
@@ -2266,9 +2266,9 @@ dunder-proto@^1.0.0, dunder-proto@^1.0.1:
     gopd "^1.2.0"
 
 electron-to-chromium@^1.5.218:
-  version "1.5.225"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.225.tgz#63d77baa4732b49de86ff5cad5873fc4fba4579f"
-  integrity sha512-Oiv6+nGcMg0xuSUeYumk+eE0pDk0PuQ6Gnz16pErrPtlitaFZxq95hUtvGRg90kcJ/AdsM+AW5VkVUl3fGk+SQ==
+  version "1.5.227"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.227.tgz#c81b6af045b0d6098faed261f0bd611dc282d3a7"
+  integrity sha512-ITxuoPfJu3lsNWUi2lBM2PaBPYgH3uqmxut5vmBxgYvyI4AlJ6P3Cai1O76mOrkJCBzq0IxWg/NtqOrpu/0gKA==
 
 emittery@^0.13.1:
   version "0.13.1"
@@ -4053,9 +4053,9 @@ jsii-reflect@^1.114.1:
     yargs "^17.7.2"
 
 jsii-rosetta@5.9.x:
-  version "5.9.6"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.6.tgz#d51d766589af10cf5967d7120ab40758a8811d46"
-  integrity sha512-oRf+Yjp5n/DjS2WsEWDCAw9wKyqXybPjXcpytXUNEFooXuF/Qpg2WcyPLPpjfdgq+c+ZVSdk50YdPbXrCa8Ejw==
+  version "5.9.7"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.9.7.tgz#b0ae7aa3dbefb6410b963b480b0b0ce93f89853b"
+  integrity sha512-OQbKI0Q1aOAbJ8vR1I+/Jv3cqZisgBBEm0DwSxrRfEeNd67UOYIcsHM0nefsV48R/FZAKIGEGxZYlix9jgAl8Q==
   dependencies:
     "@jsii/check-node" "1.114.1"
     "@jsii/spec" "^1.114.1"
