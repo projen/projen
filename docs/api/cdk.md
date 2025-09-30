@@ -6669,6 +6669,8 @@ const jsiiDotNetTarget: cdk.JsiiDotNetTarget = { ... }
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
+| <code><a href="#projen.cdk.JsiiDotNetTarget.property.nugetUsernameSecret">nugetUsernameSecret</a></code> | <code>string</code> | The NuGet.org username (profile name, not email address) for trusted publisher authentication. |
+| <code><a href="#projen.cdk.JsiiDotNetTarget.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use NuGet trusted publishing instead of API keys. |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.dotNetNamespace">dotNetNamespace</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.packageId">packageId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiDotNetTarget.property.iconUrl">iconUrl</a></code> | <code>string</code> | *No description.* |
@@ -6763,6 +6765,37 @@ public readonly nugetServer: string;
 - *Type:* string
 
 NuGet Server URL (defaults to nuget.org).
+
+---
+
+##### `nugetUsernameSecret`<sup>Optional</sup> <a name="nugetUsernameSecret" id="projen.cdk.JsiiDotNetTarget.property.nugetUsernameSecret"></a>
+
+```typescript
+public readonly nugetUsernameSecret: string;
+```
+
+- *Type:* string
+- *Default:* "NUGET_USERNAME"
+
+The NuGet.org username (profile name, not email address) for trusted publisher authentication.
+
+Required when using trusted publishing.
+
+---
+
+##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.cdk.JsiiDotNetTarget.property.trustedPublishing"></a>
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use NuGet trusted publishing instead of API keys.
+
+Needs to be setup in NuGet.org.
+
+> [https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
 
 ---
 

@@ -2194,6 +2194,8 @@ const jsiiReleaseNuget: release.JsiiReleaseNuget = { ... }
 | <code><a href="#projen.release.JsiiReleaseNuget.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.release.JsiiReleaseNuget.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
+| <code><a href="#projen.release.JsiiReleaseNuget.property.nugetUsernameSecret">nugetUsernameSecret</a></code> | <code>string</code> | The NuGet.org username (profile name, not email address) for trusted publisher authentication. |
+| <code><a href="#projen.release.JsiiReleaseNuget.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use NuGet trusted publishing instead of API keys. |
 
 ---
 
@@ -2297,6 +2299,41 @@ public readonly nugetServer: string;
 - *Type:* string
 
 NuGet Server URL (defaults to nuget.org).
+
+---
+
+##### ~~`nugetUsernameSecret`~~<sup>Optional</sup> <a name="nugetUsernameSecret" id="projen.release.JsiiReleaseNuget.property.nugetUsernameSecret"></a>
+
+- *Deprecated:* Use `NugetPublishOptions` instead.
+
+```typescript
+public readonly nugetUsernameSecret: string;
+```
+
+- *Type:* string
+- *Default:* "NUGET_USERNAME"
+
+The NuGet.org username (profile name, not email address) for trusted publisher authentication.
+
+Required when using trusted publishing.
+
+---
+
+##### ~~`trustedPublishing`~~<sup>Optional</sup> <a name="trustedPublishing" id="projen.release.JsiiReleaseNuget.property.trustedPublishing"></a>
+
+- *Deprecated:* Use `NugetPublishOptions` instead.
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use NuGet trusted publishing instead of API keys.
+
+Needs to be setup in NuGet.org.
+
+> [https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
 
 ---
 
@@ -3018,6 +3055,8 @@ const nugetPublishOptions: release.NugetPublishOptions = { ... }
 | <code><a href="#projen.release.NugetPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.NugetPublishOptions.property.nugetApiKeySecret">nugetApiKeySecret</a></code> | <code>string</code> | GitHub secret which contains the API key for NuGet. |
 | <code><a href="#projen.release.NugetPublishOptions.property.nugetServer">nugetServer</a></code> | <code>string</code> | NuGet Server URL (defaults to nuget.org). |
+| <code><a href="#projen.release.NugetPublishOptions.property.nugetUsernameSecret">nugetUsernameSecret</a></code> | <code>string</code> | The NuGet.org username (profile name, not email address) for trusted publisher authentication. |
+| <code><a href="#projen.release.NugetPublishOptions.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use NuGet trusted publishing instead of API keys. |
 
 ---
 
@@ -3109,6 +3148,37 @@ public readonly nugetServer: string;
 - *Type:* string
 
 NuGet Server URL (defaults to nuget.org).
+
+---
+
+##### `nugetUsernameSecret`<sup>Optional</sup> <a name="nugetUsernameSecret" id="projen.release.NugetPublishOptions.property.nugetUsernameSecret"></a>
+
+```typescript
+public readonly nugetUsernameSecret: string;
+```
+
+- *Type:* string
+- *Default:* "NUGET_USERNAME"
+
+The NuGet.org username (profile name, not email address) for trusted publisher authentication.
+
+Required when using trusted publishing.
+
+---
+
+##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.release.NugetPublishOptions.property.trustedPublishing"></a>
+
+```typescript
+public readonly trustedPublishing: boolean;
+```
+
+- *Type:* boolean
+
+Use NuGet trusted publishing instead of API keys.
+
+Needs to be setup in NuGet.org.
+
+> [https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
 
 ---
 
