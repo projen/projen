@@ -311,6 +311,14 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
+    if (options.trustedPublishing && options.npmTokenSecret) {
+      throw new Error(
+        "Cannot use npmTokenSecret when trustedPublishing is enabled. " +
+          "Trusted publishing uses OIDC tokens for authentication instead of NPM tokens. " +
+          "Remove the npmTokenSecret option to use trusted publishing."
+      );
+    }
+
     const trustedPublisher = options.trustedPublishing ? "true" : undefined;
     const npmProvenance = options.npmProvenance ? "true" : undefined;
 
@@ -417,6 +425,14 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
+    if (options.trustedPublishing && options.nugetApiKeySecret) {
+      throw new Error(
+        "Cannot use nugetApiKeySecret when trustedPublishing is enabled. " +
+          "Trusted publishing uses OIDC tokens for authentication instead of API keys. " +
+          "Remove the nugetApiKeySecret option to use trusted publishing."
+      );
+    }
+
     const isGitHubPackages = options.nugetServer?.startsWith(
       GITHUB_PACKAGES_NUGET_REPOSITORY
     );
@@ -535,6 +551,17 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToPyPi(options: PyPiPublishOptions = {}) {
+    if (
+      options.trustedPublishing &&
+      (options.twineUsernameSecret || options.twinePasswordSecret)
+    ) {
+      throw new Error(
+        "Cannot use twineUsernameSecret and twinePasswordSecret when trustedPublishing is enabled. " +
+          "Trusted publishing uses OIDC tokens for authentication instead of username/password credentials. " +
+          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing."
+      );
+    }
+
     let permissions: JobPermissions = { contents: JobPermission.READ };
     const prePublishSteps = options.prePublishSteps ?? [];
     let workflowEnv: Record<string, string | undefined> = {};
