@@ -7131,7 +7131,7 @@ Sets the path to the prettier node module used to update inline snapshots.
 ##### `projects`<sup>Optional</sup> <a name="projects" id="projen.javascript.JestConfigOptions.property.projects"></a>
 
 ```typescript
-public readonly projects: string | {[ key: string ]: any}[];
+public readonly projects: (string | {[ key: string ]: any})[];
 ```
 
 - *Type:* string | {[ key: string ]: any}[]
