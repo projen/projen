@@ -21,7 +21,7 @@ export class HelloFunction extends cloudfront.experimental.EdgeFunction {
     super(scope, id, {
       description: 'src/hello.edge-lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.edge-lambda')),
     });
@@ -49,7 +49,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
@@ -78,7 +78,7 @@ export class WorldFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/subdir/world.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/world.lambda')),
     });
@@ -107,7 +107,7 @@ export class JangyFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/subdir/jangy.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/jangy.lambda')),
     });
@@ -140,7 +140,7 @@ exports[`auto-discover 5`] = `
   "name": "bundle:hello.lambda",
   "steps": [
     {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
     },
   ],
 }
@@ -152,7 +152,7 @@ exports[`auto-discover 6`] = `
   "name": "bundle:hello.lambda:watch",
   "steps": [
     {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
     },
   ],
 }
@@ -164,7 +164,7 @@ exports[`auto-discover 7`] = `
   "name": "bundle:subdir/jangy.lambda",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node18" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
     },
   ],
 }
@@ -176,7 +176,7 @@ exports[`auto-discover 8`] = `
   "name": "bundle:subdir/jangy.lambda:watch",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node18" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
     },
   ],
 }
@@ -188,7 +188,7 @@ exports[`auto-discover 9`] = `
   "name": "bundle:subdir/world.lambda",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node18" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
     },
   ],
 }
@@ -200,7 +200,7 @@ exports[`auto-discover 10`] = `
   "name": "bundle:subdir/world.lambda:watch",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node18" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
     },
   ],
 }
@@ -226,7 +226,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../my-assets/hello.lambda')),
     });
@@ -257,7 +257,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
@@ -286,7 +286,7 @@ export class HelloFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
@@ -315,7 +315,7 @@ export class WorldFunction extends lambda.Function {
     super(scope, id, {
       description: 'src/world.lambda.ts',
       ...props,
-      runtime: new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS),
+      runtime: new lambda.Runtime('nodejs22.x', lambda.RuntimeFamily.NODEJS),
       handler: 'index.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../assets/world.lambda')),
     });

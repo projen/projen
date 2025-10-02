@@ -133,7 +133,7 @@ describe("lambda functions", () => {
       cdkVersion: "1.100.0",
       libdir: "liblib",
       lambdaOptions: {
-        runtime: LambdaRuntime.NODEJS_18_X,
+        runtime: LambdaRuntime.NODEJS_22_X,
         bundlingOptions: {
           externals: ["foo", "bar"],
         },
@@ -147,7 +147,7 @@ describe("lambda functions", () => {
       snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
     ).toStrictEqual([
       {
-        exec: 'esbuild --bundle src/my.lambda.ts --target="node18" --platform="node" --outfile="assets/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar',
+        exec: 'esbuild --bundle src/my.lambda.ts --target="node22" --platform="node" --outfile="assets/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar',
       },
     ]);
   });
