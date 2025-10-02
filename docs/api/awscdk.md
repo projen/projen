@@ -22688,7 +22688,7 @@ public readonly runtime: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
-- *Default:* Runtime.NODEJS_18_X
+- *Default:* Runtime.NODEJS_22_X
 
 The node.js version to target.
 
@@ -22778,7 +22778,7 @@ public readonly runtime: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
-- *Default:* Runtime.NODEJS_18_X
+- *Default:* Runtime.NODEJS_22_X
 
 The node.js version to target.
 
@@ -23052,7 +23052,9 @@ Node.js 16.x.
 
 ---
 
-##### `NODEJS_18_X`<sup>Required</sup> <a name="NODEJS_18_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_18_X"></a>
+##### ~~`NODEJS_18_X`~~<sup>Required</sup> <a name="NODEJS_18_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_18_X"></a>
+
+- *Deprecated:* : Node.js 18 runtime has been deprecated on Sep 1, 2025
 
 ```typescript
 public readonly NODEJS_18_X: LambdaRuntime;
@@ -23061,8 +23063,6 @@ public readonly NODEJS_18_X: LambdaRuntime;
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
 Node.js 18.x.
-
-Advanced notice: Node.js 18 runtime will be deprecated on Jul 31, 2025
 
 ---
 

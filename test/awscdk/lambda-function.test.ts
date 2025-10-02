@@ -52,7 +52,7 @@ describe("bundled function", () => {
       name: "bundle:hello.lambda",
       steps: [
         {
-          exec: 'esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
+          exec: 'esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
         },
       ],
     });
@@ -376,7 +376,7 @@ test("auto-discover", () => {
       dependencyType: DependencyType.RUNTIME,
     }),
     lambdaOptions: {
-      runtime: awscdk.LambdaRuntime.NODEJS_18_X,
+      runtime: awscdk.LambdaRuntime.NODEJS_22_X,
     },
   });
 
