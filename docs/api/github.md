@@ -2207,7 +2207,7 @@ Additional options to configure the workflow.
 | <code><a href="#projen.github.GithubWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
-| <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs. |
+| <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
 ---
 
@@ -2361,7 +2361,7 @@ The job name (unique within the workflow).
 public updateJobs(jobs: {[ key: string ]: JobCallingReusableWorkflow | Job}): void
 ```
 
-Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs.
 
 ###### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.updateJobs.parameter.jobs"></a>
 
@@ -2434,6 +2434,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.GithubWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.GithubWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | All current jobs of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GithubWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
@@ -2462,6 +2463,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.GithubWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
+
+All current jobs of the workflow.
+
+This is a read-only copy, use the respective helper methods to add, update or remove jobs.
 
 ---
 
@@ -3766,7 +3781,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | <code><a href="#projen.github.TaskWorkflow.on">on</a></code> | Add events to triggers the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
-| <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs. |
+| <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
 ---
 
@@ -3920,7 +3935,7 @@ The job name (unique within the workflow).
 public updateJobs(jobs: {[ key: string ]: JobCallingReusableWorkflow | Job}): void
 ```
 
-Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs.
 
 ###### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.updateJobs.parameter.jobs"></a>
 
@@ -3993,6 +4008,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.github.TaskWorkflow.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.TaskWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflow.property.jobs">jobs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> \| <a href="#projen.github.workflows.Job">Job</a>}</code> | All current jobs of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.name">name</a></code> | <code>string</code> | The name of the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.TaskWorkflow.property.concurrency">concurrency</a></code> | <code><a href="#projen.github.ConcurrencyOptions">ConcurrencyOptions</a></code> | The concurrency configuration of the workflow. |
@@ -4023,6 +4039,20 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `jobs`<sup>Required</sup> <a name="jobs" id="projen.github.TaskWorkflow.property.jobs"></a>
+
+```typescript
+public readonly jobs: {[ key: string ]: JobCallingReusableWorkflow | Job};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.github.workflows.JobCallingReusableWorkflow">JobCallingReusableWorkflow</a> | <a href="#projen.github.workflows.Job">Job</a>}
+
+All current jobs of the workflow.
+
+This is a read-only copy, use the respective helper methods to add, update or remove jobs.
 
 ---
 
@@ -4297,7 +4327,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.github.TaskWorkflowJob.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.defaults">defaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
-| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.github.TaskWorkflowJob.property.environment">environment</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.if">if</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJob.property.needs">needs</a></code> | <code>string[]</code> | *No description.* |
@@ -4406,10 +4436,10 @@ public readonly env: {[ key: string ]: string};
 ##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJob.property.environment"></a>
 
 ```typescript
-public readonly environment: any;
+public readonly environment: string;
 ```
 
-- *Type:* any
+- *Type:* string
 
 ---
 
@@ -4838,6 +4868,7 @@ const checkoutOptions: github.CheckoutOptions = { ... }
 | <code><a href="#projen.github.CheckoutOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.CheckoutOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.CheckoutOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.CheckoutOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.CheckoutOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.CheckoutOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.CheckoutOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -4898,6 +4929,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.CheckoutOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -5511,6 +5558,8 @@ For Java dependencies, the format of the dependency-name attribute is:
 
 Defines a single group for dependency updates.
 
+> [https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#groups--](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#groups--)
+
 #### Initializer <a name="Initializer" id="projen.github.DependabotGroup.Initializer"></a>
 
 ```typescript
@@ -5524,7 +5573,10 @@ const dependabotGroup: github.DependabotGroup = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.DependabotGroup.property.patterns">patterns</a></code> | <code>string[]</code> | Define a list of strings (with or without wildcards) that will match package names to form this dependency group. |
+| <code><a href="#projen.github.DependabotGroup.property.appliesTo">appliesTo</a></code> | <code><a href="#projen.github.DependabotGroupAppliesTo">DependabotGroupAppliesTo</a></code> | Specify which type of update the group applies to. |
+| <code><a href="#projen.github.DependabotGroup.property.dependencyType">dependencyType</a></code> | <code><a href="#projen.github.DependabotGroupDependencyType">DependabotGroupDependencyType</a></code> | Limit the group to a type of dependency. |
 | <code><a href="#projen.github.DependabotGroup.property.excludePatterns">excludePatterns</a></code> | <code>string[]</code> | Optionally you can use this to exclude certain dependencies from the group. |
+| <code><a href="#projen.github.DependabotGroup.property.updateTypes">updateTypes</a></code> | <code><a href="#projen.github.DependabotGroupUpdateType">DependabotGroupUpdateType</a>[]</code> | Limit the group to one or more semantic versioning levels. |
 
 ---
 
@@ -5540,6 +5592,34 @@ Define a list of strings (with or without wildcards) that will match package nam
 
 ---
 
+##### `appliesTo`<sup>Optional</sup> <a name="appliesTo" id="projen.github.DependabotGroup.property.appliesTo"></a>
+
+```typescript
+public readonly appliesTo: DependabotGroupAppliesTo;
+```
+
+- *Type:* <a href="#projen.github.DependabotGroupAppliesTo">DependabotGroupAppliesTo</a>
+- *Default:* version updates
+
+Specify which type of update the group applies to.
+
+---
+
+##### `dependencyType`<sup>Optional</sup> <a name="dependencyType" id="projen.github.DependabotGroup.property.dependencyType"></a>
+
+```typescript
+public readonly dependencyType: DependabotGroupDependencyType;
+```
+
+- *Type:* <a href="#projen.github.DependabotGroupDependencyType">DependabotGroupDependencyType</a>
+- *Default:* all types of dependencies
+
+Limit the group to a type of dependency.
+
+> [https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#dependency-type-groups](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#dependency-type-groups)
+
+---
+
 ##### `excludePatterns`<sup>Optional</sup> <a name="excludePatterns" id="projen.github.DependabotGroup.property.excludePatterns"></a>
 
 ```typescript
@@ -5549,6 +5629,23 @@ public readonly excludePatterns: string[];
 - *Type:* string[]
 
 Optionally you can use this to exclude certain dependencies from the group.
+
+---
+
+##### `updateTypes`<sup>Optional</sup> <a name="updateTypes" id="projen.github.DependabotGroup.property.updateTypes"></a>
+
+```typescript
+public readonly updateTypes: DependabotGroupUpdateType[];
+```
+
+- *Type:* <a href="#projen.github.DependabotGroupUpdateType">DependabotGroupUpdateType</a>[]
+- *Default:* all semantic versioning levels
+
+Limit the group to one or more semantic versioning levels.
+
+If specified, must contain at least one element and elements must be unique.
+
+> [https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#update-types-groups](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#update-types-groups)
 
 ---
 
@@ -5955,6 +6052,7 @@ const downloadArtifactOptions: github.DownloadArtifactOptions = { ... }
 | <code><a href="#projen.github.DownloadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -6015,6 +6113,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.DownloadArtifactOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -7207,7 +7321,7 @@ const mergifyConditionalOperator: github.MergifyConditionalOperator = { ... }
 ##### `and`<sup>Optional</sup> <a name="and" id="projen.github.MergifyConditionalOperator.property.and"></a>
 
 ```typescript
-public readonly and: string | MergifyConditionalOperator[];
+public readonly and: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7217,7 +7331,7 @@ public readonly and: string | MergifyConditionalOperator[];
 ##### `or`<sup>Optional</sup> <a name="or" id="projen.github.MergifyConditionalOperator.property.or"></a>
 
 ```typescript
-public readonly or: string | MergifyConditionalOperator[];
+public readonly or: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7225,6 +7339,12 @@ public readonly or: string | MergifyConditionalOperator[];
 ---
 
 ### MergifyOptions <a name="MergifyOptions" id="projen.github.MergifyOptions"></a>
+
+Configure Mergify.
+
+This currently only offers a subset of options available.
+
+> [https://docs.mergify.com/configuration/file-format/](https://docs.mergify.com/configuration/file-format/)
 
 #### Initializer <a name="Initializer" id="projen.github.MergifyOptions.Initializer"></a>
 
@@ -7238,8 +7358,8 @@ const mergifyOptions: github.MergifyOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyOptions.property.queues">queues</a></code> | <code><a href="#projen.github.MergifyQueue">MergifyQueue</a>[]</code> | *No description.* |
-| <code><a href="#projen.github.MergifyOptions.property.rules">rules</a></code> | <code><a href="#projen.github.MergifyRule">MergifyRule</a>[]</code> | *No description.* |
+| <code><a href="#projen.github.MergifyOptions.property.queues">queues</a></code> | <code><a href="#projen.github.MergifyQueue">MergifyQueue</a>[]</code> | The available merge queues. |
+| <code><a href="#projen.github.MergifyOptions.property.rules">rules</a></code> | <code><a href="#projen.github.MergifyRule">MergifyRule</a>[]</code> | Pull request automation rules. |
 
 ---
 
@@ -7251,6 +7371,8 @@ public readonly queues: MergifyQueue[];
 
 - *Type:* <a href="#projen.github.MergifyQueue">MergifyQueue</a>[]
 
+The available merge queues.
+
 ---
 
 ##### `rules`<sup>Optional</sup> <a name="rules" id="projen.github.MergifyOptions.property.rules"></a>
@@ -7260,6 +7382,8 @@ public readonly rules: MergifyRule[];
 ```
 
 - *Type:* <a href="#projen.github.MergifyRule">MergifyRule</a>[]
+
+Pull request automation rules.
 
 ---
 
@@ -7278,9 +7402,11 @@ const mergifyQueue: github.MergifyQueue = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
-| <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue. |
 | <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
+| <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
+| <code><a href="#projen.github.MergifyQueue.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
+| <code><a href="#projen.github.MergifyQueue.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
 | <code><a href="#projen.github.MergifyQueue.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
 
 ---
@@ -7297,20 +7423,6 @@ Template to use as the commit message when using the merge or squash merge metho
 
 ---
 
-##### `conditions`<sup>Required</sup> <a name="conditions" id="projen.github.MergifyQueue.property.conditions"></a>
-
-```typescript
-public readonly conditions: string | MergifyConditionalOperator[];
-```
-
-- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
-
-A list of Conditions string that must match against the pull request for the pull request to be added to the queue.
-
-> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
-
----
-
 ##### `name`<sup>Required</sup> <a name="name" id="projen.github.MergifyQueue.property.name"></a>
 
 ```typescript
@@ -7320,6 +7432,39 @@ public readonly name: string;
 - *Type:* string
 
 The name of the queue.
+
+---
+
+##### ~~`conditions`~~<sup>Optional</sup> <a name="conditions" id="projen.github.MergifyQueue.property.conditions"></a>
+
+- *Deprecated:* use `queueConditions` instead
+
+```typescript
+public readonly conditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions that needs to match to queue the pull request.
+
+> [https://docs.mergify.com/configuration/file-format/#queue-rules](https://docs.mergify.com/configuration/file-format/#queue-rules)
+
+---
+
+##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueue.property.mergeConditions"></a>
+
+```typescript
+public readonly mergeConditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions to match to get the queued pull request merged.
+
+This automatically includes the queueConditions.
+In case of speculative merge pull request, the merge conditions are evaluated against the temporary pull request instead of the original one.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
 
 ---
 
@@ -7336,6 +7481,20 @@ Merge method to use.
 
 Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
 `fast-forward` is not supported on queues with `speculative_checks` > 1, `batch_size` > 1, or with `allow_inplace_checks` set to false.
+
+---
+
+##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueue.property.queueConditions"></a>
+
+```typescript
+public readonly queueConditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions that needs to match to queue the pull request.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
 
 ---
 
@@ -7397,7 +7556,7 @@ A dictionary made of Actions that will be executed on the matching pull requests
 ##### `conditions`<sup>Required</sup> <a name="conditions" id="projen.github.MergifyRule.property.conditions"></a>
 
 ```typescript
-public readonly conditions: string | MergifyConditionalOperator[];
+public readonly conditions: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -8158,6 +8317,7 @@ const setupGitIdentityOptions: github.SetupGitIdentityOptions = { ... }
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -8218,6 +8378,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.SetupGitIdentityOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -8496,6 +8672,7 @@ const taskWorkflowJobOptions: github.TaskWorkflowJobOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the job. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.jobDefaults">jobDefaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | Default settings for all steps in the TaskWorkflow Job. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | Mapping of job output names to values/expressions. |
@@ -8591,6 +8768,19 @@ public readonly env: {[ key: string ]: string};
 - *Default:* {}
 
 Workflow environment variables.
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowJobOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used
+
+The GitHub Actions environment used for the job.
 
 ---
 
@@ -8718,6 +8908,7 @@ const taskWorkflowOptions: github.TaskWorkflowOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.jobDefaults">jobDefaults</a></code> | <code><a href="#projen.github.workflows.JobDefaults">JobDefaults</a></code> | Default settings for all steps in the TaskWorkflow Job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: <a href="#projen.github.workflows.JobStepOutput">JobStepOutput</a>}</code> | Mapping of job output names to values/expressions. |
@@ -8817,6 +9008,19 @@ public readonly env: {[ key: string ]: string};
 - *Default:* {}
 
 Workflow environment variables.
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.TaskWorkflowOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used
+
+The GitHub Actions environment used for the job.
 
 ---
 
@@ -8989,6 +9193,7 @@ const uploadArtifactOptions: github.UploadArtifactOptions = { ... }
 | <code><a href="#projen.github.UploadArtifactOptions.property.id">id</a></code> | <code>string</code> | A unique identifier for the step. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.if">if</a></code> | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
@@ -9049,6 +9254,22 @@ public readonly name: string;
 - *Type:* string
 
 A name for your step to display on GitHub.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.github.UploadArtifactOptions.property.shell"></a>
+
+```typescript
+public readonly shell: string;
+```
+
+- *Type:* string
+
+Overrides the default shell settings in the runner's operating system and the job's default.
+
+Refer to GitHub documentation for allowed values.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell)
 
 ---
 
@@ -9808,6 +10029,95 @@ public render(): string[]
 
 
 ## Enums <a name="Enums" id="Enums"></a>
+
+### DependabotGroupAppliesTo <a name="DependabotGroupAppliesTo" id="projen.github.DependabotGroupAppliesTo"></a>
+
+The type of update a group applies to.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependabotGroupAppliesTo.VERSION_UPDATES">VERSION_UPDATES</a></code> | Apply only to version updates. |
+| <code><a href="#projen.github.DependabotGroupAppliesTo.SECURITY_UPDATES">SECURITY_UPDATES</a></code> | Apply only to security updates. |
+
+---
+
+##### `VERSION_UPDATES` <a name="VERSION_UPDATES" id="projen.github.DependabotGroupAppliesTo.VERSION_UPDATES"></a>
+
+Apply only to version updates.
+
+---
+
+
+##### `SECURITY_UPDATES` <a name="SECURITY_UPDATES" id="projen.github.DependabotGroupAppliesTo.SECURITY_UPDATES"></a>
+
+Apply only to security updates.
+
+---
+
+
+### DependabotGroupDependencyType <a name="DependabotGroupDependencyType" id="projen.github.DependabotGroupDependencyType"></a>
+
+The type of dependency a group may be limited to.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependabotGroupDependencyType.DEVELOPMENT">DEVELOPMENT</a></code> | Include only dependencies in the "Development dependency group". |
+| <code><a href="#projen.github.DependabotGroupDependencyType.PRODUCTION">PRODUCTION</a></code> | Include only dependencies in the "Production dependency group". |
+
+---
+
+##### `DEVELOPMENT` <a name="DEVELOPMENT" id="projen.github.DependabotGroupDependencyType.DEVELOPMENT"></a>
+
+Include only dependencies in the "Development dependency group".
+
+---
+
+
+##### `PRODUCTION` <a name="PRODUCTION" id="projen.github.DependabotGroupDependencyType.PRODUCTION"></a>
+
+Include only dependencies in the "Production dependency group".
+
+---
+
+
+### DependabotGroupUpdateType <a name="DependabotGroupUpdateType" id="projen.github.DependabotGroupUpdateType"></a>
+
+The semantic versioning levels a group may be limited to.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependabotGroupUpdateType.MAJOR">MAJOR</a></code> | Include major releases. |
+| <code><a href="#projen.github.DependabotGroupUpdateType.MINOR">MINOR</a></code> | Include minor releases. |
+| <code><a href="#projen.github.DependabotGroupUpdateType.PATCH">PATCH</a></code> | Include patch releases. |
+
+---
+
+##### `MAJOR` <a name="MAJOR" id="projen.github.DependabotGroupUpdateType.MAJOR"></a>
+
+Include major releases.
+
+---
+
+
+##### `MINOR` <a name="MINOR" id="projen.github.DependabotGroupUpdateType.MINOR"></a>
+
+Include minor releases.
+
+---
+
+
+##### `PATCH` <a name="PATCH" id="projen.github.DependabotGroupUpdateType.PATCH"></a>
+
+Include patch releases.
+
+---
+
 
 ### DependabotRegistryType <a name="DependabotRegistryType" id="projen.github.DependabotRegistryType"></a>
 

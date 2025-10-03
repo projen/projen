@@ -1,11 +1,16 @@
 {
   "dependencies": [
     {
-      "name": "@types/conventional-changelog-config-spec",
+      "name": "@biomejs/biome",
+      "version": "^2",
       "type": "build"
     },
     {
-      "name": "@types/glob",
+      "name": "@jsii/check-node",
+      "type": "build"
+    },
+    {
+      "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
     {
@@ -101,12 +106,16 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.8.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.8.x",
+      "version": "5.9.x",
+      "type": "build"
+    },
+    {
+      "name": "json2jsii",
       "type": "build"
     },
     {
@@ -131,7 +140,7 @@
     },
     {
       "name": "typescript",
-      "version": "5.8.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
@@ -156,12 +165,11 @@
       "type": "bundled"
     },
     {
-      "name": "fast-json-patch",
+      "name": "fast-glob",
       "type": "bundled"
     },
     {
-      "name": "glob",
-      "version": "^8",
+      "name": "fast-json-patch",
       "type": "bundled"
     },
     {

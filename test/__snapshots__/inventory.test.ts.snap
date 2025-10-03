@@ -2841,6 +2841,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -3254,7 +3290,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -3270,8 +3306,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -3663,7 +3699,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -4394,6 +4430,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -4981,6 +5034,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -5120,6 +5190,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -5971,6 +6063,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -6353,7 +6481,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6369,8 +6497,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -6826,7 +6954,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -7096,13 +7224,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -7577,6 +7705,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -8260,6 +8405,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -8399,6 +8561,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -10479,6 +10663,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -10836,7 +11056,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -10852,8 +11072,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -11222,7 +11442,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -11900,6 +12120,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -12487,6 +12724,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -12626,6 +12880,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -13414,6 +13690,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -13700,7 +14012,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -13716,8 +14028,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -14172,7 +14484,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -14425,13 +14737,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -14853,6 +15165,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -15536,6 +15865,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -15675,6 +16021,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -16496,6 +16864,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -16748,7 +17152,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -16764,8 +17168,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -17203,7 +17607,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -17439,13 +17843,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -17867,6 +18271,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -18550,6 +18971,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -18689,6 +19127,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -20365,6 +20825,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -20581,7 +21077,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -20597,8 +21093,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -21019,7 +21515,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -21255,13 +21751,13 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.6.0"",
+        "default": ""~5.8.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.8.0"",
+        "initialValue": ""~5.9.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -21683,6 +22179,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "npm-token-secret",
+      },
+      {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
       },
       {
         "default": ""."",
@@ -22366,6 +22879,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -22505,6 +23035,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -23309,6 +23861,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -23525,7 +24113,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -23541,8 +24129,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -24366,6 +24954,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -24917,6 +25522,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -25056,6 +25678,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -25737,6 +26381,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -25953,7 +26633,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -25969,8 +26649,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -26305,7 +26985,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -26932,6 +27612,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -27519,6 +28216,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -27658,6 +28372,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -28429,6 +29165,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -28645,7 +29417,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -28661,8 +29433,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -29486,6 +30258,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -30037,6 +30826,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -30176,6 +30982,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -32062,6 +32890,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -32278,7 +33142,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -32294,8 +33158,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -33119,6 +33983,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -33670,6 +34551,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -33809,6 +34707,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -34478,6 +35398,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -34694,7 +35650,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -34710,8 +35666,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -35046,7 +36002,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -35673,6 +36629,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -36260,6 +37233,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -36399,6 +37389,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -37175,6 +38187,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -37391,7 +38439,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -37407,8 +38455,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -37743,7 +38791,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -38370,6 +39418,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -38957,6 +40022,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -39096,6 +40178,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",
@@ -39850,6 +40954,42 @@ exports[`inventory 1`] = `
         "switch": "bin",
       },
       {
+        "default": "false",
+        "docs": "Setup Biome.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "biome",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biome",
+        ],
+        "simpleType": "boolean",
+        "switch": "biome",
+      },
+      {
+        "default": "- default options",
+        "docs": "Biome options.",
+        "featured": false,
+        "fqn": "projen.javascript.BiomeOptions",
+        "fullType": {
+          "fqn": "projen.javascript.BiomeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "biomeOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "biomeOptions",
+        ],
+        "simpleType": "BiomeOptions",
+        "switch": "biome-options",
+      },
+      {
         "docs": "The email address to which issues should be reported.",
         "featured": false,
         "fullType": {
@@ -40066,7 +41206,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with \`@codeCovTokenSecret\`.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via \`codeCovTokenSecret\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -40082,8 +41222,8 @@ exports[`inventory 1`] = `
         "switch": "code-cov",
       },
       {
-        "default": "- if this option is not specified, only public repositories are supported",
-        "docs": "Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.",
+        "default": "- OIDC auth is used",
+        "docs": "Define the secret name for a specified https://codecov.io/ token.",
         "featured": false,
         "fullType": {
           "primitive": "string",
@@ -40418,7 +41558,7 @@ exports[`inventory 1`] = `
         "switch": "entrypoint-types",
       },
       {
-        "default": "true",
+        "default": "- true, unless biome is enabled",
         "docs": "Setup eslint.",
         "featured": false,
         "fullType": {
@@ -41045,6 +42185,23 @@ exports[`inventory 1`] = `
         "switch": "npm-token-secret",
       },
       {
+        "default": "- false",
+        "docs": "Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "npmTrustedPublishing",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmTrustedPublishing",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-trusted-publishing",
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -41632,6 +42789,23 @@ exports[`inventory 1`] = `
         "switch": "release-branches",
       },
       {
+        "default": "- no environment used, unless set at the artifact level",
+        "docs": "The GitHub Actions environment used for the release.",
+        "featured": false,
+        "fullType": {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "releaseEnvironment",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseEnvironment",
+        ],
+        "simpleType": "string",
+        "switch": "release-environment",
+      },
+      {
         "default": "true",
         "deprecated": true,
         "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
@@ -41771,6 +42945,28 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "boolean",
         "switch": "release-workflow",
+      },
+      {
+        "default": "{}",
+        "docs": "Build environment variables for release workflows.",
+        "featured": false,
+        "fullType": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "releaseWorkflowEnv",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "releaseWorkflowEnv",
+        ],
+        "simpleType": "unknown",
+        "switch": "release-workflow-env",
       },
       {
         "default": ""release"",

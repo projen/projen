@@ -40,6 +40,7 @@
     "node_modules/",
     "*.generated.ts",
     "coverage",
+    "src/javascript/biome/biome-config.ts",
     "!.projenrc.ts",
     "!projenrc/**/*.ts"
   ],

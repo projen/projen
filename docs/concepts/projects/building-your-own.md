@@ -236,7 +236,6 @@ Let's add a few:
 
 ```typescript
 export class MyMicroserviceProject extends TypeScriptProject {
-  export class MyMicroserviceProject extends TypeScriptProject {
   constructor(options: MyMicroserviceProjectOptions) {
     super({
       ...options,

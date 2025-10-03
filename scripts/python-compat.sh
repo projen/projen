@@ -16,7 +16,7 @@ mkdir -p ${testdir}
 cd ${testdir}
 
 # install the packed version of projen for python
-pip3 install ${pythonwheel}
+pip3 install --force-reinstall ${pythonwheel}
 
 # create a projenrc.py file
 cat > ${testdir}/.projenrc.py <<HERE

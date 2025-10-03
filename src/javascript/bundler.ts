@@ -518,7 +518,7 @@ export interface AddBundleOptions extends BundlingOptions {
    * ```text
    * project.bundler.addBundle("./src/hello.ts", {
    *   platform: "node",
-   *   target: "node18",
+   *   target: "node22",
    *   sourcemap: true,
    *   format: "esm",
    *   esbuildArgs: {
@@ -592,7 +592,7 @@ export enum RunBundleTask {
    * // Tell the bundler to bundle the compiled results (from the "lib" directory)
    * project.bundler.addBundle("./lib/index.js", {
    *   platform: "node",
-   *   target: "node18",
+   *   target: "node22",
    *   sourcemap: false,
    *   format: "esm",
    * });

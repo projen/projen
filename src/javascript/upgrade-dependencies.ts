@@ -482,6 +482,7 @@ export class UpgradeDependencies extends Component {
         name: "Upgrade",
         container: this.containerOptions,
         permissions: this.permissions,
+        env: this.options.workflowOptions?.env,
         ...filteredRunsOnOptions(
           this.options.workflowOptions?.runsOn,
           this.options.workflowOptions?.runsOnGroup
@@ -621,6 +622,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default `{ contents: JobPermission.READ }`
    */
   readonly permissions?: JobPermissions;
+
+  /**
+   * Build environment variables for the upgrade job.
+   *
+   * @default {}
+   */
+  readonly env?: { [key: string]: string };
 }
 
 /**

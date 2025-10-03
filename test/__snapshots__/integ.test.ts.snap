@@ -266,12 +266,12 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Install dependencies
@@ -283,10 +283,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -301,7 +302,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: build-artifact
           path: dist
@@ -314,13 +315,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -336,7 +337,7 @@ jobs:
         run: |-
           git add .
           git commit -s -m "chore: self mutation"
-          git push origin HEAD:$PULL_REQUEST_REF
+          git push origin "HEAD:$PULL_REQUEST_REF"
   package-js:
     needs: build
     runs-on: ubuntu-latest
@@ -344,11 +345,11 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -356,7 +357,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -378,15 +379,15 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -394,7 +395,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -416,14 +417,14 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -431,7 +432,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -468,7 +469,7 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.4.0
+      - uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -501,7 +502,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -509,7 +510,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Install dependencies
@@ -527,13 +528,14 @@ jobs:
         run: |-
           echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+        shell: bash
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: build-artifact
           path: dist
@@ -550,11 +552,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -574,11 +576,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -586,7 +588,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: .repo
       - name: Install Dependencies
@@ -614,15 +616,15 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -630,7 +632,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: .repo
       - name: Install Dependencies
@@ -659,14 +661,14 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -674,7 +676,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: .repo
       - name: Install Dependencies
@@ -710,11 +712,11 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: master
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 16.0.0
       - name: Install dependencies
@@ -726,10 +728,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -743,11 +746,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: master
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -759,7 +762,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -848,7 +851,7 @@ example/*.d.ts
 queue_rules:
   - name: default
     update_method: merge
-    conditions:
+    queue_conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
@@ -873,6 +876,8 @@ pull_request_rules:
       - status-success=package-js
       - status-success=package-java
       - status-success=package-python
+merge_queue:
+  max_parallel_checks: 1
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
@@ -900,7 +905,7 @@ tsconfig.tsbuildinfo
 !.jsii
 /.gitattributes
 ",
-  ".projen/deps.json": "{"dependencies":[{"name":"@stylistic/eslint-plugin","version":"^2","type":"build"},{"name":"@types/jest","type":"build"},{"name":"@types/node","version":"^16","type":"build"},{"name":"@typescript-eslint/eslint-plugin","version":"^8","type":"build"},{"name":"@typescript-eslint/parser","version":"^8","type":"build"},{"name":"aws-sdk","type":"build"},{"name":"commit-and-tag-version","version":"^12","type":"build"},{"name":"eslint-import-resolver-typescript","type":"build"},{"name":"eslint-plugin-import","type":"build"},{"name":"eslint","version":"^9","type":"build"},{"name":"jest","type":"build"},{"name":"jest-junit","version":"^16","type":"build"},{"name":"jsii-diff","type":"build"},{"name":"jsii-docgen","version":"^10.5.0","type":"build"},{"name":"jsii-pacmak","type":"build"},{"name":"jsii-rosetta","version":"~5.6.0","type":"build"},{"name":"jsii","version":"~5.6.0","type":"build"},{"name":"projen","type":"build"},{"name":"ts-jest","type":"build"},{"name":"typescript","type":"build"},{"name":"@aws-cdk/aws-apigateway","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-cloudwatch-actions","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-cloudwatch","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-dynamodb","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-ecs-patterns","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-ecs","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-elasticloadbalancingv2","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-events-targets","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-events","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-lambda","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-rds","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-sns-subscriptions","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-sns","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-sqs","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/core","version":"^1.75.0","type":"peer"},{"name":"constructs","version":"^3.2.27","type":"peer"},{"name":"@aws-cdk/aws-apigateway","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-cloudwatch-actions","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-cloudwatch","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-dynamodb","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-ecs-patterns","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-ecs","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-elasticloadbalancingv2","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-events-targets","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-events","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-lambda","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-rds","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-sns-subscriptions","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-sns","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-sqs","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/core","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/assert","version":"^1.75.0","type":"test"}],"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  ".projen/deps.json": "{"dependencies":[{"name":"@stylistic/eslint-plugin","version":"^2","type":"build"},{"name":"@types/jest","type":"build"},{"name":"@types/node","version":"^16","type":"build"},{"name":"@typescript-eslint/eslint-plugin","version":"^8","type":"build"},{"name":"@typescript-eslint/parser","version":"^8","type":"build"},{"name":"aws-sdk","type":"build"},{"name":"commit-and-tag-version","version":"^12","type":"build"},{"name":"eslint-import-resolver-typescript","type":"build"},{"name":"eslint-plugin-import","type":"build"},{"name":"eslint","version":"^9","type":"build"},{"name":"jest","type":"build"},{"name":"jest-junit","version":"^16","type":"build"},{"name":"jsii-diff","type":"build"},{"name":"jsii-docgen","version":"^10.5.0","type":"build"},{"name":"jsii-pacmak","type":"build"},{"name":"jsii-rosetta","version":"~5.8.0","type":"build"},{"name":"jsii","version":"~5.8.0","type":"build"},{"name":"projen","type":"build"},{"name":"ts-jest","type":"build"},{"name":"typescript","type":"build"},{"name":"@aws-cdk/aws-apigateway","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-cloudwatch-actions","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-cloudwatch","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-dynamodb","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-ecs-patterns","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-ecs","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-elasticloadbalancingv2","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-events-targets","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-events","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-lambda","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-rds","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-sns-subscriptions","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-sns","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/aws-sqs","version":"^1.75.0","type":"peer"},{"name":"@aws-cdk/core","version":"^1.75.0","type":"peer"},{"name":"constructs","version":"^3.2.27","type":"peer"},{"name":"@aws-cdk/aws-apigateway","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-cloudwatch-actions","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-cloudwatch","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-dynamodb","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-ecs-patterns","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-ecs","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-elasticloadbalancingv2","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-events-targets","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-events","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-lambda","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-rds","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-sns-subscriptions","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-sns","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/aws-sqs","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/core","version":"^1.75.0","type":"runtime"},{"name":"@aws-cdk/assert","version":"^1.75.0","type":"test"}],"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   ".projen/files.json": "{
   "files": [
     ".eslintrc.json",
@@ -1521,7 +1526,7 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": "{"name":"cdk-watchful","description":"Watching your CDK apps since 2019","repository":{"type":"git","url":"https://github.com/eladb/cdk-watchful.git"},"scripts":{"build":"npx projen build","bump":"npx projen bump","clobber":"npx projen clobber","compat":"npx projen compat","compile":"npx projen compile","default":"npx projen default","docgen":"npx projen docgen","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","package-all":"npx projen package-all","package:java":"npx projen package:java","package:js":"npx projen package:js","package:python":"npx projen package:python","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","release":"npx projen release","test":"npx projen test","test:watch":"npx projen test:watch","unbump":"npx projen unbump","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Elad Ben-Israel","email":"elad.benisrael@gmail.com","organization":false},"devDependencies":{"@aws-cdk/assert":"^1.75.0","@stylistic/eslint-plugin":"^2","@types/jest":"*","@types/node":"^16","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","aws-sdk":"*","commit-and-tag-version":"^12","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.6.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.6.0","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0","constructs":"^3.2.27"},"dependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0"},"keywords":["cdk","cloudwatch","monitoring"],"engines":{"node":">= 16.0.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"stable","jsii":{"outdir":"dist","targets":{"java":{"package":"com.github.eladb.watchful","maven":{"groupId":"com.github.eladb","artifactId":"cdk-watchful"}},"python":{"distName":"cdk-watchful","module":"cdk_watchful"}},"tsc":{"outDir":"lib","rootDir":"src"}},"awscdkio":{"twitter":"emeshbi"},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  "package.json": "{"name":"cdk-watchful","description":"Watching your CDK apps since 2019","repository":{"type":"git","url":"https://github.com/eladb/cdk-watchful.git"},"scripts":{"build":"npx projen build","bump":"npx projen bump","clobber":"npx projen clobber","compat":"npx projen compat","compile":"npx projen compile","default":"npx projen default","docgen":"npx projen docgen","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","package-all":"npx projen package-all","package:java":"npx projen package:java","package:js":"npx projen package:js","package:python":"npx projen package:python","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","release":"npx projen release","test":"npx projen test","test:watch":"npx projen test:watch","unbump":"npx projen unbump","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Elad Ben-Israel","email":"elad.benisrael@gmail.com","organization":false},"devDependencies":{"@aws-cdk/assert":"^1.75.0","@stylistic/eslint-plugin":"^2","@types/jest":"*","@types/node":"^16","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","aws-sdk":"*","commit-and-tag-version":"^12","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.8.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.8.0","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0","constructs":"^3.2.27"},"dependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0"},"keywords":["cdk","cloudwatch","monitoring"],"engines":{"node":">= 16.0.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"stable","jsii":{"outdir":"dist","targets":{"java":{"package":"com.github.eladb.watchful","maven":{"groupId":"com.github.eladb","artifactId":"cdk-watchful"}},"python":{"distName":"cdk-watchful","module":"cdk_watchful"}},"tsc":{"outDir":"lib","rootDir":"src"}},"awscdkio":{"twitter":"emeshbi"},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -1837,7 +1842,7 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.4.0
+      - uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -1864,9 +1869,9 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 12.7.0
       - name: Install dependencies
@@ -1878,10 +1883,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -1895,9 +1901,9 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1909,7 +1915,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -2006,7 +2012,7 @@ tsconfig.tsbuildinfo
 !.jsii
 /.gitattributes
 ",
-  ".projen/deps.json": "{"dependencies":[{"name":"@stylistic/eslint-plugin","version":"^2","type":"build"},{"name":"@types/follow-redirects","type":"build"},{"name":"@types/jest","type":"build"},{"name":"@types/json-stable-stringify","type":"build"},{"name":"@types/node","version":"^12","type":"build"},{"name":"@types/yaml","type":"build"},{"name":"@typescript-eslint/eslint-plugin","version":"^8","type":"build"},{"name":"@typescript-eslint/parser","version":"^8","type":"build"},{"name":"constructs","version":"^10.0.0","type":"build"},{"name":"eslint-import-resolver-typescript","type":"build"},{"name":"eslint-plugin-import","type":"build"},{"name":"eslint","version":"^9","type":"build"},{"name":"jest","type":"build"},{"name":"jest-junit","version":"^16","type":"build"},{"name":"jsii-diff","type":"build"},{"name":"jsii-docgen","version":"^10.5.0","type":"build"},{"name":"jsii-pacmak","type":"build"},{"name":"jsii-rosetta","version":"~5.6.0","type":"build"},{"name":"jsii","version":"~5.6.0","type":"build"},{"name":"json-schema-to-typescript","type":"build"},{"name":"projen","type":"build"},{"name":"ts-jest","type":"build"},{"name":"typescript","type":"build"},{"name":"fast-json-patch","type":"bundled"},{"name":"follow-redirects","type":"bundled"},{"name":"json-stable-stringify","type":"bundled"},{"name":"yaml","type":"bundled"},{"name":"constructs","type":"peer"}],"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  ".projen/deps.json": "{"dependencies":[{"name":"@stylistic/eslint-plugin","version":"^2","type":"build"},{"name":"@types/follow-redirects","type":"build"},{"name":"@types/jest","type":"build"},{"name":"@types/json-stable-stringify","type":"build"},{"name":"@types/node","version":"^12","type":"build"},{"name":"@types/yaml","type":"build"},{"name":"@typescript-eslint/eslint-plugin","version":"^8","type":"build"},{"name":"@typescript-eslint/parser","version":"^8","type":"build"},{"name":"constructs","version":"^10.0.0","type":"build"},{"name":"eslint-import-resolver-typescript","type":"build"},{"name":"eslint-plugin-import","type":"build"},{"name":"eslint","version":"^9","type":"build"},{"name":"jest","type":"build"},{"name":"jest-junit","version":"^16","type":"build"},{"name":"jsii-diff","type":"build"},{"name":"jsii-docgen","version":"^10.5.0","type":"build"},{"name":"jsii-pacmak","type":"build"},{"name":"jsii-rosetta","version":"~5.8.0","type":"build"},{"name":"jsii","version":"~5.8.0","type":"build"},{"name":"json-schema-to-typescript","type":"build"},{"name":"projen","type":"build"},{"name":"ts-jest","type":"build"},{"name":"typescript","type":"build"},{"name":"fast-json-patch","type":"bundled"},{"name":"follow-redirects","type":"bundled"},{"name":"json-stable-stringify","type":"bundled"},{"name":"yaml","type":"bundled"},{"name":"constructs","type":"peer"}],"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   ".projen/files.json": "{
   "files": [
     ".eslintrc.json",
@@ -2718,7 +2724,7 @@ project.addCompileCommand('cp src/_loadurl.js lib/');
 
 project.synth();
 ",
-  "package.json": "{"name":"cdk8s","description":"Cloud Development Kit for Kubernetes","repository":{"type":"git","url":"https://github.com/awslabs/cdk8s.git"},"scripts":{"build":"yarn compile","clobber":"npx projen clobber","compat":"npx projen compat","compile":"npx projen compile","default":"npx projen default","docgen":"npx projen docgen","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","package-all":"npx projen package-all","package:dotnet":"npx projen package:dotnet","package:java":"npx projen package:java","package:js":"npx projen package:js","package:python":"npx projen package:python","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","test":"npx projen test","test:watch":"npx projen test:watch","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Amazon Web Services","url":"https://aws.amazon.com","organization":true},"devDependencies":{"@stylistic/eslint-plugin":"^2","@types/follow-redirects":"*","@types/jest":"*","@types/json-stable-stringify":"*","@types/node":"^12","@types/yaml":"*","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","constructs":"^10.0.0","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.6.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.6.0","json-schema-to-typescript":"*","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"constructs":"*"},"dependencies":{"fast-json-patch":"*","follow-redirects":"*","json-stable-stringify":"*","yaml":"*"},"bundledDependencies":["fast-json-patch","follow-redirects","json-stable-stringify","yaml"],"keywords":["cdk","constructs","k8s","kubernetes"],"engines":{"node":">= 12.7.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"experimental","jsii":{"outdir":"dist","targets":{"java":{"package":"org.cdk8s","maven":{"groupId":"org.cdk8s","artifactId":"cdk8s"}},"python":{"distName":"cdk8s","module":"cdk8s"},"dotnet":{"namespace":"Org.Cdk8s","packageId":"Org.Cdk8s"}},"tsc":{"outDir":"lib","rootDir":"src"}},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  "package.json": "{"name":"cdk8s","description":"Cloud Development Kit for Kubernetes","repository":{"type":"git","url":"https://github.com/awslabs/cdk8s.git"},"scripts":{"build":"yarn compile","clobber":"npx projen clobber","compat":"npx projen compat","compile":"npx projen compile","default":"npx projen default","docgen":"npx projen docgen","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","package-all":"npx projen package-all","package:dotnet":"npx projen package:dotnet","package:java":"npx projen package:java","package:js":"npx projen package:js","package:python":"npx projen package:python","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","test":"npx projen test","test:watch":"npx projen test:watch","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Amazon Web Services","url":"https://aws.amazon.com","organization":true},"devDependencies":{"@stylistic/eslint-plugin":"^2","@types/follow-redirects":"*","@types/jest":"*","@types/json-stable-stringify":"*","@types/node":"^12","@types/yaml":"*","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","constructs":"^10.0.0","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.8.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.8.0","json-schema-to-typescript":"*","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"constructs":"*"},"dependencies":{"fast-json-patch":"*","follow-redirects":"*","json-stable-stringify":"*","yaml":"*"},"bundledDependencies":["fast-json-patch","follow-redirects","json-stable-stringify","yaml"],"keywords":["cdk","constructs","k8s","kubernetes"],"engines":{"node":">= 12.7.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"experimental","jsii":{"outdir":"dist","targets":{"java":{"package":"org.cdk8s","maven":{"groupId":"org.cdk8s","artifactId":"cdk8s"}},"python":{"distName":"cdk8s","module":"cdk8s"},"dotnet":{"namespace":"Org.Cdk8s","packageId":"Org.Cdk8s"}},"tsc":{"outDir":"lib","rootDir":"src"}},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -3035,7 +3041,7 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.4.0
+      - uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3062,9 +3068,9 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 12.7.0
       - name: Install dependencies
@@ -3076,10 +3082,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -3093,9 +3100,9 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -3107,7 +3114,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -3941,14 +3948,14 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: "9"
+          version: "10"
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
       - name: build
@@ -3958,10 +3965,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -3980,13 +3988,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -4002,7 +4010,7 @@ jobs:
         run: |-
           git add .
           git commit -s -m "chore: self mutation"
-          git push origin HEAD:$PULL_REQUEST_REF
+          git push origin "HEAD:$PULL_REQUEST_REF"
 ",
   ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -4025,7 +4033,7 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.4.0
+      - uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -4058,7 +4066,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -4066,9 +4074,9 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: "9"
+          version: "10"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
@@ -4084,13 +4092,14 @@ jobs:
         run: |-
           echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+        shell: bash
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: build-artifact
           path: dist
@@ -4103,11 +4112,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: lts/*
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -4136,13 +4145,13 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: master
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: "9"
+          version: "10"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
@@ -4152,10 +4161,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -4169,11 +4179,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: master
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -4185,7 +4195,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -4262,7 +4272,7 @@ junit.xml
 queue_rules:
   - name: default
     update_method: merge
-    conditions:
+    queue_conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
@@ -4281,6 +4291,8 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
+merge_queue:
+  max_parallel_checks: 1
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/

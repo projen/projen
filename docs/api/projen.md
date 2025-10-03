@@ -15,6 +15,7 @@ The following submodules are available:
 - [gitlab](./gitlab.md)
 - [java](./java.md)
 - [javascript](./javascript.md)
+- [javascript.biome_config](./javascript.biome_config.md)
 - [python](./python.md)
 - [release](./release.md)
 - [typescript](./typescript.md)
@@ -1209,6 +1210,7 @@ new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 | <code><a href="#projen.GitAttributesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.GitAttributesFile.addAttributes">addAttributes</a></code> | Maps a set of attributes to a set of files. |
 | <code><a href="#projen.GitAttributesFile.addLfsPattern">addLfsPattern</a></code> | Add attributes necessary to mark these files as stored in LFS. |
+| <code><a href="#projen.GitAttributesFile.removeAttributes">removeAttributes</a></code> | Removes attributes from a set of files. |
 
 ---
 
@@ -1281,6 +1283,32 @@ Add attributes necessary to mark these files as stored in LFS.
 ###### `glob`<sup>Required</sup> <a name="glob" id="projen.GitAttributesFile.addLfsPattern.parameter.glob"></a>
 
 - *Type:* string
+
+---
+
+##### `removeAttributes` <a name="removeAttributes" id="projen.GitAttributesFile.removeAttributes"></a>
+
+```typescript
+public removeAttributes(glob: string, attributes: ...string[]): void
+```
+
+Removes attributes from a set of files.
+
+If no attributes are provided, the glob pattern will be removed completely.
+
+###### `glob`<sup>Required</sup> <a name="glob" id="projen.GitAttributesFile.removeAttributes.parameter.glob"></a>
+
+- *Type:* string
+
+Glob pattern to modify.
+
+---
+
+###### `attributes`<sup>Required</sup> <a name="attributes" id="projen.GitAttributesFile.removeAttributes.parameter.attributes"></a>
+
+- *Type:* ...string[]
+
+Attributes to remove from matched files.
 
 ---
 
@@ -15575,7 +15603,7 @@ new TaskRuntime(workdir: string)
 ##### `runTask` <a name="runTask" id="projen.TaskRuntime.runTask"></a>
 
 ```typescript
-public runTask(name: string, parents?: string[], args?: string | number[], env?: {[ key: string ]: string}): void
+public runTask(name: string, parents?: string[], args?: (string | number)[], env?: {[ key: string ]: string}): void
 ```
 
 Runs the task.

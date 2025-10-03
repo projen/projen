@@ -73,6 +73,45 @@ publisher.publishToNuGet({
 });
 ```
 
+## Trusted Publishing
+
+Trusted publishing eliminates the need for long-lived API tokens by using OpenID Connect (OIDC) to authenticate with package repositories. This is more secure and easier to maintain.
+
+**npm**
+
+```ts
+publisher.publishToNpm({
+  trustedPublishing: true,
+  npmProvenance: true, // optional, enabled by default with trusted publishing
+});
+```
+
+> **Note**: npm trusted publishing requires npm CLI version 11.5.1 or later (available with Node.js 24+).
+> You must update the Node.js version globally with `workflowNodeVersion: "24.x"` or use manual workflow patching.
+
+**PyPI**
+
+```ts
+publisher.publishToPyPi({
+  trustedPublishing: true,
+  attestations: true, // optional, enabled by default with trusted publishing
+});
+```
+
+**NuGet**
+
+You must configure the `NUGET_USERNAME` secret (or a different secret name if customized) with your NuGet.org username (profile name, not email address).
+
+```ts
+publisher.publishToNuget({
+  trustedPublishing: true,
+  nugetUsernameSecret: "NUGET_USERNAME", // optional, defaults to "NUGET_USERNAME"
+});
+```
+
+Before using trusted publishing, you must configure your package on the respective registry to accept tokens from your GitHub repository.
+See the [Trusted Publishing guide](./trusted-publishing.md) for detailed setup instructions.
+
 ## Publishing to GitHub Packages
 
 Some targets come with dynamic defaults that support GitHub Packages.

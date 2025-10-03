@@ -18,7 +18,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -30,10 +30,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -47,11 +48,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -63,7 +64,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -110,7 +111,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -122,10 +123,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -139,11 +141,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -155,7 +157,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -202,7 +204,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch1
       - name: Install dependencies
@@ -214,10 +216,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -231,11 +234,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -247,7 +250,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -294,7 +297,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch2
       - name: Install dependencies
@@ -306,10 +309,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -323,11 +327,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -339,7 +343,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -386,7 +390,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch1
       - name: Install dependencies
@@ -398,10 +402,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -415,11 +420,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -431,7 +436,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -478,7 +483,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch2
       - name: Install dependencies
@@ -490,10 +495,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -507,11 +513,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -523,7 +529,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -570,7 +576,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -582,10 +588,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -599,11 +606,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -615,7 +622,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -662,7 +669,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch1
       - name: Install dependencies
@@ -674,10 +681,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -691,11 +699,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -707,7 +715,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -754,7 +762,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch2
       - name: Install dependencies
@@ -766,10 +774,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -783,11 +792,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -799,7 +808,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -846,7 +855,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -858,10 +867,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -875,11 +885,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -891,7 +901,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -938,7 +948,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -950,10 +960,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -967,11 +978,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -983,7 +994,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -1028,7 +1039,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -1040,10 +1051,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -1057,11 +1069,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1073,7 +1085,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -1120,7 +1132,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -1132,10 +1144,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -1150,11 +1163,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1166,7 +1179,7 @@ jobs:
           git config user.email "foo@bar.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
           commit-message: |-
@@ -1213,7 +1226,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -1225,10 +1238,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -1248,11 +1262,11 @@ jobs:
           app-id: \${{ secrets.PROJEN_APP_ID }}
           private-key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1264,7 +1278,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ steps.generate_token.outputs.token }}
           commit-message: |-
@@ -1311,7 +1325,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -1323,10 +1337,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -1348,11 +1363,11 @@ jobs:
           permission-pull-requests: write
           permission-contents: write
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1364,7 +1379,7 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ steps.generate_token.outputs.token }}
           commit-message: |-

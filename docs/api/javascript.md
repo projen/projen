@@ -2,6 +2,225 @@
 
 ## Constructs <a name="Constructs" id="Constructs"></a>
 
+### Biome <a name="Biome" id="projen.javascript.Biome"></a>
+
+Biome component.
+
+#### Initializers <a name="Initializers" id="projen.javascript.Biome.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.Biome(project: NodeProject, options?: BiomeOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Biome.Initializer.parameter.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Biome.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Biome.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.Biome.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.BiomeOptions">BiomeOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Biome.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.Biome.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.Biome.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.Biome.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.Biome.addFilePattern">addFilePattern</a></code> | *No description.* |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.Biome.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.Biome.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.Biome.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.Biome.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addFilePattern` <a name="addFilePattern" id="projen.javascript.Biome.addFilePattern"></a>
+
+```typescript
+public addFilePattern(pattern: string): void
+```
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Biome.addFilePattern.parameter.pattern"></a>
+
+- *Type:* string
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Biome.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.Biome.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.Biome.of">of</a></code> | *No description.* |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.Biome.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Biome.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.Biome.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.Biome.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Biome.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.Biome.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.Biome.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Biome.of(project: Project)
+```
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Biome.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Biome.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.Biome.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.Biome.property.file">file</a></code> | <code>projen.JsonFile</code> | Biome configuration file content. |
+| <code><a href="#projen.javascript.Biome.property.task">task</a></code> | <code>projen.Task</code> | Biome task. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.Biome.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Biome.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.Biome.property.file"></a>
+
+```typescript
+public readonly file: JsonFile;
+```
+
+- *Type:* projen.JsonFile
+
+Biome configuration file content.
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.javascript.Biome.property.task"></a>
+
+```typescript
+public readonly task: Task;
+```
+
+- *Type:* projen.Task
+
+Biome task.
+
+---
+
+
 ### Bundler <a name="Bundler" id="projen.javascript.Bundler"></a>
 
 Adds support for bundling JavaScript applications and dependencies into a single file.
@@ -2730,6 +2949,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.javascript.NodeProject.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The package manager to use. |
 | <code><a href="#projen.javascript.NodeProject.property.runScriptCommand">runScriptCommand</a></code> | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager). |
 | <code><a href="#projen.javascript.NodeProject.property.autoMerge">autoMerge</a></code> | <code>projen.github.AutoMerge</code> | Component that sets up mergify for merging approved pull requests. |
+| <code><a href="#projen.javascript.NodeProject.property.biome">biome</a></code> | <code><a href="#projen.javascript.Biome">Biome</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | The PR build GitHub workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.buildWorkflowJobId">buildWorkflowJobId</a></code> | <code>string</code> | The job ID of the build workflow. |
 | <code><a href="#projen.javascript.NodeProject.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The Jest configuration (if enabled). |
@@ -3251,6 +3471,16 @@ public readonly autoMerge: AutoMerge;
 - *Type:* projen.github.AutoMerge
 
 Component that sets up mergify for merging approved pull requests.
+
+---
+
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.javascript.NodeProject.property.biome"></a>
+
+```typescript
+public readonly biome: Biome;
+```
+
+- *Type:* <a href="#projen.javascript.Biome">Biome</a>
 
 ---
 
@@ -5029,7 +5259,7 @@ For example, to add the [--log-limit](https://esbuild.github.io/api/#log-limit) 
 ```text
 project.bundler.addBundle("./src/hello.ts", {
   platform: "node",
-  target: "node18",
+  target: "node22",
   sourcemap: true,
   format: "esm",
   esbuildArgs: {
@@ -5279,6 +5509,128 @@ public readonly tsconfigPath: string;
 - *Default:* "tsconfig.json"
 
 The path of the tsconfig.json file to use for bundling.
+
+---
+
+### BiomeOptions <a name="BiomeOptions" id="projen.javascript.BiomeOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.BiomeOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const biomeOptions: javascript.BiomeOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.BiomeOptions.property.assist">assist</a></code> | <code>boolean</code> | Enable code assist with recommended actions. |
+| <code><a href="#projen.javascript.BiomeOptions.property.biomeConfig">biomeConfig</a></code> | <code><a href="#projen.javascript.biome_config.BiomeConfiguration">BiomeConfiguration</a></code> | Full Biome configuration. |
+| <code><a href="#projen.javascript.BiomeOptions.property.formatter">formatter</a></code> | <code>boolean</code> | Enable code formatter with recommended settings. |
+| <code><a href="#projen.javascript.BiomeOptions.property.ignoreGeneratedFiles">ignoreGeneratedFiles</a></code> | <code>boolean</code> | Automatically ignore all generated files. |
+| <code><a href="#projen.javascript.BiomeOptions.property.linter">linter</a></code> | <code>boolean</code> | Enable linting with recommended rules. |
+| <code><a href="#projen.javascript.BiomeOptions.property.mergeArraysInConfiguration">mergeArraysInConfiguration</a></code> | <code>boolean</code> | Should arrays be merged or overwritten when creating Biome configuration. |
+| <code><a href="#projen.javascript.BiomeOptions.property.version">version</a></code> | <code>string</code> | Version of Biome to use. |
+
+---
+
+##### `assist`<sup>Optional</sup> <a name="assist" id="projen.javascript.BiomeOptions.property.assist"></a>
+
+```typescript
+public readonly assist: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable code assist with recommended actions.
+
+---
+
+##### `biomeConfig`<sup>Optional</sup> <a name="biomeConfig" id="projen.javascript.BiomeOptions.property.biomeConfig"></a>
+
+```typescript
+public readonly biomeConfig: BiomeConfiguration;
+```
+
+- *Type:* <a href="#projen.javascript.biome_config.BiomeConfiguration">BiomeConfiguration</a>
+
+Full Biome configuration.
+
+This configuration dictates the final outcome if value is set.
+For example, if the linter is disabled at the top-level, it can be enabled with `biomeConfig.linter.enabled`.
+
+---
+
+##### `formatter`<sup>Optional</sup> <a name="formatter" id="projen.javascript.BiomeOptions.property.formatter"></a>
+
+```typescript
+public readonly formatter: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable code formatter with recommended settings.
+
+---
+
+##### `ignoreGeneratedFiles`<sup>Optional</sup> <a name="ignoreGeneratedFiles" id="projen.javascript.BiomeOptions.property.ignoreGeneratedFiles"></a>
+
+```typescript
+public readonly ignoreGeneratedFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically ignore all generated files.
+
+This prevents Biome from trying to format or lint files that are marked as generated,
+which would fail since generated files are typically read-only.
+
+---
+
+##### `linter`<sup>Optional</sup> <a name="linter" id="projen.javascript.BiomeOptions.property.linter"></a>
+
+```typescript
+public readonly linter: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable linting with recommended rules.
+
+---
+
+##### `mergeArraysInConfiguration`<sup>Optional</sup> <a name="mergeArraysInConfiguration" id="projen.javascript.BiomeOptions.property.mergeArraysInConfiguration"></a>
+
+```typescript
+public readonly mergeArraysInConfiguration: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Should arrays be merged or overwritten when creating Biome configuration.
+
+By default arrays are merged and duplicate values are removed
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.javascript.BiomeOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* "^2"
+
+Version of Biome to use.
 
 ---
 
@@ -6779,7 +7131,7 @@ Sets the path to the prettier node module used to update inline snapshots.
 ##### `projects`<sup>Optional</sup> <a name="projects" id="projen.javascript.JestConfigOptions.property.projects"></a>
 
 ```typescript
-public readonly projects: string | {[ key: string ]: any}[];
+public readonly projects: (string | {[ key: string ]: any})[];
 ```
 
 - *Type:* string | {[ key: string ]: any}[]
@@ -7437,6 +7789,8 @@ The version of jest to use.
 
 Note that same version is used as version of `@types/jest` and `ts-jest` (if Typescript in use), so given version should work also for those.
 
+With Jest 30 ts-jest version 29 is used (if Typescript in use)
+
 ---
 
 ##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JestOptions.property.junitReporting"></a>
@@ -7629,6 +7983,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
@@ -8072,6 +8427,19 @@ GitHub secret which contains the NPM token to use when publishing packages.
 
 ---
 
+##### `npmTrustedPublishing`<sup>Optional</sup> <a name="npmTrustedPublishing" id="projen.javascript.NodePackageOptions.property.npmTrustedPublishing"></a>
+
+```typescript
+public readonly npmTrustedPublishing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
+
+---
+
 ##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.javascript.NodePackageOptions.property.packageManager"></a>
 
 ```typescript
@@ -8303,6 +8671,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmRegistry">npmRegistry</a></code> | <code>string</code> | The host name of the npm registry to publish to. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
@@ -8326,12 +8695,14 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.publishTasks">publishTasks</a></code> | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releasableCommits">releasableCommits</a></code> | <code>projen.ReleasableCommits</code> | Find commits that should be considered releasable Used to decide if a release is required. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseBranches">releaseBranches</a></code> | <code>{[ key: string ]: projen.release.BranchOptions}</code> | Defines additional release branches. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.releaseEnvironment">releaseEnvironment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseEveryCommit">releaseEveryCommit</a></code> | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseFailureIssue">releaseFailureIssue</a></code> | <code>boolean</code> | Create a github issue on every failed publishing task. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseFailureIssueLabel">releaseFailureIssueLabel</a></code> | <code>string</code> | The label to apply to issues indicating publish failures. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseSchedule">releaseSchedule</a></code> | <code>string</code> | CRON schedule to trigger new releases. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseTagPrefix">releaseTagPrefix</a></code> | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseTrigger">releaseTrigger</a></code> | <code>projen.release.ReleaseTrigger</code> | The release trigger to use. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowEnv">releaseWorkflowEnv</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables for release workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowName">releaseWorkflowName</a></code> | <code>string</code> | The name of the default release workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseWorkflowSetupSteps">releaseWorkflowSetupSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | A set of workflow steps to execute in order to setup the workflow container. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.versionrcOptions">versionrcOptions</a></code> | <code>{[ key: string ]: any}</code> | Custom configuration used when creating changelog with commit-and-tag-version package. |
@@ -8341,13 +8712,15 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | Biome options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code><a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a></code> | Options for PR build workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowTriggers">buildWorkflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code><a href="#projen.javascript.BundlerOptions">BundlerOptions</a></code> | Options for `Bundler`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code><a href="#projen.javascript.LicenseCheckerOptions">LicenseCheckerOptions</a></code> | Configure which licenses should be deemed acceptable for use by dependencies. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with `@codeCovTokenSecret`. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.codeCovTokenSecret">codeCovTokenSecret</a></code> | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.codeCovTokenSecret">codeCovTokenSecret</a></code> | <code>string</code> | Define the secret name for a specified https://codecov.io/ token. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.copyrightOwner">copyrightOwner</a></code> | <code>string</code> | License copyright owner. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.copyrightPeriod">copyrightPeriod</a></code> | <code>string</code> | The copyright years to put in the LICENSE file. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.dependabot">dependabot</a></code> | <code>boolean</code> | Use dependabot to handle dependency upgrades. |
@@ -9223,6 +9596,19 @@ GitHub secret which contains the NPM token to use when publishing packages.
 
 ---
 
+##### `npmTrustedPublishing`<sup>Optional</sup> <a name="npmTrustedPublishing" id="projen.javascript.NodeProjectOptions.property.npmTrustedPublishing"></a>
+
+```typescript
+public readonly npmTrustedPublishing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
+
+---
+
 ##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.javascript.NodeProjectOptions.property.packageManager"></a>
 
 ```typescript
@@ -9582,6 +9968,25 @@ be provided for the default branch.
 
 ---
 
+##### `releaseEnvironment`<sup>Optional</sup> <a name="releaseEnvironment" id="projen.javascript.NodeProjectOptions.property.releaseEnvironment"></a>
+
+```typescript
+public readonly releaseEnvironment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used, unless set at the artifact level
+
+The GitHub Actions environment used for the release.
+
+This can be used to add an explicit approval step to the release
+or limit who can initiate a release through environment protection rules.
+
+When multiple artifacts are released, the environment can be overwritten
+on a per artifact basis.
+
+---
+
 ##### ~~`releaseEveryCommit`~~<sup>Optional</sup> <a name="releaseEveryCommit" id="projen.javascript.NodeProjectOptions.property.releaseEveryCommit"></a>
 
 - *Deprecated:* Use `releaseTrigger: ReleaseTrigger.continuous()` instead
@@ -9668,6 +10073,19 @@ public readonly releaseTrigger: ReleaseTrigger;
 - *Default:* Continuous releases (`ReleaseTrigger.continuous()`)
 
 The release trigger to use.
+
+---
+
+##### `releaseWorkflowEnv`<sup>Optional</sup> <a name="releaseWorkflowEnv" id="projen.javascript.NodeProjectOptions.property.releaseWorkflowEnv"></a>
+
+```typescript
+public readonly releaseWorkflowEnv: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables for release workflows.
 
 ---
 
@@ -9790,6 +10208,32 @@ Throw if set to true but `autoApproveOptions` are not defined.
 
 ---
 
+##### `biome`<sup>Optional</sup> <a name="biome" id="projen.javascript.NodeProjectOptions.property.biome"></a>
+
+```typescript
+public readonly biome: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup Biome.
+
+---
+
+##### `biomeOptions`<sup>Optional</sup> <a name="biomeOptions" id="projen.javascript.NodeProjectOptions.property.biomeOptions"></a>
+
+```typescript
+public readonly biomeOptions: BiomeOptions;
+```
+
+- *Type:* <a href="#projen.javascript.BiomeOptions">BiomeOptions</a>
+- *Default:* default options
+
+Biome options.
+
+---
+
 ##### `buildWorkflow`<sup>Optional</sup> <a name="buildWorkflow" id="projen.javascript.NodeProjectOptions.property.buildWorkflow"></a>
 
 ```typescript
@@ -9866,7 +10310,7 @@ public readonly codeCov: boolean;
 - *Type:* boolean
 - *Default:* false
 
-Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v4 A secret is required for private repos. Configured with `@codeCovTokenSecret`.
+Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
 
 ---
 
@@ -9877,9 +10321,9 @@ public readonly codeCovTokenSecret: string;
 ```
 
 - *Type:* string
-- *Default:* if this option is not specified, only public repositories are supported
+- *Default:* OIDC auth is used
 
-Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.
+Define the secret name for a specified https://codecov.io/ token.
 
 ---
 
@@ -12294,6 +12738,7 @@ const upgradeDependenciesWorkflowOptions: javascript.UpgradeDependenciesWorkflow
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Assignees to add on the PR. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.branches">branches</a></code> | <code>string[]</code> | List of branches to create PR's for. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.container">container</a></code> | <code>projen.github.workflows.ContainerOptions</code> | Job container options. |
+| <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables for the upgrade job. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use for commits. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the upgrade job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
@@ -12340,6 +12785,19 @@ public readonly container: ContainerOptions;
 - *Default:* defaults
 
 Job container options.
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.javascript.UpgradeDependenciesWorkflowOptions.property.env"></a>
+
+```typescript
+public readonly env: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+- *Default:* {}
+
+Build environment variables for the upgrade job.
 
 ---
 
@@ -14934,7 +15392,7 @@ const project = new TypeScriptProject({
 // Tell the bundler to bundle the compiled results (from the "lib" directory)
 project.bundler.addBundle("./lib/index.js", {
   platform: "node",
-  target: "node18",
+  target: "node22",
   sourcemap: false,
   format: "esm",
 });

@@ -27,7 +27,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Checkout",
       }),
-      uses: "actions/checkout@v4",
+      uses: "actions/checkout@v5",
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
     };
   }
@@ -75,6 +75,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Check if tag exists",
         id: options.id ?? "check-tag",
+        shell: "bash",
       }),
       run: [
         `TAG=${tag}`,
@@ -109,7 +110,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Upload artifact",
       }),
-      uses: "actions/upload-artifact@v4.4.0",
+      uses: "actions/upload-artifact@v4.6.2",
       with: uploadArtifactWith,
     };
   }
@@ -138,7 +139,7 @@ export class WorkflowSteps {
         ...options,
         name: options?.name ?? "Download artifact",
       }),
-      uses: "actions/download-artifact@v4",
+      uses: "actions/download-artifact@v5",
       with: downloadArtifactWith,
     };
   }
