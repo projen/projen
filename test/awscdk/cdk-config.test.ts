@@ -112,4 +112,19 @@ describe("feature flags", () => {
 
     expect(config.context).toEqual(expect.objectContaining(FEATURE_FLAGS_V2));
   });
+
+  test("user context should take precedence over default flags", () => {
+    const config = new CdkConfig(new TestProject(), {
+      app: "test feature flags",
+      cdkMajorVersion: 2,
+      context: {
+        "@aws-cdk/aws-lambda:recognizeLayerVersion": false,
+      },
+    });
+
+    expect(config.context["@aws-cdk/core:checkSecretUsage"]).toBe(true);
+    expect(config.context["@aws-cdk/aws-lambda:recognizeLayerVersion"]).toBe(
+      false
+    );
+  });
 });

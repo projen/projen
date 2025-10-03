@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import * as path from "path";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
@@ -203,12 +202,16 @@ export class CdkConfig extends Component {
         }
         break;
       case 2:
-        const featureFlags = this.tryLoadFeatureFlags(this.project);
-        if (featureFlags) {
-          Object.assign(context, featureFlags);
-        } else {
-          Object.assign(context, FEATURE_FLAGS_V2);
+        const featureFlags =
+          this.tryLoadFeatureFlags(this.project) || FEATURE_FLAGS_V2;
+
+        // Customer context should take precedence over the default feature flags
+        for (const [key, value] of Object.entries(featureFlags)) {
+          if (context[key] === undefined) {
+            context[key] = value;
+          }
         }
+
         break;
     }
 
@@ -227,12 +230,7 @@ export class CdkConfig extends Component {
     if (project instanceof AwsCdkTypeScriptApp) {
       try {
         const jsonFile = fs.readFileSync(
-          path.join(
-            process.cwd(),
-            "node_modules",
-            "aws-cdk-lib",
-            "recommended-feature-flags.json"
-          ),
+          require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
           "utf-8"
         );
 

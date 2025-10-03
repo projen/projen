@@ -290,6 +290,7 @@ describe("CDK v2", () => {
       cdkVersion: "2.0.0-rc.1",
       defaultReleaseBranch: "main",
       name: "test",
+      featureFlags: true,
     });
     snapshot = synthSnapshot(project);
   });
