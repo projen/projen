@@ -1,7 +1,7 @@
-import * as fs from "fs";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
+import { tryReadFileSync } from "../util";
 import { AwsCdkTypeScriptApp } from "./awscdk-app-ts";
 import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "./internal";
 /**
@@ -16,7 +16,14 @@ export interface CdkConfigCommonOptions {
   readonly context?: { [key: string]: any };
 
   /**
-   * Include all feature flags in cdk.json
+   * Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+   *
+   * For CDK version 2:
+   * Enabling this will update the feature flags in the cdk.json when you update the CDK version,
+   * which could introduce breaking changes.
+   *
+   * Make sure to double-check the changes to cdk.json before deploying.
+   * You can overwrite any feature flag by passing it into the context field.
    *
    * @default true
    */
@@ -113,10 +120,8 @@ export class CdkConfig extends Component {
     this._include = options.watchIncludes ?? [];
     this._exclude = options.watchExcludes ?? [];
 
-    this._context = { ...options.context };
-
     this._context = this.setFeatureFlags(
-      this._context,
+      options.context ?? {},
       options.featureFlags,
       options.cdkMajorVersion
     );
@@ -187,7 +192,7 @@ export class CdkConfig extends Component {
    * @returns The updated context.
    */
   private setFeatureFlags(
-    context: Record<string, any>,
+    context: { [key: string]: any },
     fflagsEnabled: boolean = true,
     cdkMajorVersion: number = 1
   ) {
@@ -211,7 +216,6 @@ export class CdkConfig extends Component {
             context[key] = value;
           }
         }
-
         break;
     }
 
@@ -229,13 +233,14 @@ export class CdkConfig extends Component {
   private tryLoadFeatureFlags(project: Project) {
     if (project instanceof AwsCdkTypeScriptApp) {
       try {
-        const jsonFile = fs.readFileSync(
-          require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
-          "utf-8"
+        const featureFlags = tryReadFileSync(
+          require.resolve("aws-cdk-lib/recommended-feature-flags.json", {
+            paths: [process.cwd()],
+          })
         );
 
-        return JSON.parse(jsonFile);
-      } catch (e) {
+        return featureFlags ? JSON.parse(featureFlags) : undefined;
+      } catch {
         return undefined;
       }
     }
