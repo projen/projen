@@ -13562,7 +13562,7 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -14340,10 +14340,14 @@ public readonly featureFlags: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes.
+Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+
+For CDK version 2:
+Enabling this will update the feature flags in the cdk.json when you update the CDK version,
+which could introduce breaking changes.
 
 Make sure to double-check the changes to cdk.json before deploying.
-Otherwise you can overwrite any feature flag by passing it into the context field.
+You can overwrite any feature flag by passing it into the context field.
 
 ---
 
@@ -14706,7 +14710,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -15598,10 +15602,14 @@ public readonly featureFlags: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes.
+Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+
+For CDK version 2:
+Enabling this will update the feature flags in the cdk.json when you update the CDK version,
+which could introduce breaking changes.
 
 Make sure to double-check the changes to cdk.json before deploying.
-Otherwise you can overwrite any feature flag by passing it into the context field.
+You can overwrite any feature flag by passing it into the context field.
 
 ---
 
@@ -15985,7 +15993,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -18279,10 +18287,14 @@ public readonly featureFlags: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes.
+Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+
+For CDK version 2:
+Enabling this will update the feature flags in the cdk.json when you update the CDK version,
+which could introduce breaking changes.
 
 Make sure to double-check the changes to cdk.json before deploying.
-Otherwise you can overwrite any feature flag by passing it into the context field.
+You can overwrite any feature flag by passing it into the context field.
 
 ---
 
@@ -18590,7 +18602,7 @@ const cdkConfigCommonOptions: awscdk.CdkConfigCommonOptions = { ... }
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes. |
+| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -18661,10 +18673,14 @@ public readonly featureFlags: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes.
+Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+
+For CDK version 2:
+Enabling this will update the feature flags in the cdk.json when you update the CDK version,
+which could introduce breaking changes.
 
 Make sure to double-check the changes to cdk.json before deploying.
-Otherwise you can overwrite any feature flag by passing it into the context field.
+You can overwrite any feature flag by passing it into the context field.
 
 ---
 
@@ -18727,7 +18743,7 @@ const cdkConfigOptions: awscdk.CdkConfigOptions = { ... }
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.CdkConfigOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes. |
+| <code><a href="#projen.awscdk.CdkConfigOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -18799,10 +18815,14 @@ public readonly featureFlags: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. Enabling this will update the feature flags in the cdk.json when you update the CDK version, which could introduce breaking changes.
+Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+
+For CDK version 2:
+Enabling this will update the feature flags in the cdk.json when you update the CDK version,
+which could introduce breaking changes.
 
 Make sure to double-check the changes to cdk.json before deploying.
-Otherwise you can overwrite any feature flag by passing it into the context field.
+You can overwrite any feature flag by passing it into the context field.
 
 ---
 
