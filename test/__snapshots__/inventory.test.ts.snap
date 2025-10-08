@@ -5651,7 +5651,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -8992,7 +8992,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -13278,7 +13278,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -16452,7 +16452,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -19558,7 +19558,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -23466,7 +23466,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -25986,7 +25986,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -28787,7 +28787,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -31239,7 +31239,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -35020,7 +35020,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -37809,7 +37809,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -40576,7 +40576,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -43343,7 +43343,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",

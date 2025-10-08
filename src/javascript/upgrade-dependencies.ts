@@ -597,7 +597,7 @@ export interface UpgradeDependenciesWorkflowOptions {
 
   /**
    * The git identity to use for commits.
-   * @default "github-actions@github.com"
+   * @default - default GitHub Actions user
    */
   readonly gitIdentity?: GitIdentity;
 

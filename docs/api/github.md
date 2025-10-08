@@ -5459,7 +5459,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
-- *Default:* the default github-actions user
+- *Default:* default GitHub Actions user
 
 The git identity used to create the commit.
 
@@ -7835,7 +7835,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
-- *Default:* the default github-actions user
+- *Default:* default GitHub Actions user
 
 The git identity used to create the commit.
 
@@ -8791,6 +8791,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
+- *Default:* default GitHub Actions user
 
 The git identity to use in this workflow.
 
@@ -9031,6 +9032,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
+- *Default:* default GitHub Actions user
 
 The git identity to use in this workflow.
 

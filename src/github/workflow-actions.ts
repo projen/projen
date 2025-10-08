@@ -258,7 +258,7 @@ export interface CreatePullRequestOptions {
 
   /**
    * The git identity used to create the commit.
-   * @default - the default github-actions user
+   * @default - default GitHub Actions user
    */
   readonly gitIdentity?: GitIdentity;
 

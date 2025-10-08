@@ -88,6 +88,7 @@ export interface TaskWorkflowJobOptions {
 
   /**
    * The git identity to use in this workflow.
+   * @default - default GitHub Actions user
    */
   readonly gitIdentity?: GitIdentity;
 

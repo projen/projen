@@ -677,7 +677,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* projen.github.GitIdentity
-- *Default:* default identity
+- *Default:* default GitHub Actions user
 
 Git identity to use for the workflow.
 

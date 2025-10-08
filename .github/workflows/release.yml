@@ -27,8 +27,8 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
@@ -325,8 +325,8 @@ jobs:
         run: mv .repo/dist dist
       - name: Release
         env:
-          GIT_USER_NAME: github-actions
-          GIT_USER_EMAIL: github-actions@github.com
+          GIT_USER_NAME: github-actions[bot]
+          GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
           GITHUB_TOKEN: ${{ secrets.GO_GITHUB_TOKEN }}
         run: npx -p publib@latest publib-golang
       - name: Extract Version

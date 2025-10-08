@@ -10685,7 +10685,7 @@ public readonly workflowGitIdentity: GitIdentity;
 ```
 
 - *Type:* projen.github.GitIdentity
-- *Default:* GitHub Actions
+- *Default:* default GitHub Actions user
 
 The git identity to use in workflows.
 
@@ -12808,7 +12808,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* projen.github.GitIdentity
-- *Default:* "github-actions@github.com"
+- *Default:* default GitHub Actions user
 
 The git identity to use for commits.
 
