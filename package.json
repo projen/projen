@@ -97,7 +97,7 @@
     "fast-json-patch": "^3.1.1",
     "ini": "^2.0.0",
     "parse-conflict-json": "^4.0.0",
-    "semver": "^7.7.2",
+    "semver": "^7.7.3",
     "shx": "^0.4.0",
     "xmlbuilder2": "^3.1.1",
     "yaml": "^2.2.2",
