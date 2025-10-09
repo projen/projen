@@ -1343,13 +1343,13 @@ export interface GoPublishOptions extends CommonPublishOptions {
 
   /**
    * The user name to use for the release git commit.
-   * @default "github-actions"
+   * @default - default GitHub Actions user name
    */
   readonly gitUserName?: string;
 
   /**
    * The email to use in the release git commit.
-   * @default "github-actions@github.com"
+   * @default - default GitHub Actions user email
    */
   readonly gitUserEmail?: string;
 

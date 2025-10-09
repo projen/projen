@@ -114,7 +114,7 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
 
   /**
    * Git identity to use for the workflow.
-   * @default - default identity
+   * @default - default GitHub Actions user
    */
   readonly gitIdentity?: GitIdentity;
 

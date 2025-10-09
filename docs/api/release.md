@@ -1471,7 +1471,7 @@ public readonly gitUserEmail: string;
 ```
 
 - *Type:* string
-- *Default:* "github-actions@github.com"
+- *Default:* default GitHub Actions user email
 
 The email to use in the release git commit.
 
@@ -1484,7 +1484,7 @@ public readonly gitUserName: string;
 ```
 
 - *Type:* string
-- *Default:* "github-actions"
+- *Default:* default GitHub Actions user name
 
 The user name to use for the release git commit.
 
@@ -1680,7 +1680,7 @@ public readonly gitUserEmail: string;
 ```
 
 - *Type:* string
-- *Default:* "github-actions@github.com"
+- *Default:* default GitHub Actions user email
 
 The email to use in the release git commit.
 
@@ -1695,7 +1695,7 @@ public readonly gitUserName: string;
 ```
 
 - *Type:* string
-- *Default:* "github-actions"
+- *Default:* default GitHub Actions user name
 
 The user name to use for the release git commit.
 
