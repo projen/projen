@@ -4,6 +4,7 @@ import {
   Artifacts,
   Cache,
   Default,
+  DefaultHooks,
   IDToken,
   Image,
   Include,
@@ -120,6 +121,10 @@ export class CiConfiguration extends Component {
    * Default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs.
    */
   readonly defaultIdTokens?: Record<string, IDToken>;
+  /**
+   * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script
+   */
+  private defaultHooks?: Default['hooks'];
   /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
@@ -351,6 +356,15 @@ export class CiConfiguration extends Component {
     this._defaultCache = caches;
   }
 
+  /**
+   * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules 
+   * https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script 
+   * @param hooks 
+   */
+  public addDefaultHooks(hooks: DefaultHooks) {
+    this.defaultHooks = hooks;
+  }
+
   private renderCI() {
     return {
       default: this.renderDefault(),
@@ -392,6 +406,7 @@ export class CiConfiguration extends Component {
         this.defaultServices.length > 0 ? this.defaultServices : undefined,
       tags: this.defaultTags.length > 0 ? this.defaultTags : undefined,
       timeout: this.defaultTimeout,
+      hooks: this.defaultHooks,
     };
     return Object.values(defaults).filter((x) => x).length
       ? snakeCaseKeys(defaults)
