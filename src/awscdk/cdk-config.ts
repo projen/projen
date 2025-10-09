@@ -16,7 +16,7 @@ export interface CdkConfigCommonOptions {
   readonly context?: { [key: string]: any };
 
   /**
-   * Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+   * Include all feature flags in cdk.json.
    *
    * For CDK version 2:
    * Enabling this will update the feature flags in the cdk.json when you update the CDK version,
@@ -24,8 +24,8 @@ export interface CdkConfigCommonOptions {
    *
    * Make sure to double-check the changes to cdk.json before deploying.
    * You can overwrite any feature flag by passing it into the context field.
-   *
-   * @default true
+  *
+  * @default - `false` for AWS CDK V2 and `true` for AWS CDK V1
    */
   readonly featureFlags?: boolean;
 
