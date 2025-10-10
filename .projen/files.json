@@ -24,6 +24,7 @@
     ".vscode/launch.json",
     "LICENSE",
     "projen.js",
+    "src/awscdk/private/feature-flags-v2.const.ts",
     "src/javascript/biome/biome-config.ts",
     "tsconfig.dev.json"
   ],

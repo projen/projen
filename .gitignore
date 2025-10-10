@@ -65,5 +65,6 @@ tsconfig.json
 !/.markdownlint.json
 !/.vscode/launch.json
 !/src/javascript/biome/biome-config.ts
+!/src/awscdk/private/feature-flags-v2.const.ts
 !/.projen/tree.json
 !/.projenrc.ts
