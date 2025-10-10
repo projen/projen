@@ -3,26 +3,28 @@ import { posix, sep } from "path";
 /**
  * Feature flags as of v1.130.0
  */
-export const FEATURE_FLAGS = [
-  "aws-cdk:enableDiffNoFail",
-  "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId",
-  "@aws-cdk/core:enableStackNameDuplicates",
-  "@aws-cdk/core:stackRelativeExports",
-  "@aws-cdk/aws-ecr-assets:dockerIgnoreSupport",
-  "@aws-cdk/aws-secretsmanager:parseOwnedSecretName",
-  "@aws-cdk/aws-kms:defaultKeyPolicies",
-  "@aws-cdk/aws-s3:grantWriteWithoutAcl",
-  "@aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount",
-  "@aws-cdk/aws-rds:lowercaseDbIdentifier",
-  "@aws-cdk/aws-efs:defaultEncryptionAtRest",
-  "@aws-cdk/aws-lambda:recognizeVersionProps",
-  "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021",
-];
+export const FEATURE_FLAGS_V1 = {
+  "aws-cdk:enableDiffNoFail": true,
+  "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
+  "@aws-cdk/core:enableStackNameDuplicates": true,
+  "@aws-cdk/core:stackRelativeExports": true,
+  "@aws-cdk/aws-ecr-assets:dockerIgnoreSupport": true,
+  "@aws-cdk/aws-secretsmanager:parseOwnedSecretName": true,
+  "@aws-cdk/aws-kms:defaultKeyPolicies": true,
+  "@aws-cdk/aws-s3:grantWriteWithoutAcl": true,
+  "@aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount": true,
+  "@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
+  "@aws-cdk/aws-efs:defaultEncryptionAtRest": true,
+  "@aws-cdk/aws-lambda:recognizeVersionProps": true,
+  "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,
+};
 
 /**
- * Feature flags as of v2.190.0
+ * Feature flags as of v2.219.0
  */
 export const FEATURE_FLAGS_V2 = {
+  "@aws-cdk/aws-signer:signingProfileNamePassedToCfn": true,
+  "@aws-cdk/aws-ecs-patterns:secGroupsDisablesImplicitOpenListener": true,
   "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
   "@aws-cdk/core:checkSecretUsage": true,
   "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
@@ -53,6 +55,7 @@ export const FEATURE_FLAGS_V2 = {
   "@aws-cdk/aws-ec2:restrictDefaultSecurityGroup": true,
   "@aws-cdk/aws-apigateway:requestValidatorUniqueId": true,
   "@aws-cdk/aws-kms:aliasNameRef": true,
+  "@aws-cdk/aws-kms:applyImportedAliasPermissionsToPrincipal": true,
   "@aws-cdk/aws-autoscaling:generateLaunchTemplateInsteadOfLaunchConfig": true,
   "@aws-cdk/core:includePrefixInUniqueNameGeneration": true,
   "@aws-cdk/aws-efs:denyAnonymousAccess": true,
@@ -75,6 +78,7 @@ export const FEATURE_FLAGS_V2 = {
   "@aws-cdk/aws-ecs:removeDefaultDeploymentAlarm": true,
   "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": false,
   "@aws-cdk/aws-s3:keepNotificationInImportedBucket": false,
+  "@aws-cdk/core:explicitStackTags": true,
   "@aws-cdk/aws-ecs:enableImdsBlockingDeprecatedFeature": false,
   "@aws-cdk/aws-ecs:disableEcsImdsBlocking": true,
   "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": true,
@@ -100,6 +104,10 @@ export const FEATURE_FLAGS_V2 = {
   "@aws-cdk/core:aspectPrioritiesMutating": true,
   "@aws-cdk/aws-dynamodb:retainTableReplica": true,
   "@aws-cdk/aws-stepfunctions:useDistributedMapResultWriterV2": true,
+  "@aws-cdk/s3-notifications:addS3TrustKeyPolicyForSnsSubscriptions": true,
+  "@aws-cdk/aws-ec2:requirePrivateSubnetsForEgressOnlyInternetGateway": true,
+  "@aws-cdk/aws-s3:publicAccessBlockedByDefault": true,
+  "@aws-cdk/aws-lambda:useCdkManagedLogGroup": true,
 };
 
 /**

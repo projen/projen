@@ -1,6 +1,6 @@
 import { join } from "path/posix";
 import { AwsCdkDeps } from "./awscdk-deps";
-import { FEATURE_FLAGS } from "./internal";
+import { FEATURE_FLAGS_V1 } from "./internal";
 import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -87,12 +87,12 @@ export class IntegrationTest extends IntegrationTestBase {
 
     if (options.cdkDeps.cdkMajorVersion === 1) {
       // add all feature flags
-      const features = [
-        ...FEATURE_FLAGS,
-        "@aws-cdk/core:newStyleStackSynthesis", // simplifies asset coordinates in synth output
-      ];
+      const features = {
+        ...FEATURE_FLAGS_V1,
+        "@aws-cdk/core:newStyleStackSynthesis": true, // simplifies asset coordinates in synth output
+      };
 
-      for (const feature of features) {
+      for (const feature of Object.keys(features)) {
         opts.push(`--context ${feature}=true`);
       }
     }

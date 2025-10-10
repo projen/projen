@@ -1,5 +1,5 @@
-import { CdkConfig } from "../../src/awscdk/cdk-config";
-import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "../../src/awscdk/internal";
+import { CdkConfig, CdkFeatureFlags } from "../../src/awscdk/cdk-config";
+import { FEATURE_FLAGS_V1, FEATURE_FLAGS_V2 } from "../../src/awscdk/internal";
 import { TestProject } from "../util";
 
 describe("context values", () => {
@@ -95,19 +95,28 @@ describe("excludes", () => {
 });
 
 describe("feature flags", () => {
-  test("should be set for cdk v1", () => {
+  test("can be set for cdk v1", () => {
     const config = new CdkConfig(new TestProject(), {
       app: "test feature flags",
-      cdkMajorVersion: 1,
+      featureFlags: CdkFeatureFlags.V1.ALL,
     });
 
-    expect(Object.keys(config.context)).toEqual(FEATURE_FLAGS);
+    expect(Object.keys(config.context)).toEqual(FEATURE_FLAGS_V1);
   });
 
-  test("should be set for cdk v2", () => {
+  test("can be set for cdk v2", () => {
     const config = new CdkConfig(new TestProject(), {
       app: "test feature flags",
-      cdkMajorVersion: 2,
+      featureFlags: CdkFeatureFlags.V2.ALL,
+    });
+
+    expect(config.context).toEqual(expect.objectContaining(FEATURE_FLAGS_V2));
+  });
+
+  test("can be loaded dynamically for cdk v2", () => {
+    const config = new CdkConfig(new TestProject(), {
+      app: "test feature flags",
+      featureFlags: CdkFeatureFlags.V2.fromLocalAwsCdkLib(),
     });
 
     expect(config.context).toEqual(expect.objectContaining(FEATURE_FLAGS_V2));
@@ -116,7 +125,7 @@ describe("feature flags", () => {
   test("user context should take precedence over default flags", () => {
     const config = new CdkConfig(new TestProject(), {
       app: "test feature flags",
-      cdkMajorVersion: 2,
+      featureFlags: CdkFeatureFlags.V2.ALL,
       context: {
         "@aws-cdk/aws-lambda:recognizeLayerVersion": false,
       },

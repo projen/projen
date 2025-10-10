@@ -80,7 +80,6 @@ export class AwsCdkJavaApp extends JavaProject {
 
     this.cdkConfig = new CdkConfig(this, {
       app: `mvn exec:java --quiet -Dexec.mainClass=${this.mainClass}`,
-      featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       ...options,
     });
 

@@ -190,22 +190,6 @@ exports[`inventory 1`] = `
         "switch": "cdk-dependencies-as-deps",
       },
       {
-        "docs": "The major version of the AWS CDK (e.g. 1, 2, ...).",
-        "featured": false,
-        "fullType": {
-          "primitive": "number",
-        },
-        "jsonLike": true,
-        "name": "cdkMajorVersion",
-        "optional": true,
-        "parent": "CdkConfigCommonOptions",
-        "path": [
-          "cdkMajorVersion",
-        ],
-        "simpleType": "number",
-        "switch": "cdk-major-version",
-      },
-      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -443,20 +427,22 @@ exports[`inventory 1`] = `
         "switch": "distdir",
       },
       {
-        "default": "true",
-        "docs": "Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.",
+        "default": "- no feature flags are enabled by default",
+        "docs": "Feature flags that should be enabled in \`cdk.json\`.",
         "featured": false,
+        "fqn": "projen.awscdk.ICdkFeatureFlags",
         "fullType": {
-          "primitive": "boolean",
+          "fqn": "projen.awscdk.ICdkFeatureFlags",
         },
         "jsonLike": true,
+        "kind": "interface",
         "name": "featureFlags",
         "optional": true,
         "parent": "CdkConfigCommonOptions",
         "path": [
           "featureFlags",
         ],
-        "simpleType": "boolean",
+        "simpleType": "ICdkFeatureFlags",
         "switch": "feature-flags",
       },
       {
@@ -1413,22 +1399,6 @@ exports[`inventory 1`] = `
         "switch": "cdk-dependencies-as-deps",
       },
       {
-        "docs": "The major version of the AWS CDK (e.g. 1, 2, ...).",
-        "featured": false,
-        "fullType": {
-          "primitive": "number",
-        },
-        "jsonLike": true,
-        "name": "cdkMajorVersion",
-        "optional": true,
-        "parent": "CdkConfigCommonOptions",
-        "path": [
-          "cdkMajorVersion",
-        ],
-        "simpleType": "number",
-        "switch": "cdk-major-version",
-      },
-      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -1673,20 +1643,22 @@ exports[`inventory 1`] = `
         "switch": "dev-deps",
       },
       {
-        "default": "true",
-        "docs": "Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.",
+        "default": "- no feature flags are enabled by default",
+        "docs": "Feature flags that should be enabled in \`cdk.json\`.",
         "featured": false,
+        "fqn": "projen.awscdk.ICdkFeatureFlags",
         "fullType": {
-          "primitive": "boolean",
+          "fqn": "projen.awscdk.ICdkFeatureFlags",
         },
         "jsonLike": true,
+        "kind": "interface",
         "name": "featureFlags",
         "optional": true,
         "parent": "CdkConfigCommonOptions",
         "path": [
           "featureFlags",
         ],
-        "simpleType": "boolean",
+        "simpleType": "ICdkFeatureFlags",
         "switch": "feature-flags",
       },
       {
@@ -3146,22 +3118,6 @@ exports[`inventory 1`] = `
         "switch": "cdk-dependencies-as-deps",
       },
       {
-        "docs": "The major version of the AWS CDK (e.g. 1, 2, ...).",
-        "featured": false,
-        "fullType": {
-          "primitive": "number",
-        },
-        "jsonLike": true,
-        "name": "cdkMajorVersion",
-        "optional": true,
-        "parent": "CdkConfigCommonOptions",
-        "path": [
-          "cdkMajorVersion",
-        ],
-        "simpleType": "number",
-        "switch": "cdk-major-version",
-      },
-      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -3752,20 +3708,22 @@ exports[`inventory 1`] = `
         "switch": "experimental-integ-runner",
       },
       {
-        "default": "true",
-        "docs": "Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.",
+        "default": "- no feature flags are enabled by default",
+        "docs": "Feature flags that should be enabled in \`cdk.json\`.",
         "featured": false,
+        "fqn": "projen.awscdk.ICdkFeatureFlags",
         "fullType": {
-          "primitive": "boolean",
+          "fqn": "projen.awscdk.ICdkFeatureFlags",
         },
         "jsonLike": true,
+        "kind": "interface",
         "name": "featureFlags",
         "optional": true,
         "parent": "CdkConfigCommonOptions",
         "path": [
           "featureFlags",
         ],
-        "simpleType": "boolean",
+        "simpleType": "ICdkFeatureFlags",
         "switch": "feature-flags",
       },
       {

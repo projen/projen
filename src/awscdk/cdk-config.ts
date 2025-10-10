@@ -1,9 +1,109 @@
+import { deepClone } from "fast-json-patch";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { tryReadFileSync } from "../util";
-import { AwsCdkTypeScriptApp } from "./awscdk-app-ts";
-import { FEATURE_FLAGS, FEATURE_FLAGS_V2 } from "./internal";
+import { FEATURE_FLAGS_V1, FEATURE_FLAGS_V2 } from "./internal";
+
+/**
+ * CDK V1 feature flags configuration.
+ * @deprecated CDK V1 is EOS. Upgrade to CDK V2.
+ */
+export class CdkFeatureFlagsV1 implements ICdkFeatureFlags {
+  /**
+   * Disable all feature flags.
+   */
+  public static readonly NONE = new CdkFeatureFlagsV1({});
+
+  /**
+   * Enable all CDK V1 feature flags.
+   */
+  public static readonly ALL = new CdkFeatureFlagsV1(FEATURE_FLAGS_V1);
+
+  public readonly flags: Record<string, unknown>;
+
+  private constructor(flags: Record<string, unknown>) {
+    this.flags = flags;
+  }
+}
+
+/**
+ * CDK V2 feature flags configuration.
+ */
+export class CdkFeatureFlagsV2 implements ICdkFeatureFlags {
+  /**
+   * Disable all feature flags.
+   */
+  public static readonly NONE = new CdkFeatureFlagsV2({});
+
+  /**
+   * Enable all CDK V2 feature flags known to projen.
+   * These might not include feature flags, if your version of projen isn't up-to-date.
+   *
+   * Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+   * Unexpected changes may cause breaking changes in your CDK app.
+   * You can overwrite any feature flag by passing it into the context field.
+   */
+  public static readonly ALL = new CdkFeatureFlagsV2(FEATURE_FLAGS_V2);
+
+  /**
+   * Attempt to load the feature flags from the `aws-cdk-lib/recommended-feature-flags.json` in a locally available npm package.
+   * This file is typically only present in AWS CDK TypeScript projects, but can yield more accurate results.
+   *
+   * Falls back to all known feature flags if not found.
+   */
+  public static fromLocalAwsCdkLib() {
+    try {
+      const featureFlags =
+        tryReadFileSync(
+          require.resolve("aws-cdk-lib/recommended-feature-flags.json", {
+            paths: [process.cwd()],
+          })
+        ) || "{}";
+
+      return new CdkFeatureFlagsV2(JSON.parse(featureFlags));
+    } catch {
+      return CdkFeatureFlags.V2.ALL;
+    }
+  }
+
+  public readonly flags: Record<string, unknown>;
+
+  private constructor(flags: Record<string, unknown>) {
+    this.flags = flags;
+  }
+}
+
+/**
+ *
+ * @subclassable
+ */
+export interface ICdkFeatureFlags {
+  readonly flags: Record<string, unknown>;
+}
+
+/**
+ * CDK feature flags configuration.
+ */
+export class CdkFeatureFlags implements ICdkFeatureFlags {
+  /**
+   * CDK V1 feature flags configuration.
+   * @deprecated CDK V1 is EOS. Upgrade to CDK V2.
+   */
+  public static readonly V1 = CdkFeatureFlagsV1;
+
+  /**
+   * CDK V2 feature flags configuration.
+   */
+  public static readonly V2 = CdkFeatureFlagsV2;
+
+  public readonly flags: Record<string, unknown>;
+
+  private constructor(flags: Record<string, unknown>) {
+    this.flags = flags;
+  }
+}
+
 /**
  * Common options for `cdk.json`.
  */
@@ -16,23 +116,15 @@ export interface CdkConfigCommonOptions {
   readonly context?: { [key: string]: any };
 
   /**
-   * Include all feature flags in cdk.json.
+   * Feature flags that should be enabled in `cdk.json`.
    *
-   * For CDK version 2:
-   * Enabling this will update the feature flags in the cdk.json when you update the CDK version,
-   * which could introduce breaking changes.
-   *
-   * Make sure to double-check the changes to cdk.json before deploying.
+   * Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+   * Unexpected changes may cause breaking changes in your CDK app.
    * You can overwrite any feature flag by passing it into the context field.
-  *
-  * @default - `false` for AWS CDK V2 and `true` for AWS CDK V1
+   *
+   * @default - no feature flags are enabled by default
    */
-  readonly featureFlags?: boolean;
-
-  /**
-   * The major version of the AWS CDK (e.g. 1, 2, ...)
-   */
-  readonly cdkMajorVersion?: number;
+  readonly featureFlags?: ICdkFeatureFlags;
 
   /**
    * To protect you against unintended changes that affect your security posture,
@@ -111,7 +203,7 @@ export class CdkConfig extends Component {
   /**
    * The context to write to cdk.json.
    */
-  private readonly _context: Record<string, any>;
+  private readonly _context: Record<string, unknown>;
 
   constructor(project: Project, options: CdkConfigOptions) {
     super(project);
@@ -120,11 +212,12 @@ export class CdkConfig extends Component {
     this._include = options.watchIncludes ?? [];
     this._exclude = options.watchExcludes ?? [];
 
-    this._context = this.setFeatureFlags(
-      options.context ?? {},
-      options.featureFlags,
-      options.cdkMajorVersion
-    );
+    const flags: Record<string, unknown> = options.featureFlags?.flags ?? {};
+    this._context = {
+      ...flags,
+      // Customer context should take precedence over the default feature flags
+      ...(options.context ?? {}),
+    };
 
     this.json = new JsonFile(project, "cdk.json", {
       omitEmpty: true,
@@ -178,72 +271,8 @@ export class CdkConfig extends Component {
   /**
    * The context to write to cdk.json.
    */
-  public get context(): Record<string, any> {
-    return { ...this._context };
-  }
-
-  /**
-   * Set CDK feature flags based on the given version in the `cdk.json`.
-   *
-   * @param context The context to add the feature flags to.
-   * @param fflagsEnabled Include all feature flags. Defaults to `true`.
-   * @param cdkMajorVersion The major version of the CDK to include the feature flags for.
-   *     Defaults to 1.
-   * @returns The updated context.
-   */
-  private setFeatureFlags(
-    context: { [key: string]: any },
-    fflagsEnabled: boolean = true,
-    cdkMajorVersion: number = 1
-  ) {
-    if (!fflagsEnabled) {
-      return context;
-    }
-
-    switch (cdkMajorVersion) {
-      case 1:
-        for (const flag of FEATURE_FLAGS) {
-          context[flag] = true;
-        }
-        break;
-      case 2:
-        const featureFlags =
-          this.tryLoadFeatureFlags(this.project) || FEATURE_FLAGS_V2;
-
-        // Customer context should take precedence over the default feature flags
-        for (const [key, value] of Object.entries(featureFlags)) {
-          if (context[key] === undefined) {
-            context[key] = value;
-          }
-        }
-        break;
-    }
-
-    return context;
-  }
-
-  /**
-   * Attempt to load the feature flags from the `recommended-feature-flags.json` in the CDK package.
-   *
-   * This file is only present in the CDK package for TypeScript projects.
-   *
-   * @param project The project to load the feature flags for.
-   * @returns The feature flags, or `undefined` if they could not be loaded.
-   */
-  private tryLoadFeatureFlags(project: Project) {
-    if (project instanceof AwsCdkTypeScriptApp) {
-      try {
-        const featureFlags = tryReadFileSync(
-          require.resolve("aws-cdk-lib/recommended-feature-flags.json", {
-            paths: [process.cwd()],
-          })
-        );
-
-        return featureFlags ? JSON.parse(featureFlags) : undefined;
-      } catch {
-        return undefined;
-      }
-    }
+  public get context(): Record<string, unknown> {
+    return deepClone(this._context);
   }
 }
 

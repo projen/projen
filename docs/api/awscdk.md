@@ -13559,10 +13559,9 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.sampleJavaPackage">sampleJavaPackage</a></code> | <code>string</code> | The java package to use for the code sample. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
-| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -14293,18 +14292,6 @@ code before redeployment.
 
 ---
 
-##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.AwsCdkJavaAppOptions.property.cdkMajorVersion"></a>
-
-```typescript
-public readonly cdkMajorVersion: number;
-```
-
-- *Type:* number
-
-The major version of the AWS CDK (e.g. 1, 2, ...).
-
----
-
 ##### `cdkout`<sup>Optional</sup> <a name="cdkout" id="projen.awscdk.AwsCdkJavaAppOptions.property.cdkout"></a>
 
 ```typescript
@@ -14334,19 +14321,16 @@ Additional context to include in `cdk.json`.
 ##### `featureFlags`<sup>Optional</sup> <a name="featureFlags" id="projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags"></a>
 
 ```typescript
-public readonly featureFlags: boolean;
+public readonly featureFlags: ICdkFeatureFlags;
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+- *Default:* no feature flags are enabled by default
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+Feature flags that should be enabled in `cdk.json`.
 
-For CDK version 2:
-Enabling this will update the feature flags in the cdk.json when you update the CDK version,
-which could introduce breaking changes.
-
-Make sure to double-check the changes to cdk.json before deploying.
+Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+Unexpected changes may cause breaking changes in your CDK app.
 You can overwrite any feature flag by passing it into the context field.
 
 ---
@@ -14707,10 +14691,9 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -15555,18 +15538,6 @@ code before redeployment.
 
 ---
 
-##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.AwsCdkPythonAppOptions.property.cdkMajorVersion"></a>
-
-```typescript
-public readonly cdkMajorVersion: number;
-```
-
-- *Type:* number
-
-The major version of the AWS CDK (e.g. 1, 2, ...).
-
----
-
 ##### `cdkout`<sup>Optional</sup> <a name="cdkout" id="projen.awscdk.AwsCdkPythonAppOptions.property.cdkout"></a>
 
 ```typescript
@@ -15596,19 +15567,16 @@ Additional context to include in `cdk.json`.
 ##### `featureFlags`<sup>Optional</sup> <a name="featureFlags" id="projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags"></a>
 
 ```typescript
-public readonly featureFlags: boolean;
+public readonly featureFlags: ICdkFeatureFlags;
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+- *Default:* no feature flags are enabled by default
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+Feature flags that should be enabled in `cdk.json`.
 
-For CDK version 2:
-Enabling this will update the feature flags in the cdk.json when you update the CDK version,
-which could introduce breaking changes.
-
-Make sure to double-check the changes to cdk.json before deploying.
+Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+Unexpected changes may cause breaking changes in your CDK app.
 You can overwrite any feature flag by passing it into the context field.
 
 ---
@@ -15990,10 +15958,9 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -18240,18 +18207,6 @@ code before redeployment.
 
 ---
 
-##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkMajorVersion"></a>
-
-```typescript
-public readonly cdkMajorVersion: number;
-```
-
-- *Type:* number
-
-The major version of the AWS CDK (e.g. 1, 2, ...).
-
----
-
 ##### `cdkout`<sup>Optional</sup> <a name="cdkout" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkout"></a>
 
 ```typescript
@@ -18281,19 +18236,16 @@ Additional context to include in `cdk.json`.
 ##### `featureFlags`<sup>Optional</sup> <a name="featureFlags" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags"></a>
 
 ```typescript
-public readonly featureFlags: boolean;
+public readonly featureFlags: ICdkFeatureFlags;
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+- *Default:* no feature flags are enabled by default
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+Feature flags that should be enabled in `cdk.json`.
 
-For CDK version 2:
-Enabling this will update the feature flags in the cdk.json when you update the CDK version,
-which could introduce breaking changes.
-
-Make sure to double-check the changes to cdk.json before deploying.
+Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+Unexpected changes may cause breaking changes in your CDK app.
 You can overwrite any feature flag by passing it into the context field.
 
 ---
@@ -18599,10 +18551,9 @@ const cdkConfigCommonOptions: awscdk.CdkConfigCommonOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
-| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
+| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -18623,18 +18574,6 @@ A command to execute before synthesis.
 This command will be called when
 running `cdk synth` or when `cdk watch` identifies a change in your source
 code before redeployment.
-
----
-
-##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.CdkConfigCommonOptions.property.cdkMajorVersion"></a>
-
-```typescript
-public readonly cdkMajorVersion: number;
-```
-
-- *Type:* number
-
-The major version of the AWS CDK (e.g. 1, 2, ...).
 
 ---
 
@@ -18667,19 +18606,16 @@ Additional context to include in `cdk.json`.
 ##### `featureFlags`<sup>Optional</sup> <a name="featureFlags" id="projen.awscdk.CdkConfigCommonOptions.property.featureFlags"></a>
 
 ```typescript
-public readonly featureFlags: boolean;
+public readonly featureFlags: ICdkFeatureFlags;
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+- *Default:* no feature flags are enabled by default
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+Feature flags that should be enabled in `cdk.json`.
 
-For CDK version 2:
-Enabling this will update the feature flags in the cdk.json when you update the CDK version,
-which could introduce breaking changes.
-
-Make sure to double-check the changes to cdk.json before deploying.
+Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+Unexpected changes may cause breaking changes in your CDK app.
 You can overwrite any feature flag by passing it into the context field.
 
 ---
@@ -18740,10 +18676,9 @@ const cdkConfigOptions: awscdk.CdkConfigOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
-| <code><a href="#projen.awscdk.CdkConfigOptions.property.cdkMajorVersion">cdkMajorVersion</a></code> | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...). |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
-| <code><a href="#projen.awscdk.CdkConfigOptions.property.featureFlags">featureFlags</a></code> | <code>boolean</code> | Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2. |
+| <code><a href="#projen.awscdk.CdkConfigOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
@@ -18765,18 +18700,6 @@ A command to execute before synthesis.
 This command will be called when
 running `cdk synth` or when `cdk watch` identifies a change in your source
 code before redeployment.
-
----
-
-##### `cdkMajorVersion`<sup>Optional</sup> <a name="cdkMajorVersion" id="projen.awscdk.CdkConfigOptions.property.cdkMajorVersion"></a>
-
-```typescript
-public readonly cdkMajorVersion: number;
-```
-
-- *Type:* number
-
-The major version of the AWS CDK (e.g. 1, 2, ...).
 
 ---
 
@@ -18809,19 +18732,16 @@ Additional context to include in `cdk.json`.
 ##### `featureFlags`<sup>Optional</sup> <a name="featureFlags" id="projen.awscdk.CdkConfigOptions.property.featureFlags"></a>
 
 ```typescript
-public readonly featureFlags: boolean;
+public readonly featureFlags: ICdkFeatureFlags;
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+- *Default:* no feature flags are enabled by default
 
-Include all feature flags in cdk.json. Default is true for CdkVersion 1 and false for CdkVersion 2.
+Feature flags that should be enabled in `cdk.json`.
 
-For CDK version 2:
-Enabling this will update the feature flags in the cdk.json when you update the CDK version,
-which could introduce breaking changes.
-
-Make sure to double-check the changes to cdk.json before deploying.
+Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+Unexpected changes may cause breaking changes in your CDK app.
 You can overwrite any feature flag by passing it into the context field.
 
 ---
@@ -22994,6 +22914,216 @@ Packages that are considered externals by default when bundling.
 
 ## Classes <a name="Classes" id="Classes"></a>
 
+### CdkFeatureFlags <a name="CdkFeatureFlags" id="projen.awscdk.CdkFeatureFlags"></a>
+
+- *Implements:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+
+CDK feature flags configuration.
+
+
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlags.property.flags">flags</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
+
+---
+
+##### `flags`<sup>Required</sup> <a name="flags" id="projen.awscdk.CdkFeatureFlags.property.flags"></a>
+
+```typescript
+public readonly flags: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+---
+
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlags.property.V1">V1</a></code> | <code><a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a></code> | CDK V1 feature flags configuration. |
+| <code><a href="#projen.awscdk.CdkFeatureFlags.property.V2">V2</a></code> | <code><a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a></code> | CDK V2 feature flags configuration. |
+
+---
+
+##### ~~`V1`~~<sup>Required</sup> <a name="V1" id="projen.awscdk.CdkFeatureFlags.property.V1"></a>
+
+- *Deprecated:* CDK V1 is EOS. Upgrade to CDK V2.
+
+```typescript
+public readonly V1: CdkFeatureFlagsV1;
+```
+
+- *Type:* <a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a>
+
+CDK V1 feature flags configuration.
+
+---
+
+##### `V2`<sup>Required</sup> <a name="V2" id="projen.awscdk.CdkFeatureFlags.property.V2"></a>
+
+```typescript
+public readonly V2: CdkFeatureFlagsV2;
+```
+
+- *Type:* <a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a>
+
+CDK V2 feature flags configuration.
+
+---
+
+### CdkFeatureFlagsV1 <a name="CdkFeatureFlagsV1" id="projen.awscdk.CdkFeatureFlagsV1"></a>
+
+- *Implements:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+
+CDK V1 feature flags configuration.
+
+
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV1.property.flags">flags</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
+
+---
+
+##### ~~`flags`~~<sup>Required</sup> <a name="flags" id="projen.awscdk.CdkFeatureFlagsV1.property.flags"></a>
+
+- *Deprecated:* CDK V1 is EOS. Upgrade to CDK V2.
+
+```typescript
+public readonly flags: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+---
+
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV1.property.ALL">ALL</a></code> | <code><a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a></code> | Enable all CDK V1 feature flags. |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV1.property.NONE">NONE</a></code> | <code><a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a></code> | Disable all feature flags. |
+
+---
+
+##### ~~`ALL`~~<sup>Required</sup> <a name="ALL" id="projen.awscdk.CdkFeatureFlagsV1.property.ALL"></a>
+
+- *Deprecated:* CDK V1 is EOS. Upgrade to CDK V2.
+
+```typescript
+public readonly ALL: CdkFeatureFlagsV1;
+```
+
+- *Type:* <a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a>
+
+Enable all CDK V1 feature flags.
+
+---
+
+##### ~~`NONE`~~<sup>Required</sup> <a name="NONE" id="projen.awscdk.CdkFeatureFlagsV1.property.NONE"></a>
+
+- *Deprecated:* CDK V1 is EOS. Upgrade to CDK V2.
+
+```typescript
+public readonly NONE: CdkFeatureFlagsV1;
+```
+
+- *Type:* <a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a>
+
+Disable all feature flags.
+
+---
+
+### CdkFeatureFlagsV2 <a name="CdkFeatureFlagsV2" id="projen.awscdk.CdkFeatureFlagsV2"></a>
+
+- *Implements:* <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+
+CDK V2 feature flags configuration.
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV2.fromLocalAwsCdkLib">fromLocalAwsCdkLib</a></code> | Attempt to load the feature flags from the `aws-cdk-lib/recommended-feature-flags.json` in a locally available npm package. This file is typically only present in AWS CDK TypeScript projects, but can yield more accurate results. |
+
+---
+
+##### `fromLocalAwsCdkLib` <a name="fromLocalAwsCdkLib" id="projen.awscdk.CdkFeatureFlagsV2.fromLocalAwsCdkLib"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.CdkFeatureFlagsV2.fromLocalAwsCdkLib()
+```
+
+Attempt to load the feature flags from the `aws-cdk-lib/recommended-feature-flags.json` in a locally available npm package. This file is typically only present in AWS CDK TypeScript projects, but can yield more accurate results.
+
+Falls back to all known feature flags if not found.
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV2.property.flags">flags</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
+
+---
+
+##### `flags`<sup>Required</sup> <a name="flags" id="projen.awscdk.CdkFeatureFlagsV2.property.flags"></a>
+
+```typescript
+public readonly flags: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+---
+
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV2.property.ALL">ALL</a></code> | <code><a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a></code> | Enable all CDK V2 feature flags known to projen. |
+| <code><a href="#projen.awscdk.CdkFeatureFlagsV2.property.NONE">NONE</a></code> | <code><a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a></code> | Disable all feature flags. |
+
+---
+
+##### `ALL`<sup>Required</sup> <a name="ALL" id="projen.awscdk.CdkFeatureFlagsV2.property.ALL"></a>
+
+```typescript
+public readonly ALL: CdkFeatureFlagsV2;
+```
+
+- *Type:* <a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a>
+
+Enable all CDK V2 feature flags known to projen.
+
+These might not include feature flags, if your version of projen isn't up-to-date.
+
+Make sure to double-check any changes to feature flags in `cdk.json` before deploying.
+Unexpected changes may cause breaking changes in your CDK app.
+You can overwrite any feature flag by passing it into the context field.
+
+---
+
+##### `NONE`<sup>Required</sup> <a name="NONE" id="projen.awscdk.CdkFeatureFlagsV2.property.NONE"></a>
+
+```typescript
+public readonly NONE: CdkFeatureFlagsV2;
+```
+
+- *Type:* <a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a>
+
+Disable all feature flags.
+
+---
+
 ### LambdaRuntime <a name="LambdaRuntime" id="projen.awscdk.LambdaRuntime"></a>
 
 The runtime for the AWS Lambda function.
@@ -23203,6 +23333,30 @@ Node.js 22.x.
 
 ---
 
+## Protocols <a name="Protocols" id="Protocols"></a>
+
+### ICdkFeatureFlags <a name="ICdkFeatureFlags" id="projen.awscdk.ICdkFeatureFlags"></a>
+
+- *Implemented By:* <a href="#projen.awscdk.CdkFeatureFlags">CdkFeatureFlags</a>, <a href="#projen.awscdk.CdkFeatureFlagsV1">CdkFeatureFlagsV1</a>, <a href="#projen.awscdk.CdkFeatureFlagsV2">CdkFeatureFlagsV2</a>, <a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a>
+
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.ICdkFeatureFlags.property.flags">flags</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
+
+---
+
+##### `flags`<sup>Required</sup> <a name="flags" id="projen.awscdk.ICdkFeatureFlags.property.flags"></a>
+
+```typescript
+public readonly flags: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+---
 
 ## Enums <a name="Enums" id="Enums"></a>
 
