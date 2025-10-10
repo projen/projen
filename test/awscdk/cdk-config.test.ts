@@ -101,7 +101,8 @@ describe("feature flags", () => {
       featureFlags: CdkFeatureFlags.V1.ALL,
     });
 
-    expect(Object.keys(config.context)).toEqual(FEATURE_FLAGS_V1);
+    expect(config.context["aws-cdk:enableDiffNoFail"]).toBe(true);
+    expect(config.context).toEqual(FEATURE_FLAGS_V1);
   });
 
   test("can be set for cdk v2", () => {
@@ -110,6 +111,7 @@ describe("feature flags", () => {
       featureFlags: CdkFeatureFlags.V2.ALL,
     });
 
+    expect(config.context["@aws-cdk/aws-iam:minimizePolicies"]).toBe(true);
     expect(config.context).toEqual(expect.objectContaining(FEATURE_FLAGS_V2));
   });
 
@@ -120,6 +122,7 @@ describe("feature flags", () => {
     });
 
     expect(config.context).toEqual(expect.objectContaining(FEATURE_FLAGS_V2));
+    expect(config.context["@aws-cdk/aws-iam:minimizePolicies"]).toBe(true);
   });
 
   test("user context should take precedence over default flags", () => {
@@ -131,7 +134,7 @@ describe("feature flags", () => {
       },
     });
 
-    expect(config.context["@aws-cdk/core:checkSecretUsage"]).toBe(true);
+    expect(config.context["@aws-cdk/aws-iam:minimizePolicies"]).toBe(true);
     expect(config.context["@aws-cdk/aws-lambda:recognizeLayerVersion"]).toBe(
       false
     );

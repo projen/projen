@@ -344,7 +344,7 @@ describe("CDK v1", () => {
     });
   });
   it("has v1 feature flags in context", () => {
-    expect(Object.keys(snapshot["cdk.json"].context)).toEqual(FEATURE_FLAGS_V1);
+    expect(snapshot["cdk.json"].context).toEqual(FEATURE_FLAGS_V1);
   });
 });
 

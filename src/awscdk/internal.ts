@@ -1,5 +1,5 @@
 import { posix, sep } from "path";
-import * as CDK_V2_RECOMMENDED_FLAGS from "./private/feature-flags-v2.const";
+import { default as CDK_V2_RECOMMENDED_FLAGS } from "./private/feature-flags-v2.const";
 
 /**
  * Feature flags as of v1.130.0
