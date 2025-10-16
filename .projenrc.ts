@@ -18,7 +18,7 @@ import {
   JsiiFromJsonSchema,
   JsonConst,
 } from "./projenrc";
-import { ProjectTree, ReleasableCommits } from "./src";
+import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
@@ -172,6 +172,12 @@ const project = new JsiiProject({
     allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
   },
 });
+
+project.github
+  ?.tryFindWorkflow("release")
+  ?.file?.patch(
+    JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
+  );
 
 setupCheckLicenses(project);
 
