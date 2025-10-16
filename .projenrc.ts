@@ -18,7 +18,7 @@ import {
   JsiiFromJsonSchema,
   JsonConst,
 } from "./projenrc";
-import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
+import { ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
