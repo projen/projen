@@ -250,6 +250,7 @@ export class Eslint extends Component {
       description: "Runs eslint against the codebase",
       env: {
         ESLINT_USE_FLAT_CONFIG: "false",
+        NODE_NO_WARNINGS: "1", // Suppress eslint warning about legacy config format, as it just confuses users. This will suppress all node warnings, but in practice users cannot action warnings from eslint anyway.
       },
     });
     this.updateTask();

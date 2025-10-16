@@ -224,6 +224,7 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
     description: "Runs eslint against the codebase",
     env: {
       ESLINT_USE_FLAT_CONFIG: "false",
+      NODE_NO_WARNINGS: "1",
     },
     name: "eslint",
     steps: [
