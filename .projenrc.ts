@@ -173,12 +173,6 @@ const project = new JsiiProject({
   },
 });
 
-project.github
-  ?.tryFindWorkflow("release")
-  ?.file?.patch(
-    JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
-  );
-
 setupCheckLicenses(project);
 
 setupUpgradeDependencies(project);
