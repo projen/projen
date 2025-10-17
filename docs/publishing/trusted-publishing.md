@@ -58,32 +58,20 @@ const project = new JsiiProject({
 
 ### Meeting the npm Version Requirement
 
-Trusted publishing requires npm CLI version 11.5.1 or later. By default, this is available with Node.js 24+. You have two options to meet this requirement:
+Trusted publishing requires npm CLI version 11.5.1 or later. By default, this is available with Node.js 24+.
+Projen will automatically switch any default workflows to Node.js 24.
 
-#### Option 1: Update Node.js version for all workflows
-
-```typescript
-const project = new NodeProject({
-  // ... other options
-  workflowNodeVersion: "24.x",
-  publishToNpm: true,
-  npmPublishOptions: {
-    trustedPublishing: true,
-  },
-});
-```
-
-#### Option 2: Manual workflow patching (advanced)
-
-For more granular control, you can manually patch the workflow:
+If you need more granular control, or are setting `workflowNodeVersion` to a different value,
+you will need to manual ensure the this requirement is met:
 
 ```typescript
-// Update Node.js version for npm publishing job only
+// Option 1: Update Node.js version for npm publishing job only
 project.github?.tryFindWorkflow("release")?.file?.patch(
   JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
 );
 
-// Or add a step to update npm
+// Option 2: Add a step to update npm
+// Note that npm 11 is required, which has the following minimum node requirements "^20.17.0 || >=22.9.0"
 project.github?.tryFindWorkflow("release")?.file?.patch(
   JsonPatch.add("/jobs/release_npm/steps/1", {
     name: "Update npm",

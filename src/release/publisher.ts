@@ -376,8 +376,20 @@ export class Publisher extends Component {
         );
       }
 
+      let publishTools = PUBLIB_TOOLCHAIN.js;
+      if (options.trustedPublishing && this.workflowNodeVersion == "lts/*") {
+        // trusted publishing requires node 24.x and above
+        // lts/* is currently 22.x
+        // @todo remove once node 24.x is lts
+        publishTools = {
+          node: {
+            version: "24.x",
+          },
+        };
+      }
+
       return {
-        publishTools: PUBLIB_TOOLCHAIN.js,
+        publishTools,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
         environment: options.githubEnvironment ?? branchOptions.environment,
