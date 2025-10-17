@@ -380,6 +380,7 @@ export class Publisher extends Component {
       if (options.trustedPublishing && this.workflowNodeVersion == "lts/*") {
         // trusted publishing requires node 24.x and above
         // lts/* is currently 22.x
+        // @todo remove once node 24.x is lts
         publishTools = {
           node: {
             version: "24.x",

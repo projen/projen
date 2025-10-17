@@ -87,7 +87,7 @@ publisher.publishToNpm({
 ```
 
 > **Note**: npm trusted publishing requires npm CLI version 11.5.1 or later (available with Node.js 24+).
-> Projen will automatically switch to 24.x for you. Make sure you're not overriding it with `workflowNodeVersion`.
+> Projen will automatically switch to 24.x for you. Make sure you're not overriding it with `workflowNodeVersion`, otherwise use manual workflow patching.
 
 **PyPI**
 
