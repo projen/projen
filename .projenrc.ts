@@ -105,6 +105,7 @@ const project = new JsiiProject({
   workflowNodeVersion: "20.9.0",
 
   codeCov: true,
+  eslint: true,
   prettier: true,
   defaultReleaseBranch: "main",
   gitpod: true,
