@@ -11,7 +11,7 @@ import {
   synthSnapshot,
   synthSnapshotWithPost,
   TestProject,
-  withProjectDirSync,
+  withProjectDir,
 } from "./util";
 import * as inventory from "../src/inventory";
 import { execCapture, normalizePersistedPath } from "../src/util";
@@ -25,7 +25,7 @@ const EXCLUDE_FROM_SNAPSHOT_EXTENDED = [
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       // execute `projen new PJID --no-synth` in the project directory
       execProjenCLI(projectdir, ["new", "--no-synth", type.pjid]);
 
@@ -42,7 +42,7 @@ for (const type of inventory.discover()) {
 describe("projen new --from", () => {
   describe("using registry", () => {
     test("existing package", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
         execProjenCLI(projectdir, [
           "new",
@@ -69,7 +69,7 @@ describe("projen new --from", () => {
 
     test("non-existing package", () => {
       try {
-        withProjectDirSync((projectdir) => {
+        withProjectDir((projectdir) => {
           const nonExistentPackage = `@projen/some-non-existent-package`;
           execProjenCLI(projectdir, [
             "new",
@@ -87,7 +87,7 @@ describe("projen new --from", () => {
 
     test("non-jsii module", () => {
       try {
-        withProjectDirSync((projectdir) => {
+        withProjectDir((projectdir) => {
           execProjenCLI(projectdir, [
             "new",
             "--from",
@@ -104,7 +104,7 @@ describe("projen new --from", () => {
     });
 
     test("using dist tag", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "--from",
@@ -123,7 +123,7 @@ describe("projen new --from", () => {
     });
 
     test("can choose from one of multiple external project types", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         // execute `projen new --from @taimos/projen@0.0.187 taimos-ts-lib` in the project directory
         execProjenCLI(projectdir, [
           "new",
@@ -143,7 +143,7 @@ describe("projen new --from", () => {
     });
 
     test("with pjid that is similar to a built-in one", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         try {
           execProjenCLI(projectdir, [
             "new",
@@ -170,7 +170,7 @@ describe("projen new --from", () => {
       ],
       ["relative path", "./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
     ])("projen new --from %s ", (_, external) => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         const shell = (command: string) =>
           execSync(command, { cwd: projectdir });
         // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
@@ -195,7 +195,7 @@ describe("projen new --from", () => {
     });
 
     test("projen new --from from external tarball (absolute path)", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         const shell = (command: string) =>
           execSync(command, { cwd: projectdir });
         // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
@@ -236,7 +236,7 @@ describe("projen new --from", () => {
       ["none-existent-package-0.0.1.tgz"],
       ["@projen/non-existing-package@file:./none-existent-package-0.0.1.tgz"],
     ])("non-existent tarball %s", (external) => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         try {
           execProjenCLI(projectdir, ["new", "--from", external, "--no-post"]);
         } catch (error: any) {
@@ -265,7 +265,7 @@ describe("projen new --from", () => {
     });
 
     test("with enum values", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
         execProjenCLI(projectdir, [
           "new",
@@ -291,7 +291,7 @@ describe("projen new --from", () => {
     });
 
     test("with array option", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
         execProjenCLI(projectdir, [
           "new",
@@ -314,7 +314,7 @@ describe("projen new --from", () => {
     });
 
     test("options are not overwritten when creating from external project types", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
         execProjenCLI(projectdir, [
           "new",
@@ -335,7 +335,7 @@ describe("projen new --from", () => {
     });
 
     test("will fail when a required option without a default is not provided", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         try {
           execProjenCLI(projectdir, [
             "new",
@@ -353,7 +353,7 @@ describe("projen new --from", () => {
     });
 
     test("--no-comments", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "node",
@@ -368,7 +368,7 @@ describe("projen new --from", () => {
     });
 
     test("projen new with unknown option works", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "node",
@@ -383,7 +383,7 @@ describe("projen new --from", () => {
     });
 
     test("creating node project with enum-typed CLI arg", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "node",
@@ -398,7 +398,7 @@ describe("projen new --from", () => {
     });
 
     test("creating python project with enum-typed CLI arg", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "python",
@@ -414,7 +414,7 @@ describe("projen new --from", () => {
     });
 
     test("creating java project with enum-typed CLI arg", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "java",
@@ -431,7 +431,7 @@ describe("projen new --from", () => {
     });
 
     test("projenrc-json creates node-project", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "node",
@@ -445,7 +445,7 @@ describe("projen new --from", () => {
     });
 
     test("projenrc-json creates java project", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "java",
@@ -462,7 +462,7 @@ describe("projen new --from", () => {
     });
 
     test("projenrc-json creates external project type", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [
           "new",
           "--from",
@@ -479,7 +479,7 @@ describe("projen new --from", () => {
     });
 
     test("--outdir path/to/mydir", () => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         // GIVEN
         const shell = (command: string) =>
           execSync(command, { cwd: projectdir });
@@ -508,7 +508,7 @@ describe("projen new --from", () => {
 
 describe("typescript project", () => {
   test("projenrc-ts creates typescript projenrc", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       execProjenCLI(projectdir, [
         "new",
         "typescript",
@@ -526,7 +526,7 @@ describe("typescript project", () => {
 
 describe("python project", () => {
   test("includes .projenrc.py by default", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       execProjenCLI(projectdir, ["new", "python", "--no-synth"]);
 
       const output = directorySnapshot(projectdir);
@@ -535,7 +535,7 @@ describe("python project", () => {
   });
 
   test("can include .projenrc.js", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       execProjenCLI(projectdir, [
         "new",
         "python",
@@ -550,7 +550,7 @@ describe("python project", () => {
   });
 
   test("can include .projenrc.ts", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       execProjenCLI(projectdir, [
         "new",
         "python",
@@ -569,7 +569,7 @@ describe("python project", () => {
   });
 
   test("can define an array option", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       execProjenCLI(projectdir, [
         "new",
         "python",
@@ -587,7 +587,7 @@ describe("python project", () => {
 
 describe("initial values", () => {
   test("cli can override initial values", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       execProjenCLI(projectdir, [
         "new",
         "typescript",
@@ -606,7 +606,7 @@ describe("initial values", () => {
 
 describe("git", () => {
   test("--git (default) will initialize a git repo and create a commit", () => {
-    withProjectDirSync(
+    withProjectDir(
       (projectdir) => {
         execProjenCLI(projectdir, ["new", "project"]);
         expect(
@@ -620,7 +620,7 @@ describe("git", () => {
   });
 
   test("--git (default) respects init.defaultBranch setting", () => {
-    withProjectDirSync(
+    withProjectDir(
       (projectdir) => {
         const defaultBranch = "test-default-branch";
 
@@ -645,7 +645,7 @@ describe("git", () => {
   });
 
   test("--no-git will not create a git repo", () => {
-    withProjectDirSync(
+    withProjectDir(
       (projectdir) => {
         execProjenCLI(projectdir, ["new", "project", "--no-git"]);
         expect(existsSync(join(projectdir, ".git"))).toBeFalsy();
@@ -658,7 +658,7 @@ describe("git", () => {
 describe("regressions", () => {
   // https://github.com/projen/projen/issues/2837
   test("projen new --from does not fail when save=false in npm config", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       // Tells Node to not save packages on install. However we must save the external package to determine its name.
       writeFileSync(join(projectdir, ".npmrc"), "save=false\n");
 
@@ -692,7 +692,7 @@ describe("regressions", () => {
 
   // https://github.com/projen/projen/issues/2649
   test("projen new without any arguments displays full help", () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       try {
         execProjenCLI(projectdir, ["new"]);
       } catch (error: any) {
@@ -708,7 +708,7 @@ describe("regressions", () => {
     const pathWithSpace = join(mkdtemp(), "path with space");
     mkdirSync(pathWithSpace, { recursive: true });
 
-    withProjectDirSync(
+    withProjectDir(
       (projectdir) => {
         execProjenCLI(projectdir, [
           "new",

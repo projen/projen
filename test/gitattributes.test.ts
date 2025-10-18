@@ -2,7 +2,7 @@ import {
   SynthOutput,
   synthSnapshot,
   TestProject,
-  withProjectDirSync,
+  withProjectDir,
 } from "./util";
 import { EndOfLine } from "../src/gitattributes";
 
@@ -14,7 +14,7 @@ describe("GitAttributesFile", () => {
   };
 
   test("should set endOfLine to LF by default", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -28,7 +28,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("does not at the endOfLine configuration when disabled", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -45,7 +45,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("applies the endOfLine option when defined", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -62,7 +62,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should add attributes to files", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -80,7 +80,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should remove all attributes when none specified", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -98,7 +98,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should remove a single attribute when specified", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -115,7 +115,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should remove the mapping when no attributes left", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -132,7 +132,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should leave mapping unchanged when non-existent attributes are removed", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -156,7 +156,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should do nothing when trying to remove attributes from a non-existent mapping", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -171,7 +171,7 @@ describe("GitAttributesFile", () => {
   });
 
   test("should add a LFS pattern", () => {
-    withProjectDirSync((outdir) => {
+    withProjectDir((outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,

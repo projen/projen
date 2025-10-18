@@ -6,7 +6,7 @@ import {
   execProjenCLI,
   synthSnapshot,
   TestProject,
-  withProjectDirSync,
+  withProjectDir,
 } from "./util";
 import { JavaProject } from "../src/java";
 import { ReleasableCommits, Version } from "../src/version";
@@ -67,7 +67,7 @@ describe("with JavaProject", () => {
 
 describe("bump task", () => {
   test("will bump if last commit is not a tag", async () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -91,7 +91,7 @@ describe("bump task", () => {
   });
 
   test("will not bump if last commit is a tag", async () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -121,7 +121,7 @@ describe("bump task", () => {
   });
 
   test("can invoke a shell command to come up with the next version", async () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -161,7 +161,7 @@ describe("bump task", () => {
       releasable: "all" | "featsFixes",
       expectedBump
     ) => {
-      withProjectDirSync((projectdir) => {
+      withProjectDir((projectdir) => {
         const project = new TestProject({
           outdir: projectdir,
         });
@@ -195,7 +195,7 @@ describe("bump task", () => {
   );
 
   test("if there are 0 commits but the version script outputs a version, bump anyway", async () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -222,7 +222,7 @@ describe("bump task", () => {
   });
 
   test("throws an error if the bump command output is not valid", async () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });

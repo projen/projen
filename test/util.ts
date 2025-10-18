@@ -129,7 +129,7 @@ function setupProjectDir(
   return projectdir;
 }
 
-export function withProjectDirSync(
+export function withProjectDir(
   code: (workdir: string) => void,
   options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {}
 ) {
@@ -142,25 +142,6 @@ export function withProjectDirSync(
       process.chdir(projectdir);
     }
     code(projectdir);
-  } finally {
-    process.chdir(origDir);
-    fs.rmSync(outdir, { force: true, recursive: true });
-  }
-}
-
-export async function withProjectDirAsync(
-  code: (workdir: string) => Promise<void>,
-  options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {}
-) {
-  const origDir = process.cwd();
-  const outdir = options.tmpdir ?? mkdtemp();
-
-  try {
-    const projectdir = setupProjectDir(outdir, options);
-    if (options.chdir ?? false) {
-      process.chdir(projectdir);
-    }
-    await code(projectdir);
   } finally {
     process.chdir(origDir);
     fs.rmSync(outdir, { force: true, recursive: true });

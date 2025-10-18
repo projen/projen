@@ -9,7 +9,7 @@ import {
   TypeScriptAppProject,
   TypeScriptProject,
 } from "../../src/typescript";
-import { execProjenCLI, synthSnapshot, withProjectDirSync } from "../util";
+import { execProjenCLI, synthSnapshot, withProjectDir } from "../util";
 
 describe("TypeScriptProject with default settings", () => {
   it("synthesizes", () => {
@@ -342,7 +342,7 @@ describe("jestConfig", () => {
       // root to ensure that external projects don't trigger the legacy warning.
       // In order to do that, we need to make the folder ourselves instead of
       // relying on the Project calss making one for us.
-      withProjectDirSync(
+      withProjectDir(
         (projectdir) => {
           fs.writeFileSync(
             path.join(projectdir, "package.json"),

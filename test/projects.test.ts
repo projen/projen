@@ -1,14 +1,14 @@
-import { directorySnapshot, withProjectDirAsync } from "./util";
+import { directorySnapshot, withProjectDir } from "./util";
 import { installPackage } from "../src/cli/util";
 import { InitProjectOptionHints } from "../src/option-hints";
 import { Projects } from "../src/projects";
 
 describe("createProject", () => {
   test("creates a project in a directory", async () => {
-    await withProjectDirAsync(
-      async (projectdir) => {
+    withProjectDir(
+      (projectdir) => {
         // GIVEN
-        await Projects.createProject({
+        Projects.createProject({
           optionHints: InitProjectOptionHints.FEATURED,
           dir: projectdir,
           post: false,
@@ -31,10 +31,10 @@ describe("createProject", () => {
   });
 
   test("creates a project and passes in JSON-like project options", async () => {
-    await withProjectDirAsync(
-      async (projectdir) => {
+    withProjectDir(
+      (projectdir) => {
         // GIVEN
-        await Projects.createProject({
+        Projects.createProject({
           optionHints: InitProjectOptionHints.FEATURED,
           dir: projectdir,
           post: false,
@@ -65,13 +65,13 @@ describe("createProject", () => {
   });
 
   test("creates a project from an external project type, if it's installed", async () => {
-    await withProjectDirAsync(
-      async (projectdir) => {
+    withProjectDir(
+      (projectdir) => {
         // GIVEN
         installPackage(projectdir, "cdklabs-projen-project-types@0.1.48");
 
         // WHEN
-        await Projects.createProject({
+        Projects.createProject({
           optionHints: InitProjectOptionHints.FEATURED,
           dir: projectdir,
           post: false,

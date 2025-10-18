@@ -6,7 +6,7 @@ import { ReleasableCommits } from "../../src";
 import * as logging from "../../src/logging";
 import { bump, BumpOptions } from "../../src/release/bump-version";
 import { TypeScriptProject } from "../../src/typescript";
-import { execProjenCLI, withProjectDirSync } from "../util";
+import { execProjenCLI, withProjectDir } from "../util";
 
 logging.disable();
 jest.setTimeout(1000 * 60 * 5); // 5min
@@ -526,7 +526,7 @@ describe("newline at the end of version file", () => {
   });
 
   test("existing version file keeps newline at the end", async () => {
-    withProjectDirSync((projectdir) => {
+    withProjectDir((projectdir) => {
       const project = new TypeScriptProject({
         defaultReleaseBranch: "main",
         name: "test",

@@ -97,9 +97,7 @@ class Command implements yargs.CommandModule {
 
           return cargs;
         },
-        handler: async (argv) => {
-          await initProject(process.cwd(), type, argv);
-        },
+        handler: (argv) => initProject(process.cwd(), type, argv),
       });
     }
 
@@ -469,15 +467,11 @@ function parseArg(
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-async function initProject(
-  baseDir: string,
-  type: inventory.ProjectType,
-  args: any
-) {
+function initProject(baseDir: string, type: inventory.ProjectType, args: any) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(baseDir, type, args);
 
-  await Projects.createProject({
+  Projects.createProject({
     dir: props.outdir ?? baseDir,
     projectFqn: type.fqn,
     projectOptions: props,
