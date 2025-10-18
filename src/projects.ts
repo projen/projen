@@ -1,6 +1,5 @@
 import * as path from "path";
 import * as vm from "vm";
-import { cliPrompts } from "./cli/prompts";
 import { resolveProjectType } from "./inventory";
 import { renderJavaScriptOptions } from "./javascript/render-options";
 import { InitProjectOptionHints } from "./option-hints";
@@ -108,33 +107,12 @@ function createProject(opts: CreateProjectOptions) {
   // This is so we can keep the top-level namespace as clean as possible
   const optionsImports = "_options" + Math.random().toString(36).slice(2);
 
-  // const jsTools = await cliPrompts.selectJsTools({
-  //   projectTypeName: projectType.typename,
-  //   projectOptions: {
-  //     packageName: opts.projectOptions.name,
-  //     linter: opts.projectOptions.eslint && "eslint",
-  //     formatter: opts.projectOptions.prettier && "prettier",
-  //     testTool: opts.projectOptions.jest && "jest",
-  //     packageManager: opts.projectOptions.packageManager,
-  //   },
-  // });
-
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
   const { renderedOptions, imports } = renderJavaScriptOptions({
     bootstrap: true,
     comments: opts.optionHints ?? InitProjectOptionHints.FEATURED,
     type: projectType,
-    // args: jsTools
-    //   ? {
-    //       ...opts.projectOptions,
-    //       name: jsTools.projectName,
-    //       eslint: jsTools.linter && jsTools.linter === "eslint",
-    //       prettier: jsTools.formatter && jsTools.formatter === "prettier",
-    //       jest: jsTools.testTool && jsTools.testTool === "jest",
-    //       packageManager: jsTools.packageManager,
-    //     }
-    //   : opts.projectOptions,
     args: opts.projectOptions,
     omitFromBootstrap: ["outdir"],
     prefixImports: optionsImports,
