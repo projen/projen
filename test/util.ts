@@ -99,48 +99,41 @@ export function synthSnapshotWithPost(project: Project) {
   }
 }
 
-function setupProjectDir(
-  outdir: string,
-  options: { git?: boolean; tmpdir?: string } = {}
-): string {
-  // create project under "my-project" so that basedir is deterministic
-  const projectdir = path.join(outdir, "my-project");
-  fs.mkdirSync(projectdir);
-
-  const shell = (command: string) => cp.execSync(command, { cwd: projectdir });
-  if (options.git ?? true) {
-    shell("git init -b main");
-    shell("git remote add origin git@boom.com:foo/bar.git");
-    shell('git config user.name "My User Name"');
-    shell('git config user.email "my@user.email.com"');
-    shell("git config commit.gpgsign false");
-    shell("git config tag.gpgsign false");
-  } else if (process.env.CI) {
-    // if "git" is set to "false", we still want to make sure global user is defined
-    // (relevant in CI context)
-    shell(
-      'git config user.name || git config --global user.name "My User Name"'
-    );
-    shell(
-      'git config user.email || git config --global user.email "my@user.email.com"'
-    );
-  }
-
-  return projectdir;
-}
-
 export function withProjectDir(
   code: (workdir: string) => void,
   options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {}
 ) {
   const origDir = process.cwd();
   const outdir = options.tmpdir ?? mkdtemp();
-
   try {
-    const projectdir = setupProjectDir(outdir, options);
+    // create project under "my-project" so that basedir is deterministic
+    const projectdir = path.join(outdir, "my-project");
+    fs.mkdirSync(projectdir);
+
+    const shell = (command: string) =>
+      cp.execSync(command, { cwd: projectdir });
+    if (options.git ?? true) {
+      shell("git init -b main");
+      shell("git remote add origin git@boom.com:foo/bar.git");
+      shell('git config user.name "My User Name"');
+      shell('git config user.email "my@user.email.com"');
+      shell("git config commit.gpgsign false");
+      shell("git config tag.gpgsign false");
+    } else if (process.env.CI) {
+      // if "git" is set to "false", we still want to make sure global user is defined
+      // (relevant in CI context)
+      shell(
+        'git config user.name || git config --global user.name "My User Name"'
+      );
+      shell(
+        'git config user.email || git config --global user.email "my@user.email.com"'
+      );
+    }
+
     if (options.chdir ?? false) {
       process.chdir(projectdir);
     }
+
     code(projectdir);
   } finally {
     process.chdir(origDir);
