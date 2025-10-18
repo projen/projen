@@ -4,7 +4,7 @@ import { InitProjectOptionHints } from "../src/option-hints";
 import { Projects } from "../src/projects";
 
 describe("createProject", () => {
-  test("creates a project in a directory", async () => {
+  test("creates a project in a directory", () => {
     withProjectDir(
       (projectdir) => {
         // GIVEN
@@ -30,7 +30,7 @@ describe("createProject", () => {
     );
   });
 
-  test("creates a project and passes in JSON-like project options", async () => {
+  test("creates a project and passes in JSON-like project options", () => {
     withProjectDir(
       (projectdir) => {
         // GIVEN
@@ -64,7 +64,7 @@ describe("createProject", () => {
     );
   });
 
-  test("creates a project from an external project type, if it's installed", async () => {
+  test("creates a project from an external project type, if it's installed", () => {
     withProjectDir(
       (projectdir) => {
         // GIVEN
