@@ -24,8 +24,6 @@ if (!type) {
   );
 }
 
-// top-level await is not supported in this file
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 Projects.createProject({
   dir: ".",
   projectFqn: type,
