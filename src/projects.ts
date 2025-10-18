@@ -156,7 +156,8 @@ async function createProject(opts: CreateProjectOptions) {
     initProjectCode.push(`${varName}.synth();`);
   }
 
-  const mainModule = await import(mod);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const mainModule = require(mod);
   const ctx = vm.createContext({
     ...mainModule,
     [optionsImports]: {
