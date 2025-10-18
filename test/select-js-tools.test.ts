@@ -46,6 +46,7 @@ describe("selectJsTools", () => {
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(1, "Project name", {
       type: "text",
       placeholder: "my-project",
+      default: "my-project",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       2,
@@ -73,6 +74,7 @@ describe("selectJsTools", () => {
       type: "select",
       options: [
         { label: "ESLint", value: "eslint" },
+        { label: "Biome", value: "biome" },
         { label: "None", value: "undefined" },
       ],
     });
@@ -100,8 +102,12 @@ describe("selectJsTools", () => {
     );
   });
 
-  test("when value is specified for projectOption, skip package manager, linter, formatter, and testTool options", async () => {
-    mockedConsola.prompt.mockResolvedValueOnce("sample"); // project name
+  test("when specified linter to biome, formatter will also be set biome ", async () => {
+    mockedConsola.prompt
+      .mockResolvedValueOnce("sample") // project name
+      .mockResolvedValueOnce(NodePackageManager.NPM) // package manager
+      .mockResolvedValueOnce("biome") // linter
+      .mockResolvedValueOnce("jest"); // test tool
 
     // GIVEN
     const cliPrompts = {
@@ -111,28 +117,63 @@ describe("selectJsTools", () => {
     // WHEN
     const result = await cliPrompts.selectJsTools({
       projectTypeName: "projen.javascript.NodeProject",
-      projectOptions: {
-        packageName: "my-sample-project",
-        packageManager: NodePackageManager.NPM,
-        linter: "eslint",
-        formatter: "prettier",
-        testTool: "jest",
-      },
     });
 
     // THEN
     expect(result).toEqual({
       projectName: "sample",
-      packageManager: NodePackageManager.NPM,
-      linter: "eslint",
-      formatter: "prettier",
+      packageManager: "npm",
+      linter: "biome",
+      formatter: "biome",
       testTool: "jest",
     });
-    expect(mockedConsola.prompt).toHaveBeenCalledTimes(1);
+    expect(mockedConsola.prompt).toHaveBeenCalledTimes(4);
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(1, "Project name", {
       type: "text",
-      placeholder: "my-sample-project",
+      placeholder: "my-project",
+      default: "my-project",
     });
+    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
+      2,
+      "Choose a package manager",
+      {
+        type: "select",
+        options: [
+          { label: NodePackageManager.YARN, value: NodePackageManager.YARN },
+          { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
+          {
+            label: NodePackageManager.YARN_CLASSIC,
+            value: NodePackageManager.YARN_CLASSIC,
+          },
+          {
+            label: NodePackageManager.YARN_BERRY,
+            value: NodePackageManager.YARN_BERRY,
+          },
+          { label: NodePackageManager.NPM, value: NodePackageManager.NPM },
+          { label: NodePackageManager.PNPM, value: NodePackageManager.PNPM },
+          { label: NodePackageManager.BUN, value: NodePackageManager.BUN },
+        ],
+      }
+    );
+    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(3, "Choose a linter", {
+      type: "select",
+      options: [
+        { label: "ESLint", value: "eslint" },
+        { label: "Biome", value: "biome" },
+        { label: "None", value: "undefined" },
+      ],
+    });
+    expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
+      4,
+      "Choose a test tool",
+      {
+        type: "select",
+        options: [
+          { label: "Jest", value: "jest" },
+          { label: "None", value: "undefined" },
+        ],
+      }
+    );
   });
 
   test("handles user selecting 'None' for all tools", async () => {
