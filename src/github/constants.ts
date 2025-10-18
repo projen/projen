@@ -7,13 +7,14 @@ import { GitIdentity } from ".";
 export const BUILD_ARTIFACT_NAME = "build-artifact";
 
 /**
- * Represents the github-actions user.
+ * Represents the `github-actions[bot]` user.
  *
  * Use this when you need to perform a commit as part of your workflow.
  */
 export const DEFAULT_GITHUB_ACTIONS_USER: GitIdentity = {
-  name: "github-actions",
-  email: "github-actions@github.com",
+  // https://github.com/actions/checkout/blob/08c6903cd8c0fde910a37f88322edcfb5dd907a8/README.md#push-a-commit-using-the-built-in-token
+  name: "github-actions[bot]",
+  email: "41898282+github-actions[bot]@users.noreply.github.com",
 };
 
 /**

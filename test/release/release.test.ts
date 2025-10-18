@@ -1260,3 +1260,46 @@ describe("python", () => {
     });
   });
 });
+
+describe("nuget", () => {
+  test("if trustedPublishing is enabled, api token is minted and id-token write permission is granted", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    release.publisher.publishToNuget({
+      trustedPublishing: true,
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+
+    // Find the Release step (it should be the step with name "Release")
+    const releaseStep = releaseWorkflow.jobs.release_nuget.steps.find(
+      (step: any) => step.name === "Release"
+    );
+    expect(releaseStep).toMatchObject({
+      name: "Release",
+      run: expect.any(String),
+      env: {
+        NUGET_TRUSTED_PUBLISHER: "true",
+        NUGET_USERNAME: "${{ secrets.NUGET_USERNAME }}",
+      },
+    });
+
+    expect(releaseWorkflow.jobs.release_nuget.permissions).toStrictEqual({
+      contents: "read",
+      "id-token": "write",
+    });
+  });
+});

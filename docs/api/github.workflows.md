@@ -1732,7 +1732,7 @@ const jobMatrix: github.workflows.JobMatrix = { ... }
 ##### `domain`<sup>Optional</sup> <a name="domain" id="projen.github.workflows.JobMatrix.property.domain"></a>
 
 ```typescript
-public readonly domain: {[ key: string ]: string | string | number | boolean[]};
+public readonly domain: {[ key: string ]: string | (string | number | boolean)[]};
 ```
 
 - *Type:* {[ key: string ]: string | string | number | boolean[]}
@@ -1751,7 +1751,7 @@ for each operating system.
 ##### `exclude`<sup>Optional</sup> <a name="exclude" id="projen.github.workflows.JobMatrix.property.exclude"></a>
 
 ```typescript
-public readonly exclude: {[ key: string ]: string | number | boolean}[];
+public readonly exclude: ({[ key: string ]: string | number | boolean})[];
 ```
 
 - *Type:* {[ key: string ]: string | number | boolean}[]
@@ -1766,7 +1766,7 @@ build matrix.
 ##### `include`<sup>Optional</sup> <a name="include" id="projen.github.workflows.JobMatrix.property.include"></a>
 
 ```typescript
-public readonly include: {[ key: string ]: string | number | boolean}[];
+public readonly include: ({[ key: string ]: string | number | boolean})[];
 ```
 
 - *Type:* {[ key: string ]: string | number | boolean}[]

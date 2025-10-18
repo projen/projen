@@ -5459,7 +5459,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
-- *Default:* the default github-actions user
+- *Default:* default GitHub Actions user
 
 The git identity used to create the commit.
 
@@ -7321,7 +7321,7 @@ const mergifyConditionalOperator: github.MergifyConditionalOperator = { ... }
 ##### `and`<sup>Optional</sup> <a name="and" id="projen.github.MergifyConditionalOperator.property.and"></a>
 
 ```typescript
-public readonly and: string | MergifyConditionalOperator[];
+public readonly and: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7331,7 +7331,7 @@ public readonly and: string | MergifyConditionalOperator[];
 ##### `or`<sup>Optional</sup> <a name="or" id="projen.github.MergifyConditionalOperator.property.or"></a>
 
 ```typescript
-public readonly or: string | MergifyConditionalOperator[];
+public readonly or: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7440,7 +7440,7 @@ The name of the queue.
 - *Deprecated:* use `queueConditions` instead
 
 ```typescript
-public readonly conditions: string | MergifyConditionalOperator[];
+public readonly conditions: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7454,7 +7454,7 @@ The list of conditions that needs to match to queue the pull request.
 ##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueue.property.mergeConditions"></a>
 
 ```typescript
-public readonly mergeConditions: string | MergifyConditionalOperator[];
+public readonly mergeConditions: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7487,7 +7487,7 @@ Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
 ##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueue.property.queueConditions"></a>
 
 ```typescript
-public readonly queueConditions: string | MergifyConditionalOperator[];
+public readonly queueConditions: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7556,7 +7556,7 @@ A dictionary made of Actions that will be executed on the matching pull requests
 ##### `conditions`<sup>Required</sup> <a name="conditions" id="projen.github.MergifyRule.property.conditions"></a>
 
 ```typescript
-public readonly conditions: string | MergifyConditionalOperator[];
+public readonly conditions: (string | MergifyConditionalOperator)[];
 ```
 
 - *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
@@ -7835,7 +7835,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
-- *Default:* the default github-actions user
+- *Default:* default GitHub Actions user
 
 The git identity used to create the commit.
 
@@ -8791,6 +8791,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
+- *Default:* default GitHub Actions user
 
 The git identity to use in this workflow.
 
@@ -9031,6 +9032,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
+- *Default:* default GitHub Actions user
 
 The git identity to use in this workflow.
 

@@ -31,15 +31,15 @@ exports[`deps upgrade commit can be signed 1`] = `
     },
     {
       "name": "Set git identity",
-      "run": "git config user.name "github-actions"
-git config user.email "github-actions@github.com"",
+      "run": "git config user.name "github-actions[bot]"
+git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
     },
     {
       "id": "create-pr",
       "name": "Create Pull Request",
       "uses": "peter-evans/create-pull-request@v7",
       "with": {
-        "author": "github-actions <github-actions@github.com>",
+        "author": "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
 
 [Workflow Run]: \${{ github.server_url }}/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
@@ -57,7 +57,7 @@ Upgrades project dependencies. See details in [workflow run].
 ------
 
 *Automatically created by projen via the "upgrade-main" workflow*",
-        "committer": "github-actions <github-actions@github.com>",
+        "committer": "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
         "signoff": true,
         "title": "chore(deps): upgrade dependencies",
         "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
@@ -222,8 +222,8 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
   },
   {
     "name": "Set git identity",
-    "run": "git config user.name "github-actions"
-git config user.email "github-actions@github.com"",
+    "run": "git config user.name "github-actions[bot]"
+git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
   },
   {
     "env": {

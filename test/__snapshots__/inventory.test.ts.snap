@@ -427,20 +427,22 @@ exports[`inventory 1`] = `
         "switch": "distdir",
       },
       {
-        "default": "true",
-        "docs": "Include all feature flags in cdk.json.",
+        "default": "- no feature flags are enabled by default",
+        "docs": "Feature flags that should be enabled in \`cdk.json\`.",
         "featured": false,
+        "fqn": "projen.awscdk.ICdkFeatureFlags",
         "fullType": {
-          "primitive": "boolean",
+          "fqn": "projen.awscdk.ICdkFeatureFlags",
         },
         "jsonLike": true,
+        "kind": "interface",
         "name": "featureFlags",
         "optional": true,
         "parent": "CdkConfigCommonOptions",
         "path": [
           "featureFlags",
         ],
-        "simpleType": "boolean",
+        "simpleType": "ICdkFeatureFlags",
         "switch": "feature-flags",
       },
       {
@@ -1641,20 +1643,22 @@ exports[`inventory 1`] = `
         "switch": "dev-deps",
       },
       {
-        "default": "true",
-        "docs": "Include all feature flags in cdk.json.",
+        "default": "- no feature flags are enabled by default",
+        "docs": "Feature flags that should be enabled in \`cdk.json\`.",
         "featured": false,
+        "fqn": "projen.awscdk.ICdkFeatureFlags",
         "fullType": {
-          "primitive": "boolean",
+          "fqn": "projen.awscdk.ICdkFeatureFlags",
         },
         "jsonLike": true,
+        "kind": "interface",
         "name": "featureFlags",
         "optional": true,
         "parent": "CdkConfigCommonOptions",
         "path": [
           "featureFlags",
         ],
-        "simpleType": "boolean",
+        "simpleType": "ICdkFeatureFlags",
         "switch": "feature-flags",
       },
       {
@@ -3704,20 +3708,22 @@ exports[`inventory 1`] = `
         "switch": "experimental-integ-runner",
       },
       {
-        "default": "true",
-        "docs": "Include all feature flags in cdk.json.",
+        "default": "- no feature flags are enabled by default",
+        "docs": "Feature flags that should be enabled in \`cdk.json\`.",
         "featured": false,
+        "fqn": "projen.awscdk.ICdkFeatureFlags",
         "fullType": {
-          "primitive": "boolean",
+          "fqn": "projen.awscdk.ICdkFeatureFlags",
         },
         "jsonLike": true,
+        "kind": "interface",
         "name": "featureFlags",
         "optional": true,
         "parent": "CdkConfigCommonOptions",
         "path": [
           "featureFlags",
         ],
-        "simpleType": "boolean",
+        "simpleType": "ICdkFeatureFlags",
         "switch": "feature-flags",
       },
       {
@@ -5651,7 +5657,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -8992,7 +8998,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -13278,7 +13284,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -16452,7 +16458,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -19558,7 +19564,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -23466,7 +23472,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -25986,7 +25992,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -28787,7 +28793,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -31239,7 +31245,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -35020,7 +35026,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -37809,7 +37815,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -40576,7 +40582,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",
@@ -43343,7 +43349,7 @@ exports[`inventory 1`] = `
         "switch": "workflow-container-image",
       },
       {
-        "default": "- GitHub Actions",
+        "default": "- default GitHub Actions user",
         "docs": "The git identity to use in workflows.",
         "featured": false,
         "fqn": "projen.github.GitIdentity",

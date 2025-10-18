@@ -3073,7 +3073,7 @@ public readonly interruptible: boolean;
 ##### `needs`<sup>Optional</sup> <a name="needs" id="projen.gitlab.Job.property.needs"></a>
 
 ```typescript
-public readonly needs: string | Need[];
+public readonly needs: (string | Need)[];
 ```
 
 - *Type:* string | <a href="#projen.gitlab.Need">Need</a>[]

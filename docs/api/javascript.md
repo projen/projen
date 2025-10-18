@@ -5259,7 +5259,7 @@ For example, to add the [--log-limit](https://esbuild.github.io/api/#log-limit) 
 ```text
 project.bundler.addBundle("./src/hello.ts", {
   platform: "node",
-  target: "node18",
+  target: "node22",
   sourcemap: true,
   format: "esm",
   esbuildArgs: {
@@ -7131,7 +7131,7 @@ Sets the path to the prettier node module used to update inline snapshots.
 ##### `projects`<sup>Optional</sup> <a name="projects" id="projen.javascript.JestConfigOptions.property.projects"></a>
 
 ```typescript
-public readonly projects: string | {[ key: string ]: any}[];
+public readonly projects: (string | {[ key: string ]: any})[];
 ```
 
 - *Type:* string | {[ key: string ]: any}[]
@@ -10685,7 +10685,7 @@ public readonly workflowGitIdentity: GitIdentity;
 ```
 
 - *Type:* projen.github.GitIdentity
-- *Default:* GitHub Actions
+- *Default:* default GitHub Actions user
 
 The git identity to use in workflows.
 
@@ -12808,7 +12808,7 @@ public readonly gitIdentity: GitIdentity;
 ```
 
 - *Type:* projen.github.GitIdentity
-- *Default:* "github-actions@github.com"
+- *Default:* default GitHub Actions user
 
 The git identity to use for commits.
 
@@ -15392,7 +15392,7 @@ const project = new TypeScriptProject({
 // Tell the bundler to bundle the compiled results (from the "lib" directory)
 project.bundler.addBundle("./lib/index.js", {
   platform: "node",
-  target: "node18",
+  target: "node22",
   sourcemap: false,
   format: "esm",
 });

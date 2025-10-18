@@ -87,7 +87,7 @@ publisher.publishToNpm({
 ```
 
 > **Note**: npm trusted publishing requires npm CLI version 11.5.1 or later (available with Node.js 24+).
-> You must update the Node.js version globally with `workflowNodeVersion: "24.x"` or use manual workflow patching.
+> Projen will automatically switch to 24.x for you. Make sure you're not overriding it with `workflowNodeVersion`, otherwise use manual workflow patching.
 
 **PyPI**
 
@@ -98,7 +98,19 @@ publisher.publishToPyPi({
 });
 ```
 
-Before using trusted publishing, you must configure your package on the respective registry to accept tokens from your GitHub repository. See the [Trusted Publishing guide](./trusted-publishing.md) for detailed setup instructions.
+**NuGet**
+
+You must configure the `NUGET_USERNAME` secret (or a different secret name if customized) with your NuGet.org username (profile name, not email address).
+
+```ts
+publisher.publishToNuget({
+  trustedPublishing: true,
+  nugetUsernameSecret: "NUGET_USERNAME", // optional, defaults to "NUGET_USERNAME"
+});
+```
+
+Before using trusted publishing, you must configure your package on the respective registry to accept tokens from your GitHub repository.
+See the [Trusted Publishing guide](./trusted-publishing.md) for detailed setup instructions.
 
 ## Publishing to GitHub Packages
 

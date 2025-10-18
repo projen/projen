@@ -463,6 +463,13 @@
           "path": "src/javascript/biome/biome-config.ts"
         }
       },
+      "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonConst",
+          "path": "src/awscdk/private/feature-flags-v2.const.ts"
+        }
+      },
       "WindowsBuild": {
         "metadata": {
           "type": "component",
