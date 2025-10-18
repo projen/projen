@@ -7,6 +7,7 @@ export interface InteractiveCliPrompt {
   inputText: (args: {
     message: string;
     placeholder?: string;
+    defaultVal?: string;
   }) => Promise<string>;
   selectItem: <T extends SelectItemValue>(args: {
     message: string;
@@ -22,6 +23,7 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
     return consola.prompt(args.message, {
       type: "text",
       placeholder: args.placeholder,
+      default: args.defaultVal,
     });
   },
 
