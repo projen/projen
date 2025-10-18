@@ -1,15 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createProject creates a project and passes in JSON-like project options 1`] = `
-"const { javascript, typescript } = require("projen");
+"const { typescript } = require("projen");
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
-  eslint: true,
   eslintOptions: {"dirs":["src","test"],"prettier":true,"aliasMap":{"@src":"./src","@foo":"./src/foo"}},
-  jest: true,
-  name: "sample",
-  packageManager: javascript.NodePackageManager.YARN,
-  prettier: true,
+  name: "test-project",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -24,11 +20,8 @@ exports[`createProject creates a project from an external project type, if it's 
 const { CdklabsTypeScriptProject } = require("cdklabs-projen-project-types");
 const project = new CdklabsTypeScriptProject({
   defaultReleaseBranch: "main",
-  eslint: true,
-  jest: true,
-  name: "sample",
+  name: "test-project",
   packageManager: javascript.NodePackageManager.NPM,
-  prettier: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -39,14 +32,10 @@ project.synth();"
 `;
 
 exports[`createProject creates a project in a directory 1`] = `
-"const { javascript, typescript } = require("projen");
+"const { typescript } = require("projen");
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
-  eslint: true,
-  jest: true,
-  name: "sample",
-  packageManager: javascript.NodePackageManager.YARN,
-  prettier: true,
+  name: "test-project",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
