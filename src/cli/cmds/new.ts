@@ -467,7 +467,11 @@ function parseArg(
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-function initProject(baseDir: string, type: inventory.ProjectType, args: any) {
+async function initProject(
+  baseDir: string,
+  type: inventory.ProjectType,
+  args: any
+) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(baseDir, type, args);
 
