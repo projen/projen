@@ -1,7 +1,7 @@
 import { rmSync } from "fs";
 import * as path from "path";
 import { IConstruct } from "constructs";
-import { resolve } from "./_resolve";
+import { DataResolver } from "./_private/data-resolver";
 import { PROJEN_MARKER, DEFAULT_PROJEN_RC_JS_FILENAME } from "./common";
 import { Component } from "./component";
 import { ProjenrcFile } from "./projenrc";
@@ -154,9 +154,7 @@ export abstract class FileBase extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = {
-      resolve: (obj, options) => resolve(obj, options),
-    };
+    const resolver: IResolver = new DataResolver();
     const content = this.synthesizeContent(resolver);
     if (content === undefined) {
       // remove file (if exists) and skip rest of synthesis

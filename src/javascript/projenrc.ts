@@ -75,7 +75,7 @@ export class Projenrc extends ProjenrcFile {
       type: bootstrap.type,
     });
 
-    imports.add(moduleName, importName);
+    imports.from(moduleName, importName);
 
     const lines = new Array<string>();
     lines.push(...imports.asCjsRequire());

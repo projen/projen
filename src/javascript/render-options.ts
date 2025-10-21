@@ -1,5 +1,6 @@
 import * as inventory from "../inventory";
 import { InitProjectOptionHints } from "../option-hints";
+import { ModuleImports } from "./private/modules";
 
 const PROJEN_NEW = "__new__";
 const TAB = makePadding(2);
@@ -102,62 +103,6 @@ export function resolveInitProject(opts: any) {
   };
 }
 
-export class ModuleImports {
-  private imports: Map<string, Set<string>> = new Map();
-
-  /**
-   * Add a named import from a module
-   */
-  public add(moduleName: string, importName: string) {
-    const moduleImports = this.imports.get(moduleName) ?? new Set();
-    moduleImports.add(importName);
-    this.imports.set(moduleName, moduleImports);
-  }
-
-  /**
-   * Get all named imports for a module
-   */
-  public get(moduleName: string): string[] {
-    const moduleImports = this.imports.get(moduleName) ?? new Set();
-    return Array.from(moduleImports);
-  }
-
-  /**
-   * Get a list of all used modules
-   */
-  public get modules(): string[] {
-    return Array.from(this.imports.keys());
-  }
-
-  /**
-   * Return all imports as ESM import statements
-   */
-  public asEsmImports(): string[] {
-    return this.all().map(
-      ([moduleName, namedImports]) =>
-        `import { ${[...namedImports].join(", ")} } from "${moduleName}";`,
-    );
-  }
-
-  /**
-   * Return all imports as CJS require statements
-   */
-  public asCjsRequire(): string[] {
-    return this.all().map(
-      ([moduleName, namedImports]) =>
-        `const { ${[...namedImports].join(", ")} } = require("${moduleName}");`,
-    );
-  }
-
-  private all(): Array<[string, string[]]> {
-    const allImports = Object.fromEntries(this.imports);
-    return Object.entries(allImports).map(([key, value]) => [
-      key,
-      Array.from(value).sort(),
-    ]);
-  }
-}
-
 /**
  * Prints all parameters that can be used in a project type, alongside their descriptions.
  *
@@ -190,7 +135,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
       optionsWithDefaults.push(optionName);
 
       if (moduleName && importName) {
-        allImports.add(moduleName, importName);
+        allImports.from(moduleName, importName);
         if (opts.prefixImports) {
           const prefix = `${opts.prefixImports}["${moduleName}"].`;
           renders[optionName] = `${optionName}: ${prefix}${js},`;
