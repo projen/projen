@@ -1,4 +1,6 @@
+import { camel } from "case";
 import { IESLintConfig } from "./config";
+import { ModuleImports } from "../private/modules";
 
 /**
  * The configuration for a set of files.
@@ -44,11 +46,6 @@ export interface ConfigObject {
    * An object containing settings related to the linting process
    */
   readonly linterOptions?: LinterOptionsConfig;
-  /**
-   * A string indicating the name of a processor inside of a plugin
-   * (i.e., "pluginName/processorName").
-   */
-  readonly processor?: Processor;
   /**
    * An object containing a name-value mapping of plugin names to plugin objects.
    * When files is specified, these plugins are only available to the matching files.
@@ -113,24 +110,38 @@ export interface LinterOptionsConfig {
 }
 
 /**
- * Metadata about a plugin.
- */
-export interface PluginMeta {
-  readonly namespace?: string | undefined;
-  readonly name?: string | undefined;
-  readonly version?: string | undefined;
-}
-
-/**
  * A plugin is an object that contains rules. It can be a local plugin or a
  * shared plugin.
  */
-export interface Plugin {
-  readonly meta?: PluginMeta;
-  readonly configs?: Record<string, ConfigObject[]>;
-  readonly languages?: Record<string, any>;
-  readonly processors?: Record<string, Processor>;
-  readonly rules?: Record<string, any>;
+export class Plugin {
+  public static fromName(pluginName: string): Plugin {
+    if (pluginName.startsWith("@")) {
+      return Plugin.fromPackage(`${pluginName}/eslint-plugin`, pluginName);
+    }
+    return Plugin.fromPackage(`eslint-plugin-${pluginName}`, pluginName);
+  }
+
+  public static fromPackage(plugin: string, name: string): Plugin {
+    return new Plugin(plugin, name);
+  }
+
+  public readonly imports: ModuleImports = new ModuleImports();
+  private readonly name: string;
+  private readonly alias: string;
+
+  private constructor(pkg: string, name: string) {
+    this.name = name;
+
+    // sanitize to a valid JS name
+    this.alias = camel(name);
+    this.imports.default(pkg, this.alias);
+  }
+
+  public toJSON() {
+    return {
+      [this.name]: () => this.alias,
+    };
+  }
 }
 
 /**
@@ -140,19 +151,4 @@ export enum Severity {
   OFF = "off",
   WARN = "warn",
   ERROR = "error",
-}
-
-/**
- * A processor is an object that can preprocess and postprocess files.
- */
-export class Processor {
-  /**
-   * A string indicating the name of a processor inside of a plugin
-   * (i.e., "pluginName/processorName").
-   */
-  public static fromPlugin(processor: string): Processor {
-    return new Processor(processor);
-  }
-
-  private constructor(public readonly processor: string) {}
 }

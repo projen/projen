@@ -128,7 +128,10 @@ class ESLintConfigResolver implements IResolver {
     });
 
     const level = options?.indentation ?? 2;
-    return `defineConfig(\n${this.indent(this.resolveToString(resolved, level), level)}\n);`;
+    return `defineConfig(\n${this.indent(
+      this.resolveToString(resolved, level),
+      level
+    )}\n);`;
   }
 
   private resolveToString(value: any, indentation = 2): string {
@@ -137,7 +140,7 @@ class ESLintConfigResolver implements IResolver {
     }
 
     if (Array.isArray(value)) {
-      return value.map((v => this.resolveToString(v, indentation))).join(",\n");
+      return value.map((v) => this.resolveToString(v, indentation)).join(",\n");
     }
 
     return JSON.stringify(value, null, indentation);
