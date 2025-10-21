@@ -13,7 +13,7 @@ import {
   tryResolveDependencyVersion,
 } from "./util";
 import { Yarnrc, YarnrcOptions } from "./yarnrc";
-import { resolve as resolveJson } from "../_resolve";
+import { DataResolver } from "../_private/data-resolver";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
@@ -1497,7 +1497,7 @@ export class NodePackage extends Component {
       this.npmAccess === defaultNpmAccess(this.packageName);
 
     // omit values if they are the same as the npm defaults
-    return resolveJson(
+    return new DataResolver().resolve(
       {
         registry:
           this.npmRegistryUrl !== DEFAULT_NPM_REGISTRY_URL

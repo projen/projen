@@ -1,4 +1,4 @@
-import { resolve } from "../_resolve";
+import { DataResolver } from "../_private/data-resolver";
 import { Component } from "../component";
 import {
   Dependencies,
@@ -334,7 +334,7 @@ export class Pom extends Component {
   }
 
   private synthPom() {
-    return resolve(
+    return new DataResolver().resolve(
       {
         project: {
           ...POM_XML_ATTRS,
