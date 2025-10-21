@@ -2600,6 +2600,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.IgnoreFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
 | <code><a href="#projen.IgnoreFile.property.filterCommentLines">filterCommentLines</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.IgnoreFile.property.filterEmptyLines">filterEmptyLines</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.IgnoreFile.property.patterns">patterns</a></code> | <code>string[]</code> | Returns the ignore patterns in this file. |
 
 ---
 
@@ -2720,6 +2721,20 @@ public readonly filterEmptyLines: boolean;
 ```
 
 - *Type:* boolean
+
+---
+
+##### `patterns`<sup>Required</sup> <a name="patterns" id="projen.IgnoreFile.property.patterns"></a>
+
+```typescript
+public readonly patterns: string[];
+```
+
+- *Type:* string[]
+
+Returns the ignore patterns in this file.
+
+Filtering out comments and empty patterns.
 
 ---
 

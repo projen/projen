@@ -31,6 +31,17 @@ export class IgnoreFile extends FileBase {
   public readonly filterEmptyLines: boolean;
 
   /**
+   * Returns the ignore patterns in this file.
+   *
+   * Filtering out comments and empty patterns.
+   */
+  public get patterns(): string[] {
+    return [...this._patterns]
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith("#"));
+  }
+
+  /**
    *
    * @param project The project to tie this file to.
    * @param filePath - the relative path in the project to put the file
