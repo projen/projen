@@ -1,4 +1,5 @@
 import { synthSnapshot, TestProject } from "./util";
+import { javascript } from "../src";
 import { AiInstructions, AiAgent } from "../src/ai-instructions";
 
 describe("AiInstructions", () => {
@@ -13,8 +14,11 @@ describe("AiInstructions", () => {
     expect(snapshot[".amazonq/rules/projen.md"]).toBeDefined();
   });
 
-  it("default instructions include projen-specific guidance", () => {
-    const project = new TestProject();
+  it("has default instructions that include projen-specific guidance", () => {
+    const project = new javascript.NodeProject({
+      defaultReleaseBranch: "main",
+      name: "my-node-project",
+    });
     new AiInstructions(project);
 
     const snapshot = synthSnapshot(project);
@@ -26,6 +30,21 @@ describe("AiInstructions", () => {
       "DO NOT manually edit generated files"
     );
     expect(copilotInstructions).toContain("Modify configuration in .projenrc");
+  });
+  // This is being skipped because of a bug that's causing the projen command to be npx projen for bun projects
+  it.skip("has default instructions that include projen-specific guidance for bun projects", () => {
+    const project = new javascript.NodeProject({
+      packageManager: javascript.NodePackageManager.BUN,
+      defaultReleaseBranch: "main",
+      name: "my-bun-project",
+    });
+    new AiInstructions(project);
+    const snapshot = synthSnapshot(project);
+    const copilotInstructions = snapshot[".github/copilot-instructions.md"];
+
+    expect(copilotInstructions).toContain("projen");
+    expect(copilotInstructions).toContain("bun run projen");
+    expect(copilotInstructions).not.toContain("npx projen");
   });
 
   it("can specify which AI agents to support", () => {
