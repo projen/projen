@@ -300,4 +300,14 @@ describe("AiInstructions", () => {
     expect(copilotInstructions).toContain("Keep PRs small and focused.");
     expect(copilotInstructions).toContain("Write clear documentation.");
   });
+
+  it("throws an error when an invalid agent is specified", () => {
+    const project = new TestProject();
+
+    expect(() => {
+      new AiInstructions(project, {
+        supportedAiAgents: ["invalid-agent" as AiAgent],
+      });
+    }).toThrowError(/Unknown AI agent: invalid-agent/);
+  });
 });
