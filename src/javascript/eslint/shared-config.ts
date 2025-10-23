@@ -16,7 +16,7 @@ export interface SharedConfigDefinition {
  */
 export class SharedConfig implements IESLintConfig {
   public readonly imports: ModuleImports = new ModuleImports();
-  public readonly configs: ConfigWithExtends[] = [];
+  private readonly configs: ConfigWithExtends[] = [];
 
   public constructor(...defs: SharedConfigDefinition[]) {
     for (const def of defs) {
@@ -24,4 +24,8 @@ export class SharedConfig implements IESLintConfig {
       this.configs.push((() => `${def.name}.${def.path}`) as any);
     }
   }
+
+  public toJSON() {
+    return [...this.configs];
+  }  
 }

@@ -62,7 +62,6 @@ export class ESLintConfigFile extends FileBase {
       this.moduleType === ModuleType.ESM
         ? "export default"
         : "module.exports =";
-    const configParts = this.configs.flatMap((c) => c.configs ?? []);
 
     const configResolver = new ESLintConfigResolver(this.project, resolver);
 
@@ -70,7 +69,7 @@ export class ESLintConfigFile extends FileBase {
       ...(this.marker ? [`// ${this.marker}`] : []),
       ...importParts,
       "",
-      `${exportStatement} ${configResolver.resolve(configParts)}`,
+      `${exportStatement} ${configResolver.resolve(this.configs)}`,
       "",
     ].join("\n");
   }

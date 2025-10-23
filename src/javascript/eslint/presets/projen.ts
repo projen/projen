@@ -5,16 +5,25 @@ import { ConfigWithExtends, Extends, Plugin } from "../config-object";
 import { Tseslint } from "./tseslint";
 
 /**
- * The legacy configuration for Projen
- * @todo convert exiting options into default configs
- *
- * @deprecated - use `EslintConfigs.RECOMMENDED` or `TypeScriptEslintConfigs.RECOMMENDED` instead
+ * Configurations provided by projen
  */
-export class ProjenCompat implements IESLintConfig {
-  public readonly imports: ModuleImports;
-  public readonly configs: ConfigWithExtends[];
+export class Projen implements IESLintConfig {
+  /**
+   * The default recommended rules
+   */
+  public static RECOMMENDED = new Projen();
 
-  public constructor(options: EslintOptions) {
+  /**
+   * Configure the default rules
+   */
+  public static configure(options: EslintOptions) {
+    return new Projen(options);
+  }
+
+  public readonly imports: ModuleImports;
+  private readonly configs: IESLintConfig[];
+
+  private constructor(options: EslintOptions = {}) {
     this.imports = new ModuleImports();
     this.imports.needs("@typescript-eslint/eslint-plugin");
     this.imports.needs("eslint-plugin-import");
@@ -23,7 +32,7 @@ export class ProjenCompat implements IESLintConfig {
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
     this.configs = [
-      ...ESLintConfig.ignores(
+      ESLintConfig.ignores(
         options.ignorePatterns ?? [
           "**/*.js",
           "**/*.d.ts",
@@ -31,10 +40,10 @@ export class ProjenCompat implements IESLintConfig {
           "**/*.generated.ts",
           "coverage/",
         ]
-      ).configs,
-      ...Tseslint.BASE.configs,
-      Plugin.fromName("import") as any,
-      {
+      ),
+      Tseslint.BASE,
+      new ESLintConfig({
+        plugins: Plugin.fromName("import") as any,
         languageOptions: {
           sourceType: "module",
           ecmaVersion: 2018,
@@ -107,7 +116,11 @@ export class ProjenCompat implements IESLintConfig {
             },
           ],
         },
-      },
+      }),
     ];
+  }
+
+  public toJSON(): ConfigWithExtends[] {
+    return this.configs.flatMap((config) => config.toJSON());
   }
 }

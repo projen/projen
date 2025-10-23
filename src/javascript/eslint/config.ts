@@ -1,13 +1,18 @@
 import { ConfigWithExtends } from "./config-object";
 import { Project } from "../../project";
 import { ModuleImports } from "../private/modules";
+import { IResolvable } from "../../file";
 
 /**
  * A Configuration for ESLint.
  */
-export interface IESLintConfig {
+export interface IESLintConfig extends IResolvable {
   readonly imports?: ModuleImports;
-  readonly configs?: ConfigWithExtends[];
+
+  /**
+   * Resolves to an array of configuration objects.
+   */
+  toJSON(): ConfigWithExtends[];
 }
 
 export class ESLintConfig implements IESLintConfig {
@@ -76,14 +81,14 @@ export class ESLintConfig implements IESLintConfig {
    */
   public readonly imports: ModuleImports | undefined;
 
-  public get configs(): ConfigWithExtends[] {
-    return [this._config];
-  }
-
   private readonly _config: ConfigWithExtends;
 
   public constructor(config: ConfigWithExtends, imports?: ModuleImports) {
     this._config = config;
     this.imports = imports;
+  }
+
+  public toJSON() {
+    return [this._config];
   }
 }
