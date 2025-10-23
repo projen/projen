@@ -318,6 +318,30 @@ export class Task {
   }
 
   /**
+   * Insert one or more steps at a given index
+   *
+   * @param index Steps will be inserted before this index. May be negative to
+   * count backwards from the end, or may be `== steps().length` to insert at the end.
+   * @param steps The steps to insert
+   */
+  public insertStep(index: number, ...steps: TaskStep[]): void {
+    this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue("insert steps into");
+      return;
+    }
+
+    if (index < -this._steps.length || index > this.steps.length) {
+      throw new Error(
+        `Cannot insert steps at index ${index} for task ${this.name} because the index is out of bounds for size ${this.steps.length}`
+      );
+    }
+
+    this._steps.splice(index, 0, ...steps);
+  }
+
+  /**
    *
    * @param index The index of the step to edit
    * @param step The new step to replace the old one entirely, it is not merged with the old step

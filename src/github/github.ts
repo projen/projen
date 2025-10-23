@@ -32,7 +32,7 @@ export interface GitHubOptions {
    * Whether a merge queue should be used on this repository to merge pull requests.
    * Requires additional configuration of the repositories branch protection rules.
    *
-   * @default true
+   * @default false
    */
   readonly mergeQueue?: boolean;
 

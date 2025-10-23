@@ -1,3 +1,4 @@
+import * as path from "path";
 import {
   setupAllContributors,
   setupProjenBootstrap,
@@ -14,9 +15,12 @@ import {
   setupUpgradeDependencies,
   setupVscode,
   WindowsBuild,
+  JsiiFromJsonSchema,
+  JsonConst,
 } from "./projenrc";
-import { ProjectTree, ReleasableCommits } from "./src";
+import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
 import { JsiiProject } from "./src/cdk";
+import { tryResolveDependencyVersion } from "./src/javascript/util";
 
 const bootstrapScriptFile = "projen.js";
 
@@ -51,8 +55,8 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.7.x",
-  typescriptVersion: "5.7.x",
+  jsiiVersion: "5.9.x",
+  typescriptVersion: "5.9.x",
 
   deps: ["constructs@^10.0.0"],
 
@@ -61,7 +65,7 @@ const project = new JsiiProject({
     "yaml@^2.2.2",
     "yargs",
     "case",
-    "glob@^8",
+    "fast-glob",
     "semver",
     "chalk",
     "@iarna/toml",
@@ -70,17 +74,25 @@ const project = new JsiiProject({
     "shx",
     "fast-json-patch",
     "comment-json@4.2.2",
+    "parse-conflict-json",
   ],
 
   devDeps: [
     "@types/conventional-changelog-config-spec",
     "@types/yargs",
-    "@types/glob",
     "@types/semver",
     "@types/ini",
+    "@types/parse-conflict-json",
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "json2jsii",
+    // Needed to generate biome config
+    "@biomejs/biome@^2",
+    // used to get current node versions in tests
+    "@jsii/check-node",
+    // used to get CDK V2 feature flags
+    "aws-cdk-lib",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -90,7 +102,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "16.0.0", // Do not change this before a version has been EOL for a while
-  workflowNodeVersion: "18.18.0",
+  workflowNodeVersion: "20.9.0",
 
   codeCov: true,
   prettier: true,
@@ -134,19 +146,22 @@ const project = new JsiiProject({
   // This is important because PyPI has limits on the total storage amount used, and extensions need to be manually requested
   releasableCommits: ReleasableCommits.featuresAndFixes(),
 
+  releaseEnvironment: "release",
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
+    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
-    mavenEndpoint: "https://s01.oss.sonatype.org",
   },
   publishToPypi: {
     distName: "projen",
     module: "projen",
+    trustedPublishing: true,
   },
   publishToGo: {
     moduleName: "github.com/projen/projen-go",
   },
+  npmTrustedPublishing: true,
   npmProvenance: true,
 
   releaseFailureIssue: true,
@@ -157,6 +172,12 @@ const project = new JsiiProject({
     allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
   },
 });
+
+project.github
+  ?.tryFindWorkflow("release")
+  ?.file?.patch(
+    JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
+  );
 
 setupCheckLicenses(project);
 
@@ -188,10 +209,23 @@ setupNpmignore(project);
 setupIntegTest(project);
 setupBundleTaskRunner(project);
 
+new JsiiFromJsonSchema(project, {
+  schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
+  filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
+
+new JsonConst(project, {
+  jsonPath: require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
+  filePath: path.join("src", "awscdk", "private", "feature-flags-v2.const.ts"),
+  comment: `Feature flags as of v${
+    tryResolveDependencyVersion("aws-cdk-lib") || "2"
+  }`,
+});
+
 new WindowsBuild(project);
 
 // we are projen, so re-synth after compiling.
-// fixes feedback loop where projen contibutors run "build"
+// fixes feedback loop where projen contributors run "build"
 // but not all files are updated
 if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);

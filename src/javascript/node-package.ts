@@ -256,6 +256,13 @@ export interface NodePackageOptions {
   readonly pnpmVersion?: string;
 
   /**
+   * The version of Bun to use if using Bun as a package manager.
+   *
+   * @default "latest"
+   */
+  readonly bunVersion?: string;
+
+  /**
    * License's SPDX identifier.
    * See https://github.com/projen/projen/tree/main/license-text for a list of supported licenses.
    * Use the `licensed` option if you want to no license to be specified.
@@ -326,6 +333,16 @@ export interface NodePackageOptions {
    * @default "NPM_TOKEN"
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * @see
+   *
+   * @default - false
+   */
+  readonly npmTrustedPublishing?: boolean;
 
   /**
    * Options for npm packages using AWS CodeArtifact.
@@ -486,6 +503,11 @@ export class NodePackage extends Component {
    * The version of PNPM to use if using PNPM as a package manager.
    */
   public readonly pnpmVersion?: string;
+
+  /**
+   * The version of Bun to use if using Bun as a package manager.
+   */
+  public readonly bunVersion?: string;
 
   /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
@@ -669,7 +691,8 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
-    this.pnpmVersion = options.pnpmVersion ?? "9";
+    this.pnpmVersion = options.pnpmVersion ?? "10";
+    this.bunVersion = options.bunVersion ?? "latest";
     this.addNodeEngine();
 
     this.addCodeArtifactLoginScript();
@@ -1054,7 +1077,9 @@ export class NodePackage extends Component {
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
-      npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
+      npmTokenSecret: options.npmTrustedPublishing
+        ? undefined
+        : defaultNpmToken(options.npmTokenSecret, npmr.hostname),
       codeArtifactOptions,
       scopedPackagesOptions: this.parseScopedPackagesOptions(
         options.scopedPackagesOptions
@@ -1101,7 +1126,6 @@ export class NodePackage extends Component {
     }
 
     this.project.addTask("ca:login", {
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
@@ -1114,8 +1138,9 @@ export class NodePackage extends Component {
             `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
             `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
           ];
-          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16)
+          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16) {
             commands.push(`npm config set //${registry}:always-auth=true`);
+          }
           return {
             exec: commands.join("; "),
           };
@@ -1756,7 +1781,7 @@ export function defaultNpmToken(
   npmToken: string | undefined,
   registry: string | undefined
 ) {
-  // if we are publishing to AWS CdodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
+  // if we are publishing to AWS CodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
   if (isAwsCodeArtifactRegistry(registry)) {
     return undefined;
   }

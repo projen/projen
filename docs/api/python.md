@@ -3900,6 +3900,7 @@ const poetryPyprojectOptions: python.PoetryPyprojectOptions = { ... }
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.license">license</a></code> | <code>string</code> | License of this package as an SPDX identifier. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.maintainers">maintainers</a></code> | <code>string[]</code> | the maintainers of the package. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.name">name</a></code> | <code>string</code> | Name of the package (required). |
+| <code><a href="#projen.python.PoetryPyprojectOptions.property.packageMode">packageMode</a></code> | <code>boolean</code> | Package mode (optional). |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.packages">packages</a></code> | <code>any[]</code> | A list of packages and modules to include in the final distribution. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.plugins">plugins</a></code> | <code>any</code> | Plugins. |
 | <code><a href="#projen.python.PoetryPyprojectOptions.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
@@ -4068,6 +4069,28 @@ public readonly name: string;
 Name of the package (required).
 
 ---
+
+##### `packageMode`<sup>Optional</sup> <a name="packageMode" id="projen.python.PoetryPyprojectOptions.property.packageMode"></a>
+
+```typescript
+public readonly packageMode: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Package mode (optional).
+
+> [https://python-poetry.org/docs/pyproject/#package-mode](https://python-poetry.org/docs/pyproject/#package-mode)
+
+---
+
+*Example*
+
+```typescript
+false
+```
+
 
 ##### `packages`<sup>Optional</sup> <a name="packages" id="projen.python.PoetryPyprojectOptions.property.packages"></a>
 
@@ -4241,6 +4264,7 @@ const poetryPyprojectOptionsWithoutDeps: python.PoetryPyprojectOptionsWithoutDep
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.license">license</a></code> | <code>string</code> | License of this package as an SPDX identifier. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.maintainers">maintainers</a></code> | <code>string[]</code> | the maintainers of the package. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.name">name</a></code> | <code>string</code> | Name of the package (required). |
+| <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.packageMode">packageMode</a></code> | <code>boolean</code> | Package mode (optional). |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.packages">packages</a></code> | <code>any[]</code> | A list of packages and modules to include in the final distribution. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.plugins">plugins</a></code> | <code>any</code> | Plugins. |
 | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
@@ -4407,6 +4431,28 @@ public readonly name: string;
 Name of the package (required).
 
 ---
+
+##### `packageMode`<sup>Optional</sup> <a name="packageMode" id="projen.python.PoetryPyprojectOptionsWithoutDeps.property.packageMode"></a>
+
+```typescript
+public readonly packageMode: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Package mode (optional).
+
+> [https://python-poetry.org/docs/pyproject/#package-mode](https://python-poetry.org/docs/pyproject/#package-mode)
+
+---
+
+*Example*
+
+```typescript
+false
+```
+
 
 ##### `packages`<sup>Optional</sup> <a name="packages" id="projen.python.PoetryPyprojectOptionsWithoutDeps.property.packages"></a>
 

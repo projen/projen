@@ -42,11 +42,101 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
     ],
     "root": true,
     "rules": {
+      "@stylistic/array-bracket-newline": [
+        "error",
+        "consistent",
+      ],
+      "@stylistic/array-bracket-spacing": [
+        "error",
+        "never",
+      ],
+      "@stylistic/brace-style": [
+        "error",
+        "1tbs",
+        {
+          "allowSingleLine": true,
+        },
+      ],
+      "@stylistic/comma-dangle": [
+        "error",
+        "always-multiline",
+      ],
+      "@stylistic/comma-spacing": [
+        "error",
+        {
+          "after": true,
+          "before": false,
+        },
+      ],
       "@stylistic/indent": [
         "error",
         2,
       ],
+      "@stylistic/key-spacing": [
+        "error",
+      ],
+      "@stylistic/keyword-spacing": [
+        "error",
+      ],
+      "@stylistic/max-len": [
+        "error",
+        {
+          "code": 150,
+          "ignoreComments": true,
+          "ignoreRegExpLiterals": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true,
+          "ignoreUrls": true,
+        },
+      ],
       "@stylistic/member-delimiter-style": [
+        "error",
+      ],
+      "@stylistic/no-multi-spaces": [
+        "error",
+        {
+          "ignoreEOLComments": false,
+        },
+      ],
+      "@stylistic/no-multiple-empty-lines": [
+        "error",
+      ],
+      "@stylistic/no-trailing-spaces": [
+        "error",
+      ],
+      "@stylistic/object-curly-newline": [
+        "error",
+        {
+          "consistent": true,
+          "multiline": true,
+        },
+      ],
+      "@stylistic/object-curly-spacing": [
+        "error",
+        "always",
+      ],
+      "@stylistic/object-property-newline": [
+        "error",
+        {
+          "allowAllPropertiesOnSameLine": true,
+        },
+      ],
+      "@stylistic/quote-props": [
+        "error",
+        "consistent-as-needed",
+      ],
+      "@stylistic/quotes": [
+        "error",
+        "single",
+        {
+          "avoidEscape": true,
+        },
+      ],
+      "@stylistic/semi": [
+        "error",
+        "always",
+      ],
+      "@stylistic/space-before-blocks": [
         "error",
       ],
       "@typescript-eslint/member-ordering": [
@@ -65,44 +155,10 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
           ],
         },
       ],
-      "@typescript-eslint/no-floating-promises": [
-        "error",
-      ],
-      "@typescript-eslint/no-require-imports": [
-        "error",
-      ],
-      "@typescript-eslint/no-shadow": [
-        "error",
-      ],
-      "@typescript-eslint/return-await": [
-        "error",
-      ],
-      "array-bracket-newline": [
-        "error",
-        "consistent",
-      ],
-      "array-bracket-spacing": [
-        "error",
-        "never",
-      ],
-      "brace-style": [
-        "error",
-        "1tbs",
-        {
-          "allowSingleLine": true,
-        },
-      ],
-      "comma-dangle": [
-        "error",
-        "always-multiline",
-      ],
-      "comma-spacing": [
-        "error",
-        {
-          "after": true,
-          "before": false,
-        },
-      ],
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-require-imports": "error",
+      "@typescript-eslint/no-shadow": "error",
+      "@typescript-eslint/return-await": "error",
       "curly": [
         "error",
         "multi-line",
@@ -141,36 +197,7 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
           ],
         },
       ],
-      "indent": [
-        "off",
-      ],
-      "key-spacing": [
-        "error",
-      ],
-      "keyword-spacing": [
-        "error",
-      ],
-      "max-len": [
-        "error",
-        {
-          "code": 150,
-          "ignoreComments": true,
-          "ignoreRegExpLiterals": true,
-          "ignoreStrings": true,
-          "ignoreTemplateLiterals": true,
-          "ignoreUrls": true,
-        },
-      ],
       "no-bitwise": [
-        "error",
-      ],
-      "no-multi-spaces": [
-        "error",
-        {
-          "ignoreEOLComments": false,
-        },
-      ],
-      "no-multiple-empty-lines": [
         "error",
       ],
       "no-return-await": [
@@ -178,44 +205,6 @@ exports[`TypeScriptProject with default settings synthesizes 1`] = `
       ],
       "no-shadow": [
         "off",
-      ],
-      "no-trailing-spaces": [
-        "error",
-      ],
-      "object-curly-newline": [
-        "error",
-        {
-          "consistent": true,
-          "multiline": true,
-        },
-      ],
-      "object-curly-spacing": [
-        "error",
-        "always",
-      ],
-      "object-property-newline": [
-        "error",
-        {
-          "allowAllPropertiesOnSameLine": true,
-        },
-      ],
-      "quote-props": [
-        "error",
-        "consistent-as-needed",
-      ],
-      "quotes": [
-        "error",
-        "single",
-        {
-          "avoidEscape": true,
-        },
-      ],
-      "semi": [
-        "error",
-        "always",
-      ],
-      "space-before-blocks": [
-        "error",
       ],
     },
     "settings": {
@@ -275,7 +264,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -288,10 +277,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -310,13 +300,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -324,15 +314,15 @@ jobs:
         run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Push changes
         env:
           PULL_REQUEST_REF: \${{ github.event.pull_request.head.ref }}
         run: |-
           git add .
           git commit -s -m "chore: self mutation"
-          git push origin HEAD:$PULL_REQUEST_REF
+          git push origin "HEAD:$PULL_REQUEST_REF"
 ",
   ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -355,7 +345,7 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.4.0
+      - uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -388,13 +378,13 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
@@ -410,13 +400,14 @@ jobs:
         run: |-
           echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+        shell: bash
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: build-artifact
           path: dist
@@ -429,11 +420,11 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: lts/*
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: build-artifact
           path: dist
@@ -443,9 +434,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF: \${{ github.sha }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_SHA 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
 ",
   ".github/workflows/upgrade-main.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -464,7 +453,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Install dependencies
@@ -476,10 +465,11 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
+        shell: bash
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.4.0
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: repo.patch
           path: repo.patch
@@ -493,11 +483,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -505,11 +495,11 @@ jobs:
         run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -532,8 +522,8 @@ jobs:
             ------
 
             *Automatically created by projen via the "upgrade-main" workflow*
-          author: github-actions <github-actions@github.com>
-          committer: github-actions <github-actions@github.com>
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           signoff: true
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
@@ -592,7 +582,7 @@ junit.xml
 queue_rules:
   - name: default
     update_method: merge
-    conditions:
+    queue_conditions:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
@@ -611,6 +601,8 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
+merge_queue:
+  max_parallel_checks: 1
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 /.projen/
@@ -693,7 +685,7 @@ tsconfig.tsbuildinfo
       {
         "name": "jest-junit",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       {
         "name": "projen",
@@ -844,6 +836,7 @@ tsconfig.tsbuildinfo
         "description": "Runs eslint against the codebase",
         "env": {
           "ESLINT_USE_FLAT_CONFIG": "false",
+          "NODE_NO_WARNINGS": "1",
         },
         "name": "eslint",
         "steps": [
@@ -1211,7 +1204,7 @@ tsconfig.tsbuildinfo
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^15",
+      "jest-junit": "^16",
       "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
@@ -1307,7 +1300,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": [
-        "es2019",
+        "es2020",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1322,7 +1315,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2019",
+      "target": "ES2020",
     },
     "exclude": [
       "node_modules",
@@ -1342,7 +1335,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": [
-        "es2019",
+        "es2020",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1359,7 +1352,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2019",
+      "target": "ES2020",
     },
     "exclude": [],
     "include": [

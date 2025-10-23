@@ -482,6 +482,7 @@ export class UpgradeDependencies extends Component {
         name: "Upgrade",
         container: this.containerOptions,
         permissions: this.permissions,
+        env: this.options.workflowOptions?.env,
         ...filteredRunsOnOptions(
           this.options.workflowOptions?.runsOn,
           this.options.workflowOptions?.runsOnGroup
@@ -596,7 +597,7 @@ export interface UpgradeDependenciesWorkflowOptions {
 
   /**
    * The git identity to use for commits.
-   * @default "github-actions@github.com"
+   * @default - default GitHub Actions user
    */
   readonly gitIdentity?: GitIdentity;
 
@@ -621,6 +622,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default `{ contents: JobPermission.READ }`
    */
   readonly permissions?: JobPermissions;
+
+  /**
+   * Build environment variables for the upgrade job.
+   *
+   * @default {}
+   */
+  readonly env?: { [key: string]: string };
 }
 
 /**

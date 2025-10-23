@@ -15,7 +15,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v4",
+      "uses": "actions/checkout@v5",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -23,7 +23,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v4",
+      "uses": "actions/setup-node@v5",
       "with": {
         "node-version": "20.17.0",
       },
@@ -41,12 +41,13 @@ exports[`node version in workflow does setup a custom version 1`] = `
       "name": "Find mutations",
       "run": "git add .
 git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+      "shell": "bash",
       "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4.4.0",
+      "uses": "actions/upload-artifact@v4.6.2",
       "with": {
         "name": "repo.patch",
         "overwrite": true,
@@ -67,7 +68,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4.4.0",
+      "uses": "actions/upload-artifact@v4.6.2",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
@@ -93,7 +94,7 @@ exports[`node version in workflow does setup default version 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v4",
+      "uses": "actions/checkout@v5",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -101,7 +102,7 @@ exports[`node version in workflow does setup default version 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v4",
+      "uses": "actions/setup-node@v5",
       "with": {
         "node-version": "lts/*",
       },
@@ -119,12 +120,13 @@ exports[`node version in workflow does setup default version 1`] = `
       "name": "Find mutations",
       "run": "git add .
 git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+      "shell": "bash",
       "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4.4.0",
+      "uses": "actions/upload-artifact@v4.6.2",
       "with": {
         "name": "repo.patch",
         "overwrite": true,
@@ -145,7 +147,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4.4.0",
+      "uses": "actions/upload-artifact@v4.6.2",
       "with": {
         "name": "build-artifact",
         "overwrite": true,
@@ -171,7 +173,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v4",
+      "uses": "actions/checkout@v5",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -179,7 +181,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v4",
+      "uses": "actions/setup-node@v5",
       "with": {
         "node-version": "18.0.0",
       },
@@ -197,12 +199,13 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
       "name": "Find mutations",
       "run": "git add .
 git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+      "shell": "bash",
       "working-directory": "./",
     },
     {
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
-      "uses": "actions/upload-artifact@v4.4.0",
+      "uses": "actions/upload-artifact@v4.6.2",
       "with": {
         "name": "repo.patch",
         "overwrite": true,
@@ -223,7 +226,7 @@ exit 1",
     },
     {
       "name": "Upload artifact",
-      "uses": "actions/upload-artifact@v4.4.0",
+      "uses": "actions/upload-artifact@v4.6.2",
       "with": {
         "name": "build-artifact",
         "overwrite": true,

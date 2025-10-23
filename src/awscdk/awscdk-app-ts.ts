@@ -1,5 +1,15 @@
 import * as fs from "fs";
 import * as path from "path";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import {
+  NodePackageManager,
+  RunBundleTask,
+  TypeScriptModuleResolution,
+  TypescriptConfigOptions,
+} from "../javascript";
+import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import { deepMerge } from "../util";
 import { AutoDiscover } from "./auto-discover";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
@@ -7,10 +17,6 @@ import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
-import { Component } from "../component";
-import { DependencyType } from "../dependencies";
-import { RunBundleTask } from "../javascript";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
   extends TypeScriptProjectOptions,
@@ -23,7 +29,11 @@ export interface AwsCdkTypeScriptAppOptions
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
-
+  /**
+   * The command line to execute in order to synthesize the CDK application
+   * (language specific).
+   */
+  readonly app?: string;
   /**
    * Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you can manually add an
@@ -106,18 +116,72 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public readonly cdkDeps: AwsCdkDeps;
 
   constructor(options: AwsCdkTypeScriptAppOptions) {
+    // CDK default compiler options
+    const cdkDefaultCompilerOptions: TypescriptConfigOptions["compilerOptions"] =
+      {
+        target: "ES2022",
+        module: "NodeNext",
+        moduleResolution: TypeScriptModuleResolution.NODE_NEXT,
+        lib: ["es2022"],
+        declaration: true,
+        strict: true,
+        noImplicitAny: true,
+        strictNullChecks: true,
+        noImplicitThis: true,
+        alwaysStrict: true,
+        noUnusedLocals: false,
+        noUnusedParameters: false,
+        noImplicitReturns: true,
+        noFallthroughCasesInSwitch: false,
+        inlineSourceMap: true,
+        inlineSources: true,
+        experimentalDecorators: true,
+        strictPropertyInitialization: false,
+        typeRoots: ["./node_modules/@types"],
+      };
+
+    let finalCompilerOptions = cdkDefaultCompilerOptions;
+    if (options.tsconfig?.compilerOptions) {
+      // Deep merge user's `compilerOptions` onto CDK-specific defaults.
+      finalCompilerOptions = deepMerge(
+        [cdkDefaultCompilerOptions, options.tsconfig.compilerOptions],
+        { destructive: true }
+      );
+    }
+
+    // CDK default exclude
+    const cdkDefaultExclude = ["node_modules", "cdk.out"];
+    let finalExclude = cdkDefaultExclude;
+    if (options.tsconfig?.exclude) {
+      // Merge and deduplicate user's `exclude` with CDK-specific defaults.
+      finalExclude = [
+        ...new Set([...cdkDefaultExclude, ...options.tsconfig.exclude]),
+      ];
+    }
+
+    /**
+     * The final `tsconfig` object passed to the superclass.
+     * It incorporates AWS CDK defaults (derived from `cdkDefaultCompilerOptions` and `cdkDefaultExclude` above)
+     * and any user-provided overrides. The aim is to align with the standard CDK `tsconfig.json`:
+     * @see https://github.com/aws/aws-cdk-cli/blob/main/packages/aws-cdk/lib/init-templates/app/typescript/tsconfig.json
+     */
+    const tsconfigToSuper: TypescriptConfigOptions = {
+      ...options.tsconfig, // Pass through any other top-level tsconfig options from user
+      compilerOptions: finalCompilerOptions,
+      exclude: finalExclude,
+    };
+
     super({
       ...options,
       sampleCode: false,
       bundlerOptions: {
         ...options.bundlerOptions,
-
         // we invoke the "bundle" task as part of the build step in cdk.json so
         // we don't want it to be added to the pre-compile phase.
         runBundleTask: RunBundleTask.MANUAL,
       },
+      tsconfig: tsconfigToSuper,
     });
-
     this.cdkDeps = new AwsCdkDepsJs(this, {
       dependencyType: DependencyType.RUNTIME,
       ...options,
@@ -125,7 +189,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.appEntrypoint = options.appEntrypoint ?? "main.ts";
 
     // CLI
-    this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkVersion}`);
+    this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkCliVersion}`);
 
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
@@ -141,11 +205,6 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     }
 
     this.cdkConfig = new CdkConfig(this, {
-      app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(
-        this.srcdir,
-        this.appEntrypoint
-      )}`,
-      featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
       watchExcludes: [
@@ -159,6 +218,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         "node_modules",
       ],
       ...options,
+      app: this.getCdkApp(options),
     });
 
     this.gitignore.exclude(".parcel-cache/");
@@ -199,6 +259,66 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public addCdkDependency(...modules: string[]) {
     return this.cdkDeps.addV1Dependencies(...modules);
   }
+
+  private getCdkApp(options: AwsCdkTypeScriptAppOptions): string {
+    if (options.app && options.appEntrypoint) {
+      throw new Error("Only one of 'app' or 'appEntrypoint' can be specified");
+    }
+
+    // prefer an explicitly provided app command
+    if (options.app) {
+      return options.app;
+    }
+
+    const appEntrypoint = path.posix.join(this.srcdir, this.appEntrypoint);
+
+    const tsNodeConfig = this.tsconfig?.fileName
+      ? ` -P ${this.tsconfig?.fileName}`
+      : "";
+    const tsNodeApp = `ts-node${tsNodeConfig} --prefer-ts-exts ${appEntrypoint}`;
+
+    switch (this.package.packageManager) {
+      case NodePackageManager.BUN:
+        const bunTsConfig = this.tsconfig?.fileName
+          ? ` --tsconfig-override=${this.tsconfig?.fileName}`
+          : "";
+        const bunEntrypoint = ensureRelativePathPrefix(appEntrypoint);
+
+        // https://bun.sh/docs/cli/run
+        // bun can run ts files directly
+        return `bun run${bunTsConfig} ${bunEntrypoint}`;
+      case NodePackageManager.PNPM:
+      case NodePackageManager.YARN_CLASSIC:
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_BERRY:
+      case NodePackageManager.YARN2:
+        // use npx with also for yarn & pnpm due to reported issues
+        // @see https://github.com/projen/projen/issues/4180
+        return `npx ${tsNodeApp}`;
+      default:
+        return `npx ${tsNodeApp}`;
+    }
+  }
+}
+
+/**
+ * Ensures a path is properly prefixed with './' if it's a relative path
+ * @param {string} filePath - The path to normalize
+ * @returns {string} - The normalized path
+ */
+function ensureRelativePathPrefix(filePath: string) {
+  // If it's already an absolute path, return as is
+  if (path.isAbsolute(filePath)) {
+    return filePath;
+  }
+
+  // If it already starts with ./ or ../, return as is
+  if (filePath.startsWith("./") || filePath.startsWith("../")) {
+    return filePath;
+  }
+
+  // Otherwise, add ./ prefix
+  return `./${filePath}`;
 }
 
 class SampleCode extends Component {

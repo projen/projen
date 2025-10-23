@@ -41,6 +41,8 @@ junit.xml
 /dist/changelog.md
 /dist/version.txt
 !/.github/workflows/release.yml
+codecov
+codecov.*
 !/.github/pull_request_template.md
 !/.prettierignore
 !/.prettierrc.json
@@ -62,5 +64,7 @@ tsconfig.json
 **/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
+!/src/javascript/biome/biome-config.ts
+!/src/awscdk/private/feature-flags-v2.const.ts
 !/.projen/tree.json
 !/.projenrc.ts

@@ -88,6 +88,7 @@ export interface TaskWorkflowJobOptions {
 
   /**
    * The git identity to use in this workflow.
+   * @default - default GitHub Actions user
    */
   readonly gitIdentity?: GitIdentity;
 
@@ -117,6 +118,13 @@ export interface TaskWorkflowJobOptions {
    * Default settings for all steps in the TaskWorkflow Job.
    */
   readonly jobDefaults?: JobDefaults;
+
+  /**
+   * The GitHub Actions environment used for the job.
+   *
+   * @default - no environment used
+   */
+  readonly environment?: string;
 }
 
 /**
@@ -128,7 +136,7 @@ export class TaskWorkflowJob extends Component {
   public readonly runsOn?: string[] | undefined;
   public readonly runsOnGroup?: GroupRunnerOptions | undefined;
   public readonly steps: JobStep[];
-  public readonly environment?: unknown;
+  public readonly environment?: string;
   public readonly outputs?: Record<string, JobStepOutput> | undefined;
   public readonly env?: Record<string, string> | undefined;
   public readonly defaults?: JobDefaults | undefined;
@@ -193,6 +201,7 @@ export class TaskWorkflowJob extends Component {
     this.defaults = options?.jobDefaults;
     this.if = options.condition;
     this.outputs = options.outputs;
+    this.environment = options.environment;
     this.steps = [
       ...preCheckoutSteps,
 

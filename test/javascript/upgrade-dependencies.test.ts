@@ -564,6 +564,18 @@ test("uses the proper yarn berry upgrade command", () => {
   `);
 });
 
+test("given pull request workflow correct permissions when using GitHub token", () => {
+  const project = createProject({
+    projenCredentials: GithubCredentials.fromPersonalAccessToken({
+      secret: "GITHUB_TOKEN",
+    }),
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
 function createProject(
   options: Omit<
     NodeProjectOptions,

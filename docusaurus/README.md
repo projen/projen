@@ -8,7 +8,6 @@ Follow the [docusaurus docs](https://docusaurus.io/docs/en/navigation) to learn 
 
 All documentation should be in the project's root `/docs` folder, and not in this docusaurus directory.
 
-
 ## Running the docusaurus server
 
 ```bash
@@ -26,4 +25,3 @@ $ yarn docgen
 ```
 
 This will generate the API docs in `docs/api`.
-

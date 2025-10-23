@@ -9,8 +9,13 @@ import * as logging from "./logging";
 import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 import { makeCrossPlatform } from "./util/tasks";
 
+// avoids a (false positive) esbuild warning about incorrect imports
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const parseConflictJSON = require("parse-conflict-json");
+
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
+const QUOTED_ARGS_MARKER = `"${ARGS_MARKER}"`;
 
 /**
  * The runtime component of the tasks engine.
@@ -38,7 +43,11 @@ export class TaskRuntime {
     this.workdir = resolve(workdir);
     const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
-      ? JSON.parse(readFileSync(manifestPath, "utf-8"))
+      ? parseConflictJSON(
+          readFileSync(manifestPath, "utf-8"),
+          undefined,
+          "theirs"
+        )
       : { tasks: {} };
   }
 
@@ -174,7 +183,16 @@ class RunTask {
 
         let command = makeCrossPlatform(exec);
 
-        if (command.includes(ARGS_MARKER)) {
+        if (command.includes(QUOTED_ARGS_MARKER)) {
+          // Poorly imitate bash quoted variable expansion. If "$@" is encountered in bash, elements of the arg array
+          // that contain whitespace will be single quoted ('arg'). This preserves whitespace in things like filenames.
+          // Imitate that behavior here by single quoting every element of the arg array when a quoted arg marker ("$@")
+          // is encountered.
+          command = command.replace(
+            QUOTED_ARGS_MARKER,
+            argsList.map((arg) => `'${arg}'`).join(" ")
+          );
+        } else if (command.includes(ARGS_MARKER)) {
           command = command.replace(ARGS_MARKER, argsList.join(" "));
         } else {
           command = [command, ...argsList].join(" ");

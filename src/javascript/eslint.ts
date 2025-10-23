@@ -1,11 +1,13 @@
-import { Project, TaskStepOptions } from "..";
 import { Prettier } from "./prettier";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import { ICompareString } from "../compare";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import { ObjectFile } from "../object-file";
+import { Project } from "../project";
 import { Task } from "../task";
+import { TaskStepOptions } from "../task-model";
 import { YamlFile } from "../yaml";
 
 export interface EslintOptions {
@@ -163,9 +165,14 @@ export class Eslint extends Component {
   }
 
   /**
+   * The underlying config file
+   */
+  public readonly file: ObjectFile;
+
+  /**
    * eslint rules.
    */
-  public readonly rules: { [rule: string]: any[] };
+  public readonly rules: { [rule: string]: any };
 
   /**
    * eslint overrides.
@@ -243,6 +250,7 @@ export class Eslint extends Component {
       description: "Runs eslint against the codebase",
       env: {
         ESLINT_USE_FLAT_CONFIG: "false",
+        NODE_NO_WARNINGS: "1", // Suppress eslint warning about legacy config format, as it just confuses users. This will suppress all node warnings, but in practice users cannot action warnings from eslint anyway.
       },
     });
     this.updateTask();
@@ -253,35 +261,34 @@ export class Eslint extends Component {
     project.npmignore?.exclude("/.eslintrc.json");
 
     this._formattingRules = {
-      // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
-      indent: ["off"],
-      "@stylistic/indent": ["error", 2],
-
       // Style
-      quotes: ["error", "single", { avoidEscape: true }],
-      "comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
-      "comma-spacing": ["error", { before: false, after: true }], // space after, no space before
-      "no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
-      "array-bracket-spacing": ["error", "never"], // [1, 2, 3]
-      "array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
-      "object-curly-spacing": ["error", "always"], // { key: 'value' }
-      "object-curly-newline": ["error", { multiline: true, consistent: true }], // enforce consistent line breaks between braces
-      "object-property-newline": [
+      "@stylistic/indent": ["error", 2],
+      "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
+      "@stylistic/comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
+      "@stylistic/comma-spacing": ["error", { before: false, after: true }], // space after, no space before
+      "@stylistic/no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
+      "@stylistic/array-bracket-spacing": ["error", "never"], // [1, 2, 3]
+      "@stylistic/array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
+      "@stylistic/object-curly-spacing": ["error", "always"], // { key: 'value' }
+      "@stylistic/object-curly-newline": [
+        "error",
+        { multiline: true, consistent: true },
+      ], // enforce consistent line breaks between braces
+      "@stylistic/object-property-newline": [
         "error",
         { allowAllPropertiesOnSameLine: true },
       ], // enforce "same line" or "multiple line" on object properties
-      "keyword-spacing": ["error"], // require a space before & after keywords
-      "brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
-      "space-before-blocks": ["error"], // require space before blocks
-      curly: ["error", "multi-line", "consistent"], // require curly braces for multiline control statements
+      "@stylistic/keyword-spacing": ["error"], // require a space before & after keywords
+      "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
+      "@stylistic/space-before-blocks": ["error"], // require space before blocks
       // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
       "@stylistic/member-delimiter-style": ["error"],
 
       // Require semicolons
-      semi: ["error", "always"],
+      "@stylistic/semi": ["error", "always"],
 
       // Max line lengths
-      "max-len": [
+      "@stylistic/max-len": [
         "error",
         {
           code: 150,
@@ -294,12 +301,24 @@ export class Eslint extends Component {
       ],
 
       // Don't unnecessarily quote properties
-      "quote-props": ["error", "consistent-as-needed"],
+      "@stylistic/quote-props": ["error", "consistent-as-needed"],
+
+      // Required spacing in property declarations (copied from TSLint, defaults are good)
+      "@stylistic/key-spacing": ["error"],
+
+      // No multiple empty lines
+      "@stylistic/no-multiple-empty-lines": ["error"],
+
+      // Useless diff results
+      "@stylistic/no-trailing-spaces": ["error"],
     };
 
     this.rules = {
+      // require curly braces for multiline control statements
+      curly: ["error", "multi-line", "consistent"],
+
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
-      "@typescript-eslint/no-require-imports": ["error"],
+      "@typescript-eslint/no-require-imports": "error",
 
       // Require all imported dependencies are actually declared in package.json
       "import/no-extraneous-dependencies": [
@@ -329,24 +348,14 @@ export class Eslint extends Component {
 
       // Cannot shadow names
       "no-shadow": ["off"],
-      "@typescript-eslint/no-shadow": ["error"],
-
-      // Required spacing in property declarations (copied from TSLint, defaults are good)
-      "key-spacing": ["error"],
-
-      // No multiple empty lines
-      "no-multiple-empty-lines": ["error"],
-
+      "@typescript-eslint/no-shadow": "error",
       // One of the easiest mistakes to make
-      "@typescript-eslint/no-floating-promises": ["error"],
+      "@typescript-eslint/no-floating-promises": "error",
 
       // Make sure that inside try/catch blocks, promises are 'return await'ed
       // (must disable the base rule as it can report incorrect errors)
       "no-return-await": ["off"],
-      "@typescript-eslint/return-await": ["error"],
-
-      // Useless diff results
-      "no-trailing-spaces": ["error"],
+      "@typescript-eslint/return-await": "error",
 
       // Must use foo.bar instead of foo['bar'] if possible
       "dot-notation": ["error"],
@@ -451,12 +460,12 @@ export class Eslint extends Component {
     };
 
     if (options.yaml) {
-      new YamlFile(project, ".eslintrc.yml", {
+      this.file = new YamlFile(project, ".eslintrc.yml", {
         obj: this.config,
         marker: true,
       });
     } else {
-      new JsonFile(project, ".eslintrc.json", {
+      this.file = new JsonFile(project, ".eslintrc.json", {
         obj: this.config,
         // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
         marker: true,

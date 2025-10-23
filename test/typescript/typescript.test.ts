@@ -224,6 +224,7 @@ test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
     description: "Runs eslint against the codebase",
     env: {
       ESLINT_USE_FLAT_CONFIG: "false",
+      NODE_NO_WARNINGS: "1",
     },
     name: "eslint",
     steps: [
@@ -409,6 +410,39 @@ describe("jestConfig", () => {
       });
     });
 
+    test("allows overriding of ts-jest compiler options inline", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          // jestVersion default is latest
+          jestConfig: {},
+        },
+        tsJestOptions: {
+          transformOptions: {
+            tsconfig: TsJestTsconfig.custom({
+              isolatedModules: true,
+            }),
+          },
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const jestConfig = snapshot["package.json"].jest;
+      const transformConfig =
+        jestConfig.transform[
+          TypeScriptProject.DEFAULT_TS_JEST_TRANFORM_PATTERN
+        ];
+
+      expect(transformConfig).toBeDefined();
+      expect(transformConfig[0]).toStrictEqual("ts-jest");
+      expect(transformConfig[1]).toStrictEqual({
+        tsconfig: {
+          // inline compiler options without extra compilerOptions property
+          isolatedModules: true,
+        },
+      });
+    });
+
     test("sets testMatch to include src and test dirs by default", () => {
       const prj = new TypeScriptProject({
         defaultReleaseBranch: "main",
@@ -424,6 +458,21 @@ describe("jestConfig", () => {
         "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
         "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
       ]);
+    });
+
+    test("allows using Jest 30", () => {
+      const prj = new TypeScriptProject({
+        defaultReleaseBranch: "main",
+        name: "test",
+        jestOptions: {
+          jestVersion: "30",
+          jestConfig: {},
+        },
+      });
+      const snapshot = synthSnapshot(prj);
+      const devDeps = snapshot["package.json"].devDependencies;
+      expect(devDeps.jest).toMatch("30");
+      expect(devDeps["ts-jest"]).toMatch("29");
     });
   });
 
@@ -670,5 +719,19 @@ describe("tsconfigDev", () => {
 
     const packageJson = synthSnapshot(project)["package.json"];
     expect(packageJson.devDependencies["@types/node"]).toBe("ts4.8");
+  });
+});
+
+describe("only one of components can be enabled", () => {
+  test("eslint and biome", () => {
+    expect(
+      () =>
+        new TypeScriptProject({
+          biome: true,
+          eslint: true,
+          defaultReleaseBranch: "main",
+          name: "test",
+        })
+    ).toThrowError("Only one of biome and eslint can be enabled.");
   });
 });

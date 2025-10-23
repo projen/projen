@@ -23,7 +23,7 @@ const ARTIFACTS_DOWNLOAD_DIR = "dist";
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = "https://maven.pkg.github.com";
 const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
-const PUBLIB_TOOLCHAIN = {
+const PUBLIB_TOOLCHAIN: Record<string, Tools> = {
   js: {},
   java: { java: { version: "11" } },
   python: { python: { version: "3.x" } },
@@ -297,12 +297,11 @@ export class Publisher extends Component {
         needs: Object.entries(this.publishJobs)
           .filter(([name, _]) => name != jobName)
           .map(([_, job]) => job),
+        environment: options.githubEnvironment ?? branchOptions.environment,
+        run: this.githubReleaseCommand(options, branchOptions),
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
-          GITHUB_REPOSITORY: "${{ github.repository }}",
-          GITHUB_REF: "${{ github.sha }}",
         },
-        run: this.githubReleaseCommand(options, branchOptions),
       };
     });
   }
@@ -312,6 +311,17 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
+    if (options.trustedPublishing && options.npmTokenSecret) {
+      throw new Error(
+        "Cannot use npmTokenSecret when trustedPublishing is enabled. " +
+          "Trusted publishing uses OIDC tokens for authentication instead of NPM tokens. " +
+          "Remove the npmTokenSecret option to use trusted publishing."
+      );
+    }
+
+    const trustedPublisher = options.trustedPublishing ? "true" : undefined;
+    const npmProvenance = options.npmProvenance ? "true" : undefined;
+
     const isGitHubPackages = options.registry?.startsWith(
       GITHUB_PACKAGES_REGISTRY
     );
@@ -320,7 +330,11 @@ export class Publisher extends Component {
       isAwsCodeArtifact &&
       options.codeArtifactOptions?.authProvider ===
         CodeArtifactAuthProvider.GITHUB_OIDC;
-    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
+    const needsIdTokenWrite =
+      isAwsCodeArtifactWithOidc || trustedPublisher || npmProvenance;
+    const npmToken = trustedPublisher
+      ? undefined
+      : defaultNpmToken(options.npmTokenSecret, options.registry);
 
     if (options.distTag) {
       this.project.logger.warn(
@@ -347,7 +361,7 @@ export class Publisher extends Component {
       const region = options.registry?.match(regionCaptureRegex)?.[1];
       prePublishSteps.push({
         name: "Configure AWS Credentials via GitHub OIDC Provider",
-        uses: "aws-actions/configure-aws-credentials@v4",
+        uses: "aws-actions/configure-aws-credentials@v5",
         with: {
           "role-to-assume": options.codeArtifactOptions.roleToAssume,
           "aws-region": region,
@@ -362,18 +376,30 @@ export class Publisher extends Component {
         );
       }
 
-      const npmProvenance = options.npmProvenance ? "true" : undefined;
-      const needsIdTokenWrite = isAwsCodeArtifactWithOidc || npmProvenance;
+      let publishTools = PUBLIB_TOOLCHAIN.js;
+      if (options.trustedPublishing && this.workflowNodeVersion == "lts/*") {
+        // trusted publishing requires node 24.x and above
+        // lts/* is currently 22.x
+        // @todo remove once node 24.x is lts
+        publishTools = {
+          node: {
+            version: "24.x",
+          },
+        };
+      }
+
       return {
-        publishTools: PUBLIB_TOOLCHAIN.js,
+        publishTools,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
           NPM_REGISTRY: options.registry,
           NPM_CONFIG_PROVENANCE: npmProvenance,
+          NPM_TRUSTED_PUBLISHER: trustedPublisher,
         },
         permissions: {
           idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
@@ -411,29 +437,50 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
+    if (options.trustedPublishing && options.nugetApiKeySecret) {
+      throw new Error(
+        "Cannot use nugetApiKeySecret when trustedPublishing is enabled. " +
+          "Trusted publishing uses OIDC tokens for authentication instead of API keys. " +
+          "Remove the nugetApiKeySecret option to use trusted publishing."
+      );
+    }
+
     const isGitHubPackages = options.nugetServer?.startsWith(
       GITHUB_PACKAGES_NUGET_REPOSITORY
     );
+    const needsIdTokenWrite = options.trustedPublishing;
 
     this.addPublishJob(
       "nuget",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         publishTools: PUBLIB_TOOLCHAIN.dotnet,
         prePublishSteps: options.prePublishSteps ?? [],
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-nuget"),
         registryName: "NuGet Gallery",
         permissions: {
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+          idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
+        },
+        env: {
+          NUGET_TRUSTED_PUBLISHER: options.trustedPublishing
+            ? "true"
+            : undefined,
         },
         workflowEnv: {
-          NUGET_API_KEY: secret(
-            isGitHubPackages
-              ? "GITHUB_TOKEN"
-              : options.nugetApiKeySecret ?? "NUGET_API_KEY"
-          ),
+          NUGET_API_KEY: options.trustedPublishing
+            ? undefined
+            : secret(
+                isGitHubPackages
+                  ? "GITHUB_TOKEN"
+                  : options.nugetApiKeySecret ?? "NUGET_API_KEY"
+              ),
           NUGET_SERVER: options.nugetServer ?? undefined,
+          NUGET_USERNAME: options.trustedPublishing
+            ? secret(options.nugetUsernameSecret ?? "NUGET_USERNAME")
+            : undefined,
         },
       })
     );
@@ -458,13 +505,20 @@ export class Publisher extends Component {
       );
     }
 
+    if (mavenServerId === "central-ossrh" && options.mavenEndpoint != null) {
+      throw new Error(
+        'Custom endpoints are not supported when publishing to Maven Central (mavenServerId: "central-ossrh"). Please remove "mavenEndpoint" from the options.'
+      );
+    }
+
     this.addPublishJob(
       "maven",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         registryName: "Maven Central",
         publishTools: PUBLIB_TOOLCHAIN.java,
         prePublishSteps: options.prePublishSteps ?? [],
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-maven"),
         env: {
           MAVEN_ENDPOINT: options.mavenEndpoint,
@@ -509,6 +563,17 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToPyPi(options: PyPiPublishOptions = {}) {
+    if (
+      options.trustedPublishing &&
+      (options.twineUsernameSecret || options.twinePasswordSecret)
+    ) {
+      throw new Error(
+        "Cannot use twineUsernameSecret and twinePasswordSecret when trustedPublishing is enabled. " +
+          "Trusted publishing uses OIDC tokens for authentication instead of username/password credentials. " +
+          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing."
+      );
+    }
+
     let permissions: JobPermissions = { contents: JobPermission.READ };
     const prePublishSteps = options.prePublishSteps ?? [];
     let workflowEnv: Record<string, string | undefined> = {};
@@ -535,7 +600,7 @@ export class Publisher extends Component {
         permissions = { ...permissions, idToken: JobPermission.WRITE };
         prePublishSteps.push({
           name: "Configure AWS Credentials via GitHub OIDC Provider",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "role-to-assume": roleToAssume,
             "aws-region": region,
@@ -557,6 +622,15 @@ export class Publisher extends Component {
             },
       });
       workflowEnv = { TWINE_USERNAME: "aws" };
+    } else if (options.trustedPublishing) {
+      permissions = { ...permissions, idToken: JobPermission.WRITE };
+      workflowEnv = {
+        PYPI_TRUSTED_PUBLISHER: "true",
+      };
+      // attestations default to true, only disable when explicitly requested
+      if (options.attestations === false) {
+        workflowEnv.PYPI_DISABLE_ATTESTATIONS = "true";
+      }
     } else {
       workflowEnv = {
         TWINE_USERNAME: secret(options.twineUsernameSecret ?? "TWINE_USERNAME"),
@@ -566,12 +640,13 @@ export class Publisher extends Component {
 
     this.addPublishJob(
       "pypi",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         registryName: "PyPI",
         publishTools: PUBLIB_TOOLCHAIN.python,
         permissions,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-pypi"),
         env: {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
@@ -609,10 +684,11 @@ export class Publisher extends Component {
 
     this.addPublishJob(
       "golang",
-      (_branch, _branchOptions): PublishJobOptions => ({
+      (_branch, branchOptions): PublishJobOptions => ({
         publishTools: PUBLIB_TOOLCHAIN.go,
         prePublishSteps: prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
+        environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
@@ -687,7 +763,7 @@ export class Publisher extends Component {
       const steps: JobStep[] = [
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v4",
+          uses: "actions/download-artifact@v5",
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
@@ -724,6 +800,7 @@ export class Publisher extends Component {
               name: "Extract Version",
               if: "${{ failure() }}",
               id: "extract-version",
+              shell: "bash",
               run: 'echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT',
             },
             {
@@ -746,6 +823,7 @@ export class Publisher extends Component {
 
       return {
         [jobname]: {
+          ...(opts.environment ? { environment: opts.environment } : {}),
           tools: {
             node: { version: this.workflowNodeVersion },
             ...opts.publishTools,
@@ -780,7 +858,7 @@ export class Publisher extends Component {
       "-R $GITHUB_REPOSITORY",
       `-F ${changelogFile}`,
       `-t ${releaseTag}`,
-      "--target $GITHUB_REF",
+      "--target $GITHUB_SHA",
     ];
 
     if (branchOptions.prerelease) {
@@ -853,6 +931,12 @@ interface PublishJobOptions {
    * Additional jobs the publish jobs depends on.
    */
   readonly needs?: string[];
+
+  /**
+   * The GitHub Actions environment used for publishing.
+   * @default - no environment used
+   */
+  readonly environment?: string;
 }
 
 /**
@@ -884,6 +968,18 @@ export interface CommonPublishOptions {
    * @default - no additional tools are installed
    */
   readonly publishTools?: Tools;
+
+  /**
+   * The GitHub Actions environment used for publishing.
+   *
+   * This can be used to add an explicit approval step to the release
+   * or limit who can initiate a release through environment protection rules.
+   *
+   * Set this to overwrite a package level publishing environment just for this artifact.
+   *
+   * @default - no environment used, unless set at the package level
+   */
+  readonly githubEnvironment?: string;
 }
 
 /**
@@ -929,10 +1025,24 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly registry?: string;
 
   /**
-   * GitHub secret which contains the NPM token to use when publishing packages.
+   * GitHub secret which contains the NPM token to use for publishing packages.
+   *
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Use trusted publishing for publishing to npmjs.com
+   * Needs to be pre-configured on npm.js to work.
+   *
+   * Requires npm CLI version 11.5.1 or later, this is NOT ensured automatically.
+   * When used, `npmTokenSecret` will be ignored.
+   *
+   * @see https://docs.npmjs.com/trusted-publishers
+   *
+   * @default - false
+   */
+  readonly trustedPublishing?: boolean;
 
   /**
    * Should provenance statements be generated when package is published.
@@ -940,15 +1050,17 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * Note that this component is using `publib` to publish packages,
    * which is using npm internally and supports provenance statements independently of the package manager used.
    *
+   * Only works in supported CI/CD environments.
+   *
    * @see https://docs.npmjs.com/generating-provenance-statements
-   * @default - undefined
+   * @default - enabled for for public packages using trusted publishing, disabled otherwise
    */
   readonly npmProvenance?: boolean;
 
   /**
    * Options for publishing npm package to AWS CodeArtifact.
    *
-   * @default - undefined
+   * @default - package is not published to
    */
   readonly codeArtifactOptions?: CodeArtifactOptions;
 }
@@ -1042,6 +1154,26 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
   readonly twinePasswordSecret?: string;
 
   /**
+   * Use PyPI trusted publishing instead of tokens or username & password.
+   *
+   * Needs to be setup in PyPI.
+   *
+   * @see https://docs.pypi.org/trusted-publishers/adding-a-publisher/
+   */
+  readonly trustedPublishing?: boolean;
+
+  /**
+   * Generate and publish cryptographic attestations for files uploaded to PyPI.
+   *
+   * Attestations provide package provenance and integrity an can be viewed on PyPI.
+   * They are only available when using a Trusted Publisher for publishing.
+   *
+   * @see https://docs.pypi.org/attestations/producing-attestations/
+   * @default - enabled when using trusted publishing, otherwise not applicable
+   */
+  readonly attestations?: boolean;
+
+  /**
    * Options for publishing to AWS CodeArtifact.
    *
    * @default - undefined
@@ -1069,6 +1201,24 @@ export interface NugetPublishOptions extends CommonPublishOptions {
    *  NuGet Server URL (defaults to nuget.org)
    */
   readonly nugetServer?: string;
+
+  /**
+   * Use NuGet trusted publishing instead of API keys.
+   *
+   * Needs to be setup in NuGet.org.
+   *
+   * @see https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing
+   */
+  readonly trustedPublishing?: boolean;
+
+  /**
+   * The NuGet.org username (profile name, not email address) for trusted publisher authentication.
+   *
+   * Required when using trusted publishing.
+   *
+   * @default "NUGET_USERNAME"
+   */
+  readonly nugetUsernameSecret?: string;
 }
 
 /**
@@ -1083,12 +1233,14 @@ export interface MavenPublishOptions extends CommonPublishOptions {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
-   * @default "https://oss.sonatype.org"
+   * @default - "https://oss.sonatype.org" or none when publishing to Maven Central
    */
   readonly mavenEndpoint?: string;
 
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+   *
+   * Set to `central-ossrh` to publish to Maven Central.
    *
    * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
    */
@@ -1203,13 +1355,13 @@ export interface GoPublishOptions extends CommonPublishOptions {
 
   /**
    * The user name to use for the release git commit.
-   * @default "github-actions"
+   * @default - default GitHub Actions user name
    */
   readonly gitUserName?: string;
 
   /**
    * The email to use in the release git commit.
-   * @default "github-actions@github.com"
+   * @default - default GitHub Actions user email
    */
   readonly gitUserEmail?: string;
 

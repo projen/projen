@@ -3,7 +3,7 @@ import * as os from "os";
 import * as path from "path";
 import * as JSONC from "comment-json";
 import { CommentArray } from "comment-json";
-import { glob } from "glob";
+import * as glob from "fast-glob";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 
@@ -113,7 +113,8 @@ export function directorySnapshot(
   const files = glob.sync("**", {
     ignore: [".git/**", ...(options.excludeGlobs ?? [])],
     cwd: root,
-    nodir: true,
+    onlyFiles: true,
+    followSymbolicLinks: false,
     dot: true,
   }); // returns relative file paths with POSIX separators
 

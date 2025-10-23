@@ -21,7 +21,7 @@ export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
-   * @default Runtime.NODEJS_18_X
+   * @default Runtime.NODEJS_22_X
    */
   readonly runtime?: LambdaRuntime;
 
@@ -135,7 +135,7 @@ export class LambdaFunction extends Component {
       );
     }
 
-    const runtime = options.runtime ?? LambdaRuntime.NODEJS_18_X;
+    const runtime = options.runtime ?? LambdaRuntime.NODEJS_22_X;
 
     const entrypoint = normalizePersistedPath(options.entrypoint);
 
@@ -343,7 +343,7 @@ export class LambdaRuntime {
   /**
    * Node.js 18.x
    *
-   * Advanced notice: Node.js 18 runtime will be deprecated on Jul 31, 2025
+   * @deprecated: Node.js 18 runtime has been deprecated on Sep 1, 2025
    */
   public static readonly NODEJS_18_X = new LambdaRuntime(
     "nodejs18.x",

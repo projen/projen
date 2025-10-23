@@ -143,7 +143,7 @@ describe("renderBehavior()", () => {
   });
 });
 
-describe("exempt labels in workflow output", () => {
+test("exempt labels in workflow output", () => {
   const project = new TestProject({
     stale: true,
     staleOptions: {
@@ -157,7 +157,7 @@ describe("exempt labels in workflow output", () => {
   );
 
   expect(workflow.jobs.stale.steps[0]).toStrictEqual({
-    uses: "actions/stale@v4",
+    uses: expect.stringContaining("actions/stale"),
     with: {
       "close-issue-message":
         "Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen.",

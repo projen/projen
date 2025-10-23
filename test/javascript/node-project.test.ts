@@ -361,6 +361,24 @@ describe("npm publishing options", () => {
       ).toBeUndefined();
     });
 
+    test("defaults with npmTrustedPublishing enabled", () => {
+      // GIVEN
+      const project = new TestProject();
+
+      // WHEN
+      const npm = new NodePackage(project, {
+        packageName: "my-package",
+        npmTrustedPublishing: true,
+        npmProvenance: false,
+      });
+
+      // THEN
+      expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+      expect(npm.npmRegistry).toStrictEqual("registry.npmjs.org");
+      expect(npm.npmRegistryUrl).toStrictEqual("https://registry.npmjs.org/");
+      expect(npm.npmTokenSecret).toStrictEqual(undefined);
+    });
+
     test("unscoped package cannot be RESTRICTED", () => {
       // GIVEN
       const project = new TestProject();
@@ -762,7 +780,7 @@ test("codecov upload added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).toContain("uses: codecov/codecov-action@v4");
+  expect(workflow).toContain("uses: codecov/codecov-action@v5");
 });
 
 test("codecov upload not added to github release workflow", () => {
@@ -771,7 +789,7 @@ test("codecov upload not added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).not.toContain("uses: codecov/codecov-action@v4");
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v5");
 });
 
 describe("scripts", () => {
@@ -936,6 +954,11 @@ test("enabling renovatebot does not overturn mergify: false", () => {
     "constructs",
     "jest-junit",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
@@ -964,6 +987,11 @@ test("renovatebot ignored dependency overrides", () => {
     "axios",
     "some-overriden-package",
     "projen",
+    "actions/checkout",
+    "actions/download-artifact",
+    "amannn/action-semantic-pull-request",
+    "actions/upload-artifact",
+    "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
@@ -1032,8 +1060,8 @@ test("buildWorkflow can use GitHub App for API access", () => {
   expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
     name: "Generate token",
     with: {
-      app_id: `\${{ secrets.${appId} }}`,
-      private_key: `\${{ secrets.${privateKey} }}`,
+      "app-id": `\${{ secrets.${appId} }}`,
+      "private-key": `\${{ secrets.${privateKey} }}`,
     },
   });
   expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
@@ -1482,7 +1510,9 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v4",
+            uses: expect.stringContaining(
+              "aws-actions/configure-aws-credentials"
+            ),
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1518,7 +1548,9 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v4",
+            uses: expect.stringContaining(
+              "aws-actions/configure-aws-credentials"
+            ),
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1649,7 +1681,9 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: expect.stringContaining(
+            "aws-actions/configure-aws-credentials"
+          ),
           with: {
             "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
             "aws-secret-access-key": secretToString(
@@ -1715,7 +1749,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1742,7 +1775,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1779,7 +1811,6 @@ describe("scoped private packages", () => {
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
-      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
           exec: "which aws",
@@ -1989,5 +2020,66 @@ describe("npmignore", () => {
     // THEN
     expect(output[".npmignore"]).toMatchSnapshot();
     expect(output[".npmignore"]).toContain("/SECURITY.md");
+  });
+
+  test("should set bun version accordingly (via bunVersion)", () => {
+    // GIVEN
+    const project = new TestNodeProject({
+      packageManager: NodePackageManager.BUN,
+      bunVersion: "1.1.38",
+    });
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    expect(output[".github/workflows/build.yml"]).toContain(
+      "bun-version: 1.1.38"
+    );
+    expect(output[".github/workflows/release.yml"]).toContain(
+      "bun-version: 1.1.38"
+    );
+    expect(output[".github/workflows/upgrade-main.yml"]).toContain(
+      "bun-version: 1.1.38"
+    );
+  });
+});
+
+describe("build workflow options", () => {
+  let project: NodeProject;
+  let snapshot: any;
+
+  beforeEach(() => {
+    project = new NodeProject({
+      name: "test-node-project",
+      defaultReleaseBranch: "main",
+      buildWorkflowOptions: {
+        env: {
+          MY_ENV_VAR: "my-value",
+        },
+      },
+    });
+    snapshot = synthSnapshot(project);
+  });
+  it("should allow additional environment variables to be set in the build workflow", () => {
+    const buildWorkflow = yaml.parse(snapshot[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build.env).toEqual({
+      CI: "true",
+      MY_ENV_VAR: "my-value",
+    });
+  });
+});
+
+describe("only one of components can be enabled", () => {
+  test("prettier and biome", () => {
+    expect(
+      () =>
+        new NodeProject({
+          biome: true,
+          prettier: true,
+          defaultReleaseBranch: "main",
+          name: "test",
+        })
+    ).toThrowError("Only one of biome and prettier can be enabled.");
   });
 });

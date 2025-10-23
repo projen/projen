@@ -6,6 +6,36 @@ import { synthSnapshot, TestProject } from "../util";
 describe("github-workflow", () => {
   const workflowName = "test-workflow";
 
+  test("env is not set by default", () => {
+    const project = new TestProject();
+
+    new GithubWorkflow(project.github!, workflowName);
+
+    const snapshot = synthSnapshot(project);
+
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    expect(workflow.env).toBeUndefined();
+  });
+
+  test("env can be set at workflow level", () => {
+    const project = new TestProject();
+
+    new GithubWorkflow(project.github!, workflowName, { env: { FOO: "bar" } });
+
+    const snapshot = synthSnapshot(project);
+
+    const workflow = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+
+    console.log(JSON.stringify(workflow, null, 2));
+
+    expect(workflow.env).toEqual({ FOO: "bar" });
+  });
+
   test("concurrency is not set by default", () => {
     const project = new TestProject();
 
@@ -139,6 +169,52 @@ describe("github-workflow", () => {
       runsOn: ["ubuntu-latest"],
       permissions: {},
       steps: [{ run: "ls", workingDirectory: ".github/workflows" }],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+  });
+
+  test("workflow job calling a reusable workflow with a strategy matrix, using domain string value", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+
+    workflow.addJob("get-matrix", {
+      name: "Get a matrix",
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      outputs: {
+        calculatedFruits: { stepId: "set-fruits", outputName: "fruits" },
+      },
+      steps: [
+        {
+          id: "set-fruits",
+          name: "Set fruit array output",
+          run: `echo "fruits=$(echo '["apple", "orange", "banana"]' | jq -c .)" >> $GITHUB_OUTPUT`,
+        },
+      ],
+    });
+
+    workflow.addJob("use-a-matrix", {
+      name: "Some reusable workflow",
+      needs: ["get-matrix"],
+      uses: "some-user/example-action.yaml@v1",
+      permissions: {},
+      secrets: "inherit",
+      strategy: {
+        matrix: {
+          domain: {
+            fruit: "${{ needs.get-matrix.outputs.calculatedFruits }}",
+          },
+        },
+      },
+      with: {
+        fruit: "${{ matrix.fruit }}",
+      },
     });
 
     const snapshot = synthSnapshot(project);
@@ -343,7 +419,7 @@ describe("github-workflow", () => {
             permissions: {}
             steps:
               - name: Download artifact
-                uses: actions/download-artifact@v4
+                uses: actions/download-artifact@v5
         "
       `);
     });
@@ -377,7 +453,7 @@ describe("github-workflow", () => {
             permissions: {}
             steps:
               - name: Download artifact
-                uses: actions/download-artifact@v4
+                uses: actions/download-artifact@v5
                 with:
                   name: foobar
         "

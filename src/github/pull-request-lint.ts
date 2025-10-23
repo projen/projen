@@ -70,6 +70,14 @@ export interface SemanticTitleOptions {
    * @default false
    */
   readonly requireScope?: boolean;
+
+  /**
+   * Configure which scopes are allowed (newline-delimited).
+   * These are regex patterns auto-wrapped in `^ $`.
+   *
+   * @default - all scopes allowed
+   */
+  readonly scopes?: string[];
 }
 
 /**
@@ -142,12 +150,13 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "amannn/action-semantic-pull-request@v5.4.0",
+            uses: "amannn/action-semantic-pull-request@v6",
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
             with: {
               types: types.join("\n"),
+              ...(opts.scopes ? { scopes: opts.scopes.join("\n") } : {}),
               requireScope: opts.requireScope ?? false,
             },
           },
@@ -201,7 +210,7 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "actions/github-script@v6",
+            uses: "actions/github-script@v8",
             with: {
               script: fnBody(script),
             },

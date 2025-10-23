@@ -1,11 +1,16 @@
 {
   "dependencies": [
     {
-      "name": "@types/conventional-changelog-config-spec",
+      "name": "@biomejs/biome",
+      "version": "^2",
       "type": "build"
     },
     {
-      "name": "@types/glob",
+      "name": "@jsii/check-node",
+      "type": "build"
+    },
+    {
+      "name": "@types/conventional-changelog-config-spec",
       "type": "build"
     },
     {
@@ -19,6 +24,10 @@
     {
       "name": "@types/node",
       "version": "^16",
+      "type": "build"
+    },
+    {
+      "name": "@types/parse-conflict-json",
       "type": "build"
     },
     {
@@ -41,6 +50,10 @@
     },
     {
       "name": "all-contributors-cli",
+      "type": "build"
+    },
+    {
+      "name": "aws-cdk-lib",
       "type": "build"
     },
     {
@@ -79,7 +92,7 @@
     },
     {
       "name": "jest-junit",
-      "version": "^15",
+      "version": "^16",
       "type": "build"
     },
     {
@@ -97,12 +110,16 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.7.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.7.x",
+      "version": "5.9.x",
+      "type": "build"
+    },
+    {
+      "name": "json2jsii",
       "type": "build"
     },
     {
@@ -127,7 +144,7 @@
     },
     {
       "name": "typescript",
-      "version": "5.7.x",
+      "version": "5.9.x",
       "type": "build"
     },
     {
@@ -152,16 +169,19 @@
       "type": "bundled"
     },
     {
+      "name": "fast-glob",
+      "type": "bundled"
+    },
+    {
       "name": "fast-json-patch",
       "type": "bundled"
     },
     {
-      "name": "glob",
-      "version": "^8",
+      "name": "ini",
       "type": "bundled"
     },
     {
-      "name": "ini",
+      "name": "parse-conflict-json",
       "type": "bundled"
     },
     {

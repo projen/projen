@@ -91,7 +91,6 @@ export class AwsCdkPythonApp extends PythonProject {
 
     this.cdkConfig = new CdkConfig(this, {
       app: `python ${this.appEntrypoint}`,
-      featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       watchIncludes: ["**"],
       watchExcludes: [
         "README.md",

@@ -40,6 +40,7 @@ jobs:
           matched=$(echo $labels | jq '.|map(select(startswith("backport-to-"))) | length')
           echo "matched=$matched"
           echo "matched=$matched" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Backport Action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v9.5.1
@@ -73,6 +74,7 @@ jobs:
           matched=$(echo $labels | jq '.|map(select(startswith("backport-to-"))) | length')
           echo "matched=$matched"
           echo "matched=$matched" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Backport Action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v9.5.1
@@ -122,6 +124,7 @@ jobs:
           matched=$(echo $labels | jq '.|map(select(startswith("copy-to-"))) | length')
           echo "matched=$matched"
           echo "matched=$matched" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Backport Action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
         uses: sqren/backport-github-action@v9.5.1

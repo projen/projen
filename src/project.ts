@@ -2,7 +2,7 @@ import { mkdtempSync, realpathSync, renameSync } from "fs";
 import { tmpdir } from "os";
 import * as path from "path";
 import { Construct, IConstruct } from "constructs";
-import * as glob from "glob";
+import * as glob from "fast-glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
 import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
 import { Component } from "./component";
@@ -172,7 +172,7 @@ export class Project extends Construct {
    * @throws when no project is found in the path to the root
    */
   public static of(construct: IConstruct): Project {
-    return findClosestProject(construct);
+    return findClosestProject(construct, this.name);
   }
 
   /**
@@ -651,7 +651,8 @@ export class Project extends Construct {
       const files = glob.sync(".projenrc.*", {
         cwd: this.outdir,
         dot: true,
-        nodir: true,
+        onlyFiles: true,
+        followSymbolicLinks: false,
         absolute: true,
       });
 

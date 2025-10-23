@@ -61,6 +61,13 @@ export interface GithubWorkflowOptions {
   readonly concurrencyOptions?: ConcurrencyOptions;
 
   /**
+   * Additional environment variables to set for the workflow.
+   *
+   * @default - no additional environment variables
+   */
+  readonly env?: Record<string, string>;
+
+  /**
    * Set a custom file name for the workflow definition file. Must include either a .yml or .yaml file extension.
    *
    * Use this option to set a file name for the workflow file, that is different than the display name.
@@ -89,9 +96,26 @@ export class GithubWorkflow extends Component {
   public readonly name: string;
 
   /**
+   * All current jobs of the workflow.
+   *
+   * This is a read-only copy, use the respective helper methods to add, update or remove jobs.
+   */
+  public get jobs(): Record<
+    string,
+    workflows.Job | workflows.JobCallingReusableWorkflow
+  > {
+    return { ...this._jobs };
+  }
+
+  /**
    * The concurrency configuration of the workflow. undefined means no concurrency limitations.
    */
   public readonly concurrency?: ConcurrencyOptions;
+
+  /**
+   * Additional environment variables to set for the workflow.
+   */
+  public readonly env?: Record<string, string>;
 
   /**
    * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
@@ -116,12 +140,12 @@ export class GithubWorkflow extends Component {
    */
   public runName?: string;
 
-  private actions: GitHubActionsProvider;
-  private events: workflows.Triggers = {};
-  private jobs: Record<
+  private readonly _jobs: Record<
     string,
     workflows.Job | workflows.JobCallingReusableWorkflow
   > = {};
+  private actions: GitHubActionsProvider;
+  private events: workflows.Triggers = {};
 
   /**
    * @param github The GitHub component of the project this workflow belongs to.
@@ -149,6 +173,8 @@ export class GithubWorkflow extends Component {
       : undefined;
     this.projenCredentials = github.projenCredentials;
     this.actions = github.actions;
+
+    this.env = options.env;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
@@ -203,11 +229,7 @@ export class GithubWorkflow extends Component {
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
   ) {
     verifyJobConstraints(jobs);
-
-    this.jobs = {
-      ...this.jobs,
-      ...jobs,
-    };
+    Object.assign(this._jobs, { ...jobs });
   }
 
   /**
@@ -217,7 +239,7 @@ export class GithubWorkflow extends Component {
   public getJob(
     id: string
   ): workflows.Job | workflows.JobCallingReusableWorkflow {
-    return this.jobs[id];
+    return this._jobs[id];
   }
 
   /**
@@ -232,7 +254,7 @@ export class GithubWorkflow extends Component {
   }
 
   /**
-   * Updates jobs for this worklow
+   * Updates jobs for this workflow
    * Does a complete replace, it does not try to merge the jobs
    *
    * @param jobs Jobs to update.
@@ -241,17 +263,7 @@ export class GithubWorkflow extends Component {
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
   ) {
     verifyJobConstraints(jobs);
-
-    const newJobIds = Object.keys(jobs);
-    const updatedJobs = Object.entries(this.jobs).map(([jobId, job]) => {
-      if (newJobIds.includes(jobId)) {
-        return [jobId, jobs[jobId]];
-      }
-      return [jobId, job];
-    });
-    this.jobs = {
-      ...Object.fromEntries(updatedJobs),
-    };
+    Object.assign(this._jobs, { ...jobs });
   }
 
   /**
@@ -259,12 +271,7 @@ export class GithubWorkflow extends Component {
    * @param id The job name (unique within the workflow)
    */
   public removeJob(id: string) {
-    const updatedJobs = Object.entries(this.jobs).filter(
-      ([jobId]) => jobId !== id
-    );
-    this.jobs = {
-      ...Object.fromEntries(updatedJobs),
-    };
+    delete this._jobs[id];
   }
 
   private renderWorkflow() {
@@ -278,7 +285,8 @@ export class GithubWorkflow extends Component {
             "cancel-in-progress": this.concurrency.cancelInProgress,
           }
         : undefined,
-      jobs: renderJobs(this.jobs, this.actions),
+      env: this.env,
+      jobs: renderJobs(this._jobs, this.actions),
     };
   }
 }
@@ -410,6 +418,7 @@ function renderJobs(
       uses: step.uses && actions.get(step.uses),
       env: step.env,
       run: step.run,
+      shell: step.shell,
       with: step.with,
       "continue-on-error": step.continueOnError,
       "timeout-minutes": step.timeoutMinutes,
@@ -436,35 +445,35 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v4",
+      uses: "actions/setup-java@v5",
       with: { distribution: "corretto", "java-version": tools.java.version },
     });
   }
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v4",
+      uses: "actions/setup-node@v5",
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v5",
+      uses: "actions/setup-python@v6",
       with: { "python-version": tools.python.version },
     });
   }
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v5",
+      uses: "actions/setup-go@v6",
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v4",
+      uses: "actions/setup-dotnet@v5",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

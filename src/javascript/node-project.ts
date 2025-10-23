@@ -22,6 +22,7 @@ import {
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
+import { Biome, BiomeOptions } from "./biome/biome";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
@@ -52,7 +53,7 @@ import {
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
-import { deepMerge, normalizePersistedPath } from "../util";
+import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 
 const PROJEN_SCRIPT = "projen";
@@ -114,16 +115,16 @@ export interface NodeProjectOptions
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
-   * Uses codecov/codecov-action@v4
-   * A secret is required for private repos. Configured with `@codeCovTokenSecret`
+   * Uses codecov/codecov-action@v5
+   * By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
    * @default false
    */
   readonly codeCov?: boolean;
 
   /**
    * Define the secret name for a specified https://codecov.io/ token
-   * A secret is required to send coverage for private repositories
-   * @default - if this option is not specified, only public repositories are supported
+
+   * @default - OIDC auth is used
    */
   readonly codeCovTokenSecret?: string;
 
@@ -159,7 +160,7 @@ export interface NodeProjectOptions
   /**
    * The git identity to use in workflows.
    *
-   * @default - GitHub Actions
+   * @default - default GitHub Actions user
    */
   readonly workflowGitIdentity?: GitIdentity;
 
@@ -338,6 +339,19 @@ export interface NodeProjectOptions
    * @default - no license checks are run during the build and all licenses will be accepted
    */
   readonly checkLicenses?: LicenseCheckerOptions;
+
+  /**
+   * Setup Biome.
+   *
+   * @default false
+   */
+  readonly biome?: boolean;
+
+  /**
+   * Biome options
+   * @default - default options
+   */
+  readonly biomeOptions?: BiomeOptions;
 }
 
 /**
@@ -504,6 +518,7 @@ export class NodeProject extends GitHubProject {
   private readonly workflowGitIdentity: GitIdentity;
   protected readonly workflowPackageCache: boolean;
   public readonly prettier?: Prettier;
+  public readonly biome?: Biome;
 
   constructor(options: NodeProjectOptions) {
     super({
@@ -629,13 +644,8 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    const requiresIdTokenPermission =
-      (options.scopedPackagesOptions ?? []).length > 0 &&
-      options.codeArtifactOptions?.authProvider ===
-        CodeArtifactAuthProvider.GITHUB_OIDC;
-
     const workflowPermissions: JobPermissions = {
-      idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
+      idToken: this.determineIdTokenPermissions(options),
     };
 
     const buildWorkflowOptions: BuildWorkflowOptions =
@@ -668,6 +678,7 @@ export class NodeProject extends GitHubProject {
       this.buildWorkflow.addPostBuildSteps(
         ...this.renderUploadCoverageJobStep(options)
       );
+      this.maybeAddCodecovIgnores(options);
     }
 
     const release =
@@ -700,6 +711,7 @@ export class NodeProject extends GitHubProject {
         workflowPermissions,
       });
 
+      this.maybeAddCodecovIgnores(options);
       this.publisher = this.release.publisher;
 
       const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
@@ -732,6 +744,7 @@ export class NodeProject extends GitHubProject {
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
           npmProvenance: this.package.npmProvenance,
+          trustedPublishing: options.npmTrustedPublishing ?? false,
           codeArtifactOptions,
         });
       }
@@ -858,6 +871,14 @@ export class NodeProject extends GitHubProject {
       );
     }
 
+    if (multipleSelected([options.biome, options.prettier])) {
+      throw new Error("Only one of biome and prettier can be enabled.");
+    }
+
+    if (options.biome ?? false) {
+      this.biome = new Biome(this, { ...options.biomeOptions });
+    }
+
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
@@ -881,21 +902,54 @@ export class NodeProject extends GitHubProject {
     return;
   }
 
+  private determineIdTokenPermissions(
+    options: NodeProjectOptions
+  ): JobPermission | undefined {
+    const { codeCovTokenSecret, scopedPackagesOptions, codeArtifactOptions } =
+      options;
+
+    const useCodeCoveOidc = this.useCodecov(options) && !codeCovTokenSecret;
+    const hasScopedPackages = (scopedPackagesOptions ?? []).length > 0;
+    const useCodeArtifactOidc =
+      codeArtifactOptions?.authProvider ===
+      CodeArtifactAuthProvider.GITHUB_OIDC;
+
+    if (useCodeCoveOidc || (useCodeArtifactOidc && hasScopedPackages)) {
+      return JobPermission.WRITE;
+    }
+
+    return undefined;
+  }
+
+  private useCodecov(options: NodeProjectOptions): boolean {
+    // Use Codecov when it is enabled or if or a secret token name is passed in
+    // AND jest must be configured
+    return (options.codeCov || options.codeCovTokenSecret) && this.jest?.config;
+  }
+
+  private maybeAddCodecovIgnores(options: NodeProjectOptions) {
+    if (this.useCodecov(options)) {
+      this.addGitIgnore("codecov");
+      this.addGitIgnore("codecov.*");
+    }
+  }
+
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
     // run codecov if enabled or a secret token name is passed in
     // AND jest must be configured
-    if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
+    if (this.useCodecov(options)) {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v4",
+          uses: "codecov/codecov-action@v5",
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest.config.coverageDirectory,
+                directory: this.jest?.config.coverageDirectory,
               }
             : {
-                directory: this.jest.config.coverageDirectory,
+                directory: this.jest?.config.coverageDirectory,
+                use_oidc: true,
               },
         },
       ];
@@ -1008,7 +1062,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1026,7 +1080,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v4",
+          uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret
@@ -1080,13 +1134,14 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v3",
+        uses: "pnpm/action-setup@v4",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
       install.push({
         name: "Setup bun",
-        uses: "oven-sh/setup-bun@v1",
+        uses: "oven-sh/setup-bun@v2",
+        with: { "bun-version": this.package.bunVersion },
       });
     }
 
@@ -1108,7 +1163,7 @@ export class NodeProject extends GitHubProject {
             : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: "actions/setup-node@v4",
+          uses: "actions/setup-node@v5",
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,

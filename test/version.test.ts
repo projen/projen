@@ -9,7 +9,7 @@ import {
   withProjectDir,
 } from "./util";
 import { JavaProject } from "../src/java";
-import { Version } from "../src/version";
+import { ReleasableCommits, Version } from "../src/version";
 
 describe("Version", () => {
   test("Changes to bump's env should not affect unbump and vice-versa", () => {
@@ -142,6 +142,82 @@ describe("bump task", () => {
       });
 
       expect(result.version).toEqual("1.0.0");
+    });
+  });
+
+  test.each([
+    ["1.2.3", "fix: new change", "1.2.4", "all", "patch"],
+    ["1.2.3", "feat: new change", "1.3.0", "all", "minor"],
+    ["1.2.3", "feat!: new change", "2.0.0", "all", "major"],
+    // For chore
+    ["1.2.3", "chore: some build thing", "1.2.4", "all", "patch"],
+    ["1.2.3", "chore: some build thing", "1.2.3", "featsFixes", "none"],
+  ] as const)(
+    "starting with version %p, message %p leads to version %p if we are releasing %s (bump type %p)",
+    async (
+      mostRecentRelease,
+      commitMessage,
+      expectedVersion,
+      releasable: "all" | "featsFixes",
+      expectedBump
+    ) => {
+      withProjectDir((projectdir) => {
+        const project = new TestProject({
+          outdir: projectdir,
+        });
+        new Version(project, {
+          versionInputFile: "package.json",
+          artifactsDirectory: "dist",
+          // Assert that the SUGGESTED_BUMP field has the right value, or we fail the command (and the test will fail)
+          nextVersionCommand: `bash -c '[ $SUGGESTED_BUMP = ${expectedBump} ] || exit 1'`,
+          releasableCommits:
+            releasable === "all"
+              ? ReleasableCommits.everyCommit()
+              : ReleasableCommits.featuresAndFixes(),
+        });
+
+        project.synth();
+
+        const result = testBumpTask({
+          workdir: project.outdir,
+          commits: [
+            {
+              message: `chore(release): v${mostRecentRelease}`,
+              tag: `v${mostRecentRelease}`,
+            },
+            { message: commitMessage },
+          ],
+        });
+
+        expect(result.version).toEqual(expectedVersion);
+      });
+    }
+  );
+
+  test("if there are 0 commits but the version script outputs a version, bump anyway", async () => {
+    withProjectDir((projectdir) => {
+      const project = new TestProject({
+        outdir: projectdir,
+      });
+      new Version(project, {
+        versionInputFile: "package.json",
+        artifactsDirectory: "dist",
+        nextVersionCommand: "echo 9.9.9",
+      });
+
+      project.synth();
+
+      // Run with no new commits since last release
+      const result = testBumpTask({
+        workdir: project.outdir,
+        commits: [
+          // projen will fully skip the 'bump' task if the most recent commit contains the text "chore(release):",
+          // so name this commit something else.
+          { message: "release: v0.1.0", tag: "v0.1.0" },
+        ],
+      });
+
+      expect(result.version).toEqual("9.9.9");
     });
   });
 
