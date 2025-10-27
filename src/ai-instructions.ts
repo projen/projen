@@ -146,6 +146,18 @@ export class AiInstructions extends Component {
         AiInstructions.bestPractices(project)
       );
     }
+
+    if (options.instructions) {
+      this.addInstructions(...options.instructions);
+    }
+
+    if (options.agentSpecificInstructions) {
+      for (const [agent, instructions] of Object.entries(
+        options.agentSpecificInstructions
+      )) {
+        this.addAgentSpecificInstructions(agent as AiAgent, ...instructions);
+      }
+    }
   }
 
   /**

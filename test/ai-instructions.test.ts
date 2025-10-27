@@ -1,6 +1,8 @@
 import { synthSnapshot, TestProject } from "./util";
 import { javascript } from "../src";
 import { AiInstructions, AiAgent } from "../src/ai-instructions";
+import { NodeProject } from "../src/javascript";
+import { PythonProject } from "../src/python";
 
 describe("AiInstructions", () => {
   it("generates files for all AI agents by default", () => {
@@ -32,19 +34,22 @@ describe("AiInstructions", () => {
     );
     expect(copilotInstructions).toContain("Modify configuration in .projenrc");
   });
-  // This is being skipped because of a bug that's causing the projen command to be npx projen for bun projects
-  it.skip("has default instructions that include projen-specific guidance for bun projects", () => {
-    const project = new javascript.NodeProject({
-      packageManager: javascript.NodePackageManager.BUN,
-      defaultReleaseBranch: "main",
-      name: "my-bun-project",
+
+  it("default instructions use specified projen command", () => {
+    const project = new PythonProject({
+      projenCommand: "pix projen",
+      moduleName: "projen.hello",
+      name: "projen.test-python-project",
+      authorName: "John Doe",
+      authorEmail: "johndoe@example.com",
+      version: "0.1.0",
     });
     new AiInstructions(project);
     const snapshot = synthSnapshot(project);
     const copilotInstructions = snapshot[".github/copilot-instructions.md"];
 
     expect(copilotInstructions).toContain("projen");
-    expect(copilotInstructions).toContain("bun run projen");
+    expect(copilotInstructions).toContain("pix projen");
     expect(copilotInstructions).not.toContain("npx projen");
   });
 
@@ -59,6 +64,7 @@ describe("AiInstructions", () => {
     expect(snapshot[".cursor/rules/project.md"]).toBeDefined();
     expect(snapshot["CLAUDE.md"]).toBeUndefined();
     expect(snapshot[".amazonq/rules/project.md"]).toBeUndefined();
+    expect(snapshot[".kiro/steering/project.md"]).toBeUndefined();
   });
 
   it("can specify only one AI agent", () => {
@@ -72,6 +78,7 @@ describe("AiInstructions", () => {
     expect(snapshot[".cursor/rules/project.md"]).toBeUndefined();
     expect(snapshot["CLAUDE.md"]).toBeUndefined();
     expect(snapshot[".amazonq/rules/project.md"]).toBeUndefined();
+    expect(snapshot[".kiro/steering/project.md"]).toBeUndefined();
   });
 
   it("extracts task runner from projenCommand - npx", () => {
@@ -110,7 +117,6 @@ describe("AiInstructions", () => {
     const snapshot = synthSnapshot(project);
     const instructions = snapshot[".github/copilot-instructions.md"];
 
-    expect(instructions).toContain("Project-Specific Instructions");
     expect(instructions).toContain(
       "Always use functional programming patterns."
     );
@@ -130,16 +136,13 @@ describe("AiInstructions", () => {
     const copilotInstructions = snapshot[".github/copilot-instructions.md"];
     const cursorInstructions = snapshot[".cursor/rules/project.md"];
 
-    expect(copilotInstructions).toContain(
-      "GitHub Copilot-Specific Instructions"
-    );
     expect(copilotInstructions).toContain("Use descriptive commit messages.");
     expect(cursorInstructions).not.toContain(
-      "GitHub Copilot-Specific Instructions"
+      "Use descriptive commit messages."
     );
   });
 
-  it("agentSpecificInstructions option with string", () => {
+  it("agentSpecificInstructions option with array", () => {
     const project = new TestProject();
     new AiInstructions(project, {
       agentSpecificInstructions: {
@@ -150,11 +153,10 @@ describe("AiInstructions", () => {
     const snapshot = synthSnapshot(project);
     const cursorInstructions = snapshot[".cursor/rules/project.md"];
 
-    expect(cursorInstructions).toContain("Cursor-Specific Instructions");
     expect(cursorInstructions).toContain("Cursor-specific instruction.");
   });
 
-  it("agentSpecificInstructions option with array", () => {
+  it("agentSpecificInstructions option with multiple instructions", () => {
     const project = new TestProject();
     new AiInstructions(project, {
       agentSpecificInstructions: {
@@ -165,7 +167,6 @@ describe("AiInstructions", () => {
     const snapshot = synthSnapshot(project);
     const claudeInstructions = snapshot["CLAUDE.md"];
 
-    expect(claudeInstructions).toContain("Claude-Specific Instructions");
     expect(claudeInstructions).toContain("First instruction.");
     expect(claudeInstructions).toContain("Second instruction.");
   });
@@ -178,11 +179,13 @@ describe("AiInstructions", () => {
     const cursorFile = project.tryFindFile(".cursor/rules/project.md");
     const claudeFile = project.tryFindFile("CLAUDE.md");
     const amazonQFile = project.tryFindFile(".amazonq/rules/project.md");
+    const kiroFile = project.tryFindFile(".kiro/steering/project.md");
 
     expect(copilotFile?.readonly).toBe(true);
     expect(cursorFile?.readonly).toBe(true);
     expect(claudeFile?.readonly).toBe(true);
     expect(amazonQFile?.readonly).toBe(true);
+    expect(kiroFile?.readonly).toBe(true);
   });
 
   it("all agent files have consistent base content", () => {
@@ -194,11 +197,13 @@ describe("AiInstructions", () => {
     const cursorContent = snapshot[".cursor/rules/project.md"];
     const claudeContent = snapshot["CLAUDE.md"];
     const amazonQContent = snapshot[".amazonq/rules/project.md"];
+    const kiroContent = snapshot[".kiro/steering/project.md"];
 
-    expect(copilotContent).toContain("Projen Project Instructions");
-    expect(cursorContent).toContain("Projen Project Instructions");
-    expect(claudeContent).toContain("Projen Project Instructions");
-    expect(amazonQContent).toContain("Projen Project Instructions");
+    expect(copilotContent).toContain("Projen-managed Project Instructions");
+    expect(cursorContent).toContain("Projen-managed Project Instructions");
+    expect(claudeContent).toContain("Projen-managed Project Instructions");
+    expect(amazonQContent).toContain("Projen-managed Project Instructions");
+    expect(kiroContent).toContain("Projen-managed Project Instructions");
   });
 
   it("combining general and agent-specific instructions", () => {
@@ -277,6 +282,136 @@ describe("AiInstructions", () => {
 
     expect(instructions).not.toContain("Development Best Practices");
     expect(instructions).not.toContain("Always run build after changes");
+  });
+
+  it("supports constructor instructions option", () => {
+    const project = new TestProject();
+    new AiInstructions(project, {
+      instructions: ["Use functional programming.", "Write tests."],
+    });
+
+    const snapshot = synthSnapshot(project);
+    const instructions = snapshot[".github/copilot-instructions.md"];
+
+    expect(instructions).toContain("Use functional programming.");
+    expect(instructions).toContain("Write tests.");
+  });
+
+  it("supports KIRO agent", () => {
+    const project = new TestProject();
+    new AiInstructions(project, {
+      agents: [AiAgent.KIRO],
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".kiro/steering/project.md"]).toBeDefined();
+    expect(snapshot[".github/copilot-instructions.md"]).toBeUndefined();
+  });
+
+  it("static projen method returns projen instructions", () => {
+    const project = new TestProject();
+    const instructions = AiInstructions.projen(project);
+
+    expect(instructions).toContain("Projen-managed Project Instructions");
+    expect(instructions).toContain("Always use projen for task execution");
+    expect(instructions).toContain("DO NOT manually edit generated files");
+  });
+
+  it("static bestPractices method returns best practices instructions", () => {
+    const project = new TestProject();
+    const instructions = AiInstructions.bestPractices(project);
+
+    expect(instructions).toContain("Development Best Practices");
+    expect(instructions).toContain("Always run build after changes");
+    expect(instructions).toContain("Task completion criteria");
+  });
+
+  it("addAgentSpecificInstructions works for non-enabled agents", () => {
+    const project = new TestProject();
+    const ai = new AiInstructions(project, {
+      agents: [AiAgent.GITHUB_COPILOT],
+    });
+
+    ai.addAgentSpecificInstructions(AiAgent.CURSOR, "Cursor instruction.");
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".cursor/rules/project.md"]).toBeDefined();
+    expect(snapshot[".cursor/rules/project.md"]).toContain(
+      "Cursor instruction."
+    );
+  });
+
+  it("files are added to package ignore", () => {
+    const project = new NodeProject({
+      name: "@projen/test",
+      defaultReleaseBranch: "main",
+    });
+    new AiInstructions(project);
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".npmignore"]).toContain(".github/copilot-instructions.md");
+    expect(snapshot[".npmignore"]).toContain(".cursor/rules/project.md");
+    expect(snapshot[".npmignore"]).toContain("CLAUDE.md");
+    expect(snapshot[".npmignore"]).toContain(".amazonq/rules/project.md");
+    expect(snapshot[".npmignore"]).toContain(".kiro/steering/project.md");
+  });
+
+  it("handles all agent file paths correctly", () => {
+    const project = new TestProject();
+    new AiInstructions(project);
+
+    expect(
+      project.tryFindFile(".github/copilot-instructions.md")
+    ).toBeDefined();
+    expect(project.tryFindFile(".cursor/rules/project.md")).toBeDefined();
+    expect(project.tryFindFile("CLAUDE.md")).toBeDefined();
+    expect(project.tryFindFile(".amazonq/rules/project.md")).toBeDefined();
+    expect(project.tryFindFile(".kiro/steering/project.md")).toBeDefined();
+  });
+
+  it("AiInstructionsFile synthesizes content correctly", () => {
+    const project = new TestProject();
+    const ai = new AiInstructions(project, {
+      agents: [AiAgent.GITHUB_COPILOT],
+      includeDefaultInstructions: false,
+    });
+
+    ai.addAgentSpecificInstructions(
+      AiAgent.GITHUB_COPILOT,
+      "First instruction",
+      "Second instruction"
+    );
+
+    const snapshot = synthSnapshot(project);
+    const content = snapshot[".github/copilot-instructions.md"];
+
+    expect(content).toBe("First instruction\n\nSecond instruction\n");
+  });
+
+  it("constructor agentSpecificInstructions are processed correctly", () => {
+    const project = new TestProject();
+    new AiInstructions(project, {
+      agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR],
+      includeDefaultInstructions: false,
+      agentSpecificInstructions: {
+        [AiAgent.GITHUB_COPILOT]: ["Copilot instruction"],
+        [AiAgent.CURSOR]: ["Cursor instruction"],
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".github/copilot-instructions.md"]).toContain(
+      "Copilot instruction"
+    );
+    expect(snapshot[".cursor/rules/project.md"]).toContain(
+      "Cursor instruction"
+    );
+    expect(snapshot[".github/copilot-instructions.md"]).not.toContain(
+      "Cursor instruction"
+    );
+    expect(snapshot[".cursor/rules/project.md"]).not.toContain(
+      "Copilot instruction"
+    );
   });
 
   it("supports user-added generic instructions", () => {
