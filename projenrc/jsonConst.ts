@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { basename } from "node:path";
 import { FileBaseOptions, Project, TextFile } from "../src";
-import { Biome, Eslint } from "../src/javascript";
+import { Biome, Eslint, Jest } from "../src/javascript";
 
 export interface JsonConstOptions extends FileBaseOptions {
   /**
@@ -36,6 +36,7 @@ export class JsonConst extends TextFile {
 
     Eslint.of(project)?.addIgnorePattern(this.path);
     Biome.of(project)?.addFilePattern(`!${this.path}`);
+    Jest.of(project)?.addIgnorePattern(this.path);
 
     const comment = options.comment ?? basename(options.jsonPath);
     if (this.marker) {

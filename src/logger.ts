@@ -34,7 +34,7 @@ export class Logger extends Component {
   private readonly usePrefix: boolean;
 
   constructor(scope: IConstruct, options: LoggerOptions = {}) {
-    const project = findClosestProject(scope);
+    const project = findClosestProject(scope, new.target.name);
     super(scope, `${new.target.name}#${project.name}`);
 
     // if we are running inside a test, default to no logs

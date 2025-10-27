@@ -259,30 +259,16 @@ export function toJson_CssConfiguration(obj: CssConfiguration | undefined): Reco
  */
 export interface FilesConfiguration {
   /**
+   * **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: https://biomejs.dev/reference/configuration/#filesincludes
+   *
    * Set of file and folder names that should be unconditionally ignored by Biome's scanner.
-   *
-   * Biome maintains an internal list of default ignore entries, which is based on user feedback and which may change in any release. This setting allows overriding this internal list completely.
-   *
-   * This is considered an advanced feature that users _should_ not need to tweak themselves, but they can as a last resort. This setting can only be configured in root configurations, and is ignored in nested configs.
-   *
-   * Entries must be file or folder *names*. Specific paths and globs are not supported.
-   *
-   * Examples where this may be useful:
-   *
-   * ```jsonc { "files": { "experimentalScannerIgnores": [ // You almost certainly don't want to scan your `.git` // folder, which is why it's already ignored by default: ".git",
-   *
-   * // But the scanner does scan `node_modules` by default. If // you *really* don't want this, you can ignore it like // this: "node_modules",
-   *
-   * // But it's probably better to ignore a specific dependency. // For instance, one that happens to be particularly slow to // scan: "RedisCommander.d.ts", ], } } ```
-   *
-   * Please be aware that rules relying on the module graph or type inference information may be negatively affected if dependencies of your project aren't (fully) scanned.
    *
    * @schema FilesConfiguration#experimentalScannerIgnores
    */
   readonly experimentalScannerIgnores?: string[];
 
   /**
-   * Tells Biome to not emit diagnostics when handling files that doesn't know
+   * Tells Biome to not emit diagnostics when handling files that it doesn't know
    *
    * @schema FilesConfiguration#ignoreUnknown
    */
@@ -365,7 +351,7 @@ export interface FormatterConfiguration {
   readonly expand?: Expand;
 
   /**
-   * Stores whether formatting should be allowed to proceed if a given file has syntax errors
+   * Whether formatting should be allowed to proceed if a given file has syntax errors
    *
    * @schema FormatterConfiguration#formatWithErrors
    */
@@ -538,11 +524,30 @@ export function toJson_GritConfiguration(obj: GritConfiguration | undefined): Re
  */
 export interface HtmlConfiguration {
   /**
+   * @schema HtmlConfiguration#assist
+   */
+  readonly assist?: HtmlAssistConfiguration;
+
+  /**
+   * Enables full support for HTML, Vue, Svelte and Astro files.
+   *
+   * @schema HtmlConfiguration#experimentalFullSupportEnabled
+   */
+  readonly experimentalFullSupportEnabled?: boolean;
+
+  /**
    * HTML formatter options
    *
    * @schema HtmlConfiguration#formatter
    */
   readonly formatter?: HtmlFormatterConfiguration;
+
+  /**
+   * HTML linter options
+   *
+   * @schema HtmlConfiguration#linter
+   */
+  readonly linter?: HtmlLinterConfiguration;
 
   /**
    * HTML parsing options
@@ -560,7 +565,10 @@ export interface HtmlConfiguration {
 export function toJson_HtmlConfiguration(obj: HtmlConfiguration | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'assist': toJson_HtmlAssistConfiguration(obj.assist),
+    'experimentalFullSupportEnabled': obj.experimentalFullSupportEnabled,
     'formatter': toJson_HtmlFormatterConfiguration(obj.formatter),
+    'linter': toJson_HtmlLinterConfiguration(obj.linter),
     'parser': toJson_HtmlParserConfiguration(obj.parser),
   };
   // filter undefined values
@@ -1012,7 +1020,7 @@ export interface CssFormatterConfiguration {
   readonly indentWidth?: number;
 
   /**
-   * The type of line ending applied to CSS (and its super languages) files.
+   * The type of line ending applied to CSS (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
    *
    * @schema CssFormatterConfiguration#lineEnding
    */
@@ -1103,6 +1111,13 @@ export interface CssParserConfiguration {
    * @schema CssParserConfiguration#cssModules
    */
   readonly cssModules?: boolean;
+
+  /**
+   * Enables parsing of Tailwind CSS 4.0 directives and functions.
+   *
+   * @schema CssParserConfiguration#tailwindDirectives
+   */
+  readonly tailwindDirectives?: boolean;
 }
 
 /**
@@ -1115,6 +1130,7 @@ export function toJson_CssParserConfiguration(obj: CssParserConfiguration | unde
   const result = {
     'allowWrongLineComments': obj.allowWrongLineComments,
     'cssModules': obj.cssModules,
+    'tailwindDirectives': obj.tailwindDirectives,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1163,6 +1179,8 @@ export enum LineEnding {
   CRLF = "crlf",
   /** cr */
   CR = "cr",
+  /** auto */
+  AUTO = "auto",
 }
 
 /**
@@ -1231,7 +1249,7 @@ export interface GraphqlFormatterConfiguration {
   readonly indentWidth?: number;
 
   /**
-   * The type of line ending applied to GraphQL files.
+   * The type of line ending applied to GraphQL files. `auto` uses CRLF on Windows and LF on other platforms.
    *
    * @schema GraphqlFormatterConfiguration#lineEnding
    */
@@ -1420,6 +1438,35 @@ export function toJson_GritLinterConfiguration(obj: GritLinterConfiguration | un
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * Options that changes how the HTML assist behaves
+ *
+ * @schema HtmlAssistConfiguration
+ */
+export interface HtmlAssistConfiguration {
+  /**
+   * Control the assist for HTML (and its super languages) files.
+   *
+   * @schema HtmlAssistConfiguration#enabled
+   */
+  readonly enabled?: boolean;
+}
+
+/**
+ * Converts an object of type 'HtmlAssistConfiguration' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_HtmlAssistConfiguration(obj: HtmlAssistConfiguration | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'enabled': obj.enabled,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * Options that changes how the HTML formatter behaves
  *
  * @schema HtmlFormatterConfiguration
@@ -1472,7 +1519,7 @@ export interface HtmlFormatterConfiguration {
   readonly indentWidth?: number;
 
   /**
-   * The type of line ending applied to HTML (and its super languages) files.
+   * The type of line ending applied to HTML (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
    *
    * @schema HtmlFormatterConfiguration#lineEnding
    */
@@ -1521,6 +1568,35 @@ export function toJson_HtmlFormatterConfiguration(obj: HtmlFormatterConfiguratio
     'lineWidth': obj.lineWidth,
     'selfCloseVoidElements': obj.selfCloseVoidElements,
     'whitespaceSensitivity': obj.whitespaceSensitivity,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Options that changes how the HTML linter behaves
+ *
+ * @schema HtmlLinterConfiguration
+ */
+export interface HtmlLinterConfiguration {
+  /**
+   * Control the linter for HTML (and its super languages) files.
+   *
+   * @schema HtmlLinterConfiguration#enabled
+   */
+  readonly enabled?: boolean;
+}
+
+/**
+ * Converts an object of type 'HtmlLinterConfiguration' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_HtmlLinterConfiguration(obj: HtmlLinterConfiguration | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'enabled': obj.enabled,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1662,7 +1738,7 @@ export interface JsFormatterConfiguration {
   readonly jsxQuoteStyle?: QuoteStyle;
 
   /**
-   * The type of line ending applied to JavaScript (and its super languages) files.
+   * The type of line ending applied to JavaScript (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
    *
    * @schema JsFormatterConfiguration#lineEnding
    */
@@ -1839,7 +1915,7 @@ export function toJson_JsParserConfiguration(obj: JsParserConfiguration | undefi
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * Linter options specific to the JSON linter
+ * Assist options specific to the JSON linter
  *
  * @schema JsonAssistConfiguration
  */
@@ -1910,7 +1986,7 @@ export interface JsonFormatterConfiguration {
   readonly indentWidth?: number;
 
   /**
-   * The type of line ending applied to JSON (and its super languages) files.
+   * The type of line ending applied to JSON (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
    *
    * @schema JsonFormatterConfiguration#lineEnding
    */
