@@ -157,10 +157,14 @@
     "collectCoverage": true,
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "src/javascript/biome/biome-config.ts",
+      "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "src/javascript/biome/biome-config.ts",
+      "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "watchPathIgnorePatterns": [
       "/node_modules/"
