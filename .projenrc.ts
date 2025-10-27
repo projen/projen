@@ -18,7 +18,12 @@ import {
   JsiiFromJsonSchema,
   JsonConst,
 } from "./projenrc";
-import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
+import {
+  AiInstructions,
+  JsonPatch,
+  ProjectTree,
+  ReleasableCommits,
+} from "./src";
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
@@ -232,5 +237,7 @@ if (project.defaultTask) {
 }
 
 new ProjectTree(project);
+
+new AiInstructions(project);
 
 project.synth();

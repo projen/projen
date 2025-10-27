@@ -45,18 +45,18 @@ new AiInstructions(project);
 
 // Custom usage - specify which agents and add custom instructions
 new AiInstructions(project, {
-  supportedAiAgents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR],
-  perAgentInstructions: {
+  agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR],
+  agentSpecificInstructions: {
     [AiAgent.GITHUB_COPILOT]: {
       instructions: ["Always use descriptive commit messages."],
     },
   },
 });
 
-// Add more custom instructions after instantiation
+// Add more instructions after instantiation
 const ai = new AiInstructions(project);
-ai.addCustomInstruction("Use functional programming patterns.");
-ai.addCustomInstruction("Always write comprehensive tests.");
+ai.addInstructions("Use functional programming patterns.");
+ai.addInstructions("Always write comprehensive tests.");
 ```
 
 
@@ -95,8 +95,8 @@ new AiInstructions(project: Project, options?: AiInstructionsOptions)
 | <code><a href="#projen.AiInstructions.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.AiInstructions.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.AiInstructions.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.AiInstructions.addAgentInstruction">addAgentInstruction</a></code> | Add custom instructions for a specific AI agent. |
-| <code><a href="#projen.AiInstructions.addCustomInstruction">addCustomInstruction</a></code> | Add a custom instruction that will be included in all AI agent instruction files. |
+| <code><a href="#projen.AiInstructions.addAgentSpecificInstructions">addAgentSpecificInstructions</a></code> | Add instructions for a specific AI agent. |
+| <code><a href="#projen.AiInstructions.addInstructions">addInstructions</a></code> | Adds instructions that will be included for all selected AI agents. |
 
 ---
 
@@ -134,22 +134,24 @@ public synthesize(): void
 
 Synthesizes files to the project output directory.
 
-##### `addAgentInstruction` <a name="addAgentInstruction" id="projen.AiInstructions.addAgentInstruction"></a>
+##### `addAgentSpecificInstructions` <a name="addAgentSpecificInstructions" id="projen.AiInstructions.addAgentSpecificInstructions"></a>
 
 ```typescript
-public addAgentInstruction(agent: AiAgent, instructions: ...string[]): void
+public addAgentSpecificInstructions(agent: AiAgent, instructions: ...string[]): void
 ```
 
-Add custom instructions for a specific AI agent.
+Add instructions for a specific AI agent.
+
+This can also be used to add instructions for an AI agent that was previously not enabled.
 
 *Example*
 
 ```typescript
-aiInstructions.addAgentInstruction(AiAgent.GITHUB_COPILOT, "Use descriptive commit messages.");
+aiInstructions.addAgentSpecificInstructions(AiAgent.GITHUB_COPILOT, "Use descriptive commit messages.");
 ```
 
 
-###### `agent`<sup>Required</sup> <a name="agent" id="projen.AiInstructions.addAgentInstruction.parameter.agent"></a>
+###### `agent`<sup>Required</sup> <a name="agent" id="projen.AiInstructions.addAgentSpecificInstructions.parameter.agent"></a>
 
 - *Type:* <a href="#projen.AiAgent">AiAgent</a>
 
@@ -157,7 +159,7 @@ The AI agent to add instructions for.
 
 ---
 
-###### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructions.addAgentInstruction.parameter.instructions"></a>
+###### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructions.addAgentSpecificInstructions.parameter.instructions"></a>
 
 - *Type:* ...string[]
 
@@ -165,23 +167,23 @@ The instruction(s) to add.
 
 ---
 
-##### `addCustomInstruction` <a name="addCustomInstruction" id="projen.AiInstructions.addCustomInstruction"></a>
+##### `addInstructions` <a name="addInstructions" id="projen.AiInstructions.addInstructions"></a>
 
 ```typescript
-public addCustomInstruction(instructions: ...string[]): void
+public addInstructions(instructions: ...string[]): void
 ```
 
-Add a custom instruction that will be included in all AI agent instruction files.
+Adds instructions that will be included for all selected AI agents.
 
 *Example*
 
 ```typescript
-aiInstructions.addCustomInstruction("Always use TypeScript strict mode.");
-aiInstructions.addCustomInstruction("Prefer functional programming.", "Avoid mutations.");
+aiInstructions.addInstructions("Always use TypeScript strict mode.");
+aiInstructions.addInstructions("Prefer functional programming.", "Avoid mutations.");
 ```
 
 
-###### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructions.addCustomInstruction.parameter.instructions"></a>
+###### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructions.addInstructions.parameter.instructions"></a>
 
 - *Type:* ...string[]
 
@@ -195,6 +197,8 @@ The instructions to add.
 | --- | --- |
 | <code><a href="#projen.AiInstructions.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.AiInstructions.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.AiInstructions.bestPractices">bestPractices</a></code> | Returns development best practices instructions for AI agents. |
+| <code><a href="#projen.AiInstructions.projen">projen</a></code> | Returns projen-specific instructions for AI agents. |
 
 ---
 
@@ -246,6 +250,38 @@ Test whether the given construct is a component.
 
 ---
 
+##### `bestPractices` <a name="bestPractices" id="projen.AiInstructions.bestPractices"></a>
+
+```typescript
+import { AiInstructions } from 'projen'
+
+AiInstructions.bestPractices(project: Project)
+```
+
+Returns development best practices instructions for AI agents.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.AiInstructions.bestPractices.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `projen` <a name="projen" id="projen.AiInstructions.projen"></a>
+
+```typescript
+import { AiInstructions } from 'projen'
+
+AiInstructions.projen(project: Project)
+```
+
+Returns projen-specific instructions for AI agents.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.AiInstructions.projen.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
@@ -274,6 +310,286 @@ public readonly project: Project;
 ```
 
 - *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+
+### AiInstructionsFile <a name="AiInstructionsFile" id="projen.AiInstructionsFile"></a>
+
+#### Initializers <a name="Initializers" id="projen.AiInstructionsFile.Initializer"></a>
+
+```typescript
+import { AiInstructionsFile } from 'projen'
+
+new AiInstructionsFile(scope: IConstruct, filePath: string, options?: FileBaseOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.AiInstructionsFile.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.AiInstructionsFile.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.AiInstructionsFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.FileBaseOptions">FileBaseOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.AiInstructionsFile.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.AiInstructionsFile.Initializer.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.AiInstructionsFile.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.FileBaseOptions">FileBaseOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.AiInstructionsFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.AiInstructionsFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.AiInstructionsFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.AiInstructionsFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.AiInstructionsFile.addInstructions">addInstructions</a></code> | Adds instructions to the instruction file. |
+
+---
+
+##### `toString` <a name="toString" id="projen.AiInstructionsFile.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.AiInstructionsFile.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.AiInstructionsFile.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.AiInstructionsFile.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `addInstructions` <a name="addInstructions" id="projen.AiInstructionsFile.addInstructions"></a>
+
+```typescript
+public addInstructions(instructions: ...string[]): void
+```
+
+Adds instructions to the instruction file.
+
+###### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructionsFile.addInstructions.parameter.instructions"></a>
+
+- *Type:* ...string[]
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.AiInstructionsFile.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.AiInstructionsFile.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.AiInstructionsFile.isConstruct"></a>
+
+```typescript
+import { AiInstructionsFile } from 'projen'
+
+AiInstructionsFile.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.AiInstructionsFile.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.AiInstructionsFile.isComponent"></a>
+
+```typescript
+import { AiInstructionsFile } from 'projen'
+
+AiInstructionsFile.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.AiInstructionsFile.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.AiInstructionsFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.AiInstructionsFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.AiInstructionsFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.AiInstructionsFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.AiInstructionsFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.AiInstructionsFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.AiInstructionsFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.AiInstructionsFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.AiInstructionsFile.property.instructions">instructions</a></code> | <code>string[]</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.AiInstructionsFile.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.AiInstructionsFile.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.AiInstructionsFile.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.AiInstructionsFile.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.AiInstructionsFile.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.AiInstructionsFile.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.AiInstructionsFile.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.AiInstructionsFile.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructionsFile.property.instructions"></a>
+
+```typescript
+public readonly instructions: string[];
+```
+
+- *Type:* string[]
 
 ---
 
@@ -9495,38 +9811,6 @@ Maximum line width (set to 0 to disable folding).
 
 ## Structs <a name="Structs" id="Structs"></a>
 
-### AiAgentInstructions <a name="AiAgentInstructions" id="projen.AiAgentInstructions"></a>
-
-Per-agent custom instructions.
-
-#### Initializer <a name="Initializer" id="projen.AiAgentInstructions.Initializer"></a>
-
-```typescript
-import { AiAgentInstructions } from 'projen'
-
-const aiAgentInstructions: AiAgentInstructions = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.AiAgentInstructions.property.instructions">instructions</a></code> | <code>string[]</code> | Custom instructions specific to this AI agent. |
-
----
-
-##### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiAgentInstructions.property.instructions"></a>
-
-```typescript
-public readonly instructions: string[];
-```
-
-- *Type:* string[]
-
-Custom instructions specific to this AI agent.
-
----
-
 ### AiInstructionsOptions <a name="AiInstructionsOptions" id="projen.AiInstructionsOptions"></a>
 
 Options for configuring AI tool instruction files.
@@ -9543,33 +9827,34 @@ const aiInstructionsOptions: AiInstructionsOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.AiInstructionsOptions.property.includeBuildInstructions">includeBuildInstructions</a></code> | <code>boolean</code> | Include instructions to run build after every change to a source or test file. |
-| <code><a href="#projen.AiInstructionsOptions.property.perAgentInstructions">perAgentInstructions</a></code> | <code>{[ key: string ]: <a href="#projen.AiAgentInstructions">AiAgentInstructions</a>}</code> | Per-agent custom instructions. |
-| <code><a href="#projen.AiInstructionsOptions.property.supportedAiAgents">supportedAiAgents</a></code> | <code><a href="#projen.AiAgent">AiAgent</a>[]</code> | Which AI agents to generate instruction files for. |
+| <code><a href="#projen.AiInstructionsOptions.property.agents">agents</a></code> | <code><a href="#projen.AiAgent">AiAgent</a>[]</code> | Which AI agents to generate instruction files for. |
+| <code><a href="#projen.AiInstructionsOptions.property.agentSpecificInstructions">agentSpecificInstructions</a></code> | <code>{[ key: string ]: string[]}</code> | Per-agent custom instructions. |
+| <code><a href="#projen.AiInstructionsOptions.property.includeDefaultInstructions">includeDefaultInstructions</a></code> | <code>boolean</code> | Include default instructions for projen and general best practices. |
+| <code><a href="#projen.AiInstructionsOptions.property.instructions">instructions</a></code> | <code>string[]</code> | General instructions applicable to all agents. |
 
 ---
 
-##### `includeBuildInstructions`<sup>Optional</sup> <a name="includeBuildInstructions" id="projen.AiInstructionsOptions.property.includeBuildInstructions"></a>
+##### `agents`<sup>Optional</sup> <a name="agents" id="projen.AiInstructionsOptions.property.agents"></a>
 
 ```typescript
-public readonly includeBuildInstructions: boolean;
+public readonly agents: AiAgent[];
 ```
 
-- *Type:* boolean
-- *Default:* true
+- *Type:* <a href="#projen.AiAgent">AiAgent</a>[]
+- *Default:* All agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR, AiAgent.CLAUDE, AiAgent.AMAZON_Q]
 
-Include instructions to run build after every change to a source or test file.
+Which AI agents to generate instruction files for.
 
 ---
 
-##### `perAgentInstructions`<sup>Optional</sup> <a name="perAgentInstructions" id="projen.AiInstructionsOptions.property.perAgentInstructions"></a>
+##### `agentSpecificInstructions`<sup>Optional</sup> <a name="agentSpecificInstructions" id="projen.AiInstructionsOptions.property.agentSpecificInstructions"></a>
 
 ```typescript
-public readonly perAgentInstructions: {[ key: string ]: AiAgentInstructions};
+public readonly agentSpecificInstructions: {[ key: string ]: string[]};
 ```
 
-- *Type:* {[ key: string ]: <a href="#projen.AiAgentInstructions">AiAgentInstructions</a>}
-- *Default:* no per-agent custom instructions
+- *Type:* {[ key: string ]: string[]}
+- *Default:* no agent specific instructions
 
 Per-agent custom instructions.
 
@@ -9591,16 +9876,32 @@ Allows different instructions for different AI tools.
 ```
 
 
-##### `supportedAiAgents`<sup>Optional</sup> <a name="supportedAiAgents" id="projen.AiInstructionsOptions.property.supportedAiAgents"></a>
+##### `includeDefaultInstructions`<sup>Optional</sup> <a name="includeDefaultInstructions" id="projen.AiInstructionsOptions.property.includeDefaultInstructions"></a>
 
 ```typescript
-public readonly supportedAiAgents: AiAgent[];
+public readonly includeDefaultInstructions: boolean;
 ```
 
-- *Type:* <a href="#projen.AiAgent">AiAgent</a>[]
-- *Default:* All agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR, AiAgent.CLAUDE, AiAgent.AMAZON_Q]
+- *Type:* boolean
+- *Default:* true
 
-Which AI agents to generate instruction files for.
+Include default instructions for projen and general best practices.
+
+Default instructions will only be included for agents provided in the `agents` option.
+If `agents` is not provided, default instructions will be included for all agents.
+
+---
+
+##### `instructions`<sup>Optional</sup> <a name="instructions" id="projen.AiInstructionsOptions.property.instructions"></a>
+
+```typescript
+public readonly instructions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no agent specific instructions
+
+General instructions applicable to all agents.
 
 ---
 
@@ -16471,9 +16772,10 @@ Supported AI coding assistants and their instruction file locations.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.AiAgent.GITHUB_COPILOT">GITHUB_COPILOT</a></code> | GitHub Copilot - .github/copilot-instructions.md. |
-| <code><a href="#projen.AiAgent.CURSOR">CURSOR</a></code> | Cursor IDE - .cursor/rules/projen.md. |
+| <code><a href="#projen.AiAgent.CURSOR">CURSOR</a></code> | Cursor IDE - .cursor/rules/project.md. |
 | <code><a href="#projen.AiAgent.CLAUDE">CLAUDE</a></code> | Claude Code - CLAUDE.md. |
-| <code><a href="#projen.AiAgent.AMAZON_Q">AMAZON_Q</a></code> | Amazon Q - .amazonq/rules/projen.md. |
+| <code><a href="#projen.AiAgent.AMAZON_Q">AMAZON_Q</a></code> | Amazon Q - .amazonq/rules/project.md. |
+| <code><a href="#projen.AiAgent.KIRO">KIRO</a></code> | Kiro - .kiro/steering/project.md. |
 
 ---
 
@@ -16486,7 +16788,7 @@ GitHub Copilot - .github/copilot-instructions.md.
 
 ##### `CURSOR` <a name="CURSOR" id="projen.AiAgent.CURSOR"></a>
 
-Cursor IDE - .cursor/rules/projen.md.
+Cursor IDE - .cursor/rules/project.md.
 
 ---
 
@@ -16500,7 +16802,14 @@ Claude Code - CLAUDE.md.
 
 ##### `AMAZON_Q` <a name="AMAZON_Q" id="projen.AiAgent.AMAZON_Q"></a>
 
-Amazon Q - .amazonq/rules/projen.md.
+Amazon Q - .amazonq/rules/project.md.
+
+---
+
+
+##### `KIRO` <a name="KIRO" id="projen.AiAgent.KIRO"></a>
+
+Kiro - .kiro/steering/project.md.
 
 ---
 
