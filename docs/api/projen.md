@@ -477,7 +477,6 @@ Test whether the given construct is a component.
 | <code><a href="#projen.AiInstructionsFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
 | <code><a href="#projen.AiInstructionsFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
 | <code><a href="#projen.AiInstructionsFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
-| <code><a href="#projen.AiInstructionsFile.property.instructions">instructions</a></code> | <code>string[]</code> | *No description.* |
 
 ---
 
@@ -578,16 +577,6 @@ public readonly readonly: boolean;
 - *Type:* boolean
 
 Indicates if the file should be read-only or read-write.
-
----
-
-##### `instructions`<sup>Required</sup> <a name="instructions" id="projen.AiInstructionsFile.property.instructions"></a>
-
-```typescript
-public readonly instructions: string[];
-```
-
-- *Type:* string[]
 
 ---
 
@@ -9826,7 +9815,7 @@ const aiInstructionsOptions: AiInstructionsOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.AiInstructionsOptions.property.agents">agents</a></code> | <code><a href="#projen.AiAgent">AiAgent</a>[]</code> | Which AI agents to generate instruction files for. |
-| <code><a href="#projen.AiInstructionsOptions.property.agentSpecificInstructions">agentSpecificInstructions</a></code> | <code>{[ key: string ]: string}</code> | Per-agent custom instructions. |
+| <code><a href="#projen.AiInstructionsOptions.property.agentSpecificInstructions">agentSpecificInstructions</a></code> | <code>{[ key: string ]: string[]}</code> | Per-agent custom instructions. |
 | <code><a href="#projen.AiInstructionsOptions.property.includeDefaultInstructions">includeDefaultInstructions</a></code> | <code>boolean</code> | Include default instructions for projen and general best practices. |
 | <code><a href="#projen.AiInstructionsOptions.property.instructions">instructions</a></code> | <code>string[]</code> | General instructions applicable to all agents. |
 
@@ -9848,10 +9837,10 @@ Which AI agents to generate instruction files for.
 ##### `agentSpecificInstructions`<sup>Optional</sup> <a name="agentSpecificInstructions" id="projen.AiInstructionsOptions.property.agentSpecificInstructions"></a>
 
 ```typescript
-public readonly agentSpecificInstructions: {[ key: string ]: string};
+public readonly agentSpecificInstructions: {[ key: string ]: string[]};
 ```
 
-- *Type:* {[ key: string ]: string}
+- *Type:* {[ key: string ]: string[]}
 - *Default:* no agent specific instructions
 
 Per-agent custom instructions.
