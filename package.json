@@ -57,11 +57,11 @@
     "@types/node": "^16",
     "@types/parse-conflict-json": "^1.1.3",
     "@types/semver": "^7.7.1",
-    "@types/yargs": "^16.0.9",
+    "@types/yargs": "^16.0.10",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "all-contributors-cli": "^6.26.1",
-    "aws-cdk-lib": "^2.220.0",
+    "aws-cdk-lib": "^2.221.0",
     "commit-and-tag-version": "^12",
     "esbuild": "^0.25.11",
     "eslint": "^9",
@@ -157,10 +157,14 @@
     "collectCoverage": true,
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "src/javascript/biome/biome-config.ts",
+      "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "src/javascript/biome/biome-config.ts",
+      "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "watchPathIgnorePatterns": [
       "/node_modules/"
