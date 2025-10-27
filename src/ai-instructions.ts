@@ -64,7 +64,7 @@ export interface AiInstructionsOptions {
    *   }
    * }
    */
-  readonly agentSpecificInstructions?: { [key: string]: string[] };
+  readonly agentSpecificInstructions?: Record<string, string[]>;
 
   /**
    * Include default instructions for projen and general best practices.
@@ -97,9 +97,7 @@ export interface AiInstructionsOptions {
  * new AiInstructions(project, {
  *   agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR],
  *   agentSpecificInstructions: {
- *     [AiAgent.GITHUB_COPILOT]: {
- *       instructions: ["Always use descriptive commit messages."],
- *     },
+ *     [AiAgent.GITHUB_COPILOT]: ["Always use descriptive commit messages."],
  *   },
  * });
  *
@@ -137,7 +135,7 @@ export class AiInstructions extends Component {
 
     // Assert files for declared agents
     for (const agent of this.agents) {
-      this.assertInstructionsFile(agent);
+      this.ensureInstructionsFile(agent);
     }
 
     if (options.includeDefaultInstructions ?? true) {
@@ -163,7 +161,7 @@ export class AiInstructions extends Component {
   /**
    * Create or return the instructions file.
    */
-  private assertInstructionsFile(agent: AiAgent): AiInstructionsFile {
+  private ensureInstructionsFile(agent: AiAgent): AiInstructionsFile {
     if (this.files.has(agent)) {
       return this.files.get(agent)!;
     }
@@ -206,7 +204,7 @@ export class AiInstructions extends Component {
     agent: AiAgent,
     ...instructions: string[]
   ): void {
-    const file = this.assertInstructionsFile(agent);
+    const file = this.ensureInstructionsFile(agent);
     file.addInstructions(...instructions);
   }
 
@@ -232,7 +230,7 @@ export class AiInstructions extends Component {
 }
 
 export class AiInstructionsFile extends FileBase {
-  public readonly instructions: string[] = [];
+  private readonly instructions: string[] = [];
 
   /**
    * Adds instructions to the instruction file.
@@ -272,7 +270,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`${projenCommand}\` - Synthesize project configuration files
-  - \`${projenCommand} build\` - Builds the project, including running test
+  - \`${projenCommand} build\` - Builds the project, including running tests
   - \`${projenCommand} test\` - Runs tests only
   - \`${projenCommand} compile\` - Compiles the source code only
 

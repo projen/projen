@@ -10,7 +10,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in `.projen/tasks.json` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - `node ./projen.js` - Synthesize project configuration files
-  - `node ./projen.js build` - Builds the project, including running test
+  - `node ./projen.js build` - Builds the project, including running tests
   - `node ./projen.js test` - Runs tests only
   - `node ./projen.js compile` - Compiles the source code only
 

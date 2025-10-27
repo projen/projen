@@ -47,9 +47,7 @@ new AiInstructions(project);
 new AiInstructions(project, {
   agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR],
   agentSpecificInstructions: {
-    [AiAgent.GITHUB_COPILOT]: {
-      instructions: ["Always use descriptive commit messages."],
-    },
+    [AiAgent.GITHUB_COPILOT]: ["Always use descriptive commit messages."],
   },
 });
 
@@ -9828,7 +9826,7 @@ const aiInstructionsOptions: AiInstructionsOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.AiInstructionsOptions.property.agents">agents</a></code> | <code><a href="#projen.AiAgent">AiAgent</a>[]</code> | Which AI agents to generate instruction files for. |
-| <code><a href="#projen.AiInstructionsOptions.property.agentSpecificInstructions">agentSpecificInstructions</a></code> | <code>{[ key: string ]: string[]}</code> | Per-agent custom instructions. |
+| <code><a href="#projen.AiInstructionsOptions.property.agentSpecificInstructions">agentSpecificInstructions</a></code> | <code>{[ key: string ]: string}</code> | Per-agent custom instructions. |
 | <code><a href="#projen.AiInstructionsOptions.property.includeDefaultInstructions">includeDefaultInstructions</a></code> | <code>boolean</code> | Include default instructions for projen and general best practices. |
 | <code><a href="#projen.AiInstructionsOptions.property.instructions">instructions</a></code> | <code>string[]</code> | General instructions applicable to all agents. |
 
@@ -9850,10 +9848,10 @@ Which AI agents to generate instruction files for.
 ##### `agentSpecificInstructions`<sup>Optional</sup> <a name="agentSpecificInstructions" id="projen.AiInstructionsOptions.property.agentSpecificInstructions"></a>
 
 ```typescript
-public readonly agentSpecificInstructions: {[ key: string ]: string[]};
+public readonly agentSpecificInstructions: {[ key: string ]: string};
 ```
 
-- *Type:* {[ key: string ]: string[]}
+- *Type:* {[ key: string ]: string}
 - *Default:* no agent specific instructions
 
 Per-agent custom instructions.

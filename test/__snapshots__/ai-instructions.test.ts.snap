@@ -14,7 +14,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`bunx projen\` - Synthesize project configuration files
-  - \`bunx projen build\` - Builds the project, including running test
+  - \`bunx projen build\` - Builds the project, including running tests
   - \`bunx projen test\` - Runs tests only
   - \`bunx projen compile\` - Compiles the source code only
 
@@ -84,7 +84,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`bunx projen\` - Synthesize project configuration files
-  - \`bunx projen build\` - Builds the project, including running test
+  - \`bunx projen build\` - Builds the project, including running tests
   - \`bunx projen test\` - Runs tests only
   - \`bunx projen compile\` - Compiles the source code only
 
@@ -263,7 +263,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`npx projen\` - Synthesize project configuration files
-  - \`npx projen build\` - Builds the project, including running test
+  - \`npx projen build\` - Builds the project, including running tests
   - \`npx projen test\` - Runs tests only
   - \`npx projen compile\` - Compiles the source code only
 
@@ -315,7 +315,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`npx projen\` - Synthesize project configuration files
-  - \`npx projen build\` - Builds the project, including running test
+  - \`npx projen build\` - Builds the project, including running tests
   - \`npx projen test\` - Runs tests only
   - \`npx projen compile\` - Compiles the source code only
 
@@ -382,7 +382,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`npx projen\` - Synthesize project configuration files
-  - \`npx projen build\` - Builds the project, including running test
+  - \`npx projen build\` - Builds the project, including running tests
   - \`npx projen test\` - Runs tests only
   - \`npx projen compile\` - Compiles the source code only
 
@@ -478,7 +478,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`npx projen\` - Synthesize project configuration files
-  - \`npx projen build\` - Builds the project, including running test
+  - \`npx projen build\` - Builds the project, including running tests
   - \`npx projen test\` - Runs tests only
   - \`npx projen compile\` - Compiles the source code only
 
@@ -611,7 +611,7 @@ This project is managed by [projen](https://github.com/projen/projen), a project
 - **Check available tasks**: Look in \`.projen/tasks.json\` to see all available tasks, their descriptions, and steps.
 - **Common tasks**:
   - \`npx projen\` - Synthesize project configuration files
-  - \`npx projen build\` - Builds the project, including running test
+  - \`npx projen build\` - Builds the project, including running tests
   - \`npx projen test\` - Runs tests only
   - \`npx projen compile\` - Compiles the source code only
 
