@@ -1,6 +1,11 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { AwsCdkTypeScriptApp, LambdaRuntime } from "../../src/awscdk";
+import {
+  AwsCdkTypeScriptApp,
+  CdkFeatureFlags,
+  LambdaRuntime,
+} from "../../src/awscdk";
+import { FEATURE_FLAGS_V1, FEATURE_FLAGS_V2 } from "../../src/awscdk/internal";
 import { NodePackageManager } from "../../src/javascript";
 import { mkdtemp, SynthOutput, synthSnapshot } from "../util";
 
@@ -289,6 +294,7 @@ describe("CDK v2", () => {
       cdkVersion: "2.0.0-rc.1",
       defaultReleaseBranch: "main",
       name: "test",
+      featureFlags: CdkFeatureFlags.V2.ALL,
     });
     snapshot = synthSnapshot(project);
   });
@@ -307,8 +313,10 @@ describe("CDK v2", () => {
       "import { App, Stack, StackProps } from 'aws-cdk-lib'"
     );
   });
-  it("has an empty context", () => {
-    expect(snapshot["cdk.json"].context).toBeUndefined();
+  it("has v2 feature flags in context", () => {
+    expect(snapshot["cdk.json"].context).toEqual(
+      expect.objectContaining(FEATURE_FLAGS_V2)
+    );
   });
 });
 
@@ -321,6 +329,7 @@ describe("CDK v1", () => {
       name: "hello",
       defaultReleaseBranch: "main",
       cdkVersion: "1.100.0",
+      featureFlags: CdkFeatureFlags.V1.ALL,
     });
     snapshot = synthSnapshot(project);
   });
@@ -333,6 +342,9 @@ describe("CDK v1", () => {
     expect(snapshot["package.json"].dependencies).toMatchObject({
       constructs: "^3.2.27",
     });
+  });
+  it("has v1 feature flags in context", () => {
+    expect(snapshot["cdk.json"].context).toEqual(FEATURE_FLAGS_V1);
   });
 });
 

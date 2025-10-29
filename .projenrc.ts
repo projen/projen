@@ -16,9 +16,16 @@ import {
   setupVscode,
   WindowsBuild,
   JsiiFromJsonSchema,
+  JsonConst,
 } from "./projenrc";
-import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
+import {
+  AiInstructions,
+  JsonPatch,
+  ProjectTree,
+  ReleasableCommits,
+} from "./src";
 import { JsiiProject } from "./src/cdk";
+import { tryResolveDependencyVersion } from "./src/javascript/util";
 
 const bootstrapScriptFile = "projen.js";
 
@@ -89,6 +96,8 @@ const project = new JsiiProject({
     "@biomejs/biome@^2",
     // used to get current node versions in tests
     "@jsii/check-node",
+    // used to get CDK V2 feature flags
+    "aws-cdk-lib",
   ],
 
   peerDeps: ["constructs@^10.0.0"],
@@ -210,6 +219,14 @@ new JsiiFromJsonSchema(project, {
   filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
 });
 
+new JsonConst(project, {
+  jsonPath: require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
+  filePath: path.join("src", "awscdk", "private", "feature-flags-v2.const.ts"),
+  comment: `Feature flags as of v${
+    tryResolveDependencyVersion("aws-cdk-lib") || "2"
+  }`,
+});
+
 new WindowsBuild(project);
 
 // we are projen, so re-synth after compiling.
@@ -220,5 +237,7 @@ if (project.defaultTask) {
 }
 
 new ProjectTree(project);
+
+new AiInstructions(project);
 
 project.synth();

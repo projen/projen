@@ -1,8 +1,11 @@
 {
   "files": [
+    ".amazonq/rules/project.md",
+    ".cursor/rules/project.md",
     ".devcontainer.json",
     ".eslintrc.json",
     ".gitattributes",
+    ".github/copilot-instructions.md",
     ".github/pull_request_template.md",
     ".github/workflows/auto-approve.yml",
     ".github/workflows/auto-queue.yml",
@@ -14,6 +17,7 @@
     ".github/workflows/upgrade-main.yml",
     ".gitignore",
     ".gitpod.yml",
+    ".kiro/steering/project.md",
     ".markdownlint.json",
     ".prettierignore",
     ".prettierrc.json",
@@ -22,8 +26,10 @@
     ".projen/tasks.json",
     ".projen/tree.json",
     ".vscode/launch.json",
+    "CLAUDE.md",
     "LICENSE",
     "projen.js",
+    "src/awscdk/private/feature-flags-v2.const.ts",
     "src/javascript/biome/biome-config.ts",
     "tsconfig.dev.json"
   ],

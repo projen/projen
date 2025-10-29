@@ -1,3 +1,4 @@
+export * from "./ai-instructions";
 export * from "./compare";
 export * from "./component";
 export * from "./dev-env";

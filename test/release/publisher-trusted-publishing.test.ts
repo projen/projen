@@ -44,6 +44,24 @@ describe("Publisher Trusted Publishing Validation", () => {
         });
       }).not.toThrow();
     });
+
+    test("node version is set to lts when trustedPublishing is disabled", () => {
+      expect(() => {
+        release.publisher.publishToNpm();
+      }).not.toThrow();
+      const workflow = release.publisher._renderJobsForBranch("main", {});
+      expect(workflow.release_npm.tools?.node?.version).toBe("lts/*");
+    });
+
+    test("node version is set to 24 when trustedPublishing is enabled", () => {
+      expect(() => {
+        release.publisher.publishToNpm({
+          trustedPublishing: true,
+        });
+      }).not.toThrow();
+      const workflow = release.publisher._renderJobsForBranch("main", {});
+      expect(workflow.release_npm.tools?.node?.version).toBe("24.x");
+    });
   });
 
   describe("publishToNuget", () => {

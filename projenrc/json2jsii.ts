@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { TypeGenerator } from "json2jsii";
 import { FileBaseOptions, IResolver, Project, TextFile } from "../src";
-import { Biome, Eslint } from "../src/javascript";
+import { Biome, Eslint, Jest } from "../src/javascript";
 
 export interface JsiiFromJsonSchemaProps extends FileBaseOptions {
   /**
@@ -44,6 +44,7 @@ export class JsiiFromJsonSchema extends TextFile {
 
     Eslint.of(project)?.addIgnorePattern(this.path);
     Biome.of(project)?.addFilePattern(`!${this.path}`);
+    Jest.of(project)?.addIgnorePattern(this.path);
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
