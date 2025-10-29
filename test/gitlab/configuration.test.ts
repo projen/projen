@@ -420,3 +420,14 @@ test("test code coverage report", () => {
     },
   });
 });
+
+test("adds default hooks", () => {
+  // GIVEN
+  const p = new TestProject();
+  const c = new CiConfiguration(p, "foo");
+  c.addDefaultHooks({ preGetSourcesScript: ["echo test"] });
+  // THEN
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).default.hooks
+  ).toStrictEqual({ pre_get_sources_script: ["echo test"] });
+});

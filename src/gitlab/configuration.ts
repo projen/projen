@@ -124,7 +124,7 @@ export class CiConfiguration extends Component {
   /**
    * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script
    */
-  private defaultHooks?: Default['hooks'];
+  private defaultHooks?: Default["hooks"];
   /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
@@ -357,9 +357,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-   * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules 
-   * https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script 
-   * @param hooks 
+   * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules
+   * https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script
+   * @param hooks
    */
   public addDefaultHooks(hooks: DefaultHooks) {
     this.defaultHooks = hooks;

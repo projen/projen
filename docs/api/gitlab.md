@@ -53,7 +53,7 @@ new gitlab.CiConfiguration(project: Project, name: string, options?: CiConfigura
 | <code><a href="#projen.gitlab.CiConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.gitlab.CiConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.gitlab.CiConfiguration.addDefaultCaches">addDefaultCaches</a></code> | Adds up to 4 default caches configuration to the CI configuration. |
-| <code><a href="#projen.gitlab.CiConfiguration.addDefaultHooks">addDefaultHooks</a></code> | *No description.* |
+| <code><a href="#projen.gitlab.CiConfiguration.addDefaultHooks">addDefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
 | <code><a href="#projen.gitlab.CiConfiguration.addGlobalVariables">addGlobalVariables</a></code> | Add a globally defined variable to the CI configuration. |
 | <code><a href="#projen.gitlab.CiConfiguration.addIncludes">addIncludes</a></code> | Add additional yml/yaml files to the CI includes. |
 | <code><a href="#projen.gitlab.CiConfiguration.addJobs">addJobs</a></code> | Add jobs and their stages to the CI configuration. |
@@ -117,6 +117,8 @@ Caches to add.
 ```typescript
 public addDefaultHooks(hooks: DefaultHooks): void
 ```
+
+Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script.
 
 ###### `hooks`<sup>Required</sup> <a name="hooks" id="projen.gitlab.CiConfiguration.addDefaultHooks.parameter.hooks"></a>
 
@@ -583,7 +585,7 @@ new gitlab.GitlabConfiguration(project: Project, options?: CiConfigurationOption
 | <code><a href="#projen.gitlab.GitlabConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.addDefaultCaches">addDefaultCaches</a></code> | Adds up to 4 default caches configuration to the CI configuration. |
-| <code><a href="#projen.gitlab.GitlabConfiguration.addDefaultHooks">addDefaultHooks</a></code> | *No description.* |
+| <code><a href="#projen.gitlab.GitlabConfiguration.addDefaultHooks">addDefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.addGlobalVariables">addGlobalVariables</a></code> | Add a globally defined variable to the CI configuration. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.addIncludes">addIncludes</a></code> | Add additional yml/yaml files to the CI includes. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.addJobs">addJobs</a></code> | Add jobs and their stages to the CI configuration. |
@@ -648,6 +650,8 @@ Caches to add.
 ```typescript
 public addDefaultHooks(hooks: DefaultHooks): void
 ```
+
+Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script.
 
 ###### `hooks`<sup>Required</sup> <a name="hooks" id="projen.gitlab.GitlabConfiguration.addDefaultHooks.parameter.hooks"></a>
 
@@ -1161,7 +1165,7 @@ The name of the configuration.
 | <code><a href="#projen.gitlab.NestedConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.gitlab.NestedConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.gitlab.NestedConfiguration.addDefaultCaches">addDefaultCaches</a></code> | Adds up to 4 default caches configuration to the CI configuration. |
-| <code><a href="#projen.gitlab.NestedConfiguration.addDefaultHooks">addDefaultHooks</a></code> | *No description.* |
+| <code><a href="#projen.gitlab.NestedConfiguration.addDefaultHooks">addDefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
 | <code><a href="#projen.gitlab.NestedConfiguration.addGlobalVariables">addGlobalVariables</a></code> | Add a globally defined variable to the CI configuration. |
 | <code><a href="#projen.gitlab.NestedConfiguration.addIncludes">addIncludes</a></code> | Add additional yml/yaml files to the CI includes. |
 | <code><a href="#projen.gitlab.NestedConfiguration.addJobs">addJobs</a></code> | Add jobs and their stages to the CI configuration. |
@@ -1225,6 +1229,8 @@ Caches to add.
 ```typescript
 public addDefaultHooks(hooks: DefaultHooks): void
 ```
+
+Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script.
 
 ###### `hooks`<sup>Required</sup> <a name="hooks" id="projen.gitlab.NestedConfiguration.addDefaultHooks.parameter.hooks"></a>
 
@@ -2204,7 +2210,7 @@ const default: gitlab.Default = { ... }
 | <code><a href="#projen.gitlab.Default.property.artifacts">artifacts</a></code> | <code><a href="#projen.gitlab.Artifacts">Artifacts</a></code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.beforeScript">beforeScript</a></code> | <code>string[]</code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.cache">cache</a></code> | <code><a href="#projen.gitlab.Cache">Cache</a>[]</code> | *No description.* |
-| <code><a href="#projen.gitlab.Default.property.hooks">hooks</a></code> | <code><a href="#projen.gitlab.DefaultHooks">DefaultHooks</a></code> | *No description.* |
+| <code><a href="#projen.gitlab.Default.property.hooks">hooks</a></code> | <code><a href="#projen.gitlab.DefaultHooks">DefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
 | <code><a href="#projen.gitlab.Default.property.idTokens">idTokens</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}</code> | Specifies the default ID tokens (JSON Web Tokens) that are used for CI/CD authentication to use globally for all jobs. |
 | <code><a href="#projen.gitlab.Default.property.image">image</a></code> | <code><a href="#projen.gitlab.Image">Image</a></code> | *No description.* |
 | <code><a href="#projen.gitlab.Default.property.interruptible">interruptible</a></code> | <code>boolean</code> | *No description.* |
@@ -2262,6 +2268,8 @@ public readonly hooks: DefaultHooks;
 ```
 
 - *Type:* <a href="#projen.gitlab.DefaultHooks">DefaultHooks</a>
+
+Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script.
 
 ---
 
@@ -2962,6 +2970,7 @@ const job: gitlab.Job = { ... }
 | <code><a href="#projen.gitlab.Job.property.environment">environment</a></code> | <code>string \| <a href="#projen.gitlab.Environment">Environment</a></code> | Used to associate environment metadata with a deploy. |
 | <code><a href="#projen.gitlab.Job.property.except">except</a></code> | <code>string[] \| <a href="#projen.gitlab.Filter">Filter</a></code> | Job will run *except* for when these filtering options match. |
 | <code><a href="#projen.gitlab.Job.property.extends">extends</a></code> | <code>string[]</code> | The name of one or more jobs to inherit configuration from. |
+| <code><a href="#projen.gitlab.Job.property.hooks">hooks</a></code> | <code><a href="#projen.gitlab.DefaultHooks">DefaultHooks</a></code> | *No description.* |
 | <code><a href="#projen.gitlab.Job.property.idTokens">idTokens</a></code> | <code>{[ key: string ]: <a href="#projen.gitlab.IDToken">IDToken</a>}</code> | Configurable ID tokens (JSON Web Tokens) that are used for CI/CD authentication. |
 | <code><a href="#projen.gitlab.Job.property.image">image</a></code> | <code><a href="#projen.gitlab.Image">Image</a></code> | *No description.* |
 | <code><a href="#projen.gitlab.Job.property.inherit">inherit</a></code> | <code><a href="#projen.gitlab.Inherit">Inherit</a></code> | Controls inheritance of globally-defined defaults and variables. |
@@ -3101,6 +3110,16 @@ public readonly extends: string[];
 - *Type:* string[]
 
 The name of one or more jobs to inherit configuration from.
+
+---
+
+##### `hooks`<sup>Optional</sup> <a name="hooks" id="projen.gitlab.Job.property.hooks"></a>
+
+```typescript
+public readonly hooks: DefaultHooks;
+```
+
+- *Type:* <a href="#projen.gitlab.DefaultHooks">DefaultHooks</a>
 
 ---
 
