@@ -165,4 +165,52 @@ describe("ModuleImports", () => {
       ]);
     });
   });
+
+  describe("reserved keywords", () => {
+    test("automatically aliases reserved import names", () => {
+      const result = imports.from("test-module", "class");
+      expect(result).toBe("class_");
+      expect(imports.asEsmImports()).toEqual([
+        'import { class as class_ } from "test-module";',
+      ]);
+    });
+
+    test("automatically aliases reserved alias names", () => {
+      const result = imports.from("test-module", "MyClass", "class");
+      expect(result).toBe("class_");
+      expect(imports.asEsmImports()).toEqual([
+        'import { MyClass as class_ } from "test-module";',
+      ]);
+    });
+
+    test("returns correct referenceable name for reserved import", () => {
+      const result = imports.from("test-module", "function");
+      expect(result).toBe("function_");
+    });
+
+    test("returns correct referenceable name for reserved alias", () => {
+      const result = imports.from("test-module", "MyFunction", "function");
+      expect(result).toBe("function_");
+    });
+
+    test("returns original name for non-reserved words", () => {
+      const result = imports.from("test-module", "normalName");
+      expect(result).toBe("normalName");
+    });
+
+    test("handles reserved keywords in default imports", () => {
+      const result = imports.default("test-module", "class");
+      expect(result).toBe("class_");
+      expect(imports.asEsmImports()).toEqual([
+        'import { default as class_ } from "test-module";',
+      ]);
+    });
+
+    test("works with CJS require statements", () => {
+      imports.from("test-module", "class");
+      expect(imports.asCjsRequire()).toEqual([
+        'const { class: class_ } = require("test-module");',
+      ]);
+    });
+  });
 });

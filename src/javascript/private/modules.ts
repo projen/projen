@@ -1,3 +1,7 @@
+import { RESERVED_KEYWORDS } from './reserved-words';
+import { ICodeResolvable } from '../../_private/code-resolvable';
+import { Code } from '../../_private/code';
+
 type NamedImport = [string | symbol, string?];
 
 const DEFAULT = Symbol("default");
@@ -8,15 +12,15 @@ export class ModuleImports {
   /**
    * Adds a named import from a module
    */
-  public from(moduleName: string, importName: string, as?: string) {
-    this.add(moduleName, importName, as);
+  public from(moduleName: string, importName: string, as?: string): ICodeResolvable {
+    return this.add(moduleName, importName, as);
   }
 
   /**
    * Adds a default import from a module
    */
-  public default(moduleName: string, as: string) {
-    this.add(moduleName, DEFAULT, as);
+  public default(moduleName: string, as: string): ICodeResolvable {
+    return this.add(moduleName, DEFAULT, as);
   }
 
   /**
@@ -43,11 +47,26 @@ export class ModuleImports {
   /**
    * Adds an import
    */
-  private add(moduleName: string, importName: string | symbol, as?: string) {
+  private add(moduleName: string, importName: string | symbol, as?: string): ICodeResolvable {
+    const name = renderName(importName);
+    let finalAs = as;
+    
+    // Check if alias is a reserved word
+    if (finalAs && RESERVED_KEYWORDS.includes(finalAs)) {
+      finalAs = `${finalAs}_`;
+    }
+    
+    // Check if import name is a reserved word and no alias provided
+    if (!finalAs && RESERVED_KEYWORDS.includes(name)) {
+      finalAs = `${name}_`;
+    }
+    
     const moduleImports = this.namedImports.get(moduleName) ?? new Map();
-    const importKey = `${renderName(importName)}:${as || ""}`;
-    moduleImports.set(importKey, [importName, as]);
+    const importKey = `${name}:${finalAs || ""}`;
+    moduleImports.set(importKey, [importName, finalAs]);
     this.namedImports.set(moduleName, moduleImports);
+    
+    return Code.literal(finalAs || name);
   }
 
   /**

@@ -1,6 +1,7 @@
 import { camel } from "case";
 import { IESLintConfig } from "./config";
 import { ModuleImports } from "../private/modules";
+import { ICodeResolvable } from "../../_private/code-resolvable";
 
 /**
  * The configuration for a set of files.
@@ -127,19 +128,18 @@ export class Plugin {
 
   public readonly imports: ModuleImports = new ModuleImports();
   private readonly name: string;
-  private readonly alias: string;
+  private readonly alias: ICodeResolvable;
 
   private constructor(pkg: string, name: string) {
     this.name = name;
 
     // sanitize to a valid JS name
-    this.alias = camel(name);
-    this.imports.default(pkg, this.alias);
+    this.alias = this.imports.default(pkg, camel(name));
   }
 
   public toJSON() {
     return {
-      [this.name]: () => this.alias,
+      [this.name]: this.alias,
     };
   }
 }

@@ -1,6 +1,7 @@
 import { IESLintConfig } from "./config";
 import { ConfigWithExtends } from "./config-object";
 import { ModuleImports } from "../private/modules";
+import { Code } from "../../_private/code";
 
 /**
  * A shared configuration definition.
@@ -20,8 +21,8 @@ export class SharedConfig implements IESLintConfig {
 
   public constructor(...defs: SharedConfigDefinition[]) {
     for (const def of defs) {
-      this.imports.default(def.module, def.name);
-      this.configs.push((() => `${def.name}.${def.path}`) as any);
+      const alias = this.imports.default(def.module, def.name);
+      this.configs.push(Code.literal(`${alias.render()}.${def.path}`) as any);
     }
   }
 

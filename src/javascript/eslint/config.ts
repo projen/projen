@@ -2,6 +2,7 @@ import { ConfigWithExtends } from "./config-object";
 import { Project } from "../../project";
 import { ModuleImports } from "../private/modules";
 import { IResolvable } from "../../file";
+import { Code } from "../../_private/code";
 
 /**
  * A Configuration for ESLint.
@@ -33,7 +34,7 @@ export class ESLintConfig implements IESLintConfig {
     imports.from("eslint/config", "globalIgnores");
 
     return new ESLintConfig(
-      (() => `globalIgnores(${JSON.stringify(patterns)})`) as any,
+      Code.literal(`globalIgnores(${JSON.stringify(patterns)})`) as any,
       imports
     );
   }
@@ -48,9 +49,9 @@ export class ESLintConfig implements IESLintConfig {
 
     return new ESLintConfig(
       ((project: Project) =>
-        `globalIgnores(${JSON.stringify(
+         Code.literal(`globalIgnores(${JSON.stringify(
           project.gitignore.patterns
-        )}.map(convertIgnorePatternToMinimatch), "Imported .gitignore patterns")`) as any,
+        )}.map(convertIgnorePatternToMinimatch), "Imported .gitignore patterns")`)) as any,
       imports
     );
   }
@@ -67,11 +68,11 @@ export class ESLintConfig implements IESLintConfig {
 
     return new ESLintConfig(
       ((project: Project) =>
-        `globalIgnores(${JSON.stringify(
+        Code.literal(`globalIgnores(${JSON.stringify(
           project.files
             .filter((file) => file.readonly && file.marker)
             .map((file) => file.path)
-        )}, "Ignore projen generated files")`) as any,
+        )}, "Ignore projen generated files")`)) as any,
       imports
     );
   }
