@@ -2,12 +2,12 @@ import {
   ImportReference, 
   ImportPathReference,
   CodeReference,
-  js, 
-  code, 
+  js,
   json, 
   from
 } from "../../src/javascript/private/code-template";
 import { ModuleImports } from "../../src/javascript/private/modules";
+import { synthJsCode } from "../util";
 
 describe("ImportReference", () => {
   test("creates named import reference", () => {
@@ -27,9 +27,9 @@ describe("ImportReference", () => {
 
   test("throws error when rendered twice", () => {
     const ref = from("react").Component;
-    const template = code("const comp = ", ref);
+    const template = js`const comp = ${ref}`;
     
-    generateFile(template);
+    synthJsCode(template);
     expect(() => ref.render()).toThrow("Code reference already used");
   });
 
@@ -59,7 +59,7 @@ describe("CodeTemplate (js tagged template)", () => {
     const ref = from("react").Component;
     const template = js`const comp = ${ref};`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { Component } from "react";');
     expect(result).toContain('const comp = Component;');
   });
@@ -74,7 +74,7 @@ const comp = ${Component};
 const hook = ${useState};
 const server = ${express}();`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { Component, useState } from "react";');
     expect(result).toContain('import { default as app } from "express";');
   });
@@ -84,12 +84,11 @@ describe("CodeBuilder (JSII-compatible)", () => {
   test("builds code with method chaining", () => {
     const Component = from("react").Component;
     
-    const template = code()
-      .line("function Test() {")
-      .line("  return ", Component, ";")
-      .line("}");
+    const template = js`function Test() {
+  return ${Component};
+}`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { Component } from "react";');
     expect(result).toContain('function Test() {\n  return Component;\n}');
   });
@@ -97,17 +96,17 @@ describe("CodeBuilder (JSII-compatible)", () => {
   test("builds code with function arguments", () => {
     const useState = from("react").useState;
     
-    const template = code(
-      "const [state, setState] = ", useState, "(0);"
-    );
+    const template = js`const [state, setState] = ${useState}(0);`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { useState } from "react";');
     expect(result).toContain('const [state, setState] = useState(0);');
   });
 
   test("handles empty line", () => {
-    const template = code().line().line("test");
+    const template = js`
+test
+`;
     expect(template.render()).toBe('\ntest\n');
   });
 });
@@ -123,7 +122,7 @@ describe("JsonTemplate", () => {
       }
     });
     
-    const result = generateFile(config);
+    const result = synthJsCode(config);
     expect(result).toContain('import { parser } from "@typescript-eslint/parser";');
     expect(result).toContain('"parser": parser');
     expect(result).toContain('"ecmaVersion": 2022');
@@ -139,7 +138,7 @@ describe("JsonTemplate", () => {
       }
     });
     
-    const result = generateFile(config);
+    const result = synthJsCode(config);
     expect(result).toContain('import { plugin } from "eslint-plugin-react";');
     expect(result).toContain('"plugins": [\n    plugin\n  ]');
   });
@@ -177,7 +176,7 @@ describe("stringifyWithCode", () => {
   test("handles code resolvables", () => {
     const ref = from("react").Component;
     const template = json({ comp: ref });
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('"comp": Component');
   });
 
@@ -210,12 +209,10 @@ describe("Import conflict resolution", () => {
     const reactComponent = from("react").Component;
     const vueComponent = from("vue").Component;
     
-    const template = code(
-      "const a = ", reactComponent, ";\n",
-      "const b = ", vueComponent, ";"
-    );
+    const template = js`const a = ${reactComponent};
+const b = ${vueComponent};`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { Component } from "react";');
     expect(result).toContain('import { Component as Component1 } from "vue";');
     expect(result).toContain('const a = Component;');
@@ -225,9 +222,9 @@ describe("Import conflict resolution", () => {
   test("handles reserved keywords", () => {
     const classRef = from("test-module").class;
     
-    const template = code("const c = ", classRef, ";");
+    const template = js`const c = ${classRef};`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { class as class_ } from "test-module";');
     expect(result).toContain('const c = class_;');
   });
@@ -236,12 +233,10 @@ describe("Import conflict resolution", () => {
     const comp1 = from("react").Component;
     const comp2 = from("react").Component;
     
-    const template = code(
-      "const a = ", comp1, ";\n",
-      "const b = ", comp2, ";"
-    );
+    const template = js`const a = ${comp1};
+const b = ${comp2};`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     const importLines = result.split('\n').filter((line: string) => line.startsWith('import'));
     expect(importLines).toHaveLength(1);
     expect(importLines[0]).toBe('import { Component } from "react";');
@@ -253,9 +248,9 @@ describe("Import sorting", () => {
     const z = from("z-module").func;
     const a = from("a-module").func;
     
-    const template = code("const z = ", z, "; const a = ", a, ";");
+    const template = js`const z = ${z}; const a = ${a};`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     const lines = result.split('\n');
     const aIndex = lines.findIndex((line: string) => line.includes('a-module'));
     const zIndex = lines.findIndex((line: string) => line.includes('z-module'));
@@ -266,9 +261,9 @@ describe("Import sorting", () => {
     const named = from("express").Router;
     const defaultImport = from("express").default.as("app");
     
-    const template = code("const r = ", named, "; const a = ", defaultImport, ";");
+    const template = js`const r = ${named}; const a = ${defaultImport};`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toContain('import { default as app, Router } from "express";');
   });
 });
@@ -279,7 +274,7 @@ describe("File generation", () => {
     
     const template = js`function App() { return ${Component}; }`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     const lines = result.split('\n');
     
     expect(lines[0]).toBe('import { Component } from "react";');
@@ -290,7 +285,7 @@ describe("File generation", () => {
   test("handles templates without imports", () => {
     const template = js`const x = 42;`;
     
-    const result = generateFile(template);
+    const result = synthJsCode(template);
     expect(result).toBe('\nconst x = 42;');
   });
 });
@@ -318,8 +313,8 @@ describe('ImportReference path()', () => {
     
     expect(nested).toBeInstanceOf(ImportPathReference);
     
-    const template = code('const rule = ', nested, ';');
-    const result = generateFile(template);
+    const template = js`const rule = ${nested};`;
+    const result = synthJsCode(template);
     
     expect(result).toContain('eslint-config-base.rules.indent');
   });
@@ -329,8 +324,8 @@ describe('from() helper nested access', () => {
   test('supports automatic nested property access', () => {
     const nested = from('eslint-config-base').default.rules.indent;
     
-    const template = code('const rule = ', nested, ';');
-    const result = generateFile(template);
+    const template = js`const rule = ${nested};`;
+    const result = synthJsCode(template);
     
     expect(result).toContain('eslint-config-base.rules.indent');
   });
@@ -338,8 +333,8 @@ describe('from() helper nested access', () => {
   test('supports automatic deeply nested property access', () => {
     const nested = from('eslint-config-base').rules.indent.foo.bar.baz;
     
-    const template = code('const rule = ', nested, ';');
-    const result = generateFile(template);
+    const template = js`const rule = ${nested};`;
+    const result = synthJsCode(template);
     
     expect(result).toContain('rules.indent.foo.bar.baz');
   });  
@@ -347,8 +342,8 @@ describe('from() helper nested access', () => {
   test('supports aliased automatic nested property access', () => {
     const nested = from('eslint-config-base').default.as('BaseConfig').rules.indent;
     
-    const template = code('const rule = ', nested, ';');
-    const result = generateFile(template);
+    const template = js`const rule = ${nested};`;
+    const result = synthJsCode(template);
     
     expect(result).toContain('BaseConfig.rules.indent');
   });
@@ -356,18 +351,9 @@ describe('from() helper nested access', () => {
   test('supports explicit path() method', () => {
     const nested = from('eslint-config-base').default.path('rules.indent');
     
-    const template = code('const rule = ', nested, ';');
-    const result = generateFile(template);
+    const template = js`const rule = ${nested};`;
+    const result = synthJsCode(template);
     
     expect(result).toContain('eslint-config-base.rules.indent');
   });
 });
-
-// Helper function to generate complete file with imports
-function generateFile(template: any): string {
-  const imports = new ModuleImports();
-  template.resolveImports?.(imports);
-  const body = template.render();
-  const importLines = imports.asEsmImports();
-  return importLines.length > 0 ? importLines.join('\n') + '\n\n' + body : '\n' + body;
-}

@@ -12,6 +12,7 @@ import * as logging from "../src/logging";
 import { Task } from "../src/task";
 import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
+import { ModuleImports } from "../src/javascript/private/modules";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
 
@@ -169,6 +170,15 @@ export function sanitizeOutput(dir: string) {
   }
   fs.chmodSync(depsPath, "777");
   fs.writeFileSync(depsPath, JSON.stringify(deps));
+}
+
+// Helper function to synth complete js files with imports
+export function synthJsCode(template: any): string {
+  const imports = new ModuleImports();
+  template.resolveImports?.(imports);
+  const body = template.render();
+  const importLines = imports.asEsmImports();
+  return importLines.length > 0 ? importLines.join('\n') + '\n\n' + body : '\n' + body;
 }
 
 export {

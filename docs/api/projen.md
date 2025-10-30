@@ -16870,7 +16870,7 @@ The project this resolver belongs to.
 
 ### IResolvable <a name="IResolvable" id="projen.IResolvable"></a>
 
-- *Implemented By:* projen.javascript.eslint.Extends, <a href="#projen.IResolvable">IResolvable</a>
+- *Implemented By:* projen.javascript.eslint.presets.Projen, projen.javascript.eslint.ESLintConfig, projen.javascript.eslint.Extends, <a href="#projen.IResolvable">IResolvable</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 

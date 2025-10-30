@@ -16,7 +16,6 @@ Configurations provided by ESLint JavaScript Plugin.
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.presets.ESLintJs.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.presets.ESLintJs.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.presets.ESLintJs.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -39,12 +38,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.ESLintJs.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -118,7 +111,6 @@ Configurations provided by eslint-plugin-import.
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.presets.ImportPlugin.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.presets.ImportPlugin.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.presets.ImportPlugin.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -141,12 +133,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.ImportPlugin.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -233,7 +219,6 @@ Configurations provided by eslint-plugin-import.
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.presets.ImportX.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.presets.ImportX.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.presets.ImportX.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -256,12 +241,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.ImportX.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -348,7 +327,6 @@ Configurations provided to run prettier.
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.presets.Prettier.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.presets.Prettier.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.presets.Prettier.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -371,12 +349,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.Prettier.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -427,7 +399,7 @@ The default recommended rules.
 
 ### Projen <a name="Projen" id="projen.javascript.eslint.presets.Projen"></a>
 
-- *Implements:* projen.javascript.eslint.IESLintConfig
+- *Implements:* projen.javascript.eslint.IESLintConfig, projen.IResolvable
 
 Configurations provided by projen.
 
@@ -435,7 +407,7 @@ Configurations provided by projen.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Projen.toJSON">toJSON</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.Projen.toJSON">toJSON</a></code> | Resolves and returns content. |
 
 ---
 
@@ -444,6 +416,8 @@ Configurations provided by projen.
 ```typescript
 public toJSON(): any
 ```
+
+Resolves and returns content.
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -500,7 +474,6 @@ Configurations provided by ESLint.
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.presets.Stylistic.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.presets.Stylistic.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.presets.Stylistic.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -523,12 +496,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.Stylistic.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -602,7 +569,6 @@ Configurations provided by typescript-eslint.
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.presets.Tseslint.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.presets.Tseslint.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.presets.Tseslint.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -625,12 +591,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.Tseslint.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 

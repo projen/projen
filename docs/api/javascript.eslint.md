@@ -1273,7 +1273,7 @@ public readonly path: string;
 
 ### ESLintConfig <a name="ESLintConfig" id="projen.javascript.eslint.ESLintConfig"></a>
 
-- *Implements:* projen.javascript.eslint.IESLintConfig
+- *Implements:* projen.javascript.eslint.IESLintConfig, projen.IResolvable
 
 #### Initializers <a name="Initializers" id="projen.javascript.eslint.ESLintConfig.Initializer"></a>
 
@@ -1299,7 +1299,7 @@ new javascript.eslint.ESLintConfig(config: ConfigWithExtends)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.ESLintConfig.toJSON">toJSON</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.ESLintConfig.toJSON">toJSON</a></code> | Resolves and returns content. |
 
 ---
 
@@ -1308,6 +1308,8 @@ new javascript.eslint.ESLintConfig(config: ConfigWithExtends)
 ```typescript
 public toJSON(): any
 ```
+
+Resolves and returns content.
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -1681,7 +1683,6 @@ new javascript.eslint.SharedConfig(defs: ...SharedConfigDefinition[])
 | --- | --- |
 | <code><a href="#projen.javascript.eslint.SharedConfig.render">render</a></code> | Renders the code as a string. |
 | <code><a href="#projen.javascript.eslint.SharedConfig.resolveImports">resolveImports</a></code> | *No description.* |
-| <code><a href="#projen.javascript.eslint.SharedConfig.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -1704,12 +1705,6 @@ public resolveImports(imports: IImportResolver): void
 - *Type:* projen.IImportResolver
 
 ---
-
-##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.SharedConfig.toJSON"></a>
-
-```typescript
-public toJSON(): any
-```
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
