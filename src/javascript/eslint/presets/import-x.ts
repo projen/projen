@@ -1,4 +1,4 @@
-import { IImportResolver } from "../../../code-resolvable";
+import { CodeResolvable, IImportResolver } from "../../../code-resolvable";
 import { DependencyType } from "../../../dependencies";
 import { Plugin } from "../config-object";
 import { SharedConfig } from "../shared-config";
@@ -45,8 +45,16 @@ export class ImportX extends SharedConfig {
     );
   }
 
-  public resolveImports(imports: IImportResolver): void {
-    imports.project.deps.addDependency("eslint-import-resolver-typescript", DependencyType.BUILD);
-    return super.resolveImports?.(imports);
-  }  
+  public toJSON(): any {
+    const code = this.createCode();
+    return new class extends CodeResolvable {
+      public render(): string {
+        return code.render();
+      }
+      public resolveImports(imports: IImportResolver): void {
+        imports.project.deps.addDependency("eslint-import-resolver-typescript", DependencyType.BUILD);
+        return code.resolveImports?.(imports);
+      }
+    }();
+  }   
 }
