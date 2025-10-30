@@ -46,8 +46,9 @@ export class ModuleImports {
 
   /**
    * Adds an import
+   * @internal only used by CodeTemplates directly
    */
-  private add(moduleName: string, importName: string | symbol, as?: string): ICodeResolvable {
+  public add(moduleName: string, importName: string | symbol, as?: string): ICodeResolvable {
     const name = renderName(importName);
     const moduleImports = this.namedImports.get(moduleName) ?? new Map();
     

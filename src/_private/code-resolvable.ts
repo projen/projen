@@ -9,6 +9,12 @@ export interface ICodeResolvable {
    * @returns The rendered code
    */
   render(): string;
+  
+  /**
+   * Collects imports needed by this code resolvable.
+   * @param imports - The ModuleImports instance to collect imports into
+   */
+  collectImports?(imports: any): void;
 }
 
 /**
