@@ -39,7 +39,7 @@ export * from "./version";
 export * from "./yaml";
 export * from "./xmlfile";
 // @todo move file
-export * from "./_private/code-resolvable";
+export * from "./code-resolvable";
 
 // export submodules
 export * as web from "./web";

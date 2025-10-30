@@ -1,5 +1,4 @@
-import { CodeResolvable, ICodeResolvable } from '../../_private/code-resolvable';
-import { ModuleImports } from './modules';
+import { CodeResolvable, ICodeResolvable, IImportResolver } from '../../code-resolvable';
 
 /**
  * Custom error that suppresses the normal stack trace
@@ -121,16 +120,16 @@ export class CodeReference extends CodeResolvable {
  * A reference to an import that will be resolved when the code is generated.
  */
 export class ImportReference extends CodeReference {
-  private _importsCollected = false;
+  private _importsResolved = false;
 
   /**
-   * Gets the resolved reference name. Throws if collectImports hasn't been called yet.
-   * @throws ImportReferenceError if collectImports hasn't been called
+   * Gets the resolved reference name. Throws if resolveImports hasn't been called yet.
+   * @throws ImportReferenceError if resolveImports hasn't been called
    */
   protected get refName(): string {
-    if (!this._importsCollected) {
+    if (!this._importsResolved) {
       throw new ImportReferenceError(
-        'ImportReference must have collectImports() called before use. ' +
+        'ImportReference must have resolveImports() called before use. ' +
         'This usually happens automatically during code generation.'
       );
     }
@@ -225,25 +224,25 @@ export class ImportReference extends CodeReference {
   }
 
   /**
-   * Collects the import statement for this reference.
-   * @param imports - The ModuleImports instance to add this import to
+   * Resolves the import statement for this reference.
+   * @param imports - The IImportResolver instance to add this import to
    */
-  public collectImports(imports: ModuleImports): void {
-    if (this._importsCollected) {
-      return; // Already collected
+  public resolveImports(imports: IImportResolver): void {
+    if (this._importsResolved) {
+      return; // Already resolved
     }
 
     if (this.importName === ImportReference.DEFAULT) {
       // For default imports, we need an alias. If none provided, use module name
-      const alias = this.alias || this.moduleName.split('/').pop() || 'default';
-      const ref = imports.default(this.moduleName, alias);
+      const alias = this.alias || this.moduleName.split('/').pop() || this.importName;
+      const ref = imports.from(this.moduleName, this.importName, alias);
       this.refName = ref.render();
     } else {
       const ref = imports.from(this.moduleName, this.importName, this.alias);
       this.refName = ref.render();
     }
     
-    this._importsCollected = true;
+    this._importsResolved = true;
   }
 }
 
@@ -265,11 +264,11 @@ export class ImportPathReference extends CodeReference {
   }
 
   /**
-   * Collects imports by delegating to the parent import, then resolving the full path.
-   * @param imports - The ModuleImports instance to collect imports into
+   * Resolves imports by delegating to the parent import, then resolving the full path.
+   * @param imports - The IImportResolver instance to resolve imports into
    */
-  public collectImports(imports: ModuleImports): void {
-    this.parentImport.collectImports(imports);
+  public resolveImports(imports: IImportResolver): void {
+    this.parentImport.resolveImports(imports);
     this.refName = `${this.parentImport.getResolvedName()}.${this.propertyPath}`;
   }
 
@@ -316,13 +315,13 @@ export class CodeTemplate extends CodeResolvable {
   }
 
   /**
-   * Collects imports from all embedded code references.
-   * @param imports - The ModuleImports instance to collect imports into
+   * Resolves imports from all embedded code references.
+   * @param imports - The IImportResolver instance to resolve imports into
    */
-  public collectImports(imports: ModuleImports): void {
+  public resolveImports(imports: IImportResolver): void {
     for (const value of this.values) {
       if (CodeResolvable.isCodeResolvable(value)) {
-        value.collectImports?.(imports);
+        value.resolveImports?.(imports);
       }
     }
   }
@@ -366,20 +365,20 @@ class JsonTemplate extends CodeResolvable {
   }
 
   /**
-   * Collects imports from all embedded code references in the data structure.
-   * @param imports - The ModuleImports instance to collect imports into
+   * Resolves imports from all embedded code references in the data structure.
+   * @param imports - The IImportResolver instance to resolve imports into
    */
-  public collectImports(imports: ModuleImports): void {
-    this.collectImportsFromValue(this.data, imports);
+  public resolveImports(imports: IImportResolver): void {
+    this.resolveImportsFromValue(this.data, imports);
   }
 
-  private collectImportsFromValue(value: any, imports: ModuleImports): void {
-    if (CodeResolvable.isCodeResolvable(value) && value?.collectImports) {
-      value.collectImports(imports);
+  private resolveImportsFromValue(value: any, imports: IImportResolver): void {
+    if (CodeResolvable.isCodeResolvable(value) && value?.resolveImports) {
+      value.resolveImports(imports);
     } else if (Array.isArray(value)) {
-      value.forEach(item => this.collectImportsFromValue(item, imports));
+      value.forEach(item => this.resolveImportsFromValue(item, imports));
     } else if (value && typeof value === 'object') {
-      Object.values(value).forEach(val => this.collectImportsFromValue(val, imports));
+      Object.values(value).forEach(val => this.resolveImportsFromValue(val, imports));
     }
   }
 
@@ -442,85 +441,4 @@ function stringifyWithCode(value: any, indentation = 2): string {
     return JSON.stringify(val);
   };
   return serialize(value);
-}
-
-/**
- * JSII-compatible code builder that doesn't rely on template literals.
- * Supports method chaining and function argument syntax.
- */
-export class CodeBuilder extends CodeResolvable {
-  private parts: (string | ICodeResolvable)[] = [];
-
-  /**
-   * Creates a new empty code builder.
-   */
-  constructor() {
-    super();
-  }
-
-  /**
-   * Creates a new CodeBuilder with the given parts.
-   * @param parts - Initial code parts (strings or code references)
-   * @returns A new CodeBuilder instance
-   */
-  static of(...parts: (string | ICodeResolvable)[]): CodeBuilder {
-    return new CodeBuilder().add(...parts);
-  }
-
-  /**
-   * Adds code parts to this builder.
-   * @param parts - Code parts to add (strings or code references)
-   * @returns This builder for method chaining
-   */
-  public add(...parts: (string | ICodeResolvable)[]): this {
-    this.parts.push(...parts);
-    return this;
-  }
-
-  /**
-   * Adds code parts followed by a newline.
-   * @param parts - Code parts to add (strings or code references)
-   * @returns This builder for method chaining
-   */
-  public line(...parts: (string | ICodeResolvable)[]): this {
-    return this.add(...parts, '\n');
-  }
-
-  /**
-   * Collects imports from all embedded code references.
-   * @param imports - The ModuleImports instance to collect imports into
-   */
-  public collectImports(imports: ModuleImports): void {
-    this.parts.forEach(part => {
-      if (typeof part === 'object' && part.collectImports) {
-        part.collectImports(imports);
-      }
-    });
-  }
-
-  /**
-   * Renders all code parts into a single string.
-   * @returns The rendered code string
-   */
-  public render(): string {
-    return this.parts.map(part => 
-      typeof part === 'string' ? part : part.render()
-    ).join('');
-  }
-}
-
-/**
- * JSII-compatible function for creating code with embedded import references.
- * 
- * @param parts - Code parts to combine (strings or code references)
- * @returns A new CodeBuilder instance
- * 
- * @example
- * ```typescript
- * const Component = from("react").Component;
- * const template = code("const comp = ", Component, ";");
- * ```
- */
-export function code(...parts: (string | ICodeResolvable)[]): CodeBuilder {
-  return CodeBuilder.of(...parts);
 }

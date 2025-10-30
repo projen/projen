@@ -3,9 +3,8 @@ import { FileBase, IResolver } from "../../file";
 import { ModuleType } from "../module-type";
 import { DataResolver } from "../../_private/data-resolver";
 import { ConfigWithExtends } from "./config-object";
-import { Code } from "../../_private/code";
 import { js, from, json, CodeTemplate } from "../private/code-template"; 
-import { CodeResolvable } from "../../_private/code-resolvable";
+import { CodeResolvable } from "../../code-resolvable";
 import { ModuleImports } from "../private/modules";
 import { DependencyType } from "../../dependencies";
 
@@ -67,7 +66,7 @@ export class ESLintConfigFile extends FileBase {
 
     // Phase 2: Collect imports
     const imports = new ModuleImports();
-    code.collectImports?.(imports);
+    code.resolveImports?.(imports);
 
     // Phase 3: Add dependencies
     imports.dependencies.forEach((m) => this.project.deps.addDependency(m, DependencyType.BUILD));
@@ -91,7 +90,7 @@ export class ESLintConfigFile extends FileBase {
 
   private resolveConfigs(): ConfigWithExtends[] {
     const dataResolver = new DataResolver();
-    dataResolver.allowPassThrough(Code.isCodeResolvable);
+    dataResolver.allowPassThrough(CodeResolvable.isCodeResolvable);
 
     const resolvedConfigs = this.configs.flatMap(c => dataResolver.resolve(c, { args: [this.project] }));
     return resolvedConfigs;

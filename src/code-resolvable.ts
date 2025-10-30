@@ -1,6 +1,11 @@
-import { ModuleImports } from "../javascript/private";
+const CODE_RESOLVABLE_SYMBOL = Symbol.for('projen.CodeResolvable');
 
-export const CODE_RESOLVABLE_SYMBOL = Symbol.for('projen.CodeResolvable');
+export interface IImportResolver {
+  /**
+   * Adds a named import from a module
+   */  
+  from(moduleName: string, importName: string, as?: string): ICodeResolvable;
+}
 
 /**
  * Interface for code that should be rendered as-is without quotes.
@@ -13,10 +18,10 @@ export interface ICodeResolvable {
   render(): string;
   
   /**
-   * Collects imports needed by this code resolvable.
-   * @param imports - The ModuleImports instance to collect imports into
+   * Resolves imports needed by this code resolvable.
+   * @param resolver - The IImportsResolver instance to resolve imports into
    */
-  collectImports?(imports: ModuleImports): void;
+  resolveImports?(resolver: IImportResolver): void;
 }
 
 /**
@@ -45,31 +50,4 @@ export abstract class CodeResolvable implements ICodeResolvable {
    * @returns The rendered code
    */
   public abstract render(): string;
-}
-
-/**
- * A literal code reference that renders exactly as provided.
- */
-export class CodeLiteral extends CodeResolvable {
-  /**
-   * The code string to render.
-   */
-  public readonly code: string;
-
-  /**
-   * Creates a new CodeLiteral instance.
-   * @param code - The code string to render
-   */
-  constructor(code: string) {
-    super();
-    this.code = code;
-  }
-
-  /**
-   * Renders the code exactly as provided.
-   * @returns The code string
-   */
-  public render(): string {
-    return this.code;
-  }
 }

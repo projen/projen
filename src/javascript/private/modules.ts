@@ -1,13 +1,13 @@
-import { ICodeResolvable } from '../../_private/code-resolvable';
+import { ICodeResolvable, IImportResolver } from '../../code-resolvable';
 import { Code } from '../../_private/code';
 import { RESERVED_KEYWORDS } from './reserved-words';
 import { ModuleType } from '../module-type';
 
 type NamedImport = [string | symbol, string?];
 
-const DEFAULT = Symbol("default");
+const DEFAULT = "default";
 
-export class ModuleImports {
+export class ModuleImports implements IImportResolver {
   private namedImports = new Map<string, Map<string, NamedImport>>();
 
   /**

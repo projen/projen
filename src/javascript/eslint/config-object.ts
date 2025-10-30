@@ -1,6 +1,6 @@
 import { camel } from "case";
 import { from, ImportReference } from "../private/code-template";
-import { CodeResolvable } from "../../_private/code-resolvable";
+import { CodeResolvable } from "../../code-resolvable";
 import { IResolvable } from "../../file";
 
 /**
@@ -177,7 +177,7 @@ export class Plugin extends CodeResolvable {
   public render(): string {
     return this.ref.render();
   }
-  public collectImports?(imports: any): void {
-    return this.ref.collectImports(imports);
+  public resolveImports?(imports: any): void {
+    return this.ref.resolveImports(imports);
   }
 }
