@@ -1,5 +1,5 @@
 import { IConstruct } from "constructs";
-import { ESLintConfig, IESLintConfig } from "./config";
+import { ESLintConfig } from "./config";
 import { ESLintJs, Stylistic, Tseslint } from "./presets";
 import { Component } from "../../component";
 import { DependencyType } from "../../dependencies";
@@ -10,6 +10,7 @@ import { ModuleType } from "../module-type";
 import { ESLintConfigFile } from "./config-file";
 import { TypescriptConfig } from "../typescript-config";
 import { ImportX } from "./presets/import-x";
+import { ConfigWithExtends } from "./config-object";
 
 export interface ESLintFileOptions {
   /**
@@ -94,7 +95,7 @@ export interface ESLintOptions {
    *
    * @default - no additional configs
    */
-  readonly configs?: IESLintConfig[];
+  readonly configs?: ConfigWithExtends[];
 
   /**
    * Options to for the config file.
@@ -127,7 +128,7 @@ export class ESLint extends Component {
   /**
    * The ESLint configurations as an ordered list.
    */
-  public readonly configs: IESLintConfig[] = [];
+  public readonly configs: ConfigWithExtends[] = [];
 
   constructor(scope: IConstruct, options: ESLintOptions = {}) {
     super(scope);
@@ -157,7 +158,7 @@ export class ESLint extends Component {
 
     // @todo jest
 
-    const defaultConfigs = [];
+    const defaultConfigs: ConfigWithExtends[] = [];
 
     if (files.length) {
       defaultConfigs.push(ESLintConfig.files(files));
@@ -220,9 +221,8 @@ export class ESLint extends Component {
   /**
    * Add configs to eslint.
    */
-  public addConfigs(...configs: IESLintConfig[]) {
+  public addConfigs(...configs: ConfigWithExtends[]) {
     this.configs.push(...configs);
-    this.addDepsForConfigs(configs);
   }
 
   /**
@@ -230,18 +230,6 @@ export class ESLint extends Component {
    */
   private addDevDep(dep: string) {
     this.project.deps.addDependency(dep, DependencyType.BUILD);
-  }
-
-  /**
-   * Adds dependencies needed for configs
-   */
-  private addDepsForConfigs(configs: IESLintConfig[]) {
-    const modules = new Set(
-      configs.flatMap((c) => c.imports?.dependencies ?? [])
-    );
-    for (const dep of modules) {
-      this.addDevDep(dep);
-    }
   }
 
   /**

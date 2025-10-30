@@ -1,3 +1,5 @@
+import { ModuleImports } from "../javascript/private";
+
 export const CODE_RESOLVABLE_SYMBOL = Symbol.for('projen.CodeResolvable');
 
 /**
@@ -14,7 +16,7 @@ export interface ICodeResolvable {
    * Collects imports needed by this code resolvable.
    * @param imports - The ModuleImports instance to collect imports into
    */
-  collectImports?(imports: any): void;
+  collectImports?(imports: ModuleImports): void;
 }
 
 /**

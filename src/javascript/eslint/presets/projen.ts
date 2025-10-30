@@ -1,14 +1,16 @@
 import { EslintOptions } from "../../eslint";
-import { ModuleImports } from "../../private/modules";
-import { ESLintConfig, IESLintConfig } from "../config";
-import { Extends, Plugin } from "../config-object";
+import { ESLintConfig } from "../config";
+import { ConfigWithExtends, Extends, Plugin } from "../config-object";
 import { Tseslint } from "./tseslint";
 import { from, js } from "../../private/code-template";
+import { IResolvable } from "../../../file";
 
 /**
  * Configurations provided by projen
  */
-export class Projen implements IESLintConfig {
+export class Projen implements ConfigWithExtends, IResolvable {
+  public name: string = "Projen ESLint Config";
+
   /**
    * The default recommended rules
    */
@@ -17,27 +19,23 @@ export class Projen implements IESLintConfig {
   /**
    * Configure the default rules
    */
-  public static configure(options: EslintOptions) {
+  public static configure(options: EslintOptions): ConfigWithExtends {
     return new Projen(options);
   }
 
-  public readonly imports: ModuleImports;
-  private readonly configs: IESLintConfig[];
+  private readonly configs: (ConfigWithExtends | IResolvable)[];
 
   private constructor(options: EslintOptions = {}) {
-    this.imports = new ModuleImports();
-    this.imports.needs("@typescript-eslint/eslint-plugin");
-    this.imports.needs("eslint-plugin-import");
-
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
     this.configs = [
       ESLintConfig.files(["src/**"]),
       ESLintConfig.ignores(options.ignorePatterns ?? ["lib/"]),
       Tseslint.BASE,
-      new ESLintConfig({
+      {
         plugins: {
-          import: Plugin.fromName("import")
+          import: Plugin.fromName("import"),
+          "@typescript-eslint": Plugin.fromName("@typescript-eslint"),
         },
         languageOptions: {
           parserOptions: {
@@ -112,14 +110,16 @@ export class Projen implements IESLintConfig {
             },
           ],
         },
-      }),
+      },
     ];
-
-    // add imports from sub configs
-    this.configs.map((config) => config.imports && this.imports.merge(config.imports));
   }
 
-  public toJSON() {
-    return this.configs.flatMap((config) => config.toJSON());
+  public toJSON(): any {
+    return this.configs.flatMap((config) => {
+      if ("toJSON" in config) {
+        return config.toJSON();
+      }
+      return config;
+    });
   }
 }

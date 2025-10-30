@@ -1,5 +1,4 @@
 import { camel } from "case";
-import { IESLintConfig } from "./config";
 import { from, ImportReference } from "../private/code-template";
 import { CodeResolvable } from "../../_private/code-resolvable";
 import { IResolvable } from "../../file";
@@ -114,7 +113,7 @@ export class Extends implements IResolvable {
   /**
    * Extend another config.
    */
-  public static fromConfig(config: IESLintConfig): Extends {
+  public static fromConfig(config: ConfigWithExtends): Extends {
     return new Extends(config);
   }
 

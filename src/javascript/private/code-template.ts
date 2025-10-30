@@ -124,7 +124,7 @@ export class CodeTemplate extends CodeResolvable {
     super();
   }
 
-  collectImports(imports: ModuleImports): void {
+  public collectImports(imports: ModuleImports): void {
     for (const value of this.values) {
       if (CodeResolvable.isCodeResolvable(value)) {
         value.collectImports?.(imports);
@@ -132,7 +132,7 @@ export class CodeTemplate extends CodeResolvable {
     }
   }
 
-  render(): string {
+  public render(): string {
     return this.strings.reduce((result, str, i) => {
       const val =  CodeResolvable.isCodeResolvable(this.values[i]) ? this.values[i].render() : this.values[i];
       return  result + str + (val || '')
@@ -192,17 +192,17 @@ export function defaultFrom(moduleName: string, alias?: string): ImportReference
   return ImportReference.createDefault(moduleName, alias);
 }
 
-export class JsonTemplate extends CodeResolvable {
+class JsonTemplate extends CodeResolvable {
   constructor(private data: any) {
     super();
   }
 
-  collectImports(imports: ModuleImports): void {
+  public collectImports(imports: ModuleImports): void {
     this.collectImportsFromValue(this.data, imports);
   }
 
   private collectImportsFromValue(value: any, imports: ModuleImports): void {
-    if (value?.collectImports) {
+    if (CodeResolvable.isCodeResolvable(value) && value?.collectImports) {
       value.collectImports(imports);
     } else if (Array.isArray(value)) {
       value.forEach(item => this.collectImportsFromValue(item, imports));
@@ -211,7 +211,7 @@ export class JsonTemplate extends CodeResolvable {
     }
   }
 
-  render(): string {
+  public render(): string {
     return stringifyWithCode(this.data, 2);
   }
 }
@@ -237,7 +237,7 @@ export function json(data: any): JsonTemplate {
  * @param value - The value to stringify
  * @param indentation - Number of spaces for indentation
  */
-export function stringifyWithCode(value: any, indentation = 2): string {
+function stringifyWithCode(value: any, indentation = 2): string {
   const serialize = (val: any, depth = 0): string => {
     if (val?.render && typeof val.render === 'function') {
       const code = val.render();
@@ -286,16 +286,16 @@ export class CodeBuilder extends CodeResolvable {
     return new CodeBuilder().add(...parts);
   }
 
-  add(...parts: (string | ICodeResolvable)[]): this {
+  public add(...parts: (string | ICodeResolvable)[]): this {
     this.parts.push(...parts);
     return this;
   }
 
-  line(...parts: (string | ICodeResolvable)[]): this {
+  public line(...parts: (string | ICodeResolvable)[]): this {
     return this.add(...parts, '\n');
   }
 
-  collectImports(imports: ModuleImports): void {
+  public collectImports(imports: ModuleImports): void {
     this.parts.forEach(part => {
       if (typeof part === 'object' && part.collectImports) {
         part.collectImports(imports);
@@ -303,7 +303,7 @@ export class CodeBuilder extends CodeResolvable {
     });
   }
 
-  render(): string {
+  public render(): string {
     return this.parts.map(part => 
       typeof part === 'string' ? part : part.render()
     ).join('');
@@ -321,19 +321,4 @@ export class CodeBuilder extends CodeResolvable {
  */
 export function code(...parts: (string | ICodeResolvable)[]): CodeBuilder {
   return CodeBuilder.of(...parts);
-}
-
-export class CodeGenerator {
-  generateFile(template: ICodeResolvable): string {
-    const imports = new ModuleImports();
-    
-    // Phase 1: Collect all imports
-    template.collectImports?.(imports);
-    
-    // Phase 2: Generate output
-    const importStatements = imports.asEsmImports();
-    const body = template.render();
-    
-    return [...importStatements, '', body].join('\n');
-  }
 }

@@ -1,6 +1,7 @@
 import { ICodeResolvable } from '../../_private/code-resolvable';
 import { Code } from '../../_private/code';
 import { RESERVED_KEYWORDS } from './reserved-words';
+import { ModuleType } from '../module-type';
 
 type NamedImport = [string | symbol, string?];
 
@@ -133,6 +134,16 @@ export class ModuleImports {
     });
 
     return Array.from(new Set(deps));
+  }
+
+  /**
+   * Return all imports as a code literal for the given module type
+   */
+  public asCode(moduleType: ModuleType): ICodeResolvable {
+    if (moduleType === ModuleType.COMMON_JS) {
+      return Code.literal(this.asCjsRequire().join('\n'));
+    }
+    return Code.literal(this.asEsmImports().join('\n'));
   }
 
   /**
