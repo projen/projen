@@ -16,6 +16,8 @@ The following submodules are available:
 - [java](./java.md)
 - [javascript](./javascript.md)
 - [javascript.biome_config](./javascript.biome_config.md)
+- [javascript.eslint](./javascript.eslint.md)
+- [javascript.eslint.presets](./javascript.eslint.presets.md)
 - [python](./python.md)
 - [release](./release.md)
 - [typescript](./typescript.md)
@@ -14718,6 +14720,69 @@ Maximum line width (set to 0 to disable folding).
 
 ## Classes <a name="Classes" id="Classes"></a>
 
+### CodeResolvable <a name="CodeResolvable" id="projen.CodeResolvable"></a>
+
+- *Implements:* <a href="#projen.ICodeResolvable">ICodeResolvable</a>
+
+Abstract base class for code that should be rendered as-is without quotes.
+
+#### Initializers <a name="Initializers" id="projen.CodeResolvable.Initializer"></a>
+
+```typescript
+import { CodeResolvable } from 'projen'
+
+new CodeResolvable()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.CodeResolvable.render">render</a></code> | Renders the code as a string. |
+
+---
+
+##### `render` <a name="render" id="projen.CodeResolvable.render"></a>
+
+```typescript
+public render(): string
+```
+
+Renders the code as a string.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.CodeResolvable.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
+
+---
+
+##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.CodeResolvable.isCodeResolvable"></a>
+
+```typescript
+import { CodeResolvable } from 'projen'
+
+CodeResolvable.isCodeResolvable(obj: any)
+```
+
+Checks if an object is a CodeResolvable instance.
+
+###### `obj`<sup>Required</sup> <a name="obj" id="projen.CodeResolvable.isCodeResolvable.parameter.obj"></a>
+
+- *Type:* any
+
+The object to check.
+
+---
+
+
+
 ### DevEnvironmentDockerImage <a name="DevEnvironmentDockerImage" id="projen.DevEnvironmentDockerImage"></a>
 
 Options for specifying the Docker image of the container.
@@ -16429,6 +16494,46 @@ the project to produce a snapshot for.
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
 
+### ICodeResolvable <a name="ICodeResolvable" id="projen.ICodeResolvable"></a>
+
+- *Implemented By:* projen.javascript.eslint.Plugin, <a href="#projen.CodeResolvable">CodeResolvable</a>, <a href="#projen.ICodeResolvable">ICodeResolvable</a>
+
+Interface for code that should be rendered as-is without quotes.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ICodeResolvable.render">render</a></code> | Renders the code as a string. |
+| <code><a href="#projen.ICodeResolvable.resolveImports">resolveImports</a></code> | Resolves imports needed by this code resolvable. |
+
+---
+
+##### `render` <a name="render" id="projen.ICodeResolvable.render"></a>
+
+```typescript
+public render(): string
+```
+
+Renders the code as a string.
+
+##### `resolveImports` <a name="resolveImports" id="projen.ICodeResolvable.resolveImports"></a>
+
+```typescript
+public resolveImports(resolver: IImportResolver): void
+```
+
+Resolves imports needed by this code resolvable.
+
+###### `resolver`<sup>Required</sup> <a name="resolver" id="projen.ICodeResolvable.resolveImports.parameter.resolver"></a>
+
+- *Type:* <a href="#projen.IImportResolver">IImportResolver</a>
+
+The IImportsResolver instance to resolve imports into.
+
+---
+
+
 ### ICompareString <a name="ICompareString" id="projen.ICompareString"></a>
 
 - *Implemented By:* <a href="#projen.ICompareString">ICompareString</a>
@@ -16705,9 +16810,48 @@ Add volume configuration to the repository.
 ---
 
 
+### IImportResolver <a name="IImportResolver" id="projen.IImportResolver"></a>
+
+- *Implemented By:* <a href="#projen.IImportResolver">IImportResolver</a>
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.IImportResolver.from">from</a></code> | Adds a named import from a module. |
+
+---
+
+##### `from` <a name="from" id="projen.IImportResolver.from"></a>
+
+```typescript
+public from(moduleName: string, importName: string, as?: string): ICodeResolvable
+```
+
+Adds a named import from a module.
+
+###### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.IImportResolver.from.parameter.moduleName"></a>
+
+- *Type:* string
+
+---
+
+###### `importName`<sup>Required</sup> <a name="importName" id="projen.IImportResolver.from.parameter.importName"></a>
+
+- *Type:* string
+
+---
+
+###### `as`<sup>Optional</sup> <a name="as" id="projen.IImportResolver.from.parameter.as"></a>
+
+- *Type:* string
+
+---
+
+
 ### IResolvable <a name="IResolvable" id="projen.IResolvable"></a>
 
-- *Implemented By:* <a href="#projen.IResolvable">IResolvable</a>
+- *Implemented By:* projen.javascript.eslint.presets.ESLintJs, projen.javascript.eslint.presets.ImportPlugin, projen.javascript.eslint.presets.ImportX, projen.javascript.eslint.presets.Prettier, projen.javascript.eslint.presets.Projen, projen.javascript.eslint.presets.Stylistic, projen.javascript.eslint.presets.Tseslint, projen.javascript.eslint.ESLintConfig, projen.javascript.eslint.Extends, projen.javascript.eslint.SharedConfig, projen.javascript.eslint.IESLintConfig, <a href="#projen.IResolvable">IResolvable</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 
