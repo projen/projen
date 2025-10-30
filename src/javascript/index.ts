@@ -12,4 +12,4 @@ export * from "./upgrade-dependencies";
 export * from "./yarnrc";
 export * from "./biome/biome";
 export * as biome_config from "./biome/biome-config";
-export * as eslint_presets from "./eslint/presets";
+export * as eslint from "./eslint/index";

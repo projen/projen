@@ -11,6 +11,44 @@ import { ESLintConfigFile } from "./config-file";
 import { TypescriptConfig } from "../typescript-config";
 import { ImportX } from "./presets/import-x";
 
+export interface ESLintFileOptions {
+  /**
+   * The module type of configuration file.
+   * - When specified `module`, generate `eslint.config.mjs` file.
+   * - When specified `commonjs`, generate `eslint.config.cjs` file.
+   *
+   * @default ModuleType.ESM
+   */
+  readonly moduleType?: ModuleType;
+
+  /**
+   * The filename of configuration file.
+   * @default - "eslint.config.mjs" for ESM, "eslint.config.cjs" for CommonJS
+   */
+  readonly fileName?: string;
+}
+
+export interface ESLintCommandOptions {
+  /**
+   * Whether to fix eslint issues when running the eslint task
+   * @default true
+   */
+  readonly fix?: boolean;
+
+  /**
+   * Whether to enable caching
+   * @default true
+   */
+  readonly cache?: boolean;
+
+  /**
+   * Extra arguments to pass to eslint command
+   *
+   * @see https://eslint.org/docs/latest/use/command-line-interface
+   */
+  readonly extraArgs?: string[];
+}
+
 export interface ESLintOptions {
   /**
    * List of files or glob patterns matching files to globally include.
@@ -61,46 +99,12 @@ export interface ESLintOptions {
   /**
    * Options to for the config file.
    */
-  readonly fileOptions?: {
-    /**
-     * The module type of configuration file.
-     * - When specified `module`, generate `eslint.config.mjs` file.
-     * - When specified `commonjs`, generate `eslint.config.cjs` file.
-     *
-     * @default ModuleType.ESM
-     */
-    readonly moduleType?: ModuleType;
-
-    /**
-     * The filename of configuration file.
-     * @default - "eslint.config.mjs" for ESM, "eslint.config.cjs" for CommonJS
-     */
-    readonly fileName?: string;
-  };
+  readonly fileOptions?: ESLintFileOptions;
 
   /**
    * Options for the ESLint command.
    */
-  readonly commandOptions?: {
-    /**
-     * Whether to fix eslint issues when running the eslint task
-     * @default true
-     */
-    readonly fix?: boolean;
-
-    /**
-     * Whether to enable caching
-     * @default true
-     */
-    readonly cache?: boolean;
-
-    /**
-     * Extra arguments to pass to eslint command
-     *
-     * @see https://eslint.org/docs/latest/use/command-line-interface
-     */
-    readonly extraArgs?: string[];
-  };
+  readonly commandOptions?: ESLintCommandOptions;
 }
 
 export class ESLint extends Component {
