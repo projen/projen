@@ -1,6 +1,6 @@
-import { ConfigWithExtends } from "./config-object";
-import { from, js } from "../private/code-template";
+import { from, js, json } from "../private/code-template";
 import { IESLintConfig } from "./config";
+import { CodeResolvable, ICodeResolvable, IImportResolver } from "../../code-resolvable";
 
 /**
  * A shared configuration definition.
@@ -14,27 +14,30 @@ export interface SharedConfigDefinition {
 /**
  * An ESLint configuration preset shared via a module.
  */
-export class SharedConfig implements IESLintConfig {
-  public readonly name: string; 
-  private readonly config: ConfigWithExtends;
+export class SharedConfig extends CodeResolvable implements IESLintConfig {
 
-  public constructor(...defs: SharedConfigDefinition[]) {
-    this.name = defs.map(def => `${def.module}/${def.name}`).join(', ');
-    
+  private readonly config: ICodeResolvable;
+
+  public constructor(...defs: SharedConfigDefinition[]) {  
+    super(); 
     if (defs.length === 1) {
       const alias = from(defs[0].module).default.as(defs[0].name);
       this.config = js`${alias}.${defs[0].path}` as any;
     } else {
-      this.config = {
+      this.config = json({
         extends: defs.map(def => {
           const alias = from(def.module).default.as(def.name);
           return js`${alias}.${def.path}` as any;
         })
-      }
+      })
     }
   }
 
-  public toJSON(): any {
-    return this.config;
-  }  
+  public render(): string {
+    return this.config.render();
+  }
+
+  public resolveImports(imports: IImportResolver): void {
+    return this.config.resolveImports?.(imports);
+  }
 }

@@ -16496,7 +16496,7 @@ the project to produce a snapshot for.
 
 ### ICodeResolvable <a name="ICodeResolvable" id="projen.ICodeResolvable"></a>
 
-- *Implemented By:* projen.javascript.eslint.Plugin, <a href="#projen.CodeResolvable">CodeResolvable</a>, <a href="#projen.ICodeResolvable">ICodeResolvable</a>
+- *Implemented By:* projen.javascript.eslint.presets.ESLintJs, projen.javascript.eslint.presets.ImportPlugin, projen.javascript.eslint.presets.ImportX, projen.javascript.eslint.presets.Prettier, projen.javascript.eslint.presets.Stylistic, projen.javascript.eslint.presets.Tseslint, projen.javascript.eslint.Plugin, projen.javascript.eslint.SharedConfig, <a href="#projen.CodeResolvable">CodeResolvable</a>, <a href="#projen.ICodeResolvable">ICodeResolvable</a>
 
 Interface for code that should be rendered as-is without quotes.
 
@@ -16825,7 +16825,7 @@ Add volume configuration to the repository.
 ##### `from` <a name="from" id="projen.IImportResolver.from"></a>
 
 ```typescript
-public from(moduleName: string, importName: string, as?: string): ICodeResolvable
+public from(moduleName: string, importName?: string, as?: string): ICodeResolvable
 ```
 
 Adds a named import from a module.
@@ -16836,7 +16836,7 @@ Adds a named import from a module.
 
 ---
 
-###### `importName`<sup>Required</sup> <a name="importName" id="projen.IImportResolver.from.parameter.importName"></a>
+###### `importName`<sup>Optional</sup> <a name="importName" id="projen.IImportResolver.from.parameter.importName"></a>
 
 - *Type:* string
 
@@ -16848,10 +16848,29 @@ Adds a named import from a module.
 
 ---
 
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.IImportResolver.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | The project this resolver belongs to. |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.IImportResolver.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+The project this resolver belongs to.
+
+---
 
 ### IResolvable <a name="IResolvable" id="projen.IResolvable"></a>
 
-- *Implemented By:* projen.javascript.eslint.presets.ESLintJs, projen.javascript.eslint.presets.ImportPlugin, projen.javascript.eslint.presets.ImportX, projen.javascript.eslint.presets.Prettier, projen.javascript.eslint.presets.Projen, projen.javascript.eslint.presets.Stylistic, projen.javascript.eslint.presets.Tseslint, projen.javascript.eslint.ESLintConfig, projen.javascript.eslint.Extends, projen.javascript.eslint.SharedConfig, projen.javascript.eslint.IESLintConfig, <a href="#projen.IResolvable">IResolvable</a>
+- *Implemented By:* projen.javascript.eslint.Extends, <a href="#projen.IResolvable">IResolvable</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 

@@ -5,13 +5,12 @@ import { Tseslint } from "./tseslint";
 import { from, js } from "../../private/code-template";
 import { IResolvable } from "../../../file";
 import { isResolvable } from "../../../_private/data-resolver";
+import { ImportPlugin } from "./import-plugin";
 
 /**
  * Configurations provided by projen
  */
-export class Projen implements IESLintConfig {
-  public name: string = "Projen ESLint Config";
-
+export class Projen implements IESLintConfig, IResolvable {
   /**
    * The default recommended rules
    */
@@ -35,7 +34,7 @@ export class Projen implements IESLintConfig {
       Tseslint.BASE,
       {
         plugins: {
-          import: Plugin.fromName("import"),
+          import: ImportPlugin.PLUGIN,
           "@typescript-eslint": Plugin.fromName("@typescript-eslint"),
         },
         languageOptions: {

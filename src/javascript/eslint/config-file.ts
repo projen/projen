@@ -5,7 +5,7 @@ import { DataResolver } from "../../_private/data-resolver";
 import { ConfigWithExtends } from "./config-object";
 import { js, from, json, CodeTemplate } from "../private/code-template"; 
 import { CodeResolvable } from "../../code-resolvable";
-import { ModuleImports } from "../private/modules";
+import { JavaScriptImportResolver } from "../private/modules";
 import { DependencyType } from "../../dependencies";
 import { IESLintConfig } from "./config";
 
@@ -35,7 +35,7 @@ export class ESLintConfigFile extends FileBase {
   private readonly configs: IESLintConfig[];
   private readonly moduleType: ModuleType;
 
-  private _synthed?: { imports: ModuleImports; code: CodeTemplate; };
+  private _synthed?: { imports: JavaScriptImportResolver; code: CodeTemplate; };
 
   constructor(scope: IConstruct, options: ESLintConfigFileOptions = {}) {
     const moduleType = options.moduleType ?? ModuleType.ESM;
@@ -66,7 +66,7 @@ export class ESLintConfigFile extends FileBase {
     const code = js`${exportStatement} ${defineConfig}(${json(resolvedConfigs)});`
 
     // Phase 2: Collect imports
-    const imports = new ModuleImports();
+    const imports = new JavaScriptImportResolver(this.project);
     code.resolveImports?.(imports);
 
     // Phase 3: Add dependencies

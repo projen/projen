@@ -1299,7 +1299,7 @@ new javascript.eslint.ESLintConfig(config: ConfigWithExtends)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.ESLintConfig.toJSON">toJSON</a></code> | Resolves and returns content. |
+| <code><a href="#projen.javascript.eslint.ESLintConfig.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
@@ -1308,8 +1308,6 @@ new javascript.eslint.ESLintConfig(config: ConfigWithExtends)
 ```typescript
 public toJSON(): any
 ```
-
-Resolves and returns content.
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -1466,6 +1464,33 @@ public readonly config: any;
 A plugin is an object that contains rules.
 
 It can be a local plugin or a shared plugin.
+
+#### Initializers <a name="Initializers" id="projen.javascript.eslint.Plugin.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.eslint.Plugin(pkg: string, name: string)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.eslint.Plugin.Initializer.parameter.pkg">pkg</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.Plugin.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `pkg`<sup>Required</sup> <a name="pkg" id="projen.javascript.eslint.Plugin.Initializer.parameter.pkg"></a>
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.javascript.eslint.Plugin.Initializer.parameter.name"></a>
+
+- *Type:* string
+
+---
 
 #### Methods <a name="Methods" id="Methods"></a>
 
@@ -1654,7 +1679,29 @@ new javascript.eslint.SharedConfig(defs: ...SharedConfigDefinition[])
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.SharedConfig.toJSON">toJSON</a></code> | Resolves and returns content. |
+| <code><a href="#projen.javascript.eslint.SharedConfig.render">render</a></code> | Renders the code as a string. |
+| <code><a href="#projen.javascript.eslint.SharedConfig.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.SharedConfig.toJSON">toJSON</a></code> | *No description.* |
+
+---
+
+##### `render` <a name="render" id="projen.javascript.eslint.SharedConfig.render"></a>
+
+```typescript
+public render(): string
+```
+
+Renders the code as a string.
+
+##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.SharedConfig.resolveImports"></a>
+
+```typescript
+public resolveImports(imports: IImportResolver): void
+```
+
+###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.SharedConfig.resolveImports.parameter.imports"></a>
+
+- *Type:* projen.IImportResolver
 
 ---
 
@@ -1664,33 +1711,37 @@ new javascript.eslint.SharedConfig(defs: ...SharedConfigDefinition[])
 public toJSON(): any
 ```
 
-Resolves and returns content.
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.javascript.eslint.SharedConfig.property.name">name</a></code> | <code>string</code> | *No description.* |
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.eslint.SharedConfig.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="projen.javascript.eslint.SharedConfig.property.name"></a>
+##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.SharedConfig.isCodeResolvable"></a>
 
 ```typescript
-public readonly name: string;
+import { javascript } from 'projen'
+
+javascript.eslint.SharedConfig.isCodeResolvable(obj: any)
 ```
 
-- *Type:* string
+Checks if an object is a CodeResolvable instance.
+
+###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.SharedConfig.isCodeResolvable.parameter.obj"></a>
+
+- *Type:* any
+
+The object to check.
 
 ---
+
 
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
 
 ### IESLintConfig <a name="IESLintConfig" id="projen.javascript.eslint.IESLintConfig"></a>
-
-- *Extends:* projen.IResolvable
 
 - *Implemented By:* projen.javascript.eslint.presets.ESLintJs, projen.javascript.eslint.presets.ImportPlugin, projen.javascript.eslint.presets.ImportX, projen.javascript.eslint.presets.Prettier, projen.javascript.eslint.presets.Projen, projen.javascript.eslint.presets.Stylistic, projen.javascript.eslint.presets.Tseslint, projen.javascript.eslint.ESLintConfig, projen.javascript.eslint.SharedConfig, projen.javascript.eslint.IESLintConfig
 

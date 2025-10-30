@@ -2,19 +2,20 @@ import { ICodeResolvable, IImportResolver } from '../../code-resolvable';
 import { Code } from '../../_private/code';
 import { RESERVED_KEYWORDS } from './reserved-words';
 import { ModuleType } from '../module-type';
+import { Project } from '../../project';
 
-type NamedImport = [string | symbol, string?];
+type NamedImport = [string, string?];
 
 const DEFAULT = "default";
 
-export class ModuleImports implements IImportResolver {
+export class ModuleImports {
   private namedImports = new Map<string, Map<string, NamedImport>>();
 
   /**
    * Adds a named import from a module
    */
-  public from(moduleName: string, importName: string, as?: string): ICodeResolvable {
-    return this.add(moduleName, importName, as);
+  public from(moduleName: string, importName?: string, as?: string): ICodeResolvable {
+    return this.add(moduleName, importName ?? DEFAULT, as);
   }
 
   /**
@@ -22,16 +23,6 @@ export class ModuleImports implements IImportResolver {
    */
   public default(moduleName: string, as: string): ICodeResolvable {
     return this.add(moduleName, DEFAULT, as);
-  }
-
-  /**
-   * Just require the module to be installed.
-   * This is unexpected, so ot ready for public yet.
-   * @internal
-   */
-  public needs(moduleName: string) {
-    const moduleImports = this.namedImports.get(moduleName) ?? new Map();
-    this.namedImports.set(moduleName, moduleImports);
   }
 
   /**
@@ -47,9 +38,8 @@ export class ModuleImports implements IImportResolver {
 
   /**
    * Adds an import
-   * @internal only used by CodeTemplates directly
    */
-  public add(moduleName: string, importName: string | symbol, as?: string): ICodeResolvable {
+  private add(moduleName: string, importName: string, as?: string): ICodeResolvable {
     const name = renderName(importName);
     const moduleImports = this.namedImports.get(moduleName) ?? new Map();
     
@@ -199,6 +189,16 @@ export class ModuleImports implements IImportResolver {
           return renderName(a[0]).localeCompare(renderName(b[0]));
         }),
       ]);
+  }
+}
+
+
+export class JavaScriptImportResolver extends ModuleImports implements IImportResolver {
+  public readonly project: Project;
+
+  public constructor(project: Project) {
+    super();
+    this.project = project;
   }
 }
 

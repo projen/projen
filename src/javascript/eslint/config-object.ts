@@ -167,7 +167,7 @@ export class Plugin extends CodeResolvable {
 
   private ref: ImportReference;
 
-  private constructor(pkg: string, name: string) {
+  public constructor(pkg: string, name: string) {
     super();
     
     this.name = name;

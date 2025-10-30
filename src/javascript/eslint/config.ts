@@ -1,11 +1,11 @@
+import { IResolvable } from "../../file";
 import { Project } from "../../project";
 import { from, js } from "../private/code-template";
-import { IResolvable } from "../../file";
 import { ConfigWithExtends } from "./config-object";
 
-export interface IESLintConfig extends IResolvable {}
+export interface IESLintConfig {}
 
-export class ESLintConfig implements IESLintConfig {
+export class ESLintConfig implements IESLintConfig, IResolvable {
   /**
    * List of files or glob patterns matching files to globally ignore.
    */

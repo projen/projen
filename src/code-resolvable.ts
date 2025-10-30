@@ -1,10 +1,16 @@
+import { Project } from "./project";
+
 const CODE_RESOLVABLE_SYMBOL = Symbol.for('projen.CodeResolvable');
 
 export interface IImportResolver {
   /**
+   * The project this resolver belongs to.
+   */
+  readonly project: Project;
+  /**
    * Adds a named import from a module
    */  
-  from(moduleName: string, importName: string, as?: string): ICodeResolvable;
+  from(moduleName: string, importName?: string, as?: string): ICodeResolvable;
 }
 
 /**
