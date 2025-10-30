@@ -52,49 +52,28 @@ function cleanStackTrace(stack?: string): string {
 }
 
 /**
- * A reference to an import that will be resolved when the code is generated.
+ * Base class for code references.
  * Each reference can only be used once to prevent naming conflicts.
  */
-export class ImportReference extends CodeResolvable {
+export class CodeReference extends CodeResolvable {
   private consumed = false;
-  private resolvedName?: string;
+  public resolvedName?: string;
   private firstUsageStack?: string;
   private readonly creationStack: string;
 
-  protected constructor(
-    private moduleName: string,
-    private importName: string | symbol,
-    private alias?: string
-  ) {
+  constructor(resolvedName?: string) {
     super();
+    this.resolvedName = resolvedName;
     this.creationStack = captureStackTrace();
   }
 
   /**
-   * Representing a default import
+   * Creates a reference to a nested property of this code reference.
+   * @param propertyPath - The property path to access (e.g., "config.rules")
+   * @returns A new CodeReference for the nested property
    */
-  protected static DEFAULT = Symbol("default");
-
-  static create(moduleName: string, importName: string, alias?: string): ImportReference {
-    return new ImportReference(moduleName, importName, alias);
-  }
-
-  static createDefault(moduleName: string, alias?: string): ImportReference {
-    return new ImportReference(moduleName, ImportReference.DEFAULT, alias);
-  }
-
-  public collectImports(imports: ModuleImports): void {
-    if (this.importName === ImportReference.DEFAULT) {
-      // For default imports, we need an alias. If none provided, use module name
-      const alias = this.alias || this.moduleName.split('/').pop() || 'default';
-      const ref = imports.default(this.moduleName, alias);
-      this.resolvedName = ref.render();
-    } else {
-      const ref = this.alias
-        ? imports.from(this.moduleName, this.importName as string, this.alias)
-        : imports.from(this.moduleName, this.importName as string);
-      this.resolvedName = ref.render();
-    }
+  public path(propertyPath: string): CodeReference {
+    return new CodeReference(`${this.resolvedName || 'UNRESOLVED'}.${propertyPath}`);
   }
 
   public render(): string {
@@ -113,6 +92,108 @@ export class ImportReference extends CodeResolvable {
     this.consumed = true;
     this.firstUsageStack = captureStackTrace();
     return this.resolvedName;
+  }
+}
+
+/**
+ * A reference to an import that will be resolved when the code is generated.
+ */
+export class ImportReference extends CodeReference {
+  protected constructor(
+    private moduleName: string,
+    private importName: string | symbol,
+    private alias?: string
+  ) {
+    super();
+  }
+
+  /**
+   * Representing a default import
+   */
+  protected static DEFAULT = Symbol("default");
+
+  static create(moduleName: string, importName: string, alias?: string): ImportReference {
+    const ref = new ImportReference(moduleName, importName, alias);
+    return ref.createProxy();
+  }
+
+  static createDefault(moduleName: string, alias?: string): ImportReference {
+    const ref = new ImportReference(moduleName, ImportReference.DEFAULT, alias);
+    return ref.createProxy();
+  }
+
+  public createProxy(): ImportReference {
+    return new Proxy(this, {
+      get: (target, prop: string) => {
+        // If the property exists on the target, return it (bound if it's a function)
+        if (prop in target) {
+          const value = (target as any)[prop];
+          return typeof value === 'function' ? value.bind(target) : value;
+        }
+        
+        // For nested property access, create a path reference
+        return target.path(prop);
+      }
+    }) as ImportReference;
+  }
+
+  /**
+   * Creates a reference to a nested property of this import reference.
+   * The returned reference will resolve the import first, then access the nested property.
+   * @param propertyPath - The property path to access (e.g., "config.rules")
+   * @returns A new CodeReference for the nested property
+   */
+  public path(propertyPath: string): CodeReference {
+    const self = this;
+    const pathRef = new (class extends CodeReference {
+      public collectImports(imports: ModuleImports): void {
+        self.collectImports(imports);
+        this.resolvedName = `${self.resolvedName}.${propertyPath}`;
+      }
+    })();
+    
+    // Return a proxy that supports further nesting
+    return new Proxy(pathRef, {
+      get: (target, prop: string) => {
+        // If the property exists on the target, return it (bound if it's a function)
+        if (prop in target) {
+          const value = (target as any)[prop];
+          return typeof value === 'function' ? value.bind(target) : value;
+        }
+        
+        // For nested property access, create another path reference that chains import collection
+        const nestedRef = new (class extends CodeReference {
+          public collectImports(imports: ModuleImports): void {
+            self.collectImports(imports);
+            this.resolvedName = `${self.resolvedName}.${propertyPath}.${prop}`;
+          }
+        })();
+        
+        return new Proxy(nestedRef, {
+          get: (nestedTarget, nestedProp: string) => {
+            if (nestedProp in nestedTarget) {
+              const value = (nestedTarget as any)[nestedProp];
+              return typeof value === 'function' ? value.bind(nestedTarget) : value;
+            }
+            return nestedTarget.path(nestedProp);
+          }
+        }) as CodeReference;
+      }
+    }) as CodeReference;
+  }
+
+  public collectImports(imports: ModuleImports): void {
+    if (this.importName === ImportReference.DEFAULT) {
+      // For default imports, we need an alias. If none provided, use module name
+      const alias = this.alias || this.moduleName.split('/').pop() || 'default';
+      const ref = imports.default(this.moduleName, alias);
+      this.resolvedName = ref.render();
+    } else {
+      const ref = this.alias
+        ? imports.from(this.moduleName, this.importName as string, this.alias)
+        : imports.from(this.moduleName, this.importName as string);
+      this.resolvedName = ref.render();
+    }
   }
 }
 

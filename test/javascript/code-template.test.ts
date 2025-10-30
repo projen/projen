@@ -1,13 +1,13 @@
 import { 
   ImportReference, 
+  CodeReference,
   js, 
   code, 
   json, 
   from, 
-  defaultFrom, 
-  stringifyWithCode,
-  CodeGenerator 
+  defaultFrom
 } from "../../src/javascript/private/code-template";
+import { ModuleImports } from "../../src/javascript/private/modules";
 
 describe("ImportReference", () => {
   test("creates named import reference", () => {
@@ -26,11 +26,10 @@ describe("ImportReference", () => {
   });
 
   test("throws error when rendered twice", () => {
-    const generator = new CodeGenerator();
     const ref = ImportReference.create("react", "Component");
     const template = code("const comp = ", ref);
     
-    generator.generateFile(template);
+    generateFile(template);
     expect(() => ref.render()).toThrow("Import reference already used");
   });
 
@@ -57,17 +56,15 @@ describe("ImportReference", () => {
 
 describe("CodeTemplate (js tagged template)", () => {
   test("renders simple template", () => {
-    const generator = new CodeGenerator();
     const ref = from("react").Component;
     const template = js`const comp = ${ref};`;
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { Component } from "react";');
     expect(result).toContain('const comp = Component;');
   });
 
   test("handles multiple imports", () => {
-    const generator = new CodeGenerator();
     const Component = from("react").Component;
     const useState = from("react").useState;
     const express = defaultFrom("express", "app");
@@ -77,7 +74,7 @@ const comp = ${Component};
 const hook = ${useState};
 const server = ${express}();`;
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { Component, useState } from "react";');
     expect(result).toContain('import { default as app } from "express";');
   });
@@ -85,7 +82,6 @@ const server = ${express}();`;
 
 describe("CodeBuilder (JSII-compatible)", () => {
   test("builds code with method chaining", () => {
-    const generator = new CodeGenerator();
     const Component = from("react").Component;
     
     const template = code()
@@ -93,20 +89,19 @@ describe("CodeBuilder (JSII-compatible)", () => {
       .line("  return ", Component, ";")
       .line("}");
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { Component } from "react";');
     expect(result).toContain('function Test() {\n  return Component;\n}');
   });
 
   test("builds code with function arguments", () => {
-    const generator = new CodeGenerator();
     const useState = from("react").useState;
     
     const template = code(
       "const [state, setState] = ", useState, "(0);"
     );
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { useState } from "react";');
     expect(result).toContain('const [state, setState] = useState(0);');
   });
@@ -119,7 +114,6 @@ describe("CodeBuilder (JSII-compatible)", () => {
 
 describe("JsonTemplate", () => {
   test("renders JSON with embedded imports", () => {
-    const generator = new CodeGenerator();
     const parser = from("@typescript-eslint/parser").parser;
     
     const config = json({
@@ -129,14 +123,13 @@ describe("JsonTemplate", () => {
       }
     });
     
-    const result = generator.generateFile(config);
+    const result = generateFile(config);
     expect(result).toContain('import { parser } from "@typescript-eslint/parser";');
     expect(result).toContain('"parser": parser');
     expect(result).toContain('"ecmaVersion": 2022');
   });
 
   test("handles nested objects and arrays", () => {
-    const generator = new CodeGenerator();
     const plugin = from("eslint-plugin-react").plugin;
     
     const config = json({
@@ -146,7 +139,7 @@ describe("JsonTemplate", () => {
       }
     });
     
-    const result = generator.generateFile(config);
+    const result = generateFile(config);
     expect(result).toContain('import { plugin } from "eslint-plugin-react";');
     expect(result).toContain('"plugins": [\n    plugin\n  ]');
   });
@@ -187,29 +180,29 @@ describe("stringifyWithCode", () => {
     (ref as any).resolvedName = "Component";
     (ref as any).consumed = false;
     
-    const result = stringifyWithCode({ comp: ref });
+    const result = json({ comp: ref }).render();
     expect(result).toContain('"comp": Component');
   });
 
   test("handles nested objects", () => {
-    const result = stringifyWithCode({
+    const result = json({
       a: { b: { c: "value" } }
-    });
+    }).render();
     expect(result).toContain('{\n  "a": {\n    "b": {\n      "c": "value"\n    }\n  }\n}');
   });
 
   test("handles arrays", () => {
-    const result = stringifyWithCode({
+    const result = json({
       items: ["a", "b", "c"]
-    });
+    }).render();
     expect(result).toContain('"items": [\n    "a",\n    "b",\n    "c"\n  ]');
   });
 
   test("handles empty objects and arrays", () => {
-    const result = stringifyWithCode({
+    const result = json({
       empty: {},
       emptyArray: []
-    });
+    }).render();
     expect(result).toContain('"empty": {}');
     expect(result).toContain('"emptyArray": []');
   });
@@ -217,7 +210,6 @@ describe("stringifyWithCode", () => {
 
 describe("Import conflict resolution", () => {
   test("resolves naming conflicts", () => {
-    const generator = new CodeGenerator();
     const reactComponent = from("react").Component;
     const vueComponent = from("vue").Component;
     
@@ -226,7 +218,7 @@ describe("Import conflict resolution", () => {
       "const b = ", vueComponent, ";"
     );
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { Component } from "react";');
     expect(result).toContain('import { Component as Component1 } from "vue";');
     expect(result).toContain('const a = Component;');
@@ -234,18 +226,16 @@ describe("Import conflict resolution", () => {
   });
 
   test("handles reserved keywords", () => {
-    const generator = new CodeGenerator();
     const classRef = from("test-module").class;
     
     const template = code("const c = ", classRef, ";");
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { class as class_ } from "test-module";');
     expect(result).toContain('const c = class_;');
   });
 
   test("deduplicates identical imports", () => {
-    const generator = new CodeGenerator();
     const comp1 = from("react").Component;
     const comp2 = from("react").Component;
     
@@ -254,8 +244,8 @@ describe("Import conflict resolution", () => {
       "const b = ", comp2, ";"
     );
     
-    const result = generator.generateFile(template);
-    const importLines = result.split('\n').filter(line => line.startsWith('import'));
+    const result = generateFile(template);
+    const importLines = result.split('\n').filter((line: string) => line.startsWith('import'));
     expect(importLines).toHaveLength(1);
     expect(importLines[0]).toBe('import { Component } from "react";');
   });
@@ -263,39 +253,36 @@ describe("Import conflict resolution", () => {
 
 describe("Import sorting", () => {
   test("sorts modules alphabetically", () => {
-    const generator = new CodeGenerator();
     const z = from("z-module").func;
     const a = from("a-module").func;
     
     const template = code("const z = ", z, "; const a = ", a, ";");
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     const lines = result.split('\n');
-    const aIndex = lines.findIndex(line => line.includes('a-module'));
-    const zIndex = lines.findIndex(line => line.includes('z-module'));
+    const aIndex = lines.findIndex((line: string) => line.includes('a-module'));
+    const zIndex = lines.findIndex((line: string) => line.includes('z-module'));
     expect(aIndex).toBeLessThan(zIndex);
   });
 
   test("puts default imports first within module", () => {
-    const generator = new CodeGenerator();
     const named = from("express").Router;
     const defaultImport = defaultFrom("express", "app");
     
     const template = code("const r = ", named, "; const a = ", defaultImport, ";");
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toContain('import { default as app, Router } from "express";');
   });
 });
 
-describe("CodeGenerator", () => {
+describe("File generation", () => {
   test("generates complete file with imports and body", () => {
-    const generator = new CodeGenerator();
     const Component = from("react").Component;
     
     const template = js`function App() { return ${Component}; }`;
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     const lines = result.split('\n');
     
     expect(lines[0]).toBe('import { Component } from "react";');
@@ -304,10 +291,75 @@ describe("CodeGenerator", () => {
   });
 
   test("handles templates without imports", () => {
-    const generator = new CodeGenerator();
     const template = js`const x = 42;`;
     
-    const result = generator.generateFile(template);
+    const result = generateFile(template);
     expect(result).toBe('\nconst x = 42;');
   });
 });
+
+describe('CodeReference', () => {
+  test('path() creates nested property reference', () => {
+    const ref = new CodeReference('myVar');
+    const nested = ref.path('config.rules');
+    
+    expect(nested.render()).toBe('myVar.config.rules');
+  });
+
+  test('single-use consumption works', () => {
+    const ref = new CodeReference('myVar');
+    ref.render(); // First use
+    
+    expect(() => ref.render()).toThrow('Import reference already used');
+  });
+});
+
+describe('ImportReference path()', () => {
+  test('creates nested property reference with import resolution', () => {
+    const ref = ImportReference.createDefault('eslint-config-base');
+    const nested = ref.path('rules.indent');
+    
+    const template = code('const rule = ', nested, ';');
+    const result = generateFile(template);
+    
+    expect(result).toContain('eslint-config-base.rules.indent');
+  });
+});
+
+describe('from() helper nested access', () => {
+  test('supports automatic nested property access', () => {
+    const nested = from('eslint-config-base').default.rules.indent;
+    
+    const template = code('const rule = ', nested, ';');
+    const result = generateFile(template);
+    
+    expect(result).toContain('eslint-config-base.rules.indent');
+  });
+
+  test('supports aliased automatic nested property access', () => {
+    const nested = from('eslint-config-base').default.as('BaseConfig').rules.indent;
+    
+    const template = code('const rule = ', nested, ';');
+    const result = generateFile(template);
+    
+    expect(result).toContain('BaseConfig.rules.indent');
+  });
+
+  test('supports explicit path() method', () => {
+    const nested = from('eslint-config-base').default.path('rules.indent');
+    
+    const template = code('const rule = ', nested, ';');
+    const result = generateFile(template);
+    
+    expect(result).toContain('eslint-config-base.rules.indent');
+  });
+});
+
+// Helper function to generate complete file with imports
+function generateFile(template: any): string {
+  const imports = new ModuleImports();
+  template.collectImports?.(imports);
+  const body = template.render();
+  const importLines = imports.asEsmImports();
+  return importLines.length > 0 ? importLines.join('\n') + '\n\n' + body : '\n' + body;
+}
