@@ -100,7 +100,7 @@ describe("ModuleImports", () => {
   test("modules returns sorted module names", () => {
     imports.from("z-module", "func");
     imports.from("a-module", "func");
-    expect(imports.modules).toEqual(["z-module", "a-module"]);
+    expect(imports.modules).toEqual(["a-module", "z-module"]);
   });
 
   describe("merge", () => {
@@ -169,7 +169,7 @@ describe("ModuleImports", () => {
   describe("reserved keywords", () => {
     test("automatically aliases reserved import names", () => {
       const result = imports.from("test-module", "class");
-      expect(result).toBe("class_");
+      expect(result.render()).toBe("class_");
       expect(imports.asEsmImports()).toEqual([
         'import { class as class_ } from "test-module";',
       ]);
@@ -177,7 +177,7 @@ describe("ModuleImports", () => {
 
     test("automatically aliases reserved alias names", () => {
       const result = imports.from("test-module", "MyClass", "class");
-      expect(result).toBe("class_");
+      expect(result.render()).toBe("class_");
       expect(imports.asEsmImports()).toEqual([
         'import { MyClass as class_ } from "test-module";',
       ]);
@@ -185,22 +185,22 @@ describe("ModuleImports", () => {
 
     test("returns correct referenceable name for reserved import", () => {
       const result = imports.from("test-module", "function");
-      expect(result).toBe("function_");
+      expect(result.render()).toBe("function_");
     });
 
     test("returns correct referenceable name for reserved alias", () => {
       const result = imports.from("test-module", "MyFunction", "function");
-      expect(result).toBe("function_");
+      expect(result.render()).toBe("function_");
     });
 
     test("returns original name for non-reserved words", () => {
       const result = imports.from("test-module", "normalName");
-      expect(result).toBe("normalName");
+      expect(result.render()).toBe("normalName");
     });
 
     test("handles reserved keywords in default imports", () => {
       const result = imports.default("test-module", "class");
-      expect(result).toBe("class_");
+      expect(result.render()).toBe("class_");
       expect(imports.asEsmImports()).toEqual([
         'import { default as class_ } from "test-module";',
       ]);
@@ -210,6 +210,82 @@ describe("ModuleImports", () => {
       imports.from("test-module", "class");
       expect(imports.asCjsRequire()).toEqual([
         'const { class: class_ } = require("test-module");',
+      ]);
+    });
+  });
+
+  describe("naming conflict resolution", () => {
+    test("resolves conflicts when same name imported from different modules", () => {
+      imports.from("react", "Component");
+      imports.from("vue", "Component");
+      
+      const result = imports.asEsmImports();
+      expect(result.length).toBe(2);
+      expect(result).toContain('import { Component } from "react";');
+      expect(result).toContain('import { Component as Component1 } from "vue";');
+    });
+
+    test("resolves conflicts with multiple conflicts", () => {
+      imports.from("react", "Component");
+      imports.from("vue", "Component");
+      imports.from("angular", "Component");
+      
+      const result = imports.asEsmImports();
+      expect(result).toEqual([
+        'import { Component as Component2 } from "angular";',
+        'import { Component } from "react";',
+        'import { Component as Component1 } from "vue";'
+      ]);
+    });
+
+    test("resolves conflicts when merging imports", () => {
+      const imports1 = new ModuleImports();
+      const imports2 = new ModuleImports();
+      
+      imports1.from("react", "useState");
+      imports2.from("vue", "useState");
+      
+      imports1.merge(imports2);
+      
+      const result = imports1.asEsmImports();
+      expect(result.length).toBe(2);
+      expect(result).toContain('import { useState } from "react";');
+      expect(result).toContain('import { useState as useState1 } from "vue";');
+    });
+
+    test("resolves conflicts with default imports", () => {
+      imports.default("react", "React");
+      imports.from("some-lib", "React");
+      
+      const result = imports.asEsmImports();
+      expect(result.length).toBe(2);
+      expect(result).toContain('import { default as React } from "react";');
+      expect(result).toContain('import { React as React1 } from "some-lib";');
+    });
+
+    test("handles complex conflict scenarios", () => {
+      imports.from("lib1", "Component");
+      imports.from("lib2", "Component", "MyComponent");
+      imports.from("lib3", "Component");
+      imports.default("lib4", "Component");
+      
+      const result = imports.asEsmImports();
+      expect(result).toEqual([
+        'import { Component } from "lib1";',
+        'import { Component as MyComponent } from "lib2";',
+        'import { Component as Component1 } from "lib3";',
+        'import { default as Component2 } from "lib4";'
+      ]);
+    });
+
+    test("preserves explicit aliases and only resolves conflicts for auto-generated names", () => {
+      imports.from("lib1", "Component", "MyComponent");
+      imports.from("lib2", "Component");
+      
+      const result = imports.asEsmImports();
+      expect(result).toEqual([
+        'import { Component as MyComponent } from "lib1";',
+        'import { Component } from "lib2";'
       ]);
     });
   });

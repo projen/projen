@@ -1,6 +1,6 @@
-import { RESERVED_KEYWORDS } from './reserved-words';
 import { ICodeResolvable } from '../../_private/code-resolvable';
 import { Code } from '../../_private/code';
+import { RESERVED_KEYWORDS } from './reserved-words';
 
 type NamedImport = [string | symbol, string?];
 
@@ -49,24 +49,68 @@ export class ModuleImports {
    */
   private add(moduleName: string, importName: string | symbol, as?: string): ICodeResolvable {
     const name = renderName(importName);
-    let finalAs = as;
-    
-    // Check if alias is a reserved word
-    if (finalAs && RESERVED_KEYWORDS.includes(finalAs)) {
-      finalAs = `${finalAs}_`;
-    }
-    
-    // Check if import name is a reserved word and no alias provided
-    if (!finalAs && RESERVED_KEYWORDS.includes(name)) {
-      finalAs = `${name}_`;
-    }
-    
     const moduleImports = this.namedImports.get(moduleName) ?? new Map();
-    const importKey = `${name}:${finalAs || ""}`;
-    moduleImports.set(importKey, [importName, finalAs]);
+    
+    // Check for exact duplicate first
+    const existingName = this.checkForDuplicate(moduleImports, name, as);
+    if (existingName) {
+      return Code.literal(existingName);
+    }
+    
+    // Resolve the final name (handling reserved keywords and conflicts)
+    const resolvedName = this.resolveName(name, as);
+    const finalImportKey = `${name}:${resolvedName === name ? "" : resolvedName}`;
+    
+    // Add the import
+    moduleImports.set(finalImportKey, [importName, resolvedName === name ? undefined : resolvedName]);
     this.namedImports.set(moduleName, moduleImports);
     
-    return Code.literal(finalAs || name);
+    return Code.literal(resolvedName);
+  }
+
+  /**
+   * Checks if an import already exists and returns the existing name if found
+   */
+  private checkForDuplicate(moduleImports: Map<string, NamedImport>, name: string, as?: string): string | null {
+    const importKey = `${name}:${as || ""}`;
+    if (moduleImports.has(importKey)) {
+      const existingImport = moduleImports.get(importKey)!;
+      return existingImport[1] || name;
+    }
+    return null;
+  }
+
+  /**
+   * Resolves the final name for an import, handling reserved keywords and naming conflicts
+   */
+  private resolveName(importName: string, alias?: string): string {
+    // Start with the desired name (alias if provided, otherwise import name)
+    let desiredName = alias || importName;
+    
+    // Handle reserved keywords by appending underscore
+    if (RESERVED_KEYWORDS.includes(desiredName)) {
+      desiredName = `${desiredName}_`;
+    }
+    
+    // Collect all currently used names across all modules
+    const allUsedNames = new Set<string>();
+    for (const moduleImports of this.namedImports.values()) {
+      for (const [importName, alias] of moduleImports.values()) {
+        const usedName = alias || renderName(importName);
+        allUsedNames.add(usedName);
+      }
+    }
+    
+    // Find a unique name if there's a conflict
+    let candidateName = desiredName;
+    let counter = 1;
+    
+    while (allUsedNames.has(candidateName)) {
+      candidateName = `${desiredName}${counter}`;
+      counter++;
+    }
+    
+    return candidateName;
   }
 
   /**
@@ -74,7 +118,7 @@ export class ModuleImports {
    * This might include submodules from the same package.
    */
   public get modules(): string[] {
-    return Array.from(this.namedImports.keys());
+    return Array.from(this.namedImports.keys()).sort();
   }
 
   /**
@@ -131,12 +175,18 @@ export class ModuleImports {
   }
 
   private all(): [string, NamedImport[]][] {
-    return Array.from(this.namedImports.entries()).map(([key, value]) => [
-      key,
-      Array.from(value.values()).sort((a, b) =>
-        renderName(a[0]).localeCompare(renderName(b[0]))
-      ),
-    ]);
+    return Array.from(this.namedImports.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, value]) => [
+        key,
+        Array.from(value.values()).sort((a, b) => {
+          // Default imports first
+          if (a[0] === DEFAULT && b[0] !== DEFAULT) return -1;
+          if (a[0] !== DEFAULT && b[0] === DEFAULT) return 1;
+          // Then sort by name
+          return renderName(a[0]).localeCompare(renderName(b[0]));
+        }),
+      ]);
   }
 }
 
