@@ -9,12 +9,12 @@ export class ImportX extends SharedConfig {
   /**
    * The default recommended rules
    */
-  public static RECOMMENDED = new ImportX("recommended");
+  public static readonly RECOMMENDED = new ImportX("recommended");
 
   /**
    * Recommended typescript rules
    */
-  public static TYPESCRIPT = new ImportX("recommended", "typescript");
+  public static readonly TYPESCRIPT = new ImportX("recommended", "typescript");
 
   private constructor(...paths: string[]) {
     super(
@@ -24,6 +24,6 @@ export class ImportX extends SharedConfig {
         path: `flatConfigs.${path}`,
       }))
     );
-    this.imports.needs("eslint-import-resolver-typescript");
+    // this.imports.needs("eslint-import-resolver-typescript");
   }
 }

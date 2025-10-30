@@ -1,5 +1,5 @@
 import { IConstruct } from "constructs";
-import { FileBase } from "../../file";
+import { FileBase, IResolver } from "../../file";
 import { ModuleType } from "../module-type";
 import { IESLintConfig } from "./config";
 import { DataResolver } from "../../_private/data-resolver";
@@ -35,7 +35,7 @@ export class ESLintConfigFile extends FileBase {
 
   constructor(scope: IConstruct, options: ESLintConfigFileOptions = {}) {
     const moduleType = options.moduleType ?? ModuleType.ESM;
-    const filename = moduleType.fileWithExt("eslint.config.js");
+    const filename = moduleType._fileWithExt("eslint.config.js");
 
     super(scope, filename);
 
@@ -54,7 +54,7 @@ export class ESLintConfigFile extends FileBase {
   /**
    * Sync the config file with the current state of the configs.
    */
-  protected synthesizeContent(): string {
+  protected synthesizeContent(_resolver: IResolver): string {
     const defineConfig = from("eslint/config").defineConfig;
     const exportStatement = Code.literal(this.moduleType === ModuleType.ESM ? "export default" : "module.exports =");
     const marker = Code.literal(this.marker ? `// ${this.marker}\n` : '');

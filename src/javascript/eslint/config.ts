@@ -6,6 +6,7 @@ import { from, js } from "../private/code-template";
 
 /**
  * A Configuration for ESLint.
+ * @todo toJSON
  */
 export interface IESLintConfig extends IResolvable {
   readonly imports?: ModuleImports;
@@ -13,10 +14,10 @@ export interface IESLintConfig extends IResolvable {
   /**
    * Resolves to an array of configuration objects.
    */
-  toJSON(): ConfigWithExtends[];
+  // toJSON(): any;
 }
 
-export class ESLintConfig implements IESLintConfig {
+export class ESLintConfig implements IResolvable {
   /**
    * List of files or glob patterns matching files to globally ignore.
    */
@@ -72,19 +73,13 @@ export class ESLintConfig implements IESLintConfig {
     );
   }
 
-  /**
-   *
-   */
-  public readonly imports: ModuleImports | undefined;
-
   private readonly _config: ConfigWithExtends;
 
-  public constructor(config: ConfigWithExtends, imports?: ModuleImports) {
+  public constructor(config: ConfigWithExtends) {
     this._config = config;
-    this.imports = imports;
   }
 
-  public toJSON() {
+  public toJSON(): any {
     return [this._config];
   }
 }

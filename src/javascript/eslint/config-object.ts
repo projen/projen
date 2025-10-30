@@ -135,9 +135,7 @@ export class Plugin extends CodeResolvable {
    * Use plugin by its eslint plugin name.
    *
    * @example
-   * ```typescript
    * Plugin.fromName("react"); // refers to package eslint-plugin-react
-   * ```
    */
   public static fromName(pluginName: string): Plugin {
     if (pluginName.startsWith("@")) {
@@ -150,9 +148,7 @@ export class Plugin extends CodeResolvable {
    * Use plugin by its package name.
    *
    * @example
-   * ```typescript
    * Plugin.fromPackage("eslint-plugin-react");
-   * ```
    */
   public static fromPackage(plugin: string, name: string): Plugin {
     return new Plugin(plugin, name);

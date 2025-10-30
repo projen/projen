@@ -9,12 +9,12 @@ export class ESLintJs extends SharedConfig {
   /**
    * Enable all rules
    */
-  public static ALL = new ESLintJs("all");
+  public static readonly ALL = new ESLintJs("all");
 
   /**
    * The default recommended rules
    */
-  public static RECOMMENDED = new ESLintJs("recommended");
+  public static readonly RECOMMENDED = new ESLintJs("recommended");
 
   private constructor(path: string) {
     super({

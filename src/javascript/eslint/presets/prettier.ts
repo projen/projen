@@ -9,7 +9,7 @@ export class Prettier extends SharedConfig {
   /**
    * The default recommended rules
    */
-  public static RECOMMENDED = new Prettier("recommended");
+  public static readonly RECOMMENDED = new Prettier("recommended");
 
   private constructor(path: string) {
     super({

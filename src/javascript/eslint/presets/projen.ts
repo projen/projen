@@ -1,7 +1,7 @@
 import { EslintOptions } from "../../eslint";
 import { ModuleImports } from "../../private/modules";
 import { ESLintConfig, IESLintConfig } from "../config";
-import { ConfigWithExtends, Extends, Plugin } from "../config-object";
+import { Extends, Plugin } from "../config-object";
 import { Tseslint } from "./tseslint";
 import { from, js } from "../../private/code-template";
 
@@ -12,7 +12,7 @@ export class Projen implements IESLintConfig {
   /**
    * The default recommended rules
    */
-  public static RECOMMENDED = new Projen();
+  public static readonly RECOMMENDED = new Projen();
 
   /**
    * Configure the default rules
@@ -119,7 +119,7 @@ export class Projen implements IESLintConfig {
     this.configs.map((config) => config.imports && this.imports.merge(config.imports));
   }
 
-  public toJSON(): ConfigWithExtends[] {
+  public toJSON() {
     return this.configs.flatMap((config) => config.toJSON());
   }
 }

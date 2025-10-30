@@ -9,12 +9,12 @@ export class Stylistic extends SharedConfig {
   /**
    * Enable all rules
    */
-  public static ALL = new Stylistic("all");
+  public static readonly ALL = new Stylistic("all");
 
   /**
    * The default recommended config
    */
-  public static RECOMMENDED = new Stylistic("recommended");
+  public static readonly RECOMMENDED = new Stylistic("recommended");
 
   private constructor(path: string) {
     super({

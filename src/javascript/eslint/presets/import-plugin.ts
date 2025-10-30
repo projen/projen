@@ -9,12 +9,12 @@ export class ImportPlugin extends SharedConfig {
   /**
    * The default recommended rules
    */
-  public static RECOMMENDED = new ImportPlugin("recommended");
+  public static readonly RECOMMENDED = new ImportPlugin("recommended");
 
   /**
    * Recommended typescript rules
    */
-  public static TYPESCRIPT = new ImportPlugin("recommended", "typescript");
+  public static readonly TYPESCRIPT = new ImportPlugin("recommended", "typescript");
 
   private constructor(...paths: string[]) {
     super(
@@ -24,6 +24,6 @@ export class ImportPlugin extends SharedConfig {
         path: `flatConfigs.${path}`,
       }))
     );
-    this.imports.needs("eslint-import-resolver-typescript");
+    // this.imports.needs("eslint-import-resolver-typescript");
   }
 }
