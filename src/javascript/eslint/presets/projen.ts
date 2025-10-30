@@ -115,11 +115,6 @@ export class Projen implements ConfigWithExtends, IResolvable {
   }
 
   public toJSON(): any {
-    return this.configs.flatMap((config) => {
-      if ("toJSON" in config) {
-        return config.toJSON();
-      }
-      return config;
-    });
+    return this.configs.flatMap((config: any) => config.toJSON?.());
   }
 }

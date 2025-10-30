@@ -1,7 +1,7 @@
 import { types } from "util";
 import { ResolveOptions, IResolvable, IResolver } from "../file";
 
-function isResolvable(obj: any): obj is IResolvable {
+export function isResolvable(obj: any): obj is IResolvable {
   return (obj as IResolvable).toJSON !== undefined;
 }
 
