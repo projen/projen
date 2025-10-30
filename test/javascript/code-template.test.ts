@@ -1,5 +1,6 @@
 import { 
   ImportReference, 
+  ImportPathReference,
   CodeReference,
   js, 
   code, 
@@ -160,7 +161,7 @@ describe("from helper", () => {
   });
 });
 
-describe("defaultFrom helper", () => {
+describe("can access default", () => {
   test("creates default import reference", () => {
     const express = from("express").default.as("app");
     expect(express).toBeInstanceOf(ImportReference);
@@ -315,6 +316,8 @@ describe('ImportReference path()', () => {
     const ref = from('eslint-config-base').default;
     const nested = ref.path('rules.indent');
     
+    expect(nested).toBeInstanceOf(ImportPathReference);
+    
     const template = code('const rule = ', nested, ';');
     const result = generateFile(template);
     
@@ -331,6 +334,15 @@ describe('from() helper nested access', () => {
     
     expect(result).toContain('eslint-config-base.rules.indent');
   });
+
+  test('supports automatic deeply nested property access', () => {
+    const nested = from('eslint-config-base').rules.indent.foo.bar.baz;
+    
+    const template = code('const rule = ', nested, ';');
+    const result = generateFile(template);
+    
+    expect(result).toContain('rules.indent.foo.bar.baz');
+  });  
 
   test('supports aliased automatic nested property access', () => {
     const nested = from('eslint-config-base').default.as('BaseConfig').rules.indent;

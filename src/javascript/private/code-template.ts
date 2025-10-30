@@ -142,12 +142,14 @@ export class ImportReference extends CodeReference {
   }
 
   /**
-   * Gets the resolved reference name for use in nested path references.
-   * @returns The resolved name if imports have been collected
+   * Gets the resolved reference name for use by ImportPathReference.
+   * @returns The resolved name after imports have been collected
    */
   public getResolvedName(): string {
     return this._refName;
   }
+
+
 
   /**
    * Creates a proxy that generates import references for any property access.
@@ -162,13 +164,11 @@ export class ImportReference extends CodeReference {
   public static from(moduleName: string): any {
     return new Proxy({}, {
       get: (_, prop: string) => {
-        const ref = prop === 'default' 
-          ? ImportReference.createDefault(moduleName)
-          : ImportReference.create(moduleName, prop);
+        const ref = ImportReference.createWithProxy(moduleName, prop);
         
         // Add as() method for aliasing
-        if (prop === 'default') {
-          (ref as any).as = (alias: string) => ImportReference.createDefault(moduleName, alias);
+        if (prop === ImportReference.DEFAULT) {
+          (ref as any).as = (alias: string) => ImportReference.createWithProxy(moduleName, prop, alias);
         }
         
         return ref;
@@ -189,78 +189,39 @@ export class ImportReference extends CodeReference {
    */
   protected static DEFAULT = "default";
 
-  private static create(moduleName: string, importName: string, alias?: string): ImportReference {
+  private static createWithProxy(moduleName: string, importName: string, alias?: string): ImportReference {
     const ref = new ImportReference(moduleName, importName, alias);
-    return ref.createProxy();
-  }
-
-  private static createDefault(moduleName: string, alias?: string): ImportReference {
-    const ref = new ImportReference(moduleName, ImportReference.DEFAULT, alias);
-    return ref.createProxy();
+    return ref.createProxy(ref);
   }
 
   /**
-   * Creates a proxy wrapper around this ImportReference that enables nested property access.
-   * @returns A proxy-wrapped version of this ImportReference
+   * Creates a proxy for any object that supports unlimited property chaining.
+   * @param target - The target object to wrap (ImportReference or ImportPathReference)
+   * @returns A proxy that supports further nesting
    */
-  private createProxy(): ImportReference {
-    return new Proxy(this, {
-      get: (target, prop: string) => {
+  private createProxy(target: ImportReference | ImportPathReference): any {
+    return new Proxy(target, {
+      get: (proxyTarget, prop: string) => {
         // If the property exists on the target, return it (bound if it's a function)
-        if (prop in target) {
-          const value = (target as any)[prop];
-          return typeof value === 'function' ? value.bind(target) : value;
+        if (prop in proxyTarget) {
+          const value = (proxyTarget as any)[prop];
+          return typeof value === 'function' ? value.bind(proxyTarget) : value;
         }
         
-        // For nested property access, create a path reference
-        return target.path(prop);
+        // For nested property access, create a path reference and wrap it in a proxy
+        const pathRef = proxyTarget.path(prop);
+        return this.createProxy(pathRef);
       }
-    }) as ImportReference;
+    });
   }
 
   /**
    * Creates a reference to a nested property of this import reference.
-   * The returned reference will resolve the import first, then access the nested property.
    * @param propertyPath - The property path to access (e.g., "config.rules")
-   * @returns A new CodeReference for the nested property
+   * @returns A new ImportPathReference for the nested property
    */
-  public path(propertyPath: string): CodeReference {
-    const self = this;
-    const pathRef = new (class extends CodeReference {
-      public collectImports(imports: ModuleImports): void {
-        self.collectImports(imports);
-        this.refName = `${self.getResolvedName()}.${propertyPath}`;
-      }
-    })("UNRESOLVED");
-    
-    // Return a proxy that supports further nesting
-    return new Proxy(pathRef, {
-      get: (target, prop: string) => {
-        // If the property exists on the target, return it (bound if it's a function)
-        if (prop in target) {
-          const value = (target as any)[prop];
-          return typeof value === 'function' ? value.bind(target) : value;
-        }
-        
-        // For nested property access, create another path reference that chains import collection
-        const nestedRef = new (class extends CodeReference {
-          public collectImports(imports: ModuleImports): void {
-            self.collectImports(imports);
-            this.refName = `${self.getResolvedName()}.${propertyPath}.${prop}`;
-          }
-        })("UNRESOLVED");
-        
-        return new Proxy(nestedRef, {
-          get: (nestedTarget, nestedProp: string) => {
-            if (nestedProp in nestedTarget) {
-              const value = (nestedTarget as any)[nestedProp];
-              return typeof value === 'function' ? value.bind(nestedTarget) : value;
-            }
-            return nestedTarget.path(nestedProp);
-          }
-        }) as CodeReference;
-      }
-    }) as CodeReference;
+  public path(propertyPath: string): ImportPathReference {
+    return new ImportPathReference(this, propertyPath);
   }
 
   /**
@@ -278,13 +239,47 @@ export class ImportReference extends CodeReference {
       const ref = imports.default(this.moduleName, alias);
       this.refName = ref.render();
     } else {
-      const ref = this.alias
-        ? imports.from(this.moduleName, this.importName as string, this.alias)
-        : imports.from(this.moduleName, this.importName as string);
+      const ref = imports.from(this.moduleName, this.importName, this.alias);
       this.refName = ref.render();
     }
     
     this._importsCollected = true;
+  }
+}
+
+/**
+ * A reference to a nested property of an import.
+ * This class handles the simple case of accessing properties on imported values.
+ */
+export class ImportPathReference extends CodeReference {
+  /**
+   * Creates a new import path reference.
+   * @param parentImport - The import reference this path extends
+   * @param propertyPath - The property path to access
+   */
+  constructor(
+    private parentImport: ImportReference,
+    private propertyPath: string
+  ) {
+    super(parentImport.getResolvedName());
+  }
+
+  /**
+   * Collects imports by delegating to the parent import, then resolving the full path.
+   * @param imports - The ModuleImports instance to collect imports into
+   */
+  public collectImports(imports: ModuleImports): void {
+    this.parentImport.collectImports(imports);
+    this.refName = `${this.parentImport.getResolvedName()}.${this.propertyPath}`;
+  }
+
+  /**
+   * Creates a reference to a nested property of this path reference.
+   * @param propertyPath - The additional property path to access
+   * @returns A new ImportPathReference for the deeper nested property
+   */
+  public path(propertyPath: string): ImportPathReference {
+    return new ImportPathReference(this.parentImport, `${this.propertyPath}.${propertyPath}`);
   }
 }
 
@@ -513,7 +508,6 @@ export class CodeBuilder extends CodeResolvable {
     ).join('');
   }
 }
-
 
 /**
  * JSII-compatible function for creating code with embedded import references.
