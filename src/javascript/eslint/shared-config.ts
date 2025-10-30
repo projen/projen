@@ -1,5 +1,6 @@
 import { ConfigWithExtends } from "./config-object";
 import { from, js } from "../private/code-template";
+import { IESLintConfig } from "./config";
 
 /**
  * A shared configuration definition.
@@ -13,7 +14,7 @@ export interface SharedConfigDefinition {
 /**
  * An ESLint configuration preset shared via a module.
  */
-export class SharedConfig implements ConfigWithExtends {
+export class SharedConfig implements IESLintConfig {
   public readonly name: string; 
   private readonly config: ConfigWithExtends;
 

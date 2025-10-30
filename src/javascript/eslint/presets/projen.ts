@@ -1,5 +1,5 @@
 import { EslintOptions } from "../../eslint";
-import { ESLintConfig } from "../config";
+import { ESLintConfig, IESLintConfig } from "../config";
 import { ConfigWithExtends, Extends, Plugin } from "../config-object";
 import { Tseslint } from "./tseslint";
 import { from, js } from "../../private/code-template";
@@ -9,7 +9,7 @@ import { isResolvable } from "../../../_private/data-resolver";
 /**
  * Configurations provided by projen
  */
-export class Projen implements ConfigWithExtends, IResolvable {
+export class Projen implements IESLintConfig {
   public name: string = "Projen ESLint Config";
 
   /**
@@ -20,7 +20,7 @@ export class Projen implements ConfigWithExtends, IResolvable {
   /**
    * Configure the default rules
    */
-  public static configure(options: EslintOptions): ConfigWithExtends {
+  public static configure(options: EslintOptions) {
     return new Projen(options);
   }
 

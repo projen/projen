@@ -7,12 +7,13 @@ import { js, from, json, CodeTemplate } from "../private/code-template";
 import { CodeResolvable } from "../../code-resolvable";
 import { ModuleImports } from "../private/modules";
 import { DependencyType } from "../../dependencies";
+import { IESLintConfig } from "./config";
 
 export interface ESLintConfigFileOptions {
   /**
    * The ESLint configurations as an ordered list.
    */
-  readonly configs?: ConfigWithExtends[];
+  readonly configs?: IESLintConfig[];
 
   /**
    * The module type of configuration file.
@@ -31,7 +32,7 @@ export interface ESLintConfigFileOptions {
 }
 
 export class ESLintConfigFile extends FileBase {
-  private readonly configs: ConfigWithExtends[];
+  private readonly configs: IESLintConfig[];
   private readonly moduleType: ModuleType;
 
   private _synthed?: { imports: ModuleImports; code: CodeTemplate; };
@@ -50,7 +51,7 @@ export class ESLintConfigFile extends FileBase {
   /**
    * Add a configuration to the file.
    */
-  public addConfig(config: ConfigWithExtends) {
+  public addConfig(config: IESLintConfig) {
     this.configs.push(config);
   }
 

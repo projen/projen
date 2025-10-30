@@ -1,5 +1,5 @@
 import { IConstruct } from "constructs";
-import { ESLintConfig } from "./config";
+import { ESLintConfig, IESLintConfig } from "./config";
 import { ESLintJs, Stylistic, Tseslint } from "./presets";
 import { Component } from "../../component";
 import { DependencyType } from "../../dependencies";
@@ -10,7 +10,6 @@ import { ModuleType } from "../module-type";
 import { ESLintConfigFile } from "./config-file";
 import { TypescriptConfig } from "../typescript-config";
 import { ImportX } from "./presets/import-x";
-import { ConfigWithExtends } from "./config-object";
 
 export interface ESLintFileOptions {
   /**
@@ -95,7 +94,7 @@ export interface ESLintOptions {
    *
    * @default - no additional configs
    */
-  readonly configs?: ConfigWithExtends[];
+  readonly configs?: IESLintConfig[];
 
   /**
    * Options to for the config file.
@@ -128,7 +127,7 @@ export class ESLint extends Component {
   /**
    * The ESLint configurations as an ordered list.
    */
-  public readonly configs: ConfigWithExtends[] = [];
+  public readonly configs: IESLintConfig[] = [];
 
   constructor(scope: IConstruct, options: ESLintOptions = {}) {
     super(scope);
@@ -157,8 +156,7 @@ export class ESLint extends Component {
     const ignoreGenerated = options.ignoreGeneratedFiles ?? true;
 
     // @todo jest
-
-    const defaultConfigs: ConfigWithExtends[] = [];
+    const defaultConfigs: IESLintConfig[] = [];
 
     if (files.length) {
       defaultConfigs.push(ESLintConfig.files(files));
@@ -221,7 +219,7 @@ export class ESLint extends Component {
   /**
    * Add configs to eslint.
    */
-  public addConfigs(...configs: ConfigWithExtends[]) {
+  public addConfigs(...configs: IESLintConfig[]) {
     this.configs.push(...configs);
   }
 
