@@ -2,7 +2,7 @@ import { ConfigWithExtends } from "./config-object";
 import { Project } from "../../project";
 import { ModuleImports } from "../private/modules";
 import { IResolvable } from "../../file";
-import { Code } from "../../_private/code";
+import { from, js } from "../private/code-template";
 
 /**
  * A Configuration for ESLint.
@@ -30,29 +30,24 @@ export class ESLintConfig implements IESLintConfig {
    * The list of files or glob patterns matching files to ignore.
    */
   public static ignores(patterns: string[]): ESLintConfig {
-    const imports = new ModuleImports();
-    imports.from("eslint/config", "globalIgnores");
-
-    return new ESLintConfig(
-      Code.literal(`globalIgnores(${JSON.stringify(patterns)})`) as any,
-      imports
-    );
+    const globalIgnores = from("eslint/config").globalIgnores;
+    const template = js`${globalIgnores}(${JSON.stringify(patterns)})`;
+    
+    return new ESLintConfig(template as any);
   }
 
   /**
    * Use the ignore file in the list of ignored files.
    */
   public static useIgnoreFile(): ESLintConfig {
-    const imports = new ModuleImports();
-    imports.from("eslint/config", "globalIgnores");
-    imports.from("@eslint/compat", "convertIgnorePatternToMinimatch");
+    const globalIgnores = from("eslint/config").globalIgnores;
+    const convertIgnorePatternToMinimatch = from("@eslint/compat").convertIgnorePatternToMinimatch;
 
     return new ESLintConfig(
-      ((project: Project) =>
-         Code.literal(`globalIgnores(${JSON.stringify(
-          project.gitignore.patterns
-        )}.map(convertIgnorePatternToMinimatch), "Imported .gitignore patterns")`)) as any,
-      imports
+      ((project: Project) => {
+        const patterns = JSON.stringify(project.gitignore.patterns);
+        return js`${globalIgnores}(${patterns}.map(${convertIgnorePatternToMinimatch}), "Imported .gitignore patterns")`;
+      }) as any
     );
   }
 
@@ -63,17 +58,17 @@ export class ESLintConfig implements IESLintConfig {
    * which would fail since generated files are typically read-only.
    */
   public static ignoreGenerated(): ESLintConfig {
-    const imports = new ModuleImports();
-    imports.from("eslint/config", "globalIgnores");
+    const globalIgnores = from("eslint/config").globalIgnores;
 
     return new ESLintConfig(
-      ((project: Project) =>
-        Code.literal(`globalIgnores(${JSON.stringify(
+      ((project: Project) => {
+        const patterns = JSON.stringify(
           project.files
             .filter((file) => file.readonly && file.marker)
             .map((file) => file.path)
-        )}, "Ignore projen generated files")`)) as any,
-      imports
+        );
+        return js`${globalIgnores}(${patterns}, "Ignore projen generated files")`;
+      }) as any
     );
   }
 

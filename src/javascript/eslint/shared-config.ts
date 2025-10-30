@@ -1,7 +1,6 @@
 import { IESLintConfig } from "./config";
 import { ConfigWithExtends } from "./config-object";
-import { ModuleImports } from "../private/modules";
-import { Code } from "../../_private/code";
+import { from, js } from "../private/code-template";
 
 /**
  * A shared configuration definition.
@@ -16,13 +15,12 @@ export interface SharedConfigDefinition {
  * An ESLint configuration preset shared via a module.
  */
 export class SharedConfig implements IESLintConfig {
-  public readonly imports: ModuleImports = new ModuleImports();
   private readonly configs: ConfigWithExtends[] = [];
 
   public constructor(...defs: SharedConfigDefinition[]) {
     for (const def of defs) {
-      const alias = this.imports.default(def.module, def.name);
-      this.configs.push(Code.literal(`${alias.render()}.${def.path}`) as any);
+      const alias = from(def.module).default.as(def.name);
+      this.configs.push(js`${alias}.${def.path}` as any);
     }
   }
 

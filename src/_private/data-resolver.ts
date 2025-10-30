@@ -24,11 +24,18 @@ interface DataResolverOptions extends ResolveOptions {
 export class DataResolver implements IResolver {
   private readonly handlers = new Array<[DataTypePredicate, DataTypeHandler]>();
 
+  /**
+   * Register a custom handler for a type.
+   */
   public registerHandler(predicate: DataTypePredicate, handler: DataTypeHandler): void {
     this.handlers.push([predicate, handler]);
   }
 
-  public registerPassThrough(predicate: DataTypePredicate): void {
+  /**
+   * Allow a type to pass through the resolver unchanged.
+   * A serializer will than have to be aware of how to serialize it.
+   */
+  public allowPassThrough(predicate: DataTypePredicate): void {
     this.handlers.push([predicate, (_resolver, value, _options) => value]);
   }
 

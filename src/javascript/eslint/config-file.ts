@@ -3,7 +3,7 @@ import { FileBase } from "../../file";
 import { ModuleType } from "../module-type";
 import { IESLintConfig } from "./config";
 import { DataResolver } from "../../_private/data-resolver";
-import { Plugin } from "./config-object";
+import { ConfigWithExtends } from "./config-object";
 import { Code } from "../../_private/code";
 import { js, from, json, CodeGenerator } from "../private/code-template";
 
@@ -32,7 +32,6 @@ export interface ESLintConfigFileOptions {
 export class ESLintConfigFile extends FileBase {
   private readonly configs: IESLintConfig[];
   private readonly moduleType: ModuleType;
-  private readonly generator = new CodeGenerator();
 
   constructor(scope: IConstruct, options: ESLintConfigFileOptions = {}) {
     const moduleType = options.moduleType ?? ModuleType.ESM;
@@ -56,25 +55,22 @@ export class ESLintConfigFile extends FileBase {
    * Sync the config file with the current state of the configs.
    */
   protected synthesizeContent(): string {
-    const dataResolver = new DataResolver();
-    dataResolver.registerHandler((value) => value instanceof Plugin, (resolver, plugin, options) => {
-      return resolver(plugin.toJSON(), options);
-    });
-    dataResolver.registerPassThrough(Code.isCodeResolvable);
-
-    const resolvedConfigs = dataResolver.resolve(this.configs.flatMap(c => c.toJSON()), { args: [this.project] });
-
     const defineConfig = from("eslint/config").defineConfig;
     const exportStatement = Code.literal(this.moduleType === ModuleType.ESM ? "export default" : "module.exports =");
     const marker = Code.literal(this.marker ? `// ${this.marker}\n` : '');
-
-    const configJson = json(resolvedConfigs);
+    const resolvedConfigs = this.resolveConfigs();
     
-    const template = js`${marker}${exportStatement} ${defineConfig}(${configJson});
-`;
+    const template = js`${marker}${exportStatement} ${defineConfig}(${json(resolvedConfigs)});\n`;
 
-    return this.generator.generateFile(template);
+    const generator = new CodeGenerator();
+    return generator.generateFile(template);
   }
 
+  private resolveConfigs(): ConfigWithExtends[] {
+    const dataResolver = new DataResolver();
+    dataResolver.allowPassThrough(Code.isCodeResolvable);
 
+    const resolvedConfigs = dataResolver.resolve(this.configs.flatMap(c => c.toJSON()), { args: [this.project] });
+    return resolvedConfigs;
+  }
 }

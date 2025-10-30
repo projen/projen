@@ -52,11 +52,6 @@ function cleanStackTrace(stack?: string): string {
 }
 
 /**
- * Representing a default import
- */
-const DEFAULT = Symbol("default");
-
-/**
  * A reference to an import that will be resolved when the code is generated.
  * Each reference can only be used once to prevent naming conflicts.
  */
@@ -66,7 +61,7 @@ export class ImportReference extends CodeResolvable {
   private firstUsageStack?: string;
   private readonly creationStack: string;
 
-  constructor(
+  protected constructor(
     private moduleName: string,
     private importName: string | symbol,
     private alias?: string
@@ -75,20 +70,34 @@ export class ImportReference extends CodeResolvable {
     this.creationStack = captureStackTrace();
   }
 
+  /**
+   * Representing a default import
+   */
+  protected static DEFAULT = Symbol("default");
+
   static create(moduleName: string, importName: string, alias?: string): ImportReference {
     return new ImportReference(moduleName, importName, alias);
   }
 
   static createDefault(moduleName: string, alias?: string): ImportReference {
-    return new ImportReference(moduleName, DEFAULT, alias);
+    return new ImportReference(moduleName, ImportReference.DEFAULT, alias);
   }
 
-  collectImports(imports: ModuleImports): void {
-    const ref = imports.add(this.moduleName, this.importName, this.alias);
-    this.resolvedName = ref.render();
+  public collectImports(imports: ModuleImports): void {
+    if (this.importName === ImportReference.DEFAULT) {
+      // For default imports, we need an alias. If none provided, use module name
+      const alias = this.alias || this.moduleName.split('/').pop() || 'default';
+      const ref = imports.default(this.moduleName, alias);
+      this.resolvedName = ref.render();
+    } else {
+      const ref = this.alias
+        ? imports.from(this.moduleName, this.importName as string, this.alias)
+        : imports.from(this.moduleName, this.importName as string);
+      this.resolvedName = ref.render();
+    }
   }
 
-  render(): string {
+  public render(): string {
     if (this.consumed) {
       const currentStack = captureStackTrace();
       throw new ImportReferenceError(
@@ -151,11 +160,23 @@ export function js(strings: TemplateStringsArray, ...values: (string | ICodeReso
  * ```typescript
  * const { Component, useState } = from("react");
  * const router = from("express").Router;
+ * const aliased = from("react").default.as("MyReact");
  * ```
  */
 export function from(moduleName: string): any {
   return new Proxy({}, {
-    get: (_, prop: string) => ImportReference.create(moduleName, prop)
+    get: (_, prop: string) => {
+      const ref = prop === 'default' 
+        ? ImportReference.createDefault(moduleName)
+        : ImportReference.create(moduleName, prop);
+      
+      // Add as() method for aliasing
+      if (prop === 'default') {
+        (ref as any).as = (alias: string) => ImportReference.createDefault(moduleName, alias);
+      }
+      
+      return ref;
+    }
   });
 }
 

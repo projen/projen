@@ -1,10 +1,9 @@
-import { Code } from "../../../_private/code";
-
 import { EslintOptions } from "../../eslint";
 import { ModuleImports } from "../../private/modules";
 import { ESLintConfig, IESLintConfig } from "../config";
 import { ConfigWithExtends, Extends, Plugin } from "../config-object";
 import { Tseslint } from "./tseslint";
+import { from, js } from "../../private/code-template";
 
 /**
  * Configurations provided by projen
@@ -29,7 +28,6 @@ export class Projen implements IESLintConfig {
     this.imports = new ModuleImports();
     this.imports.needs("@typescript-eslint/eslint-plugin");
     this.imports.needs("eslint-plugin-import");
-    const globals = this.imports.default("globals", "globals");
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
@@ -38,14 +36,16 @@ export class Projen implements IESLintConfig {
       ESLintConfig.ignores(options.ignorePatterns ?? ["lib/"]),
       Tseslint.BASE,
       new ESLintConfig({
-        plugins: Plugin.fromName("import") as any,
+        plugins: {
+          import: Plugin.fromName("import")
+        },
         languageOptions: {
           parserOptions: {
             ecmaVersion: 2018,
             sourceType: "module",
             project: tsconfig,
           },
-          globals: Code.literal(`{\n  ...${globals.render()}.jest,\n  ...${globals.render()}.node\n}`),
+          globals: js`{\n  ...${from("globals").default}.jest,\n  ...${from("globals").default}.node\n}`,
         },
         extends: [Extends.fromName("import/typescript")],
         settings: {

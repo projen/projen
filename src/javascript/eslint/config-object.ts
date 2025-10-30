@@ -1,7 +1,8 @@
 import { camel } from "case";
 import { IESLintConfig } from "./config";
-import { ModuleImports } from "../private/modules";
-import { ICodeResolvable } from "../../_private/code-resolvable";
+import { from, ImportReference } from "../private/code-template";
+import { CodeResolvable } from "../../_private/code-resolvable";
+import { IResolvable } from "../../file";
 
 /**
  * The configuration for a set of files.
@@ -65,33 +66,6 @@ export interface ConfigObject {
 }
 
 /**
- * Config with extends. Valid only inside of `defineConfig()`.
- */
-export interface ConfigWithExtends extends ConfigObject {
-  readonly extends?: Extends[];
-}
-
-/**
- * Extends an existing config
- * @todo
- */
-export class Extends {
-  public static fromName(configName: string): Extends {
-    return new Extends(configName);
-  }
-
-  public static fromConfig(config: IESLintConfig): Extends {
-    return new Extends(config);
-  }
-
-  private constructor(public readonly config: any) {}
-
-  public toJSON() {
-    return this.config;
-  }
-}
-
-/**
  * Represents the configuration options for the core linter.
  */
 export interface LinterOptionsConfig {
@@ -111,10 +85,60 @@ export interface LinterOptionsConfig {
 }
 
 /**
- * A plugin is an object that contains rules. It can be a local plugin or a
- * shared plugin.
+ * The severity levels used in a configuration.
  */
-export class Plugin {
+export enum Severity {
+  OFF = "off",
+  WARN = "warn",
+  ERROR = "error",
+}
+
+/**
+ * Config with extends. Valid only inside of `defineConfig()`.
+ */
+export interface ConfigWithExtends extends ConfigObject {
+  readonly extends?: Extends[];
+}
+
+/**
+ * Extends an existing config
+ */
+export class Extends implements IResolvable {
+  /**
+   * Extend a config from a plugin by name.
+   */
+  public static fromName(configName: string): Extends {
+    return new Extends(configName);
+  }
+
+  /**
+   * Extend another config.
+   */
+  public static fromConfig(config: IESLintConfig): Extends {
+    return new Extends(config);
+  }
+
+  private constructor(public readonly config: any) {}
+
+  public toJSON() {
+    return this.config;
+  }
+}
+
+
+/**
+ * A plugin is an object that contains rules.
+ * It can be a local plugin or a shared plugin.
+ */
+export class Plugin extends CodeResolvable {
+  /**
+   * Use plugin by its eslint plugin name.
+   *
+   * @example
+   * ```typescript
+   * Plugin.fromName("react"); // refers to package eslint-plugin-react
+   * ```
+   */
   public static fromName(pluginName: string): Plugin {
     if (pluginName.startsWith("@")) {
       return Plugin.fromPackage(`${pluginName}/eslint-plugin`, pluginName);
@@ -122,33 +146,43 @@ export class Plugin {
     return Plugin.fromPackage(`eslint-plugin-${pluginName}`, pluginName);
   }
 
+  /**
+   * Use plugin by its package name.
+   *
+   * @example
+   * ```typescript
+   * Plugin.fromPackage("eslint-plugin-react");
+   * ```
+   */
   public static fromPackage(plugin: string, name: string): Plugin {
     return new Plugin(plugin, name);
   }
 
-  public readonly imports: ModuleImports = new ModuleImports();
-  private readonly name: string;
-  private readonly alias: ICodeResolvable;
+  /**
+   * The name of the plugin for eslint.
+   * @example "react"
+   */
+  public readonly name: string;
+
+  /**
+   * The plugin package.
+   * @example "eslint-plugin-react"
+   */
+  public readonly pkg: string;
+
+  private ref: ImportReference;
 
   private constructor(pkg: string, name: string) {
+    super();
+    
     this.name = name;
-
-    // sanitize to a valid JS name
-    this.alias = this.imports.default(pkg, camel(name));
+    this.pkg = pkg;
+    this.ref = from(this.pkg).default.as(camel(this.name));
   }
-
-  public toJSON() {
-    return {
-      [this.name]: this.alias,
-    };
+  public render(): string {
+    return this.ref.render();
   }
-}
-
-/**
- * The severity levels used in a configuration.
- */
-export enum Severity {
-  OFF = "off",
-  WARN = "warn",
-  ERROR = "error",
+  public collectImports?(imports: any): void {
+    return this.ref.collectImports(imports);
+  }
 }
