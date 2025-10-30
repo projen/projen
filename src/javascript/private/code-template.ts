@@ -57,13 +57,13 @@ function cleanStackTrace(stack?: string): string {
  */
 export class CodeReference extends CodeResolvable {
   private consumed = false;
-  public resolvedName?: string;
+  public refName?: string;
   private firstUsageStack?: string;
   private readonly creationStack: string;
 
-  constructor(resolvedName?: string) {
+  constructor(refName: string) {
     super();
-    this.resolvedName = resolvedName;
+    this.refName = refName;
     this.creationStack = captureStackTrace();
   }
 
@@ -73,25 +73,25 @@ export class CodeReference extends CodeResolvable {
    * @returns A new CodeReference for the nested property
    */
   public path(propertyPath: string): CodeReference {
-    return new CodeReference(`${this.resolvedName || 'UNRESOLVED'}.${propertyPath}`);
+    return new CodeReference(`${this.refName}.${propertyPath}`);
   }
 
   public render(): string {
     if (this.consumed) {
       const currentStack = captureStackTrace();
       throw new ImportReferenceError(
-        `Import reference already used. Create a new reference for reuse.\n\n` +
+        `Code reference already used. Create a new reference for reuse.\n\n` +
         `Reference created:\n    ${this.creationStack}\n` +
         `First use:\n    ${this.firstUsageStack}\n` +
         `Second use:\n    ${currentStack}\n`
       );
     }
-    if (!this.resolvedName) {
+    if (!this.refName) {
       throw new Error("Import not resolved. Call collectImports() first.");
     }
     this.consumed = true;
     this.firstUsageStack = captureStackTrace();
-    return this.resolvedName;
+    return this.refName;
   }
 }
 
@@ -99,12 +99,39 @@ export class CodeReference extends CodeResolvable {
  * A reference to an import that will be resolved when the code is generated.
  */
 export class ImportReference extends CodeReference {
-  protected constructor(
+  /**
+   * Creates a proxy that generates import references for any property access.
+   * 
+   * @example
+   * ```typescript
+   * const { Component, useState } = from("react");
+   * const router = from("express").Router;
+   * const aliased = from("react").default.as("MyReact");
+   * ```
+   */
+  public static from(moduleName: string): any {
+    return new Proxy({}, {
+      get: (_, prop: string) => {
+        const ref = prop === 'default' 
+          ? ImportReference.createDefault(moduleName)
+          : ImportReference.create(moduleName, prop);
+        
+        // Add as() method for aliasing
+        if (prop === 'default') {
+          (ref as any).as = (alias: string) => ImportReference.createDefault(moduleName, alias);
+        }
+        
+        return ref;
+      }
+    });
+  }
+
+  private constructor(
     private moduleName: string,
     private importName: string | symbol,
     private alias?: string
   ) {
-    super();
+    super("UNRESOLVED");
   }
 
   /**
@@ -112,12 +139,12 @@ export class ImportReference extends CodeReference {
    */
   protected static DEFAULT = Symbol("default");
 
-  static create(moduleName: string, importName: string, alias?: string): ImportReference {
+  private static create(moduleName: string, importName: string, alias?: string): ImportReference {
     const ref = new ImportReference(moduleName, importName, alias);
     return ref.createProxy();
   }
 
-  static createDefault(moduleName: string, alias?: string): ImportReference {
+  private static createDefault(moduleName: string, alias?: string): ImportReference {
     const ref = new ImportReference(moduleName, ImportReference.DEFAULT, alias);
     return ref.createProxy();
   }
@@ -148,9 +175,9 @@ export class ImportReference extends CodeReference {
     const pathRef = new (class extends CodeReference {
       public collectImports(imports: ModuleImports): void {
         self.collectImports(imports);
-        this.resolvedName = `${self.resolvedName}.${propertyPath}`;
+        this.refName = `${self.refName}.${propertyPath}`;
       }
-    })();
+    })("UNRESOLVED");
     
     // Return a proxy that supports further nesting
     return new Proxy(pathRef, {
@@ -165,9 +192,9 @@ export class ImportReference extends CodeReference {
         const nestedRef = new (class extends CodeReference {
           public collectImports(imports: ModuleImports): void {
             self.collectImports(imports);
-            this.resolvedName = `${self.resolvedName}.${propertyPath}.${prop}`;
+            this.refName = `${self.refName}.${propertyPath}.${prop}`;
           }
-        })();
+        })("UNRESOLVED");
         
         return new Proxy(nestedRef, {
           get: (nestedTarget, nestedProp: string) => {
@@ -187,14 +214,29 @@ export class ImportReference extends CodeReference {
       // For default imports, we need an alias. If none provided, use module name
       const alias = this.alias || this.moduleName.split('/').pop() || 'default';
       const ref = imports.default(this.moduleName, alias);
-      this.resolvedName = ref.render();
+      this.refName = ref.render();
     } else {
       const ref = this.alias
         ? imports.from(this.moduleName, this.importName as string, this.alias)
         : imports.from(this.moduleName, this.importName as string);
-      this.resolvedName = ref.render();
+      this.refName = ref.render();
     }
   }
+}
+
+/**
+ * Creates a proxy that generates import references for any property access.
+ * 
+ * @example
+ * ```typescript
+ * const { Component, useState } = from("react");
+ * const router = from("express").Router;
+ * const aliased = from("react").default.as("MyReact");
+ * const nested = from("react").Component.foobar;
+ * ```
+ */
+export function from(moduleName: string): any {
+  return ImportReference.from(moduleName);
 }
 
 export class CodeTemplate extends CodeResolvable {
@@ -232,45 +274,6 @@ export class CodeTemplate extends CodeResolvable {
  */
 export function js(strings: TemplateStringsArray, ...values: (string | ICodeResolvable)[]): CodeTemplate {
   return new CodeTemplate(strings, values);
-}
-
-/**
- * Creates a proxy that generates import references for any property access.
- * 
- * @example
- * ```typescript
- * const { Component, useState } = from("react");
- * const router = from("express").Router;
- * const aliased = from("react").default.as("MyReact");
- * ```
- */
-export function from(moduleName: string): any {
-  return new Proxy({}, {
-    get: (_, prop: string) => {
-      const ref = prop === 'default' 
-        ? ImportReference.createDefault(moduleName)
-        : ImportReference.create(moduleName, prop);
-      
-      // Add as() method for aliasing
-      if (prop === 'default') {
-        (ref as any).as = (alias: string) => ImportReference.createDefault(moduleName, alias);
-      }
-      
-      return ref;
-    }
-  });
-}
-
-/**
- * Creates a reference to a default import.
- * 
- * @example
- * ```typescript
- * const express = defaultFrom("express", "app");
- * ```
- */
-export function defaultFrom(moduleName: string, alias?: string): ImportReference {
-  return ImportReference.createDefault(moduleName, alias);
 }
 
 class JsonTemplate extends CodeResolvable {

@@ -4,37 +4,36 @@ import {
   js, 
   code, 
   json, 
-  from, 
-  defaultFrom
+  from
 } from "../../src/javascript/private/code-template";
 import { ModuleImports } from "../../src/javascript/private/modules";
 
 describe("ImportReference", () => {
   test("creates named import reference", () => {
-    const ref = ImportReference.create("react", "Component");
+    const ref = from("react").Component;
     expect(ref).toBeInstanceOf(ImportReference);
   });
 
   test("creates default import reference", () => {
-    const ref = ImportReference.createDefault("express", "app");
+    const ref = from("express").default.as("app");
     expect(ref).toBeInstanceOf(ImportReference);
   });
 
   test("throws error when rendered before collecting imports", () => {
-    const ref = ImportReference.create("react", "Component");
+    const ref = from("react").Component;
     expect(() => ref.render()).toThrow("Import not resolved");
   });
 
   test("throws error when rendered twice", () => {
-    const ref = ImportReference.create("react", "Component");
+    const ref = from("react").Component;
     const template = code("const comp = ", ref);
     
     generateFile(template);
-    expect(() => ref.render()).toThrow("Import reference already used");
+    expect(() => ref.render()).toThrow("Code reference already used");
   });
 
   test("import reference reuse error includes stack trace locations", () => {
-    const ref = ImportReference.create("react", "Component");
+    const ref = from("react").Component;
     const imports = new (require("../../src/javascript/private/modules").ModuleImports)();
     ref.collectImports(imports);
     
@@ -48,7 +47,7 @@ describe("ImportReference", () => {
       const message = error.message;
       
       expect(message).toMatch(
-        /Import reference already used.*Reference created:.*code-template\.test\.ts:\d+:.*First use:.*code-template\.test\.ts:\d+:.*Second use:.*code-template\.test\.ts:\d+:/s
+        /Code reference already used.*Reference created:.*code-template\.test\.ts:\d+:.*First use:.*code-template\.test\.ts:\d+:.*Second use:.*code-template\.test\.ts:\d+:/s
       );
     }
   });
@@ -67,7 +66,7 @@ describe("CodeTemplate (js tagged template)", () => {
   test("handles multiple imports", () => {
     const Component = from("react").Component;
     const useState = from("react").useState;
-    const express = defaultFrom("express", "app");
+    const express = from("express").default.as("app");
     
     const template = js`
 const comp = ${Component};
@@ -163,19 +162,19 @@ describe("from helper", () => {
 
 describe("defaultFrom helper", () => {
   test("creates default import reference", () => {
-    const express = defaultFrom("express", "app");
+    const express = from("express").default.as("app");
     expect(express).toBeInstanceOf(ImportReference);
   });
 
   test("works without alias", () => {
-    const express = defaultFrom("express");
+    const express = from("express").default;
     expect(express).toBeInstanceOf(ImportReference);
   });
 });
 
 describe("stringifyWithCode", () => {
   test("handles code resolvables", () => {
-    const ref = ImportReference.create("react", "Component");
+    const ref = from("react").Component;
     // Mock the resolved name for testing
     (ref as any).resolvedName = "Component";
     (ref as any).consumed = false;
@@ -267,7 +266,7 @@ describe("Import sorting", () => {
 
   test("puts default imports first within module", () => {
     const named = from("express").Router;
-    const defaultImport = defaultFrom("express", "app");
+    const defaultImport = from("express").default.as("app");
     
     const template = code("const r = ", named, "; const a = ", defaultImport, ";");
     
@@ -310,13 +309,13 @@ describe('CodeReference', () => {
     const ref = new CodeReference('myVar');
     ref.render(); // First use
     
-    expect(() => ref.render()).toThrow('Import reference already used');
+    expect(() => ref.render()).toThrow('Code reference already used');
   });
 });
 
 describe('ImportReference path()', () => {
   test('creates nested property reference with import resolution', () => {
-    const ref = ImportReference.createDefault('eslint-config-base');
+    const ref = from('eslint-config-base').default;
     const nested = ref.path('rules.indent');
     
     const template = code('const rule = ', nested, ';');

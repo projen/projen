@@ -43,7 +43,7 @@ export class Projen implements ConfigWithExtends, IResolvable {
             sourceType: "module",
             project: tsconfig,
           },
-          globals: js`{\n  ...${from("globals").default}.jest,\n  ...${from("globals").default}.node\n}`,
+          globals: js`{\n  ...${from("globals").default.jest},\n  ...${from("globals").default.node}\n}`,
         },
         extends: [Extends.fromName("import/typescript")],
         settings: {
