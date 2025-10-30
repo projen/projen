@@ -2,7 +2,7 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { Project } from "../src";
+import { ICodeResolvable, Project } from "../src";
 import { installPackage } from "../src/cli/util";
 import {
   GitHubProject,
@@ -12,7 +12,7 @@ import * as logging from "../src/logging";
 import { Task } from "../src/task";
 import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
-import { ModuleImports } from "../src/javascript/private/modules";
+import { JavaScriptImportResolver } from "../src/javascript/private/modules";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
 
@@ -173,8 +173,8 @@ export function sanitizeOutput(dir: string) {
 }
 
 // Helper function to synth complete js files with imports
-export function synthJsCode(template: any): string {
-  const imports = new ModuleImports();
+export function synthJsCode(template: ICodeResolvable): string {
+  const imports = new JavaScriptImportResolver(new Project({ name: "for-js-resolver" }));
   template.resolveImports?.(imports);
   const body = template.render();
   const importLines = imports.asEsmImports();

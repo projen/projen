@@ -6,7 +6,6 @@ import {
   json, 
   from
 } from "../../src/javascript/private/code-template";
-import { ModuleImports } from "../../src/javascript/private/modules";
 import { synthJsCode } from "../util";
 
 describe("ImportReference", () => {

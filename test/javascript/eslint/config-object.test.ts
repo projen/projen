@@ -1,6 +1,5 @@
 import {
   Extends,
-  Processor,
   Severity,
 } from "../../../src/javascript/eslint/config-object";
 
@@ -12,19 +11,12 @@ describe("flat-config", () => {
     });
 
     test("fromConfig creates extends from config object", () => {
-      const config = { imports: undefined, config: ["test"] };
+      const config = { name: "test-config", rules: {} };
       const ext = Extends.fromConfig(config);
       expect(ext.config).toBe(config);
     });
   });
-
-  describe("Processor", () => {
-    test("fromPlugin creates processor", () => {
-      const processor = Processor.fromPlugin("pluginName/processorName");
-      expect(processor.processor).toBe("pluginName/processorName");
-    });
-  });
-
+  
   describe("Severity", () => {
     test("has correct values", () => {
       expect(Severity.OFF).toBe("off");
