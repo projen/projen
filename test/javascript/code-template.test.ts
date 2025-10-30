@@ -21,7 +21,7 @@ describe("ImportReference", () => {
 
   test("throws error when rendered before collecting imports", () => {
     const ref = from("react").Component;
-    expect(() => ref.render()).toThrow("Import not resolved");
+    expect(() => ref.render()).toThrow("ImportReference must have collectImports() called before use");
   });
 
   test("throws error when rendered twice", () => {
@@ -175,11 +175,8 @@ describe("defaultFrom helper", () => {
 describe("stringifyWithCode", () => {
   test("handles code resolvables", () => {
     const ref = from("react").Component;
-    // Mock the resolved name for testing
-    (ref as any).resolvedName = "Component";
-    (ref as any).consumed = false;
-    
-    const result = json({ comp: ref }).render();
+    const template = json({ comp: ref });
+    const result = generateFile(template);
     expect(result).toContain('"comp": Component');
   });
 

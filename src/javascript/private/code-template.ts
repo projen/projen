@@ -56,15 +56,33 @@ function cleanStackTrace(stack?: string): string {
  * Each reference can only be used once to prevent naming conflicts.
  */
 export class CodeReference extends CodeResolvable {
+  protected _refName: string;
   private consumed = false;
-  public refName?: string;
   private firstUsageStack?: string;
-  private readonly creationStack: string;
+  private creationStack: string;
 
+  /**
+   * Creates a new code reference.
+   * @param refName - The name this reference will render as
+   */
   constructor(refName: string) {
     super();
-    this.refName = refName;
+    this._refName = refName;
     this.creationStack = captureStackTrace();
+  }
+
+  /**
+   * Gets the resolved reference name.
+   */
+  protected get refName(): string {
+    return this._refName;
+  }
+
+  /**
+   * Sets the resolved reference name.
+   */
+  protected set refName(value: string) {
+    this._refName = value;
   }
 
   /**
@@ -76,6 +94,12 @@ export class CodeReference extends CodeResolvable {
     return new CodeReference(`${this.refName}.${propertyPath}`);
   }
 
+  /**
+   * Renders this code reference as a string.
+   * Can only be called once per reference to prevent naming conflicts.
+   * @returns The resolved name of this reference
+   * @throws ImportReferenceError if called more than once
+   */
   public render(): string {
     if (this.consumed) {
       const currentStack = captureStackTrace();
@@ -86,9 +110,7 @@ export class CodeReference extends CodeResolvable {
         `Second use:\n    ${currentStack}\n`
       );
     }
-    if (!this.refName) {
-      throw new Error("Import not resolved. Call collectImports() first.");
-    }
+
     this.consumed = true;
     this.firstUsageStack = captureStackTrace();
     return this.refName;
@@ -99,6 +121,34 @@ export class CodeReference extends CodeResolvable {
  * A reference to an import that will be resolved when the code is generated.
  */
 export class ImportReference extends CodeReference {
+  private _importsCollected = false;
+
+  /**
+   * Gets the resolved reference name. Throws if collectImports hasn't been called yet.
+   * @throws ImportReferenceError if collectImports hasn't been called
+   */
+  protected get refName(): string {
+    if (!this._importsCollected) {
+      throw new ImportReferenceError(
+        'ImportReference must have collectImports() called before use. ' +
+        'This usually happens automatically during code generation.'
+      );
+    }
+    return this._refName;
+  }
+
+  protected set refName(value: string) {
+    this._refName = value;
+  }
+
+  /**
+   * Gets the resolved reference name for use in nested path references.
+   * @returns The resolved name if imports have been collected
+   */
+  public getResolvedName(): string {
+    return this._refName;
+  }
+
   /**
    * Creates a proxy that generates import references for any property access.
    * 
@@ -128,16 +178,16 @@ export class ImportReference extends CodeReference {
 
   private constructor(
     private moduleName: string,
-    private importName: string | symbol,
+    private importName: string,
     private alias?: string
   ) {
-    super("UNRESOLVED");
+    super(alias || importName);
   }
 
   /**
    * Representing a default import
    */
-  protected static DEFAULT = Symbol("default");
+  protected static DEFAULT = "default";
 
   private static create(moduleName: string, importName: string, alias?: string): ImportReference {
     const ref = new ImportReference(moduleName, importName, alias);
@@ -149,7 +199,11 @@ export class ImportReference extends CodeReference {
     return ref.createProxy();
   }
 
-  public createProxy(): ImportReference {
+  /**
+   * Creates a proxy wrapper around this ImportReference that enables nested property access.
+   * @returns A proxy-wrapped version of this ImportReference
+   */
+  private createProxy(): ImportReference {
     return new Proxy(this, {
       get: (target, prop: string) => {
         // If the property exists on the target, return it (bound if it's a function)
@@ -175,7 +229,7 @@ export class ImportReference extends CodeReference {
     const pathRef = new (class extends CodeReference {
       public collectImports(imports: ModuleImports): void {
         self.collectImports(imports);
-        this.refName = `${self.refName}.${propertyPath}`;
+        this.refName = `${self.getResolvedName()}.${propertyPath}`;
       }
     })("UNRESOLVED");
     
@@ -192,7 +246,7 @@ export class ImportReference extends CodeReference {
         const nestedRef = new (class extends CodeReference {
           public collectImports(imports: ModuleImports): void {
             self.collectImports(imports);
-            this.refName = `${self.refName}.${propertyPath}.${prop}`;
+            this.refName = `${self.getResolvedName()}.${propertyPath}.${prop}`;
           }
         })("UNRESOLVED");
         
@@ -209,7 +263,15 @@ export class ImportReference extends CodeReference {
     }) as CodeReference;
   }
 
+  /**
+   * Collects the import statement for this reference.
+   * @param imports - The ModuleImports instance to add this import to
+   */
   public collectImports(imports: ModuleImports): void {
+    if (this._importsCollected) {
+      return; // Already collected
+    }
+
     if (this.importName === ImportReference.DEFAULT) {
       // For default imports, we need an alias. If none provided, use module name
       const alias = this.alias || this.moduleName.split('/').pop() || 'default';
@@ -221,6 +283,8 @@ export class ImportReference extends CodeReference {
         : imports.from(this.moduleName, this.importName as string);
       this.refName = ref.render();
     }
+    
+    this._importsCollected = true;
   }
 }
 
@@ -239,7 +303,16 @@ export function from(moduleName: string): any {
   return ImportReference.from(moduleName);
 }
 
+/**
+ * Template for generating code with embedded import references.
+ * Created by the js`` tagged template function.
+ */
 export class CodeTemplate extends CodeResolvable {
+  /**
+   * Creates a new code template.
+   * @param strings - Template string parts
+   * @param values - Values to interpolate (strings or code references)
+   */
   constructor(
     private strings: TemplateStringsArray,
     private values: (string | ICodeResolvable)[]
@@ -247,6 +320,10 @@ export class CodeTemplate extends CodeResolvable {
     super();
   }
 
+  /**
+   * Collects imports from all embedded code references.
+   * @param imports - The ModuleImports instance to collect imports into
+   */
   public collectImports(imports: ModuleImports): void {
     for (const value of this.values) {
       if (CodeResolvable.isCodeResolvable(value)) {
@@ -255,6 +332,10 @@ export class CodeTemplate extends CodeResolvable {
     }
   }
 
+  /**
+   * Renders the template by interpolating all values.
+   * @returns The rendered code string
+   */
   public render(): string {
     return this.strings.reduce((result, str, i) => {
       const val =  CodeResolvable.isCodeResolvable(this.values[i]) ? this.values[i].render() : this.values[i];
@@ -276,11 +357,23 @@ export function js(strings: TemplateStringsArray, ...values: (string | ICodeReso
   return new CodeTemplate(strings, values);
 }
 
+/**
+ * Template for generating JSON with embedded code references.
+ * Code references are rendered as raw code without quotes.
+ */
 class JsonTemplate extends CodeResolvable {
+  /**
+   * Creates a new JSON template.
+   * @param data - The data structure to serialize, may contain code references
+   */
   constructor(private data: any) {
     super();
   }
 
+  /**
+   * Collects imports from all embedded code references in the data structure.
+   * @param imports - The ModuleImports instance to collect imports into
+   */
   public collectImports(imports: ModuleImports): void {
     this.collectImportsFromValue(this.data, imports);
   }
@@ -295,6 +388,10 @@ class JsonTemplate extends CodeResolvable {
     }
   }
 
+  /**
+   * Renders the JSON with embedded code references as raw code.
+   * @returns The JSON string with code references rendered without quotes
+   */
   public render(): string {
     return stringifyWithCode(this.data, 2);
   }
@@ -359,26 +456,45 @@ function stringifyWithCode(value: any, indentation = 2): string {
 export class CodeBuilder extends CodeResolvable {
   private parts: (string | ICodeResolvable)[] = [];
 
+  /**
+   * Creates a new empty code builder.
+   */
   constructor() {
     super();
   }
 
   /**
    * Creates a new CodeBuilder with the given parts.
+   * @param parts - Initial code parts (strings or code references)
+   * @returns A new CodeBuilder instance
    */
   static of(...parts: (string | ICodeResolvable)[]): CodeBuilder {
     return new CodeBuilder().add(...parts);
   }
 
+  /**
+   * Adds code parts to this builder.
+   * @param parts - Code parts to add (strings or code references)
+   * @returns This builder for method chaining
+   */
   public add(...parts: (string | ICodeResolvable)[]): this {
     this.parts.push(...parts);
     return this;
   }
 
+  /**
+   * Adds code parts followed by a newline.
+   * @param parts - Code parts to add (strings or code references)
+   * @returns This builder for method chaining
+   */
   public line(...parts: (string | ICodeResolvable)[]): this {
     return this.add(...parts, '\n');
   }
 
+  /**
+   * Collects imports from all embedded code references.
+   * @param imports - The ModuleImports instance to collect imports into
+   */
   public collectImports(imports: ModuleImports): void {
     this.parts.forEach(part => {
       if (typeof part === 'object' && part.collectImports) {
@@ -387,6 +503,10 @@ export class CodeBuilder extends CodeResolvable {
     });
   }
 
+  /**
+   * Renders all code parts into a single string.
+   * @returns The rendered code string
+   */
   public render(): string {
     return this.parts.map(part => 
       typeof part === 'string' ? part : part.render()
@@ -394,8 +514,12 @@ export class CodeBuilder extends CodeResolvable {
   }
 }
 
+
 /**
  * JSII-compatible function for creating code with embedded import references.
+ * 
+ * @param parts - Code parts to combine (strings or code references)
+ * @returns A new CodeBuilder instance
  * 
  * @example
  * ```typescript
