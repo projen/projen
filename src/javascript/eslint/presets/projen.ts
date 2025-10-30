@@ -4,6 +4,7 @@ import { ConfigWithExtends, Extends, Plugin } from "../config-object";
 import { Tseslint } from "./tseslint";
 import { from, js } from "../../private/code-template";
 import { IResolvable } from "../../../file";
+import { isResolvable } from "../../../_private/data-resolver";
 
 /**
  * Configurations provided by projen
@@ -115,6 +116,11 @@ export class Projen implements ConfigWithExtends, IResolvable {
   }
 
   public toJSON(): any {
-    return this.configs.flatMap((config: any) => config.toJSON?.());
+    return this.configs.flatMap((config: any) => {
+      if (isResolvable(config)) {
+        return config.toJSON(); 
+      }
+      return config;
+    });
   }
 }
