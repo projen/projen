@@ -22,7 +22,7 @@ describe("ImportReference", () => {
 
   test("throws error when rendered before collecting imports", () => {
     const ref = from("react").Component;
-    expect(() => ref.render()).toThrow("ImportReference must have collectImports() called before use");
+    expect(() => ref.render()).toThrow("ImportReference must have resolveImports() called before use");
   });
 
   test("throws error when rendered twice", () => {
@@ -36,7 +36,7 @@ describe("ImportReference", () => {
   test("import reference reuse error includes stack trace locations", () => {
     const ref = from("react").Component;
     const imports = new (require("../../src/javascript/private/modules").ModuleImports)();
-    ref.collectImports(imports);
+    ref.resolveImports(imports);
     
     const firstUse = ref.render();
     expect(firstUse).toBe("Component");
@@ -366,7 +366,7 @@ describe('from() helper nested access', () => {
 // Helper function to generate complete file with imports
 function generateFile(template: any): string {
   const imports = new ModuleImports();
-  template.collectImports?.(imports);
+  template.resolveImports?.(imports);
   const body = template.render();
   const importLines = imports.asEsmImports();
   return importLines.length > 0 ? importLines.join('\n') + '\n\n' + body : '\n' + body;
