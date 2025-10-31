@@ -1681,56 +1681,16 @@ new javascript.eslint.SharedConfig(defs: ...SharedConfigDefinition[])
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.SharedConfig.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.SharedConfig.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.SharedConfig.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.SharedConfig.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.SharedConfig.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.SharedConfig.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.SharedConfig.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.SharedConfig.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.SharedConfig.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.SharedConfig.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.SharedConfig.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 

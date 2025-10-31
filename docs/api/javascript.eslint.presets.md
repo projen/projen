@@ -14,56 +14,16 @@ Configurations provided by ESLint JavaScript Plugin.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.ESLintJs.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.presets.ESLintJs.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.ESLintJs.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.presets.ESLintJs.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.ESLintJs.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.presets.ESLintJs.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.presets.ESLintJs.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.ESLintJs.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.presets.ESLintJs.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.presets.ESLintJs.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.presets.ESLintJs.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 #### Constants <a name="Constants" id="Constants"></a>
@@ -109,56 +69,16 @@ Configurations provided by eslint-plugin-import.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.ImportPlugin.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.presets.ImportPlugin.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.ImportPlugin.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.presets.ImportPlugin.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.ImportPlugin.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.presets.ImportPlugin.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.presets.ImportPlugin.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.ImportPlugin.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.presets.ImportPlugin.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.presets.ImportPlugin.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.presets.ImportPlugin.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 #### Constants <a name="Constants" id="Constants"></a>
@@ -217,56 +137,16 @@ Configurations provided by eslint-plugin-import.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.ImportX.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.presets.ImportX.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.ImportX.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.presets.ImportX.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.ImportX.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.presets.ImportX.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.presets.ImportX.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.ImportX.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.presets.ImportX.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.presets.ImportX.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.presets.ImportX.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 #### Constants <a name="Constants" id="Constants"></a>
@@ -325,56 +205,16 @@ Configurations provided to run prettier.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Prettier.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.presets.Prettier.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.Prettier.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.presets.Prettier.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.Prettier.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.presets.Prettier.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.presets.Prettier.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Prettier.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.presets.Prettier.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.presets.Prettier.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.presets.Prettier.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 #### Constants <a name="Constants" id="Constants"></a>
@@ -472,56 +312,16 @@ Configurations provided by ESLint.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Stylistic.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.presets.Stylistic.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.Stylistic.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.presets.Stylistic.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.Stylistic.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.presets.Stylistic.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.presets.Stylistic.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Stylistic.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.presets.Stylistic.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.presets.Stylistic.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.presets.Stylistic.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 #### Constants <a name="Constants" id="Constants"></a>
@@ -567,56 +367,16 @@ Configurations provided by typescript-eslint.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Tseslint.render">render</a></code> | Renders the code as a string. |
-| <code><a href="#projen.javascript.eslint.presets.Tseslint.resolveImports">resolveImports</a></code> | *No description.* |
+| <code><a href="#projen.javascript.eslint.presets.Tseslint.toJSON">toJSON</a></code> | *No description.* |
 
 ---
 
-##### `render` <a name="render" id="projen.javascript.eslint.presets.Tseslint.render"></a>
+##### `toJSON` <a name="toJSON" id="projen.javascript.eslint.presets.Tseslint.toJSON"></a>
 
 ```typescript
-public render(): string
+public toJSON(): any
 ```
 
-Renders the code as a string.
-
-##### `resolveImports` <a name="resolveImports" id="projen.javascript.eslint.presets.Tseslint.resolveImports"></a>
-
-```typescript
-public resolveImports(imports: IImportResolver): void
-```
-
-###### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.eslint.presets.Tseslint.resolveImports.parameter.imports"></a>
-
-- *Type:* projen.IImportResolver
-
----
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.eslint.presets.Tseslint.isCodeResolvable">isCodeResolvable</a></code> | Checks if an object is a CodeResolvable instance. |
-
----
-
-##### `isCodeResolvable` <a name="isCodeResolvable" id="projen.javascript.eslint.presets.Tseslint.isCodeResolvable"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-javascript.eslint.presets.Tseslint.isCodeResolvable(obj: any)
-```
-
-Checks if an object is a CodeResolvable instance.
-
-###### `obj`<sup>Required</sup> <a name="obj" id="projen.javascript.eslint.presets.Tseslint.isCodeResolvable.parameter.obj"></a>
-
-- *Type:* any
-
-The object to check.
-
----
 
 
 #### Constants <a name="Constants" id="Constants"></a>

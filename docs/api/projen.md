@@ -16496,7 +16496,7 @@ the project to produce a snapshot for.
 
 ### ICodeResolvable <a name="ICodeResolvable" id="projen.ICodeResolvable"></a>
 
-- *Implemented By:* projen.javascript.eslint.presets.ESLintJs, projen.javascript.eslint.presets.ImportPlugin, projen.javascript.eslint.presets.ImportX, projen.javascript.eslint.presets.Prettier, projen.javascript.eslint.presets.Stylistic, projen.javascript.eslint.presets.Tseslint, projen.javascript.eslint.Plugin, projen.javascript.eslint.SharedConfig, <a href="#projen.CodeResolvable">CodeResolvable</a>, <a href="#projen.ICodeResolvable">ICodeResolvable</a>
+- *Implemented By:* projen.javascript.eslint.Plugin, <a href="#projen.CodeResolvable">CodeResolvable</a>, <a href="#projen.ICodeResolvable">ICodeResolvable</a>
 
 Interface for code that should be rendered as-is without quotes.
 
