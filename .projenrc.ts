@@ -80,6 +80,7 @@ const project = new JsiiProject({
     "fast-json-patch",
     "comment-json@4.2.2",
     "parse-conflict-json",
+    "consola",
   ],
 
   devDeps: [
