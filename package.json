@@ -63,7 +63,7 @@
     "all-contributors-cli": "^6.26.1",
     "aws-cdk-lib": "^2.221.1",
     "commit-and-tag-version": "^12",
-    "esbuild": "^0.25.11",
+    "esbuild": "^0.25.12",
     "eslint": "^9",
     "eslint-config-prettier": "^8.10.2",
     "eslint-import-resolver-typescript": "^2.7.1",
