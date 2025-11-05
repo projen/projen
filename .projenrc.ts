@@ -103,6 +103,10 @@ const project = new JsiiProject({
   peerDeps: ["constructs@^10.0.0"],
 
   depsUpgrade: false, // configured below
+  auditDeps: true,
+  auditDepsOptions: {
+    prodOnly: true,
+  },
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,

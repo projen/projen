@@ -5512,6 +5512,74 @@ The path of the tsconfig.json file to use for bundling.
 
 ---
 
+### AuditOptions <a name="AuditOptions" id="projen.javascript.AuditOptions"></a>
+
+Options for security audit configuration.
+
+#### Initializer <a name="Initializer" id="projen.javascript.AuditOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const auditOptions: javascript.AuditOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.AuditOptions.property.level">level</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.javascript.AuditOptions.property.prodOnly">prodOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
+| <code><a href="#projen.javascript.AuditOptions.property.runOn">runOn</a></code> | <code>string</code> | When to run the audit task. |
+
+---
+
+##### `level`<sup>Optional</sup> <a name="level" id="projen.javascript.AuditOptions.property.level"></a>
+
+```typescript
+public readonly level: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `prodOnly`<sup>Optional</sup> <a name="prodOnly" id="projen.javascript.AuditOptions.property.prodOnly"></a>
+
+```typescript
+public readonly prodOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Only audit production dependencies.
+
+When false, both production and development dependencies are audited.
+This is recommended as build dependencies can also contain security vulnerabilities.
+
+---
+
+##### `runOn`<sup>Optional</sup> <a name="runOn" id="projen.javascript.AuditOptions.property.runOn"></a>
+
+```typescript
+public readonly runOn: string;
+```
+
+- *Type:* string
+- *Default:* "build"
+
+When to run the audit task.
+
+"build": Run during every build (default)
+- "release": Only run during release workflow
+- "manual": Create the task but don't run it automatically
+
+---
+
 ### BiomeOptions <a name="BiomeOptions" id="projen.javascript.BiomeOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.BiomeOptions.Initializer"></a>
@@ -8711,6 +8779,8 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code><a href="#projen.javascript.AuditOptions">AuditOptions</a></code> | Security audit options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | Biome options. |
@@ -10190,6 +10260,36 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.javascript.NodeProjectOptions.property.auditDeps"></a>
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.javascript.NodeProjectOptions.property.auditDepsOptions"></a>
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* <a href="#projen.javascript.AuditOptions">AuditOptions</a>
+- *Default:* default options
+
+Security audit options.
 
 ---
 
