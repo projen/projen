@@ -70,21 +70,21 @@ export interface AuditOptions {
 
   /**
    * Only audit production dependencies.
-   * 
+   *
    * When false, both production and development dependencies are audited.
    * This is recommended as build dependencies can also contain security vulnerabilities.
-   * 
+   *
    * @default false
    */
   readonly prodOnly?: boolean;
 
   /**
    * When to run the audit task.
-   * 
+   *
    * - "build": Run during every build (default)
    * - "release": Only run during release workflow
    * - "manual": Create the task but don't run it automatically
-   * 
+   *
    * @default "build"
    */
   readonly runOn?: "build" | "release" | "manual";
@@ -387,11 +387,11 @@ export interface NodeProjectOptions
 
   /**
    * Run security audit on dependencies.
-   * 
+   *
    * When enabled, creates an "audit" task that checks for known security vulnerabilities
    * in dependencies. By default, runs during every build and checks for "high" severity
    * vulnerabilities or above in all dependencies (including dev dependencies).
-   * 
+   *
    * @default false
    */
   readonly auditDeps?: boolean;
@@ -729,7 +729,7 @@ export class NodeProject extends GitHubProject {
       );
       this.maybeAddCodecovIgnores(options);
     }
-    
+
     // Build release tasks array
     const releaseTasks = [];
 
@@ -737,7 +737,7 @@ export class NodeProject extends GitHubProject {
     if (options.auditDeps) {
       const auditTask = this.addAuditTask(options);
       const runOn = options.auditDepsOptions?.runOn ?? "build";
-      
+
       if (runOn === "release") {
         releaseTasks.push(auditTask);
       } else if (runOn === "build") {
@@ -750,7 +750,7 @@ export class NodeProject extends GitHubProject {
       options.release ??
       options.releaseWorkflow ??
       (this.parent ? false : true);
-    if (release) {      
+    if (release) {
       // Add build task
       releaseTasks.push(this.buildTask);
 
@@ -1429,7 +1429,7 @@ export class NodeProject extends GitHubProject {
     // Add package manager specific audit command
     const auditCommand = this.getAuditCommand(auditLevel, auditProdOnly);
     auditTask.exec(auditCommand);
-    
+
     return auditTask;
   }
 
@@ -1466,13 +1466,13 @@ export class NodeProject extends GitHubProject {
   private getYarnClassicThreshold(level: string): number {
     switch (level) {
       case "low":
-        return 2;   // Pass for exit code < 2, fail for >= 2 (LOW and above)
+        return 2; // Pass for exit code < 2, fail for >= 2 (LOW and above)
       case "moderate":
-        return 4;   // Pass for exit code < 4, fail for >= 4 (MODERATE and above)
+        return 4; // Pass for exit code < 4, fail for >= 4 (MODERATE and above)
       case "high":
-        return 8;   // Pass for exit code < 8, fail for >= 8 (HIGH and above)
+        return 8; // Pass for exit code < 8, fail for >= 8 (HIGH and above)
       case "critical":
-        return 16;  // Pass for exit code < 16, fail for >= 16 (CRITICAL)
+        return 16; // Pass for exit code < 16, fail for >= 16 (CRITICAL)
       default:
         return 2;
     }

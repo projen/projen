@@ -12,7 +12,9 @@ describe("NodeProject audit", () => {
     });
 
     const snapshot = synthSnapshot(project);
-    expect(JSON.stringify(snapshot["test-project/.projen/tasks.json"])).not.toContain("audit");
+    expect(
+      JSON.stringify(snapshot["test-project/.projen/tasks.json"])
+    ).not.toContain("audit");
   });
 
   test("audit can be enabled", () => {
@@ -44,7 +46,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("npm audit --audit-level=high");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "npm audit --audit-level=high"
+    );
   });
 
   test("audit uses correct yarn classic command", () => {
@@ -60,7 +64,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe('node -e "const { execSync } = require(\'child_process\'); try { execSync(\'yarn audit --level high\', {stdio: \'inherit\'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }"');
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "node -e \"const { execSync } = require('child_process'); try { execSync('yarn audit --level high', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }\""
+    );
   });
 
   test("audit uses correct yarn berry command", () => {
@@ -76,7 +82,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("yarn npm audit --severity high");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "yarn npm audit --severity high"
+    );
   });
 
   test("audit uses correct bun command", () => {
@@ -92,7 +100,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("bun audit --audit-level high");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "bun audit --audit-level high"
+    );
   });
 
   test("audit uses correct pnpm command", () => {
@@ -108,7 +118,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("pnpm audit --audit-level high");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "pnpm audit --audit-level high"
+    );
   });
 
   test("audit level can be configured", () => {
@@ -125,7 +137,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("npm audit --audit-level=critical");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "npm audit --audit-level=critical"
+    );
   });
 
   test("audit can include dev dependencies", () => {
@@ -142,7 +156,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("npm audit --audit-level=high");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "npm audit --audit-level=high"
+    );
   });
 
   test("audit can exclude dev dependencies", () => {
@@ -159,7 +175,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("npm audit --audit-level=high --omit=dev");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "npm audit --audit-level=high --omit=dev"
+    );
   });
 
   test("audit is added to pre-compile task", () => {
@@ -193,11 +211,11 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     const preCompileSteps = tasks.tasks["pre-compile"]?.steps || [];
-    
+
     // Audit task should exist
     expect(tasks.tasks.audit).toBeDefined();
     expect(tasks.tasks.audit.description).toBe("Run security audit");
-    
+
     // But should not be in pre-compile
     expect(preCompileSteps).not.toContainEqual({
       spawn: "audit",
@@ -218,7 +236,7 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    
+
     // Release task should include audit task
     expect(tasks.tasks.release.steps).toContainEqual({
       spawn: "audit",
@@ -239,11 +257,11 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     const preCompileSteps = tasks.tasks["pre-compile"]?.steps || [];
-    
+
     // Audit task should exist
     expect(tasks.tasks.audit).toBeDefined();
     expect(tasks.tasks.audit.description).toBe("Run security audit");
-    
+
     // But should not be in pre-compile
     expect(preCompileSteps).not.toContainEqual({
       spawn: "audit",

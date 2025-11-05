@@ -303,7 +303,7 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * The task to execute in order to create the release artifacts. Artifacts are
    * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
    * build is complete.
-   * 
+   *
    * @deprecated Use `tasks` instead
    */
   readonly task?: Task;
@@ -422,16 +422,18 @@ export class Release extends Component {
     }
 
     this.github = GitHub.of(this.project.root);
-    
+
     // Handle both deprecated task and new tasks options
     if (options.tasks) {
       this.buildTasks = options.tasks;
     } else if (options.task) {
       this.buildTasks = [options.task];
     } else {
-      throw new Error("Either 'tasks' or 'task' must be provided, but not both.");
+      throw new Error(
+        "Either 'tasks' or 'task' must be provided, but not both."
+      );
     }
-    
+
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.artifactsDirectory =
@@ -690,12 +692,12 @@ export class Release extends Component {
 
     releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
     releaseTask.spawn(this.version.bumpTask);
-    
+
     // Spawn all build tasks
     for (const buildTask of this.buildTasks) {
       releaseTask.spawn(buildTask);
     }
-    
+
     releaseTask.spawn(this.version.unbumpTask);
 
     // anti-tamper check (fails if there were changes to committed files)
