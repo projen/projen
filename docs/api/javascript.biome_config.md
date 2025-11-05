@@ -663,7 +663,7 @@ const filesConfiguration: javascript.biome_config.FilesConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.experimentalScannerIgnores">experimentalScannerIgnores</a></code> | <code>string[]</code> | **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>. |
+| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.experimentalScannerIgnores">experimentalScannerIgnores</a></code> | <code>string[]</code> | **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: https://biomejs.dev/reference/configuration/#filesincludes. |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.ignoreUnknown">ignoreUnknown</a></code> | <code>boolean</code> | Tells Biome to not emit diagnostics when handling files that it doesn't know. |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.includes">includes</a></code> | <code>string[]</code> | A list of glob patterns. |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.maxSize">maxSize</a></code> | <code>number</code> | The maximum allowed size for source code files in bytes. |
@@ -678,7 +678,7 @@ public readonly experimentalScannerIgnores: string[];
 
 - *Type:* string[]
 
-**Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>.
+**Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: https://biomejs.dev/reference/configuration/#filesincludes.
 
 Set of file and folder names that should be unconditionally ignored by Biome's scanner.
 

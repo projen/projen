@@ -58,6 +58,38 @@ import { ensureRelativePathStartsWithDot } from "../util/path";
 
 const PROJEN_SCRIPT = "projen";
 
+/**
+ * Options for security audit configuration.
+ */
+export interface AuditOptions {
+  /**
+   * Minimum vulnerability level to check for during audit.
+   * @default "high"
+   */
+  readonly level?: "low" | "moderate" | "high" | "critical";
+
+  /**
+   * Only audit production dependencies.
+   * 
+   * When false, both production and development dependencies are audited.
+   * This is recommended as build dependencies can also contain security vulnerabilities.
+   * 
+   * @default false
+   */
+  readonly prodOnly?: boolean;
+
+  /**
+   * When to run the audit task.
+   * 
+   * - "build": Run during every build (default)
+   * - "release": Only run during release workflow
+   * - "manual": Create the task but don't run it automatically
+   * 
+   * @default "build"
+   */
+  readonly runOn?: "build" | "release" | "manual";
+}
+
 export interface NodeProjectOptions
   extends GitHubProjectOptions,
     NodePackageOptions,
@@ -352,6 +384,23 @@ export interface NodeProjectOptions
    * @default - default options
    */
   readonly biomeOptions?: BiomeOptions;
+
+  /**
+   * Run security audit on dependencies.
+   * 
+   * When enabled, creates an "audit" task that checks for known security vulnerabilities
+   * in dependencies. By default, runs during every build and checks for "high" severity
+   * vulnerabilities or above in all dependencies (including dev dependencies).
+   * 
+   * @default false
+   */
+  readonly auditDeps?: boolean;
+
+  /**
+   * Security audit options.
+   * @default - default options
+   */
+  readonly auditDepsOptions?: AuditOptions;
 }
 
 /**
@@ -680,15 +729,34 @@ export class NodeProject extends GitHubProject {
       );
       this.maybeAddCodecovIgnores(options);
     }
+    
+    // Build release tasks array
+    const releaseTasks = [];
+
+    // Add security audit before release if enabled
+    if (options.auditDeps) {
+      const auditTask = this.addAuditTask(options);
+      const runOn = options.auditDepsOptions?.runOn ?? "build";
+      
+      if (runOn === "release") {
+        releaseTasks.push(auditTask);
+      } else if (runOn === "build") {
+        this.preCompileTask.spawn(auditTask);
+      }
+      // "manual" mode doesn't add to any task
+    }
 
     const release =
       options.release ??
       options.releaseWorkflow ??
       (this.parent ? false : true);
-    if (release) {
+    if (release) {      
+      // Add build task
+      releaseTasks.push(this.buildTask);
+
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
-        task: this.buildTask,
+        tasks: releaseTasks,
         branch: options.defaultReleaseBranch ?? "main",
         ...options,
 
@@ -1344,6 +1412,114 @@ export class NodeProject extends GitHubProject {
    */
   public get buildWorkflowJobId() {
     return this.buildWorkflow?.buildJobIds[0];
+  }
+
+  /**
+   * Adds a security audit task.
+   */
+  private addAuditTask(options: NodeProjectOptions): Task {
+    const auditLevel = options.auditDepsOptions?.level ?? "high";
+    const auditProdOnly = options.auditDepsOptions?.prodOnly ?? false;
+
+    // Create audit task
+    const auditTask = this.tasks.addTask("audit", {
+      description: "Run security audit",
+    });
+
+    // Add package manager specific audit command
+    const auditCommand = this.getAuditCommand(auditLevel, auditProdOnly);
+    auditTask.exec(auditCommand);
+    
+    return auditTask;
+  }
+
+  /**
+   * Gets the appropriate audit command for the package manager.
+   */
+  private getAuditCommand(level: string, prodOnly: boolean): string {
+    const levelFlag = this.getAuditLevelFlag(level);
+    const prodFlag = prodOnly ? this.getAuditProdFlag() : "";
+
+    switch (this.packageManager) {
+      case NodePackageManager.NPM:
+        return `npm audit${levelFlag}${prodFlag}`;
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
+        // Use Node.js to call yarn and handle exit code cross-platform
+        const threshold = this.getYarnClassicThreshold(level);
+        return `node -e "const { execSync } = require('child_process'); try { execSync('yarn audit${levelFlag}${prodFlag}', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < ${threshold} ? 0 : 1); }"`;
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        return `yarn npm audit${levelFlag}${prodFlag}`;
+      case NodePackageManager.PNPM:
+        return `pnpm audit${levelFlag}${prodFlag}`;
+      case NodePackageManager.BUN:
+        return `bun audit${levelFlag}${prodFlag}`;
+      default:
+        throw new Error(`Unsupported package manager: ${this.packageManager}`);
+    }
+  }
+
+  /**
+   * Gets the threshold value for yarn classic based on vulnerability level.
+   */
+  private getYarnClassicThreshold(level: string): number {
+    switch (level) {
+      case "low":
+        return 2;   // Pass for exit code < 2, fail for >= 2 (LOW and above)
+      case "moderate":
+        return 4;   // Pass for exit code < 4, fail for >= 4 (MODERATE and above)
+      case "high":
+        return 8;   // Pass for exit code < 8, fail for >= 8 (HIGH and above)
+      case "critical":
+        return 16;  // Pass for exit code < 16, fail for >= 16 (CRITICAL)
+      default:
+        return 2;
+    }
+  }
+
+  /**
+   * Gets the audit level flag for the package manager.
+   */
+  private getAuditLevelFlag(level: string): string {
+    switch (this.packageManager) {
+      case NodePackageManager.NPM:
+        return ` --audit-level=${level}`;
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
+        return ` --level ${level}`;
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        return ` --severity ${level}`;
+      case NodePackageManager.PNPM:
+        return ` --audit-level ${level}`;
+      case NodePackageManager.BUN:
+        return ` --audit-level ${level}`;
+      default:
+        return "";
+    }
+  }
+
+  /**
+   * Gets the production-only flag for the package manager.
+   */
+  private getAuditProdFlag(): string {
+    switch (this.packageManager) {
+      case NodePackageManager.NPM:
+        return " --omit=dev";
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
+        return " --groups dependencies";
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        return " --environment production";
+      case NodePackageManager.PNPM:
+        return " --prod";
+      case NodePackageManager.BUN:
+        return " --production";
+      default:
+        return "";
+    }
   }
 }
 

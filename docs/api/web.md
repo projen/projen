@@ -6699,6 +6699,9 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.NextJsProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -8211,6 +8214,45 @@ A directory which will contain build artifacts.
 
 ---
 
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.web.NextJsProjectOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.web.NextJsProjectOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.web.NextJsProjectOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
+
+---
+
 ##### `autoApproveUpgrades`<sup>Optional</sup> <a name="autoApproveUpgrades" id="projen.web.NextJsProjectOptions.property.autoApproveUpgrades"></a>
 
 ```typescript
@@ -8875,6 +8917,9 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -10403,6 +10448,45 @@ A directory which will contain build artifacts.
 
 ---
 
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.web.NextJsTypeScriptProjectOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.web.NextJsTypeScriptProjectOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.web.NextJsTypeScriptProjectOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
+
+---
+
 ##### `autoApproveUpgrades`<sup>Optional</sup> <a name="autoApproveUpgrades" id="projen.web.NextJsTypeScriptProjectOptions.property.autoApproveUpgrades"></a>
 
 ```typescript
@@ -11406,6 +11490,9 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.web.ReactProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.web.ReactProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.web.ReactProjectOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.web.ReactProjectOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.web.ReactProjectOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.ReactProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.web.ReactProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -12891,6 +12978,45 @@ A directory which will contain build artifacts.
 
 ---
 
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.web.ReactProjectOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.web.ReactProjectOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.web.ReactProjectOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
+
+---
+
 ##### `autoApproveUpgrades`<sup>Optional</sup> <a name="autoApproveUpgrades" id="projen.web.ReactProjectOptions.property.autoApproveUpgrades"></a>
 
 ```typescript
@@ -13750,6 +13876,9 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -15248,6 +15377,45 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.web.ReactTypeScriptProjectOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.web.ReactTypeScriptProjectOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.web.ReactTypeScriptProjectOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
 
 ---
 

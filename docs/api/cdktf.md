@@ -1636,6 +1636,9 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -3152,6 +3155,45 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.cdktf.ConstructLibraryCdktfOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.cdktf.ConstructLibraryCdktfOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.cdktf.ConstructLibraryCdktfOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
 
 ---
 

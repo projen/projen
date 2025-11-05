@@ -10383,6 +10383,9 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -11912,6 +11915,45 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
 
 ---
 
@@ -15900,6 +15942,9 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -17424,6 +17469,45 @@ A directory which will contain build artifacts.
 
 ---
 
+##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditBeforeRelease"></a>
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditLevel"></a>
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditProdOnly"></a>
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
+
+---
+
 ##### `autoApproveUpgrades`<sup>Optional</sup> <a name="autoApproveUpgrades" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades"></a>
 
 ```typescript
@@ -18907,6 +18991,9 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -20612,6 +20699,51 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### ~~`auditBeforeRelease`~~<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.awscdk.ConstructLibraryAwsOptions.property.auditBeforeRelease"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly auditBeforeRelease: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit before release.
+
+---
+
+##### ~~`auditLevel`~~<sup>Optional</sup> <a name="auditLevel" id="projen.awscdk.ConstructLibraryAwsOptions.property.auditLevel"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly auditLevel: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### ~~`auditProdOnly`~~<sup>Optional</sup> <a name="auditProdOnly" id="projen.awscdk.ConstructLibraryAwsOptions.property.auditProdOnly"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly auditProdOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Only audit production dependencies.
 
 ---
 
