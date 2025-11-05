@@ -61,7 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "all-contributors-cli": "^6.26.1",
-    "aws-cdk-lib": "^2.221.1",
+    "aws-cdk-lib": "^2.222.0",
     "commit-and-tag-version": "^12",
     "esbuild": "^0.25.12",
     "eslint": "^9",
