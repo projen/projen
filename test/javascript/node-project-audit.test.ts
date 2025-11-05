@@ -281,7 +281,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe("yarn npm audit --recursive --severity high");
+    expect(tasks.tasks.audit.steps[0].exec).toBe(
+      "yarn npm audit --recursive --severity high"
+    );
   });
 
   test("audit with yarn uses correct command", () => {
@@ -297,13 +299,21 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toContain("yarn audit --level high");
+    expect(tasks.tasks.audit.steps[0].exec).toContain(
+      "yarn audit --level high"
+    );
   });
 
   test("audit prodOnly flag works with all package managers", () => {
     const managers = [
-      { manager: NodePackageManager.YARN_CLASSIC, expected: " --groups dependencies" },
-      { manager: NodePackageManager.YARN_BERRY, expected: " --environment production" },
+      {
+        manager: NodePackageManager.YARN_CLASSIC,
+        expected: " --groups dependencies",
+      },
+      {
+        manager: NodePackageManager.YARN_BERRY,
+        expected: " --environment production",
+      },
       { manager: NodePackageManager.PNPM, expected: " --prod" },
       { manager: NodePackageManager.BUN, expected: " --production" },
     ];
@@ -328,7 +338,7 @@ describe("NodeProject audit", () => {
 
   test("audit level flags work with all package managers", () => {
     const levels = ["low", "moderate", "critical"];
-    
+
     for (const level of levels) {
       const project = new TestProject();
       new NodeProject({
@@ -343,7 +353,9 @@ describe("NodeProject audit", () => {
 
       const snapshot = synthSnapshot(project);
       const tasks = snapshot["test-project/.projen/tasks.json"];
-      expect(tasks.tasks.audit.steps[0].exec).toContain(`--audit-level=${level}`);
+      expect(tasks.tasks.audit.steps[0].exec).toContain(
+        `--audit-level=${level}`
+      );
     }
   });
 });
