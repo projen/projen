@@ -24,6 +24,7 @@ import {
   ReleasableCommits,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
+import { eslint } from "./src/javascript";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
 const AUTOMATION_USER = "projen-automation";
@@ -116,7 +117,8 @@ const project = new JsiiProject({
   workflowNodeVersion: "lts/-1", // use the previous lts for builds
 
   codeCov: true,
-  prettier: true,
+  eslint: false,
+  prettier: false,
   defaultReleaseBranch: "main",
   gitpod: true,
   devContainer: true,
@@ -190,6 +192,21 @@ const project = new JsiiProject({
       "Python-2.0",
     ],
   },
+});
+
+new eslint.ESLint(project, {
+  linter: false,
+  formatter: false,
+  commandOptions: {
+    fix: false,
+  },
+  configs: [
+    eslint.presets.Projen.configure({
+      tsconfigPath: `./${project.tsconfigDev.fileName}`,
+      dirs: [project.srcdir],
+      devdirs: [project.testdir, "build-tools"],
+    }),
+  ],
 });
 
 // Trusted Publishing requires npm 11 which is available by default in node 24
