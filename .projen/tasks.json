@@ -1,5 +1,14 @@
 {
   "tasks": {
+    "audit": {
+      "name": "audit",
+      "description": "Run security audit",
+      "steps": [
+        {
+          "exec": "node -e \"const { execSync } = require('child_process'); try { execSync('yarn audit --level high --groups dependencies', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }\""
+        }
+      ]
+    },
     "build": {
       "name": "build",
       "description": "Full release build",
@@ -310,6 +319,9 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation",
       "steps": [
+        {
+          "spawn": "audit"
+        },
         {
           "spawn": "check-licenses"
         }

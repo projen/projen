@@ -9,6 +9,7 @@
     "projen": "bin/projen"
   },
   "scripts": {
+    "audit": "node ./projen.js audit",
     "build": "node ./projen.js build",
     "bump": "node ./projen.js bump",
     "bundle:task-runner": "node ./projen.js bundle:task-runner",
