@@ -1450,7 +1450,7 @@ export class NodeProject extends GitHubProject {
         return `node -e "const { execSync } = require('child_process'); try { execSync('yarn audit${levelFlag}${prodFlag}', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < ${threshold} ? 0 : 1); }"`;
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
-        return `yarn npm audit${levelFlag}${prodFlag}`;
+        return `yarn npm audit --recursive${levelFlag}${prodFlag}`;
       case NodePackageManager.PNPM:
         return `pnpm audit${levelFlag}${prodFlag}`;
       case NodePackageManager.BUN:

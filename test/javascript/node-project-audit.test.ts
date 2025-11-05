@@ -83,7 +83,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "yarn npm audit --severity high"
+      "yarn npm audit --recursive --severity high"
     );
   });
 
@@ -266,5 +266,84 @@ describe("NodeProject audit", () => {
     expect(preCompileSteps).not.toContainEqual({
       spawn: "audit",
     });
+  });
+
+  test("audit with yarn2 uses correct command", () => {
+    const project = new TestProject();
+    new NodeProject({
+      parent: project,
+      outdir: "test-project",
+      name: "test",
+      defaultReleaseBranch: "main",
+      auditDeps: true,
+      packageManager: NodePackageManager.YARN2,
+    });
+
+    const snapshot = synthSnapshot(project);
+    const tasks = snapshot["test-project/.projen/tasks.json"];
+    expect(tasks.tasks.audit.steps[0].exec).toBe("yarn npm audit --recursive --severity high");
+  });
+
+  test("audit with yarn uses correct command", () => {
+    const project = new TestProject();
+    new NodeProject({
+      parent: project,
+      outdir: "test-project",
+      name: "test",
+      defaultReleaseBranch: "main",
+      auditDeps: true,
+      packageManager: NodePackageManager.YARN,
+    });
+
+    const snapshot = synthSnapshot(project);
+    const tasks = snapshot["test-project/.projen/tasks.json"];
+    expect(tasks.tasks.audit.steps[0].exec).toContain("yarn audit --level high");
+  });
+
+  test("audit prodOnly flag works with all package managers", () => {
+    const managers = [
+      { manager: NodePackageManager.YARN_CLASSIC, expected: " --groups dependencies" },
+      { manager: NodePackageManager.YARN_BERRY, expected: " --environment production" },
+      { manager: NodePackageManager.PNPM, expected: " --prod" },
+      { manager: NodePackageManager.BUN, expected: " --production" },
+    ];
+
+    for (const { manager, expected } of managers) {
+      const project = new TestProject();
+      new NodeProject({
+        parent: project,
+        outdir: "test-project",
+        name: "test",
+        defaultReleaseBranch: "main",
+        auditDeps: true,
+        auditDepsOptions: { prodOnly: true },
+        packageManager: manager,
+      });
+
+      const snapshot = synthSnapshot(project);
+      const tasks = snapshot["test-project/.projen/tasks.json"];
+      expect(tasks.tasks.audit.steps[0].exec).toContain(expected);
+    }
+  });
+
+  test("audit level flags work with all package managers", () => {
+    const levels = ["low", "moderate", "critical"];
+    
+    for (const level of levels) {
+      const project = new TestProject();
+      new NodeProject({
+        parent: project,
+        outdir: "test-project",
+        name: "test",
+        defaultReleaseBranch: "main",
+        auditDeps: true,
+        auditDepsOptions: { level: level as any },
+        packageManager: NodePackageManager.NPM,
+      });
+
+      const snapshot = synthSnapshot(project);
+      const tasks = snapshot["test-project/.projen/tasks.json"];
+      expect(tasks.tasks.audit.steps[0].exec).toContain(`--audit-level=${level}`);
+    }
   });
 });
