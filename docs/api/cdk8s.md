@@ -6712,9 +6712,8 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -8229,42 +8228,33 @@ A directory which will contain build artifacts.
 
 ---
 
-##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditBeforeRelease"></a>
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDeps"></a>
 
 ```typescript
-public readonly auditBeforeRelease: boolean;
+public readonly auditDeps: boolean;
 ```
 
 - *Type:* boolean
 - *Default:* false
 
-Run security audit before release.
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
 
 ---
 
-##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditLevel"></a>
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDepsOptions"></a>
 
 ```typescript
-public readonly auditLevel: string;
+public readonly auditDepsOptions: AuditOptions;
 ```
 
-- *Type:* string
-- *Default:* "high"
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
 
-Minimum vulnerability level to check for during audit.
-
----
-
-##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditProdOnly"></a>
-
-```typescript
-public readonly auditProdOnly: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Only audit production dependencies.
+Security audit options.
 
 ---
 
@@ -9338,9 +9328,8 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditBeforeRelease">auditBeforeRelease</a></code> | <code>boolean</code> | Run security audit before release. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditLevel">auditLevel</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditProdOnly">auditProdOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -10864,42 +10853,33 @@ A directory which will contain build artifacts.
 
 ---
 
-##### `auditBeforeRelease`<sup>Optional</sup> <a name="auditBeforeRelease" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditBeforeRelease"></a>
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDeps"></a>
 
 ```typescript
-public readonly auditBeforeRelease: boolean;
+public readonly auditDeps: boolean;
 ```
 
 - *Type:* boolean
 - *Default:* false
 
-Run security audit before release.
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
 
 ---
 
-##### `auditLevel`<sup>Optional</sup> <a name="auditLevel" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditLevel"></a>
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDepsOptions"></a>
 
 ```typescript
-public readonly auditLevel: string;
+public readonly auditDepsOptions: AuditOptions;
 ```
 
-- *Type:* string
-- *Default:* "high"
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
 
-Minimum vulnerability level to check for during audit.
-
----
-
-##### `auditProdOnly`<sup>Optional</sup> <a name="auditProdOnly" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditProdOnly"></a>
-
-```typescript
-public readonly auditProdOnly: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Only audit production dependencies.
+Security audit options.
 
 ---
 

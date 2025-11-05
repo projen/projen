@@ -3621,9 +3621,10 @@ const releaseOptions: release.ReleaseOptions = { ... }
 | <code><a href="#projen.release.ReleaseOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.release.ReleaseOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.release.ReleaseOptions.property.branch">branch</a></code> | <code>string</code> | The default branch name to release from. |
-| <code><a href="#projen.release.ReleaseOptions.property.task">task</a></code> | <code>projen.Task</code> | The task to execute in order to create the release artifacts. |
 | <code><a href="#projen.release.ReleaseOptions.property.versionFile">versionFile</a></code> | <code>string</code> | A name of a .json file to set the `version` field in after a bump. |
 | <code><a href="#projen.release.ReleaseOptions.property.githubRelease">githubRelease</a></code> | <code>boolean</code> | Create a GitHub release for each release. |
+| <code><a href="#projen.release.ReleaseOptions.property.task">task</a></code> | <code>projen.Task</code> | The task to execute in order to create the release artifacts. |
+| <code><a href="#projen.release.ReleaseOptions.property.tasks">tasks</a></code> | <code>projen.Task[]</code> | The tasks to execute in order to create the release artifacts. |
 | <code><a href="#projen.release.ReleaseOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed. |
 | <code><a href="#projen.release.ReleaseOptions.property.workflowPermissions">workflowPermissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the release workflow job. |
 
@@ -4056,22 +4057,6 @@ You can add additional branches using `addBranch()`.
 
 ---
 
-##### `task`<sup>Required</sup> <a name="task" id="projen.release.ReleaseOptions.property.task"></a>
-
-```typescript
-public readonly task: Task;
-```
-
-- *Type:* projen.Task
-
-The task to execute in order to create the release artifacts.
-
-Artifacts are
-expected to reside under `artifactsDirectory` (defaults to `dist/`) once
-build is complete.
-
----
-
 ##### `versionFile`<sup>Required</sup> <a name="versionFile" id="projen.release.ReleaseOptions.property.versionFile"></a>
 
 ```typescript
@@ -4101,6 +4086,40 @@ public readonly githubRelease: boolean;
 - *Default:* true
 
 Create a GitHub release for each release.
+
+---
+
+##### ~~`task`~~<sup>Optional</sup> <a name="task" id="projen.release.ReleaseOptions.property.task"></a>
+
+- *Deprecated:* Use `tasks` instead
+
+```typescript
+public readonly task: Task;
+```
+
+- *Type:* projen.Task
+
+The task to execute in order to create the release artifacts.
+
+Artifacts are
+expected to reside under `artifactsDirectory` (defaults to `dist/`) once
+build is complete.
+
+---
+
+##### `tasks`<sup>Optional</sup> <a name="tasks" id="projen.release.ReleaseOptions.property.tasks"></a>
+
+```typescript
+public readonly tasks: Task[];
+```
+
+- *Type:* projen.Task[]
+
+The tasks to execute in order to create the release artifacts.
+
+Artifacts are
+expected to reside under `artifactsDirectory` (defaults to `dist/`) once
+build is complete.
 
 ---
 
