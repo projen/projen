@@ -21,7 +21,7 @@ test("allows including deprecated versions", () => {
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0]).toMatchInlineSnapshot(`
     {
-      "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+      "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
     }
   `);
 });
@@ -52,7 +52,7 @@ test("allows configuring specific dependency types", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=prod,dev --filter=some-dep,jest,projen",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=prod,dev --filter=some-dep,jest,projen",
       },
       {
         "exec": "yarn install --check-files",
@@ -94,7 +94,7 @@ test("upgrades command includes all dependencies", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -124,7 +124,7 @@ test("ncu upgrade command does not include dependencies with any version constra
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install --check-files",
@@ -154,7 +154,7 @@ test("ncu upgrade command should include dependencies with * versions, along wit
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -216,7 +216,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -246,7 +246,7 @@ test("upgrades command doesn't include ignored packages", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,dep1",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,dep1",
       },
       {
         "exec": "yarn install --check-files",
@@ -273,8 +273,8 @@ test("upgrades command includes only included packages", () => {
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
-    `npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1`
+  expect(tasks.upgrade.steps[0].exec).toMatchInlineSnapshot(
+    `"npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1"`
   );
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade dep1`);
 });
@@ -500,7 +500,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install --check-files",
@@ -546,7 +546,7 @@ test("uses the proper yarn berry upgrade command", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "yarn dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "yarn dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install",
@@ -574,6 +574,90 @@ test("given pull request workflow correct permissions when using GitHub token", 
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
+test("cooldown adds flags to npm-check-updates and npm", () => {
+  const project = createProject({
+    packageManager: NodePackageManager.NPM,
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      cooldown: 3,
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toContain("--cooldown=3");
+  expect(tasks.upgrade.env?.NPM_CONFIG_BEFORE).toContain(
+    'node -p "new Date(Date.now()-259200000).toISOString()"'
+  );
+});
+
+test("cooldown adds flags to npm-check-updates and pnpm", () => {
+  const project = createProject({
+    packageManager: NodePackageManager.PNPM,
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      cooldown: 3,
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toContain("--cooldown=3");
+  expect(tasks.upgrade.steps[2].exec).toContain(
+    "--config.minimum-release-age=4320"
+  );
+});
+
+test("cooldown adds flags to npm-check-updates and bun", () => {
+  const project = createProject({
+    packageManager: NodePackageManager.BUN,
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      cooldown: 3,
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toContain("--cooldown=3");
+  expect(tasks.upgrade.steps[2].exec).toContain("--minimum-release-age=259200");
+});
+
+test("cooldown adds flags to npm-check-updates and yarn berry", () => {
+  const project = createProject({
+    packageManager: NodePackageManager.YARN_BERRY,
+    deps: ["some-dep"],
+    depsUpgradeOptions: {
+      cooldown: 3,
+    },
+  });
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toContain("--cooldown=3");
+  expect(tasks.upgrade.env?.YARN_NPM_MINIMAL_AGE_GATE).toBe("4320");
+});
+
+test("throws error when using cooldown with yarn", () => {
+  expect(() =>
+    createProject({
+      packageManager: NodePackageManager.YARN,
+      deps: ["some-dep"],
+      depsUpgradeOptions: {
+        cooldown: 3,
+      },
+    })
+  ).toThrow("The 'cooldown' option is not supported with yarn classic");
+});
+
+test("throws error when using cooldown with yarn classic", () => {
+  expect(() =>
+    createProject({
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      deps: ["some-dep"],
+      depsUpgradeOptions: {
+        cooldown: 3,
+      },
+    })
+  ).toThrow("The 'cooldown' option is not supported with yarn classic");
 });
 
 function createProject(
