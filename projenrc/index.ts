@@ -182,12 +182,15 @@ export function setupJsiiDocgen(project: NodeProject) {
  * @param project The project to add the task to
  */
 export function setupUpgradeDependencies(project: NodeProject) {
+  const cooldown = 2; //
+
   // Upgrade Dependencies in two parts:
   // a) Upgrade bundled dependencies as a releasable fix
   // b) Upgrade devDependencies as a chore
   new UpgradeDependencies(project, {
     taskName: "upgrade-bundled",
     types: [DependencyType.BUNDLED],
+    cooldown,
     semanticCommit: "fix",
     pullRequestTitle: "upgrade bundled dependencies",
     workflowOptions: {
@@ -206,6 +209,7 @@ export function setupUpgradeDependencies(project: NodeProject) {
       // constructs version constraint should not be changed
       "constructs",
     ],
+    cooldown,
     workflowOptions: {
       labels: ["auto-approve"],
     },

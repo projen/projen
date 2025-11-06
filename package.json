@@ -79,7 +79,7 @@
     "jsii-rosetta": "5.9.x",
     "json2jsii": "^0.5.12",
     "license-checker": "^25.0.1",
-    "markmac": "^0.1.146",
+    "markmac": "^0.1.659",
     "prettier": "^2.8.8",
     "ts-jest": "^29",
     "ts-node": "^10.9.2",
