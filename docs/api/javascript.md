@@ -4802,7 +4802,7 @@ Test whether the given construct is a component.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.javascript.UpgradeDependencies.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.UpgradeDependencies.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.postUpgradeTask">postUpgradeTask</a></code> | <code>projen.Task</code> | A task run after the upgrade task. |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.upgradeTask">upgradeTask</a></code> | <code>projen.Task</code> | The upgrade task. |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.workflows">workflows</a></code> | <code>projen.github.GithubWorkflow[]</code> | The workflows that execute the upgrades. |
@@ -4825,10 +4825,10 @@ The tree node.
 ##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.UpgradeDependencies.property.project"></a>
 
 ```typescript
-public readonly project: Project;
+public readonly project: NodeProject;
 ```
 
-- *Type:* projen.Project
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
 
 ---
 
@@ -12640,6 +12640,7 @@ const upgradeDependenciesOptions: javascript.UpgradeDependenciesOptions = { ... 
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.target">target</a></code> | <code>string</code> | Determines the target version to upgrade dependencies to. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.taskName">taskName</a></code> | <code>string</code> | The name of the task that will be created. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.types">types</a></code> | <code>projen.DependencyType[]</code> | Specify which dependency types the upgrade should operate on. |
+| <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.upgradeTransitiveDependencies">upgradeTransitiveDependencies</a></code> | <code>boolean</code> | Whether to upgrade transitive dependencies. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.workflow">workflow</a></code> | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.workflowOptions">workflowOptions</a></code> | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions">UpgradeDependenciesWorkflowOptions</a></code> | Options for the github workflow. |
 
@@ -12785,6 +12786,23 @@ public readonly types: DependencyType[];
 - *Default:* All dependency types.
 
 Specify which dependency types the upgrade should operate on.
+
+---
+
+##### `upgradeTransitiveDependencies`<sup>Optional</sup> <a name="upgradeTransitiveDependencies" id="projen.javascript.UpgradeDependenciesOptions.property.upgradeTransitiveDependencies"></a>
+
+```typescript
+public readonly upgradeTransitiveDependencies: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to upgrade transitive dependencies.
+
+When enabled, the upgrade process will use the package manager's upgrade command
+to update transitive dependencies. When disabled, only direct dependencies are
+upgraded using npm-check-updates with the --install=always flag.
 
 ---
 

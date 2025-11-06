@@ -23,6 +23,7 @@ import {
   GitIdentity,
 } from "../github";
 import { Biome, BiomeOptions } from "./biome/biome";
+import { isYarnBerry, isYarnClassic } from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import {
@@ -1215,18 +1216,11 @@ export class NodeProject extends GitHubProject {
 
     if (this.package.packageManager !== NodePackageManager.BUN) {
       if (this.nodeVersion || this.workflowPackageCache) {
+        const pm: NodePackageManager = this.package.packageManager;
         const cache =
-          this.package.packageManager === NodePackageManager.YARN
+          isYarnClassic(pm) || isYarnBerry(pm)
             ? "yarn"
-            : this.package.packageManager === NodePackageManager.YARN2
-            ? "yarn"
-            : this.package.packageManager === NodePackageManager.YARN_CLASSIC
-            ? "yarn"
-            : this.package.packageManager === NodePackageManager.YARN_BERRY
-            ? "yarn"
-            : this.packageManager === NodePackageManager.BUN
-            ? "bun"
-            : this.package.packageManager === NodePackageManager.PNPM
+            : pm === NodePackageManager.PNPM
             ? "pnpm"
             : "npm";
         install.push({

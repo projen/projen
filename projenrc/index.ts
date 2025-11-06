@@ -205,8 +205,6 @@ export function setupUpgradeDependencies(project: NodeProject) {
         .map((d: any) => d.name),
       // constructs version constraint should not be changed
       "constructs",
-      // markmac depends on projen, we are excluding it here to avoid a circular update loop
-      "markmac",
     ],
     workflowOptions: {
       labels: ["auto-approve"],

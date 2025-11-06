@@ -129,6 +129,17 @@ export interface UpgradeDependenciesOptions {
    * @default - All dependency types.
    */
   readonly types?: DependencyType[];
+
+  /**
+   * Whether to upgrade transitive dependencies.
+   *
+   * When enabled, the upgrade process will use the package manager's upgrade command
+   * to update transitive dependencies. When disabled, only direct dependencies are
+   * upgraded using npm-check-updates with the --install=always flag.
+   *
+   * @default true
+   */
+  readonly upgradeTransitiveDependencies?: boolean;
 }
 
 /**
@@ -140,8 +151,9 @@ export class UpgradeDependencies extends Component {
    */
   public readonly workflows: GithubWorkflow[] = [];
 
+  public readonly project: NodeProject;
+
   private readonly options: UpgradeDependenciesOptions;
-  private readonly _project: NodeProject;
   private readonly pullRequestTitle: string;
 
   /**
@@ -166,11 +178,12 @@ export class UpgradeDependencies extends Component {
   private readonly upgradeTarget: string;
   private readonly satisfyPeerDependencies: boolean;
   private readonly includeDeprecatedVersions: boolean;
+  private readonly upgradeTransitiveDependencies: boolean;
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
-    this._project = project;
+    this.project = project;
     this.options = options;
     this.depTypes = this.options.types ?? [
       DependencyType.BUILD,
@@ -185,6 +198,8 @@ export class UpgradeDependencies extends Component {
     this.satisfyPeerDependencies = this.options.satisfyPeerDependencies ?? true;
     this.includeDeprecatedVersions =
       this.options.includeDeprecatedVersions ?? false;
+    this.upgradeTransitiveDependencies =
+      this.options.upgradeTransitiveDependencies ?? true;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -243,7 +258,19 @@ export class UpgradeDependencies extends Component {
     this.postBuildSteps.push(...steps);
   }
 
-  private renderTaskSteps(): TaskStep[] {
+  /**
+   * Build npm-check-updates command with common options.
+   */
+  private buildNcuCommand(
+    includePackages: string[],
+    options: {
+      upgrade?: boolean;
+      target?: string;
+      format?: string;
+      removeRange?: boolean;
+      install?: boolean;
+    } = {}
+  ): string {
     function executeCommand(packageManager: NodePackageManager): string {
       switch (packageManager) {
         case NodePackageManager.NPM:
@@ -259,6 +286,44 @@ export class UpgradeDependencies extends Component {
           return "bunx";
       }
     }
+
+    const command = [
+      `${executeCommand(
+        this.project.package.packageManager
+      )} npm-check-updates@18`,
+    ];
+
+    if (options.upgrade) {
+      command.push("--upgrade");
+    }
+
+    if (options.target) {
+      command.push(`--target=${options.target}`);
+    }
+
+    if (options.install) {
+      command.push("--install=always");
+    }
+
+    command.push(
+      `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
+      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`,
+      `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
+      `--filter=${includePackages.join(",")}`
+    );
+
+    if (options.format) {
+      command.push(`--format=${options.format}`);
+    }
+
+    if (options.removeRange) {
+      command.push("--removeRange");
+    }
+
+    return command.join(" ");
+  }
+
+  private renderTaskSteps(): TaskStep[] {
     const steps = new Array<TaskStep>();
 
     // Package Manager upgrade should always include all deps
@@ -271,33 +336,37 @@ export class UpgradeDependencies extends Component {
     // that uses an npm-specific feature that causes an invalid dependency tree when using Yarn 1.
     // See https://github.com/projen/projen/pull/3136 for more details.
     const includeForNcu = this.buildDependencyList(false);
-    const ncuCommand = [
-      `${executeCommand(
-        this._project.package.packageManager
-      )} npm-check-updates@16`,
-      "--upgrade",
-      `--target=${this.upgradeTarget}`,
-      `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
-      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`,
-      `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
-      `--filter=${includeForNcu.join(",")}`,
-    ];
 
     // bump versions in package.json
     if (includeForNcu.length) {
-      steps.push({ exec: ncuCommand.join(" ") });
+      steps.push({
+        exec: this.buildNcuCommand(includeForNcu, {
+          upgrade: true,
+          target: this.upgradeTarget,
+          install: !this.upgradeTransitiveDependencies,
+        }),
+      });
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-    steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
+    // skip if ncu handles installation via --install=always
+    if (this.upgradeTransitiveDependencies) {
+      steps.push({
+        exec: this.project.package.installAndUpdateLockfileCommand,
+      });
+    }
 
     // run upgrade command to upgrade transitive deps as well
-    steps.push({
-      exec: this.renderUpgradePackagesCommand(includeForPackageManagerUpgrade),
-    });
+    if (this.upgradeTransitiveDependencies) {
+      steps.push({
+        exec: this.renderUpgradePackagesCommand(
+          includeForPackageManagerUpgrade
+        ),
+      });
+    }
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-    steps.push({ exec: this._project.projenCommand });
+    steps.push({ exec: this.project.projenCommand });
     steps.push({ spawn: this.postUpgradeTask.name });
 
     return steps;
@@ -344,7 +413,7 @@ export class UpgradeDependencies extends Component {
       };
     }
 
-    const packageManager = this._project.package.packageManager;
+    const packageManager = this.project.package.packageManager;
 
     let lazy = undefined;
     switch (packageManager) {
@@ -462,10 +531,10 @@ export class UpgradeDependencies extends Component {
 
     const steps: workflows.JobStep[] = [
       WorkflowSteps.checkout({ with: with_ }),
-      ...this._project.renderWorkflowSetup({ mutable: false }),
+      ...this.project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",
-        run: this._project.runTaskCommand(task),
+        run: this.project.runTaskCommand(task),
       },
     ];
 

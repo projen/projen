@@ -1795,20 +1795,19 @@ export function defaultNpmToken(
 }
 
 function determineLockfile(packageManager: NodePackageManager) {
-  if (
-    packageManager === NodePackageManager.YARN ||
-    packageManager === NodePackageManager.YARN2 ||
-    packageManager === NodePackageManager.YARN_CLASSIC ||
-    packageManager === NodePackageManager.YARN_BERRY
-  ) {
-    return "yarn.lock";
-  } else if (packageManager === NodePackageManager.NPM) {
-    return "package-lock.json";
-  } else if (packageManager === NodePackageManager.PNPM) {
-    return "pnpm-lock.yaml";
-  } else if (packageManager === NodePackageManager.BUN) {
-    return "bun.lockb";
+  switch (packageManager) {
+    case NodePackageManager.YARN:
+    case NodePackageManager.YARN_CLASSIC:
+    case NodePackageManager.YARN2:
+    case NodePackageManager.YARN_BERRY:
+      return "yarn.lock";
+    case NodePackageManager.NPM:
+      return "package-lock.json";
+    case NodePackageManager.PNPM:
+      return "pnpm-lock.yaml";
+    case NodePackageManager.BUN:
+      return "bun.lockb";
+    default:
+      throw new Error(`unsupported package manager ${packageManager}`);
   }
-
-  throw new Error(`unsupported package manager ${packageManager}`);
 }
