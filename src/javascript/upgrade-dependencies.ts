@@ -22,6 +22,7 @@ import { Release } from "../release";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
+import { isYarnClassic, isYarnBerry, isNpm } from "./util";
 
 const CREATE_PATCH_STEP_ID = "create_patch";
 const PATCH_CREATED_OUTPUT = "patch_created";
@@ -129,6 +130,27 @@ export interface UpgradeDependenciesOptions {
    * @default - All dependency types.
    */
   readonly types?: DependencyType[];
+
+  /**
+   * Exclude package versions published within the specified number of days.
+   *
+   * This may provide some protection against supply chain attacks, simply by avoiding
+   * newly published packages that may be malicious. It gives the ecosystem more time
+   * to detect malicious packages. However it comes at the cost of updating other
+   * packages slower, which might also contain vulnerabilities or bugs in need of a fix.
+   *
+   * The cooldown period applies to both npm-check-updates discovery
+   * and the package manager update command.
+   *
+   * @see https://github.com/raineorshine/npm-check-updates#cooldown
+   * @see https://docs.npmjs.com/cli/v11/commands/npm-update#before
+   * @see https://pnpm.io/settings#minimumreleaseage
+   * @see https://bun.com/docs/pm/cli/install#minimum-release-age
+   * @see https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate
+   *
+   * @default - No cooldown period.
+   */
+  readonly cooldown?: number;
 }
 
 /**
@@ -140,8 +162,9 @@ export class UpgradeDependencies extends Component {
    */
   public readonly workflows: GithubWorkflow[] = [];
 
+  public readonly project: NodeProject;
+
   private readonly options: UpgradeDependenciesOptions;
-  private readonly _project: NodeProject;
   private readonly pullRequestTitle: string;
 
   /**
@@ -170,8 +193,27 @@ export class UpgradeDependencies extends Component {
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
-    this._project = project;
+    this.project = project;
     this.options = options;
+
+    // Validate cooldown
+    if (
+      options.cooldown !== undefined &&
+      (!Number.isInteger(options.cooldown) || options.cooldown < 0)
+    ) {
+      throw new Error(
+        "The 'cooldown' option must be a non-negative integer representing days"
+      );
+    }
+
+    // Yarn classic doesn't support cooldown
+    if (options.cooldown && isYarnClassic(project.package.packageManager)) {
+      throw new Error(
+        "The 'cooldown' option is not supported with yarn classic. " +
+          "Consider using npm, pnpm, bun, or yarn berry instead."
+      );
+    }
+
     this.depTypes = this.options.types ?? [
       DependencyType.BUILD,
       DependencyType.BUNDLED,
@@ -201,10 +243,26 @@ export class UpgradeDependencies extends Component {
         description: "Runs after upgrading dependencies",
       });
 
+    const taskEnv: Record<string, string> = { CI: "0" };
+
+    // Set yarn berry cooldown via environment variable, expects minutes
+    if (options.cooldown && isYarnBerry(project.package.packageManager)) {
+      taskEnv.YARN_NPM_MINIMAL_AGE_GATE = String(
+        daysToMinutes(options.cooldown)
+      );
+    }
+
+    // Set npm cooldown date via environment variable (calculated at runtime), expects a date in ISO format
+    if (options.cooldown && isNpm(project.package.packageManager)) {
+      taskEnv.NPM_CONFIG_BEFORE = `$(node -p "new Date(Date.now()-${daysToMilliseconds(
+        options.cooldown
+      )}).toISOString()")`;
+    }
+
     this.upgradeTask = project.addTask(options.taskName ?? "upgrade", {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.
-      env: { CI: "0" },
+      env: taskEnv,
       description: this.pullRequestTitle,
       steps: { toJSON: () => this.renderTaskSteps() } as any,
     });
@@ -244,6 +302,55 @@ export class UpgradeDependencies extends Component {
   }
 
   private renderTaskSteps(): TaskStep[] {
+    const steps = new Array<TaskStep>();
+
+    // Package Manager upgrade should always include all deps
+    const includeForPackageManagerUpgrade = this.buildDependencyList(true);
+    if (includeForPackageManagerUpgrade.length === 0) {
+      return [{ exec: "echo No dependencies to upgrade." }];
+    }
+
+    // Removing `npm-check-updates` from our dependency tree because it depends on a package
+    // that uses an npm-specific feature that causes an invalid dependency tree when using Yarn 1.
+    // See https://github.com/projen/projen/pull/3136 for more details.
+    const includeForNcu = this.buildDependencyList(false);
+
+    // bump versions in package.json
+    if (includeForNcu.length) {
+      const ncuCommand = this.buildNcuCommand(includeForNcu, {
+        upgrade: true,
+        target: this.upgradeTarget,
+      });
+      steps.push({ exec: ncuCommand });
+    }
+
+    // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
+    steps.push({ exec: this.project.package.installAndUpdateLockfileCommand });
+
+    // run upgrade command to upgrade transitive deps as well
+    steps.push({
+      exec: this.renderUpgradePackagesCommand(includeForPackageManagerUpgrade),
+    });
+
+    // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
+    steps.push({ exec: this.project.projenCommand });
+    steps.push({ spawn: this.postUpgradeTask.name });
+
+    return steps;
+  }
+
+  /**
+   * Build npm-check-updates command with common options.
+   */
+  private buildNcuCommand(
+    includePackages: string[],
+    options: {
+      upgrade?: boolean;
+      target?: string;
+      format?: string;
+      removeRange?: boolean;
+    } = {}
+  ): string {
     function executeCommand(packageManager: NodePackageManager): string {
       switch (packageManager) {
         case NodePackageManager.NPM:
@@ -259,48 +366,37 @@ export class UpgradeDependencies extends Component {
           return "bunx";
       }
     }
-    const steps = new Array<TaskStep>();
 
-    // Package Manager upgrade should always include all deps
-    const includeForPackageManagerUpgrade = this.buildDependencyList(true);
-    if (includeForPackageManagerUpgrade.length === 0) {
-      return [{ exec: "echo No dependencies to upgrade." }];
-    }
-
-    // Removing `npm-check-updates` from our dependency tree because it depends on a package
-    // that uses an npm-specific feature that causes an invalid dependency tree when using Yarn 1.
-    // See https://github.com/projen/projen/pull/3136 for more details.
-    const includeForNcu = this.buildDependencyList(false);
-    const ncuCommand = [
+    const command = [
       `${executeCommand(
-        this._project.package.packageManager
-      )} npm-check-updates@16`,
-      "--upgrade",
-      `--target=${this.upgradeTarget}`,
-      `--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`,
-      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`,
-      `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
-      `--filter=${includeForNcu.join(",")}`,
+        this.project.package.packageManager
+      )} npm-check-updates@18`,
     ];
 
-    // bump versions in package.json
-    if (includeForNcu.length) {
-      steps.push({ exec: ncuCommand.join(" ") });
+    if (options.upgrade) {
+      command.push("--upgrade");
+    }
+    if (options.target) {
+      command.push(`--target=${options.target}`);
+    }
+    if (options.format) {
+      command.push(`--format=${options.format}`);
+    }
+    if (options.removeRange) {
+      command.push("--removeRange");
+    }
+    if (this.options.cooldown) {
+      command.push(`--cooldown=${this.options.cooldown}`);
     }
 
-    // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-    steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
+    command.push(`--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`);
+    command.push(
+      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`
+    );
+    command.push(`--dep=${this.renderNcuDependencyTypes(this.depTypes)}`);
+    command.push(`--filter=${includePackages.join(",")}`);
 
-    // run upgrade command to upgrade transitive deps as well
-    steps.push({
-      exec: this.renderUpgradePackagesCommand(includeForPackageManagerUpgrade),
-    });
-
-    // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-    steps.push({ exec: this._project.projenCommand });
-    steps.push({ spawn: this.postUpgradeTask.name });
-
-    return steps;
+    return command.join(" ");
   }
 
   /**
@@ -338,13 +434,18 @@ export class UpgradeDependencies extends Component {
    * Render a package manager specific command to upgrade all requested dependencies.
    */
   private renderUpgradePackagesCommand(include: string[]): string {
-    function upgradePackages(command: string) {
+    function upgradePackages(command: string, cooldownFlag?: string) {
       return () => {
-        return `${command} ${include.join(" ")}`;
+        const parts = [command, ...include];
+        if (cooldownFlag) {
+          parts.push(cooldownFlag);
+        }
+        return parts.join(" ");
       };
     }
 
-    const packageManager = this._project.package.packageManager;
+    const packageManager = this.project.package.packageManager;
+    const cooldown = this.options.cooldown;
 
     let lazy = undefined;
     switch (packageManager) {
@@ -354,16 +455,30 @@ export class UpgradeDependencies extends Component {
         break;
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
+        // Yarn Berry cooldown set via task env
         lazy = upgradePackages("yarn up");
         break;
       case NodePackageManager.NPM:
+        // npm cooldown set via NPM_CONFIG_BEFORE env
         lazy = upgradePackages("npm update");
         break;
       case NodePackageManager.PNPM:
-        lazy = upgradePackages("pnpm update");
+        // pnpm expects minutes
+        lazy = upgradePackages(
+          "pnpm update",
+          cooldown !== undefined
+            ? `--config.minimum-release-age=${daysToMinutes(cooldown)}`
+            : undefined
+        );
         break;
       case NodePackageManager.BUN:
-        lazy = upgradePackages("bun update");
+        // bun expects seconds
+        lazy = upgradePackages(
+          "bun update",
+          cooldown
+            ? `--minimum-release-age=${daysToSeconds(cooldown)}`
+            : undefined
+        );
         break;
       default:
         throw new Error(`unexpected package manager ${packageManager}`);
@@ -462,10 +577,10 @@ export class UpgradeDependencies extends Component {
 
     const steps: workflows.JobStep[] = [
       WorkflowSteps.checkout({ with: with_ }),
-      ...this._project.renderWorkflowSetup({ mutable: false }),
+      ...this.project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",
-        run: this._project.runTaskCommand(task),
+        run: this.project.runTaskCommand(task),
       },
     ];
 
@@ -674,4 +789,25 @@ export class UpgradeDependenciesSchedule {
   }
 
   private constructor(public readonly cron: string[]) {}
+}
+
+/**
+ * Convert days to minutes.
+ */
+function daysToMinutes(days: number): number {
+  return days * 1440;
+}
+
+/**
+ * Convert days to seconds.
+ */
+function daysToSeconds(days: number): number {
+  return days * 86400;
+}
+
+/**
+ * Convert days to milliseconds.
+ */
+function daysToMilliseconds(days: number): number {
+  return days * 86400000;
 }

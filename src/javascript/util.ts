@@ -1,9 +1,36 @@
 import { existsSync, readFileSync } from "fs";
 import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
-import { NodePackage } from "./node-package";
+import { NodePackage, NodePackageManager } from "./node-package";
 import { Project } from "../project";
 import { findUp } from "../util";
+
+/**
+ * Check if package manager is yarn classic.
+ */
+export function isYarnClassic(packageManager: NodePackageManager): boolean {
+  return (
+    packageManager === NodePackageManager.YARN ||
+    packageManager === NodePackageManager.YARN_CLASSIC
+  );
+}
+
+/**
+ * Check if package manager is yarn berry.
+ */
+export function isYarnBerry(packageManager: NodePackageManager): boolean {
+  return (
+    packageManager === NodePackageManager.YARN2 ||
+    packageManager === NodePackageManager.YARN_BERRY
+  );
+}
+
+/**
+ * Check if package manager is npm.
+ */
+export function isNpm(packageManager: NodePackageManager): boolean {
+  return packageManager === NodePackageManager.NPM;
+}
 
 /**
  * Basic interface for `package.json`.

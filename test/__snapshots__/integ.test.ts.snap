@@ -1226,7 +1226,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
         },
         {
           "exec": "yarn install --check-files"
@@ -2289,7 +2289,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
         },
         {
           "exec": "yarn install --check-files"
@@ -3405,7 +3405,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/json-schema,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@types/node,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/json-schema,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@types/node,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
         },
         {
           "exec": "yarn install --check-files"
@@ -4545,7 +4545,7 @@ resolution-mode=highest
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=aws-sdk,jest,projen,esbuild"
+          "exec": "pnpm dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=aws-sdk,jest,projen,esbuild"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
