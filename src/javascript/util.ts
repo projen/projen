@@ -26,13 +26,6 @@ export function isYarnBerry(packageManager: NodePackageManager): boolean {
 }
 
 /**
- * Check if package manager is npm.
- */
-export function isNpm(packageManager: NodePackageManager): boolean {
-  return packageManager === NodePackageManager.NPM;
-}
-
-/**
  * Basic interface for `package.json`.
  */
 interface PackageManifest {

@@ -1808,6 +1808,7 @@ function determineLockfile(packageManager: NodePackageManager) {
     case NodePackageManager.BUN:
       return "bun.lockb";
     default:
+      /* c8 ignore next */
       throw new Error(`unsupported package manager ${packageManager}`);
   }
 }

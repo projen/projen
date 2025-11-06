@@ -600,6 +600,26 @@ test("given pull request workflow correct permissions when using GitHub token", 
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
 
+test("addPostBuildSteps adds custom steps to workflow", () => {
+  const project = createProject();
+
+  project.upgradeWorkflow?.addPostBuildSteps(
+    { run: "echo 'step 1'" },
+    { run: "echo 'step 2'" }
+  );
+
+  project.synth();
+
+  const snapshot = synthSnapshot(project);
+  const workflow = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  const steps = workflow.jobs.upgrade.steps
+    .map((s: any) => s.run)
+    .filter(Boolean);
+
+  expect(steps).toContain("echo 'step 1'");
+  expect(steps).toContain("echo 'step 2'");
+});
+
 function createProject(
   options: Omit<
     NodeProjectOptions,

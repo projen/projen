@@ -266,8 +266,6 @@ export class UpgradeDependencies extends Component {
     options: {
       upgrade?: boolean;
       target?: string;
-      format?: string;
-      removeRange?: boolean;
       install?: boolean;
     } = {}
   ): string {
@@ -311,14 +309,6 @@ export class UpgradeDependencies extends Component {
       `--dep=${this.renderNcuDependencyTypes(this.depTypes)}`,
       `--filter=${includePackages.join(",")}`
     );
-
-    if (options.format) {
-      command.push(`--format=${options.format}`);
-    }
-
-    if (options.removeRange) {
-      command.push("--removeRange");
-    }
 
     return command.join(" ");
   }
