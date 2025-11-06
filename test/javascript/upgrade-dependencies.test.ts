@@ -660,6 +660,30 @@ test("throws error when using cooldown with yarn classic", () => {
   ).toThrow("The 'cooldown' option is not supported with yarn classic");
 });
 
+test("throws error when cooldown is negative", () => {
+  expect(() =>
+    createProject({
+      packageManager: NodePackageManager.NPM,
+      deps: ["some-dep"],
+      depsUpgradeOptions: {
+        cooldown: -1,
+      },
+    })
+  ).toThrow("The 'cooldown' option must be a non-negative integer");
+});
+
+test("throws error when cooldown is not an integer", () => {
+  expect(() =>
+    createProject({
+      packageManager: NodePackageManager.NPM,
+      deps: ["some-dep"],
+      depsUpgradeOptions: {
+        cooldown: 3.5,
+      },
+    })
+  ).toThrow("The 'cooldown' option must be a non-negative integer");
+});
+
 function createProject(
   options: Omit<
     NodeProjectOptions,

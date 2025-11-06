@@ -196,6 +196,16 @@ export class UpgradeDependencies extends Component {
     this.project = project;
     this.options = options;
 
+    // Validate cooldown
+    if (
+      options.cooldown !== undefined &&
+      (!Number.isInteger(options.cooldown) || options.cooldown < 0)
+    ) {
+      throw new Error(
+        "The 'cooldown' option must be a non-negative integer representing days"
+      );
+    }
+
     // Yarn classic doesn't support cooldown
     if (options.cooldown && isYarnClassic(project.package.packageManager)) {
       throw new Error(
