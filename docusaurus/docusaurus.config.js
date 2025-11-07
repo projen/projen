@@ -3,28 +3,23 @@
 
 import { themes as prismThemes } from 'prism-react-renderer';
 
-function getBaseUrl() {
-  // todo: this code will be removed at a later time
-  if (process.env.GITHUB_REPOSITORY === 'Defiance-Digital/projen') return "/projen";
-
-  return "/";
-}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  markdown: {
-    format: 'detect'
-    // format: 'md'
-  },
   title: 'projen',
   tagline: 'Define and maintain complex project configuration through code.',
   favicon: 'img/favicon.ico',
+
+  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
+  future: {
+    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+  },
 
   // Set the production url of your site here
   url: 'https://projen.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: getBaseUrl(),
+  baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -32,7 +27,6 @@ const config = {
   projectName: 'projen', // Usually your repo name.
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -41,6 +35,13 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  markdown: {
+    format: 'detect',
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    }
+  },  
 
   presets: [
     [
@@ -130,7 +131,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Website built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital.</a>`,
+        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Website built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital</a>.`,
       },
       prism: {
         darkTheme: prismThemes.dracula,
@@ -146,6 +147,43 @@ const config = {
           postcssOptions.plugins.push(require("autoprefixer"));
           return postcssOptions;
         },
+        configureWebpack(_config, isServer) {
+          if (isServer) return {};
+          return {
+            plugins: [
+              {
+                apply(compiler) {
+                  compiler.hooks.normalModuleFactory.tap('NodeProtocolPlugin', (nmf) => {
+                    nmf.hooks.resolve.tap('NodeProtocolPlugin', (resolveData) => {
+                      const req = resolveData.request;
+                      if (typeof req === 'string' && req.startsWith('node:')) {
+                        return false;
+                      }
+                    });
+                  });
+                },
+              },
+            ],
+            resolve: {
+              fallback: {
+                path: false,
+                fs: false,
+                async_hooks: false,
+                child_process: false,
+                module: false,
+                v8: false,
+                perf_hooks: false,
+                readline: false,
+                stream: false,
+                crypto: false,
+                os: false,
+                constants: false,
+                tty: false,
+                vm: false,
+              },
+            },
+          };
+        },
       };
     }
   ],
@@ -154,7 +192,6 @@ const config = {
       require("@easyops-cn/docusaurus-search-local"),
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
       ({
-
         hashed: true,
         language: ["en"],
         indexBlog: false,

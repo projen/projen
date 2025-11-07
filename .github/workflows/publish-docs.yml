@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build docs
         working-directory: docusaurus
@@ -24,7 +24,7 @@ jobs:
           npm ci
           npm run build
       - name: Build website artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: "docusaurus/build"
   deploy:
