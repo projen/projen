@@ -87,7 +87,7 @@ export class WindowsBuild extends Component {
         if: "runner.os == 'Windows'",
         name: "Windows performance improvements",
         run: [
-          "yarn config set cache-folder D:\\a\\_temp\\yarn", // move the yarn cache to D:
+          "npm config set cache D:\\a\\_temp\\npm --global", // move the npm cache to D:
           `echo "TEMP=D:\\a\\_temp" >> $env:GITHUB_ENV`, // move the tmp dir used for projen test projects to D:
         ].join("\n"),
       })
