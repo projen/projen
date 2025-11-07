@@ -1,4 +1,5 @@
-import { PageMetadata, useDoc } from '@docusaurus/theme-common';
+import { useDoc } from '@docusaurus/plugin-content-docs';
+import { PageMetadata } from '@docusaurus/theme-common';
 import stripHtml from "@site/src/utils/strip-html";
 
 export default function DocItemMetadata() {
