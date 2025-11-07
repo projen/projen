@@ -141,7 +141,7 @@
       "name": "devenv:setup",
       "steps": [
         {
-          "exec": "yarn install"
+          "exec": "npm ci"
         },
         {
           "spawn": "build"

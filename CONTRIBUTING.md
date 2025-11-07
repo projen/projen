@@ -19,7 +19,6 @@ The following tools need to be installed to develop on projen locally.
 - [git] >= 2.28
 
 [node]: https://nodejs.org/en/download/
-[yarn]: https://yarnpkg.com/en/docs/install
 [maven]: https://maven.apache.org/install
 [go]: https://go.dev/doc/install
 [git]: https://git-scm.com/downloads
@@ -31,11 +30,12 @@ The basic commands to get the repository cloned and built locally follow:
 ```console
 $ git clone git@github.com:projen/projen
 $ cd projen
-$ yarn # install dependencies
-$ yarn build # build projen
+$ npm ci # install dependencies
+$ npm run build # build projen
 ```
 
-Attention Windows users: It has been noted that there are compatibility issues between Git Bash and the Projen build script when running on Windows. Therefore, we recommend directly utilizing the WSL (Windows Subsystem Linux) terminal to build the Projen project.
+Attention Windows users: It has been noted that there are compatibility issues between Git Bash and the Projen build script when running on Windows.
+Therefore, we recommend directly utilizing the WSL (Windows Subsystem Linux) terminal to build the Projen project.
 
 ## Code Organization
 
@@ -53,13 +53,13 @@ The projen package has the following scripts:
 - `package` - emits publishable artifacts to `dist`.
 - `eslint` - run linter against source code
 
-Each of these scripts can be executed using `yarn <script>` or `npx projen <script>`.
+Each of these scripts can be executed using `npm run <script>` or `npx projen <script>`.
 
 Tests are located under `src/__tests__` and executed from javascript code, so
 make sure to compile once before running any tests.
 
-One trick for quickly iterating is to run `yarn watch` in one terminal, and
-`yarn test:watch` in another. Then, when you change your unit tests the code
+One trick for quickly iterating is to run `npm run watch` in one terminal, and
+`npm run test:watch` in another. Then, when you change your unit tests the code
 will automatically recompile, thus triggering the tests to automatically re-run.
 
 #### Linting & Formatting
@@ -78,11 +78,11 @@ and formatting errors whenever possible while saving a document.
 When your local version of projen builds successfully, you can test it to create
 a new project by going into another directory and invoking the binary directly:
 
-First, tell yarn to create a link from your local development copy:
+First, tell npm to create a link from your local development copy:
 
 ```console
 $ cd /path/to/local/projen
-$ yarn link
+$ npm link
 ```
 
 Now, to create new projects:
@@ -90,10 +90,10 @@ Now, to create new projects:
 ```console
 $ mkdir /my/new/project
 $ cd /my/new/project
-$ yarn link projen
+$ npm link projen
 $ alias pj="node_modules/projen/bin/projen"
 $ pj new TYPE
-$ yarn link projen # <-- important to run this again
+$ npm link projen # <-- important to run this again
 ```
 
 If you already have an existing project and you want to test a new projen
@@ -101,16 +101,12 @@ feature against it:
 
 ```console
 $ cd /my/other/project
-$ yarn link projen
+$ npm link projen
 $ pj
 ```
 
 From now on, running `pj` in this session will use the local development version of
 projen instead of the latest one from npm.
-
-```console
-$ yarn unlink projen
-```
 
 ### Version bumping
 
@@ -135,7 +131,7 @@ npm utility.
 - If not obvious (i.e. from unit tests), describe how you verified that your change works.
 - If this commit includes breaking changes, they must be listed at the end in the following format (notice how multiple breaking changes should be formatted):
 
-```
+```text
 BREAKING CHANGE: Description of what broke and how to achieve this behavior now
 * **module-name:** Another breaking change
 * **module-name:** Yet another breaking change

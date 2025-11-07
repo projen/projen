@@ -234,7 +234,7 @@ jobs:
       - if: runner.os == 'Windows'
         name: Windows performance improvements
         run: |-
-          yarn config set cache-folder D:\a\_temp\yarn
+          npm config set cache D:\a\_temp\npm --global
           echo "TEMP=D:\a\_temp" >> $env:GITHUB_ENV
       - name: Install dependencies
         run: npm install
