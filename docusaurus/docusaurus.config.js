@@ -3,30 +3,23 @@
 
 import { themes as prismThemes } from 'prism-react-renderer';
 
-function getBaseUrl() {
-  // todo: this code will be removed at a later time
-  if (process.env.GITHUB_REPOSITORY === 'Defiance-Digital/projen') return "/projen";
-
-  return "/";
-}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  markdown: {
-    format: 'detect',
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    }
-  },
   title: 'projen',
   tagline: 'Define and maintain complex project configuration through code.',
   favicon: 'img/favicon.ico',
+
+  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
+  future: {
+    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+  },
 
   // Set the production url of your site here
   url: 'https://projen.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: getBaseUrl(),
+  baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -42,6 +35,13 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  markdown: {
+    format: 'detect',
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    }
+  },  
 
   presets: [
     [
@@ -155,7 +155,6 @@ const config = {
       require("@easyops-cn/docusaurus-search-local"),
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
       ({
-
         hashed: true,
         language: ["en"],
         indexBlog: false,
