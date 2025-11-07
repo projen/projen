@@ -10,7 +10,6 @@ import {
   setupGitpod,
   setupIntegTest,
   setupMarkdown,
-  setupMergify,
   setupNpmignore,
   setupUpgradeDependencies,
   setupVscode,
@@ -207,8 +206,6 @@ setupGitignore(project);
 setupMarkdown(project);
 
 setupVscode(project);
-
-setupMergify(project);
 
 setupGitpod(project);
 

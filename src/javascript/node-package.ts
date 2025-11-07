@@ -1585,7 +1585,7 @@ export class NodePackage extends Component {
   }
 
   private npmScriptForTask(task: Task) {
-    return `${this.projenCommand} ${task.name}`;
+    return `${this.project.projenCommand} ${task.name}`;
   }
 
   private readPackageJson() {

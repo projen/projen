@@ -97,7 +97,7 @@ const hasJsii = existsSync("node_modules/.bin/jsii");
 const hasTsNode = existsSync("node_modules/.bin/ts-node");
 const needsBootstrapping = !isBuild || !hasTsNode;
 
-const installCommand = "yarn install --frozen-lockfile --check-files --non-interactive";
+const installCommand = "${project.package.installCommand}";
 const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
 
 function bootstrap() {
@@ -269,22 +269,6 @@ export function setupVscode(project: NodeProject) {
 }
 
 /**
- * Setup mergify rules
- * @param project The project to add the rules to
- */
-export function setupMergify(project: NodeProject) {
-  project.github?.mergify?.addRule({
-    name: "Label core contributions",
-    actions: {
-      label: {
-        add: ["contribution/core"],
-      },
-    },
-    conditions: ["author~=^(eladb|Chriscbr)$", "label!=contribution/core"],
-  });
-}
-
-/**
  * Setup gitpod configuration
  *
  * @param project The project to add the configuration to
@@ -292,9 +276,8 @@ export function setupMergify(project: NodeProject) {
 export function setupGitpod(project: NodeProject) {
   project.gitpod?.addCustomTask({
     name: "Setup",
-    init: "yarn install",
-    prebuild: "bash ./projen.bash",
-    command: "npx projen build",
+    init: project.package.installCommand,
+    command: `${project.projenCommand} ${project.buildTask.name}`,
   });
 }
 
@@ -305,7 +288,7 @@ export function setupGitpod(project: NodeProject) {
  */
 export function setupDevcontainer(project: NodeProject) {
   const setup = project.addTask("devenv:setup");
-  setup.exec("yarn install");
+  setup.exec(project.package.installCommand);
   setup.spawn(project.buildTask);
   project.devContainer?.addTasks(setup);
 
