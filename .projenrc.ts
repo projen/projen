@@ -20,6 +20,7 @@ import {
 } from "./projenrc";
 import {
   AiInstructions,
+  javascript,
   JsonPatch,
   ProjectTree,
   ReleasableCommits,
@@ -62,6 +63,8 @@ const project = new JsiiProject({
 
   jsiiVersion: "5.9.x",
   typescriptVersion: "5.9.x",
+
+  packageManager: javascript.NodePackageManager.NPM,
 
   deps: ["constructs@^10.0.0"],
 

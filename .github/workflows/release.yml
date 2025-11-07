@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: 20.9.0
       - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: npm ci
       - name: release
         run: node ./projen.js release
       - name: Upload coverage to Codecov
@@ -136,7 +136,7 @@ jobs:
         with:
           path: .repo
       - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
+        run: cd .repo && npm ci
       - name: Extract build artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
@@ -196,7 +196,7 @@ jobs:
         with:
           path: .repo
       - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
+        run: cd .repo && npm ci
       - name: Extract build artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
@@ -258,7 +258,7 @@ jobs:
         with:
           path: .repo
       - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
+        run: cd .repo && npm ci
       - name: Extract build artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
@@ -314,7 +314,7 @@ jobs:
         with:
           path: .repo
       - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
+        run: cd .repo && npm ci
       - name: Extract build artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
