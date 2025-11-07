@@ -131,7 +131,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Website built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital.</a>`,
+        copyright: `Copyright © ${new Date().getFullYear()} Amazon Web Services, Inc. <br/>Website built with ❤️ by <a href="https://defiancedigital.com/" target="_blank">Defiance Digital</a>.`,
       },
       prism: {
         darkTheme: prismThemes.dracula,
@@ -146,6 +146,43 @@ const config = {
           postcssOptions.plugins.push(require("tailwindcss"));
           postcssOptions.plugins.push(require("autoprefixer"));
           return postcssOptions;
+        },
+        configureWebpack(_config, isServer) {
+          if (isServer) return {};
+          return {
+            plugins: [
+              {
+                apply(compiler) {
+                  compiler.hooks.normalModuleFactory.tap('NodeProtocolPlugin', (nmf) => {
+                    nmf.hooks.resolve.tap('NodeProtocolPlugin', (resolveData) => {
+                      const req = resolveData.request;
+                      if (typeof req === 'string' && req.startsWith('node:')) {
+                        return false;
+                      }
+                    });
+                  });
+                },
+              },
+            ],
+            resolve: {
+              fallback: {
+                path: false,
+                fs: false,
+                async_hooks: false,
+                child_process: false,
+                module: false,
+                v8: false,
+                perf_hooks: false,
+                readline: false,
+                stream: false,
+                crypto: false,
+                os: false,
+                constants: false,
+                tty: false,
+                vm: false,
+              },
+            },
+          };
         },
       };
     }

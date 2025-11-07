@@ -1,4 +1,4 @@
-import { useDoc } from '@docusaurus/plugin-content-docs';
+import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import { PageMetadata } from '@docusaurus/theme-common';
 import stripHtml from "@site/src/utils/strip-html";
 
