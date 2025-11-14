@@ -11,6 +11,7 @@ import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
+import { Uv } from "./uv";
 import { Venv, VenvOptions } from "./venv";
 import { GitHubProject, GitHubProjectOptions } from "../github";
 import {
@@ -119,6 +120,15 @@ export interface PythonProjectOptions
    * @featured
    */
   readonly poetry?: boolean;
+
+  /**
+   * Use uv to manage your project dependencies, virtual environment, and
+   * (optional) packaging/publishing.
+   *
+   * @default false
+   * @featured
+   */
+  readonly uv?: boolean;
 
   // -- optional components --
 
@@ -267,16 +277,26 @@ export class PythonProject extends GitHubProject {
     }
 
     const poetry = options.poetry ?? false;
-    const pip = options.pip ?? !poetry;
-    const venv = options.venv ?? !poetry;
-    const setuptools =
-      options.setuptools ?? (!poetry && this.projectType === ProjectType.LIB);
+    const uv = options.uv ?? false;
+    const not_poetry_or_uv = !poetry && !uv;
 
-    if (poetry && (pip || venv || setuptools)) {
-      throw new Error(
-        "poetry is true - pip, venv, and setuptools must be undefined or false"
-      );
-    }
+    // Assume pip if not using poetry or uv
+    const pip = options.pip ?? not_poetry_or_uv;
+
+    // Assume venv if not using poetry or uv
+    const venv = options.venv ?? not_poetry_or_uv;
+
+    const setuptools =
+      options.setuptools ??
+      (not_poetry_or_uv && this.projectType === ProjectType.LIB);
+
+    const tools = {
+      poetry: poetry,
+      pip: pip,
+      venv: venv,
+      setuptools: setuptools,
+      uv: uv,
+    };
 
     if (!this.parent) {
       // default to projenrc.py if no other projenrc type was elected
@@ -321,7 +341,38 @@ export class PythonProject extends GitHubProject {
       });
     }
 
+    if (uv) {
+      // uv cannot be used with other tools.
+      this.checkToolConflicts("uv", tools);
+
+      const uvProject = new Uv(this, {
+        pythonVersion:
+          options.uvOptions?.pythonVersion ||
+          options.uvOptions?.metadata?.requiresPython,
+        deps: options.deps || options.uvOptions?.deps,
+        devDeps: options.devDeps || options.uvOptions?.devDeps,
+        metadata: {
+          version: options.version,
+          description: options.description,
+          authorName: options.authorName,
+          authorEmail: options.authorEmail,
+          license: options.license,
+          homepage: options.homepage,
+          classifiers: options.classifiers,
+          ...options.uvOptions?.metadata,
+        },
+      });
+      this.depsManager = uvProject;
+      this.envManager = uvProject;
+      this.packagingManager = uvProject;
+    } else if (options.uvOptions) {
+      throw new Error("uvOptions only applies when using uv.");
+    }
+
     if (poetry) {
+      // poetry cannot be used with other tools.
+      this.checkToolConflicts("poetry", tools);
+
       const poetryProject = new Poetry(this, {
         version: options.version,
         description: options.description,
@@ -402,6 +453,26 @@ export class PythonProject extends GitHubProject {
     }
 
     this.addDefaultGitIgnore();
+  }
+
+  private checkToolConflicts(
+    activeToolName: string,
+    tools: Record<string, boolean>
+  ) {
+    if (tools[activeToolName]) {
+      // Collect names of other enabled tools excluding the active tool itself
+      const conflicts = Object.entries(tools)
+        .filter(([name, enabled]) => name !== activeToolName && enabled)
+        .map(([name]) => name);
+
+      if (conflicts.length) {
+        throw new Error(
+          `${activeToolName} cannot be used together with other tools, found the following incompatible tools enabled: ${conflicts.join(
+            ", "
+          )}`
+        );
+      }
+    }
   }
 
   /**
