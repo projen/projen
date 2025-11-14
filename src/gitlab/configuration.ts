@@ -239,7 +239,7 @@ export class CiConfiguration extends Component {
         * local
         * file, project
         * remote
-        * template  
+        * template
         `
       );
     }
@@ -429,7 +429,8 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
       typeof v === "object" &&
       v != null &&
       k !== "variables" &&
-      k !== "idTokens"
+      k !== "idTokens" &&
+      k !== "inputs"
     ) {
       v = snakeCaseKeys(v);
     }
