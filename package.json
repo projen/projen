@@ -121,6 +121,11 @@
     "yaml",
     "yargs"
   ],
+  "overrides": {
+    "xmlbuilder2": {
+      "js-yaml": "^3.14.2"
+    }
+  },
   "keywords": [
     "cdk",
     "cicd",
