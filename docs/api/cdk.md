@@ -7292,7 +7292,7 @@ public readonly mavenServerId: string;
 ```
 
 - *Type:* string
-- *Default:* "ossrh" (Maven Central) or "github" when using GitHub Packages
+- *Default:* "central-ossrh" (Maven Central) or "github" when using GitHub Packages
 
 Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
 

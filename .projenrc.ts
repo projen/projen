@@ -160,7 +160,6 @@ const project = new JsiiProject({
   releaseEnvironment: "release",
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
-    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
   },

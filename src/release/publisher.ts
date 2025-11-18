@@ -497,7 +497,7 @@ export class Publisher extends Component {
     const isGitHubActor =
       isGitHubPackages && options.mavenUsername == undefined;
     const mavenServerId =
-      options.mavenServerId ?? (isGitHubPackages ? "github" : undefined);
+      options.mavenServerId ?? (isGitHubPackages ? "github" : "central-ossrh");
 
     if (isGitHubPackages && mavenServerId != "github") {
       throw new Error(
@@ -1242,7 +1242,7 @@ export interface MavenPublishOptions extends CommonPublishOptions {
    *
    * Set to `central-ossrh` to publish to Maven Central.
    *
-   * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
+   * @default "central-ossrh" (Maven Central) or "github" when using GitHub Packages
    */
   readonly mavenServerId?: string;
 
