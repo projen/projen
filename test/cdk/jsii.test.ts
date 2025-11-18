@@ -78,6 +78,9 @@ describe("maven repository options", () => {
     expect(outdir[".projen/tasks.json"].tasks["publish:maven"]).toStrictEqual({
       name: "publish:maven",
       description: "Publish this package to Maven Central",
+      env: {
+        MAVEN_SERVER_ID: "central-ossrh",
+      },
       requiredEnv: [
         "MAVEN_GPG_PRIVATE_KEY",
         "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
@@ -99,7 +102,7 @@ describe("maven repository options", () => {
     expect(workflow).not.toContain("packages: write");
   });
 
-  test("use nexus repo new endpoint", () => {
+  test("can use custom nexus repo endpoint", () => {
     const project = new JsiiProject({
       authorAddress: "https://foo.bar",
       authorUrl: "https://foo.bar",
@@ -110,6 +113,7 @@ describe("maven repository options", () => {
         javaPackage: "io.github.cdklabs.watchful",
         mavenGroupId: "io.github.cdklabs",
         mavenArtifactId: "cdk-watchful",
+        mavenServerId: "ossrh",
         mavenEndpoint: "https://s01.oss.sonatype.org",
       },
       defaultReleaseBranch: "master",
@@ -122,6 +126,7 @@ describe("maven repository options", () => {
       name: "publish:maven",
       description: "Publish this package to Maven Central",
       env: {
+        MAVEN_SERVER_ID: "ossrh",
         MAVEN_ENDPOINT: "https://s01.oss.sonatype.org",
       },
       requiredEnv: [
