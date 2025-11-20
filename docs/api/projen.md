@@ -9828,7 +9828,7 @@ public readonly agents: AiAgent[];
 ```
 
 - *Type:* <a href="#projen.AiAgent">AiAgent</a>[]
-- *Default:* All agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR, AiAgent.CLAUDE, AiAgent.AMAZON_Q]
+- *Default:* All agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR, AiAgent.CLAUDE, AiAgent.AMAZON_Q, AiAgent.KIRO, AiAgent.CODEX]
 
 Which AI agents to generate instruction files for.
 
@@ -16763,6 +16763,7 @@ Supported AI coding assistants and their instruction file locations.
 | <code><a href="#projen.AiAgent.CLAUDE">CLAUDE</a></code> | Claude Code - CLAUDE.md. |
 | <code><a href="#projen.AiAgent.AMAZON_Q">AMAZON_Q</a></code> | Amazon Q - .amazonq/rules/project.md. |
 | <code><a href="#projen.AiAgent.KIRO">KIRO</a></code> | Kiro - .kiro/steering/project.md. |
+| <code><a href="#projen.AiAgent.CODEX">CODEX</a></code> | OpenAI Codex - AGENTS.md. |
 
 ---
 
@@ -16797,6 +16798,13 @@ Amazon Q - .amazonq/rules/project.md.
 ##### `KIRO` <a name="KIRO" id="projen.AiAgent.KIRO"></a>
 
 Kiro - .kiro/steering/project.md.
+
+---
+
+
+##### `CODEX` <a name="CODEX" id="projen.AiAgent.CODEX"></a>
+
+OpenAI Codex - AGENTS.md.
 
 ---
 
