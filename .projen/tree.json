@@ -463,6 +463,20 @@
           "path": "src/javascript/biome/biome-config.ts"
         }
       },
+      "JsiiFromJsonSchema@src--python--pyproject-toml.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/pyproject-toml.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--uv-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/uv-config.ts"
+        }
+      },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
         "metadata": {
           "type": "file",
