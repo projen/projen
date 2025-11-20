@@ -524,6 +524,28 @@ test("npm overrides", () => {
   expect(snps["package.json"]).toMatchSnapshot();
 });
 
+test("bun overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.BUN,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  expect(
+    project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+  ).toEqual([
+    { name: "other-dep", type: "override" },
+    { name: "some-dep", type: "override", version: "1.0.0" },
+  ]);
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].overrides).toBeDefined();
+  expect(snps["package.json"].resolutions).toBeUndefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+});
+
 test("removed override dependency will not be rendered in overrides", () => {
   const project = new TestProject();
 
