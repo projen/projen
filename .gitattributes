@@ -30,6 +30,7 @@
 /.projen/tasks.json linguist-generated
 /.projen/tree.json linguist-generated
 /.vscode/launch.json linguist-generated
+/AGENTS.md linguist-generated
 /API.md linguist-generated
 /CLAUDE.md linguist-generated
 /LICENSE linguist-generated
