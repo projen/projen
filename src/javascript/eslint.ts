@@ -19,8 +19,10 @@ export interface EslintOptions {
 
   /**
    * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
+   * 
+   * @default - all files in the projet
    */
-  readonly dirs: string[];
+  readonly dirs?: string[];
 
   /**
    * Files or glob patterns or directories with source files that include tests and build tools
@@ -228,7 +230,7 @@ export class Eslint extends Component {
     const devdirs = options.devdirs ?? [];
 
     this._lintPatterns = new Set([
-      ...options.dirs,
+      ...(options.dirs ?? []),
       ...devdirs,
       ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
     ]);

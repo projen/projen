@@ -1,22 +1,75 @@
 import { types } from "util";
-import { ResolveOptions, IResolvable } from "./file";
+import { ResolveOptions, IResolvable, IResolver } from "../file";
 
-function isResolvable(obj: any): obj is IResolvable {
+export function isResolvable(obj: any): obj is IResolvable {
   return (obj as IResolvable).toJSON !== undefined;
 }
 
-export function resolve(value: any, options: ResolveOptions = {}): any {
+type DataTypeHandler = (resolver: (val: any, opts?: DataResolverOptions) => any, value: any, options: DataResolverOptions) => any;
+type DataTypePredicate = (value: any) => boolean;
+
+interface DataResolverOptions extends ResolveOptions {
+  /**
+   * Custom data type handlers.
+   * 
+   * Handlers may use the provided resolver to resolver nested values.
+   * They must ensure that the returned value is serializable. 
+   */
+  readonly handlers?: Array<[DataTypePredicate, DataTypeHandler]>;
+}
+
+/**
+ * Resolves data types like structs, lists and primitives.
+ */
+export class DataResolver implements IResolver {
+  private readonly handlers = new Array<[DataTypePredicate, DataTypeHandler]>();
+
+  /**
+   * Register a custom handler for a type.
+   */
+  public registerHandler(predicate: DataTypePredicate, handler: DataTypeHandler): void {
+    this.handlers.push([predicate, handler]);
+  }
+
+  /**
+   * Allow a type to pass through the resolver unchanged.
+   * A serializer will than have to be aware of how to serialize it.
+   */
+  public allowPassThrough(predicate: DataTypePredicate): void {
+    this.handlers.push([predicate, (_resolver, value, _options) => value]);
+  }
+
+  public resolve(value: any, options?: ResolveOptions) {
+    return resolve(value, {
+      ...options,
+      handlers: this.handlers,
+    });
+  }
+}
+
+function resolve(value: any, options: DataResolverOptions = {}): any {
   const args = options.args ?? [];
   const omitEmpty = options.omitEmpty ?? false;
+  const handlers = options.handlers ?? [];
 
   if (value == null) {
     return value;
+  }
+
+  // Check for registered custom handlers
+  if (handlers) {
+    for (const [predicate, handler] of handlers) {
+      if (predicate(value)) {
+        return handler(resolve, value, options);
+      }
+    }
   }
 
   if (isResolvable(value)) {
     const resolved = value.toJSON();
     return resolve(resolved, options);
   }
+
 
   // Special resolution for few JavaScript built-in types
   // that by default would be stringified as empty objects ('{}')
