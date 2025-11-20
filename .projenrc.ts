@@ -160,7 +160,6 @@ const project = new JsiiProject({
   releaseEnvironment: "release",
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
-    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
   },
@@ -184,11 +183,20 @@ const project = new JsiiProject({
   },
 });
 
+// Trusted Publishing requires npm 11 which is available by default in node 24
 project.github
   ?.tryFindWorkflow("release")
   ?.file?.patch(
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
+
+// cannot upgrade xmlbuilder2 to v4 as it drops node versions < 20
+// instead we force js-yaml to a fixed version
+project.package.addField("overrides", {
+  xmlbuilder2: {
+    "js-yaml": "^3.14.2",
+  },
+});
 
 setupCheckLicenses(project);
 
@@ -216,6 +224,7 @@ setupAllContributors(project);
 setupNpmignore(project);
 
 setupIntegTest(project);
+
 setupBundleTaskRunner(project);
 
 new JsiiFromJsonSchema(project, {

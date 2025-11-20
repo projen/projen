@@ -591,6 +591,8 @@ export interface Trigger {
   readonly strategy?: Strategy;
   /** A list of local files or artifacts from other jobs to define the pipeline */
   readonly include?: TriggerInclude[];
+  /** Input parameters for the downstream pipeline when using spec:inputs */
+  readonly inputs?: Record<string, any>;
 }
 
 /**
@@ -617,11 +619,14 @@ export interface TriggerInclude {
 
 /**
  * You can mirror the pipeline status from the triggered pipeline to the source bridge job
- * by using strategy: depend
+ * by using strategy: depend or mirror
  * @see https://docs.gitlab.com/ee/ci/yaml/#triggerstrategy
  */
 export enum Strategy {
+  /** Not recommended, use mirror instead. The trigger job status shows failed, success, or running, depending on the downstream pipeline status. */
   DEPEND = "depend",
+  /** Mirrors the status of the downstream pipeline exactly. */
+  MIRROR = "mirror",
 }
 
 /**

@@ -4164,6 +4164,7 @@ const trigger: gitlab.Trigger = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.gitlab.Trigger.property.branch">branch</a></code> | <code>string</code> | The branch name that a downstream pipeline will use. |
 | <code><a href="#projen.gitlab.Trigger.property.include">include</a></code> | <code><a href="#projen.gitlab.TriggerInclude">TriggerInclude</a>[]</code> | A list of local files or artifacts from other jobs to define the pipeline. |
+| <code><a href="#projen.gitlab.Trigger.property.inputs">inputs</a></code> | <code>{[ key: string ]: any}</code> | Input parameters for the downstream pipeline when using spec:inputs. |
 | <code><a href="#projen.gitlab.Trigger.property.project">project</a></code> | <code>string</code> | Path to the project, e.g. `group/project`, or `group/sub-group/project`. |
 | <code><a href="#projen.gitlab.Trigger.property.strategy">strategy</a></code> | <code><a href="#projen.gitlab.Strategy">Strategy</a></code> | You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend. |
 
@@ -4190,6 +4191,18 @@ public readonly include: TriggerInclude[];
 - *Type:* <a href="#projen.gitlab.TriggerInclude">TriggerInclude</a>[]
 
 A list of local files or artifacts from other jobs to define the pipeline.
+
+---
+
+##### `inputs`<sup>Optional</sup> <a name="inputs" id="projen.gitlab.Trigger.property.inputs"></a>
+
+```typescript
+public readonly inputs: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+Input parameters for the downstream pipeline when using spec:inputs.
 
 ---
 
@@ -4944,7 +4957,7 @@ Describes the conditions for when to pull an image.
 
 ### Strategy <a name="Strategy" id="projen.gitlab.Strategy"></a>
 
-You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend.
+You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend or mirror.
 
 > [https://docs.gitlab.com/ee/ci/yaml/#triggerstrategy](https://docs.gitlab.com/ee/ci/yaml/#triggerstrategy)
 
@@ -4952,11 +4965,23 @@ You can mirror the pipeline status from the triggered pipeline to the source bri
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.gitlab.Strategy.DEPEND">DEPEND</a></code> | *No description.* |
+| <code><a href="#projen.gitlab.Strategy.DEPEND">DEPEND</a></code> | Not recommended, use mirror instead. |
+| <code><a href="#projen.gitlab.Strategy.MIRROR">MIRROR</a></code> | Mirrors the status of the downstream pipeline exactly. |
 
 ---
 
 ##### `DEPEND` <a name="DEPEND" id="projen.gitlab.Strategy.DEPEND"></a>
+
+Not recommended, use mirror instead.
+
+The trigger job status shows failed, success, or running, depending on the downstream pipeline status.
+
+---
+
+
+##### `MIRROR` <a name="MIRROR" id="projen.gitlab.Strategy.MIRROR"></a>
+
+Mirrors the status of the downstream pipeline exactly.
 
 ---
 

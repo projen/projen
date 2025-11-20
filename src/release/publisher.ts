@@ -376,20 +376,8 @@ export class Publisher extends Component {
         );
       }
 
-      let publishTools = PUBLIB_TOOLCHAIN.js;
-      if (options.trustedPublishing && this.workflowNodeVersion == "lts/*") {
-        // trusted publishing requires node 24.x and above
-        // lts/* is currently 22.x
-        // @todo remove once node 24.x is lts
-        publishTools = {
-          node: {
-            version: "24.x",
-          },
-        };
-      }
-
       return {
-        publishTools,
+        publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
         environment: options.githubEnvironment ?? branchOptions.environment,
@@ -497,7 +485,7 @@ export class Publisher extends Component {
     const isGitHubActor =
       isGitHubPackages && options.mavenUsername == undefined;
     const mavenServerId =
-      options.mavenServerId ?? (isGitHubPackages ? "github" : undefined);
+      options.mavenServerId ?? (isGitHubPackages ? "github" : "central-ossrh");
 
     if (isGitHubPackages && mavenServerId != "github") {
       throw new Error(
@@ -1242,7 +1230,7 @@ export interface MavenPublishOptions extends CommonPublishOptions {
    *
    * Set to `central-ossrh` to publish to Maven Central.
    *
-   * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
+   * @default "central-ossrh" (Maven Central) or "github" when using GitHub Packages
    */
   readonly mavenServerId?: string;
 
