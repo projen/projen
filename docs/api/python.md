@@ -1696,7 +1696,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.python.PythonProject.property.gitpod">gitpod</a></code> | <code>projen.Gitpod</code> | Access for Gitpod. |
 | <code><a href="#projen.python.PythonProject.property.vscode">vscode</a></code> | <code>projen.vscode.VsCode</code> | Access all VSCode components. |
 | <code><a href="#projen.python.PythonProject.property.depsManager">depsManager</a></code> | <code><a href="#projen.python.IPythonDeps">IPythonDeps</a></code> | API for managing dependencies. |
-| <code><a href="#projen.python.PythonProject.property.envManager">envManager</a></code> | <code><a href="#projen.python.IPythonEnv">IPythonEnv</a></code> | API for mangaging the Python runtime environment. |
+| <code><a href="#projen.python.PythonProject.property.envManager">envManager</a></code> | <code><a href="#projen.python.IPythonEnv">IPythonEnv</a></code> | API for managing the Python runtime environment. |
 | <code><a href="#projen.python.PythonProject.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
 | <code><a href="#projen.python.PythonProject.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Directory where sample tests are located. |
 | <code><a href="#projen.python.PythonProject.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
@@ -2100,7 +2100,7 @@ public readonly envManager: IPythonEnv;
 
 - *Type:* <a href="#projen.python.IPythonEnv">IPythonEnv</a>
 
-API for mangaging the Python runtime environment.
+API for managing the Python runtime environment.
 
 ---
 
@@ -3341,6 +3341,8 @@ public readonly publishTestTask: Task;
 
 Represents configuration of a pyproject.toml file for a uv project.
 
+> [https://docs.astral.sh/uv/concepts/projects/config/](https://docs.astral.sh/uv/concepts/projects/config/)
+
 #### Initializers <a name="Initializers" id="projen.python.UvPyproject.Initializer"></a>
 
 ```typescript
@@ -3691,6 +3693,66 @@ public readonly project: Project;
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### BuildSystem <a name="BuildSystem" id="projen.python.BuildSystem"></a>
+
+Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
+
+#### Initializer <a name="Initializer" id="projen.python.BuildSystem.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const buildSystem: python.BuildSystem = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.BuildSystem.property.requires">requires</a></code> | <code>string[]</code> | List of strings following the version specifier specification, representing dependencies required to execute the build system. |
+| <code><a href="#projen.python.BuildSystem.property.backendPath">backendPath</a></code> | <code>string[]</code> | list of directories to prepend to `sys.path` when loading the build backend, relative to project root. |
+| <code><a href="#projen.python.BuildSystem.property.buildBackend">buildBackend</a></code> | <code>string</code> | String is formatted following the same `module:object` syntax as a `setuptools` entry point. |
+
+---
+
+##### `requires`<sup>Required</sup> <a name="requires" id="projen.python.BuildSystem.property.requires"></a>
+
+```typescript
+public readonly requires: string[];
+```
+
+- *Type:* string[]
+
+List of strings following the version specifier specification, representing dependencies required to execute the build system.
+
+---
+
+##### `backendPath`<sup>Optional</sup> <a name="backendPath" id="projen.python.BuildSystem.property.backendPath"></a>
+
+```typescript
+public readonly backendPath: string[];
+```
+
+- *Type:* string[]
+
+list of directories to prepend to `sys.path` when loading the build backend, relative to project root.
+
+---
+
+##### `buildBackend`<sup>Optional</sup> <a name="buildBackend" id="projen.python.BuildSystem.property.buildBackend"></a>
+
+```typescript
+public readonly buildBackend: string;
+```
+
+- *Type:* string
+
+String is formatted following the same `module:object` syntax as a `setuptools` entry point.
+
+It’s also legal to leave out the `:object` part.
+
+---
+
 ### PipOptions <a name="PipOptions" id="projen.python.PipOptions"></a>
 
 Options for pip.
@@ -3728,7 +3790,7 @@ const poetryOptions: python.PoetryOptions = { ... }
 | <code><a href="#projen.python.PoetryOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PoetryOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PoetryOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.PoetryOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
+| <code><a href="#projen.python.PoetryOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvBaseOptions">UvBaseOptions</a></code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.python.PoetryOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 
 ---
@@ -3861,10 +3923,10 @@ Additional fields to pass in the setup() function if using setuptools.
 ##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PoetryOptions.property.uvOptions"></a>
 
 ```typescript
-public readonly uvOptions: UvOptions;
+public readonly uvOptions: UvBaseOptions;
 ```
 
-- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+- *Type:* <a href="#projen.python.UvBaseOptions">UvBaseOptions</a>
 
 Additional options to set for uv if using uv.
 
@@ -4569,6 +4631,45 @@ Version of the package (required).
 
 ---
 
+### ProjectAuthor <a name="ProjectAuthor" id="projen.python.ProjectAuthor"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.ProjectAuthor.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const projectAuthor: python.ProjectAuthor = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.ProjectAuthor.property.email">email</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.python.ProjectAuthor.property.name">name</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `email`<sup>Optional</sup> <a name="email" id="projen.python.ProjectAuthor.property.email"></a>
+
+```typescript
+public readonly email: string;
+```
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.python.ProjectAuthor.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
 ### ProjenrcOptions <a name="ProjenrcOptions" id="projen.python.ProjenrcOptions"></a>
 
 Options for `Projenrc`.
@@ -4627,6 +4728,445 @@ public readonly pythonExec: string;
 - *Default:* "python"
 
 Path to the python executable to use.
+
+---
+
+### PyProjectToml <a name="PyProjectToml" id="projen.python.PyProjectToml"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.PyProjectToml.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyProjectToml: python.PyProjectToml = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyProjectToml.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
+| <code><a href="#projen.python.PyProjectToml.property.dependencyGroups">dependencyGroups</a></code> | <code><a href="#projen.python.PyProjectTomlDependencyGroups">PyProjectTomlDependencyGroups</a></code> | Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/). |
+| <code><a href="#projen.python.PyProjectToml.property.project">project</a></code> | <code><a href="#projen.python.PyProjectTomlProject">PyProjectTomlProject</a></code> | There are two kinds of metadata: _static_ and _dynamic_. |
+| <code><a href="#projen.python.PyProjectToml.property.tool">tool</a></code> | <code><a href="#projen.python.PyProjectTomlTool">PyProjectTomlTool</a></code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
+
+---
+
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.python.PyProjectToml.property.buildSystem"></a>
+
+```typescript
+public readonly buildSystem: BuildSystem;
+```
+
+- *Type:* <a href="#projen.python.BuildSystem">BuildSystem</a>
+
+---
+
+##### `dependencyGroups`<sup>Optional</sup> <a name="dependencyGroups" id="projen.python.PyProjectToml.property.dependencyGroups"></a>
+
+```typescript
+public readonly dependencyGroups: PyProjectTomlDependencyGroups;
+```
+
+- *Type:* <a href="#projen.python.PyProjectTomlDependencyGroups">PyProjectTomlDependencyGroups</a>
+
+Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
+
+---
+
+##### `project`<sup>Optional</sup> <a name="project" id="projen.python.PyProjectToml.property.project"></a>
+
+```typescript
+public readonly project: PyProjectTomlProject;
+```
+
+- *Type:* <a href="#projen.python.PyProjectTomlProject">PyProjectTomlProject</a>
+
+There are two kinds of metadata: _static_ and _dynamic_.
+
+Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
+- Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+
+---
+
+##### `tool`<sup>Optional</sup> <a name="tool" id="projen.python.PyProjectToml.property.tool"></a>
+
+```typescript
+public readonly tool: PyProjectTomlTool;
+```
+
+- *Type:* <a href="#projen.python.PyProjectTomlTool">PyProjectTomlTool</a>
+
+Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
+
+Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
+
+---
+
+### PyProjectTomlDependencyGroups <a name="PyProjectTomlDependencyGroups" id="projen.python.PyProjectTomlDependencyGroups"></a>
+
+Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
+
+#### Initializer <a name="Initializer" id="projen.python.PyProjectTomlDependencyGroups.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyProjectTomlDependencyGroups: python.PyProjectTomlDependencyGroups = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyProjectTomlDependencyGroups.property.dev">dev</a></code> | <code>any[]</code> | *No description.* |
+
+---
+
+##### `dev`<sup>Optional</sup> <a name="dev" id="projen.python.PyProjectTomlDependencyGroups.property.dev"></a>
+
+```typescript
+public readonly dev: any[];
+```
+
+- *Type:* any[]
+
+---
+
+### PyProjectTomlProject <a name="PyProjectTomlProject" id="projen.python.PyProjectTomlProject"></a>
+
+There are two kinds of metadata: _static_ and _dynamic_.
+
+Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
+- Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+
+#### Initializer <a name="Initializer" id="projen.python.PyProjectTomlProject.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyProjectTomlProject: python.PyProjectTomlProject = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyProjectTomlProject.property.name">name</a></code> | <code>string</code> | Valid name consists only of ASCII letters and numbers, period, underscore and hyphen. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.authors">authors</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | People or organizations considered as 'authors' of the project. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.classifiers">classifiers</a></code> | <code>string[]</code> | List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.dependencies">dependencies</a></code> | <code>string[]</code> | An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.description">description</a></code> | <code>string</code> | Summary description of the project in one line. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.dynamic">dynamic</a></code> | <code><a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.keywords">keywords</a></code> | <code>string[]</code> | List of keywords or tags that describe the project. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.license">license</a></code> | <code>any</code> | For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | People or organizations considered as 'maintainers' of the project. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.optionalDependencies">optionalDependencies</a></code> | <code>any</code> | Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.readme">readme</a></code> | <code>any</code> | Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version(s) that the distribution is compatible with. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
+| <code><a href="#projen.python.PyProjectTomlProject.property.version">version</a></code> | <code>string</code> | Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization). |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.python.PyProjectTomlProject.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Valid name consists only of ASCII letters and numbers, period, underscore and hyphen.
+
+It must start and end with a letter or number.
+
+---
+
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.python.PyProjectTomlProject.property.authors"></a>
+
+```typescript
+public readonly authors: ProjectAuthor[];
+```
+
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
+
+People or organizations considered as 'authors' of the project.
+
+Each author is a table with `name` key, `email` key, or both.
+
+---
+
+##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.PyProjectTomlProject.property.classifiers"></a>
+
+```typescript
+public readonly classifiers: string[];
+```
+
+- *Type:* string[]
+
+List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects.
+
+---
+
+##### `dependencies`<sup>Optional</sup> <a name="dependencies" id="projen.python.PyProjectTomlProject.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: string[];
+```
+
+- *Type:* string[]
+
+An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project.
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.python.PyProjectTomlProject.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+Summary description of the project in one line.
+
+Tools may not accept multiple lines.
+
+---
+
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.python.PyProjectTomlProject.property.dynamic"></a>
+
+```typescript
+public readonly dynamic: PyProjectTomlProjectDynamic[];
+```
+
+- *Type:* <a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]
+
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
+
+---
+
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.python.PyProjectTomlProject.property.entryPoints"></a>
+
+```typescript
+public readonly entryPoints: any;
+```
+
+- *Type:* any
+
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
+
+---
+
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.python.PyProjectTomlProject.property.guiScripts"></a>
+
+```typescript
+public readonly guiScripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
+
+---
+
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.python.PyProjectTomlProject.property.importNames"></a>
+
+```typescript
+public readonly importNames: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project exclusively provides when installed.
+
+---
+
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.python.PyProjectTomlProject.property.importNamespaces"></a>
+
+```typescript
+public readonly importNamespaces: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
+
+---
+
+##### `keywords`<sup>Optional</sup> <a name="keywords" id="projen.python.PyProjectTomlProject.property.keywords"></a>
+
+```typescript
+public readonly keywords: string[];
+```
+
+- *Type:* string[]
+
+List of keywords or tags that describe the project.
+
+They could be used by search engines to categorize the project.
+
+---
+
+##### `license`<sup>Optional</sup> <a name="license" id="projen.python.PyProjectTomlProject.property.license"></a>
+
+```typescript
+public readonly license: any;
+```
+
+- *Type:* any
+
+For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content.
+
+Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+
+---
+
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.python.PyProjectTomlProject.property.licenseFiles"></a>
+
+```typescript
+public readonly licenseFiles: string[];
+```
+
+- *Type:* string[]
+
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
+
+---
+
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.python.PyProjectTomlProject.property.maintainers"></a>
+
+```typescript
+public readonly maintainers: ProjectAuthor[];
+```
+
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
+
+People or organizations considered as 'maintainers' of the project.
+
+Each maintainer is a table with `name` key, `email` key, or both.
+
+---
+
+##### `optionalDependencies`<sup>Optional</sup> <a name="optionalDependencies" id="projen.python.PyProjectTomlProject.property.optionalDependencies"></a>
+
+```typescript
+public readonly optionalDependencies: any;
+```
+
+- *Type:* any
+
+Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings.
+
+---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.python.PyProjectTomlProject.property.readme"></a>
+
+```typescript
+public readonly readme: any;
+```
+
+- *Type:* any
+
+Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`.
+
+---
+
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.PyProjectTomlProject.property.requiresPython"></a>
+
+```typescript
+public readonly requiresPython: string;
+```
+
+- *Type:* string
+
+Specifies the Python version(s) that the distribution is compatible with.
+
+Must be in the format specified in [Version specifiers](https://packaging.python.org/en/latest/specifications/version-specifiers/).
+
+---
+
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.python.PyProjectTomlProject.property.scripts"></a>
+
+```typescript
+public readonly scripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O.
+
+---
+
+##### `urls`<sup>Optional</sup> <a name="urls" id="projen.python.PyProjectTomlProject.property.urls"></a>
+
+```typescript
+public readonly urls: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table consisting one or multiple `label: URL` pairs.
+
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.python.PyProjectTomlProject.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization).
+
+---
+
+### PyProjectTomlTool <a name="PyProjectTomlTool" id="projen.python.PyProjectTomlTool"></a>
+
+Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
+
+Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
+
+#### Initializer <a name="Initializer" id="projen.python.PyProjectTomlTool.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyProjectTomlTool: python.PyProjectTomlTool = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyProjectTomlTool.property.uv">uv</a></code> | <code>any</code> | An extremely fast Python package installer and resolver, written in Rust. |
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.python.PyProjectTomlTool.property.uv"></a>
+
+```typescript
+public readonly uv: any;
+```
+
+- *Type:* any
+
+An extremely fast Python package installer and resolver, written in Rust.
 
 ---
 
@@ -4820,7 +5360,7 @@ const pythonPackagingOptions: python.PythonPackagingOptions = { ... }
 | <code><a href="#projen.python.PythonPackagingOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PythonPackagingOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonPackagingOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.PythonPackagingOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
+| <code><a href="#projen.python.PythonPackagingOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvBaseOptions">UvBaseOptions</a></code> | Additional options to set for uv if using uv. |
 
 ---
 
@@ -4952,10 +5492,10 @@ Additional fields to pass in the setup() function if using setuptools.
 ##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PythonPackagingOptions.property.uvOptions"></a>
 
 ```typescript
-public readonly uvOptions: UvOptions;
+public readonly uvOptions: UvBaseOptions;
 ```
 
-- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+- *Type:* <a href="#projen.python.UvBaseOptions">UvBaseOptions</a>
 
 Additional options to set for uv if using uv.
 
@@ -5016,7 +5556,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PythonProjectOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.PythonProjectOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
+| <code><a href="#projen.python.PythonProjectOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvBaseOptions">UvBaseOptions</a></code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PythonProjectOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.python.PythonProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -5035,7 +5575,6 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
 | <code><a href="#projen.python.PythonProjectOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
-| <code><a href="#projen.python.PythonProjectOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Options related to uv. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venvOptions">venvOptions</a></code> | <code><a href="#projen.python.VenvOptions">VenvOptions</a></code> | Venv options. |
 
@@ -5583,10 +6122,10 @@ Additional fields to pass in the setup() function if using setuptools.
 ##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PythonProjectOptions.property.uvOptions"></a>
 
 ```typescript
-public readonly uvOptions: UvOptions;
+public readonly uvOptions: UvBaseOptions;
 ```
 
-- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+- *Type:* <a href="#projen.python.UvBaseOptions">UvBaseOptions</a>
 
 Additional options to set for uv if using uv.
 
@@ -5847,19 +6386,6 @@ public readonly uv: boolean;
 - *Default:* false
 
 Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
-
----
-
-##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PythonProjectOptions.property.uvOptions"></a>
-
-```typescript
-public readonly uvOptions: UvOptions;
-```
-
-- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
-- *Default:* default options
-
-Options related to uv.
 
 ---
 
@@ -6128,7 +6654,7 @@ const setuptoolsOptions: python.SetuptoolsOptions = { ... }
 | <code><a href="#projen.python.SetuptoolsOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.python.SetuptoolsOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvBaseOptions">UvBaseOptions</a></code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 
 ---
@@ -6261,10 +6787,10 @@ Additional fields to pass in the setup() function if using setuptools.
 ##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.SetuptoolsOptions.property.uvOptions"></a>
 
 ```typescript
-public readonly uvOptions: UvOptions;
+public readonly uvOptions: UvBaseOptions;
 ```
 
-- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+- *Type:* <a href="#projen.python.UvBaseOptions">UvBaseOptions</a>
 
 Additional options to set for uv if using uv.
 
@@ -6285,7 +6811,7 @@ Path to the python executable to use.
 
 ### UvBaseOptions <a name="UvBaseOptions" id="projen.python.UvBaseOptions"></a>
 
-Base options for UV project configuration.
+Options for UV project excluding options passed by PythonPackagingOptions.
 
 #### Initializer <a name="Initializer" id="projen.python.UvBaseOptions.Initializer"></a>
 
@@ -6299,340 +6825,32 @@ const uvBaseOptions: python.UvBaseOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.UvBaseOptions.property.addBounds">addBounds</a></code> | <code>string</code> | The default version specifier when adding a dependency. |
-| <code><a href="#projen.python.UvBaseOptions.property.allowInsecureHost">allowInsecureHost</a></code> | <code>string[]</code> | Allow insecure connections to host. |
-| <code><a href="#projen.python.UvBaseOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Email of the package author. |
-| <code><a href="#projen.python.UvBaseOptions.property.authorName">authorName</a></code> | <code>string</code> | Name of the package author. |
-| <code><a href="#projen.python.UvBaseOptions.property.buildBackend">buildBackend</a></code> | <code><a href="#projen.python.UvBuildBackend">UvBuildBackend</a></code> | Settings for the uv build backend (uv_build). |
-| <code><a href="#projen.python.UvBaseOptions.property.buildConstraintDependencies">buildConstraintDependencies</a></code> | <code>string[]</code> | Constraints to apply when solving build dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.cacheDir">cacheDir</a></code> | <code>string</code> | Path to the cache directory. |
-| <code><a href="#projen.python.UvBaseOptions.property.cacheKeys">cacheKeys</a></code> | <code>{[ key: string ]: any}</code> | The keys to consider when caching builds for the project. |
-| <code><a href="#projen.python.UvBaseOptions.property.checkUrl">checkUrl</a></code> | <code>string</code> | Check an index URL for existing files to skip duplicate uploads. |
-| <code><a href="#projen.python.UvBaseOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | Python package classifiers. |
-| <code><a href="#projen.python.UvBaseOptions.property.compileBytecode">compileBytecode</a></code> | <code>string</code> | Compile Python files to bytecode after installation. |
-| <code><a href="#projen.python.UvBaseOptions.property.concurrentBuilds">concurrentBuilds</a></code> | <code>number</code> | The maximum number of source distributions that uv will build concurrently at any given time. |
-| <code><a href="#projen.python.UvBaseOptions.property.concurrentDownloads">concurrentDownloads</a></code> | <code>number</code> | The maximum number of in-flight concurrent downloads that uv will perform at any given time. |
-| <code><a href="#projen.python.UvBaseOptions.property.concurrentInstalls">concurrentInstalls</a></code> | <code>number</code> | The number of threads used when installing and unzipping packages. |
-| <code><a href="#projen.python.UvBaseOptions.property.configSettings">configSettings</a></code> | <code>{[ key: string ]: any}</code> | Settings to pass to the PEP 517 build backend. |
-| <code><a href="#projen.python.UvBaseOptions.property.configSettingsPackage">configSettingsPackage</a></code> | <code>{[ key: string ]: any}</code> | Settings to pass to the PEP 517 build backend for specific packages. |
-| <code><a href="#projen.python.UvBaseOptions.property.conflicts">conflicts</a></code> | <code>{[ key: string ]: string}[][]</code> | Declare collections of extras or dependency groups that are conflicting (i.e., mutually exclusive). |
-| <code><a href="#projen.python.UvBaseOptions.property.constraintDependencies">constraintDependencies</a></code> | <code>string[]</code> | Constraints to apply when resolving the project's dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.defaultGroups">defaultGroups</a></code> | <code>string \| string[]</code> | The list of dependency-groups to install by default. |
-| <code><a href="#projen.python.UvBaseOptions.property.dependencyMetadata">dependencyMetadata</a></code> | <code><a href="#projen.python.UvDependencyMetadata">UvDependencyMetadata</a>[]</code> | Pre-defined static metadata for dependencies of the project (direct or transitive). |
-| <code><a href="#projen.python.UvBaseOptions.property.description">description</a></code> | <code>string</code> | Description of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.documentation">documentation</a></code> | <code>string</code> | Documentation URL of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.environments">environments</a></code> | <code>string[]</code> | Supported environments against which to resolve dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.excludeDependencies">excludeDependencies</a></code> | <code>string[]</code> | Dependencies to exclude when resolving the project's dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.excludeNewer">excludeNewer</a></code> | <code>string</code> | Limit candidate packages to those that were uploaded prior to a given point in time. |
-| <code><a href="#projen.python.UvBaseOptions.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: string}</code> | Limit candidate packages for specific packages to those that were uploaded prior to the given date. |
-| <code><a href="#projen.python.UvBaseOptions.property.extraBuildDependencies">extraBuildDependencies</a></code> | <code>{[ key: string ]: string[]}</code> | Additional build dependencies for packages. |
-| <code><a href="#projen.python.UvBaseOptions.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Extra environment variables to set when building certain packages. |
-| <code><a href="#projen.python.UvBaseOptions.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | Extra URLs of package indexes to use, in addition to --index-url. |
-| <code><a href="#projen.python.UvBaseOptions.property.findLinks">findLinks</a></code> | <code>string[]</code> | Locations to search for candidate distributions, in addition to those found in the registry indexes. |
-| <code><a href="#projen.python.UvBaseOptions.property.forkStrategy">forkStrategy</a></code> | <code>string</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
-| <code><a href="#projen.python.UvBaseOptions.property.homepage">homepage</a></code> | <code>string</code> | Homepage URL of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.index">index</a></code> | <code><a href="#projen.python.UvIndex">UvIndex</a>[]</code> | The indexes to use when resolving dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.indexStrategy">indexStrategy</a></code> | <code>string</code> | The strategy to use when resolving against multiple index URLs. |
-| <code><a href="#projen.python.UvBaseOptions.property.indexUrl">indexUrl</a></code> | <code>string</code> | The URL of the Python package index (by default: https://pypi.org/simple). |
-| <code><a href="#projen.python.UvBaseOptions.property.keyringProvider">keyringProvider</a></code> | <code>string</code> | Attempt to use keyring for authentication for index URLs. |
-| <code><a href="#projen.python.UvBaseOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords for the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.license">license</a></code> | <code>string</code> | License of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.linkMode">linkMode</a></code> | <code>string</code> | The method to use when installing packages from the global cache. |
-| <code><a href="#projen.python.UvBaseOptions.property.managed">managed</a></code> | <code>boolean</code> | Whether the project is managed by uv. |
-| <code><a href="#projen.python.UvBaseOptions.property.name">name</a></code> | <code>string</code> | Name of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.nativeTls">nativeTls</a></code> | <code>boolean</code> | Whether to load TLS certificates from the platform's native certificate store. |
-| <code><a href="#projen.python.UvBaseOptions.property.noBinary">noBinary</a></code> | <code>boolean</code> | Don't install pre-built wheels. |
-| <code><a href="#projen.python.UvBaseOptions.property.noBinaryPackage">noBinaryPackage</a></code> | <code>string[]</code> | Don't install pre-built wheels for a specific package. |
-| <code><a href="#projen.python.UvBaseOptions.property.noBuild">noBuild</a></code> | <code>boolean</code> | Don't build source distributions. |
-| <code><a href="#projen.python.UvBaseOptions.property.noBuildIsolation">noBuildIsolation</a></code> | <code>boolean</code> | Disable isolation when building source distributions. |
-| <code><a href="#projen.python.UvBaseOptions.property.noBuildIsolationPackage">noBuildIsolationPackage</a></code> | <code>string[]</code> | Disable isolation when building source distributions for a specific package. |
-| <code><a href="#projen.python.UvBaseOptions.property.noBuildPackage">noBuildPackage</a></code> | <code>string[]</code> | Don't build source distributions for a specific package. |
-| <code><a href="#projen.python.UvBaseOptions.property.noCache">noCache</a></code> | <code>boolean</code> | Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation. |
-| <code><a href="#projen.python.UvBaseOptions.property.noIndex">noIndex</a></code> | <code>boolean</code> | Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependencies and those provided via --find-links. |
-| <code><a href="#projen.python.UvBaseOptions.property.noSources">noSources</a></code> | <code>boolean</code> | Ignore the tool.uv.sources table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources. |
-| <code><a href="#projen.python.UvBaseOptions.property.offline">offline</a></code> | <code>boolean</code> | Disable network access, relying only on locally cached data and locally available files. |
-| <code><a href="#projen.python.UvBaseOptions.property.overrideDependencies">overrideDependencies</a></code> | <code>string[]</code> | Overrides to apply when resolving the project's dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.package">package</a></code> | <code>boolean</code> | Whether the project should be considered a Python package, or a non-package ("virtual") project. |
-| <code><a href="#projen.python.UvBaseOptions.property.pip">pip</a></code> | <code><a href="#projen.python.UvPipMetadata">UvPipMetadata</a></code> | Settings that are specific to the uv pip command-line interface. |
-| <code><a href="#projen.python.UvBaseOptions.property.prerelease">prerelease</a></code> | <code>string</code> | The strategy to use when considering pre-release versions. |
-| <code><a href="#projen.python.UvBaseOptions.property.preview">preview</a></code> | <code>boolean</code> | Whether to enable experimental, preview features. |
-| <code><a href="#projen.python.UvBaseOptions.property.publishUrl">publishUrl</a></code> | <code>string</code> | The URL for publishing packages to the Python package index (by default: https://upload.pypi.org/legacy/). |
-| <code><a href="#projen.python.UvBaseOptions.property.pypyInstallMirror">pypyInstallMirror</a></code> | <code>string</code> | Mirror URL to use for downloading managed PyPy installations. |
-| <code><a href="#projen.python.UvBaseOptions.property.pythonDownloads">pythonDownloads</a></code> | <code>string</code> | Whether to allow Python downloads. |
-| <code><a href="#projen.python.UvBaseOptions.property.pythonDownloadsJsonUrl">pythonDownloadsJsonUrl</a></code> | <code>string</code> | URL pointing to JSON of custom Python installations. |
-| <code><a href="#projen.python.UvBaseOptions.property.pythonInstallMirror">pythonInstallMirror</a></code> | <code>string</code> | Mirror URL for downloading managed Python installations. |
-| <code><a href="#projen.python.UvBaseOptions.property.pythonPreference">pythonPreference</a></code> | <code>string</code> | Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv. |
-| <code><a href="#projen.python.UvBaseOptions.property.readme">readme</a></code> | <code>string</code> | Path to the readme file. |
-| <code><a href="#projen.python.UvBaseOptions.property.reinstall">reinstall</a></code> | <code>boolean</code> | Reinstall all packages, regardless of whether they're already installed. |
-| <code><a href="#projen.python.UvBaseOptions.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | Reinstall a specific package, regardless of whether it's already installed. |
-| <code><a href="#projen.python.UvBaseOptions.property.repository">repository</a></code> | <code>string</code> | Repository URL of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.requiredEnvironments">requiredEnvironments</a></code> | <code>string \| string[]</code> | A list of required platforms, for packages that lack source distributions. |
-| <code><a href="#projen.python.UvBaseOptions.property.requiredVersion">requiredVersion</a></code> | <code>string</code> | Enforce a requirement on the version of uv. |
-| <code><a href="#projen.python.UvBaseOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Python version requirement string. |
-| <code><a href="#projen.python.UvBaseOptions.property.resolution">resolution</a></code> | <code>string</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
-| <code><a href="#projen.python.UvBaseOptions.property.sources">sources</a></code> | <code>{[ key: string ]: <a href="#projen.python.UvSource">UvSource</a>}</code> | The sources to use when resolving dependencies. |
-| <code><a href="#projen.python.UvBaseOptions.property.trustedPublishing">trustedPublishing</a></code> | <code>string</code> | Configure trusted publishing. |
-| <code><a href="#projen.python.UvBaseOptions.property.upgrade">upgrade</a></code> | <code>boolean</code> | Allow package upgrades, ignoring pinned versions in any existing output file. |
-| <code><a href="#projen.python.UvBaseOptions.property.upgradePackage">upgradePackage</a></code> | <code>string[]</code> | Allow upgrades for a specific package, ignoring pinned versions in any existing output file. |
-| <code><a href="#projen.python.UvBaseOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Additional URLs associated with the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
-| <code><a href="#projen.python.UvBaseOptions.property.workspace">workspace</a></code> | <code><a href="#projen.python.UvWorkspace">UvWorkspace</a></code> | Packages to include or exclude as workspace members. |
+| <code><a href="#projen.python.UvBaseOptions.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
+| <code><a href="#projen.python.UvBaseOptions.property.documentation">documentation</a></code> | <code>string</code> | A URL to the documentation of the project. |
+| <code><a href="#projen.python.UvBaseOptions.property.dynamic">dynamic</a></code> | <code><a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.python.UvBaseOptions.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.python.UvBaseOptions.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.python.UvBaseOptions.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.python.UvBaseOptions.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.python.UvBaseOptions.property.keywords">keywords</a></code> | <code>string[]</code> | A list of keywords (max: 5) that the package is related to. |
+| <code><a href="#projen.python.UvBaseOptions.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.python.UvBaseOptions.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | the maintainers of the package. |
+| <code><a href="#projen.python.UvBaseOptions.property.metadata">metadata</a></code> | <code><a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a></code> | Package metadata. |
+| <code><a href="#projen.python.UvBaseOptions.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | Python version to use for the project. |
+| <code><a href="#projen.python.UvBaseOptions.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
+| <code><a href="#projen.python.UvBaseOptions.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
+| <code><a href="#projen.python.UvBaseOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | The scripts or executables that will be installed when installing the package. |
+| <code><a href="#projen.python.UvBaseOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
 
 ---
 
-##### `addBounds`<sup>Optional</sup> <a name="addBounds" id="projen.python.UvBaseOptions.property.addBounds"></a>
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.python.UvBaseOptions.property.buildSystem"></a>
 
 ```typescript
-public readonly addBounds: string;
+public readonly buildSystem: BuildSystem;
 ```
 
-- *Type:* string
-
-The default version specifier when adding a dependency.
-
----
-
-##### `allowInsecureHost`<sup>Optional</sup> <a name="allowInsecureHost" id="projen.python.UvBaseOptions.property.allowInsecureHost"></a>
-
-```typescript
-public readonly allowInsecureHost: string[];
-```
-
-- *Type:* string[]
-
-Allow insecure connections to host.
-
----
-
-##### `authorEmail`<sup>Optional</sup> <a name="authorEmail" id="projen.python.UvBaseOptions.property.authorEmail"></a>
-
-```typescript
-public readonly authorEmail: string;
-```
-
-- *Type:* string
-
-Email of the package author.
-
----
-
-##### `authorName`<sup>Optional</sup> <a name="authorName" id="projen.python.UvBaseOptions.property.authorName"></a>
-
-```typescript
-public readonly authorName: string;
-```
-
-- *Type:* string
-
-Name of the package author.
-
----
-
-##### `buildBackend`<sup>Optional</sup> <a name="buildBackend" id="projen.python.UvBaseOptions.property.buildBackend"></a>
-
-```typescript
-public readonly buildBackend: UvBuildBackend;
-```
-
-- *Type:* <a href="#projen.python.UvBuildBackend">UvBuildBackend</a>
-
-Settings for the uv build backend (uv_build).
-
----
-
-##### `buildConstraintDependencies`<sup>Optional</sup> <a name="buildConstraintDependencies" id="projen.python.UvBaseOptions.property.buildConstraintDependencies"></a>
-
-```typescript
-public readonly buildConstraintDependencies: string[];
-```
-
-- *Type:* string[]
-
-Constraints to apply when solving build dependencies.
-
----
-
-##### `cacheDir`<sup>Optional</sup> <a name="cacheDir" id="projen.python.UvBaseOptions.property.cacheDir"></a>
-
-```typescript
-public readonly cacheDir: string;
-```
-
-- *Type:* string
-
-Path to the cache directory.
-
----
-
-##### `cacheKeys`<sup>Optional</sup> <a name="cacheKeys" id="projen.python.UvBaseOptions.property.cacheKeys"></a>
-
-```typescript
-public readonly cacheKeys: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
-The keys to consider when caching builds for the project.
-
----
-
-##### `checkUrl`<sup>Optional</sup> <a name="checkUrl" id="projen.python.UvBaseOptions.property.checkUrl"></a>
-
-```typescript
-public readonly checkUrl: string;
-```
-
-- *Type:* string
-
-Check an index URL for existing files to skip duplicate uploads.
-
----
-
-##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.UvBaseOptions.property.classifiers"></a>
-
-```typescript
-public readonly classifiers: string[];
-```
-
-- *Type:* string[]
-
-Python package classifiers.
-
-> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
-
----
-
-##### `compileBytecode`<sup>Optional</sup> <a name="compileBytecode" id="projen.python.UvBaseOptions.property.compileBytecode"></a>
-
-```typescript
-public readonly compileBytecode: string;
-```
-
-- *Type:* string
-
-Compile Python files to bytecode after installation.
-
----
-
-##### `concurrentBuilds`<sup>Optional</sup> <a name="concurrentBuilds" id="projen.python.UvBaseOptions.property.concurrentBuilds"></a>
-
-```typescript
-public readonly concurrentBuilds: number;
-```
-
-- *Type:* number
-
-The maximum number of source distributions that uv will build concurrently at any given time.
-
----
-
-##### `concurrentDownloads`<sup>Optional</sup> <a name="concurrentDownloads" id="projen.python.UvBaseOptions.property.concurrentDownloads"></a>
-
-```typescript
-public readonly concurrentDownloads: number;
-```
-
-- *Type:* number
-
-The maximum number of in-flight concurrent downloads that uv will perform at any given time.
-
----
-
-##### `concurrentInstalls`<sup>Optional</sup> <a name="concurrentInstalls" id="projen.python.UvBaseOptions.property.concurrentInstalls"></a>
-
-```typescript
-public readonly concurrentInstalls: number;
-```
-
-- *Type:* number
-
-The number of threads used when installing and unzipping packages.
-
----
-
-##### `configSettings`<sup>Optional</sup> <a name="configSettings" id="projen.python.UvBaseOptions.property.configSettings"></a>
-
-```typescript
-public readonly configSettings: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
-Settings to pass to the PEP 517 build backend.
-
----
-
-##### `configSettingsPackage`<sup>Optional</sup> <a name="configSettingsPackage" id="projen.python.UvBaseOptions.property.configSettingsPackage"></a>
-
-```typescript
-public readonly configSettingsPackage: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
-Settings to pass to the PEP 517 build backend for specific packages.
-
----
-
-##### `conflicts`<sup>Optional</sup> <a name="conflicts" id="projen.python.UvBaseOptions.property.conflicts"></a>
-
-```typescript
-public readonly conflicts: {[ key: string ]: string}[][];
-```
-
-- *Type:* {[ key: string ]: string}[][]
-
-Declare collections of extras or dependency groups that are conflicting (i.e., mutually exclusive).
-
----
-
-##### `constraintDependencies`<sup>Optional</sup> <a name="constraintDependencies" id="projen.python.UvBaseOptions.property.constraintDependencies"></a>
-
-```typescript
-public readonly constraintDependencies: string[];
-```
-
-- *Type:* string[]
-
-Constraints to apply when resolving the project's dependencies.
-
----
-
-##### `defaultGroups`<sup>Optional</sup> <a name="defaultGroups" id="projen.python.UvBaseOptions.property.defaultGroups"></a>
-
-```typescript
-public readonly defaultGroups: string | string[];
-```
-
-- *Type:* string | string[]
-
-The list of dependency-groups to install by default.
-
----
-
-##### `dependencyMetadata`<sup>Optional</sup> <a name="dependencyMetadata" id="projen.python.UvBaseOptions.property.dependencyMetadata"></a>
-
-```typescript
-public readonly dependencyMetadata: UvDependencyMetadata[];
-```
-
-- *Type:* <a href="#projen.python.UvDependencyMetadata">UvDependencyMetadata</a>[]
-
-Pre-defined static metadata for dependencies of the project (direct or transitive).
-
-When provided, enables the resolver to use the specified metadata instead of querying the registry or building the relevant package from source.
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="projen.python.UvBaseOptions.property.description"></a>
-
-```typescript
-public readonly description: string;
-```
-
-- *Type:* string
-
-Description of the package.
+- *Type:* <a href="#projen.python.BuildSystem">BuildSystem</a>
 
 ---
 
@@ -6644,175 +6862,70 @@ public readonly documentation: string;
 
 - *Type:* string
 
-Documentation URL of the package.
+A URL to the documentation of the project.
 
 ---
 
-##### `environments`<sup>Optional</sup> <a name="environments" id="projen.python.UvBaseOptions.property.environments"></a>
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.python.UvBaseOptions.property.dynamic"></a>
 
 ```typescript
-public readonly environments: string[];
+public readonly dynamic: PyProjectTomlProjectDynamic[];
 ```
 
-- *Type:* string[]
+- *Type:* <a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]
 
-Supported environments against which to resolve dependencies.
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
 
 ---
 
-##### `excludeDependencies`<sup>Optional</sup> <a name="excludeDependencies" id="projen.python.UvBaseOptions.property.excludeDependencies"></a>
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.python.UvBaseOptions.property.entryPoints"></a>
 
 ```typescript
-public readonly excludeDependencies: string[];
+public readonly entryPoints: any;
 ```
 
-- *Type:* string[]
+- *Type:* any
 
-Dependencies to exclude when resolving the project's dependencies.
-
----
-
-##### `excludeNewer`<sup>Optional</sup> <a name="excludeNewer" id="projen.python.UvBaseOptions.property.excludeNewer"></a>
-
-```typescript
-public readonly excludeNewer: string;
-```
-
-- *Type:* string
-
-Limit candidate packages to those that were uploaded prior to a given point in time.
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
 
 ---
 
-##### `excludeNewerPackage`<sup>Optional</sup> <a name="excludeNewerPackage" id="projen.python.UvBaseOptions.property.excludeNewerPackage"></a>
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.python.UvBaseOptions.property.guiScripts"></a>
 
 ```typescript
-public readonly excludeNewerPackage: {[ key: string ]: string};
+public readonly guiScripts: {[ key: string ]: string};
 ```
 
 - *Type:* {[ key: string ]: string}
 
-Limit candidate packages for specific packages to those that were uploaded prior to the given date.
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
 
 ---
 
-##### `extraBuildDependencies`<sup>Optional</sup> <a name="extraBuildDependencies" id="projen.python.UvBaseOptions.property.extraBuildDependencies"></a>
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.python.UvBaseOptions.property.importNames"></a>
 
 ```typescript
-public readonly extraBuildDependencies: {[ key: string ]: string[]};
-```
-
-- *Type:* {[ key: string ]: string[]}
-
-Additional build dependencies for packages.
-
----
-
-##### `extraBuildVariables`<sup>Optional</sup> <a name="extraBuildVariables" id="projen.python.UvBaseOptions.property.extraBuildVariables"></a>
-
-```typescript
-public readonly extraBuildVariables: {[ key: string ]: {[ key: string ]: string}};
-```
-
-- *Type:* {[ key: string ]: {[ key: string ]: string}}
-
-Extra environment variables to set when building certain packages.
-
----
-
-##### `extraIndexUrl`<sup>Optional</sup> <a name="extraIndexUrl" id="projen.python.UvBaseOptions.property.extraIndexUrl"></a>
-
-```typescript
-public readonly extraIndexUrl: string[];
+public readonly importNames: string[];
 ```
 
 - *Type:* string[]
 
-Extra URLs of package indexes to use, in addition to --index-url.
+An array of strings specifying the import names that the project exclusively provides when installed.
 
 ---
 
-##### `findLinks`<sup>Optional</sup> <a name="findLinks" id="projen.python.UvBaseOptions.property.findLinks"></a>
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.python.UvBaseOptions.property.importNamespaces"></a>
 
 ```typescript
-public readonly findLinks: string[];
+public readonly importNamespaces: string[];
 ```
 
 - *Type:* string[]
 
-Locations to search for candidate distributions, in addition to those found in the registry indexes.
-
----
-
-##### `forkStrategy`<sup>Optional</sup> <a name="forkStrategy" id="projen.python.UvBaseOptions.property.forkStrategy"></a>
-
-```typescript
-public readonly forkStrategy: string;
-```
-
-- *Type:* string
-
-The strategy to use when selecting multiple versions of a given package across Python versions and platforms.
-
----
-
-##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.python.UvBaseOptions.property.homepage"></a>
-
-```typescript
-public readonly homepage: string;
-```
-
-- *Type:* string
-
-Homepage URL of the package.
-
----
-
-##### `index`<sup>Optional</sup> <a name="index" id="projen.python.UvBaseOptions.property.index"></a>
-
-```typescript
-public readonly index: UvIndex[];
-```
-
-- *Type:* <a href="#projen.python.UvIndex">UvIndex</a>[]
-
-The indexes to use when resolving dependencies.
-
----
-
-##### `indexStrategy`<sup>Optional</sup> <a name="indexStrategy" id="projen.python.UvBaseOptions.property.indexStrategy"></a>
-
-```typescript
-public readonly indexStrategy: string;
-```
-
-- *Type:* string
-
-The strategy to use when resolving against multiple index URLs.
-
----
-
-##### `indexUrl`<sup>Optional</sup> <a name="indexUrl" id="projen.python.UvBaseOptions.property.indexUrl"></a>
-
-```typescript
-public readonly indexUrl: string;
-```
-
-- *Type:* string
-
-The URL of the Python package index (by default: https://pypi.org/simple).
-
----
-
-##### `keyringProvider`<sup>Optional</sup> <a name="keyringProvider" id="projen.python.UvBaseOptions.property.keyringProvider"></a>
-
-```typescript
-public readonly keyringProvider: string;
-```
-
-- *Type:* string
-
-Attempt to use keyring for authentication for index URLs.
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
 
 ---
 
@@ -6824,321 +6937,60 @@ public readonly keywords: string[];
 
 - *Type:* string[]
 
-Keywords for the package.
+A list of keywords (max: 5) that the package is related to.
 
 ---
 
-##### `license`<sup>Optional</sup> <a name="license" id="projen.python.UvBaseOptions.property.license"></a>
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.python.UvBaseOptions.property.licenseFiles"></a>
 
 ```typescript
-public readonly license: string;
-```
-
-- *Type:* string
-
-License of the package.
-
----
-
-##### `linkMode`<sup>Optional</sup> <a name="linkMode" id="projen.python.UvBaseOptions.property.linkMode"></a>
-
-```typescript
-public readonly linkMode: string;
-```
-
-- *Type:* string
-
-The method to use when installing packages from the global cache.
-
----
-
-##### `managed`<sup>Optional</sup> <a name="managed" id="projen.python.UvBaseOptions.property.managed"></a>
-
-```typescript
-public readonly managed: boolean;
-```
-
-- *Type:* boolean
-
-Whether the project is managed by uv.
-
-If false, uv will ignore the project when uv run is invoked.
-
----
-
-##### `name`<sup>Optional</sup> <a name="name" id="projen.python.UvBaseOptions.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
-Name of the package.
-
----
-
-##### `nativeTls`<sup>Optional</sup> <a name="nativeTls" id="projen.python.UvBaseOptions.property.nativeTls"></a>
-
-```typescript
-public readonly nativeTls: boolean;
-```
-
-- *Type:* boolean
-
-Whether to load TLS certificates from the platform's native certificate store.
-
----
-
-##### `noBinary`<sup>Optional</sup> <a name="noBinary" id="projen.python.UvBaseOptions.property.noBinary"></a>
-
-```typescript
-public readonly noBinary: boolean;
-```
-
-- *Type:* boolean
-
-Don't install pre-built wheels.
-
----
-
-##### `noBinaryPackage`<sup>Optional</sup> <a name="noBinaryPackage" id="projen.python.UvBaseOptions.property.noBinaryPackage"></a>
-
-```typescript
-public readonly noBinaryPackage: string[];
+public readonly licenseFiles: string[];
 ```
 
 - *Type:* string[]
 
-Don't install pre-built wheels for a specific package.
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
 
 ---
 
-##### `noBuild`<sup>Optional</sup> <a name="noBuild" id="projen.python.UvBaseOptions.property.noBuild"></a>
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.python.UvBaseOptions.property.maintainers"></a>
 
 ```typescript
-public readonly noBuild: boolean;
+public readonly maintainers: ProjectAuthor[];
 ```
 
-- *Type:* boolean
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
 
-Don't build source distributions.
+the maintainers of the package.
+
+Must be in the form "name <email>"
 
 ---
 
-##### `noBuildIsolation`<sup>Optional</sup> <a name="noBuildIsolation" id="projen.python.UvBaseOptions.property.noBuildIsolation"></a>
+##### `metadata`<sup>Optional</sup> <a name="metadata" id="projen.python.UvBaseOptions.property.metadata"></a>
 
 ```typescript
-public readonly noBuildIsolation: boolean;
+public readonly metadata: UvConfiguration;
 ```
 
-- *Type:* boolean
+- *Type:* <a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a>
 
-Disable isolation when building source distributions.
-
----
-
-##### `noBuildIsolationPackage`<sup>Optional</sup> <a name="noBuildIsolationPackage" id="projen.python.UvBaseOptions.property.noBuildIsolationPackage"></a>
-
-```typescript
-public readonly noBuildIsolationPackage: string[];
-```
-
-- *Type:* string[]
-
-Disable isolation when building source distributions for a specific package.
+Package metadata.
 
 ---
 
-##### `noBuildPackage`<sup>Optional</sup> <a name="noBuildPackage" id="projen.python.UvBaseOptions.property.noBuildPackage"></a>
+##### `pythonVersion`<sup>Optional</sup> <a name="pythonVersion" id="projen.python.UvBaseOptions.property.pythonVersion"></a>
 
 ```typescript
-public readonly noBuildPackage: string[];
-```
-
-- *Type:* string[]
-
-Don't build source distributions for a specific package.
-
----
-
-##### `noCache`<sup>Optional</sup> <a name="noCache" id="projen.python.UvBaseOptions.property.noCache"></a>
-
-```typescript
-public readonly noCache: boolean;
-```
-
-- *Type:* boolean
-
-Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation.
-
----
-
-##### `noIndex`<sup>Optional</sup> <a name="noIndex" id="projen.python.UvBaseOptions.property.noIndex"></a>
-
-```typescript
-public readonly noIndex: boolean;
-```
-
-- *Type:* boolean
-
-Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependencies and those provided via --find-links.
-
----
-
-##### `noSources`<sup>Optional</sup> <a name="noSources" id="projen.python.UvBaseOptions.property.noSources"></a>
-
-```typescript
-public readonly noSources: boolean;
-```
-
-- *Type:* boolean
-
-Ignore the tool.uv.sources table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources.
-
----
-
-##### `offline`<sup>Optional</sup> <a name="offline" id="projen.python.UvBaseOptions.property.offline"></a>
-
-```typescript
-public readonly offline: boolean;
-```
-
-- *Type:* boolean
-
-Disable network access, relying only on locally cached data and locally available files.
-
----
-
-##### `overrideDependencies`<sup>Optional</sup> <a name="overrideDependencies" id="projen.python.UvBaseOptions.property.overrideDependencies"></a>
-
-```typescript
-public readonly overrideDependencies: string[];
-```
-
-- *Type:* string[]
-
-Overrides to apply when resolving the project's dependencies.
-
----
-
-##### `package`<sup>Optional</sup> <a name="package" id="projen.python.UvBaseOptions.property.package"></a>
-
-```typescript
-public readonly package: boolean;
-```
-
-- *Type:* boolean
-
-Whether the project should be considered a Python package, or a non-package ("virtual") project.
-
----
-
-##### `pip`<sup>Optional</sup> <a name="pip" id="projen.python.UvBaseOptions.property.pip"></a>
-
-```typescript
-public readonly pip: UvPipMetadata;
-```
-
-- *Type:* <a href="#projen.python.UvPipMetadata">UvPipMetadata</a>
-
-Settings that are specific to the uv pip command-line interface.
-
----
-
-##### `prerelease`<sup>Optional</sup> <a name="prerelease" id="projen.python.UvBaseOptions.property.prerelease"></a>
-
-```typescript
-public readonly prerelease: string;
+public readonly pythonVersion: string;
 ```
 
 - *Type:* string
+- *Default:* "3.12"
 
-The strategy to use when considering pre-release versions.
-
----
-
-##### `preview`<sup>Optional</sup> <a name="preview" id="projen.python.UvBaseOptions.property.preview"></a>
-
-```typescript
-public readonly preview: boolean;
-```
-
-- *Type:* boolean
-
-Whether to enable experimental, preview features.
-
----
-
-##### `publishUrl`<sup>Optional</sup> <a name="publishUrl" id="projen.python.UvBaseOptions.property.publishUrl"></a>
-
-```typescript
-public readonly publishUrl: string;
-```
-
-- *Type:* string
-
-The URL for publishing packages to the Python package index (by default: https://upload.pypi.org/legacy/).
-
----
-
-##### `pypyInstallMirror`<sup>Optional</sup> <a name="pypyInstallMirror" id="projen.python.UvBaseOptions.property.pypyInstallMirror"></a>
-
-```typescript
-public readonly pypyInstallMirror: string;
-```
-
-- *Type:* string
-
-Mirror URL to use for downloading managed PyPy installations.
-
----
-
-##### `pythonDownloads`<sup>Optional</sup> <a name="pythonDownloads" id="projen.python.UvBaseOptions.property.pythonDownloads"></a>
-
-```typescript
-public readonly pythonDownloads: string;
-```
-
-- *Type:* string
-
-Whether to allow Python downloads.
-
----
-
-##### `pythonDownloadsJsonUrl`<sup>Optional</sup> <a name="pythonDownloadsJsonUrl" id="projen.python.UvBaseOptions.property.pythonDownloadsJsonUrl"></a>
-
-```typescript
-public readonly pythonDownloadsJsonUrl: string;
-```
-
-- *Type:* string
-
-URL pointing to JSON of custom Python installations.
-
----
-
-##### `pythonInstallMirror`<sup>Optional</sup> <a name="pythonInstallMirror" id="projen.python.UvBaseOptions.property.pythonInstallMirror"></a>
-
-```typescript
-public readonly pythonInstallMirror: string;
-```
-
-- *Type:* string
-
-Mirror URL for downloading managed Python installations.
-
----
-
-##### `pythonPreference`<sup>Optional</sup> <a name="pythonPreference" id="projen.python.UvBaseOptions.property.pythonPreference"></a>
-
-```typescript
-public readonly pythonPreference: string;
-```
-
-- *Type:* string
-
-Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv.
+Python version to use for the project.
 
 ---
 
@@ -7150,35 +7002,7 @@ public readonly readme: string;
 
 - *Type:* string
 
-Path to the readme file.
-
----
-
-##### `reinstall`<sup>Optional</sup> <a name="reinstall" id="projen.python.UvBaseOptions.property.reinstall"></a>
-
-```typescript
-public readonly reinstall: boolean;
-```
-
-- *Type:* boolean
-
-Reinstall all packages, regardless of whether they're already installed.
-
-Implies refresh.
-
----
-
-##### `reinstallPackage`<sup>Optional</sup> <a name="reinstallPackage" id="projen.python.UvBaseOptions.property.reinstallPackage"></a>
-
-```typescript
-public readonly reinstallPackage: string[];
-```
-
-- *Type:* string[]
-
-Reinstall a specific package, regardless of whether it's already installed.
-
-Implies refresh-package.
+The name of the readme file of the package.
 
 ---
 
@@ -7190,103 +7014,19 @@ public readonly repository: string;
 
 - *Type:* string
 
-Repository URL of the package.
+A URL to the repository of the project.
 
 ---
 
-##### `requiredEnvironments`<sup>Optional</sup> <a name="requiredEnvironments" id="projen.python.UvBaseOptions.property.requiredEnvironments"></a>
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.python.UvBaseOptions.property.scripts"></a>
 
 ```typescript
-public readonly requiredEnvironments: string | string[];
+public readonly scripts: {[ key: string ]: string};
 ```
 
-- *Type:* string | string[]
+- *Type:* {[ key: string ]: string}
 
-A list of required platforms, for packages that lack source distributions.
-
----
-
-##### `requiredVersion`<sup>Optional</sup> <a name="requiredVersion" id="projen.python.UvBaseOptions.property.requiredVersion"></a>
-
-```typescript
-public readonly requiredVersion: string;
-```
-
-- *Type:* string
-
-Enforce a requirement on the version of uv.
-
----
-
-##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.UvBaseOptions.property.requiresPython"></a>
-
-```typescript
-public readonly requiresPython: string;
-```
-
-- *Type:* string
-
-Python version requirement string.
-
----
-
-##### `resolution`<sup>Optional</sup> <a name="resolution" id="projen.python.UvBaseOptions.property.resolution"></a>
-
-```typescript
-public readonly resolution: string;
-```
-
-- *Type:* string
-
-The strategy to use when selecting between the different compatible versions for a given package requirement.
-
----
-
-##### `sources`<sup>Optional</sup> <a name="sources" id="projen.python.UvBaseOptions.property.sources"></a>
-
-```typescript
-public readonly sources: {[ key: string ]: UvSource};
-```
-
-- *Type:* {[ key: string ]: <a href="#projen.python.UvSource">UvSource</a>}
-
-The sources to use when resolving dependencies.
-
----
-
-##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.python.UvBaseOptions.property.trustedPublishing"></a>
-
-```typescript
-public readonly trustedPublishing: string;
-```
-
-- *Type:* string
-
-Configure trusted publishing.
-
----
-
-##### `upgrade`<sup>Optional</sup> <a name="upgrade" id="projen.python.UvBaseOptions.property.upgrade"></a>
-
-```typescript
-public readonly upgrade: boolean;
-```
-
-- *Type:* boolean
-
-Allow package upgrades, ignoring pinned versions in any existing output file.
-
----
-
-##### `upgradePackage`<sup>Optional</sup> <a name="upgradePackage" id="projen.python.UvBaseOptions.property.upgradePackage"></a>
-
-```typescript
-public readonly upgradePackage: string[];
-```
-
-- *Type:* string[]
-
-Allow upgrades for a specific package, ignoring pinned versions in any existing output file.
+The scripts or executables that will be installed when installing the package.
 
 ---
 
@@ -7298,319 +7038,9 @@ public readonly urls: {[ key: string ]: string};
 
 - *Type:* {[ key: string ]: string}
 
-Additional URLs associated with the package.
+Table consisting one or multiple `label: URL` pairs.
 
----
-
-##### `version`<sup>Optional</sup> <a name="version" id="projen.python.UvBaseOptions.property.version"></a>
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-
-Version of the package.
-
----
-
-##### `workspace`<sup>Optional</sup> <a name="workspace" id="projen.python.UvBaseOptions.property.workspace"></a>
-
-```typescript
-public readonly workspace: UvWorkspace;
-```
-
-- *Type:* <a href="#projen.python.UvWorkspace">UvWorkspace</a>
-
-Packages to include or exclude as workspace members.
-
----
-
-### UvBuildBackend <a name="UvBuildBackend" id="projen.python.UvBuildBackend"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvBuildBackend.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const uvBuildBackend: python.UvBuildBackend = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvBuildBackend.property.data">data</a></code> | <code><a href="#projen.python.UvBuildBackendData">UvBuildBackendData</a></code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.defaultExcludes">defaultExcludes</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.moduleName">moduleName</a></code> | <code>string \| string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.moduleRoot">moduleRoot</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.namespace">namespace</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.sourceExclude">sourceExclude</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.sourceInclude">sourceInclude</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackend.property.wheelExclude">wheelExclude</a></code> | <code>string[]</code> | *No description.* |
-
----
-
-##### `data`<sup>Optional</sup> <a name="data" id="projen.python.UvBuildBackend.property.data"></a>
-
-```typescript
-public readonly data: UvBuildBackendData;
-```
-
-- *Type:* <a href="#projen.python.UvBuildBackendData">UvBuildBackendData</a>
-
----
-
-##### `defaultExcludes`<sup>Optional</sup> <a name="defaultExcludes" id="projen.python.UvBuildBackend.property.defaultExcludes"></a>
-
-```typescript
-public readonly defaultExcludes: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `moduleName`<sup>Optional</sup> <a name="moduleName" id="projen.python.UvBuildBackend.property.moduleName"></a>
-
-```typescript
-public readonly moduleName: string | string[];
-```
-
-- *Type:* string | string[]
-
----
-
-##### `moduleRoot`<sup>Optional</sup> <a name="moduleRoot" id="projen.python.UvBuildBackend.property.moduleRoot"></a>
-
-```typescript
-public readonly moduleRoot: string;
-```
-
-- *Type:* string
-
----
-
-##### `namespace`<sup>Optional</sup> <a name="namespace" id="projen.python.UvBuildBackend.property.namespace"></a>
-
-```typescript
-public readonly namespace: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `sourceExclude`<sup>Optional</sup> <a name="sourceExclude" id="projen.python.UvBuildBackend.property.sourceExclude"></a>
-
-```typescript
-public readonly sourceExclude: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `sourceInclude`<sup>Optional</sup> <a name="sourceInclude" id="projen.python.UvBuildBackend.property.sourceInclude"></a>
-
-```typescript
-public readonly sourceInclude: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `wheelExclude`<sup>Optional</sup> <a name="wheelExclude" id="projen.python.UvBuildBackend.property.wheelExclude"></a>
-
-```typescript
-public readonly wheelExclude: string[];
-```
-
-- *Type:* string[]
-
----
-
-### UvBuildBackendData <a name="UvBuildBackendData" id="projen.python.UvBuildBackendData"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvBuildBackendData.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const uvBuildBackendData: python.UvBuildBackendData = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvBuildBackendData.property.data">data</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackendData.property.headers">headers</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvBuildBackendData.property.scripts">scripts</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `data`<sup>Optional</sup> <a name="data" id="projen.python.UvBuildBackendData.property.data"></a>
-
-```typescript
-public readonly data: string;
-```
-
-- *Type:* string
-
----
-
-##### `headers`<sup>Optional</sup> <a name="headers" id="projen.python.UvBuildBackendData.property.headers"></a>
-
-```typescript
-public readonly headers: string;
-```
-
-- *Type:* string
-
----
-
-##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.python.UvBuildBackendData.property.scripts"></a>
-
-```typescript
-public readonly scripts: string;
-```
-
-- *Type:* string
-
----
-
-### UvDependencyMetadata <a name="UvDependencyMetadata" id="projen.python.UvDependencyMetadata"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvDependencyMetadata.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const uvDependencyMetadata: python.UvDependencyMetadata = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvDependencyMetadata.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvDependencyMetadata.property.providesExtra">providesExtra</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvDependencyMetadata.property.requiresDist">requiresDist</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvDependencyMetadata.property.requiresPython">requiresPython</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvDependencyMetadata.property.version">version</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="projen.python.UvDependencyMetadata.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
----
-
-##### `providesExtra`<sup>Optional</sup> <a name="providesExtra" id="projen.python.UvDependencyMetadata.property.providesExtra"></a>
-
-```typescript
-public readonly providesExtra: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `requiresDist`<sup>Optional</sup> <a name="requiresDist" id="projen.python.UvDependencyMetadata.property.requiresDist"></a>
-
-```typescript
-public readonly requiresDist: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.UvDependencyMetadata.property.requiresPython"></a>
-
-```typescript
-public readonly requiresPython: string;
-```
-
-- *Type:* string
-
----
-
-##### `version`<sup>Optional</sup> <a name="version" id="projen.python.UvDependencyMetadata.property.version"></a>
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-
----
-
-### UvIndex <a name="UvIndex" id="projen.python.UvIndex"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvIndex.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const uvIndex: python.UvIndex = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvIndex.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvIndex.property.url">url</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvIndex.property.default">default</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvIndex.property.explicit">explicit</a></code> | <code>boolean</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="projen.python.UvIndex.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
----
-
-##### `url`<sup>Required</sup> <a name="url" id="projen.python.UvIndex.property.url"></a>
-
-```typescript
-public readonly url: string;
-```
-
-- *Type:* string
-
----
-
-##### `default`<sup>Optional</sup> <a name="default" id="projen.python.UvIndex.property.default"></a>
-
-```typescript
-public readonly default: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `explicit`<sup>Optional</sup> <a name="explicit" id="projen.python.UvIndex.property.explicit"></a>
-
-```typescript
-public readonly explicit: boolean;
-```
-
-- *Type:* boolean
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
 
 ---
 
@@ -7630,50 +7060,166 @@ const uvOptions: python.UvOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.UvOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
-| <code><a href="#projen.python.UvOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
-| <code><a href="#projen.python.UvOptions.property.metadata">metadata</a></code> | <code><a href="#projen.python.UvBaseOptions">UvBaseOptions</a></code> | Package metadata. |
+| <code><a href="#projen.python.UvOptions.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
+| <code><a href="#projen.python.UvOptions.property.documentation">documentation</a></code> | <code>string</code> | A URL to the documentation of the project. |
+| <code><a href="#projen.python.UvOptions.property.dynamic">dynamic</a></code> | <code><a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.python.UvOptions.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.python.UvOptions.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.python.UvOptions.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.python.UvOptions.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.python.UvOptions.property.keywords">keywords</a></code> | <code>string[]</code> | A list of keywords (max: 5) that the package is related to. |
+| <code><a href="#projen.python.UvOptions.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.python.UvOptions.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | the maintainers of the package. |
+| <code><a href="#projen.python.UvOptions.property.metadata">metadata</a></code> | <code><a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a></code> | Package metadata. |
 | <code><a href="#projen.python.UvOptions.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | Python version to use for the project. |
+| <code><a href="#projen.python.UvOptions.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
+| <code><a href="#projen.python.UvOptions.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
+| <code><a href="#projen.python.UvOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | The scripts or executables that will be installed when installing the package. |
+| <code><a href="#projen.python.UvOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
+| <code><a href="#projen.python.UvOptions.property.name">name</a></code> | <code>string</code> | Name of the package. |
+| <code><a href="#projen.python.UvOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
+| <code><a href="#projen.python.UvOptions.property.authors">authors</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | The authors of the package. |
+| <code><a href="#projen.python.UvOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | A list of PyPI trove classifiers that describe the project. |
+| <code><a href="#projen.python.UvOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
+| <code><a href="#projen.python.UvOptions.property.description">description</a></code> | <code>string</code> | A short description of the package. |
+| <code><a href="#projen.python.UvOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
+| <code><a href="#projen.python.UvOptions.property.homepage">homepage</a></code> | <code>string</code> | A URL to the website of the project. |
+| <code><a href="#projen.python.UvOptions.property.license">license</a></code> | <code>any</code> | License of this package as an SPDX license expression. |
 
 ---
 
-##### `deps`<sup>Optional</sup> <a name="deps" id="projen.python.UvOptions.property.deps"></a>
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.python.UvOptions.property.buildSystem"></a>
 
 ```typescript
-public readonly deps: string[];
+public readonly buildSystem: BuildSystem;
 ```
 
-- *Type:* string[]
-- *Default:* []
-
-List of runtime dependencies for this project.
-
-Dependencies use the format: `<module>@<semver>`
+- *Type:* <a href="#projen.python.BuildSystem">BuildSystem</a>
 
 ---
 
-##### `devDeps`<sup>Optional</sup> <a name="devDeps" id="projen.python.UvOptions.property.devDeps"></a>
+##### `documentation`<sup>Optional</sup> <a name="documentation" id="projen.python.UvOptions.property.documentation"></a>
 
 ```typescript
-public readonly devDeps: string[];
+public readonly documentation: string;
+```
+
+- *Type:* string
+
+A URL to the documentation of the project.
+
+---
+
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.python.UvOptions.property.dynamic"></a>
+
+```typescript
+public readonly dynamic: PyProjectTomlProjectDynamic[];
+```
+
+- *Type:* <a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]
+
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
+
+---
+
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.python.UvOptions.property.entryPoints"></a>
+
+```typescript
+public readonly entryPoints: any;
+```
+
+- *Type:* any
+
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
+
+---
+
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.python.UvOptions.property.guiScripts"></a>
+
+```typescript
+public readonly guiScripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
+
+---
+
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.python.UvOptions.property.importNames"></a>
+
+```typescript
+public readonly importNames: string[];
 ```
 
 - *Type:* string[]
-- *Default:* []
 
-List of dev dependencies for this project.
+An array of strings specifying the import names that the project exclusively provides when installed.
 
-Dependencies use the format: `<module>@<semver>`
+---
+
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.python.UvOptions.property.importNamespaces"></a>
+
+```typescript
+public readonly importNamespaces: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
+
+---
+
+##### `keywords`<sup>Optional</sup> <a name="keywords" id="projen.python.UvOptions.property.keywords"></a>
+
+```typescript
+public readonly keywords: string[];
+```
+
+- *Type:* string[]
+
+A list of keywords (max: 5) that the package is related to.
+
+---
+
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.python.UvOptions.property.licenseFiles"></a>
+
+```typescript
+public readonly licenseFiles: string[];
+```
+
+- *Type:* string[]
+
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
+
+---
+
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.python.UvOptions.property.maintainers"></a>
+
+```typescript
+public readonly maintainers: ProjectAuthor[];
+```
+
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
+
+the maintainers of the package.
+
+Must be in the form "name <email>"
 
 ---
 
 ##### `metadata`<sup>Optional</sup> <a name="metadata" id="projen.python.UvOptions.property.metadata"></a>
 
 ```typescript
-public readonly metadata: UvBaseOptions;
+public readonly metadata: UvConfiguration;
 ```
 
-- *Type:* <a href="#projen.python.UvBaseOptions">UvBaseOptions</a>
+- *Type:* <a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a>
 
 Package metadata.
 
@@ -7692,686 +7238,179 @@ Python version to use for the project.
 
 ---
 
-### UvPipMetadata <a name="UvPipMetadata" id="projen.python.UvPipMetadata"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvPipMetadata.Initializer"></a>
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.python.UvOptions.property.readme"></a>
 
 ```typescript
-import { python } from 'projen'
-
-const uvPipMetadata: python.UvPipMetadata = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvPipMetadata.property.allExtras">allExtras</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.allowEmptyRequirements">allowEmptyRequirements</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.annotationStyle">annotationStyle</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.breakSystemPackages">breakSystemPackages</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.compileBytecode">compileBytecode</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.configSettings">configSettings</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.configSettingsPackage">configSettingsPackage</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.customCompileCommand">customCompileCommand</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.dependencyMetadata">dependencyMetadata</a></code> | <code><a href="#projen.python.UvDependencyMetadata">UvDependencyMetadata</a>[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.emitBuildOptions">emitBuildOptions</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.emitFindLinks">emitFindLinks</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.emitIndexAnnotation">emitIndexAnnotation</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.emitIndexUrl">emitIndexUrl</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.emitMarkerExpression">emitMarkerExpression</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.excludeNewer">excludeNewer</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.extra">extra</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.extraBuildDependencies">extraBuildDependencies</a></code> | <code>{[ key: string ]: string[]}</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.findLinks">findLinks</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.forkStrategy">forkStrategy</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.generateHashes">generateHashes</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.group">group</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.indexStrategy">indexStrategy</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.indexUrl">indexUrl</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.keyringProvider">keyringProvider</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.linkMode">linkMode</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noAnnotate">noAnnotate</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noBinary">noBinary</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noBuild">noBuild</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noBuildIsolation">noBuildIsolation</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noBuildIsolationPackage">noBuildIsolationPackage</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noDeps">noDeps</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noEmitPackage">noEmitPackage</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noExtra">noExtra</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noHeader">noHeader</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noIndex">noIndex</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noSources">noSources</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noStripExtras">noStripExtras</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.noStripMarkers">noStripMarkers</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.onlyBinary">onlyBinary</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.outputFile">outputFile</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.prefix">prefix</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.prerelease">prerelease</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.python">python</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.pythonPlatform">pythonPlatform</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.reinstall">reinstall</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.requiresHashes">requiresHashes</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.resolution">resolution</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.strict">strict</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.system">system</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.target">target</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.torchBackend">torchBackend</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.universal">universal</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.upgrade">upgrade</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.upgradePackage">upgradePackage</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvPipMetadata.property.verifyHashes">verifyHashes</a></code> | <code>boolean</code> | *No description.* |
-
----
-
-##### `allExtras`<sup>Optional</sup> <a name="allExtras" id="projen.python.UvPipMetadata.property.allExtras"></a>
-
-```typescript
-public readonly allExtras: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `allowEmptyRequirements`<sup>Optional</sup> <a name="allowEmptyRequirements" id="projen.python.UvPipMetadata.property.allowEmptyRequirements"></a>
-
-```typescript
-public readonly allowEmptyRequirements: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `annotationStyle`<sup>Optional</sup> <a name="annotationStyle" id="projen.python.UvPipMetadata.property.annotationStyle"></a>
-
-```typescript
-public readonly annotationStyle: string;
+public readonly readme: string;
 ```
 
 - *Type:* string
 
----
-
-##### `breakSystemPackages`<sup>Optional</sup> <a name="breakSystemPackages" id="projen.python.UvPipMetadata.property.breakSystemPackages"></a>
-
-```typescript
-public readonly breakSystemPackages: boolean;
-```
-
-- *Type:* boolean
+The name of the readme file of the package.
 
 ---
 
-##### `compileBytecode`<sup>Optional</sup> <a name="compileBytecode" id="projen.python.UvPipMetadata.property.compileBytecode"></a>
+##### `repository`<sup>Optional</sup> <a name="repository" id="projen.python.UvOptions.property.repository"></a>
 
 ```typescript
-public readonly compileBytecode: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `configSettings`<sup>Optional</sup> <a name="configSettings" id="projen.python.UvPipMetadata.property.configSettings"></a>
-
-```typescript
-public readonly configSettings: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
----
-
-##### `configSettingsPackage`<sup>Optional</sup> <a name="configSettingsPackage" id="projen.python.UvPipMetadata.property.configSettingsPackage"></a>
-
-```typescript
-public readonly configSettingsPackage: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
----
-
-##### `customCompileCommand`<sup>Optional</sup> <a name="customCompileCommand" id="projen.python.UvPipMetadata.property.customCompileCommand"></a>
-
-```typescript
-public readonly customCompileCommand: string;
+public readonly repository: string;
 ```
 
 - *Type:* string
 
----
-
-##### `dependencyMetadata`<sup>Optional</sup> <a name="dependencyMetadata" id="projen.python.UvPipMetadata.property.dependencyMetadata"></a>
-
-```typescript
-public readonly dependencyMetadata: UvDependencyMetadata[];
-```
-
-- *Type:* <a href="#projen.python.UvDependencyMetadata">UvDependencyMetadata</a>[]
+A URL to the repository of the project.
 
 ---
 
-##### `emitBuildOptions`<sup>Optional</sup> <a name="emitBuildOptions" id="projen.python.UvPipMetadata.property.emitBuildOptions"></a>
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.python.UvOptions.property.scripts"></a>
 
 ```typescript
-public readonly emitBuildOptions: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `emitFindLinks`<sup>Optional</sup> <a name="emitFindLinks" id="projen.python.UvPipMetadata.property.emitFindLinks"></a>
-
-```typescript
-public readonly emitFindLinks: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `emitIndexAnnotation`<sup>Optional</sup> <a name="emitIndexAnnotation" id="projen.python.UvPipMetadata.property.emitIndexAnnotation"></a>
-
-```typescript
-public readonly emitIndexAnnotation: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `emitIndexUrl`<sup>Optional</sup> <a name="emitIndexUrl" id="projen.python.UvPipMetadata.property.emitIndexUrl"></a>
-
-```typescript
-public readonly emitIndexUrl: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `emitMarkerExpression`<sup>Optional</sup> <a name="emitMarkerExpression" id="projen.python.UvPipMetadata.property.emitMarkerExpression"></a>
-
-```typescript
-public readonly emitMarkerExpression: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `excludeNewer`<sup>Optional</sup> <a name="excludeNewer" id="projen.python.UvPipMetadata.property.excludeNewer"></a>
-
-```typescript
-public readonly excludeNewer: string;
-```
-
-- *Type:* string
-
----
-
-##### `excludeNewerPackage`<sup>Optional</sup> <a name="excludeNewerPackage" id="projen.python.UvPipMetadata.property.excludeNewerPackage"></a>
-
-```typescript
-public readonly excludeNewerPackage: {[ key: string ]: string};
+public readonly scripts: {[ key: string ]: string};
 ```
 
 - *Type:* {[ key: string ]: string}
 
+The scripts or executables that will be installed when installing the package.
+
 ---
 
-##### `extra`<sup>Optional</sup> <a name="extra" id="projen.python.UvPipMetadata.property.extra"></a>
+##### `urls`<sup>Optional</sup> <a name="urls" id="projen.python.UvOptions.property.urls"></a>
 
 ```typescript
-public readonly extra: string[];
+public readonly urls: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table consisting one or multiple `label: URL` pairs.
+
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.python.UvOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Name of the package.
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.python.UvOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+Version of the package.
+
+---
+
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.python.UvOptions.property.authors"></a>
+
+```typescript
+public readonly authors: ProjectAuthor[];
+```
+
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
+
+The authors of the package.
+
+Must be in the form "name <email>"
+
+---
+
+##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.UvOptions.property.classifiers"></a>
+
+```typescript
+public readonly classifiers: string[];
 ```
 
 - *Type:* string[]
 
----
+A list of PyPI trove classifiers that describe the project.
 
-##### `extraBuildDependencies`<sup>Optional</sup> <a name="extraBuildDependencies" id="projen.python.UvPipMetadata.property.extraBuildDependencies"></a>
-
-```typescript
-public readonly extraBuildDependencies: {[ key: string ]: string[]};
-```
-
-- *Type:* {[ key: string ]: string[]}
+> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
 
 ---
 
-##### `extraBuildVariables`<sup>Optional</sup> <a name="extraBuildVariables" id="projen.python.UvPipMetadata.property.extraBuildVariables"></a>
+##### `deps`<sup>Optional</sup> <a name="deps" id="projen.python.UvOptions.property.deps"></a>
 
 ```typescript
-public readonly extraBuildVariables: {[ key: string ]: {[ key: string ]: string}};
-```
-
-- *Type:* {[ key: string ]: {[ key: string ]: string}}
-
----
-
-##### `extraIndexUrl`<sup>Optional</sup> <a name="extraIndexUrl" id="projen.python.UvPipMetadata.property.extraIndexUrl"></a>
-
-```typescript
-public readonly extraIndexUrl: string[];
+public readonly deps: string[];
 ```
 
 - *Type:* string[]
+- *Default:* []
+
+List of runtime dependencies for this project.
+
+Dependencies use the format: `<module>@<semver>`
 
 ---
 
-##### `findLinks`<sup>Optional</sup> <a name="findLinks" id="projen.python.UvPipMetadata.property.findLinks"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="projen.python.UvOptions.property.description"></a>
 
 ```typescript
-public readonly findLinks: string[];
+public readonly description: string;
+```
+
+- *Type:* string
+
+A short description of the package.
+
+---
+
+##### `devDeps`<sup>Optional</sup> <a name="devDeps" id="projen.python.UvOptions.property.devDeps"></a>
+
+```typescript
+public readonly devDeps: string[];
 ```
 
 - *Type:* string[]
+- *Default:* []
+
+List of dev dependencies for this project.
+
+Dependencies use the format: `<module>@<semver>`
 
 ---
 
-##### `forkStrategy`<sup>Optional</sup> <a name="forkStrategy" id="projen.python.UvPipMetadata.property.forkStrategy"></a>
+##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.python.UvOptions.property.homepage"></a>
 
 ```typescript
-public readonly forkStrategy: string;
+public readonly homepage: string;
 ```
 
 - *Type:* string
 
----
-
-##### `generateHashes`<sup>Optional</sup> <a name="generateHashes" id="projen.python.UvPipMetadata.property.generateHashes"></a>
-
-```typescript
-public readonly generateHashes: boolean;
-```
-
-- *Type:* boolean
+A URL to the website of the project.
 
 ---
 
-##### `group`<sup>Optional</sup> <a name="group" id="projen.python.UvPipMetadata.property.group"></a>
+##### `license`<sup>Optional</sup> <a name="license" id="projen.python.UvOptions.property.license"></a>
 
 ```typescript
-public readonly group: string[];
+public readonly license: any;
 ```
 
-- *Type:* string[]
+- *Type:* any
 
----
-
-##### `indexStrategy`<sup>Optional</sup> <a name="indexStrategy" id="projen.python.UvPipMetadata.property.indexStrategy"></a>
-
-```typescript
-public readonly indexStrategy: string;
-```
-
-- *Type:* string
-
----
-
-##### `indexUrl`<sup>Optional</sup> <a name="indexUrl" id="projen.python.UvPipMetadata.property.indexUrl"></a>
-
-```typescript
-public readonly indexUrl: string;
-```
-
-- *Type:* string
-
----
-
-##### `keyringProvider`<sup>Optional</sup> <a name="keyringProvider" id="projen.python.UvPipMetadata.property.keyringProvider"></a>
-
-```typescript
-public readonly keyringProvider: string;
-```
-
-- *Type:* string
-
----
-
-##### `linkMode`<sup>Optional</sup> <a name="linkMode" id="projen.python.UvPipMetadata.property.linkMode"></a>
-
-```typescript
-public readonly linkMode: string;
-```
-
-- *Type:* string
-
----
-
-##### `noAnnotate`<sup>Optional</sup> <a name="noAnnotate" id="projen.python.UvPipMetadata.property.noAnnotate"></a>
-
-```typescript
-public readonly noAnnotate: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noBinary`<sup>Optional</sup> <a name="noBinary" id="projen.python.UvPipMetadata.property.noBinary"></a>
-
-```typescript
-public readonly noBinary: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noBuild`<sup>Optional</sup> <a name="noBuild" id="projen.python.UvPipMetadata.property.noBuild"></a>
-
-```typescript
-public readonly noBuild: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noBuildIsolation`<sup>Optional</sup> <a name="noBuildIsolation" id="projen.python.UvPipMetadata.property.noBuildIsolation"></a>
-
-```typescript
-public readonly noBuildIsolation: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noBuildIsolationPackage`<sup>Optional</sup> <a name="noBuildIsolationPackage" id="projen.python.UvPipMetadata.property.noBuildIsolationPackage"></a>
-
-```typescript
-public readonly noBuildIsolationPackage: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `noDeps`<sup>Optional</sup> <a name="noDeps" id="projen.python.UvPipMetadata.property.noDeps"></a>
-
-```typescript
-public readonly noDeps: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noEmitPackage`<sup>Optional</sup> <a name="noEmitPackage" id="projen.python.UvPipMetadata.property.noEmitPackage"></a>
-
-```typescript
-public readonly noEmitPackage: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `noExtra`<sup>Optional</sup> <a name="noExtra" id="projen.python.UvPipMetadata.property.noExtra"></a>
-
-```typescript
-public readonly noExtra: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `noHeader`<sup>Optional</sup> <a name="noHeader" id="projen.python.UvPipMetadata.property.noHeader"></a>
-
-```typescript
-public readonly noHeader: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noIndex`<sup>Optional</sup> <a name="noIndex" id="projen.python.UvPipMetadata.property.noIndex"></a>
-
-```typescript
-public readonly noIndex: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noSources`<sup>Optional</sup> <a name="noSources" id="projen.python.UvPipMetadata.property.noSources"></a>
-
-```typescript
-public readonly noSources: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noStripExtras`<sup>Optional</sup> <a name="noStripExtras" id="projen.python.UvPipMetadata.property.noStripExtras"></a>
-
-```typescript
-public readonly noStripExtras: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `noStripMarkers`<sup>Optional</sup> <a name="noStripMarkers" id="projen.python.UvPipMetadata.property.noStripMarkers"></a>
-
-```typescript
-public readonly noStripMarkers: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `onlyBinary`<sup>Optional</sup> <a name="onlyBinary" id="projen.python.UvPipMetadata.property.onlyBinary"></a>
-
-```typescript
-public readonly onlyBinary: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `outputFile`<sup>Optional</sup> <a name="outputFile" id="projen.python.UvPipMetadata.property.outputFile"></a>
-
-```typescript
-public readonly outputFile: string;
-```
-
-- *Type:* string
-
----
-
-##### `prefix`<sup>Optional</sup> <a name="prefix" id="projen.python.UvPipMetadata.property.prefix"></a>
-
-```typescript
-public readonly prefix: string;
-```
-
-- *Type:* string
-
----
-
-##### `prerelease`<sup>Optional</sup> <a name="prerelease" id="projen.python.UvPipMetadata.property.prerelease"></a>
-
-```typescript
-public readonly prerelease: string;
-```
-
-- *Type:* string
-
----
-
-##### `python`<sup>Optional</sup> <a name="python" id="projen.python.UvPipMetadata.property.python"></a>
-
-```typescript
-public readonly python: string;
-```
-
-- *Type:* string
-
----
-
-##### `pythonPlatform`<sup>Optional</sup> <a name="pythonPlatform" id="projen.python.UvPipMetadata.property.pythonPlatform"></a>
-
-```typescript
-public readonly pythonPlatform: string;
-```
-
-- *Type:* string
-
----
-
-##### `pythonVersion`<sup>Optional</sup> <a name="pythonVersion" id="projen.python.UvPipMetadata.property.pythonVersion"></a>
-
-```typescript
-public readonly pythonVersion: string;
-```
-
-- *Type:* string
-
----
-
-##### `reinstall`<sup>Optional</sup> <a name="reinstall" id="projen.python.UvPipMetadata.property.reinstall"></a>
-
-```typescript
-public readonly reinstall: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `reinstallPackage`<sup>Optional</sup> <a name="reinstallPackage" id="projen.python.UvPipMetadata.property.reinstallPackage"></a>
-
-```typescript
-public readonly reinstallPackage: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `requiresHashes`<sup>Optional</sup> <a name="requiresHashes" id="projen.python.UvPipMetadata.property.requiresHashes"></a>
-
-```typescript
-public readonly requiresHashes: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `resolution`<sup>Optional</sup> <a name="resolution" id="projen.python.UvPipMetadata.property.resolution"></a>
-
-```typescript
-public readonly resolution: string;
-```
-
-- *Type:* string
-
----
-
-##### `strict`<sup>Optional</sup> <a name="strict" id="projen.python.UvPipMetadata.property.strict"></a>
-
-```typescript
-public readonly strict: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `system`<sup>Optional</sup> <a name="system" id="projen.python.UvPipMetadata.property.system"></a>
-
-```typescript
-public readonly system: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `target`<sup>Optional</sup> <a name="target" id="projen.python.UvPipMetadata.property.target"></a>
-
-```typescript
-public readonly target: string;
-```
-
-- *Type:* string
-
----
-
-##### `torchBackend`<sup>Optional</sup> <a name="torchBackend" id="projen.python.UvPipMetadata.property.torchBackend"></a>
-
-```typescript
-public readonly torchBackend: string;
-```
-
-- *Type:* string
-
----
-
-##### `universal`<sup>Optional</sup> <a name="universal" id="projen.python.UvPipMetadata.property.universal"></a>
-
-```typescript
-public readonly universal: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `upgrade`<sup>Optional</sup> <a name="upgrade" id="projen.python.UvPipMetadata.property.upgrade"></a>
-
-```typescript
-public readonly upgrade: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `upgradePackage`<sup>Optional</sup> <a name="upgradePackage" id="projen.python.UvPipMetadata.property.upgradePackage"></a>
-
-```typescript
-public readonly upgradePackage: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `verifyHashes`<sup>Optional</sup> <a name="verifyHashes" id="projen.python.UvPipMetadata.property.verifyHashes"></a>
-
-```typescript
-public readonly verifyHashes: boolean;
-```
-
-- *Type:* boolean
+License of this package as an SPDX license expression.
 
 ---
 
 ### UvPyprojectOptions <a name="UvPyprojectOptions" id="projen.python.UvPyprojectOptions"></a>
 
 Options for UV pyproject.toml configuration.
+
+> [https://docs.astral.sh/uv/reference/settings/](https://docs.astral.sh/uv/reference/settings/)
 
 #### Initializer <a name="Initializer" id="projen.python.UvPyprojectOptions.Initializer"></a>
 
@@ -8385,343 +7424,43 @@ const uvPyprojectOptions: python.UvPyprojectOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.UvPyprojectOptions.property.addBounds">addBounds</a></code> | <code>string</code> | The default version specifier when adding a dependency. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.allowInsecureHost">allowInsecureHost</a></code> | <code>string[]</code> | Allow insecure connections to host. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Email of the package author. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.authorName">authorName</a></code> | <code>string</code> | Name of the package author. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.buildBackend">buildBackend</a></code> | <code><a href="#projen.python.UvBuildBackend">UvBuildBackend</a></code> | Settings for the uv build backend (uv_build). |
-| <code><a href="#projen.python.UvPyprojectOptions.property.buildConstraintDependencies">buildConstraintDependencies</a></code> | <code>string[]</code> | Constraints to apply when solving build dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.cacheDir">cacheDir</a></code> | <code>string</code> | Path to the cache directory. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.cacheKeys">cacheKeys</a></code> | <code>{[ key: string ]: any}</code> | The keys to consider when caching builds for the project. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.checkUrl">checkUrl</a></code> | <code>string</code> | Check an index URL for existing files to skip duplicate uploads. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | Python package classifiers. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.compileBytecode">compileBytecode</a></code> | <code>string</code> | Compile Python files to bytecode after installation. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.concurrentBuilds">concurrentBuilds</a></code> | <code>number</code> | The maximum number of source distributions that uv will build concurrently at any given time. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.concurrentDownloads">concurrentDownloads</a></code> | <code>number</code> | The maximum number of in-flight concurrent downloads that uv will perform at any given time. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.concurrentInstalls">concurrentInstalls</a></code> | <code>number</code> | The number of threads used when installing and unzipping packages. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.configSettings">configSettings</a></code> | <code>{[ key: string ]: any}</code> | Settings to pass to the PEP 517 build backend. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.configSettingsPackage">configSettingsPackage</a></code> | <code>{[ key: string ]: any}</code> | Settings to pass to the PEP 517 build backend for specific packages. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.conflicts">conflicts</a></code> | <code>{[ key: string ]: string}[][]</code> | Declare collections of extras or dependency groups that are conflicting (i.e., mutually exclusive). |
-| <code><a href="#projen.python.UvPyprojectOptions.property.constraintDependencies">constraintDependencies</a></code> | <code>string[]</code> | Constraints to apply when resolving the project's dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.defaultGroups">defaultGroups</a></code> | <code>string \| string[]</code> | The list of dependency-groups to install by default. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.dependencyMetadata">dependencyMetadata</a></code> | <code><a href="#projen.python.UvDependencyMetadata">UvDependencyMetadata</a>[]</code> | Pre-defined static metadata for dependencies of the project (direct or transitive). |
-| <code><a href="#projen.python.UvPyprojectOptions.property.description">description</a></code> | <code>string</code> | Description of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.documentation">documentation</a></code> | <code>string</code> | Documentation URL of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.environments">environments</a></code> | <code>string[]</code> | Supported environments against which to resolve dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.excludeDependencies">excludeDependencies</a></code> | <code>string[]</code> | Dependencies to exclude when resolving the project's dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.excludeNewer">excludeNewer</a></code> | <code>string</code> | Limit candidate packages to those that were uploaded prior to a given point in time. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: string}</code> | Limit candidate packages for specific packages to those that were uploaded prior to the given date. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.extraBuildDependencies">extraBuildDependencies</a></code> | <code>{[ key: string ]: string[]}</code> | Additional build dependencies for packages. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Extra environment variables to set when building certain packages. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | Extra URLs of package indexes to use, in addition to --index-url. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.findLinks">findLinks</a></code> | <code>string[]</code> | Locations to search for candidate distributions, in addition to those found in the registry indexes. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.forkStrategy">forkStrategy</a></code> | <code>string</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.homepage">homepage</a></code> | <code>string</code> | Homepage URL of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.index">index</a></code> | <code><a href="#projen.python.UvIndex">UvIndex</a>[]</code> | The indexes to use when resolving dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.indexStrategy">indexStrategy</a></code> | <code>string</code> | The strategy to use when resolving against multiple index URLs. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.indexUrl">indexUrl</a></code> | <code>string</code> | The URL of the Python package index (by default: https://pypi.org/simple). |
-| <code><a href="#projen.python.UvPyprojectOptions.property.keyringProvider">keyringProvider</a></code> | <code>string</code> | Attempt to use keyring for authentication for index URLs. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords for the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.license">license</a></code> | <code>string</code> | License of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.linkMode">linkMode</a></code> | <code>string</code> | The method to use when installing packages from the global cache. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.managed">managed</a></code> | <code>boolean</code> | Whether the project is managed by uv. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
+| <code><a href="#projen.python.UvPyprojectOptions.property.documentation">documentation</a></code> | <code>string</code> | A URL to the documentation of the project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.dynamic">dynamic</a></code> | <code><a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | A list of keywords (max: 5) that the package is related to. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | the maintainers of the package. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.metadata">metadata</a></code> | <code><a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a></code> | Package metadata. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | Python version to use for the project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.readme">readme</a></code> | <code>string</code> | The name of the readme file of the package. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.repository">repository</a></code> | <code>string</code> | A URL to the repository of the project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | The scripts or executables that will be installed when installing the package. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
 | <code><a href="#projen.python.UvPyprojectOptions.property.name">name</a></code> | <code>string</code> | Name of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.nativeTls">nativeTls</a></code> | <code>boolean</code> | Whether to load TLS certificates from the platform's native certificate store. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noBinary">noBinary</a></code> | <code>boolean</code> | Don't install pre-built wheels. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noBinaryPackage">noBinaryPackage</a></code> | <code>string[]</code> | Don't install pre-built wheels for a specific package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noBuild">noBuild</a></code> | <code>boolean</code> | Don't build source distributions. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noBuildIsolation">noBuildIsolation</a></code> | <code>boolean</code> | Disable isolation when building source distributions. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noBuildIsolationPackage">noBuildIsolationPackage</a></code> | <code>string[]</code> | Disable isolation when building source distributions for a specific package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noBuildPackage">noBuildPackage</a></code> | <code>string[]</code> | Don't build source distributions for a specific package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noCache">noCache</a></code> | <code>boolean</code> | Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noIndex">noIndex</a></code> | <code>boolean</code> | Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependencies and those provided via --find-links. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.noSources">noSources</a></code> | <code>boolean</code> | Ignore the tool.uv.sources table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.offline">offline</a></code> | <code>boolean</code> | Disable network access, relying only on locally cached data and locally available files. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.overrideDependencies">overrideDependencies</a></code> | <code>string[]</code> | Overrides to apply when resolving the project's dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.package">package</a></code> | <code>boolean</code> | Whether the project should be considered a Python package, or a non-package ("virtual") project. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pip">pip</a></code> | <code><a href="#projen.python.UvPipMetadata">UvPipMetadata</a></code> | Settings that are specific to the uv pip command-line interface. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.prerelease">prerelease</a></code> | <code>string</code> | The strategy to use when considering pre-release versions. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.preview">preview</a></code> | <code>boolean</code> | Whether to enable experimental, preview features. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.publishUrl">publishUrl</a></code> | <code>string</code> | The URL for publishing packages to the Python package index (by default: https://upload.pypi.org/legacy/). |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pypyInstallMirror">pypyInstallMirror</a></code> | <code>string</code> | Mirror URL to use for downloading managed PyPy installations. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pythonDownloads">pythonDownloads</a></code> | <code>string</code> | Whether to allow Python downloads. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pythonDownloadsJsonUrl">pythonDownloadsJsonUrl</a></code> | <code>string</code> | URL pointing to JSON of custom Python installations. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pythonInstallMirror">pythonInstallMirror</a></code> | <code>string</code> | Mirror URL for downloading managed Python installations. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pythonPreference">pythonPreference</a></code> | <code>string</code> | Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.readme">readme</a></code> | <code>string</code> | Path to the readme file. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.reinstall">reinstall</a></code> | <code>boolean</code> | Reinstall all packages, regardless of whether they're already installed. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | Reinstall a specific package, regardless of whether it's already installed. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.repository">repository</a></code> | <code>string</code> | Repository URL of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.requiredEnvironments">requiredEnvironments</a></code> | <code>string \| string[]</code> | A list of required platforms, for packages that lack source distributions. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.requiredVersion">requiredVersion</a></code> | <code>string</code> | Enforce a requirement on the version of uv. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Python version requirement string. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.resolution">resolution</a></code> | <code>string</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.sources">sources</a></code> | <code>{[ key: string ]: <a href="#projen.python.UvSource">UvSource</a>}</code> | The sources to use when resolving dependencies. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.trustedPublishing">trustedPublishing</a></code> | <code>string</code> | Configure trusted publishing. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.upgrade">upgrade</a></code> | <code>boolean</code> | Allow package upgrades, ignoring pinned versions in any existing output file. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.upgradePackage">upgradePackage</a></code> | <code>string[]</code> | Allow upgrades for a specific package, ignoring pinned versions in any existing output file. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Additional URLs associated with the package. |
 | <code><a href="#projen.python.UvPyprojectOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.workspace">workspace</a></code> | <code><a href="#projen.python.UvWorkspace">UvWorkspace</a></code> | Packages to include or exclude as workspace members. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.dependencies">dependencies</a></code> | <code>string[]</code> | A list of dependencies for the project. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.devDependencies">devDependencies</a></code> | <code>string[]</code> | A list of development dependencies for the project. |
-| <code><a href="#projen.python.UvPyprojectOptions.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | Python version to use. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.authors">authors</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | The authors of the package. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | A list of PyPI trove classifiers that describe the project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.description">description</a></code> | <code>string</code> | A short description of the package. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.homepage">homepage</a></code> | <code>string</code> | A URL to the website of the project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.license">license</a></code> | <code>any</code> | License of this package as an SPDX license expression. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.dependencies">dependencies</a></code> | <code>any</code> | A list of dependencies for the project. |
+| <code><a href="#projen.python.UvPyprojectOptions.property.dependencyGroups">dependencyGroups</a></code> | <code>{[ key: string ]: any}</code> | A list of development dependencies for the project. |
 
 ---
 
-##### `addBounds`<sup>Optional</sup> <a name="addBounds" id="projen.python.UvPyprojectOptions.property.addBounds"></a>
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.python.UvPyprojectOptions.property.buildSystem"></a>
 
 ```typescript
-public readonly addBounds: string;
+public readonly buildSystem: BuildSystem;
 ```
 
-- *Type:* string
-
-The default version specifier when adding a dependency.
-
----
-
-##### `allowInsecureHost`<sup>Optional</sup> <a name="allowInsecureHost" id="projen.python.UvPyprojectOptions.property.allowInsecureHost"></a>
-
-```typescript
-public readonly allowInsecureHost: string[];
-```
-
-- *Type:* string[]
-
-Allow insecure connections to host.
-
----
-
-##### `authorEmail`<sup>Optional</sup> <a name="authorEmail" id="projen.python.UvPyprojectOptions.property.authorEmail"></a>
-
-```typescript
-public readonly authorEmail: string;
-```
-
-- *Type:* string
-
-Email of the package author.
-
----
-
-##### `authorName`<sup>Optional</sup> <a name="authorName" id="projen.python.UvPyprojectOptions.property.authorName"></a>
-
-```typescript
-public readonly authorName: string;
-```
-
-- *Type:* string
-
-Name of the package author.
-
----
-
-##### `buildBackend`<sup>Optional</sup> <a name="buildBackend" id="projen.python.UvPyprojectOptions.property.buildBackend"></a>
-
-```typescript
-public readonly buildBackend: UvBuildBackend;
-```
-
-- *Type:* <a href="#projen.python.UvBuildBackend">UvBuildBackend</a>
-
-Settings for the uv build backend (uv_build).
-
----
-
-##### `buildConstraintDependencies`<sup>Optional</sup> <a name="buildConstraintDependencies" id="projen.python.UvPyprojectOptions.property.buildConstraintDependencies"></a>
-
-```typescript
-public readonly buildConstraintDependencies: string[];
-```
-
-- *Type:* string[]
-
-Constraints to apply when solving build dependencies.
-
----
-
-##### `cacheDir`<sup>Optional</sup> <a name="cacheDir" id="projen.python.UvPyprojectOptions.property.cacheDir"></a>
-
-```typescript
-public readonly cacheDir: string;
-```
-
-- *Type:* string
-
-Path to the cache directory.
-
----
-
-##### `cacheKeys`<sup>Optional</sup> <a name="cacheKeys" id="projen.python.UvPyprojectOptions.property.cacheKeys"></a>
-
-```typescript
-public readonly cacheKeys: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
-The keys to consider when caching builds for the project.
-
----
-
-##### `checkUrl`<sup>Optional</sup> <a name="checkUrl" id="projen.python.UvPyprojectOptions.property.checkUrl"></a>
-
-```typescript
-public readonly checkUrl: string;
-```
-
-- *Type:* string
-
-Check an index URL for existing files to skip duplicate uploads.
-
----
-
-##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.UvPyprojectOptions.property.classifiers"></a>
-
-```typescript
-public readonly classifiers: string[];
-```
-
-- *Type:* string[]
-
-Python package classifiers.
-
-> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
-
----
-
-##### `compileBytecode`<sup>Optional</sup> <a name="compileBytecode" id="projen.python.UvPyprojectOptions.property.compileBytecode"></a>
-
-```typescript
-public readonly compileBytecode: string;
-```
-
-- *Type:* string
-
-Compile Python files to bytecode after installation.
-
----
-
-##### `concurrentBuilds`<sup>Optional</sup> <a name="concurrentBuilds" id="projen.python.UvPyprojectOptions.property.concurrentBuilds"></a>
-
-```typescript
-public readonly concurrentBuilds: number;
-```
-
-- *Type:* number
-
-The maximum number of source distributions that uv will build concurrently at any given time.
-
----
-
-##### `concurrentDownloads`<sup>Optional</sup> <a name="concurrentDownloads" id="projen.python.UvPyprojectOptions.property.concurrentDownloads"></a>
-
-```typescript
-public readonly concurrentDownloads: number;
-```
-
-- *Type:* number
-
-The maximum number of in-flight concurrent downloads that uv will perform at any given time.
-
----
-
-##### `concurrentInstalls`<sup>Optional</sup> <a name="concurrentInstalls" id="projen.python.UvPyprojectOptions.property.concurrentInstalls"></a>
-
-```typescript
-public readonly concurrentInstalls: number;
-```
-
-- *Type:* number
-
-The number of threads used when installing and unzipping packages.
-
----
-
-##### `configSettings`<sup>Optional</sup> <a name="configSettings" id="projen.python.UvPyprojectOptions.property.configSettings"></a>
-
-```typescript
-public readonly configSettings: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
-Settings to pass to the PEP 517 build backend.
-
----
-
-##### `configSettingsPackage`<sup>Optional</sup> <a name="configSettingsPackage" id="projen.python.UvPyprojectOptions.property.configSettingsPackage"></a>
-
-```typescript
-public readonly configSettingsPackage: {[ key: string ]: any};
-```
-
-- *Type:* {[ key: string ]: any}
-
-Settings to pass to the PEP 517 build backend for specific packages.
-
----
-
-##### `conflicts`<sup>Optional</sup> <a name="conflicts" id="projen.python.UvPyprojectOptions.property.conflicts"></a>
-
-```typescript
-public readonly conflicts: {[ key: string ]: string}[][];
-```
-
-- *Type:* {[ key: string ]: string}[][]
-
-Declare collections of extras or dependency groups that are conflicting (i.e., mutually exclusive).
-
----
-
-##### `constraintDependencies`<sup>Optional</sup> <a name="constraintDependencies" id="projen.python.UvPyprojectOptions.property.constraintDependencies"></a>
-
-```typescript
-public readonly constraintDependencies: string[];
-```
-
-- *Type:* string[]
-
-Constraints to apply when resolving the project's dependencies.
-
----
-
-##### `defaultGroups`<sup>Optional</sup> <a name="defaultGroups" id="projen.python.UvPyprojectOptions.property.defaultGroups"></a>
-
-```typescript
-public readonly defaultGroups: string | string[];
-```
-
-- *Type:* string | string[]
-
-The list of dependency-groups to install by default.
-
----
-
-##### `dependencyMetadata`<sup>Optional</sup> <a name="dependencyMetadata" id="projen.python.UvPyprojectOptions.property.dependencyMetadata"></a>
-
-```typescript
-public readonly dependencyMetadata: UvDependencyMetadata[];
-```
-
-- *Type:* <a href="#projen.python.UvDependencyMetadata">UvDependencyMetadata</a>[]
-
-Pre-defined static metadata for dependencies of the project (direct or transitive).
-
-When provided, enables the resolver to use the specified metadata instead of querying the registry or building the relevant package from source.
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="projen.python.UvPyprojectOptions.property.description"></a>
-
-```typescript
-public readonly description: string;
-```
-
-- *Type:* string
-
-Description of the package.
+- *Type:* <a href="#projen.python.BuildSystem">BuildSystem</a>
 
 ---
 
@@ -8733,175 +7472,70 @@ public readonly documentation: string;
 
 - *Type:* string
 
-Documentation URL of the package.
+A URL to the documentation of the project.
 
 ---
 
-##### `environments`<sup>Optional</sup> <a name="environments" id="projen.python.UvPyprojectOptions.property.environments"></a>
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.python.UvPyprojectOptions.property.dynamic"></a>
 
 ```typescript
-public readonly environments: string[];
+public readonly dynamic: PyProjectTomlProjectDynamic[];
 ```
 
-- *Type:* string[]
+- *Type:* <a href="#projen.python.PyProjectTomlProjectDynamic">PyProjectTomlProjectDynamic</a>[]
 
-Supported environments against which to resolve dependencies.
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
 
 ---
 
-##### `excludeDependencies`<sup>Optional</sup> <a name="excludeDependencies" id="projen.python.UvPyprojectOptions.property.excludeDependencies"></a>
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.python.UvPyprojectOptions.property.entryPoints"></a>
 
 ```typescript
-public readonly excludeDependencies: string[];
+public readonly entryPoints: any;
 ```
 
-- *Type:* string[]
+- *Type:* any
 
-Dependencies to exclude when resolving the project's dependencies.
-
----
-
-##### `excludeNewer`<sup>Optional</sup> <a name="excludeNewer" id="projen.python.UvPyprojectOptions.property.excludeNewer"></a>
-
-```typescript
-public readonly excludeNewer: string;
-```
-
-- *Type:* string
-
-Limit candidate packages to those that were uploaded prior to a given point in time.
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
 
 ---
 
-##### `excludeNewerPackage`<sup>Optional</sup> <a name="excludeNewerPackage" id="projen.python.UvPyprojectOptions.property.excludeNewerPackage"></a>
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.python.UvPyprojectOptions.property.guiScripts"></a>
 
 ```typescript
-public readonly excludeNewerPackage: {[ key: string ]: string};
+public readonly guiScripts: {[ key: string ]: string};
 ```
 
 - *Type:* {[ key: string ]: string}
 
-Limit candidate packages for specific packages to those that were uploaded prior to the given date.
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
 
 ---
 
-##### `extraBuildDependencies`<sup>Optional</sup> <a name="extraBuildDependencies" id="projen.python.UvPyprojectOptions.property.extraBuildDependencies"></a>
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.python.UvPyprojectOptions.property.importNames"></a>
 
 ```typescript
-public readonly extraBuildDependencies: {[ key: string ]: string[]};
-```
-
-- *Type:* {[ key: string ]: string[]}
-
-Additional build dependencies for packages.
-
----
-
-##### `extraBuildVariables`<sup>Optional</sup> <a name="extraBuildVariables" id="projen.python.UvPyprojectOptions.property.extraBuildVariables"></a>
-
-```typescript
-public readonly extraBuildVariables: {[ key: string ]: {[ key: string ]: string}};
-```
-
-- *Type:* {[ key: string ]: {[ key: string ]: string}}
-
-Extra environment variables to set when building certain packages.
-
----
-
-##### `extraIndexUrl`<sup>Optional</sup> <a name="extraIndexUrl" id="projen.python.UvPyprojectOptions.property.extraIndexUrl"></a>
-
-```typescript
-public readonly extraIndexUrl: string[];
+public readonly importNames: string[];
 ```
 
 - *Type:* string[]
 
-Extra URLs of package indexes to use, in addition to --index-url.
+An array of strings specifying the import names that the project exclusively provides when installed.
 
 ---
 
-##### `findLinks`<sup>Optional</sup> <a name="findLinks" id="projen.python.UvPyprojectOptions.property.findLinks"></a>
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.python.UvPyprojectOptions.property.importNamespaces"></a>
 
 ```typescript
-public readonly findLinks: string[];
+public readonly importNamespaces: string[];
 ```
 
 - *Type:* string[]
 
-Locations to search for candidate distributions, in addition to those found in the registry indexes.
-
----
-
-##### `forkStrategy`<sup>Optional</sup> <a name="forkStrategy" id="projen.python.UvPyprojectOptions.property.forkStrategy"></a>
-
-```typescript
-public readonly forkStrategy: string;
-```
-
-- *Type:* string
-
-The strategy to use when selecting multiple versions of a given package across Python versions and platforms.
-
----
-
-##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.python.UvPyprojectOptions.property.homepage"></a>
-
-```typescript
-public readonly homepage: string;
-```
-
-- *Type:* string
-
-Homepage URL of the package.
-
----
-
-##### `index`<sup>Optional</sup> <a name="index" id="projen.python.UvPyprojectOptions.property.index"></a>
-
-```typescript
-public readonly index: UvIndex[];
-```
-
-- *Type:* <a href="#projen.python.UvIndex">UvIndex</a>[]
-
-The indexes to use when resolving dependencies.
-
----
-
-##### `indexStrategy`<sup>Optional</sup> <a name="indexStrategy" id="projen.python.UvPyprojectOptions.property.indexStrategy"></a>
-
-```typescript
-public readonly indexStrategy: string;
-```
-
-- *Type:* string
-
-The strategy to use when resolving against multiple index URLs.
-
----
-
-##### `indexUrl`<sup>Optional</sup> <a name="indexUrl" id="projen.python.UvPyprojectOptions.property.indexUrl"></a>
-
-```typescript
-public readonly indexUrl: string;
-```
-
-- *Type:* string
-
-The URL of the Python package index (by default: https://pypi.org/simple).
-
----
-
-##### `keyringProvider`<sup>Optional</sup> <a name="keyringProvider" id="projen.python.UvPyprojectOptions.property.keyringProvider"></a>
-
-```typescript
-public readonly keyringProvider: string;
-```
-
-- *Type:* string
-
-Attempt to use keyring for authentication for index URLs.
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
 
 ---
 
@@ -8913,321 +7547,60 @@ public readonly keywords: string[];
 
 - *Type:* string[]
 
-Keywords for the package.
+A list of keywords (max: 5) that the package is related to.
 
 ---
 
-##### `license`<sup>Optional</sup> <a name="license" id="projen.python.UvPyprojectOptions.property.license"></a>
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.python.UvPyprojectOptions.property.licenseFiles"></a>
 
 ```typescript
-public readonly license: string;
-```
-
-- *Type:* string
-
-License of the package.
-
----
-
-##### `linkMode`<sup>Optional</sup> <a name="linkMode" id="projen.python.UvPyprojectOptions.property.linkMode"></a>
-
-```typescript
-public readonly linkMode: string;
-```
-
-- *Type:* string
-
-The method to use when installing packages from the global cache.
-
----
-
-##### `managed`<sup>Optional</sup> <a name="managed" id="projen.python.UvPyprojectOptions.property.managed"></a>
-
-```typescript
-public readonly managed: boolean;
-```
-
-- *Type:* boolean
-
-Whether the project is managed by uv.
-
-If false, uv will ignore the project when uv run is invoked.
-
----
-
-##### `name`<sup>Optional</sup> <a name="name" id="projen.python.UvPyprojectOptions.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
-Name of the package.
-
----
-
-##### `nativeTls`<sup>Optional</sup> <a name="nativeTls" id="projen.python.UvPyprojectOptions.property.nativeTls"></a>
-
-```typescript
-public readonly nativeTls: boolean;
-```
-
-- *Type:* boolean
-
-Whether to load TLS certificates from the platform's native certificate store.
-
----
-
-##### `noBinary`<sup>Optional</sup> <a name="noBinary" id="projen.python.UvPyprojectOptions.property.noBinary"></a>
-
-```typescript
-public readonly noBinary: boolean;
-```
-
-- *Type:* boolean
-
-Don't install pre-built wheels.
-
----
-
-##### `noBinaryPackage`<sup>Optional</sup> <a name="noBinaryPackage" id="projen.python.UvPyprojectOptions.property.noBinaryPackage"></a>
-
-```typescript
-public readonly noBinaryPackage: string[];
+public readonly licenseFiles: string[];
 ```
 
 - *Type:* string[]
 
-Don't install pre-built wheels for a specific package.
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
 
 ---
 
-##### `noBuild`<sup>Optional</sup> <a name="noBuild" id="projen.python.UvPyprojectOptions.property.noBuild"></a>
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.python.UvPyprojectOptions.property.maintainers"></a>
 
 ```typescript
-public readonly noBuild: boolean;
+public readonly maintainers: ProjectAuthor[];
 ```
 
-- *Type:* boolean
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
 
-Don't build source distributions.
+the maintainers of the package.
+
+Must be in the form "name <email>"
 
 ---
 
-##### `noBuildIsolation`<sup>Optional</sup> <a name="noBuildIsolation" id="projen.python.UvPyprojectOptions.property.noBuildIsolation"></a>
+##### `metadata`<sup>Optional</sup> <a name="metadata" id="projen.python.UvPyprojectOptions.property.metadata"></a>
 
 ```typescript
-public readonly noBuildIsolation: boolean;
+public readonly metadata: UvConfiguration;
 ```
 
-- *Type:* boolean
+- *Type:* <a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a>
 
-Disable isolation when building source distributions.
-
----
-
-##### `noBuildIsolationPackage`<sup>Optional</sup> <a name="noBuildIsolationPackage" id="projen.python.UvPyprojectOptions.property.noBuildIsolationPackage"></a>
-
-```typescript
-public readonly noBuildIsolationPackage: string[];
-```
-
-- *Type:* string[]
-
-Disable isolation when building source distributions for a specific package.
+Package metadata.
 
 ---
 
-##### `noBuildPackage`<sup>Optional</sup> <a name="noBuildPackage" id="projen.python.UvPyprojectOptions.property.noBuildPackage"></a>
+##### `pythonVersion`<sup>Optional</sup> <a name="pythonVersion" id="projen.python.UvPyprojectOptions.property.pythonVersion"></a>
 
 ```typescript
-public readonly noBuildPackage: string[];
-```
-
-- *Type:* string[]
-
-Don't build source distributions for a specific package.
-
----
-
-##### `noCache`<sup>Optional</sup> <a name="noCache" id="projen.python.UvPyprojectOptions.property.noCache"></a>
-
-```typescript
-public readonly noCache: boolean;
-```
-
-- *Type:* boolean
-
-Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation.
-
----
-
-##### `noIndex`<sup>Optional</sup> <a name="noIndex" id="projen.python.UvPyprojectOptions.property.noIndex"></a>
-
-```typescript
-public readonly noIndex: boolean;
-```
-
-- *Type:* boolean
-
-Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependencies and those provided via --find-links.
-
----
-
-##### `noSources`<sup>Optional</sup> <a name="noSources" id="projen.python.UvPyprojectOptions.property.noSources"></a>
-
-```typescript
-public readonly noSources: boolean;
-```
-
-- *Type:* boolean
-
-Ignore the tool.uv.sources table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources.
-
----
-
-##### `offline`<sup>Optional</sup> <a name="offline" id="projen.python.UvPyprojectOptions.property.offline"></a>
-
-```typescript
-public readonly offline: boolean;
-```
-
-- *Type:* boolean
-
-Disable network access, relying only on locally cached data and locally available files.
-
----
-
-##### `overrideDependencies`<sup>Optional</sup> <a name="overrideDependencies" id="projen.python.UvPyprojectOptions.property.overrideDependencies"></a>
-
-```typescript
-public readonly overrideDependencies: string[];
-```
-
-- *Type:* string[]
-
-Overrides to apply when resolving the project's dependencies.
-
----
-
-##### `package`<sup>Optional</sup> <a name="package" id="projen.python.UvPyprojectOptions.property.package"></a>
-
-```typescript
-public readonly package: boolean;
-```
-
-- *Type:* boolean
-
-Whether the project should be considered a Python package, or a non-package ("virtual") project.
-
----
-
-##### `pip`<sup>Optional</sup> <a name="pip" id="projen.python.UvPyprojectOptions.property.pip"></a>
-
-```typescript
-public readonly pip: UvPipMetadata;
-```
-
-- *Type:* <a href="#projen.python.UvPipMetadata">UvPipMetadata</a>
-
-Settings that are specific to the uv pip command-line interface.
-
----
-
-##### `prerelease`<sup>Optional</sup> <a name="prerelease" id="projen.python.UvPyprojectOptions.property.prerelease"></a>
-
-```typescript
-public readonly prerelease: string;
+public readonly pythonVersion: string;
 ```
 
 - *Type:* string
+- *Default:* "3.12"
 
-The strategy to use when considering pre-release versions.
-
----
-
-##### `preview`<sup>Optional</sup> <a name="preview" id="projen.python.UvPyprojectOptions.property.preview"></a>
-
-```typescript
-public readonly preview: boolean;
-```
-
-- *Type:* boolean
-
-Whether to enable experimental, preview features.
-
----
-
-##### `publishUrl`<sup>Optional</sup> <a name="publishUrl" id="projen.python.UvPyprojectOptions.property.publishUrl"></a>
-
-```typescript
-public readonly publishUrl: string;
-```
-
-- *Type:* string
-
-The URL for publishing packages to the Python package index (by default: https://upload.pypi.org/legacy/).
-
----
-
-##### `pypyInstallMirror`<sup>Optional</sup> <a name="pypyInstallMirror" id="projen.python.UvPyprojectOptions.property.pypyInstallMirror"></a>
-
-```typescript
-public readonly pypyInstallMirror: string;
-```
-
-- *Type:* string
-
-Mirror URL to use for downloading managed PyPy installations.
-
----
-
-##### `pythonDownloads`<sup>Optional</sup> <a name="pythonDownloads" id="projen.python.UvPyprojectOptions.property.pythonDownloads"></a>
-
-```typescript
-public readonly pythonDownloads: string;
-```
-
-- *Type:* string
-
-Whether to allow Python downloads.
-
----
-
-##### `pythonDownloadsJsonUrl`<sup>Optional</sup> <a name="pythonDownloadsJsonUrl" id="projen.python.UvPyprojectOptions.property.pythonDownloadsJsonUrl"></a>
-
-```typescript
-public readonly pythonDownloadsJsonUrl: string;
-```
-
-- *Type:* string
-
-URL pointing to JSON of custom Python installations.
-
----
-
-##### `pythonInstallMirror`<sup>Optional</sup> <a name="pythonInstallMirror" id="projen.python.UvPyprojectOptions.property.pythonInstallMirror"></a>
-
-```typescript
-public readonly pythonInstallMirror: string;
-```
-
-- *Type:* string
-
-Mirror URL for downloading managed Python installations.
-
----
-
-##### `pythonPreference`<sup>Optional</sup> <a name="pythonPreference" id="projen.python.UvPyprojectOptions.property.pythonPreference"></a>
-
-```typescript
-public readonly pythonPreference: string;
-```
-
-- *Type:* string
-
-Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv.
+Python version to use for the project.
 
 ---
 
@@ -9239,35 +7612,7 @@ public readonly readme: string;
 
 - *Type:* string
 
-Path to the readme file.
-
----
-
-##### `reinstall`<sup>Optional</sup> <a name="reinstall" id="projen.python.UvPyprojectOptions.property.reinstall"></a>
-
-```typescript
-public readonly reinstall: boolean;
-```
-
-- *Type:* boolean
-
-Reinstall all packages, regardless of whether they're already installed.
-
-Implies refresh.
-
----
-
-##### `reinstallPackage`<sup>Optional</sup> <a name="reinstallPackage" id="projen.python.UvPyprojectOptions.property.reinstallPackage"></a>
-
-```typescript
-public readonly reinstallPackage: string[];
-```
-
-- *Type:* string[]
-
-Reinstall a specific package, regardless of whether it's already installed.
-
-Implies refresh-package.
+The name of the readme file of the package.
 
 ---
 
@@ -9279,103 +7624,19 @@ public readonly repository: string;
 
 - *Type:* string
 
-Repository URL of the package.
+A URL to the repository of the project.
 
 ---
 
-##### `requiredEnvironments`<sup>Optional</sup> <a name="requiredEnvironments" id="projen.python.UvPyprojectOptions.property.requiredEnvironments"></a>
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.python.UvPyprojectOptions.property.scripts"></a>
 
 ```typescript
-public readonly requiredEnvironments: string | string[];
+public readonly scripts: {[ key: string ]: string};
 ```
 
-- *Type:* string | string[]
+- *Type:* {[ key: string ]: string}
 
-A list of required platforms, for packages that lack source distributions.
-
----
-
-##### `requiredVersion`<sup>Optional</sup> <a name="requiredVersion" id="projen.python.UvPyprojectOptions.property.requiredVersion"></a>
-
-```typescript
-public readonly requiredVersion: string;
-```
-
-- *Type:* string
-
-Enforce a requirement on the version of uv.
-
----
-
-##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.UvPyprojectOptions.property.requiresPython"></a>
-
-```typescript
-public readonly requiresPython: string;
-```
-
-- *Type:* string
-
-Python version requirement string.
-
----
-
-##### `resolution`<sup>Optional</sup> <a name="resolution" id="projen.python.UvPyprojectOptions.property.resolution"></a>
-
-```typescript
-public readonly resolution: string;
-```
-
-- *Type:* string
-
-The strategy to use when selecting between the different compatible versions for a given package requirement.
-
----
-
-##### `sources`<sup>Optional</sup> <a name="sources" id="projen.python.UvPyprojectOptions.property.sources"></a>
-
-```typescript
-public readonly sources: {[ key: string ]: UvSource};
-```
-
-- *Type:* {[ key: string ]: <a href="#projen.python.UvSource">UvSource</a>}
-
-The sources to use when resolving dependencies.
-
----
-
-##### `trustedPublishing`<sup>Optional</sup> <a name="trustedPublishing" id="projen.python.UvPyprojectOptions.property.trustedPublishing"></a>
-
-```typescript
-public readonly trustedPublishing: string;
-```
-
-- *Type:* string
-
-Configure trusted publishing.
-
----
-
-##### `upgrade`<sup>Optional</sup> <a name="upgrade" id="projen.python.UvPyprojectOptions.property.upgrade"></a>
-
-```typescript
-public readonly upgrade: boolean;
-```
-
-- *Type:* boolean
-
-Allow package upgrades, ignoring pinned versions in any existing output file.
-
----
-
-##### `upgradePackage`<sup>Optional</sup> <a name="upgradePackage" id="projen.python.UvPyprojectOptions.property.upgradePackage"></a>
-
-```typescript
-public readonly upgradePackage: string[];
-```
-
-- *Type:* string[]
-
-Allow upgrades for a specific package, ignoring pinned versions in any existing output file.
+The scripts or executables that will be installed when installing the package.
 
 ---
 
@@ -9387,11 +7648,25 @@ public readonly urls: {[ key: string ]: string};
 
 - *Type:* {[ key: string ]: string}
 
-Additional URLs associated with the package.
+Table consisting one or multiple `label: URL` pairs.
+
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
 
 ---
 
-##### `version`<sup>Optional</sup> <a name="version" id="projen.python.UvPyprojectOptions.property.version"></a>
+##### `name`<sup>Required</sup> <a name="name" id="projen.python.UvPyprojectOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Name of the package.
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.python.UvPyprojectOptions.property.version"></a>
 
 ```typescript
 public readonly version: string;
@@ -9403,25 +7678,107 @@ Version of the package.
 
 ---
 
-##### `workspace`<sup>Optional</sup> <a name="workspace" id="projen.python.UvPyprojectOptions.property.workspace"></a>
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.python.UvPyprojectOptions.property.authors"></a>
 
 ```typescript
-public readonly workspace: UvWorkspace;
+public readonly authors: ProjectAuthor[];
 ```
 
-- *Type:* <a href="#projen.python.UvWorkspace">UvWorkspace</a>
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
 
-Packages to include or exclude as workspace members.
+The authors of the package.
+
+Must be in the form "name <email>"
+
+---
+
+##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.UvPyprojectOptions.property.classifiers"></a>
+
+```typescript
+public readonly classifiers: string[];
+```
+
+- *Type:* string[]
+
+A list of PyPI trove classifiers that describe the project.
+
+> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
+
+---
+
+##### `deps`<sup>Optional</sup> <a name="deps" id="projen.python.UvPyprojectOptions.property.deps"></a>
+
+```typescript
+public readonly deps: string[];
+```
+
+- *Type:* string[]
+- *Default:* []
+
+List of runtime dependencies for this project.
+
+Dependencies use the format: `<module>@<semver>`
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.python.UvPyprojectOptions.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A short description of the package.
+
+---
+
+##### `devDeps`<sup>Optional</sup> <a name="devDeps" id="projen.python.UvPyprojectOptions.property.devDeps"></a>
+
+```typescript
+public readonly devDeps: string[];
+```
+
+- *Type:* string[]
+- *Default:* []
+
+List of dev dependencies for this project.
+
+Dependencies use the format: `<module>@<semver>`
+
+---
+
+##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.python.UvPyprojectOptions.property.homepage"></a>
+
+```typescript
+public readonly homepage: string;
+```
+
+- *Type:* string
+
+A URL to the website of the project.
+
+---
+
+##### `license`<sup>Optional</sup> <a name="license" id="projen.python.UvPyprojectOptions.property.license"></a>
+
+```typescript
+public readonly license: any;
+```
+
+- *Type:* any
+
+License of this package as an SPDX license expression.
 
 ---
 
 ##### `dependencies`<sup>Optional</sup> <a name="dependencies" id="projen.python.UvPyprojectOptions.property.dependencies"></a>
 
 ```typescript
-public readonly dependencies: string[];
+public readonly dependencies: any;
 ```
 
-- *Type:* string[]
+- *Type:* any
 
 A list of dependencies for the project.
 
@@ -9429,239 +7786,17 @@ Each entry should be in the format: `<module>@<semver>`
 
 ---
 
-##### `devDependencies`<sup>Optional</sup> <a name="devDependencies" id="projen.python.UvPyprojectOptions.property.devDependencies"></a>
+##### `dependencyGroups`<sup>Optional</sup> <a name="dependencyGroups" id="projen.python.UvPyprojectOptions.property.dependencyGroups"></a>
 
 ```typescript
-public readonly devDependencies: string[];
+public readonly dependencyGroups: {[ key: string ]: any};
 ```
 
-- *Type:* string[]
+- *Type:* {[ key: string ]: any}
 
 A list of development dependencies for the project.
 
 Each entry should be in the format: `<module>@<semver>`
-
----
-
-##### `pythonVersion`<sup>Optional</sup> <a name="pythonVersion" id="projen.python.UvPyprojectOptions.property.pythonVersion"></a>
-
-```typescript
-public readonly pythonVersion: string;
-```
-
-- *Type:* string
-
-Python version to use.
-
----
-
-### UvSource <a name="UvSource" id="projen.python.UvSource"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvSource.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const uvSource: python.UvSource = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvSource.property.branch">branch</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.commit">commit</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.editable">editable</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.extra">extra</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.git">git</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.index">index</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.marker">marker</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.package">package</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.path">path</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.rev">rev</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.subdirectory">subdirectory</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.tag">tag</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.url">url</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.python.UvSource.property.workspace">workspace</a></code> | <code>boolean</code> | *No description.* |
-
----
-
-##### `branch`<sup>Optional</sup> <a name="branch" id="projen.python.UvSource.property.branch"></a>
-
-```typescript
-public readonly branch: string;
-```
-
-- *Type:* string
-
----
-
-##### `commit`<sup>Optional</sup> <a name="commit" id="projen.python.UvSource.property.commit"></a>
-
-```typescript
-public readonly commit: string;
-```
-
-- *Type:* string
-
----
-
-##### `editable`<sup>Optional</sup> <a name="editable" id="projen.python.UvSource.property.editable"></a>
-
-```typescript
-public readonly editable: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `extra`<sup>Optional</sup> <a name="extra" id="projen.python.UvSource.property.extra"></a>
-
-```typescript
-public readonly extra: string;
-```
-
-- *Type:* string
-
----
-
-##### `git`<sup>Optional</sup> <a name="git" id="projen.python.UvSource.property.git"></a>
-
-```typescript
-public readonly git: string;
-```
-
-- *Type:* string
-
----
-
-##### `index`<sup>Optional</sup> <a name="index" id="projen.python.UvSource.property.index"></a>
-
-```typescript
-public readonly index: string;
-```
-
-- *Type:* string
-
----
-
-##### `marker`<sup>Optional</sup> <a name="marker" id="projen.python.UvSource.property.marker"></a>
-
-```typescript
-public readonly marker: string;
-```
-
-- *Type:* string
-
----
-
-##### `package`<sup>Optional</sup> <a name="package" id="projen.python.UvSource.property.package"></a>
-
-```typescript
-public readonly package: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `path`<sup>Optional</sup> <a name="path" id="projen.python.UvSource.property.path"></a>
-
-```typescript
-public readonly path: string;
-```
-
-- *Type:* string
-
----
-
-##### `rev`<sup>Optional</sup> <a name="rev" id="projen.python.UvSource.property.rev"></a>
-
-```typescript
-public readonly rev: string;
-```
-
-- *Type:* string
-
----
-
-##### `subdirectory`<sup>Optional</sup> <a name="subdirectory" id="projen.python.UvSource.property.subdirectory"></a>
-
-```typescript
-public readonly subdirectory: string;
-```
-
-- *Type:* string
-
----
-
-##### `tag`<sup>Optional</sup> <a name="tag" id="projen.python.UvSource.property.tag"></a>
-
-```typescript
-public readonly tag: string;
-```
-
-- *Type:* string
-
----
-
-##### `url`<sup>Optional</sup> <a name="url" id="projen.python.UvSource.property.url"></a>
-
-```typescript
-public readonly url: string;
-```
-
-- *Type:* string
-
----
-
-##### `workspace`<sup>Optional</sup> <a name="workspace" id="projen.python.UvSource.property.workspace"></a>
-
-```typescript
-public readonly workspace: boolean;
-```
-
-- *Type:* boolean
-
----
-
-### UvWorkspace <a name="UvWorkspace" id="projen.python.UvWorkspace"></a>
-
-#### Initializer <a name="Initializer" id="projen.python.UvWorkspace.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const uvWorkspace: python.UvWorkspace = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.UvWorkspace.property.exclude">exclude</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.python.UvWorkspace.property.members">members</a></code> | <code>string[]</code> | *No description.* |
-
----
-
-##### `exclude`<sup>Optional</sup> <a name="exclude" id="projen.python.UvWorkspace.property.exclude"></a>
-
-```typescript
-public readonly exclude: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `members`<sup>Optional</sup> <a name="members" id="projen.python.UvWorkspace.property.members"></a>
-
-```typescript
-public readonly members: string[];
-```
-
-- *Type:* string[]
 
 ---
 
@@ -9857,6 +7992,160 @@ public readonly publishTask: Task;
 - *Type:* projen.Task
 
 A task that uploads the package to a package repository.
+
+---
+
+## Enums <a name="Enums" id="Enums"></a>
+
+### PyProjectTomlProjectDynamic <a name="PyProjectTomlProjectDynamic" id="projen.python.PyProjectTomlProjectDynamic"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.VERSION">VERSION</a></code> | version. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.DESCRIPTION">DESCRIPTION</a></code> | description. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.README">README</a></code> | readme. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.REQU_IRES_HYPHEN_PYTHON">REQU_IRES_HYPHEN_PYTHON</a></code> | requires-python. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.LICENSE">LICENSE</a></code> | license. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.LICENSE_HYPHEN_FILES">LICENSE_HYPHEN_FILES</a></code> | license-files. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.AUTHORS">AUTHORS</a></code> | authors. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.MAINTAINERS">MAINTAINERS</a></code> | maintainers. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.KEYWORDS">KEYWORDS</a></code> | keywords. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.CLASSIFIERS">CLASSIFIERS</a></code> | classifiers. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.URLS">URLS</a></code> | urls. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.SCRIPTS">SCRIPTS</a></code> | scripts. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.GUI_HYPHEN_SCRIPTS">GUI_HYPHEN_SCRIPTS</a></code> | gui-scripts. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.ENTRY_HYPHEN_POINTS">ENTRY_HYPHEN_POINTS</a></code> | entry-points. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.DEPENDENCIES">DEPENDENCIES</a></code> | dependencies. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.OPTIONAL_HYPHEN_DEPENDENCIES">OPTIONAL_HYPHEN_DEPENDENCIES</a></code> | optional-dependencies. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.IMPORT_HYPHEN_NAMES">IMPORT_HYPHEN_NAMES</a></code> | import-names. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.IMPORT_HYPHEN_NAMESPACES">IMPORT_HYPHEN_NAMESPACES</a></code> | import-namespaces. |
+
+---
+
+##### `VERSION` <a name="VERSION" id="projen.python.PyProjectTomlProjectDynamic.VERSION"></a>
+
+version.
+
+---
+
+
+##### `DESCRIPTION` <a name="DESCRIPTION" id="projen.python.PyProjectTomlProjectDynamic.DESCRIPTION"></a>
+
+description.
+
+---
+
+
+##### `README` <a name="README" id="projen.python.PyProjectTomlProjectDynamic.README"></a>
+
+readme.
+
+---
+
+
+##### `REQU_IRES_HYPHEN_PYTHON` <a name="REQU_IRES_HYPHEN_PYTHON" id="projen.python.PyProjectTomlProjectDynamic.REQU_IRES_HYPHEN_PYTHON"></a>
+
+requires-python.
+
+---
+
+
+##### `LICENSE` <a name="LICENSE" id="projen.python.PyProjectTomlProjectDynamic.LICENSE"></a>
+
+license.
+
+---
+
+
+##### `LICENSE_HYPHEN_FILES` <a name="LICENSE_HYPHEN_FILES" id="projen.python.PyProjectTomlProjectDynamic.LICENSE_HYPHEN_FILES"></a>
+
+license-files.
+
+---
+
+
+##### `AUTHORS` <a name="AUTHORS" id="projen.python.PyProjectTomlProjectDynamic.AUTHORS"></a>
+
+authors.
+
+---
+
+
+##### `MAINTAINERS` <a name="MAINTAINERS" id="projen.python.PyProjectTomlProjectDynamic.MAINTAINERS"></a>
+
+maintainers.
+
+---
+
+
+##### `KEYWORDS` <a name="KEYWORDS" id="projen.python.PyProjectTomlProjectDynamic.KEYWORDS"></a>
+
+keywords.
+
+---
+
+
+##### `CLASSIFIERS` <a name="CLASSIFIERS" id="projen.python.PyProjectTomlProjectDynamic.CLASSIFIERS"></a>
+
+classifiers.
+
+---
+
+
+##### `URLS` <a name="URLS" id="projen.python.PyProjectTomlProjectDynamic.URLS"></a>
+
+urls.
+
+---
+
+
+##### `SCRIPTS` <a name="SCRIPTS" id="projen.python.PyProjectTomlProjectDynamic.SCRIPTS"></a>
+
+scripts.
+
+---
+
+
+##### `GUI_HYPHEN_SCRIPTS` <a name="GUI_HYPHEN_SCRIPTS" id="projen.python.PyProjectTomlProjectDynamic.GUI_HYPHEN_SCRIPTS"></a>
+
+gui-scripts.
+
+---
+
+
+##### `ENTRY_HYPHEN_POINTS` <a name="ENTRY_HYPHEN_POINTS" id="projen.python.PyProjectTomlProjectDynamic.ENTRY_HYPHEN_POINTS"></a>
+
+entry-points.
+
+---
+
+
+##### `DEPENDENCIES` <a name="DEPENDENCIES" id="projen.python.PyProjectTomlProjectDynamic.DEPENDENCIES"></a>
+
+dependencies.
+
+---
+
+
+##### `OPTIONAL_HYPHEN_DEPENDENCIES` <a name="OPTIONAL_HYPHEN_DEPENDENCIES" id="projen.python.PyProjectTomlProjectDynamic.OPTIONAL_HYPHEN_DEPENDENCIES"></a>
+
+optional-dependencies.
+
+---
+
+
+##### `IMPORT_HYPHEN_NAMES` <a name="IMPORT_HYPHEN_NAMES" id="projen.python.PyProjectTomlProjectDynamic.IMPORT_HYPHEN_NAMES"></a>
+
+import-names.
+
+---
+
+
+##### `IMPORT_HYPHEN_NAMESPACES` <a name="IMPORT_HYPHEN_NAMESPACES" id="projen.python.PyProjectTomlProjectDynamic.IMPORT_HYPHEN_NAMESPACES"></a>
+
+import-namespaces.
 
 ---
 

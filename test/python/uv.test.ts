@@ -107,16 +107,18 @@ test("uv enabled with uv-specific options", () => {
     authorEmail: "first.last@example.com",
     uvOptions: {
       pythonVersion: "3.13",
+      repository: "https://github.com/test-python-project",
+      documentation: "https://example.github.io/test-python-project",
+      keywords: ["Keyword1"],
       metadata: {
-        repository: "https://github.com/test-python-project",
-        documentation: "https://example.github.io/test-python-project",
-        keywords: ["Keyword1"],
         sources: {
-          httpx: { git: "https://github.com/encode/httpx", tag: "0.27.0" },
-          pytest: {
-            url: "https://files.pythonhosted.org/packages/6b/77/7440a06a8ead44c7757a64362dd22df5760f9b12dc5f11b6188cd2fc27a0/pytest-8.3.3-py3-none-any.whl",
-          },
-          pydantic: { path: "/path/to/pydantic", editable: true },
+          httpx: [{ git: "https://github.com/encode/httpx", tag: "0.27.0" }],
+          pytest: [
+            {
+              url: "https://files.pythonhosted.org/packages/6b/77/7440a06a8ead44c7757a64362dd22df5760f9b12dc5f11b6188cd2fc27a0/pytest-8.3.3-py3-none-any.whl",
+            },
+          ],
+          pydantic: [{ path: "/path/to/pydantic", editable: true }],
         },
         workspace: {
           exclude: ["member1", "path/to/member2", "libs/*"],
@@ -150,6 +152,8 @@ test("generates correct pyproject.toml content", () => {
     deps: ["aws-cdk-lib@^2.128.0"],
     devDeps: ["ruff@~0.14.4", "pytest@*"],
     uvOptions: {
+      documentation: "http://www.example.com",
+      repository: "http://www.example.com",
       metadata: {
         managed: true,
         buildBackend: {
@@ -174,9 +178,7 @@ test("generates correct pyproject.toml content", () => {
             explicit: true,
           },
         ],
-        sources: { torch: { index: "pytorch" } },
-        documentation: "http://www.example.com",
-        repository: "http://www.example.com",
+        sources: { torch: [{ index: "pytorch" }] },
       },
     },
   });
@@ -230,7 +232,7 @@ test("generates correct pyproject.toml content", () => {
             explicit: true,
           },
         ],
-        sources: { torch: { index: "pytorch" } },
+        sources: { torch: [{ index: "pytorch" }] },
       },
     },
   };

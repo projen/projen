@@ -346,21 +346,32 @@ export class PythonProject extends GitHubProject {
       this.checkToolConflicts("uv", tools);
 
       const uvProject = new Uv(this, {
-        pythonVersion:
-          options.uvOptions?.pythonVersion ||
-          options.uvOptions?.metadata?.requiresPython,
-        deps: options.deps || options.uvOptions?.deps,
-        devDeps: options.devDeps || options.uvOptions?.devDeps,
-        metadata: {
-          version: options.version,
-          description: options.description,
-          authorName: options.authorName,
-          authorEmail: options.authorEmail,
-          license: options.license,
-          homepage: options.homepage,
-          classifiers: options.classifiers,
-          ...options.uvOptions?.metadata,
-        },
+        pythonVersion: options.uvOptions?.pythonVersion,
+        licenseFiles: options.uvOptions?.licenseFiles,
+        maintainers: options.uvOptions?.maintainers,
+        repository: options.uvOptions?.repository,
+        documentation: options.uvOptions?.documentation,
+        keywords: options.uvOptions?.keywords,
+        readme: options.uvOptions?.readme,
+        deps: options.deps,
+        devDeps: options.devDeps,
+        name: options.name,
+        version: options.version,
+        description: options.description,
+        license: options.license,
+        authors: options.authorName
+          ? [{ name: options.authorName, email: options.authorEmail }]
+          : [],
+        classifiers: options.classifiers,
+        homepage: options.homepage,
+        scripts: options.uvOptions?.scripts,
+        guiScripts: options.uvOptions?.guiScripts,
+        entryPoints: options.uvOptions?.entryPoints,
+        importNames: options.uvOptions?.importNames,
+        importNamespaces: options.uvOptions?.importNamespaces,
+        dynamic: options.uvOptions?.dynamic,
+        buildSystem: options.uvOptions?.buildSystem,
+        metadata: options.uvOptions?.metadata,
       });
       this.depsManager = uvProject;
       this.envManager = uvProject;
