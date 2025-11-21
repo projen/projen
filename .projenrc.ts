@@ -228,8 +228,32 @@ setupIntegTest(project);
 setupBundleTaskRunner(project);
 
 new JsiiFromJsonSchema(project, {
+  structName: "BiomeConfiguration",
   schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
   filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PyProjectToml",
+  schemaPath: "schemas/pyproject.json",
+  filePath: path.join("src", "python", "pyproject-toml.ts"),
+  transform: (schema) => {
+    schema.properties.tool.properties = {
+      uv: {
+        type: "object",
+        title: "Package Manager",
+        description:
+          "An extremely fast Python package installer and resolver, written in Rust.",
+      },
+    };
+    return schema;
+  },
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "UvConfiguration",
+  schemaPath: "schemas/uv.json",
+  filePath: path.join("src", "python", "uv-config.ts"),
 });
 
 new JsonConst(project, {
