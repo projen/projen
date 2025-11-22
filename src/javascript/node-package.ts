@@ -1471,6 +1471,7 @@ export class NodePackage extends Component {
 
     switch (this.packageManager) {
       case NodePackageManager.NPM:
+      case NodePackageManager.BUN:
         return { overrides: render };
       case NodePackageManager.PNPM:
         return this.project.parent
@@ -1480,7 +1481,6 @@ export class NodePackage extends Component {
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_CLASSIC:
       case NodePackageManager.YARN_BERRY:
-      case NodePackageManager.BUN:
       default:
         return { resolutions: render };
     }
