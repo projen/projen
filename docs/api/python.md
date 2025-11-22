@@ -8006,7 +8006,7 @@ A task that uploads the package to a package repository.
 | <code><a href="#projen.python.PyProjectTomlProjectDynamic.VERSION">VERSION</a></code> | version. |
 | <code><a href="#projen.python.PyProjectTomlProjectDynamic.DESCRIPTION">DESCRIPTION</a></code> | description. |
 | <code><a href="#projen.python.PyProjectTomlProjectDynamic.README">README</a></code> | readme. |
-| <code><a href="#projen.python.PyProjectTomlProjectDynamic.REQU_IRES_HYPHEN_PYTHON">REQU_IRES_HYPHEN_PYTHON</a></code> | requires-python. |
+| <code><a href="#projen.python.PyProjectTomlProjectDynamic.REQUIRES_HYPHEN_PYTHON">REQUIRES_HYPHEN_PYTHON</a></code> | requires-python. |
 | <code><a href="#projen.python.PyProjectTomlProjectDynamic.LICENSE">LICENSE</a></code> | license. |
 | <code><a href="#projen.python.PyProjectTomlProjectDynamic.LICENSE_HYPHEN_FILES">LICENSE_HYPHEN_FILES</a></code> | license-files. |
 | <code><a href="#projen.python.PyProjectTomlProjectDynamic.AUTHORS">AUTHORS</a></code> | authors. |
@@ -8045,7 +8045,7 @@ readme.
 ---
 
 
-##### `REQU_IRES_HYPHEN_PYTHON` <a name="REQU_IRES_HYPHEN_PYTHON" id="projen.python.PyProjectTomlProjectDynamic.REQU_IRES_HYPHEN_PYTHON"></a>
+##### `REQUIRES_HYPHEN_PYTHON` <a name="REQUIRES_HYPHEN_PYTHON" id="projen.python.PyProjectTomlProjectDynamic.REQUIRES_HYPHEN_PYTHON"></a>
 
 requires-python.
 
