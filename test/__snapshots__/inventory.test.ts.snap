@@ -2467,9 +2467,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Additional options to set for uv if using uv.",
         "featured": false,
-        "fqn": "projen.python.UvBaseOptions",
+        "fqn": "projen.python.UvOptions",
         "fullType": {
-          "fqn": "projen.python.UvBaseOptions",
+          "fqn": "projen.python.UvOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -2479,7 +2479,7 @@ exports[`inventory 1`] = `
         "path": [
           "uvOptions",
         ],
-        "simpleType": "UvBaseOptions",
+        "simpleType": "UvOptions",
         "switch": "uv-options",
       },
       {
@@ -10442,9 +10442,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Additional options to set for uv if using uv.",
         "featured": false,
-        "fqn": "projen.python.UvBaseOptions",
+        "fqn": "projen.python.UvOptions",
         "fullType": {
-          "fqn": "projen.python.UvBaseOptions",
+          "fqn": "projen.python.UvOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -10454,7 +10454,7 @@ exports[`inventory 1`] = `
         "path": [
           "uvOptions",
         ],
-        "simpleType": "UvBaseOptions",
+        "simpleType": "UvOptions",
         "switch": "uv-options",
       },
       {
@@ -32973,9 +32973,9 @@ exports[`inventory 1`] = `
       {
         "docs": "Additional options to set for uv if using uv.",
         "featured": false,
-        "fqn": "projen.python.UvBaseOptions",
+        "fqn": "projen.python.UvOptions",
         "fullType": {
-          "fqn": "projen.python.UvBaseOptions",
+          "fqn": "projen.python.UvOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -32985,7 +32985,7 @@ exports[`inventory 1`] = `
         "path": [
           "uvOptions",
         ],
-        "simpleType": "UvBaseOptions",
+        "simpleType": "UvOptions",
         "switch": "uv-options",
       },
       {
