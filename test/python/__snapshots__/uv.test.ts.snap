@@ -317,9 +317,11 @@ dependencies = [ "package1==0.0.1", "package2==0.0.2", "package3" ]
   email = "email@example.com"
 
   [project.urls]
-  Homepage = "http://www.example.com"
-  Documentation = "https://example.github.io/test-python-project"
-  Repository = "https://github.com/test-python-project"
+  repository = "https://github.com/test-python-project"
+  documentation = "https://example.github.io/test-python-project"
+
+[dependency-groups]
+dev = [ "projen==99.99.99", "pytest", "ruff" ]
 
 [tool.uv.pip]
 all-extras = true
@@ -345,9 +347,6 @@ editable = true
 [tool.uv.workspace]
 exclude = [ "member1", "path/to/member2", "libs/*" ]
 members = [ "member2", "packages/*" ]
-
-[dependency-groups]
-dev = [ "projen==99.99.99", "pytest", "ruff" ]
 ",
   "test_python_project/__init__.py": "__version__ = "0.1.0"
 ",

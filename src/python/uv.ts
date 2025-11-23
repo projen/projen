@@ -56,8 +56,9 @@ export class Uv
 
   constructor(scope: IConstruct, options: UvOptions) {
     super(scope);
-    this.venvPython =
-      options.pythonExec ?? options.project?.requiresPython ?? ">=3.12,<4.0";
+
+    const requiresPython = options.project?.requiresPython ?? ">=3.12,<4.0";
+    this.venvPython = options.pythonExec ?? requiresPython;
 
     this.installTask = this.project.addTask("install", {
       description: "Install dependencies and update lockfile",
@@ -87,6 +88,7 @@ export class Uv
     this.file = new PyprojectTomlFile(this.project, {
       project: {
         name: options.project?.name ?? this.project.name,
+        requiresPython,
         ...options.project,
         dependencies: (() => [
           ...(options?.project?.dependencies ?? []),

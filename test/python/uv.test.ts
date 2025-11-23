@@ -88,7 +88,7 @@ test("uv options not using uv", () => {
   expect(
     () =>
       new TestPythonProject({
-        uvOptions: { metadata: { reinstall: true } },
+        uvOptions: { uv: { reinstall: true } },
       })
   ).toThrowError("uvOptions only applies when using uv.");
 });
@@ -106,11 +106,16 @@ test("uv enabled with uv-specific options", () => {
     authorName: "First Last",
     authorEmail: "first.last@example.com",
     uvOptions: {
-      pythonVersion: "3.13",
-      repository: "https://github.com/test-python-project",
-      documentation: "https://example.github.io/test-python-project",
-      keywords: ["Keyword1"],
-      metadata: {
+      project: {
+        name: "test-python-project",
+        requiresPython: ">=3.13,<4.0",
+        keywords: ["Keyword1"],
+        urls: {
+          repository: "https://github.com/test-python-project",
+          documentation: "https://example.github.io/test-python-project",
+        },
+      },
+      uv: {
         sources: {
           httpx: [{ git: "https://github.com/encode/httpx", tag: "0.27.0" }],
           pytest: [
@@ -152,9 +157,7 @@ test("generates correct pyproject.toml content", () => {
     deps: ["aws-cdk-lib@^2.128.0"],
     devDeps: ["ruff@~0.14.4", "pytest@*"],
     uvOptions: {
-      documentation: "http://www.example.com",
-      repository: "http://www.example.com",
-      metadata: {
+      uv: {
         managed: true,
         buildBackend: {
           data: {
@@ -202,9 +205,7 @@ test("generates correct pyproject.toml content", () => {
       dependencies: ["aws-cdk-lib>=2.128.0,<3.0.0"],
       "requires-python": ">=3.12,<4.0",
       urls: {
-        Homepage: "http://www.example.com",
-        Documentation: "http://www.example.com",
-        Repository: "http://www.example.com",
+        homepage: "http://www.example.com",
       },
     },
     tool: {
