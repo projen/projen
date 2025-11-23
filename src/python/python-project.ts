@@ -346,32 +346,26 @@ export class PythonProject extends GitHubProject {
       this.checkToolConflicts("uv", tools);
 
       const uvProject = new Uv(this, {
-        pythonVersion: options.uvOptions?.pythonVersion,
-        licenseFiles: options.uvOptions?.licenseFiles,
-        maintainers: options.uvOptions?.maintainers,
-        repository: options.uvOptions?.repository,
-        documentation: options.uvOptions?.documentation,
-        keywords: options.uvOptions?.keywords,
-        readme: options.uvOptions?.readme,
-        deps: options.deps,
-        devDeps: options.devDeps,
-        name: options.name,
-        version: options.version,
-        description: options.description,
-        license: options.license,
-        authors: options.authorName
-          ? [{ name: options.authorName, email: options.authorEmail }]
-          : [],
-        classifiers: options.classifiers,
-        homepage: options.homepage,
-        scripts: options.uvOptions?.scripts,
-        guiScripts: options.uvOptions?.guiScripts,
-        entryPoints: options.uvOptions?.entryPoints,
-        importNames: options.uvOptions?.importNames,
-        importNamespaces: options.uvOptions?.importNamespaces,
-        dynamic: options.uvOptions?.dynamic,
+        project: {
+          name: options.name,
+          version: options.version,
+          description: options.description,
+          readme: options.readme?.filename ?? "README.md",
+          license: options.license,
+          authors: options.authorName
+            ? [{ name: options.authorName, email: options.authorEmail }]
+            : [],
+          classifiers: options.classifiers,
+          urls: options.homepage
+            ? {
+                homepage: options.homepage,
+              }
+            : undefined,
+          ...options.uvOptions?.project, // takes priority
+        },
+
         buildSystem: options.uvOptions?.buildSystem,
-        metadata: options.uvOptions?.metadata,
+        uv: options.uvOptions?.uv,
       });
       this.depsManager = uvProject;
       this.envManager = uvProject;

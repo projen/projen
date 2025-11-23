@@ -55,10 +55,6 @@ export interface UvConfiguration {
   /**
    * Path to the cache directory.
    *
-   * Defaults to `$XDG_CACHE_HOME/uv` or `$HOME/.cache/uv` on Linux and macOS, and
-   * `%LOCALAPPDATA%\uv\cache` on Windows.
-   *
-   * @default XDG_CACHE_HOME/uv` or `$HOME/.cache/uv` on Linux and macOS, and
    * @schema UvConfiguration#cache-dir
    */
   readonly cacheDir?: string;
