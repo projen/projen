@@ -1899,12 +1899,8 @@ public readonly cacheDir: string;
 ```
 
 - *Type:* string
-- *Default:* XDG_CACHE_HOME/uv` or `$HOME/.cache/uv` on Linux and macOS, and
 
 Path to the cache directory.
-
-Defaults to `$XDG_CACHE_HOME/uv` or `$HOME/.cache/uv` on Linux and macOS, and
-`%LOCALAPPDATA%\uv\cache` on Windows.
 
 ---
 
