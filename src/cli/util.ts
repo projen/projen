@@ -56,7 +56,10 @@ export function installPackage(
  * @returns The string that includes the install command ("npm install ...")
  */
 export function renderInstallCommand(dir: string, module: string): string {
-  return `npm install --save --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
+  // --save is needed to override any global save: false config
+  // --save-dev to install as dev dependency
+  // --include=dev to force saving the dependencies with NODE_ENV=production
+  return `npm install --save --save-dev -f --no-package-lock --include=dev --prefix="${dir}" ${module}`;
 }
 
 export function findJsiiFilePath(

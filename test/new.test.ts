@@ -504,6 +504,23 @@ describe("projen new --from", () => {
       });
     });
   });
+
+  describe("projen new --from with NODE_ENV=production", () => {
+    test("should install external module successfully", () => {
+      withProjectDir((projectdir) => {
+        execProjenCLI(
+          projectdir,
+          [
+            "new",
+            "--from",
+            "@pepperize/projen-awscdk-app-ts@0.0.333",
+            "--no-post",
+          ],
+          { ...process.env, NODE_ENV: "production" }
+        );
+      });
+    });
+  });
 });
 
 describe("typescript project", () => {
