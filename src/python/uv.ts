@@ -12,8 +12,6 @@ import { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
 import { PythonExecutableOptions } from "./python-project";
 
-// type DependencyGroup = string | { "include-group": string };
-
 /**
  * Options for UV project
  */
