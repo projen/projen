@@ -17,6 +17,7 @@ The following submodules are available:
 - [javascript](./javascript.md)
 - [javascript.biome_config](./javascript.biome_config.md)
 - [python](./python.md)
+- [python.uvConfig](./python.uvConfig.md)
 - [release](./release.md)
 - [typescript](./typescript.md)
 - [vscode](./vscode.md)
@@ -8177,20 +8178,20 @@ Represents a TOML file.
 ```typescript
 import { TomlFile } from 'projen'
 
-new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
+new TomlFile(scope: IConstruct, filePath: string, options: TomlFileOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.TomlFile.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.TomlFile.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.TomlFile.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.TomlFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.TomlFileOptions">TomlFileOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.TomlFile.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.TomlFile.Initializer.parameter.scope"></a>
 
-- *Type:* <a href="#projen.Project">Project</a>
+- *Type:* constructs.IConstruct
 
 ---
 

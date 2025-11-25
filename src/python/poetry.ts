@@ -1,4 +1,5 @@
 import * as TOML from "@iarna/toml";
+import { IConstruct } from "constructs";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
@@ -10,6 +11,7 @@ import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
 import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+import { PyprojectTomlFile } from "./pyproject-toml-file";
 
 export interface PoetryOptions
   extends PythonPackagingOptions,
@@ -404,21 +406,17 @@ export interface PoetryPyprojectOptions
  * @see https://python-poetry.org/docs/pyproject/
  */
 export class PoetryPyproject extends Component {
-  public readonly file: TomlFile;
+  public readonly file: PyprojectTomlFile;
 
-  constructor(project: Project, options: PoetryPyprojectOptions) {
-    super(project);
+  constructor(scope: IConstruct, options: PoetryPyprojectOptions) {
+    super(scope);
 
-    const { dependencies, devDependencies, ...otherOptions } = options;
-    const decamelizedOptions = decamelizeKeysRecursively(otherOptions, {
-      separator: "-",
-    });
+    const { devDependencies, ...poetryConfig } = options;
 
-    const tomlStructure: any = {
+    this.file = new PyprojectTomlFile(scope, {
       tool: {
         poetry: {
-          ...decamelizedOptions,
-          dependencies: dependencies,
+          ...decamelizeKeysRecursively(poetryConfig, { separator: "-" }),
           group: {
             dev: {
               dependencies: devDependencies,
@@ -426,15 +424,10 @@ export class PoetryPyproject extends Component {
           },
         },
       },
-      "build-system": {
+      buildSystem: {
         requires: ["poetry-core"],
-        "build-backend": "poetry.core.masonry.api",
+        buildBackend: "poetry.core.masonry.api",
       },
-    };
-
-    this.file = new TomlFile(project, "pyproject.toml", {
-      omitEmpty: false,
-      obj: tomlStructure,
     });
   }
 }

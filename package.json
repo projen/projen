@@ -165,11 +165,15 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "src/javascript/biome/biome-config.ts",
+      "src/python/pyproject-toml.ts",
+      "src/python/uv-config.ts",
       "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "src/javascript/biome/biome-config.ts",
+      "src/python/pyproject-toml.ts",
+      "src/python/uv-config.ts",
       "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "watchPathIgnorePatterns": [

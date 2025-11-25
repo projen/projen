@@ -228,8 +228,37 @@ setupIntegTest(project);
 setupBundleTaskRunner(project);
 
 new JsiiFromJsonSchema(project, {
+  structName: "BiomeConfiguration",
   schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
   filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PyprojectToml",
+  schemaPath: "schemas/pyproject.json",
+  filePath: path.join("src", "python", "pyproject-toml.ts"),
+  transform: (schema) => (
+    (schema.properties.tool.properties = Object.fromEntries(
+      Object.entries(schema.properties.tool.properties).map(
+        ([tool, def]) => (delete (def as any).$ref, [tool, def])
+      )
+    )),
+    schema
+  ),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "UvConfiguration",
+  schemaPath: "schemas/uv.json",
+  filePath: path.join("src", "python", "uv-config.ts"),
+  transform: (schema) => (
+    (schema.properties["cache-dir"].description = schema.properties[
+      "cache-dir"
+    ].description
+      .split("\n")
+      .at(0)),
+    schema
+  ),
 });
 
 new JsonConst(project, {

@@ -39,4 +39,6 @@
 /projen.js linguist-generated
 /src/awscdk/private/feature-flags-v2.const.ts linguist-generated
 /src/javascript/biome/biome-config.ts linguist-generated
+/src/python/pyproject-toml.ts linguist-generated
+/src/python/uv-config.ts linguist-generated
 /tsconfig.dev.json linguist-generated
