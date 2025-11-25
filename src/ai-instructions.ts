@@ -30,6 +30,11 @@ export enum AiAgent {
    * Kiro - .kiro/steering/project.md
    */
   KIRO = "Kiro",
+
+  /**
+   * OpenAI Codex - AGENTS.md
+   */
+  CODEX = "Codex",
 }
 
 /**
@@ -39,7 +44,7 @@ export interface AiInstructionsOptions {
   /**
    * Which AI agents to generate instruction files for.
    *
-   * @default - All agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR, AiAgent.CLAUDE, AiAgent.AMAZON_Q]
+   * @default - All agents: [AiAgent.GITHUB_COPILOT, AiAgent.CURSOR, AiAgent.CLAUDE, AiAgent.AMAZON_Q, AiAgent.KIRO, AiAgent.CODEX]
    */
   readonly agents?: AiAgent[];
 
@@ -223,8 +228,11 @@ export class AiInstructions extends Component {
         return ".amazonq/rules/project.md";
       case AiAgent.KIRO:
         return ".kiro/steering/project.md";
+      case AiAgent.CODEX:
+        return "AGENTS.md";
       default:
-        throw new Error(`Unknown AI agent: ${agent}`);
+        // Fallback to AGENTS.md for unknown agents
+        return "AGENTS.md";
     }
   }
 }

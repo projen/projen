@@ -74,4 +74,5 @@ tsconfig.json
 !/CLAUDE.md
 !/.amazonq/rules/project.md
 !/.kiro/steering/project.md
+!/AGENTS.md
 !/.projenrc.ts

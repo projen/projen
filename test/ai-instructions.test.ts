@@ -15,6 +15,7 @@ describe("AiInstructions", () => {
     expect(snapshot["CLAUDE.md"]).toBeDefined();
     expect(snapshot[".amazonq/rules/project.md"]).toBeDefined();
     expect(snapshot[".kiro/steering/project.md"]).toBeDefined();
+    expect(snapshot["AGENTS.md"]).toBeDefined();
   });
 
   it("has default instructions that include projen-specific guidance", () => {
@@ -180,12 +181,14 @@ describe("AiInstructions", () => {
     const claudeFile = project.tryFindFile("CLAUDE.md");
     const amazonQFile = project.tryFindFile(".amazonq/rules/project.md");
     const kiroFile = project.tryFindFile(".kiro/steering/project.md");
+    const codexFile = project.tryFindFile("AGENTS.md");
 
     expect(copilotFile?.readonly).toBe(true);
     expect(cursorFile?.readonly).toBe(true);
     expect(claudeFile?.readonly).toBe(true);
     expect(amazonQFile?.readonly).toBe(true);
     expect(kiroFile?.readonly).toBe(true);
+    expect(codexFile?.readonly).toBe(true);
   });
 
   it("all agent files have consistent base content", () => {
@@ -198,12 +201,14 @@ describe("AiInstructions", () => {
     const claudeContent = snapshot["CLAUDE.md"];
     const amazonQContent = snapshot[".amazonq/rules/project.md"];
     const kiroContent = snapshot[".kiro/steering/project.md"];
+    const codexContent = snapshot["AGENTS.md"];
 
     expect(copilotContent).toContain("Projen-managed Project Instructions");
     expect(cursorContent).toContain("Projen-managed Project Instructions");
     expect(claudeContent).toContain("Projen-managed Project Instructions");
     expect(amazonQContent).toContain("Projen-managed Project Instructions");
     expect(kiroContent).toContain("Projen-managed Project Instructions");
+    expect(codexContent).toContain("Projen-managed Project Instructions");
   });
 
   it("combining general and agent-specific instructions", () => {
@@ -308,6 +313,17 @@ describe("AiInstructions", () => {
     expect(snapshot[".github/copilot-instructions.md"]).toBeUndefined();
   });
 
+  it("supports CODEX agent", () => {
+    const project = new TestProject();
+    new AiInstructions(project, {
+      agents: [AiAgent.CODEX],
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot["AGENTS.md"]).toBeDefined();
+    expect(snapshot[".github/copilot-instructions.md"]).toBeUndefined();
+  });
+
   it("static projen method returns projen instructions", () => {
     const project = new TestProject();
     const instructions = AiInstructions.projen(project);
@@ -354,6 +370,7 @@ describe("AiInstructions", () => {
     expect(snapshot[".npmignore"]).toContain("CLAUDE.md");
     expect(snapshot[".npmignore"]).toContain(".amazonq/rules/project.md");
     expect(snapshot[".npmignore"]).toContain(".kiro/steering/project.md");
+    expect(snapshot[".npmignore"]).toContain("AGENTS.md");
   });
 
   it("handles all agent file paths correctly", () => {
@@ -367,6 +384,7 @@ describe("AiInstructions", () => {
     expect(project.tryFindFile("CLAUDE.md")).toBeDefined();
     expect(project.tryFindFile(".amazonq/rules/project.md")).toBeDefined();
     expect(project.tryFindFile(".kiro/steering/project.md")).toBeDefined();
+    expect(project.tryFindFile("AGENTS.md")).toBeDefined();
   });
 
   it("AiInstructionsFile synthesizes content correctly", () => {
@@ -451,13 +469,16 @@ describe("AiInstructions", () => {
     expect(copilotInstructions).toContain("Write clear documentation.");
   });
 
-  it("throws an error when an invalid agent is specified", () => {
+  it("falls back to AGENTS.md for unknown agents", () => {
     const project = new TestProject();
+    new AiInstructions(project, {
+      agents: ["unknown-agent" as AiAgent],
+    });
 
-    expect(() => {
-      new AiInstructions(project, {
-        agents: ["invalid-agent" as AiAgent],
-      });
-    }).toThrowError(/Unknown AI agent: invalid-agent/);
+    const snapshot = synthSnapshot(project);
+    expect(snapshot["AGENTS.md"]).toBeDefined();
+    expect(snapshot["AGENTS.md"]).toContain(
+      "Projen-managed Project Instructions"
+    );
   });
 });

@@ -543,6 +543,13 @@
           "construct": "AiInstructionsFile",
           "path": ".kiro/steering/project.md"
         }
+      },
+      "AiInstructionsFile@AGENTS.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": "AGENTS.md"
+        }
       }
     }
   }
