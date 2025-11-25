@@ -5,7 +5,7 @@ exports[`poetry correctly handles dependencies with toml inline tables should ma
 
 [tool.poetry]
 name = "test-python-project"
-version = "0.1.0"
+version = "0.0.0"
 description = "a short project description"
 license = "Apache-2.0"
 authors = [ "First Last <email@example.com>" ]
@@ -219,7 +219,6 @@ cython_debug/
       ".projen/files.json",
       ".projen/tasks.json",
       "poetry.toml",
-      "pyproject.toml",
     ],
   },
   ".projen/tasks.json": {
@@ -352,7 +351,7 @@ url = "https://test.pypi.org/legacy/"
 
 [tool.poetry]
 name = "test-python-project"
-version = "0.1.0"
+version = "0.0.0"
 description = "a short project description"
 license = "Apache-2.0"
 authors = [ "First Last <email@example.com>" ]
