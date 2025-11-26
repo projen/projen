@@ -1,60 +1,35 @@
 import { IConstruct } from "constructs";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging } from "./python-packaging";
-import { toJson_UvConfiguration, UvConfiguration } from "./uv-config";
 import { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
 import { exec, execOrUndefined } from "../util";
-import { PackageBase } from "./package";
-import { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
-import { PyprojectTomlFile } from "./pyproject-toml-file";
-import { PythonExecutableOptions } from "./python-project";
-
-/**
- * Options for UV project
- */
-export interface UvOptions extends PythonExecutableOptions {
-  /**
-   * The project's basic metadata configuration.
-   */
-  readonly project?: PyprojectTomlProject;
-
-  /**
-   * Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
-   *
-   * @default - no build system
-   */
-  readonly buildSystem?: BuildSystem;
-
-  /**
-   * The configuration and metadata for uv.
-   */
-  readonly uv?: UvConfiguration;
-}
+import { PackageManagerBase } from "./package-manager";
+import { BuildSystem } from "./pyproject-toml";
+import { PythonBaseOptions } from "./python-project";
 
 /**
  * Manage project dependencies, virtual environments, and packaging through uv.
  */
-export class Uv
-  extends PackageBase
-  implements IPythonDeps, IPythonEnv, IPythonPackaging
-{
-  /**
-   * The `pyproject.toml` file
-   */
-  public readonly file: PyprojectTomlFile;
+export class Uv extends PackageManagerBase {
   public readonly installTask: Task;
   public readonly installCiTask: Task;
   public readonly publishTask: Task;
   public readonly publishTestTask: Task;
+  public readonly lintTask?: Task;
+  public readonly formatTask?: Task;
+  public readonly typeCheckTask?: Task;
+  public readonly defaultBuildSystem: BuildSystem;
 
   private readonly venvPython: string;
 
-  constructor(scope: IConstruct, options: UvOptions) {
-    super(scope);
+  constructor(scope: IConstruct, options: PythonBaseOptions) {
+    super(scope, options);
 
-    const requiresPython = options.project?.requiresPython ?? ">=3.12,<4.0";
+    this.defaultBuildSystem = {
+      requires: ["uv_build"],
+      buildBackend: "uv_build",
+    };
+
+    const requiresPython =
+      this.project.projectOptions?.requiresPython ?? ">=3.12,<4.0";
     this.venvPython = options.pythonExec ?? requiresPython;
 
     this.installTask = this.project.addTask("install", {
@@ -81,23 +56,10 @@ export class Uv
       description: "Uploads the package to PyPI.",
       exec: "uv publish",
     });
+  }
 
-    this.file = new PyprojectTomlFile(this.project, {
-      project: {
-        name: options.project?.name ?? this.project.name,
-        requiresPython,
-        ...options.project,
-        dependencies: (() => [
-          ...(options?.project?.dependencies ?? []),
-          ...this.synthDependencies(),
-        ]) as any,
-      },
-      dependencyGroups: (() => this.synthDependencyGroups()) as any,
-      buildSystem: options.buildSystem,
-      tool: {
-        uv: toJson_UvConfiguration(options.uv),
-      },
-    });
+  public getRunCommand(_options: PythonBaseOptions): string {
+    return "uv run";
   }
 
   public setupEnvironment(): void {
@@ -113,21 +75,11 @@ export class Uv
 
     // Create venv with the specific Python version
     // this will install the requested python version if needed
-    exec(`uv venv --python ${this.venvPython} .venv`, {
+    exec(`uv venv --python ${this.venvPython} .venv --allow-existing`, {
       cwd: this.project.outdir,
     });
     this.project.logger.info(
       `Environment successfully created in .venv directory with Python ${this.venvPython}.`
     );
-  }
-
-  public installDependencies(): void {
-    this.project.logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(this.project.outdir);
-    if (this.file.changed) {
-      runtime.runTask(this.installTask.name);
-    } else {
-      runtime.runTask(this.installCiTask.name);
-    }
   }
 }

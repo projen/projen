@@ -1,107 +1,226 @@
-import { Pip } from "./pip";
+import { BlackConfiguration, toJson_BlackConfiguration } from "./black-config";
+import { HatchConfiguration, toJson_HatchConfiguration } from "./hatch-config";
+import { MypyConfiguration, toJson_MypyConfiguration } from "./mypy-config";
+import { PackageManagerBase } from "./package-manager";
+import { PdmConfiguration, toJson_PdmConfiguration } from "./pdm-config";
 import { Poetry } from "./poetry";
+import {
+  PoetryConfiguration,
+  toJson_PoetryConfiguration,
+} from "./poetry-config";
 import {
   Projenrc as ProjenrcPython,
   ProjenrcOptions as ProjenrcPythonOptions,
 } from "./projenrc";
+import { PyprojectTomlFile } from "./pyproject-toml-file";
+import {
+  PyrightConfiguration,
+  toJson_PyrightConfiguration,
+} from "./pyright-config";
 import { Pytest, PytestOptions } from "./pytest";
+import {
+  PytestConfiguration,
+  toJson_PytestConfiguration,
+} from "./pytest-config";
 import { PytestSample } from "./pytest-sample";
-import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import {
+  PythonFormatter,
+  PythonLinter,
+  PythonPackageManager,
+  PythonTypeChecker,
+} from "./python-lint";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
 import { Uv } from "./uv";
 import { Venv, VenvOptions } from "./venv";
-import { GitHubProject, GitHubProjectOptions } from "../github";
+import { GitHubProject, GitHubProjectBaseOptions } from "../github";
 import {
   Projenrc as ProjenrcJs,
   ProjenrcOptions as ProjenrcJsOptions,
 } from "../javascript/projenrc";
-import { ProjectType } from "../project";
 import { ProjenrcTs, ProjenrcTsOptions } from "../typescript";
-import { anySelected, multipleSelected } from "../util";
+import { anySelected, formatAsPythonModule, multipleSelected } from "../util";
 import { Hatch } from "./hatch";
+import { Pdm } from "./pdm";
+import {
+  BuildSystem,
+  ProjectAuthor,
+  PyprojectTomlProject,
+  PyprojectTomlTool,
+} from "./pyproject-toml";
+import { RuffConfiguration, toJson_RuffConfiguration } from "./ruff-config";
+import {
+  SetuptoolsConfiguration,
+  toJson_SetuptoolsConfiguration,
+} from "./setuptools-config";
+import { toJson_TyConfiguration, TyConfiguration } from "./ty-config";
+import { toJson_UvConfiguration, UvConfiguration } from "./uv-config";
 
 /** Allowed characters in python project names */
 const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
 
-export enum PackageManager {
+export interface PythonProjectTool {
   /**
-   * Use hatch to manage your project dependencies, virtual environment, and
-   * (optional) packaging/publishing.
+   * The uncompromising Python code formatter.
+   */
+  readonly black?: BlackConfiguration;
+
+  /**
+   * Build Python wheels for all platforms.
    *
-   * This feature is incompatible with venv.
+   * @schema PyprojectTomlTool#cibuildwheel
    */
-  HATCH = "hatch",
+  readonly cibuildwheel?: any;
 
   /**
-   * Use pdm to manage your project dependencies, virtual environment, and
-   * (optional) packaging/publishing.
+   * Optional static typing for Python.
+   */
+  readonly mypy?: MypyConfiguration;
+
+  /**
+   * An extremely fast Python linter and formatter, written in Rust.
+   */
+  readonly ruff?: RuffConfiguration;
+
+  /**
+   * An extremely fast Python type checker, written in Rust.
+   */
+  readonly ty?: TyConfiguration;
+
+  /**
+   * Modern, extensible Python project management.
+   */
+  readonly hatch?: HatchConfiguration;
+
+  /**
+   * Build and publish crates with pyo3, cffi and uniffi bindings as well as rust binaries as python packages
    *
-   * This feature is incompatible with venv.
+   * @schema PyprojectTomlTool#maturin
    */
-  PDM = "pdm",
+  readonly maturin?: any;
 
   /**
-   * Use pip with a requirements.txt file to track project dependencies.
-   */
-  PIP = "pip",
-
-  /**
-   * Use poetry to manage your project dependencies, virtual environment, and
-   * (optional) packaging/publishing.
+   * Improved build system generator for Python C/C++/Fortran extensions
    *
-   * This feature is incompatible with venv.
+   * @schema PyprojectTomlTool#scikit-build
    */
-  POETRY = "poetry",
+  readonly scikitBuild?: any;
 
   /**
-   * Use uv to manage your project dependencies, virtual environment, and
-   * (optional) packaging/publishing.
+   * Easily download, build, install, upgrade, and uninstall Python packages.
    */
-  UV = "uv",
+  readonly setuptools?: SetuptoolsConfiguration;
+
+  /**
+   * Manage Python package versions using SCM (e.g. Git).
+   *
+   * @schema PyprojectTomlTool#setuptools_scm
+   */
+  readonly setuptoolsScm?: any;
+
+  /**
+   * A task runner that works well with pyproject.toml files.
+   *
+   * @schema PyprojectTomlTool#poe
+   */
+  readonly poe?: any;
+
+  /**
+   * Python dependency management and packaging made easy.
+   */
+  readonly poetry?: PoetryConfiguration;
+
+  /**
+   * A modern Python package manager with PEP 621 support.
+   */
+  readonly pdm?: PdmConfiguration;
+
+  /**
+   * Static type checker for Python.
+   */
+  readonly pyright?: PyrightConfiguration;
+
+  /**
+   * Standardized automated testing of Python packages
+   */
+  readonly pytest?: PytestConfiguration;
+
+  /**
+   * Review a repository for best practices.
+   *
+   * @schema PyprojectTomlTool#repo-review
+   */
+  readonly repoReview?: any;
+
+  /**
+   * The complementary task runner for python.
+   *
+   * @schema PyprojectTomlTool#taskipy
+   */
+  readonly taskipy?: any;
+
+  /**
+   * Tombi is a toolkit for TOML; providing a formatter/linter and language server
+   *
+   * @schema PyprojectTomlTool#tombi
+   */
+  readonly tombi?: any;
+
+  /**
+   * Standardized automated testing of Python packages
+   *
+   * @schema PyprojectTomlTool#tox
+   */
+  readonly tox?: any;
+
+  /**
+   * An extremely fast Python package installer and resolver, written in Rust.
+   */
+  readonly uv?: UvConfiguration;
 }
 
-export interface PythonExecutableOptions {
+export interface PythonBaseOptions {
   /**
    * Path to the python executable to use.
    * @default "python"
    */
   readonly pythonExec?: string;
+
+  /**
+   * Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
+   *
+   * @default - no build system
+   */
+  readonly buildSystem?: BuildSystem;
+
+  /**
+   * The formatter to use for the project.
+   */
+  readonly formatter?: PythonFormatter;
+
+  /**
+   * The linter to use for the project.
+   */
+  readonly linter?: PythonLinter;
+
+  /**
+   * The type checker to use for the project.
+   */
+  readonly typeChecker?: PythonTypeChecker;
 }
 
 /**
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions
-  extends GitHubProjectOptions,
-    PythonPackagingOptions,
-    PythonExecutableOptions {
-  // -- required options --
-
+  extends GitHubProjectBaseOptions,
+    PyprojectTomlProject,
+    PythonBaseOptions {
   /**
-   * Name of the python package as used in imports and filenames.
-   *
-   * Must only consist of alphanumeric characters and underscores.
-   *
-   * @default $PYTHON_MODULE_NAME
+   * Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
    */
-  readonly moduleName: string;
-
-  // -- dependencies --
-
-  /**
-   * List of runtime dependencies for this project.
-   *
-   * Dependencies use the format: `<module>@<semver>`
-   *
-   * Additional dependencies can be added via `project.addDependency()`.
-   *
-   * @default []
-   * @featured
-   */
-  readonly deps?: string[];
+  readonly tool?: PythonProjectTool;
 
   /**
    * List of dev dependencies for this project.
@@ -115,12 +234,11 @@ export interface PythonProjectOptions
    */
   readonly devDeps?: string[];
 
-  // -- core components --
   /**
    * The package manager to use for the project.
    * @default PackageManager.UV
    */
-  readonly packageManager?: PackageManager;
+  readonly packageManager?: PythonPackageManager;
 
   /**
    * Use venv to manage a virtual environment for installing dependencies inside.
@@ -220,20 +338,9 @@ export interface PythonProjectOptions
  */
 export class PythonProject extends GitHubProject {
   /**
-   * Python module name (the project name, with any hyphens or periods replaced
-   * with underscores).
+   * pyproject.toml file
    */
-  public readonly moduleName: string;
-
-  /**
-   * Version of the package for distribution (should follow semver).
-   */
-  public readonly version: string;
-
-  /**
-   * API for managing dependencies.
-   */
-  public readonly depsManager!: IPythonDeps;
+  public readonly file!: PyprojectTomlFile;
 
   /**
    * API for managing the Python runtime environment.
@@ -243,7 +350,7 @@ export class PythonProject extends GitHubProject {
   /**
    * API for managing packaging the project as a library. Only applies when the `projectType` is LIB.
    */
-  public readonly packagingManager?: IPythonPackaging;
+  public readonly packagingManager!: PackageManagerBase;
 
   /**
    * Pytest component.
@@ -256,8 +363,17 @@ export class PythonProject extends GitHubProject {
    */
   public readonly sampleTestdir: string;
 
+  private readonly poetryOptions?: PoetryConfiguration;
+
+  public readonly projectOptions: PyprojectTomlProject;
+  public readonly moduleName: string;
+
   constructor(options: PythonProjectOptions) {
-    super(options);
+    const readme = options.readme ?? "README.md";
+    super({ ...options, readme: { filename: readme } });
+
+    const projectName = options.name ?? this.name;
+    this.moduleName = formatAsPythonModule(projectName);
 
     if (!PYTHON_PROJECT_NAME_REGEX.test(options.name)) {
       throw new Error(
@@ -265,8 +381,6 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    this.moduleName = options.moduleName;
-    this.version = options.version;
     this.sampleTestdir = options.sampleTestdir ?? "tests";
 
     const rcFileTypeOptions = [
@@ -282,17 +396,16 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    // Assume venv if not using poetry, uv, or pdm
-    const packageManager = options.packageManager ?? PackageManager.UV;
-    const pip = packageManager === PackageManager.PIP;
-    const poetry = packageManager === PackageManager.POETRY;
-    const uv = packageManager === PackageManager.UV;
-    const hatch = packageManager === PackageManager.HATCH;
-    const venv = options.venv ?? pip;
-    const setuptools = pip && this.projectType === ProjectType.LIB;
+    const packageManagerName =
+      options.packageManager ?? PythonPackageManager.UV;
 
-    if (venv && packageManager != PackageManager.PIP) {
-      throw new Error(`\`venv\` can only be used with ${PackageManager.PIP}`);
+    // Assume venv if using setuptools
+    const supportsVenv = PythonPackageManager.SETUPTOOLS;
+    const canUseVenv = packageManagerName === supportsVenv;
+    const venv = options.venv ?? canUseVenv;
+
+    if (venv && !canUseVenv) {
+      throw new Error(`\`venv\` can only be used with ${supportsVenv}`);
     }
 
     if (!this.parent) {
@@ -313,106 +426,145 @@ export class PythonProject extends GitHubProject {
       }
     }
 
+    this.projectOptions = {
+      name: projectName,
+      version: options.version,
+      description: options.description,
+      readme: readme,
+      requiresPython: options.requiresPython ?? ">=3.12,<4.0",
+      license: options.license,
+      licenseFiles: options.licenseFiles,
+      authors: options.authors,
+      maintainers: options.maintainers,
+      keywords: options.keywords,
+      classifiers: options.classifiers,
+      urls: options.urls,
+      scripts: options.scripts,
+      guiScripts: options.guiScripts,
+      entryPoints: options.entryPoints,
+      dependencies: options.dependencies,
+      optionalDependencies: options.optionalDependencies,
+      importNames: options.importNames,
+      importNamespaces: options.importNamespaces,
+      dynamic: options.dynamic,
+    };
+    const packageManagerOptions: PythonBaseOptions = {
+      buildSystem: options.buildSystem,
+      pythonExec: options.pythonExec,
+      formatter: options.formatter,
+      linter: options.linter,
+      typeChecker: options.typeChecker,
+    };
+
+    if (packageManagerName === PythonPackageManager.SETUPTOOLS) {
+      this.packagingManager = new Setuptools(this, packageManagerOptions);
+    } else if (options.tool?.setuptools) {
+      throw new Error(
+        `\`tool.setuptools\` only applies when using ${PythonPackageManager.SETUPTOOLS}.`
+      );
+    }
+
+    if (packageManagerName === PythonPackageManager.UV) {
+      this.packagingManager = new Uv(this, packageManagerOptions);
+    } else if (options.tool?.uv) {
+      throw new Error(
+        `\`tool.uv\` only applies when using ${PythonPackageManager.UV}.`
+      );
+    }
+
+    if (packageManagerName === PythonPackageManager.POETRY) {
+      // Pull out poetry options that are redundant with project options
+      const {
+        name: poetryName,
+        version: poetryVersion,
+        description: poetryDescription,
+        keywords: poetryKeywords,
+        license: poetryLicense,
+        readme: poetryReadme,
+        classifiers: poetryClassifiers,
+        urls: poetryUrls,
+        authors: poetryAuthors,
+        maintainers: poetryMaintainers,
+        ...poetryOptions
+      } = options.tool?.poetry || {};
+
+      this.poetryOptions = poetryOptions;
+
+      const {
+        name: projectOptionsName,
+        version: projectOptionsVersion,
+        description: projectOptionsDescription,
+        keywords: projectOptionsKeywords,
+        license: projectOptionsLicense,
+        readme: projectOptionsReadmeo,
+        classifiers: projectOptionsClassifiers,
+        urls: projectOptionsUrls,
+        authors: projectOptionsAuthors,
+        maintainers: projectOptionsMaintainers,
+        ...remainingProjectOptions
+      } = this.projectOptions;
+
+      this.projectOptions = {
+        name: projectOptionsName ?? poetryName,
+        version: projectOptionsVersion ?? poetryVersion,
+        description: projectOptionsDescription ?? poetryDescription,
+        keywords: projectOptionsKeywords ?? poetryKeywords,
+        license: projectOptionsLicense ?? poetryLicense,
+        readme: projectOptionsReadmeo ?? poetryReadme,
+        classifiers: projectOptionsClassifiers ?? poetryClassifiers,
+        urls: projectOptionsUrls ?? poetryUrls,
+        authors: projectOptionsAuthors ?? this.toProjectAuthor(poetryAuthors),
+        maintainers:
+          projectOptionsMaintainers ?? this.toProjectAuthor(poetryMaintainers),
+        ...remainingProjectOptions,
+      };
+
+      this.packagingManager = new Poetry(this, packageManagerOptions);
+    } else if (options.tool?.poetry) {
+      throw new Error(
+        `\`tool.poetry\` only applies when using ${PythonPackageManager.POETRY}.`
+      );
+    } else {
+      this.poetryOptions = undefined;
+    }
+
+    if (packageManagerName === PythonPackageManager.HATCH) {
+      this.packagingManager = new Hatch(this, packageManagerOptions);
+    } else if (options.tool?.hatch) {
+      throw new Error(
+        `\`tool.hatch\` only applies when using ${PythonPackageManager.HATCH}.`
+      );
+    }
+
+    if (packageManagerName === PythonPackageManager.PDM) {
+      this.packagingManager = new Pdm(this, packageManagerOptions);
+    } else if (options.tool?.pdm) {
+      throw new Error(
+        `\`tool.pdm\` only applies when using ${PythonPackageManager.PDM}.`
+      );
+    }
+
     if (venv) {
       this.envManager = new Venv(this, {
         pythonExec: options.pythonExec,
         ...options.venvOptions,
       });
-    }
-
-    if (pip) {
-      this.depsManager = new Pip(this);
-    }
-
-    if (setuptools) {
-      this.packagingManager = new Setuptools(this, {
-        version: options.version,
-        description: options.description,
-        authorName: options.authorName,
-        authorEmail: options.authorEmail,
-        license: options.license,
-        homepage: options.homepage,
-        classifiers: options.classifiers,
-        setupConfig: options.setupConfig,
-        pythonExec: options.pythonExec,
-      });
     } else {
-      const projectOptions = {
-        name: options.name,
-        version: options.version,
-        description: options.description,
-        readme: options.readme?.filename ?? "README.md",
-        license: options.license,
-        authors: options.authorName
-          ? [{ name: options.authorName, email: options.authorEmail }]
-          : [],
-        classifiers: options.classifiers,
-        urls: options.homepage
-          ? {
-              homepage: options.homepage,
-            }
-          : undefined,
-      };
-
-      if (uv) {
-        const uvProject = new Uv(this, {
-          project: {
-            ...projectOptions,
-            ...options.uvOptions?.project, // takes priority
-          },
-          uv: options.uvOptions?.uv,
-        });
-        this.depsManager = uvProject;
-        this.envManager = uvProject;
-        this.packagingManager = uvProject;
-      } else if (options.uvOptions) {
-        throw new Error("uvOptions only applies when using uv.");
-      }
-
-      if (poetry) {
-        const poetryProject = new Poetry(this, {
-          project: {
-            ...projectOptions,
-            ...options.poetryOptions?.project, // takes priority
-          },
-          poetry: options.poetryOptions?.poetry,
-        });
-        this.depsManager = poetryProject;
-        this.envManager = poetryProject;
-        this.packagingManager = poetryProject;
-      } else if (options.poetryOptions) {
-        throw new Error("poetryOptions only applies when using poetry.");
-      }
-
-      if (hatch) {
-        const hatchProject = new Hatch(this, {
-          project: {
-            ...projectOptions,
-            ...options.hatchOptions?.project, // takes priority
-          },
-          hatch: options.hatchOptions?.hatch,
-        });
-        this.depsManager = hatchProject;
-        this.envManager = hatchProject;
-        this.packagingManager = hatchProject;
-      } else if (options.hatchOptions) {
-        throw new Error("hatchOptions only applies when using hatch.");
-      }
+      this.envManager = this.packagingManager;
     }
 
-    const tools = Object.values(PackageManager);
-
-    if (!this.envManager) {
-      throw new Error(
-        `At least one tool must be chosen for managing the environment ${tools}.`
-      );
-    }
-
-    if (!this.depsManager) {
-      throw new Error(
-        `At least one tool must be chosen for managing dependencies ${tools}.`
-      );
-    }
+    this.file = new PyprojectTomlFile(this, {
+      project: {
+        ...this.projectOptions,
+        dependencies: (() => this.packagingManager.synthDependencies()) as any,
+      },
+      dependencyGroups: (() =>
+        this.packagingManager.synthDependencyGroups()) as any,
+      buildSystem:
+        packageManagerOptions.buildSystem ??
+        this.packagingManager.defaultBuildSystem,
+      tool: (() => this.synthTools(options)) as any,
+    });
 
     if (options.pytest ?? true) {
       this.pytest = new Pytest(this, options.pytestOptions);
@@ -430,7 +582,7 @@ export class PythonProject extends GitHubProject {
       });
     }
 
-    for (const dep of options.deps ?? []) {
+    for (const dep of options.dependencies ?? []) {
       this.addDependency(dep);
     }
 
@@ -442,6 +594,30 @@ export class PythonProject extends GitHubProject {
   }
 
   /**
+   * Converts string email format to ProjectAuthor.
+   */
+  private toProjectAuthor(
+    authors: string[] | undefined
+  ): ProjectAuthor[] | undefined {
+    if (authors) {
+      return authors.flatMap((author) => {
+        const match = author.match(/^(.+?)\s*<(.+?)>$/);
+        if (!match) {
+          throw new Error(
+            `Expected author to match format \`Name <email>\` but got ${author}`
+          );
+        }
+
+        const [, rawName, rawEmail] = match;
+
+        return { name: rawName.trim(), email: rawEmail.trim() };
+      });
+    }
+
+    return undefined;
+  }
+
+  /**
    * Adds default gitignore options for a Python project based on
    * https://github.com/github/gitignore/blob/master/Python.gitignore
    */
@@ -449,7 +625,7 @@ export class PythonProject extends GitHubProject {
     this.gitignore.exclude(
       "# Byte-compiled / optimized / DLL files",
       "__pycache__/",
-      "*.py[cod]",
+      "*.py[codz]",
       "*$py.class",
       "",
       "# C extensions",
@@ -531,12 +707,32 @@ export class PythonProject extends GitHubProject {
       "profile_default/",
       "ipython_config.py",
       "",
+      "# pdm",
+      ".pdm-python",
+      ".pdm-build/",
+      "",
+      "# pixi",
+      ".pixi",
+      "",
       "# PEP 582; used by e.g. github.com/David-OConnor/pyflow",
       "__pypackages__/",
       "",
       "# Celery stuff",
       "celerybeat-schedule",
       "celerybeat.pid",
+      "",
+      "# Redis",
+      "*.rdb",
+      "*.aof",
+      "*.pid",
+      "",
+      "# RabbitMQ",
+      "mnesia/",
+      "rabbitmq/",
+      "rabbitmq-data/",
+      "",
+      "# ActiveMQ",
+      "activemq-data/",
       "",
       "# SageMath parsed files",
       "*.sage.py",
@@ -572,8 +768,41 @@ export class PythonProject extends GitHubProject {
       ".pytype/",
       "",
       "# Cython debug symbols",
-      "cython_debug/"
+      "cython_debug/",
+      "",
+      "# Abstra",
+      ".abstra/",
+      "",
+      "# Ruff stuff:",
+      ".ruff_cache/",
+      "",
+      "# Pypi configuration file",
+      ".pypirc",
+      "",
+      "# Marimo",
+      "marimo/_static/",
+      "marimo/_lsp/",
+      "__marimo__/",
+      "",
+      "# Streamlit",
+      ".streamlit/secrets.toml"
     );
+  }
+
+  private synthTools(options: PythonProjectOptions): PyprojectTomlTool {
+    return {
+      black: toJson_BlackConfiguration(options.tool?.black),
+      mypy: toJson_MypyConfiguration(options.tool?.mypy),
+      ruff: toJson_RuffConfiguration(options.tool?.ruff),
+      ty: toJson_TyConfiguration(options.tool?.ty),
+      hatch: toJson_HatchConfiguration(options.tool?.hatch),
+      setuptools: toJson_SetuptoolsConfiguration(options.tool?.setuptools),
+      poetry: toJson_PoetryConfiguration(this.poetryOptions ?? undefined),
+      pdm: toJson_PdmConfiguration(options.tool?.pdm),
+      pyright: toJson_PyrightConfiguration(options.tool?.pyright),
+      pytest: toJson_PytestConfiguration(options.tool?.pytest),
+      uv: toJson_UvConfiguration(options.tool?.uv),
+    };
   }
 
   /**
@@ -582,7 +811,7 @@ export class PythonProject extends GitHubProject {
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    return this.depsManager.addDependency(spec);
+    return this.packagingManager.addDependency(spec);
   }
 
   /**
@@ -591,13 +820,13 @@ export class PythonProject extends GitHubProject {
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    return this.depsManager.addDevDependency(spec);
+    return this.packagingManager.addDevDependency(spec);
   }
 
   public postSynthesize() {
     super.postSynthesize();
 
     this.envManager.setupEnvironment();
-    this.depsManager.installDependencies();
+    this.packagingManager.installDependencies();
   }
 }
