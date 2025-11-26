@@ -21,9 +21,47 @@ import {
 import { ProjectType } from "../project";
 import { ProjenrcTs, ProjenrcTsOptions } from "../typescript";
 import { anySelected, multipleSelected } from "../util";
+import { Hatch } from "./hatch";
 
 /** Allowed characters in python project names */
 const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
+
+export enum PackageManager {
+  /**
+   * Use hatch to manage your project dependencies, virtual environment, and
+   * (optional) packaging/publishing.
+   *
+   * This feature is incompatible with venv.
+   */
+  HATCH = "hatch",
+
+  /**
+   * Use pdm to manage your project dependencies, virtual environment, and
+   * (optional) packaging/publishing.
+   *
+   * This feature is incompatible with venv.
+   */
+  PDM = "pdm",
+
+  /**
+   * Use pip with a requirements.txt file to track project dependencies.
+   */
+  PIP = "pip",
+
+  /**
+   * Use poetry to manage your project dependencies, virtual environment, and
+   * (optional) packaging/publishing.
+   *
+   * This feature is incompatible with venv.
+   */
+  POETRY = "poetry",
+
+  /**
+   * Use uv to manage your project dependencies, virtual environment, and
+   * (optional) packaging/publishing.
+   */
+  UV = "uv",
+}
 
 export interface PythonExecutableOptions {
   /**
@@ -78,19 +116,16 @@ export interface PythonProjectOptions
   readonly devDeps?: string[];
 
   // -- core components --
-
   /**
-   * Use pip with a requirements.txt file to track project dependencies.
-   *
-   * @default - true, unless poetry is true, then false
-   * @featured
+   * The package manager to use for the project.
+   * @default PackageManager.UV
    */
-  readonly pip?: boolean;
+  readonly packageManager?: PackageManager;
 
   /**
    * Use venv to manage a virtual environment for installing dependencies inside.
    *
-   * @default - true, unless poetry is true, then false
+   * @default - true when using setuptools
    * @featured
    */
   readonly venv?: boolean;
@@ -100,35 +135,6 @@ export interface PythonProjectOptions
    * @default - defaults
    */
   readonly venvOptions?: VenvOptions;
-
-  /**
-   * Use setuptools with a setup.py script for packaging and publishing.
-   *
-   * @default - true, unless poetry is true, then false
-   * @featured
-   */
-  readonly setuptools?: boolean;
-
-  /**
-   * Use poetry to manage your project dependencies, virtual environment, and
-   * (optional) packaging/publishing.
-   *
-   * This feature is incompatible with pip, setuptools, or venv.
-   * If you set this option to `true`, then pip, setuptools, and venv must be set to `false`.
-   *
-   * @default false
-   * @featured
-   */
-  readonly poetry?: boolean;
-
-  /**
-   * Use uv to manage your project dependencies, virtual environment, and
-   * (optional) packaging/publishing.
-   *
-   * @default false
-   * @featured
-   */
-  readonly uv?: boolean;
 
   // -- optional components --
 
@@ -276,27 +282,18 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    const poetry = options.poetry ?? false;
-    const uv = options.uv ?? false;
-    const not_poetry_or_uv = !poetry && !uv;
+    // Assume venv if not using poetry, uv, or pdm
+    const packageManager = options.packageManager ?? PackageManager.UV;
+    const pip = packageManager === PackageManager.PIP;
+    const poetry = packageManager === PackageManager.POETRY;
+    const uv = packageManager === PackageManager.UV;
+    const hatch = packageManager === PackageManager.HATCH;
+    const venv = options.venv ?? pip;
+    const setuptools = pip && this.projectType === ProjectType.LIB;
 
-    // Assume pip if not using poetry or uv
-    const pip = options.pip ?? not_poetry_or_uv;
-
-    // Assume venv if not using poetry or uv
-    const venv = options.venv ?? not_poetry_or_uv;
-
-    const setuptools =
-      options.setuptools ??
-      (not_poetry_or_uv && this.projectType === ProjectType.LIB);
-
-    const tools = {
-      poetry: poetry,
-      pip: pip,
-      venv: venv,
-      setuptools: setuptools,
-      uv: uv,
-    };
+    if (venv && packageManager != PackageManager.PIP) {
+      throw new Error(`\`venv\` can only be used with ${PackageManager.PIP}`);
+    }
 
     if (!this.parent) {
       // default to projenrc.py if no other projenrc type was elected
@@ -339,97 +336,81 @@ export class PythonProject extends GitHubProject {
         setupConfig: options.setupConfig,
         pythonExec: options.pythonExec,
       });
-    }
-
-    if (uv) {
-      // uv cannot be used with other tools.
-      this.checkToolConflicts("uv", tools);
-
-      const uvProject = new Uv(this, {
-        project: {
-          name: options.name,
-          version: options.version,
-          description: options.description,
-          readme: options.readme?.filename ?? "README.md",
-          license: options.license,
-          authors: options.authorName
-            ? [{ name: options.authorName, email: options.authorEmail }]
-            : [],
-          classifiers: options.classifiers,
-          urls: options.homepage
-            ? {
-                homepage: options.homepage,
-              }
-            : undefined,
-          ...options.uvOptions?.project, // takes priority
-        },
-
-        buildSystem: options.uvOptions?.buildSystem,
-        uv: options.uvOptions?.uv,
-      });
-      this.depsManager = uvProject;
-      this.envManager = uvProject;
-      this.packagingManager = uvProject;
-    } else if (options.uvOptions) {
-      throw new Error("uvOptions only applies when using uv.");
-    }
-
-    if (poetry) {
-      // poetry cannot be used with other tools.
-      this.checkToolConflicts("poetry", tools);
-
-      const poetryProject = new Poetry(this, {
+    } else {
+      const projectOptions = {
+        name: options.name,
         version: options.version,
         description: options.description,
-        authorName: options.authorName,
-        authorEmail: options.authorEmail,
+        readme: options.readme?.filename ?? "README.md",
         license: options.license,
-        homepage: options.homepage,
+        authors: options.authorName
+          ? [{ name: options.authorName, email: options.authorEmail }]
+          : [],
         classifiers: options.classifiers,
-        pythonExec: options.pythonExec,
-        poetryOptions: {
-          readme: options.readme?.filename ?? "README.md",
-          ...options.poetryOptions,
-        },
-      });
-      this.depsManager = poetryProject;
-      this.envManager = poetryProject;
-      this.packagingManager = poetryProject;
+        urls: options.homepage
+          ? {
+              homepage: options.homepage,
+            }
+          : undefined,
+      };
+
+      if (uv) {
+        const uvProject = new Uv(this, {
+          project: {
+            ...projectOptions,
+            ...options.uvOptions?.project, // takes priority
+          },
+          uv: options.uvOptions?.uv,
+        });
+        this.depsManager = uvProject;
+        this.envManager = uvProject;
+        this.packagingManager = uvProject;
+      } else if (options.uvOptions) {
+        throw new Error("uvOptions only applies when using uv.");
+      }
+
+      if (poetry) {
+        const poetryProject = new Poetry(this, {
+          project: {
+            ...projectOptions,
+            ...options.poetryOptions?.project, // takes priority
+          },
+          poetry: options.poetryOptions?.poetry,
+        });
+        this.depsManager = poetryProject;
+        this.envManager = poetryProject;
+        this.packagingManager = poetryProject;
+      } else if (options.poetryOptions) {
+        throw new Error("poetryOptions only applies when using poetry.");
+      }
+
+      if (hatch) {
+        const hatchProject = new Hatch(this, {
+          project: {
+            ...projectOptions,
+            ...options.hatchOptions?.project, // takes priority
+          },
+          hatch: options.hatchOptions?.hatch,
+        });
+        this.depsManager = hatchProject;
+        this.envManager = hatchProject;
+        this.packagingManager = hatchProject;
+      } else if (options.hatchOptions) {
+        throw new Error("hatchOptions only applies when using hatch.");
+      }
     }
+
+    const tools = Object.values(PackageManager);
 
     if (!this.envManager) {
       throw new Error(
-        "At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry)."
+        `At least one tool must be chosen for managing the environment ${tools}.`
       );
     }
 
     if (!this.depsManager) {
       throw new Error(
-        "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry)."
-      );
-    }
-
-    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error(
-        "At least one tool must be chosen for managing packaging (setuptools or poetry)."
-      );
-    }
-
-    if (Number(venv) + Number(poetry) > 1) {
-      throw new Error(
-        "More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)"
-      );
-    }
-
-    if (Number(pip) + Number(poetry) > 1) {
-      throw new Error(
-        "More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)"
-      );
-    }
-
-    if (Number(setuptools) + Number(poetry) > 1) {
-      throw new Error(
-        "More than one component has been chosen for managing packaging (setuptools or poetry)"
+        `At least one tool must be chosen for managing dependencies ${tools}.`
       );
     }
 
@@ -458,26 +439,6 @@ export class PythonProject extends GitHubProject {
     }
 
     this.addDefaultGitIgnore();
-  }
-
-  private checkToolConflicts(
-    activeToolName: string,
-    tools: Record<string, boolean>
-  ) {
-    if (tools[activeToolName]) {
-      // Collect names of other enabled tools excluding the active tool itself
-      const conflicts = Object.entries(tools)
-        .filter(([name, enabled]) => name !== activeToolName && enabled)
-        .map(([name]) => name);
-
-      if (conflicts.length) {
-        throw new Error(
-          `${activeToolName} cannot be used together with other tools, found the following incompatible tools enabled: ${conflicts.join(
-            ", "
-          )}`
-        );
-      }
-    }
   }
 
   /**

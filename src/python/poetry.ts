@@ -2,20 +2,32 @@ import * as TOML from "@iarna/toml";
 import { IConstruct } from "constructs";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { IPythonPackaging } from "./python-packaging";
 import { PythonExecutableOptions } from "./python-project";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
-import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+import { exec, execOrUndefined } from "../util";
+import {
+  PoetryConfiguration,
+  toJson_PoetryConfiguration,
+} from "./poetry-config";
+import { PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
 
-export interface PoetryOptions
-  extends PythonPackagingOptions,
-    PythonExecutableOptions {}
+export interface PoetryOptions extends PythonExecutableOptions {
+  /**
+   * The project's basic metadata configuration.
+   */
+  readonly project?: PyprojectTomlProject;
+
+  /**
+   * The configuration and metadata for poetry.
+   */
+  readonly poetry?: PoetryConfiguration;
+}
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -25,6 +37,7 @@ export class Poetry
   extends Component
   implements IPythonDeps, IPythonEnv, IPythonPackaging
 {
+  public readonly file: PyprojectTomlFile;
   /**
    * Task for updating the lockfile and installing project dependencies.
    */
@@ -50,22 +63,16 @@ export class Poetry
    */
   private readonly pythonExec: string;
 
-  /**
-   * Represents the configuration of the `pyproject.toml` file for a Poetry project.
-   * This includes package metadata, dependencies, and Poetry-specific settings.
-   */
-  private readonly pyProject: PoetryPyproject;
-
-  constructor(project: Project, options: PoetryOptions) {
-    super(project);
+  constructor(scope: IConstruct, options: PoetryOptions) {
+    super(scope);
     this.pythonExec = options.pythonExec ?? "python";
 
-    this.installTask = project.addTask("install", {
+    this.installTask = this.project.addTask("install", {
       description: "Install dependencies and update lockfile",
       exec: "poetry update",
     });
 
-    this.installCiTask = project.addTask("install:ci", {
+    this.installCiTask = this.project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
       exec: "poetry check --lock && poetry install",
     });
@@ -80,32 +87,57 @@ export class Poetry
       "$(echo $(poetry env info -p)/bin:$PATH)"
     );
 
-    project.packageTask.exec("poetry build");
+    this.project.packageTask.exec("poetry build");
 
-    this.publishTestTask = project.addTask("publish:test", {
+    this.publishTestTask = this.project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",
       exec: "poetry publish -r testpypi",
     });
 
-    this.publishTask = project.addTask("publish", {
+    this.publishTask = this.project.addTask("publish", {
       description: "Uploads the package to PyPI.",
       exec: "poetry publish",
     });
 
-    this.pyProject = new PoetryPyproject(project, {
-      name: project.name,
-      version: options.version,
-      description: options.description ?? "",
-      license: options.license,
-      authors: [`${options.authorName} <${options.authorEmail}>`],
-      homepage: options.homepage,
-      classifiers: options.classifiers,
-      ...options.poetryOptions,
-      dependencies: () => this.synthDependencies(),
-      devDependencies: () => this.synthDevDependencies(),
+    // Pull out poetry options that are redundant with project options
+    const {
+      name,
+      version,
+      description,
+      keywords,
+      license,
+      authors,
+      maintainers,
+      readme,
+      classifiers,
+      urls,
+      ...poetryOptions
+    } = options.poetry || {};
+
+    this.file = new PyprojectTomlFile(scope, {
+      project: {
+        name: name ?? this.project.name,
+        version: version,
+        description: description,
+        keywords: keywords,
+        license: license,
+        authors: authors,
+        maintainers: maintainers,
+        readme: readme,
+        classifiers: classifiers,
+        urls: urls,
+        ...options.project,
+        dependencies: this.synthDependencies(),
+        devDependencies: this.synthDevDependencies(),
+      },
+      tool: { poetry: toJson_PoetryConfiguration(poetryOptions) },
+      buildSystem: {
+        requires: ["poetry-core"],
+        buildBackend: "poetry.core.masonry.api",
+      },
     });
 
-    new TomlFile(project, "poetry.toml", {
+    new TomlFile(this.project, "poetry.toml", {
       committed: false,
       obj: {
         repositories: {
@@ -246,188 +278,10 @@ export class Poetry
     this.project.logger.info("Installing dependencies...");
     const runtime = new TaskRuntime(this.project.outdir);
     // If the pyproject.toml file has changed, update the lockfile prior to installation
-    if (this.pyProject.file.changed) {
+    if (this.file.changed) {
       runtime.runTask(this.installTask.name);
     } else {
       runtime.runTask(this.installCiTask.name);
     }
-  }
-}
-
-/**
- * Poetry-specific options.
- * @see https://python-poetry.org/docs/pyproject/
- */
-export interface PoetryPyprojectOptionsWithoutDeps {
-  /**
-   * Name of the package (required).
-   */
-  readonly name?: string;
-
-  /**
-   * Version of the package (required).
-   */
-  readonly version?: string;
-
-  /**
-   * A short description of the package (required).
-   */
-  readonly description?: string;
-
-  /**
-   * License of this package as an SPDX identifier.
-   *
-   * If the project is proprietary and does not use a specific license, you
-   * can set this value as "Proprietary".
-   */
-  readonly license?: string;
-
-  /**
-   * The authors of the package. Must be in the form "name <email>"
-   */
-  readonly authors?: string[];
-
-  /**
-   * the maintainers of the package. Must be in the form "name <email>"
-   */
-  readonly maintainers?: string[];
-
-  /**
-   * The name of the readme file of the package.
-   */
-  readonly readme?: string;
-
-  /**
-   * A URL to the website of the project.
-   */
-  readonly homepage?: string;
-
-  /**
-   * A URL to the repository of the project.
-   */
-  readonly repository?: string;
-
-  /**
-   * A URL to the documentation of the project.
-   */
-  readonly documentation?: string;
-
-  /**
-   * A list of keywords (max: 5) that the package is related to.
-   */
-  readonly keywords?: string[];
-
-  /**
-   * A list of PyPI trove classifiers that describe the project.
-   *
-   * @see https://pypi.org/classifiers/
-   */
-  readonly classifiers?: string[];
-
-  /**
-   * A list of packages and modules to include in the final distribution.
-   */
-  readonly packages?: any[];
-
-  /**
-   * A list of patterns that will be included in the final package.
-   */
-  readonly include?: string[];
-
-  /**
-   * A list of patterns that will be excluded in the final package.
-   *
-   * If a VCS is being used for a package, the exclude field will be seeded with
-   * the VCS’ ignore settings (.gitignore for git for example).
-   */
-  readonly exclude?: string[];
-
-  /**
-   * The scripts or executables that will be installed when installing the package.
-   */
-  readonly scripts?: { [key: string]: any };
-
-  /**
-   * Source registries from which packages are retrieved.
-   */
-  readonly source?: any[];
-
-  /**
-   * Package extras
-   */
-  readonly extras?: { [key: string]: string[] };
-
-  /**
-   * Plugins. Must be specified as a table.
-   * @see https://toml.io/en/v1.0.0#table
-   */
-  readonly plugins?: any;
-
-  /**
-   * Project custom URLs, in addition to homepage, repository and documentation.
-   * E.g. "Bug Tracker"
-   */
-  readonly urls?: { [key: string]: string };
-  /**
-   * Package mode (optional).
-   * @see https://python-poetry.org/docs/pyproject/#package-mode
-   * @default true
-   * @example false
-   */
-  readonly packageMode?: boolean;
-}
-
-/**
- * Poetry-specific options.
- * @see https://python-poetry.org/docs/pyproject/
- */
-export interface PoetryPyprojectOptions
-  extends PoetryPyprojectOptionsWithoutDeps {
-  /**
-   * A list of dependencies for the project.
-   *
-   * The python version for which your package is compatible is also required.
-   *
-   * @example { requests: "^2.13.0" }
-   */
-  readonly dependencies?: { [key: string]: any };
-
-  /**
-   * A list of development dependencies for the project.
-   *
-   * @example { requests: "^2.13.0" }
-   */
-  readonly devDependencies?: { [key: string]: any };
-}
-
-/**
- * Represents configuration of a pyproject.toml file for a Poetry project.
- *
- * @see https://python-poetry.org/docs/pyproject/
- */
-export class PoetryPyproject extends Component {
-  public readonly file: PyprojectTomlFile;
-
-  constructor(scope: IConstruct, options: PoetryPyprojectOptions) {
-    super(scope);
-
-    const { devDependencies, ...poetryConfig } = options;
-
-    this.file = new PyprojectTomlFile(scope, {
-      tool: {
-        poetry: {
-          ...decamelizeKeysRecursively(poetryConfig, { separator: "-" }),
-          group: {
-            dev: {
-              dependencies: devDependencies,
-            },
-          },
-        },
-      },
-      buildSystem: {
-        requires: ["poetry-core"],
-        buildBackend: "poetry.core.masonry.api",
-      },
-    });
   }
 }

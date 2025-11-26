@@ -2,12 +2,11 @@ import { IConstruct } from "constructs";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging } from "./python-packaging";
-import { Component } from "../component";
 import { toJson_UvConfiguration, UvConfiguration } from "./uv-config";
-import { Dependency, DependencyType } from "../dependencies";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { exec, execOrUndefined } from "../util";
+import { PackageBase } from "./package";
 import { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
 import { PythonExecutableOptions } from "./python-project";
@@ -38,7 +37,7 @@ export interface UvOptions extends PythonExecutableOptions {
  * Manage project dependencies, virtual environments, and packaging through uv.
  */
 export class Uv
-  extends Component
+  extends PackageBase
   implements IPythonDeps, IPythonEnv, IPythonPackaging
 {
   /**
@@ -99,77 +98,6 @@ export class Uv
         uv: toJson_UvConfiguration(options.uv),
       },
     });
-  }
-
-  /** Formats dependencies in UV style. */
-  private formatDependency(dep: Dependency): string {
-    const name = dep.name;
-    const version = dep.version;
-
-    if (!version || version === "*") {
-      return name;
-    }
-
-    // Translate caret (^) to Python compatible constraints
-    if (version.startsWith("^")) {
-      const cleanVersion = version.slice(1);
-      const [major] = cleanVersion.split(".");
-      const nextMajor = Number(major) + 1;
-      return `${name}>=${cleanVersion},<${nextMajor}.0.0`;
-    }
-
-    // Translate tilde (~) to compatible release clause per PEP 440
-    if (version.startsWith("~")) {
-      const cleanVersion = version.slice(1);
-
-      // Only keep major.minor for tilde if possible
-      const [major, minor = "0", patch = "0"] = cleanVersion.split(".");
-      const nextMinor = Number(minor) + 1;
-      return `${name}>=${major}.${minor}.${patch},<${major}.${nextMinor}.0`;
-    }
-
-    // Otherwise treat as an exact version
-    return `${name}==${version}`;
-  }
-
-  private getDependencies(dependencyTypes: DependencyType[]): string[] {
-    return (
-      this.project.deps.all
-        .filter(
-          (pkg) => dependencyTypes.includes(pkg.type) && pkg.name !== "python"
-        )
-        // remove duplicate versions of the same dependency
-        .filter(
-          (dep, index, self) =>
-            index === self.findIndex((d) => d.name === dep.name)
-        )
-        .map((pkg) => this.formatDependency(pkg))
-    );
-  }
-
-  private synthDependencies(): string[] {
-    return this.getDependencies([DependencyType.RUNTIME]);
-  }
-
-  private synthDependencyGroups(): { [key: string]: string[] } | undefined {
-    const devDeps = this.getDependencies([
-      DependencyType.DEVENV,
-      DependencyType.TEST,
-    ]);
-
-    if (devDeps) {
-      return { dev: devDeps };
-    } else {
-      return undefined;
-    }
-  }
-
-  public addDependency(spec: string): void {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
-  }
-
-  public addDevDependency(spec: string): void {
-    this.project.deps.addDependency(spec, DependencyType.DEVENV);
   }
 
   public setupEnvironment(): void {

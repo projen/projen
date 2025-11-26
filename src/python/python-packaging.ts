@@ -1,5 +1,7 @@
-import { PoetryPyprojectOptionsWithoutDeps } from "./poetry";
 import { Task } from "../task";
+import { HatchOptions } from "./hatch";
+import { PoetryOptions } from "./poetry";
+import { SetuptoolsConfiguration } from "./setuptools-config";
 import { UvOptions } from "./uv";
 
 export interface IPythonPackaging {
@@ -66,12 +68,22 @@ export interface PythonPackagingOptions {
   readonly setupConfig?: { [key: string]: any };
 
   /**
+   * Additional options to set for setuptools if using setuptools
+   */
+  readonly setupToolsOptions?: SetuptoolsConfiguration;
+
+  /**
    * Additional options to set for poetry if using poetry
    */
-  readonly poetryOptions?: PoetryPyprojectOptionsWithoutDeps;
+  readonly poetryOptions?: PoetryOptions;
 
   /**
    * Additional options to set for uv if using uv
    */
   readonly uvOptions?: UvOptions;
+
+  /**
+   * Additional options to set for hatch if using hatch
+   */
+  readonly hatchOptions?: HatchOptions;
 }
