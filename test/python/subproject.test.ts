@@ -11,9 +11,7 @@ test("python subprojects do not add a Projenrc component", () => {
     outdir: "sub",
     projenrcPython: true,
     name: "test-python-project",
-    moduleName: "test_python_project",
-    authorName: "First Last",
-    authorEmail: "email@example.com",
+    authors: [{ name: "First Last", email: "email@example.com" }],
     version: "0.1.0",
   });
 
