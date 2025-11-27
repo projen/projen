@@ -41,6 +41,13 @@ export interface ContinuousReleaseOptions {
   readonly paths?: string[];
 }
 
+export interface TagReleaseOptions {
+  /**
+   * Tag patterns for which pushes should trigger a release
+   */
+  readonly tags?: string[];
+}
+
 interface ReleaseTriggerOptions {
   /**
    * Project-level changelog file path.
@@ -81,6 +88,11 @@ interface ReleaseTriggerOptions {
    * Only a workflowDispatch trigger
    */
   readonly workflowDispatchOnly?: boolean;
+
+  /**
+   * Tag patterns for which pushes should trigger a release
+   */
+  readonly tags?: string[];
 }
 
 /**
@@ -158,6 +170,17 @@ export class ReleaseTrigger {
   }
 
   /**
+   * Creates a tag-based release trigger.
+   *
+   * Automated releases will occur on every new tag matching the provided patterns.
+   */
+  public static tagged(options: TagReleaseOptions = {}) {
+    return new ReleaseTrigger({
+      tags: options.tags,
+    });
+  }
+
+  /**
    * Project-level changelog file path.
    */
   public readonly changelogPath?: string;
@@ -182,6 +205,11 @@ export class ReleaseTrigger {
   public readonly paths?: string[];
 
   /**
+   * Tag patterns for which pushes will trigger a release
+   */
+  public readonly tags?: string[];
+
+  /**
    * Override git-push command used when releasing manually.
    *
    * Set to an empty string to disable pushing.
@@ -197,6 +225,7 @@ export class ReleaseTrigger {
     this.changelogPath = options.changelogPath;
     this.gitPushCommand = options.gitPushCommand;
     this.workflowDispatchOnly = options.workflowDispatchOnly;
+    this.tags = options.tags;
   }
 
   /**
@@ -205,6 +234,9 @@ export class ReleaseTrigger {
    * If the `ReleaseTrigger` is a GitHub-only manual task, this will return `false`.
    */
   public get isManual() {
-    return !(this.isContinuous || this.schedule) && !this.workflowDispatchOnly;
+    return (
+      !(this.isContinuous || this.schedule || this.tags) &&
+      !this.workflowDispatchOnly
+    );
   }
 }

@@ -19,6 +19,10 @@ describe("manual release", () => {
     expect(releaseTrigger.schedule).toBeUndefined();
   });
 
+  test("does not have tags", () => {
+    expect(releaseTrigger.tags).toBeUndefined();
+  });
+
   test("is manual", () => {
     expect(releaseTrigger.isManual).toBe(true);
   });
@@ -70,6 +74,10 @@ describe("continuous release", () => {
     expect(releaseTrigger.schedule).toBeUndefined();
   });
 
+  test("does not have tags", () => {
+    expect(releaseTrigger.tags).toBeUndefined();
+  });
+
   test("does not have a changelog", () => {
     expect(releaseTrigger.changelogPath).toBeUndefined();
   });
@@ -108,6 +116,40 @@ describe("scheduled release", () => {
 
   test("has a schedule", () => {
     expect(releaseTrigger.schedule).toEqual(releaseSchedule);
+  });
+
+  test("does not have tags", () => {
+    expect(releaseTrigger.tags).toBeUndefined();
+  });
+
+  test("does not have a changelog", () => {
+    expect(releaseTrigger.changelogPath).toBeUndefined();
+  });
+});
+
+describe("tagged release", () => {
+  let tags = ["v*.*.*", "!v*.*.*-**"];
+
+  beforeAll(() => {
+    releaseTrigger = ReleaseTrigger.tagged({
+      tags: tags,
+    });
+  });
+
+  test("is not continuous", () => {
+    expect(releaseTrigger.isContinuous).toBe(false);
+  });
+
+  test("is not manual", () => {
+    expect(releaseTrigger.isManual).toBe(false);
+  });
+
+  test("does not have a schedule", () => {
+    expect(releaseTrigger.schedule).toBeUndefined();
+  });
+
+  test("does have tags", () => {
+    expect(releaseTrigger.tags).toEqual(tags);
   });
 
   test("does not have a changelog", () => {
