@@ -366,6 +366,14 @@ export class LambdaRuntime {
     "node22"
   );
 
+  /**
+   * Node.js 24.x
+   */
+  public static readonly NODEJS_24_X = new LambdaRuntime(
+    "nodejs24.x",
+    "node24"
+  );
+
   public readonly esbuildPlatform = "node";
 
   public readonly defaultExternals: string[];

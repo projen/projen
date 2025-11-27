@@ -797,7 +797,7 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,react,react-dom,web-vitals",
+            "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,react,react-dom,web-vitals",
           },
           {
             "exec": "yarn install --check-files",

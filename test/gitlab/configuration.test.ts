@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { CiConfiguration } from "../../src/gitlab";
+import { CiConfiguration, Strategy } from "../../src/gitlab";
 import { synthSnapshot, TestProject } from "../util";
 
 test("throws when adding an existing service with same name and alias", () => {
@@ -417,6 +417,121 @@ test("test code coverage report", () => {
     coverage_report: {
       coverage_format: "cobertura",
       path: "coverage/cobertura-coverage.xml",
+    },
+  });
+});
+
+test("adds default hooks", () => {
+  // GIVEN
+  const p = new TestProject();
+  const c = new CiConfiguration(p, "foo");
+  c.addDefaultHooks({ preGetSourcesScript: ["echo test"] });
+  // THEN
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).default.hooks
+  ).toStrictEqual({ pre_get_sources_script: ["echo test"] });
+});
+
+test("supports trigger with inputs and mirror strategy", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      "trigger-job": {
+        stage: "trigger",
+        trigger: {
+          project: "group/project",
+          strategy: Strategy.MIRROR,
+          inputs: {
+            environment: "production",
+            version: "1.0.0",
+          },
+        },
+      },
+    },
+  });
+  // THEN
+  const parsed = YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]);
+  expect(parsed["trigger-job"].trigger).toStrictEqual({
+    project: "group/project",
+    strategy: "mirror",
+    inputs: {
+      environment: "production",
+      version: "1.0.0",
+    },
+  });
+});
+
+test("supports trigger with UPPER CASE input keys", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      "trigger-uppercase-job": {
+        stage: "trigger",
+        trigger: {
+          project: "group/project",
+          strategy: Strategy.MIRROR,
+          inputs: {
+            ENVIRONMENT: "production",
+            BUILD_VERSION: "1.0.0",
+            DEPLOY_TARGET: "staging",
+          },
+        },
+      },
+    },
+  });
+  // THEN
+  const parsed = YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]);
+  expect(parsed["trigger-uppercase-job"].trigger).toStrictEqual({
+    project: "group/project",
+    strategy: "mirror",
+    inputs: {
+      ENVIRONMENT: "production",
+      BUILD_VERSION: "1.0.0",
+      DEPLOY_TARGET: "staging",
+    },
+  });
+});
+
+test("supports trigger with mixed case input keys (no snake case conversion)", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      "trigger-mixed-case-job": {
+        stage: "trigger",
+        trigger: {
+          project: "group/project",
+          strategy: Strategy.MIRROR,
+          inputs: {
+            camelCaseVar: "value1",
+            PascalCaseVar: "value2",
+            snake_case_var: "value3",
+            UPPER_CASE_VAR: "value4",
+            "kebab-case-var": "value5",
+          },
+        },
+      },
+    },
+  });
+  // THEN
+  const parsed = YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]);
+  expect(parsed["trigger-mixed-case-job"].trigger).toStrictEqual({
+    project: "group/project",
+    strategy: "mirror",
+    inputs: {
+      camelCaseVar: "value1",
+      PascalCaseVar: "value2",
+      snake_case_var: "value3",
+      UPPER_CASE_VAR: "value4",
+      "kebab-case-var": "value5",
     },
   });
 });

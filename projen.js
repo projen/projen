@@ -18,7 +18,7 @@ const hasJsii = existsSync("node_modules/.bin/jsii");
 const hasTsNode = existsSync("node_modules/.bin/ts-node");
 const needsBootstrapping = !isBuild || !hasTsNode;
 
-const installCommand = "yarn install --frozen-lockfile --check-files --non-interactive";
+const installCommand = "npm ci";
 const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
 
 function bootstrap() {

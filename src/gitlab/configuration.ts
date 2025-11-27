@@ -4,6 +4,7 @@ import {
   Artifacts,
   Cache,
   Default,
+  DefaultHooks,
   IDToken,
   Image,
   Include,
@@ -121,6 +122,10 @@ export class CiConfiguration extends Component {
    */
   readonly defaultIdTokens?: Record<string, IDToken>;
   /**
+   * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script
+   */
+  private defaultHooks?: Default["hooks"];
+  /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
    * content will be fetched, included and evaluated along the `.gitlab-ci.yml`.
@@ -234,7 +239,7 @@ export class CiConfiguration extends Component {
         * local
         * file, project
         * remote
-        * template  
+        * template
         `
       );
     }
@@ -351,6 +356,15 @@ export class CiConfiguration extends Component {
     this._defaultCache = caches;
   }
 
+  /**
+   * Specify a list of commands to execute on the runner before cloning the Git repository and any submodules
+   * https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script
+   * @param hooks
+   */
+  public addDefaultHooks(hooks: DefaultHooks) {
+    this.defaultHooks = hooks;
+  }
+
   private renderCI() {
     return {
       default: this.renderDefault(),
@@ -392,6 +406,7 @@ export class CiConfiguration extends Component {
         this.defaultServices.length > 0 ? this.defaultServices : undefined,
       tags: this.defaultTags.length > 0 ? this.defaultTags : undefined,
       timeout: this.defaultTimeout,
+      hooks: this.defaultHooks,
     };
     return Object.values(defaults).filter((x) => x).length
       ? snakeCaseKeys(defaults)
@@ -414,7 +429,8 @@ function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
       typeof v === "object" &&
       v != null &&
       k !== "variables" &&
-      k !== "idTokens"
+      k !== "idTokens" &&
+      k !== "inputs"
     ) {
       v = snakeCaseKeys(v);
     }

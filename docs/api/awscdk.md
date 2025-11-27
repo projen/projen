@@ -4380,7 +4380,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.gitpod">gitpod</a></code> | <code>projen.Gitpod</code> | Access for Gitpod. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.vscode">vscode</a></code> | <code>projen.vscode.VsCode</code> | Access all VSCode components. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.depsManager">depsManager</a></code> | <code>projen.python.IPythonDeps</code> | API for managing dependencies. |
-| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for mangaging the Python runtime environment. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for managing the Python runtime environment. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | The directory in which the python sample tests reside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
@@ -4790,7 +4790,7 @@ public readonly envManager: IPythonEnv;
 
 - *Type:* projen.python.IPythonEnv
 
-API for mangaging the Python runtime environment.
+API for managing the Python runtime environment.
 
 ---
 
@@ -10383,6 +10383,8 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -11912,6 +11914,36 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.auditDeps"></a>
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.auditDepsOptions"></a>
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
+
+Security audit options.
 
 ---
 
@@ -14671,6 +14703,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.uvOptions">uvOptions</a></code> | <code>projen.python.UvOptions</code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -14688,6 +14721,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
@@ -15250,6 +15284,18 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.awscdk.AwsCdkPythonAppOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* projen.python.UvOptions
+
+Additional options to set for uv if using uv.
+
+---
+
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec"></a>
 
 ```typescript
@@ -15492,6 +15538,19 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.awscdk.AwsCdkPythonAppOptions.property.uv"></a>
+
+```typescript
+public readonly uv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
 
 ---
 
@@ -15900,6 +15959,8 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -17424,6 +17485,36 @@ A directory which will contain build artifacts.
 
 ---
 
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditDeps"></a>
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.auditDepsOptions"></a>
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
+
+Security audit options.
+
+---
+
 ##### `autoApproveUpgrades`<sup>Optional</sup> <a name="autoApproveUpgrades" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.autoApproveUpgrades"></a>
 
 ```typescript
@@ -18907,6 +18998,8 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -20612,6 +20705,40 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### ~~`auditDeps`~~<sup>Optional</sup> <a name="auditDeps" id="projen.awscdk.ConstructLibraryAwsOptions.property.auditDeps"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### ~~`auditDepsOptions`~~<sup>Optional</sup> <a name="auditDepsOptions" id="projen.awscdk.ConstructLibraryAwsOptions.property.auditDepsOptions"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
+
+Security audit options.
 
 ---
 
@@ -23236,6 +23363,7 @@ The Node.js runtime to use.
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_18_X">NODEJS_18_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 18.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_20_X">NODEJS_20_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 20.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_22_X">NODEJS_22_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 22.x. |
+| <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_24_X">NODEJS_24_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 24.x. |
 
 ---
 
@@ -23330,6 +23458,18 @@ public readonly NODEJS_22_X: LambdaRuntime;
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
 Node.js 22.x.
+
+---
+
+##### `NODEJS_24_X`<sup>Required</sup> <a name="NODEJS_24_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_24_X"></a>
+
+```typescript
+public readonly NODEJS_24_X: LambdaRuntime;
+```
+
+- *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
+
+Node.js 24.x.
 
 ---
 

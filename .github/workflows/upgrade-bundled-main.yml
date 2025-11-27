@@ -21,9 +21,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 20.9.0
+          node-version: lts/-1
       - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: npm ci
       - name: Upgrade dependencies
         run: node ./projen.js upgrade-bundled
       - name: Find mutations

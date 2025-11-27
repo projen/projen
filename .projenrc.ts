@@ -10,7 +10,6 @@ import {
   setupGitpod,
   setupIntegTest,
   setupMarkdown,
-  setupMergify,
   setupNpmignore,
   setupUpgradeDependencies,
   setupVscode,
@@ -18,7 +17,13 @@ import {
   JsiiFromJsonSchema,
   JsonConst,
 } from "./projenrc";
-import { JsonPatch, ProjectTree, ReleasableCommits } from "./src";
+import {
+  AiInstructions,
+  javascript,
+  JsonPatch,
+  ProjectTree,
+  ReleasableCommits,
+} from "./src";
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
@@ -57,6 +62,8 @@ const project = new JsiiProject({
 
   jsiiVersion: "5.9.x",
   typescriptVersion: "5.9.x",
+
+  packageManager: javascript.NodePackageManager.NPM,
 
   deps: ["constructs@^10.0.0"],
 
@@ -99,11 +106,15 @@ const project = new JsiiProject({
   peerDeps: ["constructs@^10.0.0"],
 
   depsUpgrade: false, // configured below
+  auditDeps: true,
+  auditDepsOptions: {
+    prodOnly: true,
+  },
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "16.0.0", // Do not change this before a version has been EOL for a while
-  workflowNodeVersion: "20.9.0",
+  workflowNodeVersion: "lts/-1", // use the previous lts for builds
 
   codeCov: true,
   prettier: true,
@@ -150,7 +161,6 @@ const project = new JsiiProject({
   releaseEnvironment: "release",
   publishToMaven: {
     javaPackage: "io.github.cdklabs.projen",
-    mavenServerId: "central-ossrh",
     mavenGroupId: "io.github.cdklabs",
     mavenArtifactId: "projen",
   },
@@ -174,11 +184,20 @@ const project = new JsiiProject({
   },
 });
 
+// Trusted Publishing requires npm 11 which is available by default in node 24
 project.github
   ?.tryFindWorkflow("release")
   ?.file?.patch(
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
+
+// cannot upgrade xmlbuilder2 to v4 as it drops node versions < 20
+// instead we force js-yaml to a fixed version
+project.package.addField("overrides", {
+  xmlbuilder2: {
+    "js-yaml": "^3.14.2",
+  },
+});
 
 setupCheckLicenses(project);
 
@@ -197,8 +216,6 @@ setupMarkdown(project);
 
 setupVscode(project);
 
-setupMergify(project);
-
 setupGitpod(project);
 
 setupDevcontainer(project);
@@ -208,11 +225,41 @@ setupAllContributors(project);
 setupNpmignore(project);
 
 setupIntegTest(project);
+
 setupBundleTaskRunner(project);
 
 new JsiiFromJsonSchema(project, {
+  structName: "BiomeConfiguration",
   schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
   filePath: path.join("src", "javascript", "biome", "biome-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PyprojectToml",
+  schemaPath: "schemas/pyproject.json",
+  filePath: path.join("src", "python", "pyproject-toml.ts"),
+  transform: (schema) => (
+    (schema.properties.tool.properties = Object.fromEntries(
+      Object.entries(schema.properties.tool.properties).map(
+        ([tool, def]) => (delete (def as any).$ref, [tool, def])
+      )
+    )),
+    schema
+  ),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "UvConfiguration",
+  schemaPath: "schemas/uv.json",
+  filePath: path.join("src", "python", "uv-config.ts"),
+  transform: (schema) => (
+    (schema.properties["cache-dir"].description = schema.properties[
+      "cache-dir"
+    ].description
+      .split("\n")
+      .at(0)),
+    schema
+  ),
 });
 
 new JsonConst(project, {
@@ -233,5 +280,7 @@ if (project.defaultTask) {
 }
 
 new ProjectTree(project);
+
+new AiInstructions(project);
 
 project.synth();

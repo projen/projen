@@ -63,6 +63,11 @@ export enum CacheWhen {
   ON_SUCCESS = "on_success",
 }
 
+export interface DefaultHooks {
+  /** Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script */
+  readonly preGetSourcesScript?: string[];
+}
+
 /**
  * Default settings for the CI Configuration. Jobs that do not define one or more of the listed keywords use the value defined in the default section.
  * @see https://docs.gitlab.com/ee/ci/yaml/#default
@@ -90,6 +95,8 @@ export interface Default {
   readonly tags?: string[];
   /* A default timeout job written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly timeout?: string;
+  /** Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script */
+  readonly hooks?: DefaultHooks;
 }
 
 /**
@@ -365,6 +372,8 @@ export interface Job {
   readonly variables?: Record<string, string>;
   /** Describes the conditions for when to run the job. Defaults to 'on_success'. */
   readonly when?: JobWhen;
+  /* Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script */
+  readonly hooks?: DefaultHooks;
 }
 
 /**
@@ -582,6 +591,8 @@ export interface Trigger {
   readonly strategy?: Strategy;
   /** A list of local files or artifacts from other jobs to define the pipeline */
   readonly include?: TriggerInclude[];
+  /** Input parameters for the downstream pipeline when using spec:inputs */
+  readonly inputs?: Record<string, any>;
 }
 
 /**
@@ -608,11 +619,14 @@ export interface TriggerInclude {
 
 /**
  * You can mirror the pipeline status from the triggered pipeline to the source bridge job
- * by using strategy: depend
+ * by using strategy: depend or mirror
  * @see https://docs.gitlab.com/ee/ci/yaml/#triggerstrategy
  */
 export enum Strategy {
+  /** Not recommended, use mirror instead. The trigger job status shows failed, success, or running, depending on the downstream pipeline status. */
   DEPEND = "depend",
+  /** Mirrors the status of the downstream pipeline exactly. */
+  MIRROR = "mirror",
 }
 
 /**

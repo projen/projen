@@ -28,6 +28,40 @@ describe("Single Project", () => {
     expect(outdir).toMatchSnapshot();
   });
 
+  test("with tasks array", () => {
+    // GIVEN
+    const project = new TestProject();
+    const task1 = project.addTask("task1");
+    const task2 = project.addTask("task2");
+
+    // WHEN
+    new Release(project, {
+      tasks: [task1, task2],
+      versionFile: "version.json",
+      branch: "main",
+      artifactsDirectory: "dist",
+    });
+
+    const outdir = synthSnapshot(project);
+    const tasks = outdir[".projen/tasks.json"];
+    expect(tasks.tasks.release.steps).toContainEqual({ spawn: "task1" });
+    expect(tasks.tasks.release.steps).toContainEqual({ spawn: "task2" });
+  });
+
+  test("throws error when neither task nor tasks provided", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN/THEN
+    expect(() => {
+      new Release(project, {
+        versionFile: "version.json",
+        branch: "main",
+        artifactsDirectory: "dist",
+      } as any);
+    }).toThrow("Either 'tasks' or 'task' must be provided");
+  });
+
   test("with major version filter", () => {
     // GIVEN
     const project = new TestProject();

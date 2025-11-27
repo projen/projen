@@ -97,7 +97,7 @@ const hasJsii = existsSync("node_modules/.bin/jsii");
 const hasTsNode = existsSync("node_modules/.bin/ts-node");
 const needsBootstrapping = !isBuild || !hasTsNode;
 
-const installCommand = "yarn install --frozen-lockfile --check-files --non-interactive";
+const installCommand = "${project.package.installCommand}";
 const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
 
 function bootstrap() {
@@ -182,12 +182,15 @@ export function setupJsiiDocgen(project: NodeProject) {
  * @param project The project to add the task to
  */
 export function setupUpgradeDependencies(project: NodeProject) {
+  const cooldown = 2; //
+
   // Upgrade Dependencies in two parts:
   // a) Upgrade bundled dependencies as a releasable fix
   // b) Upgrade devDependencies as a chore
   new UpgradeDependencies(project, {
     taskName: "upgrade-bundled",
     types: [DependencyType.BUNDLED],
+    cooldown,
     semanticCommit: "fix",
     pullRequestTitle: "upgrade bundled dependencies",
     workflowOptions: {
@@ -205,9 +208,8 @@ export function setupUpgradeDependencies(project: NodeProject) {
         .map((d: any) => d.name),
       // constructs version constraint should not be changed
       "constructs",
-      // markmac depends on projen, we are excluding it here to avoid a circular update loop
-      "markmac",
     ],
+    cooldown,
     workflowOptions: {
       labels: ["auto-approve"],
     },
@@ -267,22 +269,6 @@ export function setupVscode(project: NodeProject) {
 }
 
 /**
- * Setup mergify rules
- * @param project The project to add the rules to
- */
-export function setupMergify(project: NodeProject) {
-  project.github?.mergify?.addRule({
-    name: "Label core contributions",
-    actions: {
-      label: {
-        add: ["contribution/core"],
-      },
-    },
-    conditions: ["author~=^(eladb|Chriscbr)$", "label!=contribution/core"],
-  });
-}
-
-/**
  * Setup gitpod configuration
  *
  * @param project The project to add the configuration to
@@ -290,9 +276,8 @@ export function setupMergify(project: NodeProject) {
 export function setupGitpod(project: NodeProject) {
   project.gitpod?.addCustomTask({
     name: "Setup",
-    init: "yarn install",
-    prebuild: "bash ./projen.bash",
-    command: "npx projen build",
+    init: project.package.installCommand,
+    command: `${project.projenCommand} ${project.buildTask.name}`,
   });
 }
 
@@ -303,7 +288,7 @@ export function setupGitpod(project: NodeProject) {
  */
 export function setupDevcontainer(project: NodeProject) {
   const setup = project.addTask("devenv:setup");
-  setup.exec("yarn install");
+  setup.exec(project.package.installCommand);
   setup.spawn(project.buildTask);
   project.devContainer?.addTasks(setup);
 
@@ -332,6 +317,7 @@ export function setupNpmignore(project: NodeProject) {
   project.npmignore?.exclude("/logo/");
   project.npmignore?.exclude("/rfcs/");
   project.npmignore?.exclude("/scripts/");
+  project.npmignore?.exclude("/schemas/");
   project.npmignore?.exclude("/ARCHITECTURE.md");
   project.npmignore?.exclude("/CODE_OF_CONDUCT.md");
   project.npmignore?.exclude("/CONTRIBUTING.md");

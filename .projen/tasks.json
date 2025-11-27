@@ -1,5 +1,14 @@
 {
   "tasks": {
+    "audit": {
+      "name": "audit",
+      "description": "Run security audit",
+      "steps": [
+        {
+          "exec": "npm audit --audit-level=high --omit=dev"
+        }
+      ]
+    },
     "build": {
       "name": "build",
       "description": "Full release build",
@@ -132,7 +141,7 @@
       "name": "devenv:setup",
       "steps": [
         {
-          "exec": "yarn install"
+          "exec": "npm ci"
         },
         {
           "spawn": "build"
@@ -179,7 +188,7 @@
       "description": "Install project dependencies and update lockfile (non-frozen)",
       "steps": [
         {
-          "exec": "yarn install --check-files"
+          "exec": "npm install"
         }
       ]
     },
@@ -188,7 +197,7 @@
       "description": "Install project dependencies using frozen lockfile",
       "steps": [
         {
-          "exec": "yarn install --check-files --frozen-lockfile"
+          "exec": "npm ci"
         }
       ]
     },
@@ -311,6 +320,9 @@
       "description": "Prepare the project for compilation",
       "steps": [
         {
+          "spawn": "audit"
+        },
+        {
           "spawn": "check-licenses"
         }
       ]
@@ -397,17 +409,18 @@
       "name": "upgrade",
       "description": "upgrade dependencies",
       "env": {
-        "CI": "0"
+        "CI": "0",
+        "NPM_CONFIG_BEFORE": "$(node -p \"new Date(Date.now()-172800000).toISOString()\")"
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
         },
         {
-          "exec": "yarn install --check-files"
+          "exec": "npm install"
         },
         {
-          "exec": "yarn upgrade @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker prettier ts-jest ts-node typescript"
+          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript"
         },
         {
           "exec": "node ./projen.js"
@@ -421,17 +434,18 @@
       "name": "upgrade-bundled",
       "description": "upgrade bundled dependencies",
       "env": {
-        "CI": "0"
+        "CI": "0",
+        "NPM_CONFIG_BEFORE": "$(node -p \"new Date(Date.now()-172800000).toISOString()\")"
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,consola,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
         },
         {
-          "exec": "yarn install --check-files"
+          "exec": "npm install"
         },
         {
-          "exec": "yarn upgrade @iarna/toml case chalk comment-json consola conventional-changelog-config-spec fast-glob fast-json-patch ini parse-conflict-json semver shx xmlbuilder2 yaml yargs"
+          "exec": "npm update @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-glob fast-json-patch ini parse-conflict-json semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "node ./projen.js"

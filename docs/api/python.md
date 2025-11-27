@@ -507,19 +507,19 @@ Represents configuration of a pyproject.toml file for a Poetry project.
 ```typescript
 import { python } from 'projen'
 
-new python.PoetryPyproject(project: Project, options: PoetryPyprojectOptions)
+new python.PoetryPyproject(scope: IConstruct, options: PoetryPyprojectOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.PoetryPyproject.Initializer.parameter.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.python.PoetryPyproject.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.python.PoetryPyproject.Initializer.parameter.options">options</a></code> | <code><a href="#projen.python.PoetryPyprojectOptions">PoetryPyprojectOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.python.PoetryPyproject.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.python.PoetryPyproject.Initializer.parameter.scope"></a>
 
-- *Type:* projen.Project
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -637,7 +637,7 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.python.PoetryPyproject.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.PoetryPyproject.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.PoetryPyproject.property.file">file</a></code> | <code>projen.TomlFile</code> | *No description.* |
+| <code><a href="#projen.python.PoetryPyproject.property.file">file</a></code> | <code><a href="#projen.python.PyprojectTomlFile">PyprojectTomlFile</a></code> | *No description.* |
 
 ---
 
@@ -666,10 +666,10 @@ public readonly project: Project;
 ##### `file`<sup>Required</sup> <a name="file" id="projen.python.PoetryPyproject.property.file"></a>
 
 ```typescript
-public readonly file: TomlFile;
+public readonly file: PyprojectTomlFile;
 ```
 
-- *Type:* projen.TomlFile
+- *Type:* <a href="#projen.python.PyprojectTomlFile">PyprojectTomlFile</a>
 
 ---
 
@@ -883,6 +883,445 @@ public readonly pythonExec: string;
 - *Type:* string
 
 Path to the python executable to use.
+
+---
+
+
+### PyprojectTomlFile <a name="PyprojectTomlFile" id="projen.python.PyprojectTomlFile"></a>
+
+Represents configuration of a pyproject.toml file.
+
+> [https://packaging.python.org/en/latest/guides/writing-pyproject-toml/](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
+
+#### Initializers <a name="Initializers" id="projen.python.PyprojectTomlFile.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+new python.PyprojectTomlFile(scope: IConstruct, config: PyprojectToml)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyprojectTomlFile.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.python.PyprojectTomlFile.Initializer.parameter.config">config</a></code> | <code><a href="#projen.python.PyprojectToml">PyprojectToml</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.python.PyprojectTomlFile.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `config`<sup>Required</sup> <a name="config" id="projen.python.PyprojectTomlFile.Initializer.parameter.config"></a>
+
+- *Type:* <a href="#projen.python.PyprojectToml">PyprojectToml</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.PyprojectTomlFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.python.PyprojectTomlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.python.PyprojectTomlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.PyprojectTomlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.python.PyprojectTomlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
+| <code><a href="#projen.python.PyprojectTomlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
+| <code><a href="#projen.python.PyprojectTomlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
+| <code><a href="#projen.python.PyprojectTomlFile.patch">patch</a></code> | Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information. |
+
+---
+
+##### `toString` <a name="toString" id="projen.python.PyprojectTomlFile.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.python.PyprojectTomlFile.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.python.PyprojectTomlFile.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.python.PyprojectTomlFile.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.python.PyprojectTomlFile.addDeletionOverride"></a>
+
+```typescript
+public addDeletionOverride(path: string): void
+```
+
+Syntactic sugar for `addOverride(path, undefined)`.
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.python.PyprojectTomlFile.addDeletionOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the value to delete.
+
+---
+
+##### `addOverride` <a name="addOverride" id="projen.python.PyprojectTomlFile.addOverride"></a>
+
+```typescript
+public addOverride(path: string, value: any): void
+```
+
+Adds an override to the synthesized object file.
+
+If the override is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example,
+```typescript
+project.tsconfig.file.addOverride('compilerOptions.alwaysStrict', true);
+project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable', 'esnext']);
+```
+would add the overrides
+```json
+"compilerOptions": {
+  "alwaysStrict": true,
+  "lib": [
+    "dom",
+    "dom.iterable",
+    "esnext"
+  ]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.python.PyprojectTomlFile.addOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to override values in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.python.PyprojectTomlFile.addOverride.parameter.value"></a>
+
+- *Type:* any
+
+The value.
+
+Could be primitive or complex.
+
+---
+
+##### `addToArray` <a name="addToArray" id="projen.python.PyprojectTomlFile.addToArray"></a>
+
+```typescript
+public addToArray(path: string, values: ...any[]): void
+```
+
+Adds to an array in the synthesized object file.
+
+If the array is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2020"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.addToArray('compilerOptions.exclude', 'coverage');
+project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.python.PyprojectTomlFile.addToArray.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to att to arrays in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `values`<sup>Required</sup> <a name="values" id="projen.python.PyprojectTomlFile.addToArray.parameter.values"></a>
+
+- *Type:* ...any[]
+
+The values to add.
+
+Could be primitive or complex.
+
+---
+
+##### `patch` <a name="patch" id="projen.python.PyprojectTomlFile.patch"></a>
+
+```typescript
+public patch(patches: ...JsonPatch[]): void
+```
+
+Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2020"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `patches`<sup>Required</sup> <a name="patches" id="projen.python.PyprojectTomlFile.patch.parameter.patches"></a>
+
+- *Type:* ...projen.JsonPatch[]
+
+The patch operations to apply.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.PyprojectTomlFile.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.python.PyprojectTomlFile.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.python.PyprojectTomlFile.isConstruct"></a>
+
+```typescript
+import { python } from 'projen'
+
+python.PyprojectTomlFile.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.python.PyprojectTomlFile.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.python.PyprojectTomlFile.isComponent"></a>
+
+```typescript
+import { python } from 'projen'
+
+python.PyprojectTomlFile.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.python.PyprojectTomlFile.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyprojectTomlFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.python.PyprojectTomlFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.python.PyprojectTomlFile.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.python.PyprojectTomlFile.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.python.PyprojectTomlFile.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.python.PyprojectTomlFile.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.python.PyprojectTomlFile.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.python.PyprojectTomlFile.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.python.PyprojectTomlFile.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.python.PyprojectTomlFile.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `omitEmpty`<sup>Required</sup> <a name="omitEmpty" id="projen.python.PyprojectTomlFile.property.omitEmpty"></a>
+
+```typescript
+public readonly omitEmpty: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if empty objects and arrays are omitted from the output object.
 
 ---
 
@@ -1696,7 +2135,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.python.PythonProject.property.gitpod">gitpod</a></code> | <code>projen.Gitpod</code> | Access for Gitpod. |
 | <code><a href="#projen.python.PythonProject.property.vscode">vscode</a></code> | <code>projen.vscode.VsCode</code> | Access all VSCode components. |
 | <code><a href="#projen.python.PythonProject.property.depsManager">depsManager</a></code> | <code><a href="#projen.python.IPythonDeps">IPythonDeps</a></code> | API for managing dependencies. |
-| <code><a href="#projen.python.PythonProject.property.envManager">envManager</a></code> | <code><a href="#projen.python.IPythonEnv">IPythonEnv</a></code> | API for mangaging the Python runtime environment. |
+| <code><a href="#projen.python.PythonProject.property.envManager">envManager</a></code> | <code><a href="#projen.python.IPythonEnv">IPythonEnv</a></code> | API for managing the Python runtime environment. |
 | <code><a href="#projen.python.PythonProject.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
 | <code><a href="#projen.python.PythonProject.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Directory where sample tests are located. |
 | <code><a href="#projen.python.PythonProject.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
@@ -2100,7 +2539,7 @@ public readonly envManager: IPythonEnv;
 
 - *Type:* <a href="#projen.python.IPythonEnv">IPythonEnv</a>
 
-API for mangaging the Python runtime environment.
+API for managing the Python runtime environment.
 
 ---
 
@@ -3074,6 +3513,282 @@ A task that uploads the package to the Test PyPI repository.
 ---
 
 
+### Uv <a name="Uv" id="projen.python.Uv"></a>
+
+- *Implements:* <a href="#projen.python.IPythonDeps">IPythonDeps</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
+
+Manage project dependencies, virtual environments, and packaging through uv.
+
+#### Initializers <a name="Initializers" id="projen.python.Uv.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+new python.Uv(scope: IConstruct, options: UvOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.Uv.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.python.Uv.Initializer.parameter.options">options</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.python.Uv.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.python.Uv.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.Uv.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.python.Uv.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.python.Uv.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Uv.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.python.Uv.addDependency">addDependency</a></code> | Adds a runtime dependency. |
+| <code><a href="#projen.python.Uv.addDevDependency">addDevDependency</a></code> | Adds a dev dependency. |
+| <code><a href="#projen.python.Uv.installDependencies">installDependencies</a></code> | Installs dependencies (called during post-synthesis). |
+| <code><a href="#projen.python.Uv.setupEnvironment">setupEnvironment</a></code> | Initializes the virtual environment if it doesn't exist (called during post-synthesis). |
+
+---
+
+##### `toString` <a name="toString" id="projen.python.Uv.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.python.Uv.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.python.Uv.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.python.Uv.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addDependency` <a name="addDependency" id="projen.python.Uv.addDependency"></a>
+
+```typescript
+public addDependency(spec: string): void
+```
+
+Adds a runtime dependency.
+
+###### `spec`<sup>Required</sup> <a name="spec" id="projen.python.Uv.addDependency.parameter.spec"></a>
+
+- *Type:* string
+
+---
+
+##### `addDevDependency` <a name="addDevDependency" id="projen.python.Uv.addDevDependency"></a>
+
+```typescript
+public addDevDependency(spec: string): void
+```
+
+Adds a dev dependency.
+
+###### `spec`<sup>Required</sup> <a name="spec" id="projen.python.Uv.addDevDependency.parameter.spec"></a>
+
+- *Type:* string
+
+---
+
+##### `installDependencies` <a name="installDependencies" id="projen.python.Uv.installDependencies"></a>
+
+```typescript
+public installDependencies(): void
+```
+
+Installs dependencies (called during post-synthesis).
+
+##### `setupEnvironment` <a name="setupEnvironment" id="projen.python.Uv.setupEnvironment"></a>
+
+```typescript
+public setupEnvironment(): void
+```
+
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.Uv.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.python.Uv.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.python.Uv.isConstruct"></a>
+
+```typescript
+import { python } from 'projen'
+
+python.Uv.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.python.Uv.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.python.Uv.isComponent"></a>
+
+```typescript
+import { python } from 'projen'
+
+python.Uv.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.python.Uv.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.Uv.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.python.Uv.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.python.Uv.property.file">file</a></code> | <code><a href="#projen.python.PyprojectTomlFile">PyprojectTomlFile</a></code> | The `pyproject.toml` file. |
+| <code><a href="#projen.python.Uv.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | A task that installs and updates dependencies. |
+| <code><a href="#projen.python.Uv.property.installTask">installTask</a></code> | <code>projen.Task</code> | *No description.* |
+| <code><a href="#projen.python.Uv.property.publishTask">publishTask</a></code> | <code>projen.Task</code> | A task that uploads the package to a package repository. |
+| <code><a href="#projen.python.Uv.property.publishTestTask">publishTestTask</a></code> | <code>projen.Task</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.python.Uv.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.python.Uv.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.python.Uv.property.file"></a>
+
+```typescript
+public readonly file: PyprojectTomlFile;
+```
+
+- *Type:* <a href="#projen.python.PyprojectTomlFile">PyprojectTomlFile</a>
+
+The `pyproject.toml` file.
+
+---
+
+##### `installCiTask`<sup>Required</sup> <a name="installCiTask" id="projen.python.Uv.property.installCiTask"></a>
+
+```typescript
+public readonly installCiTask: Task;
+```
+
+- *Type:* projen.Task
+
+A task that installs and updates dependencies.
+
+---
+
+##### `installTask`<sup>Required</sup> <a name="installTask" id="projen.python.Uv.property.installTask"></a>
+
+```typescript
+public readonly installTask: Task;
+```
+
+- *Type:* projen.Task
+
+---
+
+##### `publishTask`<sup>Required</sup> <a name="publishTask" id="projen.python.Uv.property.publishTask"></a>
+
+```typescript
+public readonly publishTask: Task;
+```
+
+- *Type:* projen.Task
+
+A task that uploads the package to a package repository.
+
+---
+
+##### `publishTestTask`<sup>Required</sup> <a name="publishTestTask" id="projen.python.Uv.property.publishTestTask"></a>
+
+```typescript
+public readonly publishTestTask: Task;
+```
+
+- *Type:* projen.Task
+
+---
+
+
 ### Venv <a name="Venv" id="projen.python.Venv"></a>
 
 - *Implements:* <a href="#projen.python.IPythonEnv">IPythonEnv</a>
@@ -3252,6 +3967,66 @@ public readonly project: Project;
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### BuildSystem <a name="BuildSystem" id="projen.python.BuildSystem"></a>
+
+Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
+
+#### Initializer <a name="Initializer" id="projen.python.BuildSystem.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const buildSystem: python.BuildSystem = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.BuildSystem.property.requires">requires</a></code> | <code>string[]</code> | List of strings following the version specifier specification, representing dependencies required to execute the build system. |
+| <code><a href="#projen.python.BuildSystem.property.backendPath">backendPath</a></code> | <code>string[]</code> | list of directories to prepend to `sys.path` when loading the build backend, relative to project root. |
+| <code><a href="#projen.python.BuildSystem.property.buildBackend">buildBackend</a></code> | <code>string</code> | String is formatted following the same `module:object` syntax as a `setuptools` entry point. |
+
+---
+
+##### `requires`<sup>Required</sup> <a name="requires" id="projen.python.BuildSystem.property.requires"></a>
+
+```typescript
+public readonly requires: string[];
+```
+
+- *Type:* string[]
+
+List of strings following the version specifier specification, representing dependencies required to execute the build system.
+
+---
+
+##### `backendPath`<sup>Optional</sup> <a name="backendPath" id="projen.python.BuildSystem.property.backendPath"></a>
+
+```typescript
+public readonly backendPath: string[];
+```
+
+- *Type:* string[]
+
+list of directories to prepend to `sys.path` when loading the build backend, relative to project root.
+
+---
+
+##### `buildBackend`<sup>Optional</sup> <a name="buildBackend" id="projen.python.BuildSystem.property.buildBackend"></a>
+
+```typescript
+public readonly buildBackend: string;
+```
+
+- *Type:* string
+
+String is formatted following the same `module:object` syntax as a `setuptools` entry point.
+
+It’s also legal to leave out the `:object` part.
+
+---
+
 ### PipOptions <a name="PipOptions" id="projen.python.PipOptions"></a>
 
 Options for pip.
@@ -3289,6 +4064,7 @@ const poetryOptions: python.PoetryOptions = { ... }
 | <code><a href="#projen.python.PoetryOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PoetryOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PoetryOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.PoetryOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.python.PoetryOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 
 ---
@@ -3415,6 +4191,18 @@ public readonly setupConfig: {[ key: string ]: any};
 - *Type:* {[ key: string ]: any}
 
 Additional fields to pass in the setup() function if using setuptools.
+
+---
+
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PoetryOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+
+Additional options to set for uv if using uv.
 
 ---
 
@@ -4117,6 +4905,45 @@ Version of the package (required).
 
 ---
 
+### ProjectAuthor <a name="ProjectAuthor" id="projen.python.ProjectAuthor"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.ProjectAuthor.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const projectAuthor: python.ProjectAuthor = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.ProjectAuthor.property.email">email</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.python.ProjectAuthor.property.name">name</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `email`<sup>Optional</sup> <a name="email" id="projen.python.ProjectAuthor.property.email"></a>
+
+```typescript
+public readonly email: string;
+```
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="projen.python.ProjectAuthor.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
 ### ProjenrcOptions <a name="ProjenrcOptions" id="projen.python.ProjenrcOptions"></a>
 
 Options for `Projenrc`.
@@ -4175,6 +5002,694 @@ public readonly pythonExec: string;
 - *Default:* "python"
 
 Path to the python executable to use.
+
+---
+
+### PyprojectToml <a name="PyprojectToml" id="projen.python.PyprojectToml"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.PyprojectToml.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyprojectToml: python.PyprojectToml = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyprojectToml.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
+| <code><a href="#projen.python.PyprojectToml.property.dependencyGroups">dependencyGroups</a></code> | <code><a href="#projen.python.PyprojectTomlDependencyGroups">PyprojectTomlDependencyGroups</a></code> | Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/). |
+| <code><a href="#projen.python.PyprojectToml.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | There are two kinds of metadata: _static_ and _dynamic_. |
+| <code><a href="#projen.python.PyprojectToml.property.tool">tool</a></code> | <code><a href="#projen.python.PyprojectTomlTool">PyprojectTomlTool</a></code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
+
+---
+
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.python.PyprojectToml.property.buildSystem"></a>
+
+```typescript
+public readonly buildSystem: BuildSystem;
+```
+
+- *Type:* <a href="#projen.python.BuildSystem">BuildSystem</a>
+
+---
+
+##### `dependencyGroups`<sup>Optional</sup> <a name="dependencyGroups" id="projen.python.PyprojectToml.property.dependencyGroups"></a>
+
+```typescript
+public readonly dependencyGroups: PyprojectTomlDependencyGroups;
+```
+
+- *Type:* <a href="#projen.python.PyprojectTomlDependencyGroups">PyprojectTomlDependencyGroups</a>
+
+Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
+
+---
+
+##### `project`<sup>Optional</sup> <a name="project" id="projen.python.PyprojectToml.property.project"></a>
+
+```typescript
+public readonly project: PyprojectTomlProject;
+```
+
+- *Type:* <a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a>
+
+There are two kinds of metadata: _static_ and _dynamic_.
+
+Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
+- Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+
+---
+
+##### `tool`<sup>Optional</sup> <a name="tool" id="projen.python.PyprojectToml.property.tool"></a>
+
+```typescript
+public readonly tool: PyprojectTomlTool;
+```
+
+- *Type:* <a href="#projen.python.PyprojectTomlTool">PyprojectTomlTool</a>
+
+Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
+
+Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
+
+---
+
+### PyprojectTomlDependencyGroups <a name="PyprojectTomlDependencyGroups" id="projen.python.PyprojectTomlDependencyGroups"></a>
+
+Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
+
+#### Initializer <a name="Initializer" id="projen.python.PyprojectTomlDependencyGroups.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyprojectTomlDependencyGroups: python.PyprojectTomlDependencyGroups = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyprojectTomlDependencyGroups.property.dev">dev</a></code> | <code>any[]</code> | *No description.* |
+
+---
+
+##### `dev`<sup>Optional</sup> <a name="dev" id="projen.python.PyprojectTomlDependencyGroups.property.dev"></a>
+
+```typescript
+public readonly dev: any[];
+```
+
+- *Type:* any[]
+
+---
+
+### PyprojectTomlProject <a name="PyprojectTomlProject" id="projen.python.PyprojectTomlProject"></a>
+
+There are two kinds of metadata: _static_ and _dynamic_.
+
+Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
+- Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+
+#### Initializer <a name="Initializer" id="projen.python.PyprojectTomlProject.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyprojectTomlProject: python.PyprojectTomlProject = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyprojectTomlProject.property.name">name</a></code> | <code>string</code> | Valid name consists only of ASCII letters and numbers, period, underscore and hyphen. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.authors">authors</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | People or organizations considered as 'authors' of the project. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.classifiers">classifiers</a></code> | <code>string[]</code> | List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.dependencies">dependencies</a></code> | <code>string[]</code> | An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.description">description</a></code> | <code>string</code> | Summary description of the project in one line. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.dynamic">dynamic</a></code> | <code><a href="#projen.python.PyprojectTomlProjectDynamic">PyprojectTomlProjectDynamic</a>[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.keywords">keywords</a></code> | <code>string[]</code> | List of keywords or tags that describe the project. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.license">license</a></code> | <code>any</code> | For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | People or organizations considered as 'maintainers' of the project. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.optionalDependencies">optionalDependencies</a></code> | <code>any</code> | Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.readme">readme</a></code> | <code>any</code> | Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version(s) that the distribution is compatible with. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.version">version</a></code> | <code>string</code> | Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization). |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.python.PyprojectTomlProject.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Valid name consists only of ASCII letters and numbers, period, underscore and hyphen.
+
+It must start and end with a letter or number.
+
+---
+
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.python.PyprojectTomlProject.property.authors"></a>
+
+```typescript
+public readonly authors: ProjectAuthor[];
+```
+
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
+
+People or organizations considered as 'authors' of the project.
+
+Each author is a table with `name` key, `email` key, or both.
+
+---
+
+##### `classifiers`<sup>Optional</sup> <a name="classifiers" id="projen.python.PyprojectTomlProject.property.classifiers"></a>
+
+```typescript
+public readonly classifiers: string[];
+```
+
+- *Type:* string[]
+
+List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects.
+
+---
+
+##### `dependencies`<sup>Optional</sup> <a name="dependencies" id="projen.python.PyprojectTomlProject.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: string[];
+```
+
+- *Type:* string[]
+
+An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project.
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.python.PyprojectTomlProject.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+Summary description of the project in one line.
+
+Tools may not accept multiple lines.
+
+---
+
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.python.PyprojectTomlProject.property.dynamic"></a>
+
+```typescript
+public readonly dynamic: PyprojectTomlProjectDynamic[];
+```
+
+- *Type:* <a href="#projen.python.PyprojectTomlProjectDynamic">PyprojectTomlProjectDynamic</a>[]
+
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
+
+---
+
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.python.PyprojectTomlProject.property.entryPoints"></a>
+
+```typescript
+public readonly entryPoints: any;
+```
+
+- *Type:* any
+
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
+
+---
+
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.python.PyprojectTomlProject.property.guiScripts"></a>
+
+```typescript
+public readonly guiScripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
+
+---
+
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.python.PyprojectTomlProject.property.importNames"></a>
+
+```typescript
+public readonly importNames: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project exclusively provides when installed.
+
+---
+
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.python.PyprojectTomlProject.property.importNamespaces"></a>
+
+```typescript
+public readonly importNamespaces: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
+
+---
+
+##### `keywords`<sup>Optional</sup> <a name="keywords" id="projen.python.PyprojectTomlProject.property.keywords"></a>
+
+```typescript
+public readonly keywords: string[];
+```
+
+- *Type:* string[]
+
+List of keywords or tags that describe the project.
+
+They could be used by search engines to categorize the project.
+
+---
+
+##### `license`<sup>Optional</sup> <a name="license" id="projen.python.PyprojectTomlProject.property.license"></a>
+
+```typescript
+public readonly license: any;
+```
+
+- *Type:* any
+
+For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content.
+
+Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+
+---
+
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.python.PyprojectTomlProject.property.licenseFiles"></a>
+
+```typescript
+public readonly licenseFiles: string[];
+```
+
+- *Type:* string[]
+
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
+
+---
+
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.python.PyprojectTomlProject.property.maintainers"></a>
+
+```typescript
+public readonly maintainers: ProjectAuthor[];
+```
+
+- *Type:* <a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]
+
+People or organizations considered as 'maintainers' of the project.
+
+Each maintainer is a table with `name` key, `email` key, or both.
+
+---
+
+##### `optionalDependencies`<sup>Optional</sup> <a name="optionalDependencies" id="projen.python.PyprojectTomlProject.property.optionalDependencies"></a>
+
+```typescript
+public readonly optionalDependencies: any;
+```
+
+- *Type:* any
+
+Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings.
+
+---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.python.PyprojectTomlProject.property.readme"></a>
+
+```typescript
+public readonly readme: any;
+```
+
+- *Type:* any
+
+Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`.
+
+---
+
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.python.PyprojectTomlProject.property.requiresPython"></a>
+
+```typescript
+public readonly requiresPython: string;
+```
+
+- *Type:* string
+
+Specifies the Python version(s) that the distribution is compatible with.
+
+Must be in the format specified in [Version specifiers](https://packaging.python.org/en/latest/specifications/version-specifiers/).
+
+---
+
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.python.PyprojectTomlProject.property.scripts"></a>
+
+```typescript
+public readonly scripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O.
+
+---
+
+##### `urls`<sup>Optional</sup> <a name="urls" id="projen.python.PyprojectTomlProject.property.urls"></a>
+
+```typescript
+public readonly urls: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table consisting one or multiple `label: URL` pairs.
+
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.python.PyprojectTomlProject.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization).
+
+---
+
+### PyprojectTomlTool <a name="PyprojectTomlTool" id="projen.python.PyprojectTomlTool"></a>
+
+Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
+
+Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
+
+#### Initializer <a name="Initializer" id="projen.python.PyprojectTomlTool.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const pyprojectTomlTool: python.PyprojectTomlTool = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.PyprojectTomlTool.property.black">black</a></code> | <code>any</code> | The uncompromising Python code formatter. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.cibuildwheel">cibuildwheel</a></code> | <code>any</code> | Build Python wheels for all platforms. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.hatch">hatch</a></code> | <code>any</code> | Modern, extensible Python project management. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.maturin">maturin</a></code> | <code>any</code> | Build and publish crates with pyo3, cffi and uniffi bindings as well as rust binaries as python packages. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.mypy">mypy</a></code> | <code>any</code> | Optional static typing for Python. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.pdm">pdm</a></code> | <code>any</code> | A modern Python package manager with PEP 621 support. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.poe">poe</a></code> | <code>any</code> | A task runner that works well with pyproject.toml files. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.poetry">poetry</a></code> | <code>any</code> | Python dependency management and packaging made easy. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.pyright">pyright</a></code> | <code>any</code> | Static type checker for Python. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.pytest">pytest</a></code> | <code>any</code> | Standardized automated testing of Python packages. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.repoReview">repoReview</a></code> | <code>any</code> | Review a repository for best practices. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.ruff">ruff</a></code> | <code>any</code> | An extremely fast Python linter and formatter, written in Rust. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.scikitBuild">scikitBuild</a></code> | <code>any</code> | Improved build system generator for Python C/C++/Fortran extensions. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.setuptools">setuptools</a></code> | <code>any</code> | Easily download, build, install, upgrade, and uninstall Python packages. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.setuptoolsScm">setuptoolsScm</a></code> | <code>any</code> | Manage Python package versions using SCM (e.g. Git). |
+| <code><a href="#projen.python.PyprojectTomlTool.property.taskipy">taskipy</a></code> | <code>any</code> | The complementary task runner for python. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.tombi">tombi</a></code> | <code>any</code> | Tombi is a toolkit for TOML; |
+| <code><a href="#projen.python.PyprojectTomlTool.property.tox">tox</a></code> | <code>any</code> | Standardized automated testing of Python packages. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.ty">ty</a></code> | <code>any</code> | An extremely fast Python type checker, written in Rust. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.uv">uv</a></code> | <code>any</code> | An extremely fast Python package installer and resolver, written in Rust. |
+
+---
+
+##### `black`<sup>Optional</sup> <a name="black" id="projen.python.PyprojectTomlTool.property.black"></a>
+
+```typescript
+public readonly black: any;
+```
+
+- *Type:* any
+
+The uncompromising Python code formatter.
+
+---
+
+##### `cibuildwheel`<sup>Optional</sup> <a name="cibuildwheel" id="projen.python.PyprojectTomlTool.property.cibuildwheel"></a>
+
+```typescript
+public readonly cibuildwheel: any;
+```
+
+- *Type:* any
+
+Build Python wheels for all platforms.
+
+---
+
+##### `hatch`<sup>Optional</sup> <a name="hatch" id="projen.python.PyprojectTomlTool.property.hatch"></a>
+
+```typescript
+public readonly hatch: any;
+```
+
+- *Type:* any
+
+Modern, extensible Python project management.
+
+---
+
+##### `maturin`<sup>Optional</sup> <a name="maturin" id="projen.python.PyprojectTomlTool.property.maturin"></a>
+
+```typescript
+public readonly maturin: any;
+```
+
+- *Type:* any
+
+Build and publish crates with pyo3, cffi and uniffi bindings as well as rust binaries as python packages.
+
+---
+
+##### `mypy`<sup>Optional</sup> <a name="mypy" id="projen.python.PyprojectTomlTool.property.mypy"></a>
+
+```typescript
+public readonly mypy: any;
+```
+
+- *Type:* any
+
+Optional static typing for Python.
+
+---
+
+##### `pdm`<sup>Optional</sup> <a name="pdm" id="projen.python.PyprojectTomlTool.property.pdm"></a>
+
+```typescript
+public readonly pdm: any;
+```
+
+- *Type:* any
+
+A modern Python package manager with PEP 621 support.
+
+---
+
+##### `poe`<sup>Optional</sup> <a name="poe" id="projen.python.PyprojectTomlTool.property.poe"></a>
+
+```typescript
+public readonly poe: any;
+```
+
+- *Type:* any
+
+A task runner that works well with pyproject.toml files.
+
+---
+
+##### `poetry`<sup>Optional</sup> <a name="poetry" id="projen.python.PyprojectTomlTool.property.poetry"></a>
+
+```typescript
+public readonly poetry: any;
+```
+
+- *Type:* any
+
+Python dependency management and packaging made easy.
+
+---
+
+##### `pyright`<sup>Optional</sup> <a name="pyright" id="projen.python.PyprojectTomlTool.property.pyright"></a>
+
+```typescript
+public readonly pyright: any;
+```
+
+- *Type:* any
+
+Static type checker for Python.
+
+---
+
+##### `pytest`<sup>Optional</sup> <a name="pytest" id="projen.python.PyprojectTomlTool.property.pytest"></a>
+
+```typescript
+public readonly pytest: any;
+```
+
+- *Type:* any
+
+Standardized automated testing of Python packages.
+
+---
+
+##### `repoReview`<sup>Optional</sup> <a name="repoReview" id="projen.python.PyprojectTomlTool.property.repoReview"></a>
+
+```typescript
+public readonly repoReview: any;
+```
+
+- *Type:* any
+
+Review a repository for best practices.
+
+---
+
+##### `ruff`<sup>Optional</sup> <a name="ruff" id="projen.python.PyprojectTomlTool.property.ruff"></a>
+
+```typescript
+public readonly ruff: any;
+```
+
+- *Type:* any
+
+An extremely fast Python linter and formatter, written in Rust.
+
+---
+
+##### `scikitBuild`<sup>Optional</sup> <a name="scikitBuild" id="projen.python.PyprojectTomlTool.property.scikitBuild"></a>
+
+```typescript
+public readonly scikitBuild: any;
+```
+
+- *Type:* any
+
+Improved build system generator for Python C/C++/Fortran extensions.
+
+---
+
+##### `setuptools`<sup>Optional</sup> <a name="setuptools" id="projen.python.PyprojectTomlTool.property.setuptools"></a>
+
+```typescript
+public readonly setuptools: any;
+```
+
+- *Type:* any
+
+Easily download, build, install, upgrade, and uninstall Python packages.
+
+---
+
+##### `setuptoolsScm`<sup>Optional</sup> <a name="setuptoolsScm" id="projen.python.PyprojectTomlTool.property.setuptoolsScm"></a>
+
+```typescript
+public readonly setuptoolsScm: any;
+```
+
+- *Type:* any
+
+Manage Python package versions using SCM (e.g. Git).
+
+---
+
+##### `taskipy`<sup>Optional</sup> <a name="taskipy" id="projen.python.PyprojectTomlTool.property.taskipy"></a>
+
+```typescript
+public readonly taskipy: any;
+```
+
+- *Type:* any
+
+The complementary task runner for python.
+
+---
+
+##### `tombi`<sup>Optional</sup> <a name="tombi" id="projen.python.PyprojectTomlTool.property.tombi"></a>
+
+```typescript
+public readonly tombi: any;
+```
+
+- *Type:* any
+
+Tombi is a toolkit for TOML;
+
+providing a formatter/linter and language server
+
+---
+
+##### `tox`<sup>Optional</sup> <a name="tox" id="projen.python.PyprojectTomlTool.property.tox"></a>
+
+```typescript
+public readonly tox: any;
+```
+
+- *Type:* any
+
+Standardized automated testing of Python packages.
+
+---
+
+##### `ty`<sup>Optional</sup> <a name="ty" id="projen.python.PyprojectTomlTool.property.ty"></a>
+
+```typescript
+public readonly ty: any;
+```
+
+- *Type:* any
+
+An extremely fast Python type checker, written in Rust.
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.python.PyprojectTomlTool.property.uv"></a>
+
+```typescript
+public readonly uv: any;
+```
+
+- *Type:* any
+
+An extremely fast Python package installer and resolver, written in Rust.
 
 ---
 
@@ -4368,6 +5883,7 @@ const pythonPackagingOptions: python.PythonPackagingOptions = { ... }
 | <code><a href="#projen.python.PythonPackagingOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PythonPackagingOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonPackagingOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.PythonPackagingOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
 
 ---
 
@@ -4496,6 +6012,18 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PythonPackagingOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+
+Additional options to set for uv if using uv.
+
+---
+
 ### PythonProjectOptions <a name="PythonProjectOptions" id="projen.python.PythonProjectOptions"></a>
 
 Options for `PythonProject`.
@@ -4551,6 +6079,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.PythonProjectOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.PythonProjectOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.python.PythonProjectOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.python.PythonProjectOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.python.PythonProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -4568,6 +6097,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.python.PythonProjectOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PythonProjectOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
+| <code><a href="#projen.python.PythonProjectOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.python.PythonProjectOptions.property.venvOptions">venvOptions</a></code> | <code><a href="#projen.python.VenvOptions">VenvOptions</a></code> | Venv options. |
 
@@ -5112,6 +6642,18 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.PythonProjectOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+
+Additional options to set for uv if using uv.
+
+---
+
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.PythonProjectOptions.property.pythonExec"></a>
 
 ```typescript
@@ -5354,6 +6896,19 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.python.PythonProjectOptions.property.uv"></a>
+
+```typescript
+public readonly uv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
 
 ---
 
@@ -5622,6 +7177,7 @@ const setuptoolsOptions: python.SetuptoolsOptions = { ... }
 | <code><a href="#projen.python.SetuptoolsOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.poetryOptions">poetryOptions</a></code> | <code><a href="#projen.python.PoetryPyprojectOptionsWithoutDeps">PoetryPyprojectOptionsWithoutDeps</a></code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.python.SetuptoolsOptions.property.uvOptions">uvOptions</a></code> | <code><a href="#projen.python.UvOptions">UvOptions</a></code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.python.SetuptoolsOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 
 ---
@@ -5751,6 +7307,18 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.python.SetuptoolsOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* <a href="#projen.python.UvOptions">UvOptions</a>
+
+Additional options to set for uv if using uv.
+
+---
+
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.SetuptoolsOptions.property.pythonExec"></a>
 
 ```typescript
@@ -5761,6 +7329,79 @@ public readonly pythonExec: string;
 - *Default:* "python"
 
 Path to the python executable to use.
+
+---
+
+### UvOptions <a name="UvOptions" id="projen.python.UvOptions"></a>
+
+Options for UV project.
+
+#### Initializer <a name="Initializer" id="projen.python.UvOptions.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const uvOptions: python.UvOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.UvOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
+| <code><a href="#projen.python.UvOptions.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | Declares any Python level dependencies that must be installed in order to run the project’s build system successfully. |
+| <code><a href="#projen.python.UvOptions.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | The project's basic metadata configuration. |
+| <code><a href="#projen.python.UvOptions.property.uv">uv</a></code> | <code><a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a></code> | The configuration and metadata for uv. |
+
+---
+
+##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.python.UvOptions.property.pythonExec"></a>
+
+```typescript
+public readonly pythonExec: string;
+```
+
+- *Type:* string
+- *Default:* "python"
+
+Path to the python executable to use.
+
+---
+
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.python.UvOptions.property.buildSystem"></a>
+
+```typescript
+public readonly buildSystem: BuildSystem;
+```
+
+- *Type:* <a href="#projen.python.BuildSystem">BuildSystem</a>
+- *Default:* no build system
+
+Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
+
+---
+
+##### `project`<sup>Optional</sup> <a name="project" id="projen.python.UvOptions.property.project"></a>
+
+```typescript
+public readonly project: PyprojectTomlProject;
+```
+
+- *Type:* <a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a>
+
+The project's basic metadata configuration.
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.python.UvOptions.property.uv"></a>
+
+```typescript
+public readonly uv: UvConfiguration;
+```
+
+- *Type:* <a href="#projen.python.uvConfig.UvConfiguration">UvConfiguration</a>
+
+The configuration and metadata for uv.
 
 ---
 
@@ -5841,7 +7482,7 @@ An array of packages (may be dynamically generated).
 
 ### IPythonDeps <a name="IPythonDeps" id="projen.python.IPythonDeps"></a>
 
-- *Implemented By:* <a href="#projen.python.Pip">Pip</a>, <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.IPythonDeps">IPythonDeps</a>
+- *Implemented By:* <a href="#projen.python.Pip">Pip</a>, <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Uv">Uv</a>, <a href="#projen.python.IPythonDeps">IPythonDeps</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 
@@ -5915,7 +7556,7 @@ A task that installs and updates dependencies.
 
 ### IPythonEnv <a name="IPythonEnv" id="projen.python.IPythonEnv"></a>
 
-- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Venv">Venv</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>
+- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Uv">Uv</a>, <a href="#projen.python.Venv">Venv</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 
@@ -5936,7 +7577,7 @@ Initializes the virtual environment if it doesn't exist (called during post-synt
 
 ### IPythonPackaging <a name="IPythonPackaging" id="projen.python.IPythonPackaging"></a>
 
-- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Setuptools">Setuptools</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
+- *Implemented By:* <a href="#projen.python.Poetry">Poetry</a>, <a href="#projen.python.Setuptools">Setuptools</a>, <a href="#projen.python.Uv">Uv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
 
 
 #### Properties <a name="Properties" id="Properties"></a>
@@ -5956,6 +7597,160 @@ public readonly publishTask: Task;
 - *Type:* projen.Task
 
 A task that uploads the package to a package repository.
+
+---
+
+## Enums <a name="Enums" id="Enums"></a>
+
+### PyprojectTomlProjectDynamic <a name="PyprojectTomlProjectDynamic" id="projen.python.PyprojectTomlProjectDynamic"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.VERSION">VERSION</a></code> | version. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.DESCRIPTION">DESCRIPTION</a></code> | description. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.README">README</a></code> | readme. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.REQUIRES_HYPHEN_PYTHON">REQUIRES_HYPHEN_PYTHON</a></code> | requires-python. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.LICENSE">LICENSE</a></code> | license. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.LICENSE_HYPHEN_FILES">LICENSE_HYPHEN_FILES</a></code> | license-files. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.AUTHORS">AUTHORS</a></code> | authors. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.MAINTAINERS">MAINTAINERS</a></code> | maintainers. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.KEYWORDS">KEYWORDS</a></code> | keywords. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.CLASSIFIERS">CLASSIFIERS</a></code> | classifiers. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.URLS">URLS</a></code> | urls. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.SCRIPTS">SCRIPTS</a></code> | scripts. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.GUI_HYPHEN_SCRIPTS">GUI_HYPHEN_SCRIPTS</a></code> | gui-scripts. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.ENTRY_HYPHEN_POINTS">ENTRY_HYPHEN_POINTS</a></code> | entry-points. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.DEPENDENCIES">DEPENDENCIES</a></code> | dependencies. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.OPTIONAL_HYPHEN_DEPENDENCIES">OPTIONAL_HYPHEN_DEPENDENCIES</a></code> | optional-dependencies. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.IMPORT_HYPHEN_NAMES">IMPORT_HYPHEN_NAMES</a></code> | import-names. |
+| <code><a href="#projen.python.PyprojectTomlProjectDynamic.IMPORT_HYPHEN_NAMESPACES">IMPORT_HYPHEN_NAMESPACES</a></code> | import-namespaces. |
+
+---
+
+##### `VERSION` <a name="VERSION" id="projen.python.PyprojectTomlProjectDynamic.VERSION"></a>
+
+version.
+
+---
+
+
+##### `DESCRIPTION` <a name="DESCRIPTION" id="projen.python.PyprojectTomlProjectDynamic.DESCRIPTION"></a>
+
+description.
+
+---
+
+
+##### `README` <a name="README" id="projen.python.PyprojectTomlProjectDynamic.README"></a>
+
+readme.
+
+---
+
+
+##### `REQUIRES_HYPHEN_PYTHON` <a name="REQUIRES_HYPHEN_PYTHON" id="projen.python.PyprojectTomlProjectDynamic.REQUIRES_HYPHEN_PYTHON"></a>
+
+requires-python.
+
+---
+
+
+##### `LICENSE` <a name="LICENSE" id="projen.python.PyprojectTomlProjectDynamic.LICENSE"></a>
+
+license.
+
+---
+
+
+##### `LICENSE_HYPHEN_FILES` <a name="LICENSE_HYPHEN_FILES" id="projen.python.PyprojectTomlProjectDynamic.LICENSE_HYPHEN_FILES"></a>
+
+license-files.
+
+---
+
+
+##### `AUTHORS` <a name="AUTHORS" id="projen.python.PyprojectTomlProjectDynamic.AUTHORS"></a>
+
+authors.
+
+---
+
+
+##### `MAINTAINERS` <a name="MAINTAINERS" id="projen.python.PyprojectTomlProjectDynamic.MAINTAINERS"></a>
+
+maintainers.
+
+---
+
+
+##### `KEYWORDS` <a name="KEYWORDS" id="projen.python.PyprojectTomlProjectDynamic.KEYWORDS"></a>
+
+keywords.
+
+---
+
+
+##### `CLASSIFIERS` <a name="CLASSIFIERS" id="projen.python.PyprojectTomlProjectDynamic.CLASSIFIERS"></a>
+
+classifiers.
+
+---
+
+
+##### `URLS` <a name="URLS" id="projen.python.PyprojectTomlProjectDynamic.URLS"></a>
+
+urls.
+
+---
+
+
+##### `SCRIPTS` <a name="SCRIPTS" id="projen.python.PyprojectTomlProjectDynamic.SCRIPTS"></a>
+
+scripts.
+
+---
+
+
+##### `GUI_HYPHEN_SCRIPTS` <a name="GUI_HYPHEN_SCRIPTS" id="projen.python.PyprojectTomlProjectDynamic.GUI_HYPHEN_SCRIPTS"></a>
+
+gui-scripts.
+
+---
+
+
+##### `ENTRY_HYPHEN_POINTS` <a name="ENTRY_HYPHEN_POINTS" id="projen.python.PyprojectTomlProjectDynamic.ENTRY_HYPHEN_POINTS"></a>
+
+entry-points.
+
+---
+
+
+##### `DEPENDENCIES` <a name="DEPENDENCIES" id="projen.python.PyprojectTomlProjectDynamic.DEPENDENCIES"></a>
+
+dependencies.
+
+---
+
+
+##### `OPTIONAL_HYPHEN_DEPENDENCIES` <a name="OPTIONAL_HYPHEN_DEPENDENCIES" id="projen.python.PyprojectTomlProjectDynamic.OPTIONAL_HYPHEN_DEPENDENCIES"></a>
+
+optional-dependencies.
+
+---
+
+
+##### `IMPORT_HYPHEN_NAMES` <a name="IMPORT_HYPHEN_NAMES" id="projen.python.PyprojectTomlProjectDynamic.IMPORT_HYPHEN_NAMES"></a>
+
+import-names.
+
+---
+
+
+##### `IMPORT_HYPHEN_NAMESPACES` <a name="IMPORT_HYPHEN_NAMESPACES" id="projen.python.PyprojectTomlProjectDynamic.IMPORT_HYPHEN_NAMESPACES"></a>
+
+import-namespaces.
 
 ---
 

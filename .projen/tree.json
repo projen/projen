@@ -463,6 +463,20 @@
           "path": "src/javascript/biome/biome-config.ts"
         }
       },
+      "JsiiFromJsonSchema@src--python--pyproject-toml.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/pyproject-toml.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--uv-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/uv-config.ts"
+        }
+      },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
         "metadata": {
           "type": "file",
@@ -487,6 +501,54 @@
           "type": "file",
           "construct": "JsonFile",
           "path": ".projen/tree.json"
+        }
+      },
+      "AiInstructions#AutoId30": {
+        "metadata": {
+          "type": "component",
+          "construct": "AiInstructions"
+        }
+      },
+      "AiInstructionsFile@.github--copilot-instructions.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": ".github/copilot-instructions.md"
+        }
+      },
+      "AiInstructionsFile@.cursor--rules--project.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": ".cursor/rules/project.md"
+        }
+      },
+      "AiInstructionsFile@CLAUDE.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": "CLAUDE.md"
+        }
+      },
+      "AiInstructionsFile@.amazonq--rules--project.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": ".amazonq/rules/project.md"
+        }
+      },
+      "AiInstructionsFile@.kiro--steering--project.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": ".kiro/steering/project.md"
+        }
+      },
+      "AiInstructionsFile@AGENTS.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": "AGENTS.md"
         }
       }
     }

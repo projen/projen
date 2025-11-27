@@ -1030,7 +1030,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.gitpod">gitpod</a></code> | <code>projen.Gitpod</code> | Access for Gitpod. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.vscode">vscode</a></code> | <code>projen.vscode.VsCode</code> | Access all VSCode components. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.depsManager">depsManager</a></code> | <code>projen.python.IPythonDeps</code> | API for managing dependencies. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for mangaging the Python runtime environment. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for managing the Python runtime environment. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Directory where sample tests are located. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
@@ -1436,7 +1436,7 @@ public readonly envManager: IPythonEnv;
 
 - *Type:* projen.python.IPythonEnv
 
-API for mangaging the Python runtime environment.
+API for managing the Python runtime environment.
 
 ---
 
@@ -5576,6 +5576,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.uvOptions">uvOptions</a></code> | <code>projen.python.UvOptions</code> | Additional options to set for uv if using uv. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -5593,6 +5594,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.cdk8sVersion">cdk8sVersion</a></code> | <code>string</code> | Minimum version of the cdk8s to depend on. |
@@ -6150,6 +6152,18 @@ Additional fields to pass in the setup() function if using setuptools.
 
 ---
 
+##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.cdk8s.Cdk8sPythonOptions.property.uvOptions"></a>
+
+```typescript
+public readonly uvOptions: UvOptions;
+```
+
+- *Type:* projen.python.UvOptions
+
+Additional options to set for uv if using uv.
+
+---
+
 ##### `pythonExec`<sup>Optional</sup> <a name="pythonExec" id="projen.cdk8s.Cdk8sPythonOptions.property.pythonExec"></a>
 
 ```typescript
@@ -6392,6 +6406,19 @@ public readonly setuptools: boolean;
 - *Default:* true, unless poetry is true, then false
 
 Use setuptools with a setup.py script for packaging and publishing.
+
+---
+
+##### `uv`<sup>Optional</sup> <a name="uv" id="projen.cdk8s.Cdk8sPythonOptions.property.uv"></a>
+
+```typescript
+public readonly uv: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
 
 ---
 
@@ -6712,6 +6739,8 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -8226,6 +8255,36 @@ A directory which will contain build artifacts.
 
 ---
 
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDeps"></a>
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.auditDepsOptions"></a>
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
+
+Security audit options.
+
+---
+
 ##### `autoApproveUpgrades`<sup>Optional</sup> <a name="autoApproveUpgrades" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoApproveUpgrades"></a>
 
 ```typescript
@@ -9296,6 +9355,8 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code>projen.javascript.AuditOptions</code> | Security audit options. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.biomeOptions">biomeOptions</a></code> | <code>projen.javascript.BiomeOptions</code> | Biome options. |
@@ -10816,6 +10877,36 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDeps"></a>
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.auditDepsOptions"></a>
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* projen.javascript.AuditOptions
+- *Default:* default options
+
+Security audit options.
 
 ---
 

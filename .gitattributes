@@ -2,9 +2,12 @@
 
 * text=auto eol=lf
 *.snap linguist-generated
+/.amazonq/rules/project.md linguist-generated
+/.cursor/rules/project.md linguist-generated
 /.devcontainer.json linguist-generated
 /.eslintrc.json linguist-generated
 /.gitattributes linguist-generated
+/.github/copilot-instructions.md linguist-generated
 /.github/pull_request_template.md linguist-generated
 /.github/workflows/auto-approve.yml linguist-generated
 /.github/workflows/auto-queue.yml linguist-generated
@@ -16,6 +19,7 @@
 /.github/workflows/upgrade-main.yml linguist-generated
 /.gitignore linguist-generated
 /.gitpod.yml linguist-generated
+/.kiro/steering/project.md linguist-generated
 /.markdownlint.json linguist-generated
 /.npmignore linguist-generated
 /.prettierignore linguist-generated
@@ -26,11 +30,15 @@
 /.projen/tasks.json linguist-generated
 /.projen/tree.json linguist-generated
 /.vscode/launch.json linguist-generated
+/AGENTS.md linguist-generated
 /API.md linguist-generated
+/CLAUDE.md linguist-generated
 /LICENSE linguist-generated
+/package-lock.json linguist-generated
 /package.json linguist-generated
 /projen.js linguist-generated
 /src/awscdk/private/feature-flags-v2.const.ts linguist-generated
 /src/javascript/biome/biome-config.ts linguist-generated
+/src/python/pyproject-toml.ts linguist-generated
+/src/python/uv-config.ts linguist-generated
 /tsconfig.dev.json linguist-generated
-/yarn.lock linguist-generated

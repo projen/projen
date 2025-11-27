@@ -523,6 +523,8 @@ public readonly lineEnding: LineEnding;
 
 The type of line ending applied to CSS (and its super languages) files.
 
+`auto` uses CRLF on Windows and LF on other platforms.
+
 ---
 
 ##### `lineWidth`<sup>Optional</sup> <a name="lineWidth" id="projen.javascript.biome_config.CssFormatterConfiguration.property.lineWidth"></a>
@@ -605,6 +607,7 @@ const cssParserConfiguration: javascript.biome_config.CssParserConfiguration = {
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.allowWrongLineComments">allowWrongLineComments</a></code> | <code>boolean</code> | Allow comments to appear on incorrect lines in `.css` files. |
 | <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.cssModules">cssModules</a></code> | <code>boolean</code> | Enables parsing of CSS Modules specific features. |
+| <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.tailwindDirectives">tailwindDirectives</a></code> | <code>boolean</code> | Enables parsing of Tailwind CSS 4.0 directives and functions. |
 
 ---
 
@@ -632,6 +635,18 @@ Enables parsing of CSS Modules specific features.
 
 ---
 
+##### `tailwindDirectives`<sup>Optional</sup> <a name="tailwindDirectives" id="projen.javascript.biome_config.CssParserConfiguration.property.tailwindDirectives"></a>
+
+```typescript
+public readonly tailwindDirectives: boolean;
+```
+
+- *Type:* boolean
+
+Enables parsing of Tailwind CSS 4.0 directives and functions.
+
+---
+
 ### FilesConfiguration <a name="FilesConfiguration" id="projen.javascript.biome_config.FilesConfiguration"></a>
 
 The configuration of the filesystem.
@@ -648,8 +663,8 @@ const filesConfiguration: javascript.biome_config.FilesConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.experimentalScannerIgnores">experimentalScannerIgnores</a></code> | <code>string[]</code> | Set of file and folder names that should be unconditionally ignored by Biome's scanner. |
-| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.ignoreUnknown">ignoreUnknown</a></code> | <code>boolean</code> | Tells Biome to not emit diagnostics when handling files that doesn't know. |
+| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.experimentalScannerIgnores">experimentalScannerIgnores</a></code> | <code>string[]</code> | **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>. |
+| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.ignoreUnknown">ignoreUnknown</a></code> | <code>boolean</code> | Tells Biome to not emit diagnostics when handling files that it doesn't know. |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.includes">includes</a></code> | <code>string[]</code> | A list of glob patterns. |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.maxSize">maxSize</a></code> | <code>number</code> | The maximum allowed size for source code files in bytes. |
 
@@ -663,23 +678,9 @@ public readonly experimentalScannerIgnores: string[];
 
 - *Type:* string[]
 
+**Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>.
+
 Set of file and folder names that should be unconditionally ignored by Biome's scanner.
-
-Biome maintains an internal list of default ignore entries, which is based on user feedback and which may change in any release. This setting allows overriding this internal list completely.
-
-This is considered an advanced feature that users _should_ not need to tweak themselves, but they can as a last resort. This setting can only be configured in root configurations, and is ignored in nested configs.
-
-Entries must be file or folder *names*. Specific paths and globs are not supported.
-
-Examples where this may be useful:
-
-```jsonc { "files": { "experimentalScannerIgnores": [ // You almost certainly don't want to scan your `.git` // folder, which is why it's already ignored by default: ".git",
-
-// But the scanner does scan `node_modules` by default. If // you *really* don't want this, you can ignore it like // this: "node_modules",
-
-// But it's probably better to ignore a specific dependency. // For instance, one that happens to be particularly slow to // scan: "RedisCommander.d.ts", ], } } ```
-
-Please be aware that rules relying on the module graph or type inference information may be negatively affected if dependencies of your project aren't (fully) scanned.
 
 ---
 
@@ -691,7 +692,7 @@ public readonly ignoreUnknown: boolean;
 
 - *Type:* boolean
 
-Tells Biome to not emit diagnostics when handling files that doesn't know.
+Tells Biome to not emit diagnostics when handling files that it doesn't know.
 
 ---
 
@@ -745,7 +746,7 @@ const formatterConfiguration: javascript.biome_config.FormatterConfiguration = {
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Stores whether formatting should be allowed to proceed if a given file has syntax errors. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Whether formatting should be allowed to proceed if a given file has syntax errors. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.includes">includes</a></code> | <code>string[]</code> | A list of glob patterns. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation, 2 by default. |
@@ -830,7 +831,7 @@ public readonly formatWithErrors: boolean;
 
 - *Type:* boolean
 
-Stores whether formatting should be allowed to proceed if a given file has syntax errors.
+Whether formatting should be allowed to proceed if a given file has syntax errors.
 
 ---
 
@@ -1090,6 +1091,8 @@ public readonly lineEnding: LineEnding;
 - *Type:* projen.javascript.biome_config.LineEnding
 
 The type of line ending applied to GraphQL files.
+
+`auto` uses CRLF on Windows and LF on other platforms.
 
 ---
 
@@ -1361,6 +1364,38 @@ Control the linter for Grit files.
 
 ---
 
+### HtmlAssistConfiguration <a name="HtmlAssistConfiguration" id="projen.javascript.biome_config.HtmlAssistConfiguration"></a>
+
+Options that changes how the HTML assist behaves.
+
+#### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlAssistConfiguration.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const htmlAssistConfiguration: javascript.biome_config.HtmlAssistConfiguration = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.HtmlAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the assist for HTML (and its super languages) files. |
+
+---
+
+##### `enabled`<sup>Optional</sup> <a name="enabled" id="projen.javascript.biome_config.HtmlAssistConfiguration.property.enabled"></a>
+
+```typescript
+public readonly enabled: boolean;
+```
+
+- *Type:* boolean
+
+Control the assist for HTML (and its super languages) files.
+
+---
+
 ### HtmlConfiguration <a name="HtmlConfiguration" id="projen.javascript.biome_config.HtmlConfiguration"></a>
 
 Options applied to HTML files.
@@ -1377,8 +1412,33 @@ const htmlConfiguration: javascript.biome_config.HtmlConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.HtmlAssistConfiguration</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.experimentalFullSupportEnabled">experimentalFullSupportEnabled</a></code> | <code>boolean</code> | Enables full support for HTML, Vue, Svelte and Astro files. |
 | <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.HtmlFormatterConfiguration</code> | HTML formatter options. |
+| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.HtmlLinterConfiguration</code> | HTML linter options. |
 | <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.parser">parser</a></code> | <code>projen.javascript.biome_config.HtmlParserConfiguration</code> | HTML parsing options. |
+
+---
+
+##### `assist`<sup>Optional</sup> <a name="assist" id="projen.javascript.biome_config.HtmlConfiguration.property.assist"></a>
+
+```typescript
+public readonly assist: HtmlAssistConfiguration;
+```
+
+- *Type:* projen.javascript.biome_config.HtmlAssistConfiguration
+
+---
+
+##### `experimentalFullSupportEnabled`<sup>Optional</sup> <a name="experimentalFullSupportEnabled" id="projen.javascript.biome_config.HtmlConfiguration.property.experimentalFullSupportEnabled"></a>
+
+```typescript
+public readonly experimentalFullSupportEnabled: boolean;
+```
+
+- *Type:* boolean
+
+Enables full support for HTML, Vue, Svelte and Astro files.
 
 ---
 
@@ -1391,6 +1451,18 @@ public readonly formatter: HtmlFormatterConfiguration;
 - *Type:* projen.javascript.biome_config.HtmlFormatterConfiguration
 
 HTML formatter options.
+
+---
+
+##### `linter`<sup>Optional</sup> <a name="linter" id="projen.javascript.biome_config.HtmlConfiguration.property.linter"></a>
+
+```typescript
+public readonly linter: HtmlLinterConfiguration;
+```
+
+- *Type:* projen.javascript.biome_config.HtmlLinterConfiguration
+
+HTML linter options.
 
 ---
 
@@ -1529,6 +1601,8 @@ public readonly lineEnding: LineEnding;
 
 The type of line ending applied to HTML (and its super languages) files.
 
+`auto` uses CRLF on Windows and LF on other platforms.
+
 ---
 
 ##### `lineWidth`<sup>Optional</sup> <a name="lineWidth" id="projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineWidth"></a>
@@ -1573,6 +1647,38 @@ public readonly whitespaceSensitivity: WhitespaceSensitivity;
 Whether to account for whitespace sensitivity when formatting HTML (and its super languages).
 
 Defaults to "css".
+
+---
+
+### HtmlLinterConfiguration <a name="HtmlLinterConfiguration" id="projen.javascript.biome_config.HtmlLinterConfiguration"></a>
+
+Options that changes how the HTML linter behaves.
+
+#### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlLinterConfiguration.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const htmlLinterConfiguration: javascript.biome_config.HtmlLinterConfiguration = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.HtmlLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the linter for HTML (and its super languages) files. |
+
+---
+
+##### `enabled`<sup>Optional</sup> <a name="enabled" id="projen.javascript.biome_config.HtmlLinterConfiguration.property.enabled"></a>
+
+```typescript
+public readonly enabled: boolean;
+```
+
+- *Type:* boolean
+
+Control the linter for HTML (and its super languages) files.
 
 ---
 
@@ -1913,6 +2019,8 @@ public readonly lineEnding: LineEnding;
 
 The type of line ending applied to JavaScript (and its super languages) files.
 
+`auto` uses CRLF on Windows and LF on other platforms.
+
 ---
 
 ##### `lineWidth`<sup>Optional</sup> <a name="lineWidth" id="projen.javascript.biome_config.JsFormatterConfiguration.property.lineWidth"></a>
@@ -2036,7 +2144,7 @@ Control the linter for JavaScript (and its super languages) files.
 
 ### JsonAssistConfiguration <a name="JsonAssistConfiguration" id="projen.javascript.biome_config.JsonAssistConfiguration"></a>
 
-Linter options specific to the JSON linter.
+Assist options specific to the JSON linter.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.JsonAssistConfiguration.Initializer"></a>
 
@@ -2240,6 +2348,8 @@ public readonly lineEnding: LineEnding;
 - *Type:* projen.javascript.biome_config.LineEnding
 
 The type of line ending applied to JSON (and its super languages) files.
+
+`auto` uses CRLF on Windows and LF on other platforms.
 
 ---
 
@@ -3406,6 +3516,7 @@ reactClassic.
 | <code><a href="#projen.javascript.biome_config.LineEnding.LF">LF</a></code> | lf. |
 | <code><a href="#projen.javascript.biome_config.LineEnding.CRLF">CRLF</a></code> | crlf. |
 | <code><a href="#projen.javascript.biome_config.LineEnding.CR">CR</a></code> | cr. |
+| <code><a href="#projen.javascript.biome_config.LineEnding.AUTO">AUTO</a></code> | auto. |
 
 ---
 
@@ -3426,6 +3537,13 @@ crlf.
 ##### `CR` <a name="CR" id="projen.javascript.biome_config.LineEnding.CR"></a>
 
 cr.
+
+---
+
+
+##### `AUTO` <a name="AUTO" id="projen.javascript.biome_config.LineEnding.AUTO"></a>
+
+auto.
 
 ---
 

@@ -871,19 +871,19 @@ Installs the following npm scripts:.
 ```typescript
 import { javascript } from 'projen'
 
-new javascript.Jest(project: NodeProject, options?: JestOptions)
+new javascript.Jest(scope: IConstruct, options?: JestOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.Jest.Initializer.parameter.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Jest.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.JestOptions">JestOptions</a></code> | *No description.* |
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Jest.Initializer.parameter.project"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.Jest.Initializer.parameter.scope"></a>
 
-- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -1204,7 +1204,7 @@ Returns the singleton Jest component of a project or undefined if there is none.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.Jest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.javascript.Jest.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.Jest.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.property.config">config</a></code> | <code>any</code> | Escape hatch. |
 | <code><a href="#projen.javascript.Jest.property.jestVersion">jestVersion</a></code> | <code>string</code> | Jest version, including `@` symbol, like `@^29`. |
 | <code><a href="#projen.javascript.Jest.property.file">file</a></code> | <code>projen.JsonFile</code> | Jest config file. |
@@ -1226,10 +1226,10 @@ The tree node.
 ##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.Jest.property.project"></a>
 
 ```typescript
-public readonly project: Project;
+public readonly project: NodeProject;
 ```
 
-- *Type:* projen.Project
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
 
 ---
 
@@ -4802,7 +4802,7 @@ Test whether the given construct is a component.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.javascript.UpgradeDependencies.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.UpgradeDependencies.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.postUpgradeTask">postUpgradeTask</a></code> | <code>projen.Task</code> | A task run after the upgrade task. |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.upgradeTask">upgradeTask</a></code> | <code>projen.Task</code> | The upgrade task. |
 | <code><a href="#projen.javascript.UpgradeDependencies.property.workflows">workflows</a></code> | <code>projen.github.GithubWorkflow[]</code> | The workflows that execute the upgrades. |
@@ -4825,10 +4825,10 @@ The tree node.
 ##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.UpgradeDependencies.property.project"></a>
 
 ```typescript
-public readonly project: Project;
+public readonly project: NodeProject;
 ```
 
-- *Type:* projen.Project
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
 
 ---
 
@@ -5509,6 +5509,74 @@ public readonly tsconfigPath: string;
 - *Default:* "tsconfig.json"
 
 The path of the tsconfig.json file to use for bundling.
+
+---
+
+### AuditOptions <a name="AuditOptions" id="projen.javascript.AuditOptions"></a>
+
+Options for security audit configuration.
+
+#### Initializer <a name="Initializer" id="projen.javascript.AuditOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const auditOptions: javascript.AuditOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.AuditOptions.property.level">level</a></code> | <code>string</code> | Minimum vulnerability level to check for during audit. |
+| <code><a href="#projen.javascript.AuditOptions.property.prodOnly">prodOnly</a></code> | <code>boolean</code> | Only audit production dependencies. |
+| <code><a href="#projen.javascript.AuditOptions.property.runOn">runOn</a></code> | <code>string</code> | When to run the audit task. |
+
+---
+
+##### `level`<sup>Optional</sup> <a name="level" id="projen.javascript.AuditOptions.property.level"></a>
+
+```typescript
+public readonly level: string;
+```
+
+- *Type:* string
+- *Default:* "high"
+
+Minimum vulnerability level to check for during audit.
+
+---
+
+##### `prodOnly`<sup>Optional</sup> <a name="prodOnly" id="projen.javascript.AuditOptions.property.prodOnly"></a>
+
+```typescript
+public readonly prodOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Only audit production dependencies.
+
+When false, both production and development dependencies are audited.
+This is recommended as build dependencies can also contain security vulnerabilities.
+
+---
+
+##### `runOn`<sup>Optional</sup> <a name="runOn" id="projen.javascript.AuditOptions.property.runOn"></a>
+
+```typescript
+public readonly runOn: string;
+```
+
+- *Type:* string
+- *Default:* "build"
+
+When to run the audit task.
+
+"build": Run during every build (default)
+- "release": Only run during release workflow
+- "manual": Create the task but don't run it automatically
 
 ---
 
@@ -8711,6 +8779,8 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.defaultReleaseBranch">defaultReleaseBranch</a></code> | <code>string</code> | The name of the main release branch. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code><a href="#projen.javascript.AuditOptions">AuditOptions</a></code> | Security audit options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | Biome options. |
@@ -10190,6 +10260,36 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A directory which will contain build artifacts.
+
+---
+
+##### `auditDeps`<sup>Optional</sup> <a name="auditDeps" id="projen.javascript.NodeProjectOptions.property.auditDeps"></a>
+
+```typescript
+public readonly auditDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run security audit on dependencies.
+
+When enabled, creates an "audit" task that checks for known security vulnerabilities
+in dependencies. By default, runs during every build and checks for "high" severity
+vulnerabilities or above in all dependencies (including dev dependencies).
+
+---
+
+##### `auditDepsOptions`<sup>Optional</sup> <a name="auditDepsOptions" id="projen.javascript.NodeProjectOptions.property.auditDepsOptions"></a>
+
+```typescript
+public readonly auditDepsOptions: AuditOptions;
+```
+
+- *Type:* <a href="#projen.javascript.AuditOptions">AuditOptions</a>
+- *Default:* default options
+
+Security audit options.
 
 ---
 
@@ -12530,6 +12630,7 @@ const upgradeDependenciesOptions: javascript.UpgradeDependenciesOptions = { ... 
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.cooldown">cooldown</a></code> | <code>number</code> | Exclude package versions published within the specified number of days. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.exclude">exclude</a></code> | <code>string[]</code> | List of package names to exclude during the upgrade. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.include">include</a></code> | <code>string[]</code> | List of package names to include during the upgrade. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.includeDeprecatedVersions">includeDeprecatedVersions</a></code> | <code>boolean</code> | Include deprecated packages. |
@@ -12542,6 +12643,29 @@ const upgradeDependenciesOptions: javascript.UpgradeDependenciesOptions = { ... 
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.types">types</a></code> | <code>projen.DependencyType[]</code> | Specify which dependency types the upgrade should operate on. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.workflow">workflow</a></code> | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.workflowOptions">workflowOptions</a></code> | <code><a href="#projen.javascript.UpgradeDependenciesWorkflowOptions">UpgradeDependenciesWorkflowOptions</a></code> | Options for the github workflow. |
+
+---
+
+##### `cooldown`<sup>Optional</sup> <a name="cooldown" id="projen.javascript.UpgradeDependenciesOptions.property.cooldown"></a>
+
+```typescript
+public readonly cooldown: number;
+```
+
+- *Type:* number
+- *Default:* No cooldown period.
+
+Exclude package versions published within the specified number of days.
+
+This may provide some protection against supply chain attacks, simply by avoiding
+newly published packages that may be malicious. It gives the ecosystem more time
+to detect malicious packages. However it comes at the cost of updating other
+packages slower, which might also contain vulnerabilities or bugs in need of a fix.
+
+The cooldown period applies to both npm-check-updates discovery
+and the package manager update command.
+
+> [https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate](https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate)
 
 ---
 
