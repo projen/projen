@@ -269,12 +269,72 @@ describe("Configuration", () => {
       });
       const mergedConfig = snapshotBiomeConfig(project);
 
-      expect(mergedConfig.linter!.rules).toBeDefined();
-      expect(mergedConfig.linter!.rules).toMatchObject({
+      expect(mergedConfig.linter?.rules).toBeDefined();
+      expect(mergedConfig.linter?.rules).toMatchObject({
         recommended: true,
         security: {
           noBlankTarget: "error",
         },
+      });
+    });
+
+    it("add overrides", () => {
+      const project = getTestProject({ eslint: false, prettier: false });
+      const biome = new Biome(project, {});
+
+      biome.addOverride({
+        includes: ["test.ts"],
+        linter: {
+          enabled: false,
+        },
+      });
+
+      const mergedConfig = snapshotBiomeConfig(project);
+
+      expect(mergedConfig.overrides).toBeDefined();
+      expect(mergedConfig.overrides?.length).toBeGreaterThan(0);
+      expect(mergedConfig.overrides?.[0]).toEqual({
+        includes: ["test.ts"],
+        linter: {
+          enabled: false,
+        },
+      });
+    });
+
+    it("expand linting rules", () => {
+      const project = getTestProject({ eslint: false, prettier: false });
+      const biome = new Biome(project, {
+        biomeConfig: {
+          linter: {
+            rules: {
+              nursery: {
+                "standard-rule": "error",
+              },
+              complexity: {
+                "another-rule": "warn",
+              },
+              correctness: {
+                "removed-rule": "info",
+              },
+            },
+          },
+        },
+      });
+
+      biome.expandLintingRules({
+        nursery: {
+          "test-rule": "warn",
+        },
+        correctness: undefined,
+      });
+
+      const mergedConfig = snapshotBiomeConfig(project);
+
+      expect(mergedConfig.linter?.rules).toBeDefined();
+      expect(mergedConfig.linter?.rules).toEqual({
+        recommended: true,
+        complexity: { "another-rule": "warn" },
+        nursery: { "standard-rule": "error", "test-rule": "warn" },
       });
     });
   });

@@ -2,7 +2,9 @@ import * as path from "node:path";
 import { deepClone } from "fast-json-patch";
 import {
   IndentStyle,
+  OverridePattern,
   QuoteStyle,
+  Rules,
   toJson_BiomeConfiguration,
   VcsClientKind,
   type BiomeConfiguration,
@@ -147,7 +149,7 @@ export class Biome extends Component {
    */
   public readonly file: JsonFile;
 
-  constructor(project: NodeProject, options: BiomeOptions = {}) {
+  constructor(project: NodeProject, private options: BiomeOptions = {}) {
     super(project);
 
     const biomejs = `@biomejs/biome`;
@@ -231,8 +233,54 @@ export class Biome extends Component {
     project.testTask.spawn(this.task);
   }
 
+  /**
+   * Add a file pattern to biome.
+   *
+   * Use ! or !! to ignore a file pattern.
+   * @param pattern Biome glob pattern
+   * @see https://biomejs.dev/guides/configure-biome/#control-files-via-configuration
+   */
   public addFilePattern(pattern: string) {
     this._filePatterns.add(pattern);
+  }
+
+  /**
+   * Add a biome override to set rules for a specific file pattern.
+   * @param override Override object
+   * @see https://biomejs.dev/reference/configuration/#overrides
+   */
+  public addOverride(override: OverridePattern) {
+    if (!this.biomeConfiguration.overrides) {
+      this.biomeConfiguration.overrides = [];
+    }
+
+    this.biomeConfiguration.overrides.push(override);
+  }
+
+  /**
+   * Expand the linting rules applied.
+   *
+   * Use `undefined` to remove the rule or group.
+   *
+   * @param rules Rules to apply.
+   * @see https://biomejs.dev/reference/configuration/#linterrulesgroup
+   * @example
+   * biome.expandLintingRules({
+   *   style: undefined,
+   *   suspicious: {
+   *     noExplicitAny: undefined,
+   *     noDuplicateCase: "info",
+   *   }
+   * })
+   */
+  public expandLintingRules(rules: Rules) {
+    this.biomeConfiguration.linter.rules = deepMerge(
+      [this.biomeConfiguration.linter.rules, rules],
+      {
+        mergeArrays: this.options.mergeArraysInConfiguration ?? true,
+        destructive: true,
+      }
+    );
   }
 
   private createLocalBiomeTask() {
