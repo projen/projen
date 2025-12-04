@@ -40,5 +40,15 @@
 /src/awscdk/private/feature-flags-v2.const.ts linguist-generated
 /src/javascript/biome/biome-config.ts linguist-generated
 /src/python/pyproject-toml.ts linguist-generated
+/src/python/black-config.ts linguist-generated
+/src/python/hatch-config.ts linguist-generated
+/src/python/mypy-config.ts linguist-generated
+/src/python/pdm-config.ts linguist-generated
+/src/python/poetry-config.ts linguist-generated
+/src/python/pyright-config.ts linguist-generated
+/src/python/pytest-config.ts linguist-generated
+/src/python/ruff-config.ts linguist-generated
+/src/python/setuptools-config.ts linguist-generated
+/src/python/ty-config.ts linguist-generated
 /src/python/uv-config.ts linguist-generated
 /tsconfig.dev.json linguist-generated

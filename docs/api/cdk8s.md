@@ -1029,12 +1029,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.github">github</a></code> | <code>projen.github.GitHub</code> | Access all github components. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.gitpod">gitpod</a></code> | <code>projen.Gitpod</code> | Access for Gitpod. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.vscode">vscode</a></code> | <code>projen.vscode.VsCode</code> | Access all VSCode components. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.depsManager">depsManager</a></code> | <code>projen.python.IPythonDeps</code> | API for managing dependencies. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for managing the Python runtime environment. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.file">file</a></code> | <code>projen.python.PyprojectTomlFile</code> | pyproject.toml file. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.packagingManager">packagingManager</a></code> | <code>projen.python.PackageManagerBase</code> | API for managing packaging the project as a library. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.projectOptions">projectOptions</a></code> | <code>projen.python.PyprojectTomlProject</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Directory where sample tests are located. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
-| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.packagingManager">packagingManager</a></code> | <code>projen.python.IPythonPackaging</code> | API for managing packaging the project as a library. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.pytest">pytest</a></code> | <code>projen.python.Pytest</code> | Pytest component. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.appEntrypoint">appEntrypoint</a></code> | <code>string</code> | The CDK8s app entrypoint. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.cdk8sDeps">cdk8sDeps</a></code> | <code><a href="#projen.cdk8s.Cdk8sDeps">Cdk8sDeps</a></code> | *No description.* |
@@ -1416,18 +1416,6 @@ This will be `undefined` for subprojects.
 
 ---
 
-##### `depsManager`<sup>Required</sup> <a name="depsManager" id="projen.cdk8s.Cdk8sPythonApp.property.depsManager"></a>
-
-```typescript
-public readonly depsManager: IPythonDeps;
-```
-
-- *Type:* projen.python.IPythonDeps
-
-API for managing dependencies.
-
----
-
 ##### `envManager`<sup>Required</sup> <a name="envManager" id="projen.cdk8s.Cdk8sPythonApp.property.envManager"></a>
 
 ```typescript
@@ -1440,6 +1428,18 @@ API for managing the Python runtime environment.
 
 ---
 
+##### `file`<sup>Required</sup> <a name="file" id="projen.cdk8s.Cdk8sPythonApp.property.file"></a>
+
+```typescript
+public readonly file: PyprojectTomlFile;
+```
+
+- *Type:* projen.python.PyprojectTomlFile
+
+pyproject.toml file.
+
+---
+
 ##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.cdk8s.Cdk8sPythonApp.property.moduleName"></a>
 
 ```typescript
@@ -1448,7 +1448,29 @@ public readonly moduleName: string;
 
 - *Type:* string
 
-Python module name (the project name, with any hyphens or periods replaced with underscores).
+---
+
+##### `packagingManager`<sup>Required</sup> <a name="packagingManager" id="projen.cdk8s.Cdk8sPythonApp.property.packagingManager"></a>
+
+```typescript
+public readonly packagingManager: PackageManagerBase;
+```
+
+- *Type:* projen.python.PackageManagerBase
+
+API for managing packaging the project as a library.
+
+Only applies when the `projectType` is LIB.
+
+---
+
+##### `projectOptions`<sup>Required</sup> <a name="projectOptions" id="projen.cdk8s.Cdk8sPythonApp.property.projectOptions"></a>
+
+```typescript
+public readonly projectOptions: PyprojectTomlProject;
+```
+
+- *Type:* projen.python.PyprojectTomlProject
 
 ---
 
@@ -1462,32 +1484,6 @@ public readonly sampleTestdir: string;
 - *Default:* "tests"
 
 Directory where sample tests are located.
-
----
-
-##### `version`<sup>Required</sup> <a name="version" id="projen.cdk8s.Cdk8sPythonApp.property.version"></a>
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-
-Version of the package for distribution (should follow semver).
-
----
-
-##### `packagingManager`<sup>Optional</sup> <a name="packagingManager" id="projen.cdk8s.Cdk8sPythonApp.property.packagingManager"></a>
-
-```typescript
-public readonly packagingManager: IPythonPackaging;
-```
-
-- *Type:* projen.python.IPythonPackaging
-
-API for managing packaging the project as a library.
-
-Only applies when the `projectType` is LIB.
 
 ---
 
@@ -5537,7 +5533,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.name">name</a></code> | <code>string</code> | Valid name consists only of ASCII letters and numbers, period, underscore and hyphen. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
@@ -5562,27 +5558,35 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | A list of PyPI trove classifiers that describe the project. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.description">description</a></code> | <code>string</code> | A short description of the package. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.homepage">homepage</a></code> | <code>string</code> | A URL to the website of the project. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.license">license</a></code> | <code>string</code> | License of this package as an SPDX identifier. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.uvOptions">uvOptions</a></code> | <code>projen.python.UvOptions</code> | Additional options to set for uv if using uv. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.authors">authors</a></code> | <code>projen.python.ProjectAuthor[]</code> | People or organizations considered as 'authors' of the project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.dependencies">dependencies</a></code> | <code>string[]</code> | An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.description">description</a></code> | <code>string</code> | Summary description of the project in one line. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.dynamic">dynamic</a></code> | <code>projen.python.PyprojectTomlProjectDynamic[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.keywords">keywords</a></code> | <code>string[]</code> | List of keywords or tags that describe the project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.license">license</a></code> | <code>any</code> | For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.maintainers">maintainers</a></code> | <code>projen.python.ProjectAuthor[]</code> | People or organizations considered as 'maintainers' of the project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.optionalDependencies">optionalDependencies</a></code> | <code>any</code> | Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.readme">readme</a></code> | <code>any</code> | Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version(s) that the distribution is compatible with. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.version">version</a></code> | <code>string</code> | Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization). |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.buildSystem">buildSystem</a></code> | <code>projen.python.BuildSystem</code> | Declares any Python level dependencies that must be installed in order to run the project’s build system successfully. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.formatter">formatter</a></code> | <code>projen.python.PythonFormatter</code> | The formatter to use for the project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.linter">linter</a></code> | <code>projen.python.PythonLinter</code> | The linter to use for the project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.typeChecker">typeChecker</a></code> | <code>projen.python.PythonTypeChecker</code> | The type checker to use for the project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pip">pip</a></code> | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.poetry">poetry</a></code> | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.packageManager">packageManager</a></code> | <code>projen.python.PythonPackageManager</code> | The package manager to use for the project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenrcJs">projenrcJs</a></code> | <code>boolean</code> | Use projenrc in javascript. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenrcJsOptions">projenrcJsOptions</a></code> | <code>projen.javascript.ProjenrcOptions</code> | Options related to projenrc in JavaScript. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenrcPython">projenrcPython</a></code> | <code>boolean</code> | Use projenrc in Python. |
@@ -5593,8 +5597,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.pytestOptions">pytestOptions</a></code> | <code>projen.python.PytestOptions</code> | pytest options. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
-| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.tool">tool</a></code> | <code>projen.python.PythonProjectTool</code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.cdk8sVersion">cdk8sVersion</a></code> | <code>string</code> | Minimum version of the cdk8s to depend on. |
@@ -5620,9 +5623,10 @@ public readonly name: string;
 ```
 
 - *Type:* string
-- *Default:* $BASEDIR
 
-This is the name of your project.
+Valid name consists only of ASCII letters and numbers, period, underscore and hyphen.
+
+It must start and end with a letter or number.
 
 ---
 
@@ -5962,26 +5966,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.cdk8s.Cdk8sPythonOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.cdk8s.Cdk8sPythonOptions.property.stale"></a>
 
 ```typescript
@@ -6027,42 +6011,17 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
-##### `authorEmail`<sup>Required</sup> <a name="authorEmail" id="projen.cdk8s.Cdk8sPythonOptions.property.authorEmail"></a>
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.cdk8s.Cdk8sPythonOptions.property.authors"></a>
 
 ```typescript
-public readonly authorEmail: string;
+public readonly authors: ProjectAuthor[];
 ```
 
-- *Type:* string
-- *Default:* $GIT_USER_EMAIL
+- *Type:* projen.python.ProjectAuthor[]
 
-Author's e-mail.
+People or organizations considered as 'authors' of the project.
 
----
-
-##### `authorName`<sup>Required</sup> <a name="authorName" id="projen.cdk8s.Cdk8sPythonOptions.property.authorName"></a>
-
-```typescript
-public readonly authorName: string;
-```
-
-- *Type:* string
-- *Default:* $GIT_USER_NAME
-
-Author's name.
-
----
-
-##### `version`<sup>Required</sup> <a name="version" id="projen.cdk8s.Cdk8sPythonOptions.property.version"></a>
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-- *Default:* "0.1.0"
-
-Version of the package.
+Each author is a table with `name` key, `email` key, or both.
 
 ---
 
@@ -6074,9 +6033,19 @@ public readonly classifiers: string[];
 
 - *Type:* string[]
 
-A list of PyPI trove classifiers that describe the project.
+List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects.
 
-> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
+---
+
+##### `dependencies`<sup>Optional</sup> <a name="dependencies" id="projen.cdk8s.Cdk8sPythonOptions.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: string[];
+```
+
+- *Type:* string[]
+
+An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project.
 
 ---
 
@@ -6088,79 +6057,241 @@ public readonly description: string;
 
 - *Type:* string
 
-A short description of the package.
+Summary description of the project in one line.
+
+Tools may not accept multiple lines.
 
 ---
 
-##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.cdk8s.Cdk8sPythonOptions.property.homepage"></a>
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.cdk8s.Cdk8sPythonOptions.property.dynamic"></a>
 
 ```typescript
-public readonly homepage: string;
+public readonly dynamic: PyprojectTomlProjectDynamic[];
 ```
 
-- *Type:* string
+- *Type:* projen.python.PyprojectTomlProjectDynamic[]
 
-A URL to the website of the project.
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
+
+---
+
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.cdk8s.Cdk8sPythonOptions.property.entryPoints"></a>
+
+```typescript
+public readonly entryPoints: any;
+```
+
+- *Type:* any
+
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
+
+---
+
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.cdk8s.Cdk8sPythonOptions.property.guiScripts"></a>
+
+```typescript
+public readonly guiScripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
+
+---
+
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.cdk8s.Cdk8sPythonOptions.property.importNames"></a>
+
+```typescript
+public readonly importNames: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project exclusively provides when installed.
+
+---
+
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.cdk8s.Cdk8sPythonOptions.property.importNamespaces"></a>
+
+```typescript
+public readonly importNamespaces: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
+
+---
+
+##### `keywords`<sup>Optional</sup> <a name="keywords" id="projen.cdk8s.Cdk8sPythonOptions.property.keywords"></a>
+
+```typescript
+public readonly keywords: string[];
+```
+
+- *Type:* string[]
+
+List of keywords or tags that describe the project.
+
+They could be used by search engines to categorize the project.
 
 ---
 
 ##### `license`<sup>Optional</sup> <a name="license" id="projen.cdk8s.Cdk8sPythonOptions.property.license"></a>
 
 ```typescript
-public readonly license: string;
+public readonly license: any;
+```
+
+- *Type:* any
+
+For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content.
+
+Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+
+---
+
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.cdk8s.Cdk8sPythonOptions.property.licenseFiles"></a>
+
+```typescript
+public readonly licenseFiles: string[];
+```
+
+- *Type:* string[]
+
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
+
+---
+
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.cdk8s.Cdk8sPythonOptions.property.maintainers"></a>
+
+```typescript
+public readonly maintainers: ProjectAuthor[];
+```
+
+- *Type:* projen.python.ProjectAuthor[]
+
+People or organizations considered as 'maintainers' of the project.
+
+Each maintainer is a table with `name` key, `email` key, or both.
+
+---
+
+##### `optionalDependencies`<sup>Optional</sup> <a name="optionalDependencies" id="projen.cdk8s.Cdk8sPythonOptions.property.optionalDependencies"></a>
+
+```typescript
+public readonly optionalDependencies: any;
+```
+
+- *Type:* any
+
+Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings.
+
+---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.cdk8s.Cdk8sPythonOptions.property.readme"></a>
+
+```typescript
+public readonly readme: any;
+```
+
+- *Type:* any
+
+Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`.
+
+---
+
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.cdk8s.Cdk8sPythonOptions.property.requiresPython"></a>
+
+```typescript
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
 
-License of this package as an SPDX identifier.
+Specifies the Python version(s) that the distribution is compatible with.
+
+Must be in the format specified in [Version specifiers](https://packaging.python.org/en/latest/specifications/version-specifiers/).
 
 ---
 
-##### `packageName`<sup>Optional</sup> <a name="packageName" id="projen.cdk8s.Cdk8sPythonOptions.property.packageName"></a>
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.cdk8s.Cdk8sPythonOptions.property.scripts"></a>
 
 ```typescript
-public readonly packageName: string;
+public readonly scripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O.
+
+---
+
+##### `urls`<sup>Optional</sup> <a name="urls" id="projen.cdk8s.Cdk8sPythonOptions.property.urls"></a>
+
+```typescript
+public readonly urls: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table consisting one or multiple `label: URL` pairs.
+
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.cdk8s.Cdk8sPythonOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
 ```
 
 - *Type:* string
 
-Package name.
+Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization).
 
 ---
 
-##### `poetryOptions`<sup>Optional</sup> <a name="poetryOptions" id="projen.cdk8s.Cdk8sPythonOptions.property.poetryOptions"></a>
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.cdk8s.Cdk8sPythonOptions.property.buildSystem"></a>
 
 ```typescript
-public readonly poetryOptions: PoetryPyprojectOptionsWithoutDeps;
+public readonly buildSystem: BuildSystem;
 ```
 
-- *Type:* projen.python.PoetryPyprojectOptionsWithoutDeps
+- *Type:* projen.python.BuildSystem
+- *Default:* no build system
 
-Additional options to set for poetry if using poetry.
+Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
 
 ---
 
-##### `setupConfig`<sup>Optional</sup> <a name="setupConfig" id="projen.cdk8s.Cdk8sPythonOptions.property.setupConfig"></a>
+##### `formatter`<sup>Optional</sup> <a name="formatter" id="projen.cdk8s.Cdk8sPythonOptions.property.formatter"></a>
 
 ```typescript
-public readonly setupConfig: {[ key: string ]: any};
+public readonly formatter: PythonFormatter;
 ```
 
-- *Type:* {[ key: string ]: any}
+- *Type:* projen.python.PythonFormatter
 
-Additional fields to pass in the setup() function if using setuptools.
+The formatter to use for the project.
 
 ---
 
-##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.cdk8s.Cdk8sPythonOptions.property.uvOptions"></a>
+##### `linter`<sup>Optional</sup> <a name="linter" id="projen.cdk8s.Cdk8sPythonOptions.property.linter"></a>
 
 ```typescript
-public readonly uvOptions: UvOptions;
+public readonly linter: PythonLinter;
 ```
 
-- *Type:* projen.python.UvOptions
+- *Type:* projen.python.PythonLinter
 
-Additional options to set for uv if using uv.
+The linter to use for the project.
 
 ---
 
@@ -6177,35 +6308,15 @@ Path to the python executable to use.
 
 ---
 
-##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.cdk8s.Cdk8sPythonOptions.property.moduleName"></a>
+##### `typeChecker`<sup>Optional</sup> <a name="typeChecker" id="projen.cdk8s.Cdk8sPythonOptions.property.typeChecker"></a>
 
 ```typescript
-public readonly moduleName: string;
+public readonly typeChecker: PythonTypeChecker;
 ```
 
-- *Type:* string
-- *Default:* $PYTHON_MODULE_NAME
+- *Type:* projen.python.PythonTypeChecker
 
-Name of the python package as used in imports and filenames.
-
-Must only consist of alphanumeric characters and underscores.
-
----
-
-##### `deps`<sup>Optional</sup> <a name="deps" id="projen.cdk8s.Cdk8sPythonOptions.property.deps"></a>
-
-```typescript
-public readonly deps: string[];
-```
-
-- *Type:* string[]
-- *Default:* []
-
-List of runtime dependencies for this project.
-
-Dependencies use the format: `<module>@<semver>`
-
-Additional dependencies can be added via `project.addDependency()`.
+The type checker to use for the project.
 
 ---
 
@@ -6226,32 +6337,16 @@ Additional dependencies can be added via `project.addDevDependency()`.
 
 ---
 
-##### `pip`<sup>Optional</sup> <a name="pip" id="projen.cdk8s.Cdk8sPythonOptions.property.pip"></a>
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.cdk8s.Cdk8sPythonOptions.property.packageManager"></a>
 
 ```typescript
-public readonly pip: boolean;
+public readonly packageManager: PythonPackageManager;
 ```
 
-- *Type:* boolean
-- *Default:* true, unless poetry is true, then false
+- *Type:* projen.python.PythonPackageManager
+- *Default:* PackageManager.UV
 
-Use pip with a requirements.txt file to track project dependencies.
-
----
-
-##### `poetry`<sup>Optional</sup> <a name="poetry" id="projen.cdk8s.Cdk8sPythonOptions.property.poetry"></a>
-
-```typescript
-public readonly poetry: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
-
-This feature is incompatible with pip, setuptools, or venv.
-If you set this option to `true`, then pip, setuptools, and venv must be set to `false`.
+The package manager to use for the project.
 
 ---
 
@@ -6396,29 +6491,17 @@ Typically the same directory where project tests will be located.
 
 ---
 
-##### `setuptools`<sup>Optional</sup> <a name="setuptools" id="projen.cdk8s.Cdk8sPythonOptions.property.setuptools"></a>
+##### `tool`<sup>Optional</sup> <a name="tool" id="projen.cdk8s.Cdk8sPythonOptions.property.tool"></a>
 
 ```typescript
-public readonly setuptools: boolean;
+public readonly tool: PythonProjectTool;
 ```
 
-- *Type:* boolean
-- *Default:* true, unless poetry is true, then false
+- *Type:* projen.python.PythonProjectTool
 
-Use setuptools with a setup.py script for packaging and publishing.
+Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
 
----
-
-##### `uv`<sup>Optional</sup> <a name="uv" id="projen.cdk8s.Cdk8sPythonOptions.property.uv"></a>
-
-```typescript
-public readonly uv: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
+Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
 
 ---
 
@@ -6429,7 +6512,7 @@ public readonly venv: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true, unless poetry is true, then false
+- *Default:* true when using setuptools
 
 Use venv to manage a virtual environment for installing dependencies inside.
 
@@ -6668,10 +6751,10 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -7164,26 +7247,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.stale"></a>
 
 ```typescript
@@ -7228,6 +7291,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.allowLibraryDependencies"></a>
 
@@ -9284,10 +9367,10 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -9789,26 +9872,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.stale"></a>
 
 ```typescript
@@ -9853,6 +9916,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.allowLibraryDependencies"></a>
 

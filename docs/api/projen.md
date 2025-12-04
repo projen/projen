@@ -17,7 +17,6 @@ The following submodules are available:
 - [javascript](./javascript.md)
 - [javascript.biome_config](./javascript.biome_config.md)
 - [python](./python.md)
-- [python.uvConfig](./python.uvConfig.md)
 - [release](./release.md)
 - [typescript](./typescript.md)
 - [vscode](./vscode.md)

@@ -167,6 +167,16 @@
       "src/javascript/biome/biome-config.ts",
       "src/python/pyproject-toml.ts",
       "src/python/uv-config.ts",
+      "src/python/ruff-config.ts",
+      "src/python/black-config.ts",
+      "src/python/mypy-config.ts",
+      "src/python/ty-config.ts",
+      "src/python/hatch-config.ts",
+      "src/python/setuptools-config.ts",
+      "src/python/poetry-config.ts",
+      "src/python/pdm-config.ts",
+      "src/python/pyright-config.ts",
+      "src/python/pytest-config.ts",
       "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "testPathIgnorePatterns": [
@@ -174,6 +184,16 @@
       "src/javascript/biome/biome-config.ts",
       "src/python/pyproject-toml.ts",
       "src/python/uv-config.ts",
+      "src/python/ruff-config.ts",
+      "src/python/black-config.ts",
+      "src/python/mypy-config.ts",
+      "src/python/ty-config.ts",
+      "src/python/hatch-config.ts",
+      "src/python/setuptools-config.ts",
+      "src/python/poetry-config.ts",
+      "src/python/pdm-config.ts",
+      "src/python/pyright-config.ts",
+      "src/python/pytest-config.ts",
       "src/awscdk/private/feature-flags-v2.const.ts"
     ],
     "watchPathIgnorePatterns": [

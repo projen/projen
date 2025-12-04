@@ -1,60 +1,68 @@
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonExecutableOptions } from "./python-project";
-import { SetupPy } from "./setuppy";
-import { Component } from "../component";
+import { IConstruct } from "constructs";
+import { IPythonPackaging } from "./python-packaging";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
 import { Task } from "../task";
-
-export interface SetuptoolsOptions
-  extends PythonPackagingOptions,
-    PythonExecutableOptions {}
+import { PackageManagerBase } from "./package-manager";
+import { BuildSystem } from "./pyproject-toml";
+import { IPythonEnv } from "./python-env";
+import { PythonBaseOptions } from "./python-project";
 
 /**
  * Manages packaging through setuptools with a setup.py script.
  */
-export class Setuptools extends Component implements IPythonPackaging {
+export class Setuptools
+  extends PackageManagerBase
+  implements IPythonPackaging, IPythonEnv, IPythonPackaging
+{
+  public readonly installTask: Task;
+  public readonly installCiTask: Task;
   public readonly publishTask: Task;
-
-  /**
-   * A task that uploads the package to the Test PyPI repository.
-   */
   public readonly publishTestTask: Task;
+  public readonly lintTask?: Task;
+  public readonly formatTask?: Task;
+  public readonly typeCheckTask?: Task;
+  public readonly defaultBuildSystem: BuildSystem;
 
-  private readonly pythonExec: string;
+  constructor(scope: IConstruct, options: PythonBaseOptions) {
+    super(scope, options);
 
-  constructor(project: Project, options: SetuptoolsOptions) {
-    super(project);
-    this.pythonExec = options.pythonExec ?? "python";
+    this.defaultBuildSystem = {
+      requires: ["setuptools"],
+      buildBackend: "setuptools.build_meta",
+    };
 
-    project.deps.addDependency("wheel@0.36.2", DependencyType.DEVENV);
-    project.deps.addDependency("twine@3.3.0", DependencyType.DEVENV);
+    this.project.deps.addDependency("wheel", DependencyType.DEVENV);
+    this.project.deps.addDependency("twine", DependencyType.DEVENV);
 
-    project.packageTask.exec(`${this.pythonExec} setup.py sdist bdist_wheel`);
+    this.installTask = this.project.addTask("install", {
+      description: "Install dependencies",
+      exec: "pip install .",
+    });
 
-    this.publishTestTask = project.addTask("publish:test", {
+    this.installCiTask = this.project.addTask("install:ci", {
+      description: "Install dependencies",
+      exec: "pip install .",
+    });
+
+    this.project.packageTask.exec(`${this.runCommand} build`);
+
+    this.publishTestTask = this.project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",
       exec: "twine upload --repository-url https://test.pypi.org/legacy/ dist/*",
     });
 
-    this.publishTask = project.addTask("publish", {
+    this.publishTask = this.project.addTask("publish", {
       description: "Uploads the package against a test PyPI endpoint.",
       exec: "twine upload dist/*",
     });
+  }
 
-    const packages = options.packageName ? [options.packageName] : undefined;
+  public getRunCommand(_options: PythonBaseOptions): string {
+    const pythonExec = _options.pythonExec ?? "python";
+    return `${pythonExec} -m`;
+  }
 
-    new SetupPy(project, {
-      name: project.name,
-      packages: packages,
-      authorName: options.authorName,
-      authorEmail: options.authorEmail,
-      version: options.version,
-      description: options.description,
-      license: options.license,
-      homepage: options.homepage,
-      classifiers: options.classifiers,
-      ...options.setupConfig,
-    });
+  public setupEnvironment(): void {
+    this.installDependencies();
   }
 }

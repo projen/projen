@@ -68,7 +68,7 @@ Eslint is used to lint and format our typescript code. The `eslint`
 script can be run from the root of the package.
 
 You can integrate the linting and formatting workflow with your editor or ide by
-installing the approporiate eslint plugin. For example, when using Visual Studio
+installing the appropriate eslint plugin. For example, when using Visual Studio
 Code, the [eslint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 exposes a number of options including "fix on save". This will auto correct lint
 and formatting errors whenever possible while saving a document.
