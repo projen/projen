@@ -6,6 +6,8 @@ import {
   QuoteStyle,
   Rules,
   toJson_BiomeConfiguration,
+  toJson_OverridePattern,
+  toJson_Rules,
   VcsClientKind,
   type BiomeConfiguration,
 } from "./biome-config";
@@ -254,7 +256,7 @@ export class Biome extends Component {
       this.biomeConfiguration.overrides = [];
     }
 
-    this.biomeConfiguration.overrides.push(override);
+    this.biomeConfiguration.overrides.push(toJson_OverridePattern(override));
   }
 
   /**
@@ -273,13 +275,12 @@ export class Biome extends Component {
    *   }
    * })
    */
-  public expandLintingRules(rules: Rules) {
-    this.biomeConfiguration.linter.rules = deepMerge(
-      [this.biomeConfiguration.linter.rules, rules],
-      {
+  public expandLinterRules(rules: Rules) {
+    this.biomeConfiguration.linter.rules = toJson_Rules(
+      deepMerge([this.biomeConfiguration.linter.rules, rules], {
         mergeArrays: this.options.mergeArraysInConfiguration ?? true,
         destructive: true,
-      }
+      })
     );
   }
 

@@ -321,7 +321,7 @@ describe("Configuration", () => {
         },
       });
 
-      biome.expandLintingRules({
+      biome.expandLinterRules({
         nursery: {
           "test-rule": "warn",
         },
