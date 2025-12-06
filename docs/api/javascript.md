@@ -41,7 +41,9 @@ new javascript.Biome(project: NodeProject, options?: BiomeOptions)
 | <code><a href="#projen.javascript.Biome.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.javascript.Biome.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.Biome.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.javascript.Biome.addFilePattern">addFilePattern</a></code> | *No description.* |
+| <code><a href="#projen.javascript.Biome.addFilePattern">addFilePattern</a></code> | Add a file pattern to biome. |
+| <code><a href="#projen.javascript.Biome.addOverride">addOverride</a></code> | Add a biome override to set rules for a specific file pattern. |
+| <code><a href="#projen.javascript.Biome.expandLinterRules">expandLinterRules</a></code> | Expand the linting rules applied. |
 
 ---
 
@@ -85,9 +87,68 @@ Synthesizes files to the project output directory.
 public addFilePattern(pattern: string): void
 ```
 
+Add a file pattern to biome.
+
+Use ! or !! to ignore a file pattern.
+
+> [https://biomejs.dev/guides/configure-biome/#control-files-via-configuration](https://biomejs.dev/guides/configure-biome/#control-files-via-configuration)
+
 ###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Biome.addFilePattern.parameter.pattern"></a>
 
 - *Type:* string
+
+Biome glob pattern.
+
+---
+
+##### `addOverride` <a name="addOverride" id="projen.javascript.Biome.addOverride"></a>
+
+```typescript
+public addOverride(override: OverridePattern): void
+```
+
+Add a biome override to set rules for a specific file pattern.
+
+> [https://biomejs.dev/reference/configuration/#overrides](https://biomejs.dev/reference/configuration/#overrides)
+
+###### `override`<sup>Required</sup> <a name="override" id="projen.javascript.Biome.addOverride.parameter.override"></a>
+
+- *Type:* <a href="#projen.javascript.biome_config.OverridePattern">OverridePattern</a>
+
+Override object.
+
+---
+
+##### `expandLinterRules` <a name="expandLinterRules" id="projen.javascript.Biome.expandLinterRules"></a>
+
+```typescript
+public expandLinterRules(rules: Rules): void
+```
+
+Expand the linting rules applied.
+
+Use `undefined` to remove the rule or group.
+
+> [https://biomejs.dev/reference/configuration/#linterrulesgroup](https://biomejs.dev/reference/configuration/#linterrulesgroup)
+
+*Example*
+
+```typescript
+biome.expandLintingRules({
+  style: undefined,
+  suspicious: {
+    noExplicitAny: undefined,
+    noDuplicateCase: "info",
+  }
+})
+```
+
+
+###### `rules`<sup>Required</sup> <a name="rules" id="projen.javascript.Biome.expandLinterRules.parameter.rules"></a>
+
+- *Type:* <a href="#projen.javascript.biome_config.Rules">Rules</a>
+
+Rules to apply.
 
 ---
 
