@@ -47,6 +47,7 @@ describe("selectJsTools", () => {
       type: "text",
       placeholder: "my-project",
       default: "my-project",
+      cancel: "default",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       2,
@@ -54,29 +55,32 @@ describe("selectJsTools", () => {
       {
         type: "select",
         options: [
+          { label: NodePackageManager.BUN, value: NodePackageManager.BUN },
+          { label: NodePackageManager.NPM, value: NodePackageManager.NPM },
+          { label: NodePackageManager.PNPM, value: NodePackageManager.PNPM },
           { label: NodePackageManager.YARN, value: NodePackageManager.YARN },
-          { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
-          {
-            label: NodePackageManager.YARN_CLASSIC,
-            value: NodePackageManager.YARN_CLASSIC,
-          },
           {
             label: NodePackageManager.YARN_BERRY,
             value: NodePackageManager.YARN_BERRY,
           },
-          { label: NodePackageManager.NPM, value: NodePackageManager.NPM },
-          { label: NodePackageManager.PNPM, value: NodePackageManager.PNPM },
-          { label: NodePackageManager.BUN, value: NodePackageManager.BUN },
+          {
+            label: NodePackageManager.YARN_CLASSIC,
+            value: NodePackageManager.YARN_CLASSIC,
+          },
+          { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
         ],
+        cancel: "default",
+        initial: NodePackageManager.NPM,
       }
     );
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(3, "Choose a linter", {
       type: "select",
       options: [
-        { label: "ESLint", value: "eslint" },
         { label: "Biome", value: "biome" },
+        { label: "ESLint", value: "eslint" },
         { label: "None", value: "undefined" },
       ],
+      cancel: "undefined",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       4,
@@ -87,6 +91,7 @@ describe("selectJsTools", () => {
           { label: "Prettier", value: "prettier" },
           { label: "None", value: "undefined" },
         ],
+        cancel: "undefined",
       }
     );
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
@@ -98,6 +103,7 @@ describe("selectJsTools", () => {
           { label: "Jest", value: "jest" },
           { label: "None", value: "undefined" },
         ],
+        cancel: "undefined",
       }
     );
   });
@@ -132,6 +138,7 @@ describe("selectJsTools", () => {
       type: "text",
       placeholder: "my-project",
       default: "my-project",
+      cancel: "default",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       2,
@@ -139,29 +146,32 @@ describe("selectJsTools", () => {
       {
         type: "select",
         options: [
+          { label: NodePackageManager.BUN, value: NodePackageManager.BUN },
+          { label: NodePackageManager.NPM, value: NodePackageManager.NPM },
+          { label: NodePackageManager.PNPM, value: NodePackageManager.PNPM },
           { label: NodePackageManager.YARN, value: NodePackageManager.YARN },
-          { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
-          {
-            label: NodePackageManager.YARN_CLASSIC,
-            value: NodePackageManager.YARN_CLASSIC,
-          },
           {
             label: NodePackageManager.YARN_BERRY,
             value: NodePackageManager.YARN_BERRY,
           },
-          { label: NodePackageManager.NPM, value: NodePackageManager.NPM },
-          { label: NodePackageManager.PNPM, value: NodePackageManager.PNPM },
-          { label: NodePackageManager.BUN, value: NodePackageManager.BUN },
+          {
+            label: NodePackageManager.YARN_CLASSIC,
+            value: NodePackageManager.YARN_CLASSIC,
+          },
+          { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
         ],
+        cancel: "default",
+        initial: NodePackageManager.NPM,
       }
     );
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(3, "Choose a linter", {
       type: "select",
       options: [
-        { label: "ESLint", value: "eslint" },
         { label: "Biome", value: "biome" },
+        { label: "ESLint", value: "eslint" },
         { label: "None", value: "undefined" },
       ],
+      cancel: "undefined",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       4,
@@ -172,14 +182,15 @@ describe("selectJsTools", () => {
           { label: "Jest", value: "jest" },
           { label: "None", value: "undefined" },
         ],
+        cancel: "undefined",
       }
     );
   });
 
-  test("handles user selecting 'None' for all tools", async () => {
+  test("handle items not selected (User pressed Ctrl+C or selected 'None') for all tools", async () => {
     mockedConsola.prompt
-      .mockResolvedValueOnce("sample") // project name
-      .mockResolvedValueOnce(NodePackageManager.NPM) // package manager
+      .mockResolvedValueOnce("sample") // project name (default value)
+      .mockResolvedValueOnce(NodePackageManager.NPM) // package manager (default value)
       .mockResolvedValueOnce("undefined") // linter selection
       .mockResolvedValueOnce("undefined") // formatter selection
       .mockResolvedValueOnce("undefined"); // test tool selection
@@ -217,22 +228,5 @@ describe("selectJsTools", () => {
 
     // THEN
     expect(result).toBeUndefined();
-  });
-
-  test("throws error when user cancels prompt", async () => {
-    mockedConsola.prompt.mockResolvedValueOnce(undefined as any);
-
-    // GIVEN
-    const cliPrompts = {
-      selectJsTools: selectJsTools(interactiveCliPrompt),
-    };
-
-    // WHEN
-    // THEN
-    await expect(
-      cliPrompts.selectJsTools({
-        projectTypeName: "projen.javascript.NodeProject",
-      })
-    ).rejects.toThrow("No item selected.");
   });
 });

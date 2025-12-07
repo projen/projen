@@ -1,5 +1,5 @@
 import { NodePackageManager } from "../../../javascript";
-import { InteractiveCliPrompt } from "../core/interactive-cli-prompt";
+import type { InteractiveCliPrompt } from "../core/interactive-cli-prompt";
 
 type Linter = "eslint" | "biome";
 
@@ -36,6 +36,7 @@ export const selectJsTools =
       message: "Project name",
       placeholder: packageName ?? "my-project",
       defaultVal: packageName ?? "my-project",
+      cancel: "default",
     });
 
     const packageManager = await interactiveCliPrompt.selectItem({
@@ -44,6 +45,8 @@ export const selectJsTools =
         label: val,
         value: val,
       })),
+      cancel: "default",
+      defaultVal: NodePackageManager.NPM,
     });
 
     const linter = await interactiveCliPrompt.selectItem({
@@ -57,8 +60,10 @@ export const selectJsTools =
           label: "Biome",
           value: "biome",
         },
-        { label: "None", value: undefined },
       ],
+      cancel: "undefined",
+      defaultVal: undefined,
+      withNoneOption: true,
     });
 
     const formatter =
@@ -71,8 +76,10 @@ export const selectJsTools =
                 label: "Prettier",
                 value: "prettier",
               },
-              { label: "None", value: undefined },
             ],
+            cancel: "undefined",
+            defaultVal: undefined,
+            withNoneOption: true,
           });
 
     const testTool = await interactiveCliPrompt.selectItem({
@@ -82,8 +89,10 @@ export const selectJsTools =
           label: "Jest",
           value: "jest",
         },
-        { label: "None", value: undefined },
       ],
+      cancel: "undefined",
+      defaultVal: undefined,
+      withNoneOption: true,
     });
 
     return {
