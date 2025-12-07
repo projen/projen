@@ -1,5 +1,4 @@
 import { consola } from "consola";
-import { CliError } from "../../util";
 
 type DefaultValue = string | number | boolean;
 type SelectItemValue = DefaultValue | undefined | null;
@@ -12,12 +11,9 @@ type SelectItem<T extends SelectItemValue> = {
 /**
  * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
  *
- * - `"default"` - Resolve the promise with the `default` value.
- * - `"undefined`" - Resolve the promise with `undefined`.
  * - `"exit"` - Exit the process with code 1.
- * - `"reject"` - Reject the promise.
  */
-type CancelOption = "default" | "undefined" | "exit" | "reject";
+type CancelOption = "exit";
 
 export interface InteractiveCliPrompt {
   inputText: <Cancel extends CancelOption>(args: {
@@ -59,13 +55,6 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
       })) as string;
     } catch {
       switch (args.cancel) {
-        case "default": {
-          return args.defaultVal ?? "";
-        }
-        case "reject": {
-          // convert errors thrown when user cancels prompt to CliError
-          throw new CliError("Prompt was cancelled by the user.");
-        }
         case "exit": {
           // when user cancels the prompt, exit the process with code 1
           process.exit(1);
@@ -112,16 +101,6 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
       return res === "undefined" ? (undefined as Item) : (res as Item);
     } catch {
       switch (args.cancel) {
-        case "default": {
-          return args.defaultVal as Item;
-        }
-        case "undefined": {
-          return undefined as Item;
-        }
-        case "reject": {
-          // convert errors thrown when user cancels prompt to CliError
-          throw new CliError("Prompt was cancelled by the user.");
-        }
         case "exit": {
           // when user cancels the prompt, exit the process with code 1
           process.exit(1);
