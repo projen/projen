@@ -1,4 +1,5 @@
 import { consola } from "consola";
+import { CliError } from "../../util";
 
 type DefaultValue = string | number | boolean;
 type SelectItemValue = DefaultValue | undefined | null;
@@ -13,15 +14,17 @@ type SelectItem<T extends SelectItemValue> = {
  *
  * - `"default"` - Resolve the promise with the `default` value.
  * - `"undefined`" - Resolve the promise with `undefined`.
+ * - `"exit"` - Exit the process with code 1.
+ * - `"reject"` - Reject the promise.
  */
-type CancelOption = "default" | "undefined";
+type CancelOption = "default" | "undefined" | "exit" | "reject";
 
 export interface InteractiveCliPrompt {
   inputText: <Cancel extends CancelOption>(args: {
     message: string;
-    cancel: Cancel;
+    cancel: Cancel extends "undefined" ? never : Cancel;
     /**
-     * When specified "default" at `cancel` property, this property must be specified
+     * When specified "default" at `cancel` property, this property must be provided
      */
     defaultVal: Cancel extends "default" ? string : string | undefined;
     placeholder?: string;
@@ -35,11 +38,11 @@ export interface InteractiveCliPrompt {
     items: SelectItem<Item>[];
     cancel: Cancel;
     /**
-     * When specified "default" at `cancel` property, DefaultValue must be provided
+     * When specified "default" at `cancel` property, this property must be provided
      */
     defaultVal: Cancel extends "default" ? DefaultValue : Default | undefined;
     /**
-     * When Default is provided, withNoneOption cannot be provided
+     * When provided `defaultVal` property, this property must not be provide
      */
     withNoneOption?: Default extends undefined ? boolean : never;
   }) => Promise<Item>;
@@ -47,12 +50,28 @@ export interface InteractiveCliPrompt {
 
 export const interactiveCliPrompt: InteractiveCliPrompt = {
   async inputText(args): Promise<string> {
-    return consola.prompt(args.message, {
-      type: "text",
-      placeholder: args.placeholder,
-      default: args.defaultVal,
-      cancel: args.cancel,
-    }) as Promise<string>;
+    try {
+      return (await consola.prompt(args.message, {
+        type: "text",
+        placeholder: args.placeholder,
+        default: args.defaultVal,
+        cancel: args.cancel !== "exit" ? args.cancel : "reject", // specify how to handle a cancelled prompt (e.g. when user presses `Ctrl+C`)
+      })) as string;
+    } catch {
+      switch (args.cancel) {
+        case "default": {
+          return args.defaultVal ?? "";
+        }
+        case "reject": {
+          // convert errors thrown when user cancels prompt to CliError
+          throw new CliError("Prompt was cancelled by the user.");
+        }
+        case "exit": {
+          // when user cancels the prompt, exit the process with code 1
+          process.exit(1);
+        }
+      }
+    }
   },
 
   async selectItem<
@@ -62,9 +81,9 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
   >(args: {
     message: string;
     items: SelectItem<Item>[];
-    defaultVal: Cancel extends "default" ? DefaultValue : Default;
-    withNoneOption?: Default extends undefined ? boolean : never;
     cancel: Cancel;
+    defaultVal: Cancel extends "default" ? DefaultValue : Default | undefined;
+    withNoneOption?: Default extends undefined ? boolean : never;
   }): Promise<Item> {
     const sortedOptions = args.items
       .map((item) => ({
@@ -82,22 +101,32 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
         ]
       : [];
 
-    const res = await consola.prompt(args.message, {
-      cancel: args.cancel,
-      type: "select",
-      options: [...sortedOptions, ...noneOptions],
-      initial: args.defaultVal ? String(args.defaultVal) : undefined,
-    });
-
-    const selected = args.items.find((item) => String(item.value) === res);
-    if (selected) return selected.value;
-
-    // When items not selected (User pressed Ctrl+C or selected "None" option)
-    switch (args.cancel) {
-      case "default":
-        return (args.defaultVal ?? undefined) as Item;
-      case "undefined":
-        return undefined as Item;
+    try {
+      const res = await consola.prompt(args.message, {
+        cancel: args.cancel === "exit" ? "reject" : args.cancel, // specify how to handle a cancelled prompt (e.g. when user presses `Ctrl+C`)
+        type: "select",
+        options: [...sortedOptions, ...noneOptions],
+        initial: args.defaultVal ? String(args.defaultVal) : undefined,
+      });
+      // when user selects "None", return undefined, otherwise return the selected value
+      return res === "undefined" ? (undefined as Item) : (res as Item);
+    } catch {
+      switch (args.cancel) {
+        case "default": {
+          return args.defaultVal as Item;
+        }
+        case "undefined": {
+          return undefined as Item;
+        }
+        case "reject": {
+          // convert errors thrown when user cancels prompt to CliError
+          throw new CliError("Prompt was cancelled by the user.");
+        }
+        case "exit": {
+          // when user cancels the prompt, exit the process with code 1
+          process.exit(1);
+        }
+      }
     }
   },
 };

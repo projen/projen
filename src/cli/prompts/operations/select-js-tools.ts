@@ -34,9 +34,9 @@ export const selectJsTools =
 
     const projectName = await interactiveCliPrompt.inputText({
       message: "Project name",
-      placeholder: packageName ?? "my-project",
+      cancel: "exit",
       defaultVal: packageName ?? "my-project",
-      cancel: "default",
+      placeholder: packageName ?? "my-project",
     });
 
     const packageManager = await interactiveCliPrompt.selectItem({
@@ -45,7 +45,7 @@ export const selectJsTools =
         label: val,
         value: val,
       })),
-      cancel: "default",
+      cancel: "exit",
       defaultVal: NodePackageManager.NPM,
     });
 
@@ -61,7 +61,7 @@ export const selectJsTools =
           value: "biome",
         },
       ],
-      cancel: "undefined",
+      cancel: "exit",
       defaultVal: undefined,
       withNoneOption: true,
     });
@@ -77,7 +77,7 @@ export const selectJsTools =
                 value: "prettier",
               },
             ],
-            cancel: "undefined",
+            cancel: "exit",
             defaultVal: undefined,
             withNoneOption: true,
           });
@@ -90,7 +90,7 @@ export const selectJsTools =
           value: "jest",
         },
       ],
-      cancel: "undefined",
+      cancel: "exit",
       defaultVal: undefined,
       withNoneOption: true,
     });

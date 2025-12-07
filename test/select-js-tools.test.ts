@@ -47,7 +47,7 @@ describe("selectJsTools", () => {
       type: "text",
       placeholder: "my-project",
       default: "my-project",
-      cancel: "default",
+      cancel: "reject",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       2,
@@ -69,7 +69,7 @@ describe("selectJsTools", () => {
           },
           { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
         ],
-        cancel: "default",
+        cancel: "reject",
         initial: NodePackageManager.NPM,
       }
     );
@@ -80,7 +80,7 @@ describe("selectJsTools", () => {
         { label: "ESLint", value: "eslint" },
         { label: "None", value: "undefined" },
       ],
-      cancel: "undefined",
+      cancel: "reject",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       4,
@@ -91,7 +91,7 @@ describe("selectJsTools", () => {
           { label: "Prettier", value: "prettier" },
           { label: "None", value: "undefined" },
         ],
-        cancel: "undefined",
+        cancel: "reject",
       }
     );
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
@@ -103,7 +103,7 @@ describe("selectJsTools", () => {
           { label: "Jest", value: "jest" },
           { label: "None", value: "undefined" },
         ],
-        cancel: "undefined",
+        cancel: "reject",
       }
     );
   });
@@ -138,7 +138,7 @@ describe("selectJsTools", () => {
       type: "text",
       placeholder: "my-project",
       default: "my-project",
-      cancel: "default",
+      cancel: "reject",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       2,
@@ -160,7 +160,7 @@ describe("selectJsTools", () => {
           },
           { label: NodePackageManager.YARN2, value: NodePackageManager.YARN2 },
         ],
-        cancel: "default",
+        cancel: "reject",
         initial: NodePackageManager.NPM,
       }
     );
@@ -171,7 +171,7 @@ describe("selectJsTools", () => {
         { label: "ESLint", value: "eslint" },
         { label: "None", value: "undefined" },
       ],
-      cancel: "undefined",
+      cancel: "reject",
     });
     expect(mockedConsola.prompt).toHaveBeenNthCalledWith(
       4,
@@ -182,7 +182,7 @@ describe("selectJsTools", () => {
           { label: "Jest", value: "jest" },
           { label: "None", value: "undefined" },
         ],
-        cancel: "undefined",
+        cancel: "reject",
       }
     );
   });
@@ -228,5 +228,31 @@ describe("selectJsTools", () => {
 
     // THEN
     expect(result).toBeUndefined();
+  });
+
+  test("when user cancels the prompt, exit the process with code 1", async () => {
+    const mockExit = jest.spyOn(process, "exit").mockImplementation((code) => {
+      throw new Error(`process.exit called with code ${code}`);
+    });
+
+    mockedConsola.prompt.mockRejectedValueOnce(new Error("Prompt cancelled")); // simulate user cancelling the prompt
+
+    // GIVEN
+    const cliPrompts = {
+      selectJsTools: selectJsTools(interactiveCliPrompt),
+    };
+
+    // WHEN
+    const promise = () =>
+      cliPrompts.selectJsTools({
+        projectTypeName: "projen.javascript.NodeProject",
+      });
+
+    // THEN
+    await expect(promise()).rejects.toThrow("process.exit called with code 1");
+
+    expect(mockExit).toHaveBeenCalledWith(1);
+
+    mockExit.mockRestore();
   });
 });
