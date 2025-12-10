@@ -231,8 +231,12 @@ describe("selectJsTools", () => {
   });
 
   describe("when user cancels the prompt, exit the process with code 1", () => {
-    const mockExit = jest.spyOn(process, "exit").mockImplementation((code) => {
-      throw new Error(`process.exit called with code ${code}`);
+    const mockExit = jest.spyOn(process, "exit");
+
+    beforeEach(() => {
+      mockExit.mockImplementation((code) => {
+        throw new Error(`process.exit called with code ${code}`);
+      });
     });
 
     test("when cancel input text", async () => {
@@ -255,7 +259,7 @@ describe("selectJsTools", () => {
       );
       expect(mockExit).toHaveBeenCalledWith(1);
 
-      mockExit.mockRestore();
+      mockExit.mockClear();
     });
 
     test("when cancel item selection", async () => {
@@ -279,8 +283,6 @@ describe("selectJsTools", () => {
         "process.exit called with code 1"
       );
       expect(mockExit).toHaveBeenCalledWith(1);
-
-      mockExit.mockRestore();
     });
   });
 });
