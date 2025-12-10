@@ -16,27 +16,20 @@ type SelectItem<T extends SelectItemValue> = {
 type CancelOption = "exit";
 
 export interface InteractiveCliPrompt {
-  inputText: <Cancel extends CancelOption>(args: {
+  inputText: (args: {
     message: string;
-    cancel: Cancel extends "undefined" ? never : Cancel;
-    /**
-     * When specified "default" at `cancel` property, this property must be provided
-     */
-    defaultVal: Cancel extends "default" ? string : string | undefined;
+    cancel: CancelOption;
+    defaultVal?: string;
     placeholder?: string;
   }) => Promise<string>;
   selectItem: <
     Item extends SelectItemValue,
-    Cancel extends CancelOption,
     Default extends DefaultValue | undefined
   >(args: {
     message: string;
     items: SelectItem<Item>[];
-    cancel: Cancel;
-    /**
-     * When specified "default" at `cancel` property, this property must be provided
-     */
-    defaultVal: Cancel extends "default" ? DefaultValue : Default | undefined;
+    cancel: CancelOption;
+    defaultVal?: Default;
     /**
      * When provided `defaultVal` property, this property must not be provide
      */
@@ -51,7 +44,7 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
         type: "text",
         placeholder: args.placeholder,
         default: args.defaultVal,
-        cancel: args.cancel !== "exit" ? args.cancel : "reject", // specify how to handle a cancelled prompt (e.g. when user presses `Ctrl+C`)
+        cancel: args.cancel === "exit" ? "reject" : args.cancel, // specify how to handle a cancelled prompt (e.g. when user presses `Ctrl+C`)
       })) as string;
     } catch {
       switch (args.cancel) {
@@ -65,13 +58,12 @@ export const interactiveCliPrompt: InteractiveCliPrompt = {
 
   async selectItem<
     Item extends SelectItemValue,
-    Cancel extends CancelOption,
     Default extends DefaultValue | undefined
   >(args: {
     message: string;
     items: SelectItem<Item>[];
-    cancel: Cancel;
-    defaultVal: Cancel extends "default" ? DefaultValue : Default | undefined;
+    cancel: CancelOption;
+    defaultVal?: Default;
     withNoneOption?: Default extends undefined ? boolean : never;
   }): Promise<Item> {
     const sortedOptions = args.items

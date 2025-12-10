@@ -230,29 +230,63 @@ describe("selectJsTools", () => {
     expect(result).toBeUndefined();
   });
 
-  test("when user cancels the prompt, exit the process with code 1", async () => {
+  describe("when user cancels the prompt, exit the process with code 1", () => {
     const mockExit = jest.spyOn(process, "exit").mockImplementation((code) => {
       throw new Error(`process.exit called with code ${code}`);
     });
 
-    mockedConsola.prompt.mockRejectedValueOnce(new Error("Prompt cancelled")); // simulate user cancelling the prompt
+    test("when cancel input text", async () => {
+      mockedConsola.prompt.mockRejectedValueOnce(new Error("Prompt cancelled")); // project name (simulate user cancelling the prompt)
 
-    // GIVEN
-    const cliPrompts = {
-      selectJsTools: selectJsTools(interactiveCliPrompt),
-    };
+      // GIVEN
+      const cliPrompts = {
+        selectJsTools: selectJsTools(interactiveCliPrompt),
+      };
 
-    // WHEN
-    const promise = () =>
-      cliPrompts.selectJsTools({
-        projectTypeName: "projen.javascript.NodeProject",
-      });
+      // WHEN
+      const promise = () =>
+        cliPrompts.selectJsTools({
+          projectTypeName: "projen.javascript.NodeProject",
+        });
 
-    // THEN
-    await expect(promise()).rejects.toThrow("process.exit called with code 1");
+      // THEN
+      await expect(promise()).rejects.toThrow(
+        "process.exit called with code 1"
+      );
+      expect(mockExit).toHaveBeenCalledWith(1);
 
-    expect(mockExit).toHaveBeenCalledWith(1);
+      mockExit.mockRestore();
+    });
 
-    mockExit.mockRestore();
+    test("when cancel item selection", async () => {
+      const mockExit = jest
+        .spyOn(process, "exit")
+        .mockImplementation((code) => {
+          throw new Error(`process.exit called with code ${code}`);
+        });
+
+      mockedConsola.prompt
+        .mockResolvedValueOnce("sample") // project name
+        .mockRejectedValueOnce(new Error("Prompt cancelled")); // package manager (simulate user cancelling the prompt)
+
+      // GIVEN
+      const cliPrompts = {
+        selectJsTools: selectJsTools(interactiveCliPrompt),
+      };
+
+      // WHEN
+      const promise = () =>
+        cliPrompts.selectJsTools({
+          projectTypeName: "projen.javascript.NodeProject",
+        });
+
+      // THEN
+      await expect(promise()).rejects.toThrow(
+        "process.exit called with code 1"
+      );
+      expect(mockExit).toHaveBeenCalledWith(1);
+
+      mockExit.mockRestore();
+    });
   });
 });
