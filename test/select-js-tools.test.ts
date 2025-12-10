@@ -259,12 +259,6 @@ describe("selectJsTools", () => {
     });
 
     test("when cancel item selection", async () => {
-      const mockExit = jest
-        .spyOn(process, "exit")
-        .mockImplementation((code) => {
-          throw new Error(`process.exit called with code ${code}`);
-        });
-
       mockedConsola.prompt
         .mockResolvedValueOnce("sample") // project name
         .mockRejectedValueOnce(new Error("Prompt cancelled")); // package manager (simulate user cancelling the prompt)
