@@ -423,7 +423,7 @@ function determineLatestTag(options: LatestTagOptions): {
      *    by setting the latestTag as v1.0.1 instead of v1.0.1-beta.1
      */
     const releaseTags = tags.filter((x) =>
-      new RegExp(`^v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
+      new RegExp(`^${prefix}v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
     );
     if (
       releaseTags.length > 0 &&
