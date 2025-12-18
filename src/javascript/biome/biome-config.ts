@@ -104,8 +104,7 @@ export interface BiomeConfiguration {
   readonly plugins?: string[];
 
   /**
-   * Indicates whether this configuration file is at the root of a Biome
-   * project. By default, this is `true`.
+   * Indicates whether this configuration file is at the root of a Biome project. By default, this is `true`.
    *
    * @schema BiomeConfiguration#root
    */
@@ -168,8 +167,7 @@ export interface AssistConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * A list of glob patterns. Biome will include files/folders that will
-   * match these patterns.
+   * A list of glob patterns. Biome will include files/folders that will match these patterns.
    *
    * @schema AssistConfiguration#includes
    */
@@ -261,11 +259,9 @@ export function toJson_CssConfiguration(obj: CssConfiguration | undefined): Reco
  */
 export interface FilesConfiguration {
   /**
-   * **Deprecated:** Please use _force-ignore syntax_ in `files.includes`
-   * instead: <https://biomejs.dev/reference/configuration/#filesincludes>
+   * **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>
    *
-   * Set of file and folder names that should be unconditionally ignored by
-   * Biome's scanner.
+   * Set of file and folder names that should be unconditionally ignored by Biome's scanner.
    *
    * @schema FilesConfiguration#experimentalScannerIgnores
    */
@@ -279,16 +275,14 @@ export interface FilesConfiguration {
   readonly ignoreUnknown?: boolean;
 
   /**
-   * A list of glob patterns. Biome will handle only those files/folders that will
-   * match these patterns.
+   * A list of glob patterns. Biome will handle only those files/folders that will match these patterns.
    *
    * @schema FilesConfiguration#includes
    */
   readonly includes?: string[];
 
   /**
-   * The maximum allowed size for source code files in bytes. Files above
-   * this limit will be ignored for performance reasons. Defaults to 1 MiB
+   * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
    *
    * @default 1 MiB
    * @schema FilesConfiguration#maxSize
@@ -349,29 +343,22 @@ export interface FormatterConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * Whether to expand arrays and objects on multiple lines.
-   * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-   * and array literals are formatted on a single line if it fits in the line.
-   * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-   * When set to `never`, these literals are formatted on a single line if it fits in the line.
-   * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+   * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
    *
    * @default auto".
    * @schema FormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
-   * Whether formatting should be allowed to proceed if a given file
-   * has syntax errors
+   * Whether formatting should be allowed to proceed if a given file has syntax errors
    *
    * @schema FormatterConfiguration#formatWithErrors
    */
   readonly formatWithErrors?: boolean;
 
   /**
-   * A list of glob patterns. The formatter will include files/folders that will
-   * match these patterns.
+   * A list of glob patterns. The formatter will include files/folders that will match these patterns.
    *
    * @schema FormatterConfiguration#includes
    */
@@ -382,7 +369,7 @@ export interface FormatterConfiguration {
    *
    * @schema FormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation, 2 by default
@@ -396,7 +383,7 @@ export interface FormatterConfiguration {
    *
    * @schema FormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line. Defaults to 80.
@@ -407,8 +394,7 @@ export interface FormatterConfiguration {
   readonly lineWidth?: number;
 
   /**
-   * Use any `.editorconfig` files to configure the formatter. Configuration
-   * in `biome.json` will override `.editorconfig` configuration.
+   * Use any `.editorconfig` files to configure the formatter. Configuration in `biome.json` will override `.editorconfig` configuration.
    *
    * Default: `true`.
    *
@@ -624,7 +610,7 @@ export interface JsConfiguration {
    *
    * @schema JsConfiguration#jsxRuntime
    */
-  readonly jsxRuntime?: string;
+  readonly jsxRuntime?: JsxRuntime;
 
   /**
    * Linter options
@@ -723,7 +709,7 @@ export interface LinterConfiguration {
    *
    * @schema LinterConfiguration#domains
    */
-  readonly domains?: { [key: string]: string };
+  readonly domains?: { [key: string]: RuleDomainValue };
 
   /**
    * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -733,8 +719,7 @@ export interface LinterConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * A list of glob patterns. The analyzer will handle only those files/folders that will
-   * match these patterns.
+   * A list of glob patterns. The analyzer will handle only those files/folders that will match these patterns.
    *
    * @schema LinterConfiguration#includes
    */
@@ -820,8 +805,7 @@ export interface OverridePattern {
   readonly html?: HtmlConfiguration;
 
   /**
-   * A list of glob patterns. Biome will include files/folders that will
-   * match these patterns.
+   * A list of glob patterns. Biome will include files/folders that will match these patterns.
    *
    * @schema OverridePattern#includes
    */
@@ -893,7 +877,7 @@ export interface VcsConfiguration {
    *
    * @schema VcsConfiguration#clientKind
    */
-  readonly clientKind?: string;
+  readonly clientKind?: VcsClientKind;
 
   /**
    * The main branch of the project
@@ -910,20 +894,16 @@ export interface VcsConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * The folder where Biome should check for VCS files. By default, Biome will use the same
-   * folder where `biome.json` was found.
+   * The folder where Biome should check for VCS files. By default, Biome will use the same folder where `biome.json` was found.
    *
-   * If Biome can't find the configuration, it will attempt to use the current working directory.
-   * If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic
-   * will be emitted
+   * If Biome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic will be emitted
    *
    * @schema VcsConfiguration#root
    */
   readonly root?: string;
 
   /**
-   * Whether Biome should use the VCS ignore file. When [true], Biome will ignore the files
-   * specified in the ignore file.
+   * Whether Biome should use the VCS ignore file. When [true], Biome will ignore the files specified in the ignore file.
    *
    * @schema VcsConfiguration#useIgnoreFile
    */
@@ -1029,7 +1009,7 @@ export interface CssFormatterConfiguration {
    *
    * @schema CssFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to CSS (and its super languages) files. Default to 2.
@@ -1044,7 +1024,7 @@ export interface CssFormatterConfiguration {
    *
    * @schema CssFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to CSS (and its super languages) files. Defaults to 80.
@@ -1168,6 +1148,42 @@ export enum AttributePosition {
 }
 
 /**
+ * @schema Expand
+ */
+export enum Expand {
+  /** auto */
+  AUTO = "auto",
+  /** always */
+  ALWAYS = "always",
+  /** never */
+  NEVER = "never",
+}
+
+/**
+ * @schema IndentStyle
+ */
+export enum IndentStyle {
+  /** tab */
+  TAB = "tab",
+  /** space */
+  SPACE = "space",
+}
+
+/**
+ * @schema LineEnding
+ */
+export enum LineEnding {
+  /** lf */
+  LF = "lf",
+  /** crlf */
+  CRLF = "crlf",
+  /** cr */
+  CR = "cr",
+  /** auto */
+  AUTO = "auto",
+}
+
+/**
  * Options that changes how the GraphQL linter behaves
  *
  * @schema GraphqlAssistConfiguration
@@ -1222,7 +1238,7 @@ export interface GraphqlFormatterConfiguration {
    *
    * @schema GraphqlFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to GraphQL files. Default to 2.
@@ -1237,7 +1253,7 @@ export interface GraphqlFormatterConfiguration {
    *
    * @schema GraphqlFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to GraphQL files. Defaults to 80.
@@ -1349,7 +1365,7 @@ export interface GritFormatterConfiguration {
    *
    * @schema GritFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to Grit files. Default to 2.
@@ -1364,7 +1380,7 @@ export interface GritFormatterConfiguration {
    *
    * @schema GritFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to Grit files. Defaults to 80.
@@ -1492,7 +1508,7 @@ export interface HtmlFormatterConfiguration {
    *
    * @schema HtmlFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to HTML (and its super languages) files. Default to 2.
@@ -1507,7 +1523,7 @@ export interface HtmlFormatterConfiguration {
    *
    * @schema HtmlFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to HTML (and its super languages) files. Defaults to 80.
@@ -1523,7 +1539,7 @@ export interface HtmlFormatterConfiguration {
    * @default never.
    * @schema HtmlFormatterConfiguration#selfCloseVoidElements
    */
-  readonly selfCloseVoidElements?: string;
+  readonly selfCloseVoidElements?: SelfCloseVoidElements;
 
   /**
    * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
@@ -1531,7 +1547,7 @@ export interface HtmlFormatterConfiguration {
    * @default css".
    * @schema HtmlFormatterConfiguration#whitespaceSensitivity
    */
-  readonly whitespaceSensitivity?: string;
+  readonly whitespaceSensitivity?: WhitespaceSensitivity;
 }
 
 /**
@@ -1691,24 +1707,19 @@ export interface JsFormatterConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * Whether to expand arrays and objects on multiple lines.
-   * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-   * and array literals are formatted on a single line if it fits in the line.
-   * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-   * When set to `never`, these literals are formatted on a single line if it fits in the line.
-   * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+   * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
    *
    * @default auto".
    * @schema JsFormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
    * The indent style applied to JavaScript (and its super languages) files.
    *
    * @schema JsFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to JavaScript (and its super languages) files. Default to 2.
@@ -1731,7 +1742,7 @@ export interface JsFormatterConfiguration {
    *
    * @schema JsFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to JavaScript (and its super languages) files. Defaults to 80.
@@ -1747,7 +1758,7 @@ export interface JsFormatterConfiguration {
    * @default after".
    * @schema JsFormatterConfiguration#operatorLinebreak
    */
-  readonly operatorLinebreak?: string;
+  readonly operatorLinebreak?: OperatorLinebreak;
 
   /**
    * When properties in objects are quoted. Defaults to asNeeded.
@@ -1778,7 +1789,7 @@ export interface JsFormatterConfiguration {
    * @default all".
    * @schema JsFormatterConfiguration#trailingCommas
    */
-  readonly trailingCommas?: JsTrailingCommas;
+  readonly trailingCommas?: TrailingCommas;
 }
 
 /**
@@ -1810,6 +1821,18 @@ export function toJson_JsFormatterConfiguration(obj: JsFormatterConfiguration | 
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Indicates the type of runtime or transformation used for interpreting JSX.
+ *
+ * @schema JsxRuntime
+ */
+export enum JsxRuntime {
+  /** transparent */
+  TRANSPARENT = "transparent",
+  /** reactClassic */
+  REACT_CLASSIC = "reactClassic",
+}
 
 /**
  * Linter options specific to the JavaScript linter
@@ -1847,8 +1870,7 @@ export function toJson_JsLinterConfiguration(obj: JsLinterConfiguration | undefi
  */
 export interface JsParserConfiguration {
   /**
-   * Enables parsing of Grit metavariables.
-   * Defaults to `false`.
+   * Enables parsing of Grit metavariables. Defaults to `false`.
    *
    * @default false`.
    * @schema JsParserConfiguration#gritMetavariables
@@ -1941,24 +1963,19 @@ export interface JsonFormatterConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * Whether to expand arrays and objects on multiple lines.
-   * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-   * and array literals are formatted on a single line if it fits in the line.
-   * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-   * When set to `never`, these literals are formatted on a single line if it fits in the line.
-   * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+   * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
    *
    * @default auto".
    * @schema JsonFormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
    * The indent style applied to JSON (and its super languages) files.
    *
    * @schema JsonFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to JSON (and its super languages) files. Default to 2.
@@ -1973,7 +1990,7 @@ export interface JsonFormatterConfiguration {
    *
    * @schema JsonFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to JSON (and its super languages) files. Defaults to 80.
@@ -1989,7 +2006,7 @@ export interface JsonFormatterConfiguration {
    * @default none".
    * @schema JsonFormatterConfiguration#trailingCommas
    */
-  readonly trailingCommas?: JsonTrailingCommas;
+  readonly trailingCommas?: TrailingCommas2;
 }
 
 /**
@@ -2079,6 +2096,18 @@ export function toJson_JsonParserConfiguration(obj: JsonParserConfiguration | un
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema RuleDomainValue
+ */
+export enum RuleDomainValue {
+  /** all */
+  ALL = "all",
+  /** none */
+  NONE = "none",
+  /** recommended */
+  RECOMMENDED = "recommended",
+}
 
 /**
  * @schema Rules
@@ -2249,21 +2278,15 @@ export interface OverrideFormatterConfiguration {
   readonly enabled?: boolean;
 
   /**
-   * Whether to expand arrays and objects on multiple lines.
-   * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-   * and array literals are formatted on a single line if it fits in the line.
-   * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-   * When set to `never`, these literals are formatted on a single line if it fits in the line.
-   * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+   * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
    *
    * @default auto".
    * @schema OverrideFormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
-   * Stores whether formatting should be allowed to proceed if a given file
-   * has syntax errors
+   * Stores whether formatting should be allowed to proceed if a given file has syntax errors
    *
    * @schema OverrideFormatterConfiguration#formatWithErrors
    */
@@ -2281,7 +2304,7 @@ export interface OverrideFormatterConfiguration {
    *
    * @schema OverrideFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation, 2 by default
@@ -2295,7 +2318,7 @@ export interface OverrideFormatterConfiguration {
    *
    * @schema OverrideFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line. Defaults to 80.
@@ -2340,7 +2363,7 @@ export interface OverrideLinterConfiguration {
    *
    * @schema OverrideLinterConfiguration#domains
    */
-  readonly domains?: { [key: string]: string };
+  readonly domains?: { [key: string]: RuleDomainValue };
 
   /**
    * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -2375,6 +2398,16 @@ export function toJson_OverrideLinterConfiguration(obj: OverrideLinterConfigurat
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * Integration with the git client as VCS
+ *
+ * @schema VcsClientKind
+ */
+export enum VcsClientKind {
+  /** git */
+  GIT = "git",
+}
+
+/**
  * A list of rules that belong to this group
  *
  * @schema Source
@@ -2382,7 +2415,6 @@ export function toJson_OverrideLinterConfiguration(obj: OverrideLinterConfigurat
 export interface Source {
   /**
    * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
-   * See <https://biomejs.dev/assist/actions/organize-imports>
    *
    * @schema Source#organizeImports
    */
@@ -2397,7 +2429,6 @@ export interface Source {
 
   /**
    * Enforce attribute sorting in JSX elements.
-   * See <https://biomejs.dev/assist/actions/use-sorted-attributes>
    *
    * @schema Source#useSortedAttributes
    */
@@ -2405,7 +2436,6 @@ export interface Source {
 
   /**
    * Sort the keys of a JSON object in natural order.
-   * See <https://biomejs.dev/assist/actions/use-sorted-keys>
    *
    * @schema Source#useSortedKeys
    */
@@ -2413,7 +2443,6 @@ export interface Source {
 
   /**
    * Enforce ordering of CSS properties and nested rules.
-   * See <https://biomejs.dev/assist/actions/use-sorted-properties>
    *
    * @schema Source#useSortedProperties
    */
@@ -2450,6 +2479,42 @@ export enum QuoteStyle {
 }
 
 /**
+ * Controls whether void-elements should be self closed
+ *
+ * @schema SelfCloseVoidElements
+ */
+export enum SelfCloseVoidElements {
+  /** never */
+  NEVER = "never",
+  /** always */
+  ALWAYS = "always",
+}
+
+/**
+ * Whitespace sensitivity for HTML formatting.
+ *
+ * The following two cases won't produce the same output:
+ *
+ * |                |      html      |    output    | | -------------- | :------------: | :----------: | | with spaces    | `1<b> 2 </b>3` | 1<b> 2 </b>3 | | without spaces |  `1<b>2</b>3`  |  1<b>2</b>3  |
+ *
+ * This happens because whitespace is significant in inline elements.
+ *
+ * As a consequence of this, the formatter must format blocks that look like this (assume a small line width, <20): ```html <span>really long content</span> ``` as this, where the content hugs the tags: ```html <span >really long content</span > ```
+ *
+ * Note that this is only necessary for inline elements. Block elements do not have this restriction.
+ *
+ * @schema WhitespaceSensitivity
+ */
+export enum WhitespaceSensitivity {
+  /** css */
+  CSS = "css",
+  /** strict */
+  STRICT = "strict",
+  /** ignore */
+  IGNORE = "ignore",
+}
+
+/**
  * @schema ArrowParentheses
  */
 export enum ArrowParentheses {
@@ -2457,6 +2522,16 @@ export enum ArrowParentheses {
   ALWAYS = "always",
   /** asNeeded */
   AS_NEEDED = "asNeeded",
+}
+
+/**
+ * @schema OperatorLinebreak
+ */
+export enum OperatorLinebreak {
+  /** after */
+  AFTER = "after",
+  /** before */
+  BEFORE = "before",
 }
 
 /**
@@ -2480,11 +2555,11 @@ export enum Semicolons {
 }
 
 /**
- * Print trailing commas wherever possible in multi-line comma-separated syntactic structures for JavaScript/TypeScript files.
+ * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
  *
- * @schema JsTrailingCommas
+ * @schema TrailingCommas
  */
-export enum JsTrailingCommas {
+export enum TrailingCommas {
   /** all */
   ALL = "all",
   /** es5 */
@@ -2494,11 +2569,9 @@ export enum JsTrailingCommas {
 }
 
 /**
- * Print trailing commas wherever possible in multi-line comma-separated syntactic structures for JSON files.
- *
- * @schema JsonTrailingCommas
+ * @schema TrailingCommas2
  */
-export enum JsonTrailingCommas {
+export enum TrailingCommas2 {
   /** none */
   NONE = "none",
   /** all */
