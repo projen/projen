@@ -6621,9 +6621,448 @@ If this is set to `false`, workflows will not be created.
 
 ---
 
-### GitHubProjectOptions <a name="GitHubProjectOptions" id="projen.github.GitHubProjectOptions"></a>
+### GitHubProjectBaseOptions <a name="GitHubProjectBaseOptions" id="projen.github.GitHubProjectBaseOptions"></a>
 
 Options for `GitHubProject`.
+
+#### Initializer <a name="Initializer" id="projen.github.GitHubProjectBaseOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const gitHubProjectBaseOptions: github.GitHubProjectBaseOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code><a href="#projen.github.AutoApproveOptions">AutoApproveOptions</a></code> | Enable and configure the 'auto approve' workflow. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code><a href="#projen.github.AutoMergeOptions">AutoMergeOptions</a></code> | Configure options for automatic merging on GitHub. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.clobber">clobber</a></code> | <code>boolean</code> | Add a `clobber` task which resets the repo to origin. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.devContainer">devContainer</a></code> | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces). |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.github">github</a></code> | <code>boolean</code> | Enable GitHub integration. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.githubOptions">githubOptions</a></code> | <code><a href="#projen.github.GitHubOptions">GitHubOptions</a></code> | Options for GitHub integration. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.gitpod">gitpod</a></code> | <code>boolean</code> | Add a Gitpod development environment. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for mergify. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.staleOptions">staleOptions</a></code> | <code><a href="#projen.github.StaleOptions">StaleOptions</a></code> | Auto-close stale issues and pull requests. |
+| <code><a href="#projen.github.GitHubProjectBaseOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.GitHubProjectBaseOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* $BASEDIR
+
+This is the name of your project.
+
+---
+
+##### `commitGenerated`<sup>Optional</sup> <a name="commitGenerated" id="projen.github.GitHubProjectBaseOptions.property.commitGenerated"></a>
+
+```typescript
+public readonly commitGenerated: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to commit the managed files by default.
+
+---
+
+##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.github.GitHubProjectBaseOptions.property.gitIgnoreOptions"></a>
+
+```typescript
+public readonly gitIgnoreOptions: IgnoreFileOptions;
+```
+
+- *Type:* projen.IgnoreFileOptions
+
+Configuration options for .gitignore file.
+
+---
+
+##### `gitOptions`<sup>Optional</sup> <a name="gitOptions" id="projen.github.GitHubProjectBaseOptions.property.gitOptions"></a>
+
+```typescript
+public readonly gitOptions: GitOptions;
+```
+
+- *Type:* projen.GitOptions
+
+Configuration options for git.
+
+---
+
+##### `logging`<sup>Optional</sup> <a name="logging" id="projen.github.GitHubProjectBaseOptions.property.logging"></a>
+
+```typescript
+public readonly logging: LoggerOptions;
+```
+
+- *Type:* projen.LoggerOptions
+- *Default:* {}
+
+Configure logging options such as verbosity.
+
+---
+
+##### `outdir`<sup>Optional</sup> <a name="outdir" id="projen.github.GitHubProjectBaseOptions.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+- *Default:* "."
+
+The root directory of the project.
+
+Relative to this directory, all files are synthesized.
+
+If this project has a parent, this directory is relative to the parent
+directory and it cannot be the same as the parent or any of it's other
+subprojects.
+
+---
+
+##### `parent`<sup>Optional</sup> <a name="parent" id="projen.github.GitHubProjectBaseOptions.property.parent"></a>
+
+```typescript
+public readonly parent: Project;
+```
+
+- *Type:* projen.Project
+
+The parent project, if this project is part of a bigger project.
+
+---
+
+##### `projenCommand`<sup>Optional</sup> <a name="projenCommand" id="projen.github.GitHubProjectBaseOptions.property.projenCommand"></a>
+
+```typescript
+public readonly projenCommand: string;
+```
+
+- *Type:* string
+- *Default:* "npx projen"
+
+The shell command to use in order to run the projen CLI.
+
+Can be used to customize in special environments.
+
+---
+
+##### `projenrcJson`<sup>Optional</sup> <a name="projenrcJson" id="projen.github.GitHubProjectBaseOptions.property.projenrcJson"></a>
+
+```typescript
+public readonly projenrcJson: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.
+
+---
+
+##### `projenrcJsonOptions`<sup>Optional</sup> <a name="projenrcJsonOptions" id="projen.github.GitHubProjectBaseOptions.property.projenrcJsonOptions"></a>
+
+```typescript
+public readonly projenrcJsonOptions: ProjenrcJsonOptions;
+```
+
+- *Type:* projen.ProjenrcJsonOptions
+- *Default:* default options
+
+Options for .projenrc.json.
+
+---
+
+##### `renovatebot`<sup>Optional</sup> <a name="renovatebot" id="projen.github.GitHubProjectBaseOptions.property.renovatebot"></a>
+
+```typescript
+public readonly renovatebot: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use renovatebot to handle dependency upgrades.
+
+---
+
+##### `renovatebotOptions`<sup>Optional</sup> <a name="renovatebotOptions" id="projen.github.GitHubProjectBaseOptions.property.renovatebotOptions"></a>
+
+```typescript
+public readonly renovatebotOptions: RenovatebotOptions;
+```
+
+- *Type:* projen.RenovatebotOptions
+- *Default:* default options
+
+Options for renovatebot.
+
+---
+
+##### `autoApproveOptions`<sup>Optional</sup> <a name="autoApproveOptions" id="projen.github.GitHubProjectBaseOptions.property.autoApproveOptions"></a>
+
+```typescript
+public readonly autoApproveOptions: AutoApproveOptions;
+```
+
+- *Type:* <a href="#projen.github.AutoApproveOptions">AutoApproveOptions</a>
+- *Default:* auto approve is disabled
+
+Enable and configure the 'auto approve' workflow.
+
+---
+
+##### `autoMerge`<sup>Optional</sup> <a name="autoMerge" id="projen.github.GitHubProjectBaseOptions.property.autoMerge"></a>
+
+```typescript
+public readonly autoMerge: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable automatic merging on GitHub.
+
+Has no effect if `github.mergify`
+is set to false.
+
+---
+
+##### `autoMergeOptions`<sup>Optional</sup> <a name="autoMergeOptions" id="projen.github.GitHubProjectBaseOptions.property.autoMergeOptions"></a>
+
+```typescript
+public readonly autoMergeOptions: AutoMergeOptions;
+```
+
+- *Type:* <a href="#projen.github.AutoMergeOptions">AutoMergeOptions</a>
+- *Default:* see defaults in `AutoMergeOptions`
+
+Configure options for automatic merging on GitHub.
+
+Has no effect if
+`github.mergify` or `autoMerge` is set to false.
+
+---
+
+##### `clobber`<sup>Optional</sup> <a name="clobber" id="projen.github.GitHubProjectBaseOptions.property.clobber"></a>
+
+```typescript
+public readonly clobber: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true, but false for subprojects
+
+Add a `clobber` task which resets the repo to origin.
+
+---
+
+##### `devContainer`<sup>Optional</sup> <a name="devContainer" id="projen.github.GitHubProjectBaseOptions.property.devContainer"></a>
+
+```typescript
+public readonly devContainer: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Add a VSCode development environment (used for GitHub Codespaces).
+
+---
+
+##### `github`<sup>Optional</sup> <a name="github" id="projen.github.GitHubProjectBaseOptions.property.github"></a>
+
+```typescript
+public readonly github: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable GitHub integration.
+
+Enabled by default for root projects. Disabled for non-root projects.
+
+---
+
+##### `githubOptions`<sup>Optional</sup> <a name="githubOptions" id="projen.github.GitHubProjectBaseOptions.property.githubOptions"></a>
+
+```typescript
+public readonly githubOptions: GitHubOptions;
+```
+
+- *Type:* <a href="#projen.github.GitHubOptions">GitHubOptions</a>
+- *Default:* see GitHubOptions
+
+Options for GitHub integration.
+
+---
+
+##### `gitpod`<sup>Optional</sup> <a name="gitpod" id="projen.github.GitHubProjectBaseOptions.property.gitpod"></a>
+
+```typescript
+public readonly gitpod: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Add a Gitpod development environment.
+
+---
+
+##### ~~`mergify`~~<sup>Optional</sup> <a name="mergify" id="projen.github.GitHubProjectBaseOptions.property.mergify"></a>
+
+- *Deprecated:* use `githubOptions.mergify` instead
+
+```typescript
+public readonly mergify: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether mergify should be enabled on this repository or not.
+
+---
+
+##### ~~`mergifyOptions`~~<sup>Optional</sup> <a name="mergifyOptions" id="projen.github.GitHubProjectBaseOptions.property.mergifyOptions"></a>
+
+- *Deprecated:* use `githubOptions.mergifyOptions` instead
+
+```typescript
+public readonly mergifyOptions: MergifyOptions;
+```
+
+- *Type:* <a href="#projen.github.MergifyOptions">MergifyOptions</a>
+- *Default:* default options
+
+Options for mergify.
+
+---
+
+##### ~~`projectType`~~<sup>Optional</sup> <a name="projectType" id="projen.github.GitHubProjectBaseOptions.property.projectType"></a>
+
+- *Deprecated:* no longer supported at the base project level
+
+```typescript
+public readonly projectType: ProjectType;
+```
+
+- *Type:* projen.ProjectType
+- *Default:* ProjectType.UNKNOWN
+
+Which type of project this is (library/app).
+
+---
+
+##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.github.GitHubProjectBaseOptions.property.projenCredentials"></a>
+
+```typescript
+public readonly projenCredentials: GithubCredentials;
+```
+
+- *Type:* <a href="#projen.github.GithubCredentials">GithubCredentials</a>
+- *Default:* use a personal access token named PROJEN_GITHUB_TOKEN
+
+Choose a method of providing GitHub API access for projen workflows.
+
+---
+
+##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.github.GitHubProjectBaseOptions.property.projenTokenSecret"></a>
+
+- *Deprecated:* use `projenCredentials`
+
+```typescript
+public readonly projenTokenSecret: string;
+```
+
+- *Type:* string
+- *Default:* "PROJEN_GITHUB_TOKEN"
+
+The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
+
+This token needs to have the `repo`, `workflows`
+and `packages` scope.
+
+---
+
+##### `stale`<sup>Optional</sup> <a name="stale" id="projen.github.GitHubProjectBaseOptions.property.stale"></a>
+
+```typescript
+public readonly stale: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Auto-close of stale issues and pull request.
+
+See `staleOptions` for options.
+
+---
+
+##### `staleOptions`<sup>Optional</sup> <a name="staleOptions" id="projen.github.GitHubProjectBaseOptions.property.staleOptions"></a>
+
+```typescript
+public readonly staleOptions: StaleOptions;
+```
+
+- *Type:* <a href="#projen.github.StaleOptions">StaleOptions</a>
+- *Default:* see defaults in `StaleOptions`
+
+Auto-close stale issues and pull requests.
+
+To disable set `stale` to `false`.
+
+---
+
+##### `vscode`<sup>Optional</sup> <a name="vscode" id="projen.github.GitHubProjectBaseOptions.property.vscode"></a>
+
+```typescript
+public readonly vscode: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable VSCode integration.
+
+Enabled by default for root projects. Disabled for non-root projects.
+
+---
+
+### GitHubProjectOptions <a name="GitHubProjectOptions" id="projen.github.GitHubProjectOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.github.GitHubProjectOptions.Initializer"></a>
 
@@ -6662,10 +7101,10 @@ const gitHubProjectOptions: github.GitHubProjectOptions = { ... }
 | <code><a href="#projen.github.GitHubProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.github.GitHubProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.staleOptions">staleOptions</a></code> | <code><a href="#projen.github.StaleOptions">StaleOptions</a></code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.github.GitHubProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 
 ---
 
@@ -7018,26 +7457,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.github.GitHubProjectOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.github.GitHubProjectOptions.property.stale"></a>
 
 ```typescript
@@ -7082,6 +7501,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.github.GitHubProjectOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ### GithubWorkflowOptions <a name="GithubWorkflowOptions" id="projen.github.GithubWorkflowOptions"></a>
 

@@ -261,6 +261,72 @@ new JsiiFromJsonSchema(project, {
   ),
 });
 
+new JsiiFromJsonSchema(project, {
+  structName: "RuffConfiguration",
+  schemaPath: "schemas/ruff.json",
+  filePath: path.join("src", "python", "ruff-config.ts"),
+  transform: (schema) => (
+    (schema.definitions.ImportSection = { type: "string" }), schema
+  ),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "BlackConfiguration",
+  schemaPath: "schemas/partial-black.json",
+  filePath: path.join("src", "python", "black-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "MypyConfiguration",
+  schemaPath: "schemas/partial-mypy.json",
+  filePath: path.join("src", "python", "mypy-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "TyConfiguration",
+  schemaPath: "schemas/ty.json",
+  filePath: path.join("src", "python", "ty-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "HatchConfiguration",
+  schemaPath: "schemas/hatch.json",
+  filePath: path.join("src", "python", "hatch-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "SetuptoolsConfiguration",
+  schemaPath: "schemas/partial-setuptools.json",
+  filePath: path.join("src", "python", "setuptools-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PoetryConfiguration",
+  schemaPath: "schemas/partial-poetry.json",
+  filePath: path.join("src", "python", "poetry-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PdmConfiguration",
+  schemaPath: "schemas/partial-pdm.json",
+  filePath: path.join("src", "python", "pdm-config.ts"),
+  transform: (schema) => (
+    delete schema.properties.scripts.properties._, schema
+  ),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PyrightConfiguration",
+  schemaPath: "schemas/partial-pyright.json",
+  filePath: path.join("src", "python", "pyright-config.ts"),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PytestConfiguration",
+  schemaPath: "schemas/partial-pytest.json",
+  filePath: path.join("src", "python", "pytest-config.ts"),
+});
+
 new JsonConst(project, {
   jsonPath: require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
   filePath: path.join("src", "awscdk", "private", "feature-flags-v2.const.ts"),
