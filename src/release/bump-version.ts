@@ -425,10 +425,16 @@ function determineLatestTag(options: LatestTagOptions): {
     const releaseTags = tags.filter((x) =>
       new RegExp(`^${prefix}v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
     );
-    if (
-      releaseTags.length > 0 &&
-      compare(releaseTags[0], prereleaseTags[0]) === 1
-    ) {
+
+    let releaseTag = releaseTags[0];
+    let prereleaseTag = prereleaseTags[0];
+
+    if (prefix) {
+      releaseTag = releaseTag.substring(prefix.length);
+      prereleaseTag = prereleaseTag.substring(prefix.length);
+    }
+
+    if (releaseTags.length > 0 && compare(releaseTag, prereleaseTag) === 1) {
       tags = releaseTags;
     } else {
       tags = prereleaseTags;
