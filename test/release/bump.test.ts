@@ -3,6 +3,7 @@ import { promises as fs, mkdtempSync, readFileSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
 import { ReleasableCommits } from "../../src";
+import { NodePackageManager } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { bump, BumpOptions } from "../../src/release/bump-version";
 import { TypeScriptProject } from "../../src/typescript";
@@ -584,6 +585,7 @@ describe("newline at the end of version file", () => {
         name: "test",
         outdir: projectdir,
         release: true,
+        packageManager: NodePackageManager.NPM,
       });
       project.synth();
 
