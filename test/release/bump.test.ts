@@ -383,6 +383,39 @@ test("second prerelease, no other releases", async () => {
   expect(result.version).toStrictEqual("1.0.0-beta.1");
 });
 
+test("release promotion", async () => {
+  const result = await testBump({
+    commits: [
+      { message: "first version", tag: "v1.0.0" },
+      { message: "fix(test): testing", tag: "v1.0.1-beta.0" },
+      { message: "fix(test): testing2", tag: "v1.0.1-beta.1" },
+      { message: "fix(test): new fix" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.0.1");
+  expect(result.bumpfile).toStrictEqual("1.0.1");
+  expect(result.tag).toStrictEqual("v1.0.1");
+});
+
+test("release promotion, with prefix", async () => {
+  const result = await testBump({
+    options: {
+      tagPrefix: "prefix/",
+    },
+    commits: [
+      { message: "first version", tag: "prefix/v1.0.0" },
+      { message: "fix(test): testing", tag: "prefix/v1.0.1-beta.0" },
+      { message: "fix(test): testing2", tag: "prefix/v1.0.1-beta.1" },
+      { message: "fix(test): new fix" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.0.1");
+  expect(result.bumpfile).toStrictEqual("1.0.1");
+  expect(result.tag).toStrictEqual("prefix/v1.0.1");
+});
+
 test("first prerelease after promotion, with prerelease", async () => {
   const result = await testBump({
     options: {
@@ -398,6 +431,25 @@ test("first prerelease after promotion, with prerelease", async () => {
   });
 
   expect(result.version).toEqual("1.0.2-beta.0");
+});
+
+test("first prerelease after promotion, with prerelease, with prefix", async () => {
+  const result = await testBump({
+    options: {
+      prerelease: "beta",
+      tagPrefix: "prefix/",
+    },
+    commits: [
+      { message: "first version", tag: "prefix/v1.0.0" },
+      { message: "fix(test): testing", tag: "prefix/v1.0.1-beta.0" },
+      { message: "fix(test): testing2", tag: "prefix/v1.0.1-beta.1" },
+      { message: "fix(test): new fix" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.0.1-beta.2");
+  expect(result.bumpfile).toStrictEqual("1.0.1-beta.2");
+  expect(result.tag).toStrictEqual("prefix/v1.0.1-beta.2");
 });
 
 test("second prerelease after the first prerelease", async () => {

@@ -413,6 +413,8 @@ function determineLatestTag(options: LatestTagOptions): {
     new RegExp(`-${prerelease}\.[0-9]+$`).test(x)
   );
   if (prerelease && prereleaseTags.length > 0) {
+    let prereleaseTag = prereleaseTags[0];
+
     /**
      * Cover the following case specifically
      * 1 - v1.0.0
@@ -425,10 +427,18 @@ function determineLatestTag(options: LatestTagOptions): {
     const releaseTags = tags.filter((x) =>
       new RegExp(`^${prefix}v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
     );
-    if (
-      releaseTags.length > 0 &&
-      compare(releaseTags[0], prereleaseTags[0]) === 1
-    ) {
+
+    let releaseTag: string | undefined;
+    if (releaseTags.length > 0) {
+      releaseTag = releaseTags[0];
+    }
+
+    if (prefix) {
+      releaseTag = releaseTag?.substring(prefix.length);
+      prereleaseTag = prereleaseTag.substring(prefix.length);
+    }
+
+    if (releaseTag && compare(releaseTag, prereleaseTag) === 1) {
       tags = releaseTags;
     } else {
       tags = prereleaseTags;
