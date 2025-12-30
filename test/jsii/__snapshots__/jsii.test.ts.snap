@@ -546,6 +546,7 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
+        working-directory: .
       - name: Find mutations
         id: create_patch
         run: |-
@@ -2059,6 +2060,7 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
+        working-directory: .
       - name: Find mutations
         id: create_patch
         run: |-
@@ -3570,6 +3572,7 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
+        working-directory: .
       - name: Find mutations
         id: create_patch
         run: |-

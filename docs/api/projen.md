@@ -5329,6 +5329,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.Project.property.preCompileTask">preCompileTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Project.property.projectBuild">projectBuild</a></code> | <code><a href="#projen.ProjectBuild">ProjectBuild</a></code> | Manages the build process of the project. |
 | <code><a href="#projen.Project.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.Project.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.Project.property.root">root</a></code> | <code><a href="#projen.Project">Project</a></code> | The root project. |
 | <code><a href="#projen.Project.property.subprojects">subprojects</a></code> | <code><a href="#projen.Project">Project</a>[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.Project.property.tasks">tasks</a></code> | <code><a href="#projen.Tasks">Tasks</a></code> | Project tasks. |
@@ -5542,6 +5543,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.Project.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 

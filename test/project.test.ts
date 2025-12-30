@@ -207,3 +207,35 @@ test("github: false disables github integration", () => {
   // THEN
   expect(p.github).toBeUndefined();
 });
+
+describe("rootRelativeDirectory", () => {
+  test("for the root project", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // THEN
+    expect(p.repoRelativeDirectory).toEqual(".");
+  });
+
+  test("for the root project, if it is not in the repository root", () => {
+    // GIVEN
+    const p = new TestProject({
+      outdir: "subdir",
+    });
+
+    // THEN
+    expect(p.repoRelativeDirectory).toEqual("subdir");
+  });
+
+  test("for a child project", () => {
+    // GIVEN
+    const parent = new TestProject();
+    const child = new TestProject({
+      parent,
+      outdir: "asdf/xyz",
+    });
+
+    // THEN
+    expect(child.repoRelativeDirectory).toEqual(`asdf${path.sep}xyz`);
+  });
+});

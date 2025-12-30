@@ -257,9 +257,12 @@ export class Project extends Construct {
   private readonly _ejected: boolean;
   /** projenCommand without default value */
   private readonly _projenCommand?: string;
+  /** Root of the repository */
+  private readonly repoRoot: string;
 
   constructor(options: ProjectOptions) {
-    const outdir = determineOutdir(options.parent, options.outdir);
+    const repoRoot = options.parent?.repoRoot ?? repositoryRoot(options.outdir);
+    const outdir = determineOutdir(repoRoot, options.parent, options.outdir);
     const autoId = `${new.target.name}#${options.name}@${path.normalize(
       options.outdir ?? "<root>"
     )}`;
@@ -287,6 +290,7 @@ export class Project extends Construct {
     }
 
     this.outdir = outdir;
+    this.repoRoot = repoRoot;
 
     // ------------------------------------------------------------------------
 
@@ -382,6 +386,16 @@ export class Project extends Construct {
    */
   public get root(): Project {
     return isProject(this.node.root) ? this.node.root : this;
+  }
+
+  /**
+   * The project directory relative to the repository project
+   *
+   * Use this in tasks and workflows to find the working directory of
+   * subprojects in a monorepo.
+   */
+  public get repoRelativeDirectory(): string {
+    return path.relative(this.repoRoot, this.outdir) || ".";
   }
 
   /**
@@ -736,7 +750,11 @@ export interface InitProject {
 /**
  * Resolves the project's output directory.
  */
-function determineOutdir(parent?: Project, outdirOption?: string) {
+function determineOutdir(
+  repoRoot: string,
+  parent?: Project,
+  outdirOption?: string
+): string {
   if (parent && outdirOption && path.isAbsolute(outdirOption)) {
     throw new Error('"outdir" must be a relative path');
   }
@@ -750,20 +768,35 @@ function determineOutdir(parent?: Project, outdirOption?: string) {
     return path.resolve(parent.outdir, outdirOption);
   }
 
+  return path.resolve(repoRoot, outdirOption ?? DEFAULT_OUTDIR);
+}
+
+/**
+ * Guess at the repository root
+ *
+ * If the root project's `outdir` is relative, it will be evaluated relative to
+ * the current working directory, or if we are running tests, we will create
+ * a temporary directory and use that as the root.
+ *
+ * If the root project's `outdir` is absolute, we have no information on the
+ * repository root and we will just assume it is the same as the root project's
+ * absolute outdir.
+ */
+function repositoryRoot(rootProjectOutdir?: string): string {
+  const realCwd = realpathSync(process.cwd());
+
   // if this is running inside a test and outdir is not explicitly set
   // use a temp directory (unless cwd is already under tmp)
-  if (IS_TEST_RUN && !outdirOption) {
-    const realCwd = realpathSync(process.cwd());
+  if (IS_TEST_RUN && !rootProjectOutdir) {
     const realTmp = realpathSync(tmpdir());
-
-    if (realCwd.startsWith(realTmp)) {
-      return path.resolve(realCwd, outdirOption ?? DEFAULT_OUTDIR);
+    if (!realCwd.startsWith(realTmp)) {
+      return mkdtempSync(path.join(tmpdir(), "projen."));
     }
-
-    return mkdtempSync(path.join(tmpdir(), "projen."));
   }
 
-  return path.resolve(outdirOption ?? DEFAULT_OUTDIR);
+  return rootProjectOutdir && path.isAbsolute(rootProjectOutdir)
+    ? rootProjectOutdir
+    : realCwd;
 }
 
 function isFile(c: Component): c is FileBase {
