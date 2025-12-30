@@ -35,6 +35,19 @@ export class JsonFile extends ObjectFile {
       (filePath.toLowerCase().endsWith("json5") ||
         filePath.toLowerCase().endsWith("jsonc"));
 
+    // Add linguist-language=JSON-with-Comments attribute for files that support comments
+    // This helps GitHub render them correctly with syntax highlighting
+    if (this.supportsComments) {
+      const committed =
+        options.committed ?? this.project.commitGenerated ?? true;
+      if (committed) {
+        this.project.gitattributes.addAttributes(
+          `/${this.path}`,
+          "linguist-language=JSON-with-Comments"
+        );
+      }
+    }
+
     if (!options.obj) {
       throw new Error('"obj" cannot be undefined');
     }

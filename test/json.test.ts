@@ -183,6 +183,70 @@ describe("newline", () => {
   });
 });
 
+describe("gitattributes linguist-language", () => {
+  test("json5 files get linguist-language=JSON-with-Comments attribute", () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, "config.json5", { obj: { hello: "world" } });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot[".gitattributes"]).toContain(
+      "/config.json5 linguist-generated linguist-language=JSON-with-Comments"
+    );
+  });
+
+  test("jsonc files get linguist-language=JSON-with-Comments attribute", () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, "config.jsonc", { obj: { hello: "world" } });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot[".gitattributes"]).toContain(
+      "/config.jsonc linguist-generated linguist-language=JSON-with-Comments"
+    );
+  });
+
+  test("json files with allowComments get linguist-language=JSON-with-Comments attribute", () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, "config.json", {
+      obj: { hello: "world" },
+      allowComments: true,
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot[".gitattributes"]).toContain(
+      "/config.json linguist-generated linguist-language=JSON-with-Comments"
+    );
+  });
+
+  test("regular json files do not get linguist-language attribute", () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, "config.json", { obj: { hello: "world" } });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot[".gitattributes"]).toContain(
+      "/config.json linguist-generated"
+    );
+    expect(snapshot[".gitattributes"]).not.toContain(
+      "linguist-language=JSON-with-Comments"
+    );
+  });
+
+  test("uncommitted files do not get linguist-language attribute", () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, "config.json5", {
+      obj: { hello: "world" },
+      committed: false,
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot[".gitattributes"]).not.toContain("/config.json5");
+  });
+});
+
 describe("changed", () => {
   const obj = { hello: "world" };
 
