@@ -16,7 +16,7 @@ test("dependencies", () => {
 
 test("dependencies via ctor", () => {
   const p = new TestPythonProject({
-    deps: ["Django@3.1.5", "aws-cdk.core"],
+    dependencies: ["Django@3.1.5", "aws-cdk.core"],
     devDeps: ["hypothesis@^6.0.3"],
   });
   expect(synthSnapshot(p)).toMatchSnapshot();
@@ -79,18 +79,18 @@ test("cannot specify multiple projenrc types", () => {
 
 test("extras render properly", () => {
   const p = new TestPythonProject({
-    deps: ["aws-lambda-powertools[tracer]"],
+    dependencies: ["aws-lambda-powertools[tracer]"],
   });
-  expect(synthSnapshot(p)["requirements.txt"]).toContain(
+  expect(synthSnapshot(p)["pyproject.toml"]).toContain(
     "aws-lambda-powertools[tracer]"
   );
 });
 
 test("extras render properly with explicit version", () => {
   const p = new TestPythonProject({
-    deps: ["aws-lambda-powertools[tracer]@1.0.0"],
+    dependencies: ["aws-lambda-powertools[tracer]@1.0.0"],
   });
-  expect(synthSnapshot(p)["requirements.txt"]).toContain(
+  expect(synthSnapshot(p)["pyproject.toml"]).toContain(
     "aws-lambda-powertools[tracer]==1.0.0"
   );
 });

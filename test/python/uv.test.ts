@@ -1,14 +1,22 @@
 import * as TOML from "@iarna/toml";
 import { TestPythonProject } from "./util";
+import {
+  PythonFormatter,
+  PythonPackageManager,
+  PythonTypeChecker,
+} from "../../src/python";
 import { synthSnapshot } from "../util";
 
 test("uv enabled", () => {
   const p = new TestPythonProject({
-    uv: true,
-    homepage: "http://www.example.com",
+    packageManager: PythonPackageManager.UV,
+    urls: {
+      Homepage: "http://www.example.com",
+    },
     description: "a short project description",
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
+    authors: [{ name: "First Last", email: "email@example.com" }],
   });
   const snapshot = synthSnapshot(p);
   expect(snapshot["pyproject.toml"]).toContain("First Last");
@@ -22,44 +30,12 @@ test("uv enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain('python = ">=3.12,<4.0"'); // default python version
 });
 
-test.each([
-  ["poetry", true, false, false, false],
-  ["pip", false, true, false, false],
-  ["venv", false, false, true, false],
-  ["setuptools", false, false, false, true],
-  ["pip, venv", false, true, true, false],
-])(
-  "uv and %s fail",
-  (
-    tools: string,
-    poetry: boolean,
-    pip: boolean,
-    venv: boolean,
-    setuptools: boolean
-  ) => {
-    expect(
-      () =>
-        new TestPythonProject({
-          poetry: poetry,
-          pip: pip,
-          venv: venv,
-          setuptools: setuptools,
-          uv: true,
-          homepage: "http://www.example.com",
-          description: "a short project description",
-          license: "Apache-2.0",
-          classifiers: ["Development Status :: 4 - Beta"],
-        })
-    ).toThrowError(
-      `uv cannot be used together with other tools, found the following incompatible tools enabled: ${tools}`
-    );
-  }
-);
-
 test("uv add dependency", () => {
   const p = new TestPythonProject({
-    uv: true,
-    homepage: "http://www.example.com",
+    packageManager: PythonPackageManager.UV,
+    urls: {
+      Homepage: "http://www.example.com",
+    },
     description: "a short project description",
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
@@ -72,8 +48,10 @@ test("uv add dependency", () => {
 
 test("uv add dev dependency", () => {
   const p = new TestPythonProject({
-    uv: true,
-    homepage: "http://www.example.com",
+    packageManager: PythonPackageManager.UV,
+    urls: {
+      Homepage: "http://www.example.com",
+    },
     description: "a short project description",
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
@@ -88,33 +66,32 @@ test("uv options not using uv", () => {
   expect(
     () =>
       new TestPythonProject({
-        uvOptions: { uv: { reinstall: true } },
+        packageManager: PythonPackageManager.HATCH,
+        tool: { uv: { managed: true } },
       })
-  ).toThrowError("uvOptions only applies when using uv.");
+  ).toThrowError("`tool.uv` only applies when using uv.");
 });
 
 test("uv enabled with uv-specific options", () => {
   const p = new TestPythonProject({
-    uv: true,
-    homepage: "http://www.example.com",
+    packageManager: PythonPackageManager.UV,
+    formatter: PythonFormatter.RUFF,
+    name: "test-python-project",
+    requiresPython: ">=3.13,<4.0",
+    keywords: ["Keyword1"],
+    urls: {
+      Homepage: "http://www.example.com",
+      Repository: "https://github.com/test-python-project",
+      Documentation: "https://example.github.io/test-python-project",
+    },
     description: "a short project description",
     license: "Apache-2.0",
     classifiers: ["Development Status :: 4 - Beta"],
     version: "0.0.1",
-    deps: ["package1@0.0.1", "package2@0.0.2", "package3"],
+    dependencies: ["package1@0.0.1", "package2@0.0.2", "package3"],
     devDeps: ["pytest", "ruff"],
-    authorName: "First Last",
-    authorEmail: "first.last@example.com",
-    uvOptions: {
-      project: {
-        name: "test-python-project",
-        requiresPython: ">=3.13,<4.0",
-        keywords: ["Keyword1"],
-        urls: {
-          repository: "https://github.com/test-python-project",
-          documentation: "https://example.github.io/test-python-project",
-        },
-      },
+    authors: [{ name: "First Last", email: "first.last@example.com" }],
+    tool: {
       uv: {
         sources: {
           httpx: [{ git: "https://github.com/encode/httpx", tag: "0.27.0" }],
@@ -148,15 +125,19 @@ test("uv enabled with uv-specific options", () => {
   expect(snapshot).toMatchSnapshot();
 });
 
-test("generates correct pyproject.toml content", () => {
+test("uv generates correct pyproject.toml content", () => {
   const project = new TestPythonProject({
-    uv: true,
-    homepage: "http://www.example.com",
+    packageManager: PythonPackageManager.UV,
+    urls: {
+      Homepage: "http://www.example.com",
+    },
+    authors: [{ name: "First Last", email: "email@example.com" }],
     description: "A short project description",
     license: "Apache-2.0",
-    deps: ["aws-cdk-lib@^2.128.0"],
-    devDeps: ["ruff@~0.14.4", "pytest@*"],
-    uvOptions: {
+    dependencies: ["aws-cdk-lib@^2.128.0"],
+    typeChecker: PythonTypeChecker.TY,
+    devDeps: ["ruff@~=0.14.4", "pytest@*"],
+    tool: {
       uv: {
         managed: true,
         buildBackend: {
@@ -188,12 +169,15 @@ test("generates correct pyproject.toml content", () => {
 
   const snapshot = synthSnapshot(project);
   const actualTomlContent = snapshot["pyproject.toml"];
-
   const actualContentObject = TOML.parse(actualTomlContent);
 
   const expectedContentObject = {
     "dependency-groups": {
-      dev: ["projen==99.99.99", "pytest", "ruff>=0.14.4,<0.15.0"],
+      dev: ["projen==99.99.99", "pytest", "ruff~=0.14.4", "ty"],
+    },
+    "build-system": {
+      "build-backend": "uv_build",
+      requires: ["uv_build"],
     },
     project: {
       name: "test-python-project",
@@ -205,7 +189,7 @@ test("generates correct pyproject.toml content", () => {
       dependencies: ["aws-cdk-lib>=2.128.0,<3.0.0"],
       "requires-python": ">=3.12,<4.0",
       urls: {
-        homepage: "http://www.example.com",
+        Homepage: "http://www.example.com",
       },
     },
     tool: {

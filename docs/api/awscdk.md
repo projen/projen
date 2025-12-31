@@ -4379,12 +4379,12 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.github">github</a></code> | <code>projen.github.GitHub</code> | Access all github components. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.gitpod">gitpod</a></code> | <code>projen.Gitpod</code> | Access for Gitpod. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.vscode">vscode</a></code> | <code>projen.vscode.VsCode</code> | Access all VSCode components. |
-| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.depsManager">depsManager</a></code> | <code>projen.python.IPythonDeps</code> | API for managing dependencies. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.envManager">envManager</a></code> | <code>projen.python.IPythonEnv</code> | API for managing the Python runtime environment. |
-| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores). |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.file">file</a></code> | <code>projen.python.PyprojectTomlFile</code> | pyproject.toml file. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.moduleName">moduleName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.packagingManager">packagingManager</a></code> | <code>projen.python.PackageManagerBase</code> | API for managing packaging the project as a library. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.projectOptions">projectOptions</a></code> | <code>projen.python.PyprojectTomlProject</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | The directory in which the python sample tests reside. |
-| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.version">version</a></code> | <code>string</code> | Version of the package for distribution (should follow semver). |
-| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.packagingManager">packagingManager</a></code> | <code>projen.python.IPythonPackaging</code> | API for managing packaging the project as a library. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.pytest">pytest</a></code> | <code>projen.python.Pytest</code> | Pytest component. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.appEntrypoint">appEntrypoint</a></code> | <code>string</code> | The CDK app entrypoint. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.cdkConfig">cdkConfig</a></code> | <code><a href="#projen.awscdk.CdkConfig">CdkConfig</a></code> | cdk.json configuration. |
@@ -4770,18 +4770,6 @@ This will be `undefined` for subprojects.
 
 ---
 
-##### `depsManager`<sup>Required</sup> <a name="depsManager" id="projen.awscdk.AwsCdkPythonApp.property.depsManager"></a>
-
-```typescript
-public readonly depsManager: IPythonDeps;
-```
-
-- *Type:* projen.python.IPythonDeps
-
-API for managing dependencies.
-
----
-
 ##### `envManager`<sup>Required</sup> <a name="envManager" id="projen.awscdk.AwsCdkPythonApp.property.envManager"></a>
 
 ```typescript
@@ -4794,6 +4782,18 @@ API for managing the Python runtime environment.
 
 ---
 
+##### `file`<sup>Required</sup> <a name="file" id="projen.awscdk.AwsCdkPythonApp.property.file"></a>
+
+```typescript
+public readonly file: PyprojectTomlFile;
+```
+
+- *Type:* projen.python.PyprojectTomlFile
+
+pyproject.toml file.
+
+---
+
 ##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.awscdk.AwsCdkPythonApp.property.moduleName"></a>
 
 ```typescript
@@ -4802,7 +4802,29 @@ public readonly moduleName: string;
 
 - *Type:* string
 
-Python module name (the project name, with any hyphens or periods replaced with underscores).
+---
+
+##### `packagingManager`<sup>Required</sup> <a name="packagingManager" id="projen.awscdk.AwsCdkPythonApp.property.packagingManager"></a>
+
+```typescript
+public readonly packagingManager: PackageManagerBase;
+```
+
+- *Type:* projen.python.PackageManagerBase
+
+API for managing packaging the project as a library.
+
+Only applies when the `projectType` is LIB.
+
+---
+
+##### `projectOptions`<sup>Required</sup> <a name="projectOptions" id="projen.awscdk.AwsCdkPythonApp.property.projectOptions"></a>
+
+```typescript
+public readonly projectOptions: PyprojectTomlProject;
+```
+
+- *Type:* projen.python.PyprojectTomlProject
 
 ---
 
@@ -4815,32 +4837,6 @@ public readonly sampleTestdir: string;
 - *Type:* string
 
 The directory in which the python sample tests reside.
-
----
-
-##### `version`<sup>Required</sup> <a name="version" id="projen.awscdk.AwsCdkPythonApp.property.version"></a>
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-
-Version of the package for distribution (should follow semver).
-
----
-
-##### `packagingManager`<sup>Optional</sup> <a name="packagingManager" id="projen.awscdk.AwsCdkPythonApp.property.packagingManager"></a>
-
-```typescript
-public readonly packagingManager: IPythonPackaging;
-```
-
-- *Type:* projen.python.IPythonPackaging
-
-API for managing packaging the project as a library.
-
-Only applies when the `projectType` is LIB.
 
 ---
 
@@ -10312,10 +10308,10 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -10826,26 +10822,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.stale"></a>
 
 ```typescript
@@ -10890,6 +10866,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.allowLibraryDependencies"></a>
 
@@ -13568,10 +13564,10 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.artifactId">artifactId</a></code> | <code>string</code> | The artifactId is generally the name that the project is known by. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.groupId">groupId</a></code> | <code>string</code> | This is generally unique amongst an organization or a project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
@@ -13959,26 +13955,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkJavaAppOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.awscdk.AwsCdkJavaAppOptions.property.stale"></a>
 
 ```typescript
@@ -14023,6 +13999,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkJavaAppOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `artifactId`<sup>Required</sup> <a name="artifactId" id="projen.awscdk.AwsCdkJavaAppOptions.property.artifactId"></a>
 
@@ -14664,7 +14660,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.name">name</a></code> | <code>string</code> | This is the name of your project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.name">name</a></code> | <code>string</code> | Valid name consists only of ASCII letters and numbers, period, underscore and hyphen. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.commitGenerated">commitGenerated</a></code> | <code>boolean</code> | Whether to commit the managed files by default. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
@@ -14689,27 +14685,35 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.version">version</a></code> | <code>string</code> | Version of the package. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | A list of PyPI trove classifiers that describe the project. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.description">description</a></code> | <code>string</code> | A short description of the package. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.homepage">homepage</a></code> | <code>string</code> | A URL to the website of the project. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.license">license</a></code> | <code>string</code> | License of this package as an SPDX identifier. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.packageName">packageName</a></code> | <code>string</code> | Package name. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.poetryOptions">poetryOptions</a></code> | <code>projen.python.PoetryPyprojectOptionsWithoutDeps</code> | Additional options to set for poetry if using poetry. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setupConfig">setupConfig</a></code> | <code>{[ key: string ]: any}</code> | Additional fields to pass in the setup() function if using setuptools. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.uvOptions">uvOptions</a></code> | <code>projen.python.UvOptions</code> | Additional options to set for uv if using uv. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.authors">authors</a></code> | <code>projen.python.ProjectAuthor[]</code> | People or organizations considered as 'authors' of the project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.classifiers">classifiers</a></code> | <code>string[]</code> | List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.dependencies">dependencies</a></code> | <code>string[]</code> | An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.description">description</a></code> | <code>string</code> | Summary description of the project in one line. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.dynamic">dynamic</a></code> | <code>projen.python.PyprojectTomlProjectDynamic[]</code> | Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.entryPoints">entryPoints</a></code> | <code>any</code> | Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.guiScripts">guiScripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.keywords">keywords</a></code> | <code>string[]</code> | List of keywords or tags that describe the project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.license">license</a></code> | <code>any</code> | For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.maintainers">maintainers</a></code> | <code>projen.python.ProjectAuthor[]</code> | People or organizations considered as 'maintainers' of the project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.optionalDependencies">optionalDependencies</a></code> | <code>any</code> | Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.readme">readme</a></code> | <code>any</code> | Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.requiresPython">requiresPython</a></code> | <code>string</code> | Specifies the Python version(s) that the distribution is compatible with. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.urls">urls</a></code> | <code>{[ key: string ]: string}</code> | Table consisting one or multiple `label: URL` pairs. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.version">version</a></code> | <code>string</code> | Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization). |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildSystem">buildSystem</a></code> | <code>projen.python.BuildSystem</code> | Declares any Python level dependencies that must be installed in order to run the project’s build system successfully. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.formatter">formatter</a></code> | <code>projen.python.PythonFormatter</code> | The formatter to use for the project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.linter">linter</a></code> | <code>projen.python.PythonLinter</code> | The linter to use for the project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pythonExec">pythonExec</a></code> | <code>string</code> | Path to the python executable to use. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.moduleName">moduleName</a></code> | <code>string</code> | Name of the python package as used in imports and filenames. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.typeChecker">typeChecker</a></code> | <code>projen.python.PythonTypeChecker</code> | The type checker to use for the project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | List of dev dependencies for this project. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pip">pip</a></code> | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.poetry">poetry</a></code> | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.packageManager">packageManager</a></code> | <code>projen.python.PythonPackageManager</code> | The package manager to use for the project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenrcJs">projenrcJs</a></code> | <code>boolean</code> | Use projenrc in javascript. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenrcJsOptions">projenrcJsOptions</a></code> | <code>projen.javascript.ProjenrcOptions</code> | Options related to projenrc in JavaScript. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenrcPython">projenrcPython</a></code> | <code>boolean</code> | Use projenrc in Python. |
@@ -14720,8 +14724,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.pytestOptions">pytestOptions</a></code> | <code>projen.python.PytestOptions</code> | pytest options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sample">sample</a></code> | <code>boolean</code> | Include sample code and test if the relevant directories don't exist. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.sampleTestdir">sampleTestdir</a></code> | <code>string</code> | Location of sample tests. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.setuptools">setuptools</a></code> | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing. |
-| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.uv">uv</a></code> | <code>boolean</code> | Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.tool">tool</a></code> | <code>projen.python.PythonProjectTool</code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venv">venv</a></code> | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.venvOptions">venvOptions</a></code> | <code>projen.python.VenvOptions</code> | Venv options. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
@@ -14752,9 +14755,10 @@ public readonly name: string;
 ```
 
 - *Type:* string
-- *Default:* $BASEDIR
 
-This is the name of your project.
+Valid name consists only of ASCII letters and numbers, period, underscore and hyphen.
+
+It must start and end with a letter or number.
 
 ---
 
@@ -15094,26 +15098,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkPythonAppOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.awscdk.AwsCdkPythonAppOptions.property.stale"></a>
 
 ```typescript
@@ -15159,42 +15143,17 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
-##### `authorEmail`<sup>Required</sup> <a name="authorEmail" id="projen.awscdk.AwsCdkPythonAppOptions.property.authorEmail"></a>
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.awscdk.AwsCdkPythonAppOptions.property.authors"></a>
 
 ```typescript
-public readonly authorEmail: string;
+public readonly authors: ProjectAuthor[];
 ```
 
-- *Type:* string
-- *Default:* $GIT_USER_EMAIL
+- *Type:* projen.python.ProjectAuthor[]
 
-Author's e-mail.
+People or organizations considered as 'authors' of the project.
 
----
-
-##### `authorName`<sup>Required</sup> <a name="authorName" id="projen.awscdk.AwsCdkPythonAppOptions.property.authorName"></a>
-
-```typescript
-public readonly authorName: string;
-```
-
-- *Type:* string
-- *Default:* $GIT_USER_NAME
-
-Author's name.
-
----
-
-##### `version`<sup>Required</sup> <a name="version" id="projen.awscdk.AwsCdkPythonAppOptions.property.version"></a>
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-- *Default:* "0.1.0"
-
-Version of the package.
+Each author is a table with `name` key, `email` key, or both.
 
 ---
 
@@ -15206,9 +15165,19 @@ public readonly classifiers: string[];
 
 - *Type:* string[]
 
-A list of PyPI trove classifiers that describe the project.
+List of [Trove classifiers](https://pypi.org/classifiers/) that describe the project. PyPI use the classifiers to categorize projects.
 
-> [https://pypi.org/classifiers/](https://pypi.org/classifiers/)
+---
+
+##### `dependencies`<sup>Optional</sup> <a name="dependencies" id="projen.awscdk.AwsCdkPythonAppOptions.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: string[];
+```
+
+- *Type:* string[]
+
+An array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings, each representing a mandatory dependent package of the project.
 
 ---
 
@@ -15220,79 +15189,241 @@ public readonly description: string;
 
 - *Type:* string
 
-A short description of the package.
+Summary description of the project in one line.
+
+Tools may not accept multiple lines.
 
 ---
 
-##### `homepage`<sup>Optional</sup> <a name="homepage" id="projen.awscdk.AwsCdkPythonAppOptions.property.homepage"></a>
+##### `dynamic`<sup>Optional</sup> <a name="dynamic" id="projen.awscdk.AwsCdkPythonAppOptions.property.dynamic"></a>
 
 ```typescript
-public readonly homepage: string;
+public readonly dynamic: PyprojectTomlProjectDynamic[];
 ```
 
-- *Type:* string
+- *Type:* projen.python.PyprojectTomlProjectDynamic[]
 
-A URL to the website of the project.
+Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
+
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
+
+---
+
+##### `entryPoints`<sup>Optional</sup> <a name="entryPoints" id="projen.awscdk.AwsCdkPythonAppOptions.property.entryPoints"></a>
+
+```typescript
+public readonly entryPoints: any;
+```
+
+- *Type:* any
+
+Extra [entry point groups](https://packaging.python.org/en/latest/specifications/entry-points/) that allow applications to load plugins. For example, Pygments (a syntax highlighting tool) can use additional styles from separately installed packages through `[project.entry-points."pygments.styles"]`. Each key is the name of the entry-point group, and each value is a table of entry points.
+
+---
+
+##### `guiScripts`<sup>Optional</sup> <a name="guiScripts" id="projen.awscdk.AwsCdkPythonAppOptions.property.guiScripts"></a>
+
+```typescript
+public readonly guiScripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a GUI wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `gui_scripts` specially in that they are wrapped in a GUI executable, so they can be started without a console, but cannot use standard streams unless application code redirects them.
+
+---
+
+##### `importNames`<sup>Optional</sup> <a name="importNames" id="projen.awscdk.AwsCdkPythonAppOptions.property.importNames"></a>
+
+```typescript
+public readonly importNames: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project exclusively provides when installed.
+
+---
+
+##### `importNamespaces`<sup>Optional</sup> <a name="importNamespaces" id="projen.awscdk.AwsCdkPythonAppOptions.property.importNamespaces"></a>
+
+```typescript
+public readonly importNamespaces: string[];
+```
+
+- *Type:* string[]
+
+An array of strings specifying the import names that the project provides when installed, but not exclusively.
+
+---
+
+##### `keywords`<sup>Optional</sup> <a name="keywords" id="projen.awscdk.AwsCdkPythonAppOptions.property.keywords"></a>
+
+```typescript
+public readonly keywords: string[];
+```
+
+- *Type:* string[]
+
+List of keywords or tags that describe the project.
+
+They could be used by search engines to categorize the project.
 
 ---
 
 ##### `license`<sup>Optional</sup> <a name="license" id="projen.awscdk.AwsCdkPythonAppOptions.property.license"></a>
 
 ```typescript
-public readonly license: string;
+public readonly license: any;
+```
+
+- *Type:* any
+
+For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content.
+
+Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+
+---
+
+##### `licenseFiles`<sup>Optional</sup> <a name="licenseFiles" id="projen.awscdk.AwsCdkPythonAppOptions.property.licenseFiles"></a>
+
+```typescript
+public readonly licenseFiles: string[];
+```
+
+- *Type:* string[]
+
+Relative paths or globs to paths of license files.
+
+Can be an empty list.
+
+---
+
+##### `maintainers`<sup>Optional</sup> <a name="maintainers" id="projen.awscdk.AwsCdkPythonAppOptions.property.maintainers"></a>
+
+```typescript
+public readonly maintainers: ProjectAuthor[];
+```
+
+- *Type:* projen.python.ProjectAuthor[]
+
+People or organizations considered as 'maintainers' of the project.
+
+Each maintainer is a table with `name` key, `email` key, or both.
+
+---
+
+##### `optionalDependencies`<sup>Optional</sup> <a name="optionalDependencies" id="projen.awscdk.AwsCdkPythonAppOptions.property.optionalDependencies"></a>
+
+```typescript
+public readonly optionalDependencies: any;
+```
+
+- *Type:* any
+
+Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings.
+
+---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkPythonAppOptions.property.readme"></a>
+
+```typescript
+public readonly readme: any;
+```
+
+- *Type:* any
+
+Value can be a relative path to text / markdown (`.md` suffix) / reStructuredText (`.rst` suffix) readme file, or a table with either: - `file` key containing path of aforementioned readme file, or - `text` key containing the full readme text embedded inside `pyproject.toml`.
+
+---
+
+##### `requiresPython`<sup>Optional</sup> <a name="requiresPython" id="projen.awscdk.AwsCdkPythonAppOptions.property.requiresPython"></a>
+
+```typescript
+public readonly requiresPython: string;
 ```
 
 - *Type:* string
 
-License of this package as an SPDX identifier.
+Specifies the Python version(s) that the distribution is compatible with.
+
+Must be in the format specified in [Version specifiers](https://packaging.python.org/en/latest/specifications/version-specifiers/).
 
 ---
 
-##### `packageName`<sup>Optional</sup> <a name="packageName" id="projen.awscdk.AwsCdkPythonAppOptions.property.packageName"></a>
+##### `scripts`<sup>Optional</sup> <a name="scripts" id="projen.awscdk.AwsCdkPythonAppOptions.property.scripts"></a>
 
 ```typescript
-public readonly packageName: string;
+public readonly scripts: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table of [entry points](https://packaging.python.org/en/latest/specifications/entry-points/) that allows package installers to create a command-line wrapper for. Each key is the name of the script to be created, and each value is the function or object to all, in form of either `importable.module` or `importable.module:object.attr`. Windows platform treats `console_scripts` specially in that they are wrapped in a console executable, so they are attached to a console and can use `sys.stdin`, `sys.stdout` and `sys.stderr` for I/O.
+
+---
+
+##### `urls`<sup>Optional</sup> <a name="urls" id="projen.awscdk.AwsCdkPythonAppOptions.property.urls"></a>
+
+```typescript
+public readonly urls: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Table consisting one or multiple `label: URL` pairs.
+
+Common indexes like PyPI uses [well-known Project URLs](https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels) when presenting project pages.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.awscdk.AwsCdkPythonAppOptions.property.version"></a>
+
+```typescript
+public readonly version: string;
 ```
 
 - *Type:* string
 
-Package name.
+Version of the project, as defined in the [Version specifier specification](https://packaging.python.org/en/latest/specifications/version-specifiers/), and preferably [already normalized](https://packaging.python.org/en/latest/specifications/version-specifiers/#normalization).
 
 ---
 
-##### `poetryOptions`<sup>Optional</sup> <a name="poetryOptions" id="projen.awscdk.AwsCdkPythonAppOptions.property.poetryOptions"></a>
+##### `buildSystem`<sup>Optional</sup> <a name="buildSystem" id="projen.awscdk.AwsCdkPythonAppOptions.property.buildSystem"></a>
 
 ```typescript
-public readonly poetryOptions: PoetryPyprojectOptionsWithoutDeps;
+public readonly buildSystem: BuildSystem;
 ```
 
-- *Type:* projen.python.PoetryPyprojectOptionsWithoutDeps
+- *Type:* projen.python.BuildSystem
+- *Default:* no build system
 
-Additional options to set for poetry if using poetry.
+Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
 
 ---
 
-##### `setupConfig`<sup>Optional</sup> <a name="setupConfig" id="projen.awscdk.AwsCdkPythonAppOptions.property.setupConfig"></a>
+##### `formatter`<sup>Optional</sup> <a name="formatter" id="projen.awscdk.AwsCdkPythonAppOptions.property.formatter"></a>
 
 ```typescript
-public readonly setupConfig: {[ key: string ]: any};
+public readonly formatter: PythonFormatter;
 ```
 
-- *Type:* {[ key: string ]: any}
+- *Type:* projen.python.PythonFormatter
 
-Additional fields to pass in the setup() function if using setuptools.
+The formatter to use for the project.
 
 ---
 
-##### `uvOptions`<sup>Optional</sup> <a name="uvOptions" id="projen.awscdk.AwsCdkPythonAppOptions.property.uvOptions"></a>
+##### `linter`<sup>Optional</sup> <a name="linter" id="projen.awscdk.AwsCdkPythonAppOptions.property.linter"></a>
 
 ```typescript
-public readonly uvOptions: UvOptions;
+public readonly linter: PythonLinter;
 ```
 
-- *Type:* projen.python.UvOptions
+- *Type:* projen.python.PythonLinter
 
-Additional options to set for uv if using uv.
+The linter to use for the project.
 
 ---
 
@@ -15309,35 +15440,15 @@ Path to the python executable to use.
 
 ---
 
-##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.awscdk.AwsCdkPythonAppOptions.property.moduleName"></a>
+##### `typeChecker`<sup>Optional</sup> <a name="typeChecker" id="projen.awscdk.AwsCdkPythonAppOptions.property.typeChecker"></a>
 
 ```typescript
-public readonly moduleName: string;
+public readonly typeChecker: PythonTypeChecker;
 ```
 
-- *Type:* string
-- *Default:* $PYTHON_MODULE_NAME
+- *Type:* projen.python.PythonTypeChecker
 
-Name of the python package as used in imports and filenames.
-
-Must only consist of alphanumeric characters and underscores.
-
----
-
-##### `deps`<sup>Optional</sup> <a name="deps" id="projen.awscdk.AwsCdkPythonAppOptions.property.deps"></a>
-
-```typescript
-public readonly deps: string[];
-```
-
-- *Type:* string[]
-- *Default:* []
-
-List of runtime dependencies for this project.
-
-Dependencies use the format: `<module>@<semver>`
-
-Additional dependencies can be added via `project.addDependency()`.
+The type checker to use for the project.
 
 ---
 
@@ -15358,32 +15469,16 @@ Additional dependencies can be added via `project.addDevDependency()`.
 
 ---
 
-##### `pip`<sup>Optional</sup> <a name="pip" id="projen.awscdk.AwsCdkPythonAppOptions.property.pip"></a>
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.awscdk.AwsCdkPythonAppOptions.property.packageManager"></a>
 
 ```typescript
-public readonly pip: boolean;
+public readonly packageManager: PythonPackageManager;
 ```
 
-- *Type:* boolean
-- *Default:* true, unless poetry is true, then false
+- *Type:* projen.python.PythonPackageManager
+- *Default:* PackageManager.UV
 
-Use pip with a requirements.txt file to track project dependencies.
-
----
-
-##### `poetry`<sup>Optional</sup> <a name="poetry" id="projen.awscdk.AwsCdkPythonAppOptions.property.poetry"></a>
-
-```typescript
-public readonly poetry: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
-
-This feature is incompatible with pip, setuptools, or venv.
-If you set this option to `true`, then pip, setuptools, and venv must be set to `false`.
+The package manager to use for the project.
 
 ---
 
@@ -15528,29 +15623,17 @@ Typically the same directory where project tests will be located.
 
 ---
 
-##### `setuptools`<sup>Optional</sup> <a name="setuptools" id="projen.awscdk.AwsCdkPythonAppOptions.property.setuptools"></a>
+##### `tool`<sup>Optional</sup> <a name="tool" id="projen.awscdk.AwsCdkPythonAppOptions.property.tool"></a>
 
 ```typescript
-public readonly setuptools: boolean;
+public readonly tool: PythonProjectTool;
 ```
 
-- *Type:* boolean
-- *Default:* true, unless poetry is true, then false
+- *Type:* projen.python.PythonProjectTool
 
-Use setuptools with a setup.py script for packaging and publishing.
+Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
 
----
-
-##### `uv`<sup>Optional</sup> <a name="uv" id="projen.awscdk.AwsCdkPythonAppOptions.property.uv"></a>
-
-```typescript
-public readonly uv: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.
+Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
 
 ---
 
@@ -15561,7 +15644,7 @@ public readonly venv: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true, unless poetry is true, then false
+- *Default:* true when using setuptools
 
 Use venv to manage a virtual environment for installing dependencies inside.
 
@@ -15888,10 +15971,10 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -16394,26 +16477,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.stale"></a>
 
 ```typescript
@@ -16458,6 +16521,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.allowLibraryDependencies"></a>
 
@@ -18927,10 +19010,10 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -19483,28 +19566,6 @@ and `packages` scope.
 
 ---
 
-##### ~~`readme`~~<sup>Optional</sup> <a name="readme" id="projen.awscdk.ConstructLibraryAwsOptions.property.readme"></a>
-
-- *Deprecated:* use `AwsCdkConstructLibraryOptions`
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### ~~`stale`~~<sup>Optional</sup> <a name="stale" id="projen.awscdk.ConstructLibraryAwsOptions.property.stale"></a>
 
 - *Deprecated:* use `AwsCdkConstructLibraryOptions`
@@ -19555,6 +19616,28 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### ~~`readme`~~<sup>Optional</sup> <a name="readme" id="projen.awscdk.ConstructLibraryAwsOptions.property.readme"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### ~~`allowLibraryDependencies`~~<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.awscdk.ConstructLibraryAwsOptions.property.allowLibraryDependencies"></a>
 

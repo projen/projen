@@ -14,7 +14,7 @@ import { DevContainer, VsCode } from "../vscode";
 /**
  * Options for `GitHubProject`.
  */
-export interface GitHubProjectOptions extends ProjectOptions {
+export interface GitHubProjectBaseOptions extends ProjectOptions {
   /**
    * Add a Gitpod development environment
    *
@@ -77,14 +77,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly clobber?: boolean;
 
   /**
-   * The README setup.
-   *
-   * @default - { filename: 'README.md', contents: '# replace this' }
-   * @example "{ filename: 'readme.md', contents: '# title' }"
-   */
-  readonly readme?: SampleReadmeProps;
-
-  /**
    * Which type of project this is (library/app).
    * @default ProjectType.UNKNOWN
    * @deprecated no longer supported at the base project level
@@ -142,6 +134,16 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @deprecated use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
+}
+
+export interface GitHubProjectOptions extends GitHubProjectBaseOptions {
+  /**
+   * The README setup.
+   *
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
+   */
+  readonly readme?: SampleReadmeProps;
 }
 
 /**

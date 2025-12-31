@@ -2304,10 +2304,10 @@ const javaProjectCommonOptions: java.JavaProjectCommonOptions = { ... }
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.java.JavaProjectCommonOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.java.JavaProjectCommonOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.artifactId">artifactId</a></code> | <code>string</code> | The artifactId is generally the name that the project is known by. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.groupId">groupId</a></code> | <code>string</code> | This is generally unique amongst an organization or a project. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
@@ -2676,26 +2676,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.java.JavaProjectCommonOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.java.JavaProjectCommonOptions.property.stale"></a>
 
 ```typescript
@@ -2740,6 +2720,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.java.JavaProjectCommonOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `artifactId`<sup>Required</sup> <a name="artifactId" id="projen.java.JavaProjectCommonOptions.property.artifactId"></a>
 
@@ -3039,10 +3039,10 @@ const javaProjectOptions: java.JavaProjectOptions = { ... }
 | <code><a href="#projen.java.JavaProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.java.JavaProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.java.JavaProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.java.JavaProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.java.JavaProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.java.JavaProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.java.JavaProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.java.JavaProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.java.JavaProjectOptions.property.artifactId">artifactId</a></code> | <code>string</code> | The artifactId is generally the name that the project is known by. |
 | <code><a href="#projen.java.JavaProjectOptions.property.groupId">groupId</a></code> | <code>string</code> | This is generally unique amongst an organization or a project. |
 | <code><a href="#projen.java.JavaProjectOptions.property.version">version</a></code> | <code>string</code> | This is the last piece of the naming puzzle. |
@@ -3413,26 +3413,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.java.JavaProjectOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.java.JavaProjectOptions.property.stale"></a>
 
 ```typescript
@@ -3477,6 +3457,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.java.JavaProjectOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `artifactId`<sup>Required</sup> <a name="artifactId" id="projen.java.JavaProjectOptions.property.artifactId"></a>
 

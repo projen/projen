@@ -477,6 +477,76 @@
           "path": "src/python/uv-config.ts"
         }
       },
+      "JsiiFromJsonSchema@src--python--ruff-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/ruff-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--black-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/black-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--mypy-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/mypy-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--ty-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/ty-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--hatch-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/hatch-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--setuptools-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/setuptools-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--poetry-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/poetry-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--pdm-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/pdm-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--pyright-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/pyright-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--python--pytest-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/python/pytest-config.ts"
+        }
+      },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
         "metadata": {
           "type": "file",

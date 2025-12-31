@@ -11,7 +11,7 @@ import { IResolver } from "../file";
 export class PyprojectTomlFile extends TomlFile {
   constructor(scope: IConstruct, config: PyprojectToml) {
     super(scope, "pyproject.toml", {
-      omitEmpty: false,
+      omitEmpty: true,
       obj: config,
     });
   }
