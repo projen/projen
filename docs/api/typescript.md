@@ -1090,6 +1090,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -1341,6 +1342,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.typescript.TypeScriptAppProject.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -2606,6 +2622,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -2893,6 +2910,23 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### ~~`repoRelativeDirectory`~~<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.typescript.TypeScriptLibraryProject.property.repoRelativeDirectory"></a>
+
+- *Deprecated:* use `TypeScriptProject`
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -4244,6 +4278,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.typescript.TypeScriptProject.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -4495,6 +4530,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.typescript.TypeScriptProject.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 

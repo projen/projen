@@ -883,6 +883,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -1137,6 +1138,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.awscdk.AwsCdkConstructLibrary.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -3353,6 +3369,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.awscdk.AwsCdkJavaApp.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -3584,6 +3601,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.awscdk.AwsCdkJavaApp.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -4366,6 +4398,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -4598,6 +4631,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.awscdk.AwsCdkPythonApp.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -5644,6 +5692,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -5900,6 +5949,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.awscdk.AwsCdkTypeScriptApp.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -7759,6 +7823,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.awscdk.ConstructLibraryAws.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAws.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -8049,6 +8114,23 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### ~~`repoRelativeDirectory`~~<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.awscdk.ConstructLibraryAws.property.repoRelativeDirectory"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibrary`
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 

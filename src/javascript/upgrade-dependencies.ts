@@ -581,6 +581,7 @@ export class UpgradeDependencies extends Component {
       {
         name: "Upgrade dependencies",
         run: this.project.runTaskCommand(task),
+        workingDirectory: this.project.repoRelativeDirectory,
       },
     ];
 

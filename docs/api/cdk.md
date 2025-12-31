@@ -856,6 +856,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.ConstructLibrary.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk.ConstructLibrary.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk.ConstructLibrary.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -1107,6 +1108,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.cdk.ConstructLibrary.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
@@ -2919,6 +2935,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.JsiiProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk.JsiiProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk.JsiiProject.property.repoRelativeDirectory">repoRelativeDirectory</a></code> | <code>string</code> | The project directory relative to the repository project. |
 | <code><a href="#projen.cdk.JsiiProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk.JsiiProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk.JsiiProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -3170,6 +3187,21 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repoRelativeDirectory`<sup>Required</sup> <a name="repoRelativeDirectory" id="projen.cdk.JsiiProject.property.repoRelativeDirectory"></a>
+
+```typescript
+public readonly repoRelativeDirectory: string;
+```
+
+- *Type:* string
+
+The project directory relative to the repository project.
+
+Use this in tasks and workflows to find the working directory of
+subprojects in a monorepo.
 
 ---
 
