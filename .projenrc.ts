@@ -179,7 +179,15 @@ const project = new JsiiProject({
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
   checkLicenses: {
-    allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
+    allow: [
+      "MIT",
+      "ISC",
+      "BSD",
+      "BSD-2-Clause",
+      "BSD-3-Clause",
+      "Apache-2.0",
+      "Python-2.0",
+    ],
   },
 });
 
@@ -189,14 +197,6 @@ project.github
   ?.file?.patch(
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
-
-// cannot upgrade xmlbuilder2 to v4 as it drops node versions < 20
-// instead we force js-yaml to a fixed version
-project.package.addField("overrides", {
-  xmlbuilder2: {
-    "js-yaml": "^3.14.2",
-  },
-});
 
 setupCheckLicenses(project);
 

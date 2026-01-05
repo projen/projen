@@ -65,7 +65,7 @@
       "name": "check-licenses",
       "steps": [
         {
-          "exec": "license-checker --summary --production --onlyAllow \"MIT;ISC;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0\"",
+          "exec": "license-checker --summary --production --onlyAllow \"MIT;ISC;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0\"",
           "receiveArgs": true
         }
       ]
