@@ -179,7 +179,15 @@ const project = new JsiiProject({
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
   checkLicenses: {
-    allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
+    allow: [
+      "MIT",
+      "ISC",
+      "BSD",
+      "BSD-2-Clause",
+      "BSD-3-Clause",
+      "Apache-2.0",
+      "Python-2.0",
+    ],
   },
 });
 
