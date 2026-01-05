@@ -6628,10 +6628,10 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.web.NextJsProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.web.NextJsProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -7122,26 +7122,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.NextJsProjectOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.web.NextJsProjectOptions.property.stale"></a>
 
 ```typescript
@@ -7186,6 +7166,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.NextJsProjectOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.NextJsProjectOptions.property.allowLibraryDependencies"></a>
 
@@ -8836,10 +8836,10 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -9346,26 +9346,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.NextJsTypeScriptProjectOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.web.NextJsTypeScriptProjectOptions.property.stale"></a>
 
 ```typescript
@@ -9410,6 +9390,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.NextJsTypeScriptProjectOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.NextJsTypeScriptProjectOptions.property.allowLibraryDependencies"></a>
 
@@ -11399,10 +11399,10 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.web.ReactProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.web.ReactProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.web.ReactProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.ReactProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.ReactProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.ReactProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.ReactProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.ReactProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -11866,26 +11866,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.ReactProjectOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.web.ReactProjectOptions.property.stale"></a>
 
 ```typescript
@@ -11930,6 +11910,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.ReactProjectOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.ReactProjectOptions.property.allowLibraryDependencies"></a>
 
@@ -13775,10 +13775,10 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
-| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -14258,26 +14258,6 @@ and `packages` scope.
 
 ---
 
-##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.ReactTypeScriptProjectOptions.property.readme"></a>
-
-```typescript
-public readonly readme: SampleReadmeProps;
-```
-
-- *Type:* projen.SampleReadmeProps
-- *Default:* { filename: 'README.md', contents: '# replace this' }
-
-The README setup.
-
----
-
-*Example*
-
-```typescript
-"{ filename: 'readme.md', contents: '# title' }"
-```
-
-
 ##### `stale`<sup>Optional</sup> <a name="stale" id="projen.web.ReactTypeScriptProjectOptions.property.stale"></a>
 
 ```typescript
@@ -14322,6 +14302,26 @@ Enable VSCode integration.
 Enabled by default for root projects. Disabled for non-root projects.
 
 ---
+
+##### `readme`<sup>Optional</sup> <a name="readme" id="projen.web.ReactTypeScriptProjectOptions.property.readme"></a>
+
+```typescript
+public readonly readme: SampleReadmeProps;
+```
+
+- *Type:* projen.SampleReadmeProps
+- *Default:* { filename: 'README.md', contents: '# replace this' }
+
+The README setup.
+
+---
+
+*Example*
+
+```typescript
+"{ filename: 'readme.md', contents: '# title' }"
+```
+
 
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.ReactTypeScriptProjectOptions.property.allowLibraryDependencies"></a>
 
