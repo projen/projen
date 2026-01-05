@@ -190,14 +190,6 @@ project.github
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
 
-// cannot upgrade xmlbuilder2 to v4 as it drops node versions < 20
-// instead we force js-yaml to a fixed version
-project.package.addField("overrides", {
-  xmlbuilder2: {
-    "js-yaml": "^3.14.2",
-  },
-});
-
 setupCheckLicenses(project);
 
 setupUpgradeDependencies(project);
