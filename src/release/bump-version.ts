@@ -410,7 +410,7 @@ function determineLatestTag(options: LatestTagOptions): {
 
   // if prerelease is set and there are existing prerelease tags, filter versions that end with "-PRE.ddd".
   const prereleaseTags = tags.filter((x) =>
-    new RegExp(`-${prerelease}\.[0-9]+$`).test(x)
+    new RegExp(`-${prerelease}\\.[0-9]+$`).test(x)
   );
   if (prerelease && prereleaseTags.length > 0) {
     let prereleaseTag = prereleaseTags[0];
@@ -425,7 +425,7 @@ function determineLatestTag(options: LatestTagOptions): {
      *    by setting the latestTag as v1.0.1 instead of v1.0.1-beta.1
      */
     const releaseTags = tags.filter((x) =>
-      new RegExp(`^${prefix}v([0-9]+)\.([0-9]+)\.([0-9]+)$`).test(x)
+     new RegExp(`^${prefix}v([0-9]+)\\.([0-9]+)\\.([0-9]+)$`).test(x)
     );
 
     let releaseTag: string | undefined;
