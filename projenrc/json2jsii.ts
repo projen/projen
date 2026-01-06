@@ -49,6 +49,7 @@ export class JsiiFromJsonSchema extends TextFile {
         toJson: true,
         toJsonInternal: true,
         transformations: {
+          convertConstToEnum: true,
           hoistSingletonUnions: true,
           convertNullUnionsToOptional: true,
           simplifyElementArrayUnions: true,

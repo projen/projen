@@ -359,7 +359,7 @@ export interface FormatterConfiguration {
    * @default auto".
    * @schema FormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
    * Whether formatting should be allowed to proceed if a given file
@@ -382,7 +382,7 @@ export interface FormatterConfiguration {
    *
    * @schema FormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation, 2 by default
@@ -396,7 +396,7 @@ export interface FormatterConfiguration {
    *
    * @schema FormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line. Defaults to 80.
@@ -624,7 +624,7 @@ export interface JsConfiguration {
    *
    * @schema JsConfiguration#jsxRuntime
    */
-  readonly jsxRuntime?: string;
+  readonly jsxRuntime?: JsxRuntime;
 
   /**
    * Linter options
@@ -723,7 +723,7 @@ export interface LinterConfiguration {
    *
    * @schema LinterConfiguration#domains
    */
-  readonly domains?: { [key: string]: string };
+  readonly domains?: { [key: string]: RuleDomainValue };
 
   /**
    * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -893,7 +893,7 @@ export interface VcsConfiguration {
    *
    * @schema VcsConfiguration#clientKind
    */
-  readonly clientKind?: string;
+  readonly clientKind?: VcsClientKind;
 
   /**
    * The main branch of the project
@@ -1029,7 +1029,7 @@ export interface CssFormatterConfiguration {
    *
    * @schema CssFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to CSS (and its super languages) files. Default to 2.
@@ -1044,7 +1044,7 @@ export interface CssFormatterConfiguration {
    *
    * @schema CssFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to CSS (and its super languages) files. Defaults to 80.
@@ -1168,6 +1168,43 @@ export enum AttributePosition {
 }
 
 /**
+ * @schema Expand
+ */
+export enum Expand {
+  /** Objects are expanded when the first property has a leading newline. Arrays are always
+expanded if they are shorter than the line width. (auto) */
+  AUTO = "auto",
+  /** Objects and arrays are always expanded. (always) */
+  ALWAYS = "always",
+  /** Objects and arrays are never expanded, if they are shorter than the line width. (never) */
+  NEVER = "never",
+}
+
+/**
+ * @schema IndentStyle
+ */
+export enum IndentStyle {
+  /** Indent with Tab (tab) */
+  TAB = "tab",
+  /** Indent with Space (space) */
+  SPACE = "space",
+}
+
+/**
+ * @schema LineEnding
+ */
+export enum LineEnding {
+  /** Line Feed only (\n), common on Linux and macOS as well as inside git repos (lf) */
+  LF = "lf",
+  /** Carriage Return + Line Feed characters (\r\n), common on Windows (crlf) */
+  CRLF = "crlf",
+  /** Carriage Return character only (\r), used very rarely (cr) */
+  CR = "cr",
+  /** Automatically use CRLF on Windows and LF on other platforms (auto) */
+  AUTO = "auto",
+}
+
+/**
  * Options that changes how the GraphQL linter behaves
  *
  * @schema GraphqlAssistConfiguration
@@ -1222,7 +1259,7 @@ export interface GraphqlFormatterConfiguration {
    *
    * @schema GraphqlFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to GraphQL files. Default to 2.
@@ -1237,7 +1274,7 @@ export interface GraphqlFormatterConfiguration {
    *
    * @schema GraphqlFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to GraphQL files. Defaults to 80.
@@ -1349,7 +1386,7 @@ export interface GritFormatterConfiguration {
    *
    * @schema GritFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to Grit files. Default to 2.
@@ -1364,7 +1401,7 @@ export interface GritFormatterConfiguration {
    *
    * @schema GritFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to Grit files. Defaults to 80.
@@ -1492,7 +1529,7 @@ export interface HtmlFormatterConfiguration {
    *
    * @schema HtmlFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to HTML (and its super languages) files. Default to 2.
@@ -1507,7 +1544,7 @@ export interface HtmlFormatterConfiguration {
    *
    * @schema HtmlFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to HTML (and its super languages) files. Defaults to 80.
@@ -1523,7 +1560,7 @@ export interface HtmlFormatterConfiguration {
    * @default never.
    * @schema HtmlFormatterConfiguration#selfCloseVoidElements
    */
-  readonly selfCloseVoidElements?: string;
+  readonly selfCloseVoidElements?: SelfCloseVoidElements;
 
   /**
    * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
@@ -1531,7 +1568,7 @@ export interface HtmlFormatterConfiguration {
    * @default css".
    * @schema HtmlFormatterConfiguration#whitespaceSensitivity
    */
-  readonly whitespaceSensitivity?: string;
+  readonly whitespaceSensitivity?: WhitespaceSensitivity;
 }
 
 /**
@@ -1701,14 +1738,14 @@ export interface JsFormatterConfiguration {
    * @default auto".
    * @schema JsFormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
    * The indent style applied to JavaScript (and its super languages) files.
    *
    * @schema JsFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to JavaScript (and its super languages) files. Default to 2.
@@ -1731,7 +1768,7 @@ export interface JsFormatterConfiguration {
    *
    * @schema JsFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to JavaScript (and its super languages) files. Defaults to 80.
@@ -1747,7 +1784,7 @@ export interface JsFormatterConfiguration {
    * @default after".
    * @schema JsFormatterConfiguration#operatorLinebreak
    */
-  readonly operatorLinebreak?: string;
+  readonly operatorLinebreak?: OperatorLinebreak;
 
   /**
    * When properties in objects are quoted. Defaults to asNeeded.
@@ -1810,6 +1847,27 @@ export function toJson_JsFormatterConfiguration(obj: JsFormatterConfiguration | 
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Indicates the type of runtime or transformation used for interpreting JSX.
+ *
+ * @schema JsxRuntime
+ */
+export enum JsxRuntime {
+  /** Indicates a modern or native JSX environment, that doesn't require
+special handling by Biome. (transparent) */
+  TRANSPARENT = "transparent",
+  /** Indicates a classic React environment that requires the `React` import.
+
+Corresponds to the `react` value for the `jsx` option in TypeScript's
+`tsconfig.json`.
+
+This option should only be necessary if you cannot upgrade to a React
+version that supports the new JSX runtime. For more information about
+the old vs. new JSX runtime, please see:
+<https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html> (reactClassic) */
+  REACT_CLASSIC = "reactClassic",
+}
 
 /**
  * Linter options specific to the JavaScript linter
@@ -1951,14 +2009,14 @@ export interface JsonFormatterConfiguration {
    * @default auto".
    * @schema JsonFormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
    * The indent style applied to JSON (and its super languages) files.
    *
    * @schema JsonFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation applied to JSON (and its super languages) files. Default to 2.
@@ -1973,7 +2031,7 @@ export interface JsonFormatterConfiguration {
    *
    * @schema JsonFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line applied to JSON (and its super languages) files. Defaults to 80.
@@ -2079,6 +2137,18 @@ export function toJson_JsonParserConfiguration(obj: JsonParserConfiguration | un
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema RuleDomainValue
+ */
+export enum RuleDomainValue {
+  /** Enables all the rules that belong to this domain (all) */
+  ALL = "all",
+  /** Disables all the rules that belong to this domain (none) */
+  NONE = "none",
+  /** Enables only the recommended rules for this domain (recommended) */
+  RECOMMENDED = "recommended",
+}
 
 /**
  * @schema Rules
@@ -2259,7 +2329,7 @@ export interface OverrideFormatterConfiguration {
    * @default auto".
    * @schema OverrideFormatterConfiguration#expand
    */
-  readonly expand?: string;
+  readonly expand?: Expand;
 
   /**
    * Stores whether formatting should be allowed to proceed if a given file
@@ -2281,7 +2351,7 @@ export interface OverrideFormatterConfiguration {
    *
    * @schema OverrideFormatterConfiguration#indentStyle
    */
-  readonly indentStyle?: string;
+  readonly indentStyle?: IndentStyle;
 
   /**
    * The size of the indentation, 2 by default
@@ -2295,7 +2365,7 @@ export interface OverrideFormatterConfiguration {
    *
    * @schema OverrideFormatterConfiguration#lineEnding
    */
-  readonly lineEnding?: string;
+  readonly lineEnding?: LineEnding;
 
   /**
    * What's the max width of a line. Defaults to 80.
@@ -2340,7 +2410,7 @@ export interface OverrideLinterConfiguration {
    *
    * @schema OverrideLinterConfiguration#domains
    */
-  readonly domains?: { [key: string]: string };
+  readonly domains?: { [key: string]: RuleDomainValue };
 
   /**
    * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -2373,6 +2443,16 @@ export function toJson_OverrideLinterConfiguration(obj: OverrideLinterConfigurat
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Integration with the git client as VCS
+ *
+ * @schema VcsClientKind
+ */
+export enum VcsClientKind {
+  /** git */
+  GIT = "git",
+}
 
 /**
  * A list of rules that belong to this group
@@ -2450,6 +2530,65 @@ export enum QuoteStyle {
 }
 
 /**
+ * Controls whether void-elements should be self closed
+ *
+ * @schema SelfCloseVoidElements
+ */
+export enum SelfCloseVoidElements {
+  /** The `/` inside void elements is removed by the formatter (never) */
+  NEVER = "never",
+  /** The `/` inside void elements is always added (always) */
+  ALWAYS = "always",
+}
+
+/**
+ * Whitespace sensitivity for HTML formatting.
+ *
+ * The following two cases won't produce the same output:
+ *
+ * |                |      html      |    output    |
+ * | -------------- | :------------: | :----------: |
+ * | with spaces    | `1<b> 2 </b>3` | 1<b> 2 </b>3 |
+ * | without spaces |  `1<b>2</b>3`  |  1<b>2</b>3  |
+ *
+ * This happens because whitespace is significant in inline elements.
+ *
+ * As a consequence of this, the formatter must format blocks that look like this (assume a small line width, <20):
+ * ```html
+ * <span>really long content</span>
+ * ```
+ * as this, where the content hugs the tags:
+ * ```html
+ * <span
+ * >really long content</span
+ * >
+ * ```
+ *
+ * Note that this is only necessary for inline elements. Block elements do not have this restriction.
+ *
+ * @schema WhitespaceSensitivity
+ */
+export enum WhitespaceSensitivity {
+  /** The formatter considers whitespace significant for elements that have an "inline" display style by default in
+browser's user agent style sheets. (css) */
+  CSS = "css",
+  /** Leading and trailing whitespace in content is considered significant for all elements.
+
+The formatter should leave at least one whitespace character if whitespace is present.
+Otherwise, if there is no whitespace, it should not add any after `>` or before `<`. In other words, if there's no whitespace, the text content should hug the tags.
+
+Example of text hugging the tags:
+```html
+<b
+    >content</b
+>
+``` (strict) */
+  STRICT = "strict",
+  /** Whitespace is considered insignificant. The formatter is free to remove or add whitespace as it sees fit. (ignore) */
+  IGNORE = "ignore",
+}
+
+/**
  * @schema ArrowParentheses
  */
 export enum ArrowParentheses {
@@ -2457,6 +2596,16 @@ export enum ArrowParentheses {
   ALWAYS = "always",
   /** asNeeded */
   AS_NEEDED = "asNeeded",
+}
+
+/**
+ * @schema OperatorLinebreak
+ */
+export enum OperatorLinebreak {
+  /** The operator is placed after the expression (after) */
+  AFTER = "after",
+  /** The operator is placed before the expression (before) */
+  BEFORE = "before",
 }
 
 /**
