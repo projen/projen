@@ -8842,7 +8842,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory which will contain build artifacts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.auditDeps">auditDeps</a></code> | <code>boolean</code> | Run security audit on dependencies. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.auditDepsOptions">auditDepsOptions</a></code> | <code><a href="#projen.javascript.AuditOptions">AuditOptions</a></code> | Security audit options. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.autoApproveUpgrades">autoApproveUpgrades</a></code> | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.biome">biome</a></code> | <code>boolean</code> | Setup Biome. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.biomeOptions">biomeOptions</a></code> | <code><a href="#projen.javascript.BiomeOptions">BiomeOptions</a></code> | Biome options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflow">buildWorkflow</a></code> | <code>boolean</code> | Define a GitHub workflow for building PRs. |
@@ -10363,7 +10363,7 @@ public readonly autoApproveUpgrades: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).
+Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).
 
 Throw if set to true but `autoApproveOptions` are not defined.
 
@@ -10549,7 +10549,7 @@ public readonly depsUpgrade: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true
+- *Default:* `true` for root projects, `false` for subprojects
 
 Use tasks and github workflows to handle dependency upgrades.
 
