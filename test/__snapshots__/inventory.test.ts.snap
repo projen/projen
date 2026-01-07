@@ -2794,7 +2794,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -3516,7 +3516,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -6038,7 +6038,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6774,7 +6774,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -10709,7 +10709,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -11385,7 +11385,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -13772,7 +13772,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -14428,7 +14428,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -16982,7 +16982,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17587,7 +17587,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -20979,7 +20979,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -21531,7 +21531,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -24051,7 +24051,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -24552,7 +24552,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -26607,7 +26607,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -27108,7 +27108,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -29427,7 +29427,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -29928,7 +29928,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -33223,7 +33223,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -33724,7 +33724,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -35767,7 +35767,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36268,7 +36268,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -38592,7 +38592,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39093,7 +39093,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -41395,7 +41395,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -41896,7 +41896,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
