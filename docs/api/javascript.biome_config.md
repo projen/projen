@@ -100,7 +100,8 @@ public readonly includes: string[];
 
 A list of glob patterns.
 
-Biome will include files/folders that will match these patterns.
+Biome will include files/folders that will
+match these patterns.
 
 ---
 
@@ -680,7 +681,8 @@ public readonly experimentalScannerIgnores: string[];
 
 **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>.
 
-Set of file and folder names that should be unconditionally ignored by Biome's scanner.
+Set of file and folder names that should be unconditionally ignored by
+Biome's scanner.
 
 ---
 
@@ -706,7 +708,8 @@ public readonly includes: string[];
 
 A list of glob patterns.
 
-Biome will handle only those files/folders that will match these patterns.
+Biome will handle only those files/folders that will
+match these patterns.
 
 ---
 
@@ -721,7 +724,8 @@ public readonly maxSize: number;
 
 The maximum allowed size for source code files in bytes.
 
-Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
+Files above
+this limit will be ignored for performance reasons. Defaults to 1 MiB
 
 ---
 
@@ -819,7 +823,11 @@ public readonly expand: Expand;
 
 Whether to expand arrays and objects on multiple lines.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
+and array literals are formatted on a single line if it fits in the line.
+When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
+When set to `never`, these literals are formatted on a single line if it fits in the line.
+When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
 
 ---
 
@@ -845,7 +853,8 @@ public readonly includes: string[];
 
 A list of glob patterns.
 
-The formatter will include files/folders that will match these patterns.
+The formatter will include files/folders that will
+match these patterns.
 
 ---
 
@@ -1876,7 +1885,7 @@ const jsFormatterConfiguration: javascript.biome_config.JsFormatterConfiguration
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteProperties">quoteProperties</a></code> | <code>projen.javascript.biome_config.QuoteProperties</code> | When properties in objects are quoted. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in JavaScript code. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.semicolons">semicolons</a></code> | <code>projen.javascript.biome_config.Semicolons</code> | Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.TrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
 
 ---
 
@@ -1963,7 +1972,11 @@ public readonly expand: Expand;
 
 Whether to expand arrays and objects on multiple lines.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
+and array literals are formatted on a single line if it fits in the line.
+When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
+When set to `never`, these literals are formatted on a single line if it fits in the line.
+When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
 
 ---
 
@@ -2098,10 +2111,10 @@ Whether the formatter prints semicolons for all statements or only in for statem
 ##### `trailingCommas`<sup>Optional</sup> <a name="trailingCommas" id="projen.javascript.biome_config.JsFormatterConfiguration.property.trailingCommas"></a>
 
 ```typescript
-public readonly trailingCommas: TrailingCommas;
+public readonly trailingCommas: JsTrailingCommas;
 ```
 
-- *Type:* projen.javascript.biome_config.TrailingCommas
+- *Type:* projen.javascript.biome_config.JsTrailingCommas
 - *Default:* all".
 
 Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
@@ -2266,7 +2279,7 @@ const jsonFormatterConfiguration: javascript.biome_config.JsonFormatterConfigura
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to JSON (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to JSON (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to JSON (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.TrailingCommas2</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsonTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
 
 ---
 
@@ -2308,7 +2321,11 @@ public readonly expand: Expand;
 
 Whether to expand arrays and objects on multiple lines.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
+and array literals are formatted on a single line if it fits in the line.
+When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
+When set to `never`, these literals are formatted on a single line if it fits in the line.
+When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
 
 ---
 
@@ -2371,10 +2388,10 @@ Defaults to 80.
 ##### `trailingCommas`<sup>Optional</sup> <a name="trailingCommas" id="projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingCommas"></a>
 
 ```typescript
-public readonly trailingCommas: TrailingCommas2;
+public readonly trailingCommas: JsonTrailingCommas;
 ```
 
-- *Type:* projen.javascript.biome_config.TrailingCommas2
+- *Type:* projen.javascript.biome_config.JsonTrailingCommas
 - *Default:* none".
 
 Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
@@ -2583,7 +2600,8 @@ public readonly includes: string[];
 
 A list of glob patterns.
 
-The analyzer will handle only those files/folders that will match these patterns.
+The analyzer will handle only those files/folders that will
+match these patterns.
 
 ---
 
@@ -2762,7 +2780,11 @@ public readonly expand: Expand;
 
 Whether to expand arrays and objects on multiple lines.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
+and array literals are formatted on a single line if it fits in the line.
+When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
+When set to `never`, these literals are formatted on a single line if it fits in the line.
+When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
 
 ---
 
@@ -3022,7 +3044,8 @@ public readonly includes: string[];
 
 A list of glob patterns.
 
-Biome will include files/folders that will match these patterns.
+Biome will include files/folders that will
+match these patterns.
 
 ---
 
@@ -3228,6 +3251,8 @@ public readonly organizeImports: any;
 
 Provides a code action to sort the imports and exports in the file using a built-in or custom order.
 
+See <https://biomejs.dev/assist/actions/organize-imports>
+
 ---
 
 ##### `recommended`<sup>Optional</sup> <a name="recommended" id="projen.javascript.biome_config.Source.property.recommended"></a>
@@ -3252,6 +3277,8 @@ public readonly useSortedAttributes: any;
 
 Enforce attribute sorting in JSX elements.
 
+See <https://biomejs.dev/assist/actions/use-sorted-attributes>
+
 ---
 
 ##### `useSortedKeys`<sup>Optional</sup> <a name="useSortedKeys" id="projen.javascript.biome_config.Source.property.useSortedKeys"></a>
@@ -3264,6 +3291,8 @@ public readonly useSortedKeys: any;
 
 Sort the keys of a JSON object in natural order.
 
+See <https://biomejs.dev/assist/actions/use-sorted-keys>
+
 ---
 
 ##### `useSortedProperties`<sup>Optional</sup> <a name="useSortedProperties" id="projen.javascript.biome_config.Source.property.useSortedProperties"></a>
@@ -3275,6 +3304,8 @@ public readonly useSortedProperties: any;
 - *Type:* any
 
 Enforce ordering of CSS properties and nested rules.
+
+See <https://biomejs.dev/assist/actions/use-sorted-properties>
 
 ---
 
@@ -3348,9 +3379,12 @@ public readonly root: string;
 
 The folder where Biome should check for VCS files.
 
-By default, Biome will use the same folder where `biome.json` was found.
+By default, Biome will use the same
+folder where `biome.json` was found.
 
-If Biome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic will be emitted
+If Biome can't find the configuration, it will attempt to use the current working directory.
+If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic
+will be emitted
 
 ---
 
@@ -3364,7 +3398,8 @@ public readonly useIgnoreFile: boolean;
 
 Whether Biome should use the VCS ignore file.
 
-When [true], Biome will ignore the files specified in the ignore file.
+When [true], Biome will ignore the files
+specified in the ignore file.
 
 ---
 
@@ -3428,29 +3463,36 @@ multiline.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.Expand.AUTO">AUTO</a></code> | auto. |
-| <code><a href="#projen.javascript.biome_config.Expand.ALWAYS">ALWAYS</a></code> | always. |
-| <code><a href="#projen.javascript.biome_config.Expand.NEVER">NEVER</a></code> | never. |
+| <code><a href="#projen.javascript.biome_config.Expand.AUTO">AUTO</a></code> | Objects are expanded when the first property has a leading newline. |
+| <code><a href="#projen.javascript.biome_config.Expand.ALWAYS">ALWAYS</a></code> | Objects and arrays are always expanded. |
+| <code><a href="#projen.javascript.biome_config.Expand.NEVER">NEVER</a></code> | Objects and arrays are never expanded, if they are shorter than the line width. |
 
 ---
 
 ##### `AUTO` <a name="AUTO" id="projen.javascript.biome_config.Expand.AUTO"></a>
 
-auto.
+Objects are expanded when the first property has a leading newline.
+
+Arrays are always
+expanded if they are shorter than the line width. (auto)
 
 ---
 
 
 ##### `ALWAYS` <a name="ALWAYS" id="projen.javascript.biome_config.Expand.ALWAYS"></a>
 
-always.
+Objects and arrays are always expanded.
+
+(always)
 
 ---
 
 
 ##### `NEVER` <a name="NEVER" id="projen.javascript.biome_config.Expand.NEVER"></a>
 
-never.
+Objects and arrays are never expanded, if they are shorter than the line width.
+
+(never)
 
 ---
 
@@ -3461,21 +3503,83 @@ never.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.IndentStyle.TAB">TAB</a></code> | tab. |
-| <code><a href="#projen.javascript.biome_config.IndentStyle.SPACE">SPACE</a></code> | space. |
+| <code><a href="#projen.javascript.biome_config.IndentStyle.TAB">TAB</a></code> | Indent with Tab (tab). |
+| <code><a href="#projen.javascript.biome_config.IndentStyle.SPACE">SPACE</a></code> | Indent with Space (space). |
 
 ---
 
 ##### `TAB` <a name="TAB" id="projen.javascript.biome_config.IndentStyle.TAB"></a>
 
-tab.
+Indent with Tab (tab).
 
 ---
 
 
 ##### `SPACE` <a name="SPACE" id="projen.javascript.biome_config.IndentStyle.SPACE"></a>
 
-space.
+Indent with Space (space).
+
+---
+
+
+### JsonTrailingCommas <a name="JsonTrailingCommas" id="projen.javascript.biome_config.JsonTrailingCommas"></a>
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures for JSON files.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.biome_config.JsonTrailingCommas.NONE">NONE</a></code> | none. |
+| <code><a href="#projen.javascript.biome_config.JsonTrailingCommas.ALL">ALL</a></code> | all. |
+
+---
+
+##### `NONE` <a name="NONE" id="projen.javascript.biome_config.JsonTrailingCommas.NONE"></a>
+
+none.
+
+---
+
+
+##### `ALL` <a name="ALL" id="projen.javascript.biome_config.JsonTrailingCommas.ALL"></a>
+
+all.
+
+---
+
+
+### JsTrailingCommas <a name="JsTrailingCommas" id="projen.javascript.biome_config.JsTrailingCommas"></a>
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures for JavaScript/TypeScript files.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.biome_config.JsTrailingCommas.ALL">ALL</a></code> | all. |
+| <code><a href="#projen.javascript.biome_config.JsTrailingCommas.ES5">ES5</a></code> | es5. |
+| <code><a href="#projen.javascript.biome_config.JsTrailingCommas.NONE">NONE</a></code> | none. |
+
+---
+
+##### `ALL` <a name="ALL" id="projen.javascript.biome_config.JsTrailingCommas.ALL"></a>
+
+all.
+
+---
+
+
+##### `ES5` <a name="ES5" id="projen.javascript.biome_config.JsTrailingCommas.ES5"></a>
+
+es5.
+
+---
+
+
+##### `NONE` <a name="NONE" id="projen.javascript.biome_config.JsTrailingCommas.NONE"></a>
+
+none.
 
 ---
 
@@ -3488,21 +3592,31 @@ Indicates the type of runtime or transformation used for interpreting JSX.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsxRuntime.TRANSPARENT">TRANSPARENT</a></code> | transparent. |
-| <code><a href="#projen.javascript.biome_config.JsxRuntime.REACT_CLASSIC">REACT_CLASSIC</a></code> | reactClassic. |
+| <code><a href="#projen.javascript.biome_config.JsxRuntime.TRANSPARENT">TRANSPARENT</a></code> | Indicates a modern or native JSX environment, that doesn't require special handling by Biome. |
+| <code><a href="#projen.javascript.biome_config.JsxRuntime.REACT_CLASSIC">REACT_CLASSIC</a></code> | Indicates a classic React environment that requires the `React` import. |
 
 ---
 
 ##### `TRANSPARENT` <a name="TRANSPARENT" id="projen.javascript.biome_config.JsxRuntime.TRANSPARENT"></a>
 
-transparent.
+Indicates a modern or native JSX environment, that doesn't require special handling by Biome.
+
+(transparent)
 
 ---
 
 
 ##### `REACT_CLASSIC` <a name="REACT_CLASSIC" id="projen.javascript.biome_config.JsxRuntime.REACT_CLASSIC"></a>
 
-reactClassic.
+Indicates a classic React environment that requires the `React` import.
+
+Corresponds to the `react` value for the `jsx` option in TypeScript's
+`tsconfig.json`.
+
+This option should only be necessary if you cannot upgrade to a React
+version that supports the new JSX runtime. For more information about
+the old vs. new JSX runtime, please see:
+<https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html> (reactClassic)
 
 ---
 
@@ -3513,37 +3627,37 @@ reactClassic.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.LineEnding.LF">LF</a></code> | lf. |
-| <code><a href="#projen.javascript.biome_config.LineEnding.CRLF">CRLF</a></code> | crlf. |
-| <code><a href="#projen.javascript.biome_config.LineEnding.CR">CR</a></code> | cr. |
-| <code><a href="#projen.javascript.biome_config.LineEnding.AUTO">AUTO</a></code> | auto. |
+| <code><a href="#projen.javascript.biome_config.LineEnding.LF">LF</a></code> | Line Feed only (\n), common on Linux and macOS as well as inside git repos (lf). |
+| <code><a href="#projen.javascript.biome_config.LineEnding.CRLF">CRLF</a></code> | Carriage Return + Line Feed characters (\r\n), common on Windows (crlf). |
+| <code><a href="#projen.javascript.biome_config.LineEnding.CR">CR</a></code> | Carriage Return character only (\r), used very rarely (cr). |
+| <code><a href="#projen.javascript.biome_config.LineEnding.AUTO">AUTO</a></code> | Automatically use CRLF on Windows and LF on other platforms (auto). |
 
 ---
 
 ##### `LF` <a name="LF" id="projen.javascript.biome_config.LineEnding.LF"></a>
 
-lf.
+Line Feed only (\n), common on Linux and macOS as well as inside git repos (lf).
 
 ---
 
 
 ##### `CRLF` <a name="CRLF" id="projen.javascript.biome_config.LineEnding.CRLF"></a>
 
-crlf.
+Carriage Return + Line Feed characters (\r\n), common on Windows (crlf).
 
 ---
 
 
 ##### `CR` <a name="CR" id="projen.javascript.biome_config.LineEnding.CR"></a>
 
-cr.
+Carriage Return character only (\r), used very rarely (cr).
 
 ---
 
 
 ##### `AUTO` <a name="AUTO" id="projen.javascript.biome_config.LineEnding.AUTO"></a>
 
-auto.
+Automatically use CRLF on Windows and LF on other platforms (auto).
 
 ---
 
@@ -3554,21 +3668,21 @@ auto.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.OperatorLinebreak.AFTER">AFTER</a></code> | after. |
-| <code><a href="#projen.javascript.biome_config.OperatorLinebreak.BEFORE">BEFORE</a></code> | before. |
+| <code><a href="#projen.javascript.biome_config.OperatorLinebreak.AFTER">AFTER</a></code> | The operator is placed after the expression (after). |
+| <code><a href="#projen.javascript.biome_config.OperatorLinebreak.BEFORE">BEFORE</a></code> | The operator is placed before the expression (before). |
 
 ---
 
 ##### `AFTER` <a name="AFTER" id="projen.javascript.biome_config.OperatorLinebreak.AFTER"></a>
 
-after.
+The operator is placed after the expression (after).
 
 ---
 
 
 ##### `BEFORE` <a name="BEFORE" id="projen.javascript.biome_config.OperatorLinebreak.BEFORE"></a>
 
-before.
+The operator is placed before the expression (before).
 
 ---
 
@@ -3629,29 +3743,29 @@ single.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.RuleDomainValue.ALL">ALL</a></code> | all. |
-| <code><a href="#projen.javascript.biome_config.RuleDomainValue.NONE">NONE</a></code> | none. |
-| <code><a href="#projen.javascript.biome_config.RuleDomainValue.RECOMMENDED">RECOMMENDED</a></code> | recommended. |
+| <code><a href="#projen.javascript.biome_config.RuleDomainValue.ALL">ALL</a></code> | Enables all the rules that belong to this domain (all). |
+| <code><a href="#projen.javascript.biome_config.RuleDomainValue.NONE">NONE</a></code> | Disables all the rules that belong to this domain (none). |
+| <code><a href="#projen.javascript.biome_config.RuleDomainValue.RECOMMENDED">RECOMMENDED</a></code> | Enables only the recommended rules for this domain (recommended). |
 
 ---
 
 ##### `ALL` <a name="ALL" id="projen.javascript.biome_config.RuleDomainValue.ALL"></a>
 
-all.
+Enables all the rules that belong to this domain (all).
 
 ---
 
 
 ##### `NONE` <a name="NONE" id="projen.javascript.biome_config.RuleDomainValue.NONE"></a>
 
-none.
+Disables all the rules that belong to this domain (none).
 
 ---
 
 
 ##### `RECOMMENDED` <a name="RECOMMENDED" id="projen.javascript.biome_config.RuleDomainValue.RECOMMENDED"></a>
 
-recommended.
+Enables only the recommended rules for this domain (recommended).
 
 ---
 
@@ -3664,21 +3778,21 @@ Controls whether void-elements should be self closed.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.SelfCloseVoidElements.NEVER">NEVER</a></code> | never. |
-| <code><a href="#projen.javascript.biome_config.SelfCloseVoidElements.ALWAYS">ALWAYS</a></code> | always. |
+| <code><a href="#projen.javascript.biome_config.SelfCloseVoidElements.NEVER">NEVER</a></code> | The `/` inside void elements is removed by the formatter (never). |
+| <code><a href="#projen.javascript.biome_config.SelfCloseVoidElements.ALWAYS">ALWAYS</a></code> | The `/` inside void elements is always added (always). |
 
 ---
 
 ##### `NEVER` <a name="NEVER" id="projen.javascript.biome_config.SelfCloseVoidElements.NEVER"></a>
 
-never.
+The `/` inside void elements is removed by the formatter (never).
 
 ---
 
 
 ##### `ALWAYS` <a name="ALWAYS" id="projen.javascript.biome_config.SelfCloseVoidElements.ALWAYS"></a>
 
-always.
+The `/` inside void elements is always added (always).
 
 ---
 
@@ -3708,66 +3822,6 @@ asNeeded.
 ---
 
 
-### TrailingCommas <a name="TrailingCommas" id="projen.javascript.biome_config.TrailingCommas"></a>
-
-Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
-
-#### Members <a name="Members" id="Members"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.biome_config.TrailingCommas.ALL">ALL</a></code> | all. |
-| <code><a href="#projen.javascript.biome_config.TrailingCommas.ES5">ES5</a></code> | es5. |
-| <code><a href="#projen.javascript.biome_config.TrailingCommas.NONE">NONE</a></code> | none. |
-
----
-
-##### `ALL` <a name="ALL" id="projen.javascript.biome_config.TrailingCommas.ALL"></a>
-
-all.
-
----
-
-
-##### `ES5` <a name="ES5" id="projen.javascript.biome_config.TrailingCommas.ES5"></a>
-
-es5.
-
----
-
-
-##### `NONE` <a name="NONE" id="projen.javascript.biome_config.TrailingCommas.NONE"></a>
-
-none.
-
----
-
-
-### TrailingCommas2 <a name="TrailingCommas2" id="projen.javascript.biome_config.TrailingCommas2"></a>
-
-#### Members <a name="Members" id="Members"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.javascript.biome_config.TrailingCommas2.NONE">NONE</a></code> | none. |
-| <code><a href="#projen.javascript.biome_config.TrailingCommas2.ALL">ALL</a></code> | all. |
-
----
-
-##### `NONE` <a name="NONE" id="projen.javascript.biome_config.TrailingCommas2.NONE"></a>
-
-none.
-
----
-
-
-##### `ALL` <a name="ALL" id="projen.javascript.biome_config.TrailingCommas2.ALL"></a>
-
-all.
-
----
-
-
 ### VcsClientKind <a name="VcsClientKind" id="projen.javascript.biome_config.VcsClientKind"></a>
 
 Integration with the git client as VCS.
@@ -3793,11 +3847,23 @@ Whitespace sensitivity for HTML formatting.
 
 The following two cases won't produce the same output:
 
-|                |      html      |    output    | | -------------- | :------------: | :----------: | | with spaces    | `1<b> 2 </b>3` | 1<b> 2 </b>3 | | without spaces |  `1<b>2</b>3`  |  1<b>2</b>3  |
+|                |      html      |    output    |
+| -------------- | :------------: | :----------: |
+| with spaces    | `1<b> 2 </b>3` | 1<b> 2 </b>3 |
+| without spaces |  `1<b>2</b>3`  |  1<b>2</b>3  |
 
 This happens because whitespace is significant in inline elements.
 
-As a consequence of this, the formatter must format blocks that look like this (assume a small line width, <20): ```html <span>really long content</span> ``` as this, where the content hugs the tags: ```html <span >really long content</span > ```
+As a consequence of this, the formatter must format blocks that look like this (assume a small line width, <20):
+```html
+<span>really long content</span>
+```
+as this, where the content hugs the tags:
+```html
+<span
+>really long content</span
+>
+```
 
 Note that this is only necessary for inline elements. Block elements do not have this restriction.
 
@@ -3805,29 +3871,43 @@ Note that this is only necessary for inline elements. Block elements do not have
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.biome_config.WhitespaceSensitivity.CSS">CSS</a></code> | css. |
-| <code><a href="#projen.javascript.biome_config.WhitespaceSensitivity.STRICT">STRICT</a></code> | strict. |
-| <code><a href="#projen.javascript.biome_config.WhitespaceSensitivity.IGNORE">IGNORE</a></code> | ignore. |
+| <code><a href="#projen.javascript.biome_config.WhitespaceSensitivity.CSS">CSS</a></code> | The formatter considers whitespace significant for elements that have an "inline" display style by default in browser's user agent style sheets. |
+| <code><a href="#projen.javascript.biome_config.WhitespaceSensitivity.STRICT">STRICT</a></code> | Leading and trailing whitespace in content is considered significant for all elements. |
+| <code><a href="#projen.javascript.biome_config.WhitespaceSensitivity.IGNORE">IGNORE</a></code> | Whitespace is considered insignificant. |
 
 ---
 
 ##### `CSS` <a name="CSS" id="projen.javascript.biome_config.WhitespaceSensitivity.CSS"></a>
 
-css.
+The formatter considers whitespace significant for elements that have an "inline" display style by default in browser's user agent style sheets.
+
+(css)
 
 ---
 
 
 ##### `STRICT` <a name="STRICT" id="projen.javascript.biome_config.WhitespaceSensitivity.STRICT"></a>
 
-strict.
+Leading and trailing whitespace in content is considered significant for all elements.
+
+The formatter should leave at least one whitespace character if whitespace is present.
+Otherwise, if there is no whitespace, it should not add any after `>` or before `<`. In other words, if there's no whitespace, the text content should hug the tags.
+
+Example of text hugging the tags:
+```html
+<b
+>content</b
+>
+``` (strict)
 
 ---
 
 
 ##### `IGNORE` <a name="IGNORE" id="projen.javascript.biome_config.WhitespaceSensitivity.IGNORE"></a>
 
-ignore.
+Whitespace is considered insignificant.
+
+The formatter is free to remove or add whitespace as it sees fit. (ignore)
 
 ---
 
