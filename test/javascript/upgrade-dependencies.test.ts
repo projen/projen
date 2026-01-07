@@ -576,6 +576,26 @@ test("given pull request workflow correct permissions when using GitHub token", 
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
 
+test("subprojects get upgrade workflows and are run in the correct working directory", () => {
+  // GIVEN
+  const parent = createProject({
+    release: false,
+  });
+  createProject({
+    parent,
+    name: "child",
+    outdir: "asdf/xyz",
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(parent);
+  const rootWf = yaml.parse(snapshot[".github/workflows/upgrade.yml"]);
+  const childWf = yaml.parse(snapshot[".github/workflows/upgrade_child.yml"]);
+
+  expect(rootWf.jobs.upgrade.steps[2]["working-directory"]).toBeUndefined();
+  expect(childWf.jobs.upgrade.steps[2]["working-directory"]).toBe("./asdf/xyz");
+});
+
 test("cooldown adds flags to npm-check-updates and npm", () => {
   const project = createProject({
     packageManager: NodePackageManager.NPM,
@@ -686,8 +706,8 @@ test("throws error when cooldown is not an integer", () => {
 
 function createProject(
   options: Omit<
-    NodeProjectOptions,
-    "outdir" | "defaultReleaseBranch" | "name" | "dependenciesUpgrade"
+    Partial<NodeProjectOptions>,
+    "defaultReleaseBranch" | "dependenciesUpgrade"
   > = {}
 ): NodeProject {
   return new NodeProject({

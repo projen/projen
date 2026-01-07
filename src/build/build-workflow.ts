@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as posixPath from "node:path/posix";
 import { Task } from "..";
 import { Component } from "../component";
 import {
@@ -13,7 +13,10 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import { ensureNotHiddenPath } from "../github/private/util";
+import {
+  ensureNotHiddenPath,
+  projectPathRelativeToRepoRoot,
+} from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
 import {
   Job,
@@ -37,7 +40,6 @@ import {
   SELF_MUTATION_STEP,
 } from "./private/consts";
 import { workflowNameForProject } from "../util/name";
-import { ensureRelativePathStartsWithDot } from "../util/path";
 
 export interface BuildWorkflowCommonOptions {
   /**
@@ -191,9 +193,8 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
-    const projectPathRelativeToRoot = path.relative(
-      this.project.root.outdir,
-      this.project.outdir
+    const projectPathRelativeToRoot = projectPathRelativeToRepoRoot(
+      this.project
     );
     const jobConfig: workflows.Job = {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
@@ -211,9 +212,7 @@ export class BuildWorkflow extends Component {
       defaults: this.project.parent // is subproject,
         ? {
             run: {
-              workingDirectory: ensureRelativePathStartsWithDot(
-                projectPathRelativeToRoot
-              ),
+              workingDirectory: projectPathRelativeToRoot,
             },
           }
         : undefined,
@@ -447,7 +446,10 @@ export class BuildWorkflow extends Component {
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.project.parent
-                  ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+                  ? posixPath.join(
+                      projectPathRelativeToRoot,
+                      this.artifactsDirectory
+                    )
                   : this.artifactsDirectory,
               },
             }),
