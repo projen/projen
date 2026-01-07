@@ -5,6 +5,7 @@ import {
   NodePackageManager,
   NodeProject,
   NodeProjectOptions,
+  UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../../src/javascript";
 import { TaskRuntime } from "../../src/task-runtime";
@@ -594,6 +595,31 @@ test("subprojects get upgrade workflows and are run in the correct working direc
 
   expect(rootWf.jobs.upgrade.steps[2]["working-directory"]).toBeUndefined();
   expect(childWf.jobs.upgrade.steps[2]["working-directory"]).toBe("./asdf/xyz");
+});
+
+test("subprojects can have custom upgrade workflows", () => {
+  // GIVEN
+  const parent = createProject({
+    release: false,
+  });
+  const child = createProject({
+    parent,
+    name: "child",
+    outdir: "asdf/xyz",
+    depsUpgrade: false,
+  });
+
+  new UpgradeDependencies(child, {
+    taskName: "upgrade-something",
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(parent);
+  const wf = yaml.parse(
+    snapshot[".github/workflows/upgrade-something_child.yml"]
+  );
+
+  expect(wf.jobs.upgrade.steps[2]["working-directory"]).toBe("./asdf/xyz");
 });
 
 test("cooldown adds flags to npm-check-updates and npm", () => {
