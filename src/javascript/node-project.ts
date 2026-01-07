@@ -852,7 +852,8 @@ export class NodeProject extends GitHubProject {
     }
 
     const dependabot = options.dependabot ?? false;
-    const depsUpgrade = options.depsUpgrade ?? !dependabot;
+    const depsUpgrade =
+      options.depsUpgrade ?? (this.parent ? false : !dependabot); // by default disabled in subprojects
 
     if (dependabot && depsUpgrade) {
       throw new Error(

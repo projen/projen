@@ -586,6 +586,7 @@ test("subprojects get upgrade workflows and are run in the correct working direc
     parent,
     name: "child",
     outdir: "asdf/xyz",
+    depsUpgrade: true,
   });
 
   // THEN
