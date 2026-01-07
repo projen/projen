@@ -74,6 +74,14 @@ test('running "projen" with task in subdirectory of a project will execute task 
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
+test('running "projen" without specifying a task it in subdirectory of a project will execute default task of the project', () => {
+  const project = new Project({ name: "my-project" });
+  project.synth();
+  const subdirectory = mkdtemp({ dir: project.outdir });
+
+  execProjenCLI(subdirectory, []); // no task specified
+});
+
 test('running "projen" with task in root of a subproject will execute task of the subproject', () => {
   const project = new Project({ name: "my-project" });
   const subProject = new Project({

@@ -12,8 +12,6 @@ import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { findUp, getNodeMajorVersion } from "../util";
 
-const DEFAULT_RC = resolve(DEFAULT_PROJEN_RC_JS_FILENAME);
-
 async function main() {
   const ya = yargs;
   ya.command(newCommand);
@@ -41,7 +39,11 @@ async function main() {
   ya.options("rc", {
     deprecated: true,
     desc: "path to .projenrc.js file",
-    default: DEFAULT_RC,
+    // must be `defaultDescription` and not an actual `default` value,
+    // since a default would make the CLI think --rc was passed
+    // and later skip a perfectly fine modern default task.
+    // The actual default value is set again later on.
+    defaultDescription: resolve(DEFAULT_PROJEN_RC_JS_FILENAME),
     type: "string",
   });
   ya.completion();
