@@ -262,11 +262,11 @@ const index: python.uvConfig.Index = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.uvConfig.Index.property.url">url</a></code> | <code>string</code> | The URL of the index. |
-| <code><a href="#projen.python.uvConfig.Index.property.authenticate">authenticate</a></code> | <code>string</code> | When uv should use authentication for requests to the index. |
+| <code><a href="#projen.python.uvConfig.Index.property.authenticate">authenticate</a></code> | <code>projen.python.uvConfig.AuthPolicy</code> | When uv should use authentication for requests to the index. |
 | <code><a href="#projen.python.uvConfig.Index.property.cacheControl">cacheControl</a></code> | <code>projen.python.uvConfig.IndexCacheControl</code> | Cache control configuration for this index. |
 | <code><a href="#projen.python.uvConfig.Index.property.default">default</a></code> | <code>boolean</code> | Mark the index as the default index. |
 | <code><a href="#projen.python.uvConfig.Index.property.explicit">explicit</a></code> | <code>boolean</code> | Mark the index as explicit. |
-| <code><a href="#projen.python.uvConfig.Index.property.format">format</a></code> | <code>string</code> | The format used by the index. |
+| <code><a href="#projen.python.uvConfig.Index.property.format">format</a></code> | <code>projen.python.uvConfig.IndexFormat</code> | The format used by the index. |
 | <code><a href="#projen.python.uvConfig.Index.property.ignoreErrorCodes">ignoreErrorCodes</a></code> | <code>number[]</code> | Status codes that uv should ignore when deciding whether to continue searching in the next index after a failure. |
 | <code><a href="#projen.python.uvConfig.Index.property.name">name</a></code> | <code>string</code> | The name of the index. |
 | <code><a href="#projen.python.uvConfig.Index.property.publishUrl">publishUrl</a></code> | <code>string</code> | The URL of the upload endpoint. |
@@ -290,10 +290,10 @@ Expects to receive a URL (e.g., `https://pypi.org/simple`) or a local path.
 ##### `authenticate`<sup>Optional</sup> <a name="authenticate" id="projen.python.uvConfig.Index.property.authenticate"></a>
 
 ```typescript
-public readonly authenticate: string;
+public readonly authenticate: AuthPolicy;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.AuthPolicy
 
 When uv should use authentication for requests to the index.
 
@@ -376,10 +376,10 @@ torch = { index = "pytorch" }
 ##### `format`<sup>Optional</sup> <a name="format" id="projen.python.uvConfig.Index.property.format"></a>
 
 ```typescript
-public readonly format: string;
+public readonly format: IndexFormat;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.IndexFormat
 
 The format used by the index.
 
@@ -565,7 +565,7 @@ const pipOptions: python.uvConfig.PipOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.allExtras">allExtras</a></code> | <code>boolean</code> | Include all optional dependencies. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.allowEmptyRequirements">allowEmptyRequirements</a></code> | <code>boolean</code> | Allow `uv pip sync` with empty requirements, which will clear the environment of all packages. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.annotationStyle">annotationStyle</a></code> | <code>string</code> | The style of the annotation comments included in the output file, used to indicate the source of each package. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.annotationStyle">annotationStyle</a></code> | <code>projen.python.uvConfig.AnnotationStyle</code> | The style of the annotation comments included in the output file, used to indicate the source of each package. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.breakSystemPackages">breakSystemPackages</a></code> | <code>boolean</code> | Allow uv to modify an `EXTERNALLY-MANAGED` Python installation. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.compileBytecode">compileBytecode</a></code> | <code>boolean</code> | Compile Python files to bytecode after installation. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.configSettings">configSettings</a></code> | <code>{[ key: string ]: any}</code> | Settings to pass to the [PEP 517](https://peps.python.org/pep-0517/) build backend, specified as `KEY=VALUE` pairs. |
@@ -584,13 +584,13 @@ const pipOptions: python.uvConfig.PipOptions = { ... }
 | <code><a href="#projen.python.uvConfig.PipOptions.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Extra environment variables to set when building certain packages. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | Extra URLs of package indexes to use, in addition to `--index-url`. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.findLinks">findLinks</a></code> | <code>string[]</code> | Locations to search for candidate distributions, in addition to those found in the registry indexes. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.forkStrategy">forkStrategy</a></code> | <code>string</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.forkStrategy">forkStrategy</a></code> | <code>projen.python.uvConfig.ForkStrategy</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.generateHashes">generateHashes</a></code> | <code>boolean</code> | Include distribution hashes in the output file. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.group">group</a></code> | <code>projen.python.uvConfig.PipGroupName[]</code> | Include the following dependency groups. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.indexStrategy">indexStrategy</a></code> | <code>string</code> | The strategy to use when resolving against multiple index URLs. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.indexStrategy">indexStrategy</a></code> | <code>projen.python.uvConfig.IndexStrategy</code> | The strategy to use when resolving against multiple index URLs. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.indexUrl">indexUrl</a></code> | <code>string</code> | The URL of the Python package index (by default: <https://pypi.org/simple>). |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.keyringProvider">keyringProvider</a></code> | <code>string</code> | Attempt to use `keyring` for authentication for index URLs. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.linkMode">linkMode</a></code> | <code>string</code> | The method to use when installing packages from the global cache. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.keyringProvider">keyringProvider</a></code> | <code>projen.python.uvConfig.KeyringProviderType</code> | Attempt to use `keyring` for authentication for index URLs. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.linkMode">linkMode</a></code> | <code>projen.python.uvConfig.LinkMode</code> | The method to use when installing packages from the global cache. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noAnnotate">noAnnotate</a></code> | <code>boolean</code> | Exclude comment annotations indicating the source of each package from the output file generated by `uv pip compile`. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noBinary">noBinary</a></code> | <code>string[]</code> | Don't install pre-built wheels. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noBuild">noBuild</a></code> | <code>boolean</code> | Don't build source distributions. |
@@ -607,18 +607,18 @@ const pipOptions: python.uvConfig.PipOptions = { ... }
 | <code><a href="#projen.python.uvConfig.PipOptions.property.onlyBinary">onlyBinary</a></code> | <code>string[]</code> | Only use pre-built wheels; don't build source distributions. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.outputFile">outputFile</a></code> | <code>string</code> | Write the requirements generated by `uv pip compile` to the given `requirements.txt` file. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.prefix">prefix</a></code> | <code>string</code> | Install packages into `lib`, `bin`, and other top-level folders under the specified directory, as if a virtual environment were present at that location. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.prerelease">prerelease</a></code> | <code>string</code> | The strategy to use when considering pre-release versions. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.prerelease">prerelease</a></code> | <code>projen.python.uvConfig.PrereleaseMode</code> | The strategy to use when considering pre-release versions. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.python">python</a></code> | <code>string</code> | The Python interpreter into which packages should be installed. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.pythonPlatform">pythonPlatform</a></code> | <code>string</code> | The platform for which requirements should be resolved. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.pythonPlatform">pythonPlatform</a></code> | <code>projen.python.uvConfig.TargetTriple</code> | The platform for which requirements should be resolved. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | The minimum Python version that should be supported by the resolved requirements (e.g., `3.8` or `3.8.17`). |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.reinstall">reinstall</a></code> | <code>boolean</code> | Reinstall all packages, regardless of whether they're already installed. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | Reinstall a specific package, regardless of whether it's already installed. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.requireHashes">requireHashes</a></code> | <code>boolean</code> | Require a matching hash for each requirement. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.resolution">resolution</a></code> | <code>string</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.resolution">resolution</a></code> | <code>projen.python.uvConfig.ResolutionMode</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.strict">strict</a></code> | <code>boolean</code> | Validate the Python environment, to detect packages with missing dependencies and other issues. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.system">system</a></code> | <code>boolean</code> | Install packages into the system Python environment. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.target">target</a></code> | <code>string</code> | Install packages into the specified directory, rather than into the virtual or system Python environment. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.torchBackend">torchBackend</a></code> | <code>string</code> | The backend to use when fetching packages in the PyTorch ecosystem. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.torchBackend">torchBackend</a></code> | <code>projen.python.uvConfig.TorchMode</code> | The backend to use when fetching packages in the PyTorch ecosystem. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.universal">universal</a></code> | <code>boolean</code> | Perform a universal resolution, attempting to generate a single `requirements.txt` output file that is compatible with all operating systems, architectures, and Python implementations. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.upgrade">upgrade</a></code> | <code>boolean</code> | Allow package upgrades, ignoring pinned versions in any existing output file. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.upgradePackage">upgradePackage</a></code> | <code>string[]</code> | Allow upgrades for a specific package, ignoring pinned versions in any existing output file. |
@@ -655,10 +655,10 @@ Allow `uv pip sync` with empty requirements, which will clear the environment of
 ##### `annotationStyle`<sup>Optional</sup> <a name="annotationStyle" id="projen.python.uvConfig.PipOptions.property.annotationStyle"></a>
 
 ```typescript
-public readonly annotationStyle: string;
+public readonly annotationStyle: AnnotationStyle;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.AnnotationStyle
 
 The style of the annotation comments included in the output file, used to indicate the source of each package.
 
@@ -947,10 +947,10 @@ formats described above.
 ##### `forkStrategy`<sup>Optional</sup> <a name="forkStrategy" id="projen.python.uvConfig.PipOptions.property.forkStrategy"></a>
 
 ```typescript
-public readonly forkStrategy: string;
+public readonly forkStrategy: ForkStrategy;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.ForkStrategy
 
 The strategy to use when selecting multiple versions of a given package across Python versions and platforms.
 
@@ -991,10 +991,10 @@ Include the following dependency groups.
 ##### `indexStrategy`<sup>Optional</sup> <a name="indexStrategy" id="projen.python.uvConfig.PipOptions.property.indexStrategy"></a>
 
 ```typescript
-public readonly indexStrategy: string;
+public readonly indexStrategy: IndexStrategy;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.IndexStrategy
 
 The strategy to use when resolving against multiple index URLs.
 
@@ -1026,10 +1026,10 @@ The index provided by this setting is given lower priority than any indexes spec
 ##### `keyringProvider`<sup>Optional</sup> <a name="keyringProvider" id="projen.python.uvConfig.PipOptions.property.keyringProvider"></a>
 
 ```typescript
-public readonly keyringProvider: string;
+public readonly keyringProvider: KeyringProviderType;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.KeyringProviderType
 
 Attempt to use `keyring` for authentication for index URLs.
 
@@ -1041,10 +1041,10 @@ use the `keyring` CLI to handle authentication.
 ##### `linkMode`<sup>Optional</sup> <a name="linkMode" id="projen.python.uvConfig.PipOptions.property.linkMode"></a>
 
 ```typescript
-public readonly linkMode: string;
+public readonly linkMode: LinkMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.LinkMode
 - *Default:* clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
 
 The method to use when installing packages from the global cache.
@@ -1297,10 +1297,10 @@ non-portable.
 ##### `prerelease`<sup>Optional</sup> <a name="prerelease" id="projen.python.uvConfig.PipOptions.property.prerelease"></a>
 
 ```typescript
-public readonly prerelease: string;
+public readonly prerelease: PrereleaseMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.PrereleaseMode
 
 The strategy to use when considering pre-release versions.
 
@@ -1336,10 +1336,10 @@ Supported formats:
 ##### `pythonPlatform`<sup>Optional</sup> <a name="pythonPlatform" id="projen.python.uvConfig.PipOptions.property.pythonPlatform"></a>
 
 ```typescript
-public readonly pythonPlatform: string;
+public readonly pythonPlatform: TargetTriple;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.TargetTriple
 
 The platform for which requirements should be resolved.
 
@@ -1419,10 +1419,10 @@ source archive (`.zip`, `.tar.gz`), as opposed to a directory.
 ##### `resolution`<sup>Optional</sup> <a name="resolution" id="projen.python.uvConfig.PipOptions.property.resolution"></a>
 
 ```typescript
-public readonly resolution: string;
+public readonly resolution: ResolutionMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.ResolutionMode
 
 The strategy to use when selecting between the different compatible versions for a given package requirement.
 
@@ -1478,10 +1478,10 @@ The packages will be installed at the top-level of the directory.
 ##### `torchBackend`<sup>Optional</sup> <a name="torchBackend" id="projen.python.uvConfig.PipOptions.property.torchBackend"></a>
 
 ```typescript
-public readonly torchBackend: string;
+public readonly torchBackend: TorchMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.TorchMode
 
 The backend to use when fetching packages in the PyTorch ecosystem.
 
@@ -1756,7 +1756,7 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.addBounds">addBounds</a></code> | <code>string</code> | The default version specifier when adding a dependency. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.addBounds">addBounds</a></code> | <code>projen.python.uvConfig.AddBoundsKind</code> | The default version specifier when adding a dependency. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.allowInsecureHost">allowInsecureHost</a></code> | <code>string[]</code> | Allow insecure connections to host. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildBackend">buildBackend</a></code> | <code>projen.python.uvConfig.BuildBackendSettings</code> | Configuration for the uv build backend. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildConstraintDependencies">buildConstraintDependencies</a></code> | <code>string[]</code> | PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`. |
@@ -1783,12 +1783,12 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Extra environment variables to set when building certain packages. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | Extra URLs of package indexes to use, in addition to `--index-url`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.findLinks">findLinks</a></code> | <code>string[]</code> | Locations to search for candidate distributions, in addition to those found in the registry indexes. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.forkStrategy">forkStrategy</a></code> | <code>string</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.forkStrategy">forkStrategy</a></code> | <code>projen.python.uvConfig.ForkStrategy</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.index">index</a></code> | <code>projen.python.uvConfig.Index[]</code> | The indexes to use when resolving dependencies. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.indexStrategy">indexStrategy</a></code> | <code>string</code> | The strategy to use when resolving against multiple index URLs. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.indexStrategy">indexStrategy</a></code> | <code>projen.python.uvConfig.IndexStrategy</code> | The strategy to use when resolving against multiple index URLs. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.indexUrl">indexUrl</a></code> | <code>string</code> | The URL of the Python package index (by default: <https://pypi.org/simple>). |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.keyringProvider">keyringProvider</a></code> | <code>string</code> | Attempt to use `keyring` for authentication for index URLs. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.linkMode">linkMode</a></code> | <code>string</code> | The method to use when installing packages from the global cache. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.keyringProvider">keyringProvider</a></code> | <code>projen.python.uvConfig.KeyringProviderType</code> | Attempt to use `keyring` for authentication for index URLs. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.linkMode">linkMode</a></code> | <code>projen.python.uvConfig.LinkMode</code> | The method to use when installing packages from the global cache. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.managed">managed</a></code> | <code>boolean</code> | Whether the project is managed by uv. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.nativeTls">nativeTls</a></code> | <code>boolean</code> | Whether to load TLS certificates from the platform's native certificate store. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noBinary">noBinary</a></code> | <code>boolean</code> | Don't install pre-built wheels. |
@@ -1804,19 +1804,19 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.overrideDependencies">overrideDependencies</a></code> | <code>string[]</code> | PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.package">package</a></code> | <code>boolean</code> | Whether the project should be considered a Python package, or a non-package ("virtual") project. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pip">pip</a></code> | <code>projen.python.uvConfig.PipOptions</code> | *No description.* |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.prerelease">prerelease</a></code> | <code>string</code> | The strategy to use when considering pre-release versions. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.prerelease">prerelease</a></code> | <code>projen.python.uvConfig.PrereleaseMode</code> | The strategy to use when considering pre-release versions. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.preview">preview</a></code> | <code>boolean</code> | Whether to enable experimental, preview features. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.publishUrl">publishUrl</a></code> | <code>string</code> | The URL for publishing packages to the Python package index (by default: <https://upload.pypi.org/legacy/>). |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pypyInstallMirror">pypyInstallMirror</a></code> | <code>string</code> | Mirror URL to use for downloading managed PyPy installations. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonDownloads">pythonDownloads</a></code> | <code>string</code> | Whether to allow Python downloads. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonDownloads">pythonDownloads</a></code> | <code>projen.python.uvConfig.PythonDownloads</code> | Whether to allow Python downloads. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonDownloadsJsonUrl">pythonDownloadsJsonUrl</a></code> | <code>string</code> | URL pointing to JSON of custom Python installations. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonInstallMirror">pythonInstallMirror</a></code> | <code>string</code> | Mirror URL for downloading managed Python installations. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonPreference">pythonPreference</a></code> | <code>string</code> | Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonPreference">pythonPreference</a></code> | <code>projen.python.uvConfig.PythonPreference</code> | Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.reinstall">reinstall</a></code> | <code>boolean</code> | Reinstall all packages, regardless of whether they're already installed. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | Reinstall a specific package, regardless of whether it's already installed. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.requiredEnvironments">requiredEnvironments</a></code> | <code>string[]</code> | A list of environment markers, e.g., `sys_platform == 'darwin'. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.requiredVersion">requiredVersion</a></code> | <code>string</code> | Enforce a requirement on the version of uv. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.resolution">resolution</a></code> | <code>string</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.resolution">resolution</a></code> | <code>projen.python.uvConfig.ResolutionMode</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.sources">sources</a></code> | <code>{[ key: string ]: any[]}</code> | The sources to use when resolving dependencies. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.trustedPublishing">trustedPublishing</a></code> | <code>projen.python.uvConfig.TrustedPublishing</code> | Configure trusted publishing. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.upgrade">upgrade</a></code> | <code>boolean</code> | Allow package upgrades, ignoring pinned versions in any existing output file. |
@@ -1828,10 +1828,10 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 ##### `addBounds`<sup>Optional</sup> <a name="addBounds" id="projen.python.uvConfig.UvConfiguration.property.addBounds"></a>
 
 ```typescript
-public readonly addBounds: string;
+public readonly addBounds: AddBoundsKind;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.AddBoundsKind
 
 The default version specifier when adding a dependency.
 
@@ -2288,10 +2288,10 @@ formats described above.
 ##### `forkStrategy`<sup>Optional</sup> <a name="forkStrategy" id="projen.python.uvConfig.UvConfiguration.property.forkStrategy"></a>
 
 ```typescript
-public readonly forkStrategy: string;
+public readonly forkStrategy: ForkStrategy;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.ForkStrategy
 
 The strategy to use when selecting multiple versions of a given package across Python versions and platforms.
 
@@ -2346,10 +2346,10 @@ PyPI default index.
 ##### `indexStrategy`<sup>Optional</sup> <a name="indexStrategy" id="projen.python.uvConfig.UvConfiguration.property.indexStrategy"></a>
 
 ```typescript
-public readonly indexStrategy: string;
+public readonly indexStrategy: IndexStrategy;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.IndexStrategy
 
 The strategy to use when resolving against multiple index URLs.
 
@@ -2383,10 +2383,10 @@ The index provided by this setting is given lower priority than any indexes spec
 ##### `keyringProvider`<sup>Optional</sup> <a name="keyringProvider" id="projen.python.uvConfig.UvConfiguration.property.keyringProvider"></a>
 
 ```typescript
-public readonly keyringProvider: string;
+public readonly keyringProvider: KeyringProviderType;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.KeyringProviderType
 
 Attempt to use `keyring` for authentication for index URLs.
 
@@ -2398,10 +2398,10 @@ use the `keyring` CLI to handle authentication.
 ##### `linkMode`<sup>Optional</sup> <a name="linkMode" id="projen.python.uvConfig.UvConfiguration.property.linkMode"></a>
 
 ```typescript
-public readonly linkMode: string;
+public readonly linkMode: LinkMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.LinkMode
 - *Default:* clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
 
 The method to use when installing packages from the global cache.
@@ -2629,10 +2629,10 @@ public readonly pip: PipOptions;
 ##### `prerelease`<sup>Optional</sup> <a name="prerelease" id="projen.python.uvConfig.UvConfiguration.property.prerelease"></a>
 
 ```typescript
-public readonly prerelease: string;
+public readonly prerelease: PrereleaseMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.PrereleaseMode
 
 The strategy to use when considering pre-release versions.
 
@@ -2688,10 +2688,10 @@ local directory by using the `file://` URL scheme.
 ##### `pythonDownloads`<sup>Optional</sup> <a name="pythonDownloads" id="projen.python.uvConfig.UvConfiguration.property.pythonDownloads"></a>
 
 ```typescript
-public readonly pythonDownloads: string;
+public readonly pythonDownloads: PythonDownloads;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.PythonDownloads
 
 Whether to allow Python downloads.
 
@@ -2732,10 +2732,10 @@ Distributions can be read from a local directory by using the `file://` URL sche
 ##### `pythonPreference`<sup>Optional</sup> <a name="pythonPreference" id="projen.python.uvConfig.UvConfiguration.property.pythonPreference"></a>
 
 ```typescript
-public readonly pythonPreference: string;
+public readonly pythonPreference: PythonPreference;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.PythonPreference
 
 Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv.
 
@@ -2802,10 +2802,10 @@ Accepts a [PEP 440](https://peps.python.org/pep-0440/) specifier, like `==0.5.0`
 ##### `resolution`<sup>Optional</sup> <a name="resolution" id="projen.python.uvConfig.UvConfiguration.property.resolution"></a>
 
 ```typescript
-public readonly resolution: string;
+public readonly resolution: ResolutionMode;
 ```
 
-- *Type:* string
+- *Type:* projen.python.uvConfig.ResolutionMode
 
 The strategy to use when selecting between the different compatible versions for a given package requirement.
 
@@ -2966,6 +2966,1361 @@ public readonly scripts: string;
 
 ## Enums <a name="Enums" id="Enums"></a>
 
+### AddBoundsKind <a name="AddBoundsKind" id="projen.python.uvConfig.AddBoundsKind"></a>
+
+The default version specifier when adding a dependency.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.AddBoundsKind.LOWER">LOWER</a></code> | Only a lower bound, e.g., `>=1.2.3`. (lower). |
+| <code><a href="#projen.python.uvConfig.AddBoundsKind.MAJOR">MAJOR</a></code> | Allow the same major version, similar to the semver caret, e.g., `>=1.2.3, <2.0.0`. |
+| <code><a href="#projen.python.uvConfig.AddBoundsKind.MINOR">MINOR</a></code> | Allow the same minor version, similar to the semver tilde, e.g., `>=1.2.3, <1.3.0`. |
+| <code><a href="#projen.python.uvConfig.AddBoundsKind.EXACT">EXACT</a></code> | Pin the exact version, e.g., `==1.2.3`. |
+
+---
+
+##### `LOWER` <a name="LOWER" id="projen.python.uvConfig.AddBoundsKind.LOWER"></a>
+
+Only a lower bound, e.g., `>=1.2.3`. (lower).
+
+---
+
+
+##### `MAJOR` <a name="MAJOR" id="projen.python.uvConfig.AddBoundsKind.MAJOR"></a>
+
+Allow the same major version, similar to the semver caret, e.g., `>=1.2.3, <2.0.0`.
+
+Leading zeroes are skipped, e.g. `>=0.1.2, <0.2.0`. (major)
+
+---
+
+
+##### `MINOR` <a name="MINOR" id="projen.python.uvConfig.AddBoundsKind.MINOR"></a>
+
+Allow the same minor version, similar to the semver tilde, e.g., `>=1.2.3, <1.3.0`.
+
+Leading zeroes are skipped, e.g. `>=0.1.2, <0.1.3`. (minor)
+
+---
+
+
+##### `EXACT` <a name="EXACT" id="projen.python.uvConfig.AddBoundsKind.EXACT"></a>
+
+Pin the exact version, e.g., `==1.2.3`.
+
+This option is not recommended, as versions are already pinned in the uv lockfile. (exact)
+
+---
+
+
+### AnnotationStyle <a name="AnnotationStyle" id="projen.python.uvConfig.AnnotationStyle"></a>
+
+Indicate the style of annotation comments, used to indicate the dependencies that requested each package.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.AnnotationStyle.LINE">LINE</a></code> | Render the annotations on a single, comma-separated line. |
+| <code><a href="#projen.python.uvConfig.AnnotationStyle.SPLIT">SPLIT</a></code> | Render each annotation on its own line. |
+
+---
+
+##### `LINE` <a name="LINE" id="projen.python.uvConfig.AnnotationStyle.LINE"></a>
+
+Render the annotations on a single, comma-separated line.
+
+(line)
+
+---
+
+
+##### `SPLIT` <a name="SPLIT" id="projen.python.uvConfig.AnnotationStyle.SPLIT"></a>
+
+Render each annotation on its own line.
+
+(split)
+
+---
+
+
+### AuthPolicy <a name="AuthPolicy" id="projen.python.uvConfig.AuthPolicy"></a>
+
+When to use authentication.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.AuthPolicy.AUTO">AUTO</a></code> | Authenticate when necessary. |
+| <code><a href="#projen.python.uvConfig.AuthPolicy.ALWAYS">ALWAYS</a></code> | Always authenticate. |
+| <code><a href="#projen.python.uvConfig.AuthPolicy.NEVER">NEVER</a></code> | Never authenticate. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.python.uvConfig.AuthPolicy.AUTO"></a>
+
+Authenticate when necessary.
+
+If credentials are provided, they will be used. Otherwise, an unauthenticated request will
+be attempted first. If the request fails, uv will search for credentials. If credentials are
+found, an authenticated request will be attempted. (auto)
+
+---
+
+
+##### `ALWAYS` <a name="ALWAYS" id="projen.python.uvConfig.AuthPolicy.ALWAYS"></a>
+
+Always authenticate.
+
+If credentials are not provided, uv will eagerly search for credentials. If credentials
+cannot be found, uv will error instead of attempting an unauthenticated request. (always)
+
+---
+
+
+##### `NEVER` <a name="NEVER" id="projen.python.uvConfig.AuthPolicy.NEVER"></a>
+
+Never authenticate.
+
+If credentials are provided, uv will error. uv will not search for credentials. (never)
+
+---
+
+
+### ForkStrategy <a name="ForkStrategy" id="projen.python.uvConfig.ForkStrategy"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.ForkStrategy.FEWEST">FEWEST</a></code> | Optimize for selecting the fewest number of versions for each package. |
+| <code><a href="#projen.python.uvConfig.ForkStrategy.REQUIRES_HYPHEN_PYTHON">REQUIRES_HYPHEN_PYTHON</a></code> | Optimize for selecting latest supported version of each package, for each supported Python version. |
+
+---
+
+##### `FEWEST` <a name="FEWEST" id="projen.python.uvConfig.ForkStrategy.FEWEST"></a>
+
+Optimize for selecting the fewest number of versions for each package.
+
+Older versions may
+be preferred if they are compatible with a wider range of supported Python versions or
+platforms. (fewest)
+
+---
+
+
+##### `REQUIRES_HYPHEN_PYTHON` <a name="REQUIRES_HYPHEN_PYTHON" id="projen.python.uvConfig.ForkStrategy.REQUIRES_HYPHEN_PYTHON"></a>
+
+Optimize for selecting latest supported version of each package, for each supported Python version.
+
+(requires-python)
+
+---
+
+
+### IndexFormat <a name="IndexFormat" id="projen.python.uvConfig.IndexFormat"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.IndexFormat.SIMPLE">SIMPLE</a></code> | A PyPI-style index implementing the Simple Repository API. |
+| <code><a href="#projen.python.uvConfig.IndexFormat.FLAT">FLAT</a></code> | A `--find-links`-style index containing a flat list of wheels and source distributions. |
+
+---
+
+##### `SIMPLE` <a name="SIMPLE" id="projen.python.uvConfig.IndexFormat.SIMPLE"></a>
+
+A PyPI-style index implementing the Simple Repository API.
+
+(simple)
+
+---
+
+
+##### `FLAT` <a name="FLAT" id="projen.python.uvConfig.IndexFormat.FLAT"></a>
+
+A `--find-links`-style index containing a flat list of wheels and source distributions.
+
+(flat)
+
+---
+
+
+### IndexStrategy <a name="IndexStrategy" id="projen.python.uvConfig.IndexStrategy"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.IndexStrategy.FIRST_HYPHEN_INDEX">FIRST_HYPHEN_INDEX</a></code> | Only use results from the first index that returns a match for a given package name. |
+| <code><a href="#projen.python.uvConfig.IndexStrategy.UNSAFE_HYPHEN_FIRST_HYPHEN_MATCH">UNSAFE_HYPHEN_FIRST_HYPHEN_MATCH</a></code> | Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next. |
+| <code><a href="#projen.python.uvConfig.IndexStrategy.UNSAFE_HYPHEN_BEST_HYPHEN_MATCH">UNSAFE_HYPHEN_BEST_HYPHEN_MATCH</a></code> | Search for every package name across all indexes, preferring the "best" version found. |
+
+---
+
+##### `FIRST_HYPHEN_INDEX` <a name="FIRST_HYPHEN_INDEX" id="projen.python.uvConfig.IndexStrategy.FIRST_HYPHEN_INDEX"></a>
+
+Only use results from the first index that returns a match for a given package name.
+
+While this differs from pip's behavior, it's the default index strategy as it's the most
+secure. (first-index)
+
+---
+
+
+##### `UNSAFE_HYPHEN_FIRST_HYPHEN_MATCH` <a name="UNSAFE_HYPHEN_FIRST_HYPHEN_MATCH" id="projen.python.uvConfig.IndexStrategy.UNSAFE_HYPHEN_FIRST_HYPHEN_MATCH"></a>
+
+Search for every package name across all indexes, exhausting the versions from the first index before moving on to the next.
+
+In this strategy, we look for every package across all indexes. When resolving, we attempt
+to use versions from the indexes in order, such that we exhaust all available versions from
+the first index before moving on to the next. Further, if a version is found to be
+incompatible in the first index, we do not reconsider that version in subsequent indexes,
+even if the secondary index might contain compatible versions (e.g., variants of the same
+versions with different ABI tags or Python version constraints).
+
+See: <https://peps.python.org/pep-0708/> (unsafe-first-match)
+
+---
+
+
+##### `UNSAFE_HYPHEN_BEST_HYPHEN_MATCH` <a name="UNSAFE_HYPHEN_BEST_HYPHEN_MATCH" id="projen.python.uvConfig.IndexStrategy.UNSAFE_HYPHEN_BEST_HYPHEN_MATCH"></a>
+
+Search for every package name across all indexes, preferring the "best" version found.
+
+If a
+package version is in multiple indexes, only look at the entry for the first index.
+
+In this strategy, we look for every package across all indexes. When resolving, we consider
+all versions from all indexes, choosing the "best" version found (typically, the highest
+compatible version).
+
+This most closely matches pip's behavior, but exposes the resolver to "dependency confusion"
+attacks whereby malicious actors can publish packages to public indexes with the same name
+as internal packages, causing the resolver to install the malicious package in lieu of
+the intended internal package.
+
+See: <https://peps.python.org/pep-0708/> (unsafe-best-match)
+
+---
+
+
+### KeyringProviderType <a name="KeyringProviderType" id="projen.python.uvConfig.KeyringProviderType"></a>
+
+Keyring provider type to use for credential lookup.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.KeyringProviderType.DISABLED">DISABLED</a></code> | Do not use keyring for credential lookup. |
+| <code><a href="#projen.python.uvConfig.KeyringProviderType.SUBPROCESS">SUBPROCESS</a></code> | Use the `keyring` command for credential lookup. |
+
+---
+
+##### `DISABLED` <a name="DISABLED" id="projen.python.uvConfig.KeyringProviderType.DISABLED"></a>
+
+Do not use keyring for credential lookup.
+
+(disabled)
+
+---
+
+
+##### `SUBPROCESS` <a name="SUBPROCESS" id="projen.python.uvConfig.KeyringProviderType.SUBPROCESS"></a>
+
+Use the `keyring` command for credential lookup.
+
+(subprocess)
+
+---
+
+
+### LinkMode <a name="LinkMode" id="projen.python.uvConfig.LinkMode"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.LinkMode.CLONE">CLONE</a></code> | Clone (i.e., copy-on-write) packages from the wheel into the `site-packages` directory. (clone). |
+| <code><a href="#projen.python.uvConfig.LinkMode.COPY">COPY</a></code> | Copy packages from the wheel into the `site-packages` directory. |
+| <code><a href="#projen.python.uvConfig.LinkMode.HARDLINK">HARDLINK</a></code> | Hard link packages from the wheel into the `site-packages` directory. |
+| <code><a href="#projen.python.uvConfig.LinkMode.SYMLINK">SYMLINK</a></code> | Symbolically link packages from the wheel into the `site-packages` directory. |
+
+---
+
+##### `CLONE` <a name="CLONE" id="projen.python.uvConfig.LinkMode.CLONE"></a>
+
+Clone (i.e., copy-on-write) packages from the wheel into the `site-packages` directory. (clone).
+
+---
+
+
+##### `COPY` <a name="COPY" id="projen.python.uvConfig.LinkMode.COPY"></a>
+
+Copy packages from the wheel into the `site-packages` directory.
+
+(copy)
+
+---
+
+
+##### `HARDLINK` <a name="HARDLINK" id="projen.python.uvConfig.LinkMode.HARDLINK"></a>
+
+Hard link packages from the wheel into the `site-packages` directory.
+
+(hardlink)
+
+---
+
+
+##### `SYMLINK` <a name="SYMLINK" id="projen.python.uvConfig.LinkMode.SYMLINK"></a>
+
+Symbolically link packages from the wheel into the `site-packages` directory.
+
+(symlink)
+
+---
+
+
+### PrereleaseMode <a name="PrereleaseMode" id="projen.python.uvConfig.PrereleaseMode"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.DISALLOW">DISALLOW</a></code> | Disallow all pre-release versions. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.ALLOW">ALLOW</a></code> | Allow all pre-release versions. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY">IF_HYPHEN_NECESSARY</a></code> | Allow pre-release versions if all versions of a package are pre-release. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.EXPLICIT">EXPLICIT</a></code> | Allow pre-release versions for first-party packages with explicit pre-release markers in their version requirements. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT">IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT</a></code> | Allow pre-release versions if all versions of a package are pre-release, or if the package has an explicit pre-release marker in its version requirements. |
+
+---
+
+##### `DISALLOW` <a name="DISALLOW" id="projen.python.uvConfig.PrereleaseMode.DISALLOW"></a>
+
+Disallow all pre-release versions.
+
+(disallow)
+
+---
+
+
+##### `ALLOW` <a name="ALLOW" id="projen.python.uvConfig.PrereleaseMode.ALLOW"></a>
+
+Allow all pre-release versions.
+
+(allow)
+
+---
+
+
+##### `IF_HYPHEN_NECESSARY` <a name="IF_HYPHEN_NECESSARY" id="projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY"></a>
+
+Allow pre-release versions if all versions of a package are pre-release.
+
+(if-necessary)
+
+---
+
+
+##### `EXPLICIT` <a name="EXPLICIT" id="projen.python.uvConfig.PrereleaseMode.EXPLICIT"></a>
+
+Allow pre-release versions for first-party packages with explicit pre-release markers in their version requirements.
+
+(explicit)
+
+---
+
+
+##### `IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT` <a name="IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT" id="projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT"></a>
+
+Allow pre-release versions if all versions of a package are pre-release, or if the package has an explicit pre-release marker in its version requirements.
+
+(if-necessary-or-explicit)
+
+---
+
+
+### PythonDownloads <a name="PythonDownloads" id="projen.python.uvConfig.PythonDownloads"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.PythonDownloads.AUTOMATIC">AUTOMATIC</a></code> | Automatically download managed Python installations when needed. |
+| <code><a href="#projen.python.uvConfig.PythonDownloads.MANUAL">MANUAL</a></code> | Do not automatically download managed Python installations; |
+| <code><a href="#projen.python.uvConfig.PythonDownloads.NEVER">NEVER</a></code> | Do not ever allow Python downloads. |
+
+---
+
+##### `AUTOMATIC` <a name="AUTOMATIC" id="projen.python.uvConfig.PythonDownloads.AUTOMATIC"></a>
+
+Automatically download managed Python installations when needed.
+
+(automatic)
+
+---
+
+
+##### `MANUAL` <a name="MANUAL" id="projen.python.uvConfig.PythonDownloads.MANUAL"></a>
+
+Do not automatically download managed Python installations;
+
+require explicit installation. (manual)
+
+---
+
+
+##### `NEVER` <a name="NEVER" id="projen.python.uvConfig.PythonDownloads.NEVER"></a>
+
+Do not ever allow Python downloads.
+
+(never)
+
+---
+
+
+### PythonPreference <a name="PythonPreference" id="projen.python.uvConfig.PythonPreference"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.PythonPreference.ONLY_HYPHEN_MANAGED">ONLY_HYPHEN_MANAGED</a></code> | Only use managed Python installations; |
+| <code><a href="#projen.python.uvConfig.PythonPreference.MANAGED">MANAGED</a></code> | Prefer managed Python installations over system Python installations. |
+| <code><a href="#projen.python.uvConfig.PythonPreference.SYSTEM">SYSTEM</a></code> | Prefer system Python installations over managed Python installations. |
+| <code><a href="#projen.python.uvConfig.PythonPreference.ONLY_HYPHEN_SYSTEM">ONLY_HYPHEN_SYSTEM</a></code> | Only use system Python installations; |
+
+---
+
+##### `ONLY_HYPHEN_MANAGED` <a name="ONLY_HYPHEN_MANAGED" id="projen.python.uvConfig.PythonPreference.ONLY_HYPHEN_MANAGED"></a>
+
+Only use managed Python installations;
+
+never use system Python installations. (only-managed)
+
+---
+
+
+##### `MANAGED` <a name="MANAGED" id="projen.python.uvConfig.PythonPreference.MANAGED"></a>
+
+Prefer managed Python installations over system Python installations.
+
+System Python installations are still preferred over downloading managed Python versions.
+Use `only-managed` to always fetch a managed Python version. (managed)
+
+---
+
+
+##### `SYSTEM` <a name="SYSTEM" id="projen.python.uvConfig.PythonPreference.SYSTEM"></a>
+
+Prefer system Python installations over managed Python installations.
+
+If a system Python installation cannot be found, a managed Python installation can be used. (system)
+
+---
+
+
+##### `ONLY_HYPHEN_SYSTEM` <a name="ONLY_HYPHEN_SYSTEM" id="projen.python.uvConfig.PythonPreference.ONLY_HYPHEN_SYSTEM"></a>
+
+Only use system Python installations;
+
+never use managed Python installations. (only-system)
+
+---
+
+
+### ResolutionMode <a name="ResolutionMode" id="projen.python.uvConfig.ResolutionMode"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.ResolutionMode.HIGHEST">HIGHEST</a></code> | Resolve the highest compatible version of each package. |
+| <code><a href="#projen.python.uvConfig.ResolutionMode.LOWEST">LOWEST</a></code> | Resolve the lowest compatible version of each package. |
+| <code><a href="#projen.python.uvConfig.ResolutionMode.LOWEST_HYPHEN_DIRECT">LOWEST_HYPHEN_DIRECT</a></code> | Resolve the lowest compatible version of any direct dependencies, and the highest compatible version of any transitive dependencies. |
+
+---
+
+##### `HIGHEST` <a name="HIGHEST" id="projen.python.uvConfig.ResolutionMode.HIGHEST"></a>
+
+Resolve the highest compatible version of each package.
+
+(highest)
+
+---
+
+
+##### `LOWEST` <a name="LOWEST" id="projen.python.uvConfig.ResolutionMode.LOWEST"></a>
+
+Resolve the lowest compatible version of each package.
+
+(lowest)
+
+---
+
+
+##### `LOWEST_HYPHEN_DIRECT` <a name="LOWEST_HYPHEN_DIRECT" id="projen.python.uvConfig.ResolutionMode.LOWEST_HYPHEN_DIRECT"></a>
+
+Resolve the lowest compatible version of any direct dependencies, and the highest compatible version of any transitive dependencies.
+
+(lowest-direct)
+
+---
+
+
+### TargetTriple <a name="TargetTriple" id="projen.python.uvConfig.TargetTriple"></a>
+
+The supported target triples. Each triple consists of an architecture, vendor, and operating system.
+
+See: <https://doc.rust-lang.org/nightly/rustc/platform-support.html>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.TargetTriple.WINDOWS">WINDOWS</a></code> | An alias for `x86_64-pc-windows-msvc`, the default target for Windows. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LINUX">LINUX</a></code> | An alias for `x86_64-unknown-linux-gnu`, the default target for Linux. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.MACOS">MACOS</a></code> | An alias for `aarch64-apple-darwin`, the default target for macOS. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC">X86_UNDERSCORE_64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC</a></code> | A 64-bit x86 Windows target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC">AARCH64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC</a></code> | An ARM64 Windows target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.I686_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC">I686_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC</a></code> | A 32-bit x86 Windows target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU">X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU</a></code> | An x86 Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_APPLE_HYPHEN_DARWIN">AARCH64_HYPHEN_APPLE_HYPHEN_DARWIN</a></code> | An ARM-based macOS target, as seen on Apple Silicon devices. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_DARWIN">X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_DARWIN</a></code> | An x86 macOS target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU">AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU</a></code> | An ARM64 Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL">AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL</a></code> | An ARM64 Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL">X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL</a></code> | An `x86_64` Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX">RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX</a></code> | A RISCV64 Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014">X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014</a></code> | An `x86_64` target for the `manylinux2014` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17</a></code> | An `x86_64` target for the `manylinux_2_17` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28</a></code> | An `x86_64` target for the `manylinux_2_28` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31</a></code> | An `x86_64` target for the `manylinux_2_31` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32</a></code> | An `x86_64` target for the `manylinux_2_32` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33</a></code> | An `x86_64` target for the `manylinux_2_33` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34</a></code> | An `x86_64` target for the `manylinux_2_34` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35</a></code> | An `x86_64` target for the `manylinux_2_35` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36</a></code> | An `x86_64` target for the `manylinux_2_36` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37</a></code> | An `x86_64` target for the `manylinux_2_37` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38</a></code> | An `x86_64` target for the `manylinux_2_38` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39</a></code> | An `x86_64` target for the `manylinux_2_39` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40</a></code> | An `x86_64` target for the `manylinux_2_40` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX2014">AARCH64_HYPHEN_MANYLINUX2014</a></code> | An ARM64 target for the `manylinux2014` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17</a></code> | An ARM64 target for the `manylinux_2_17` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28</a></code> | An ARM64 target for the `manylinux_2_28` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31</a></code> | An ARM64 target for the `manylinux_2_31` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32</a></code> | An ARM64 target for the `manylinux_2_32` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33</a></code> | An ARM64 target for the `manylinux_2_33` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34</a></code> | An ARM64 target for the `manylinux_2_34` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35</a></code> | An ARM64 target for the `manylinux_2_35` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36</a></code> | An ARM64 target for the `manylinux_2_36` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37</a></code> | An ARM64 target for the `manylinux_2_37` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38</a></code> | An ARM64 target for the `manylinux_2_38` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39</a></code> | An ARM64 target for the `manylinux_2_39` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40</a></code> | An ARM64 target for the `manylinux_2_40` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID">AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID</a></code> | An ARM64 Android target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID">X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID</a></code> | An `x86_64` Android target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.WASM32_HYPHEN_PYODIDE2024">WASM32_HYPHEN_PYODIDE2024</a></code> | A wasm32 target using the Pyodide 2024 platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.ARM64_HYPHEN_APPLE_HYPHEN_IOS">ARM64_HYPHEN_APPLE_HYPHEN_IOS</a></code> | An ARM64 target for iOS device. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.ARM64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR">ARM64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR</a></code> | An ARM64 target for iOS simulator. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR">X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR</a></code> | An `x86_64` target for iOS simulator. |
+
+---
+
+##### `WINDOWS` <a name="WINDOWS" id="projen.python.uvConfig.TargetTriple.WINDOWS"></a>
+
+An alias for `x86_64-pc-windows-msvc`, the default target for Windows.
+
+(windows)
+
+---
+
+
+##### `LINUX` <a name="LINUX" id="projen.python.uvConfig.TargetTriple.LINUX"></a>
+
+An alias for `x86_64-unknown-linux-gnu`, the default target for Linux.
+
+(linux)
+
+---
+
+
+##### `MACOS` <a name="MACOS" id="projen.python.uvConfig.TargetTriple.MACOS"></a>
+
+An alias for `aarch64-apple-darwin`, the default target for macOS.
+
+(macos)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC` <a name="X86_UNDERSCORE_64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC"></a>
+
+A 64-bit x86 Windows target.
+
+(x86_64-pc-windows-msvc)
+
+---
+
+
+##### `AARCH64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC` <a name="AARCH64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC"></a>
+
+An ARM64 Windows target.
+
+(aarch64-pc-windows-msvc)
+
+---
+
+
+##### `I686_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC` <a name="I686_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC" id="projen.python.uvConfig.TargetTriple.I686_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC"></a>
+
+A 32-bit x86 Windows target.
+
+(i686-pc-windows-msvc)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU` <a name="X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU"></a>
+
+An x86 Linux target.
+
+Equivalent to `x86_64-manylinux_2_28`. (x86_64-unknown-linux-gnu)
+
+---
+
+
+##### `AARCH64_HYPHEN_APPLE_HYPHEN_DARWIN` <a name="AARCH64_HYPHEN_APPLE_HYPHEN_DARWIN" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_APPLE_HYPHEN_DARWIN"></a>
+
+An ARM-based macOS target, as seen on Apple Silicon devices.
+
+By default, assumes the least-recent, non-EOL macOS version (13.0), but respects
+the `MACOSX_DEPLOYMENT_TARGET` environment variable if set. (aarch64-apple-darwin)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_DARWIN` <a name="X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_DARWIN" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_DARWIN"></a>
+
+An x86 macOS target.
+
+By default, assumes the least-recent, non-EOL macOS version (13.0), but respects
+the `MACOSX_DEPLOYMENT_TARGET` environment variable if set. (x86_64-apple-darwin)
+
+---
+
+
+##### `AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU` <a name="AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU"></a>
+
+An ARM64 Linux target.
+
+Equivalent to `aarch64-manylinux_2_28`. (aarch64-unknown-linux-gnu)
+
+---
+
+
+##### `AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL` <a name="AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL"></a>
+
+An ARM64 Linux target.
+
+(aarch64-unknown-linux-musl)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL` <a name="X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL"></a>
+
+An `x86_64` Linux target.
+
+(x86_64-unknown-linux-musl)
+
+---
+
+
+##### `RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX` <a name="RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX" id="projen.python.uvConfig.TargetTriple.RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX"></a>
+
+A RISCV64 Linux target.
+
+(riscv64-unknown-linux)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014"></a>
+
+An `x86_64` target for the `manylinux2014` platform.
+
+Equivalent to `x86_64-manylinux_2_17`. (x86_64-manylinux2014)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17"></a>
+
+An `x86_64` target for the `manylinux_2_17` platform.
+
+(x86_64-manylinux_2_17)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28"></a>
+
+An `x86_64` target for the `manylinux_2_28` platform.
+
+(x86_64-manylinux_2_28)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31"></a>
+
+An `x86_64` target for the `manylinux_2_31` platform.
+
+(x86_64-manylinux_2_31)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32"></a>
+
+An `x86_64` target for the `manylinux_2_32` platform.
+
+(x86_64-manylinux_2_32)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33"></a>
+
+An `x86_64` target for the `manylinux_2_33` platform.
+
+(x86_64-manylinux_2_33)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34"></a>
+
+An `x86_64` target for the `manylinux_2_34` platform.
+
+(x86_64-manylinux_2_34)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35"></a>
+
+An `x86_64` target for the `manylinux_2_35` platform.
+
+(x86_64-manylinux_2_35)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36"></a>
+
+An `x86_64` target for the `manylinux_2_36` platform.
+
+(x86_64-manylinux_2_36)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37"></a>
+
+An `x86_64` target for the `manylinux_2_37` platform.
+
+(x86_64-manylinux_2_37)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38"></a>
+
+An `x86_64` target for the `manylinux_2_38` platform.
+
+(x86_64-manylinux_2_38)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39"></a>
+
+An `x86_64` target for the `manylinux_2_39` platform.
+
+(x86_64-manylinux_2_39)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40` <a name="X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40"></a>
+
+An `x86_64` target for the `manylinux_2_40` platform.
+
+(x86_64-manylinux_2_40)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX2014` <a name="AARCH64_HYPHEN_MANYLINUX2014" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX2014"></a>
+
+An ARM64 target for the `manylinux2014` platform.
+
+Equivalent to `aarch64-manylinux_2_17`. (aarch64-manylinux2014)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17"></a>
+
+An ARM64 target for the `manylinux_2_17` platform.
+
+(aarch64-manylinux_2_17)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28"></a>
+
+An ARM64 target for the `manylinux_2_28` platform.
+
+(aarch64-manylinux_2_28)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31"></a>
+
+An ARM64 target for the `manylinux_2_31` platform.
+
+(aarch64-manylinux_2_31)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32"></a>
+
+An ARM64 target for the `manylinux_2_32` platform.
+
+(aarch64-manylinux_2_32)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33"></a>
+
+An ARM64 target for the `manylinux_2_33` platform.
+
+(aarch64-manylinux_2_33)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34"></a>
+
+An ARM64 target for the `manylinux_2_34` platform.
+
+(aarch64-manylinux_2_34)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35"></a>
+
+An ARM64 target for the `manylinux_2_35` platform.
+
+(aarch64-manylinux_2_35)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36"></a>
+
+An ARM64 target for the `manylinux_2_36` platform.
+
+(aarch64-manylinux_2_36)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37"></a>
+
+An ARM64 target for the `manylinux_2_37` platform.
+
+(aarch64-manylinux_2_37)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38"></a>
+
+An ARM64 target for the `manylinux_2_38` platform.
+
+(aarch64-manylinux_2_38)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39"></a>
+
+An ARM64 target for the `manylinux_2_39` platform.
+
+(aarch64-manylinux_2_39)
+
+---
+
+
+##### `AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40` <a name="AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40"></a>
+
+An ARM64 target for the `manylinux_2_40` platform.
+
+(aarch64-manylinux_2_40)
+
+---
+
+
+##### `AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID` <a name="AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID" id="projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID"></a>
+
+An ARM64 Android target.
+
+By default uses Android API level 24, but respects
+the `ANDROID_API_LEVEL` environment variable if set. (aarch64-linux-android)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID` <a name="X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID"></a>
+
+An `x86_64` Android target.
+
+By default uses Android API level 24, but respects
+the `ANDROID_API_LEVEL` environment variable if set. (x86_64-linux-android)
+
+---
+
+
+##### `WASM32_HYPHEN_PYODIDE2024` <a name="WASM32_HYPHEN_PYODIDE2024" id="projen.python.uvConfig.TargetTriple.WASM32_HYPHEN_PYODIDE2024"></a>
+
+A wasm32 target using the Pyodide 2024 platform.
+
+Meant for use with Python 3.12. (wasm32-pyodide2024)
+
+---
+
+
+##### `ARM64_HYPHEN_APPLE_HYPHEN_IOS` <a name="ARM64_HYPHEN_APPLE_HYPHEN_IOS" id="projen.python.uvConfig.TargetTriple.ARM64_HYPHEN_APPLE_HYPHEN_IOS"></a>
+
+An ARM64 target for iOS device.
+
+By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
+environment variable if set. (arm64-apple-ios)
+
+---
+
+
+##### `ARM64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR` <a name="ARM64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR" id="projen.python.uvConfig.TargetTriple.ARM64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR"></a>
+
+An ARM64 target for iOS simulator.
+
+By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
+environment variable if set. (arm64-apple-ios-simulator)
+
+---
+
+
+##### `X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR` <a name="X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR" id="projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR"></a>
+
+An `x86_64` target for iOS simulator.
+
+By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
+environment variable if set. (x86_64-apple-ios-simulator)
+
+---
+
+
+### TorchMode <a name="TorchMode" id="projen.python.uvConfig.TorchMode"></a>
+
+The strategy to use when determining the appropriate PyTorch index.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.TorchMode.AUTO">AUTO</a></code> | Select the appropriate PyTorch index based on the operating system and CUDA driver version. |
+| <code><a href="#projen.python.uvConfig.TorchMode.CPU">CPU</a></code> | Use the CPU-only PyTorch index. |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU130">CU130</a></code> | Use the PyTorch index for CUDA 13.0. (cu130). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU129">CU129</a></code> | Use the PyTorch index for CUDA 12.9. (cu129). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU128">CU128</a></code> | Use the PyTorch index for CUDA 12.8. (cu128). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU126">CU126</a></code> | Use the PyTorch index for CUDA 12.6. (cu126). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU125">CU125</a></code> | Use the PyTorch index for CUDA 12.5. (cu125). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU124">CU124</a></code> | Use the PyTorch index for CUDA 12.4. (cu124). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU123">CU123</a></code> | Use the PyTorch index for CUDA 12.3. (cu123). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU122">CU122</a></code> | Use the PyTorch index for CUDA 12.2. (cu122). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU121">CU121</a></code> | Use the PyTorch index for CUDA 12.1. (cu121). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU120">CU120</a></code> | Use the PyTorch index for CUDA 12.0. (cu120). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU118">CU118</a></code> | Use the PyTorch index for CUDA 11.8. (cu118). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU117">CU117</a></code> | Use the PyTorch index for CUDA 11.7. (cu117). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU116">CU116</a></code> | Use the PyTorch index for CUDA 11.6. (cu116). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU115">CU115</a></code> | Use the PyTorch index for CUDA 11.5. (cu115). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU114">CU114</a></code> | Use the PyTorch index for CUDA 11.4. (cu114). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU113">CU113</a></code> | Use the PyTorch index for CUDA 11.3. (cu113). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU112">CU112</a></code> | Use the PyTorch index for CUDA 11.2. (cu112). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU111">CU111</a></code> | Use the PyTorch index for CUDA 11.1. (cu111). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU110">CU110</a></code> | Use the PyTorch index for CUDA 11.0. (cu110). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU102">CU102</a></code> | Use the PyTorch index for CUDA 10.2. (cu102). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU101">CU101</a></code> | Use the PyTorch index for CUDA 10.1. (cu101). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU100">CU100</a></code> | Use the PyTorch index for CUDA 10.0. (cu100). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU92">CU92</a></code> | Use the PyTorch index for CUDA 9.2. (cu92). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU91">CU91</a></code> | Use the PyTorch index for CUDA 9.1. (cu91). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU90">CU90</a></code> | Use the PyTorch index for CUDA 9.0. (cu90). |
+| <code><a href="#projen.python.uvConfig.TorchMode.CU80">CU80</a></code> | Use the PyTorch index for CUDA 8.0. (cu80). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_3">ROCM6_3</a></code> | Use the PyTorch index for ROCm 6.3. (rocm6.3). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_2_4">ROCM6_2_4</a></code> | Use the PyTorch index for ROCm 6.2.4. (rocm6.2.4). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_2">ROCM6_2</a></code> | Use the PyTorch index for ROCm 6.2. (rocm6.2). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_1">ROCM6_1</a></code> | Use the PyTorch index for ROCm 6.1. (rocm6.1). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_0">ROCM6_0</a></code> | Use the PyTorch index for ROCm 6.0. (rocm6.0). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_7">ROCM5_7</a></code> | Use the PyTorch index for ROCm 5.7. (rocm5.7). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_6">ROCM5_6</a></code> | Use the PyTorch index for ROCm 5.6. (rocm5.6). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_5">ROCM5_5</a></code> | Use the PyTorch index for ROCm 5.5. (rocm5.5). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_4_2">ROCM5_4_2</a></code> | Use the PyTorch index for ROCm 5.4.2. (rocm5.4.2). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_4">ROCM5_4</a></code> | Use the PyTorch index for ROCm 5.4. (rocm5.4). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_3">ROCM5_3</a></code> | Use the PyTorch index for ROCm 5.3. (rocm5.3). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_2">ROCM5_2</a></code> | Use the PyTorch index for ROCm 5.2. (rocm5.2). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM5_1_1">ROCM5_1_1</a></code> | Use the PyTorch index for ROCm 5.1.1. (rocm5.1.1). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM4_2">ROCM4_2</a></code> | Use the PyTorch index for ROCm 4.2. (rocm4.2). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM4_1">ROCM4_1</a></code> | Use the PyTorch index for ROCm 4.1. (rocm4.1). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM4_0_1">ROCM4_0_1</a></code> | Use the PyTorch index for ROCm 4.0.1. (rocm4.0.1). |
+| <code><a href="#projen.python.uvConfig.TorchMode.XPU">XPU</a></code> | Use the PyTorch index for Intel XPU. |
+
+---
+
+##### `AUTO` <a name="AUTO" id="projen.python.uvConfig.TorchMode.AUTO"></a>
+
+Select the appropriate PyTorch index based on the operating system and CUDA driver version.
+
+(auto)
+
+---
+
+
+##### `CPU` <a name="CPU" id="projen.python.uvConfig.TorchMode.CPU"></a>
+
+Use the CPU-only PyTorch index.
+
+(cpu)
+
+---
+
+
+##### `CU130` <a name="CU130" id="projen.python.uvConfig.TorchMode.CU130"></a>
+
+Use the PyTorch index for CUDA 13.0. (cu130).
+
+---
+
+
+##### `CU129` <a name="CU129" id="projen.python.uvConfig.TorchMode.CU129"></a>
+
+Use the PyTorch index for CUDA 12.9. (cu129).
+
+---
+
+
+##### `CU128` <a name="CU128" id="projen.python.uvConfig.TorchMode.CU128"></a>
+
+Use the PyTorch index for CUDA 12.8. (cu128).
+
+---
+
+
+##### `CU126` <a name="CU126" id="projen.python.uvConfig.TorchMode.CU126"></a>
+
+Use the PyTorch index for CUDA 12.6. (cu126).
+
+---
+
+
+##### `CU125` <a name="CU125" id="projen.python.uvConfig.TorchMode.CU125"></a>
+
+Use the PyTorch index for CUDA 12.5. (cu125).
+
+---
+
+
+##### `CU124` <a name="CU124" id="projen.python.uvConfig.TorchMode.CU124"></a>
+
+Use the PyTorch index for CUDA 12.4. (cu124).
+
+---
+
+
+##### `CU123` <a name="CU123" id="projen.python.uvConfig.TorchMode.CU123"></a>
+
+Use the PyTorch index for CUDA 12.3. (cu123).
+
+---
+
+
+##### `CU122` <a name="CU122" id="projen.python.uvConfig.TorchMode.CU122"></a>
+
+Use the PyTorch index for CUDA 12.2. (cu122).
+
+---
+
+
+##### `CU121` <a name="CU121" id="projen.python.uvConfig.TorchMode.CU121"></a>
+
+Use the PyTorch index for CUDA 12.1. (cu121).
+
+---
+
+
+##### `CU120` <a name="CU120" id="projen.python.uvConfig.TorchMode.CU120"></a>
+
+Use the PyTorch index for CUDA 12.0. (cu120).
+
+---
+
+
+##### `CU118` <a name="CU118" id="projen.python.uvConfig.TorchMode.CU118"></a>
+
+Use the PyTorch index for CUDA 11.8. (cu118).
+
+---
+
+
+##### `CU117` <a name="CU117" id="projen.python.uvConfig.TorchMode.CU117"></a>
+
+Use the PyTorch index for CUDA 11.7. (cu117).
+
+---
+
+
+##### `CU116` <a name="CU116" id="projen.python.uvConfig.TorchMode.CU116"></a>
+
+Use the PyTorch index for CUDA 11.6. (cu116).
+
+---
+
+
+##### `CU115` <a name="CU115" id="projen.python.uvConfig.TorchMode.CU115"></a>
+
+Use the PyTorch index for CUDA 11.5. (cu115).
+
+---
+
+
+##### `CU114` <a name="CU114" id="projen.python.uvConfig.TorchMode.CU114"></a>
+
+Use the PyTorch index for CUDA 11.4. (cu114).
+
+---
+
+
+##### `CU113` <a name="CU113" id="projen.python.uvConfig.TorchMode.CU113"></a>
+
+Use the PyTorch index for CUDA 11.3. (cu113).
+
+---
+
+
+##### `CU112` <a name="CU112" id="projen.python.uvConfig.TorchMode.CU112"></a>
+
+Use the PyTorch index for CUDA 11.2. (cu112).
+
+---
+
+
+##### `CU111` <a name="CU111" id="projen.python.uvConfig.TorchMode.CU111"></a>
+
+Use the PyTorch index for CUDA 11.1. (cu111).
+
+---
+
+
+##### `CU110` <a name="CU110" id="projen.python.uvConfig.TorchMode.CU110"></a>
+
+Use the PyTorch index for CUDA 11.0. (cu110).
+
+---
+
+
+##### `CU102` <a name="CU102" id="projen.python.uvConfig.TorchMode.CU102"></a>
+
+Use the PyTorch index for CUDA 10.2. (cu102).
+
+---
+
+
+##### `CU101` <a name="CU101" id="projen.python.uvConfig.TorchMode.CU101"></a>
+
+Use the PyTorch index for CUDA 10.1. (cu101).
+
+---
+
+
+##### `CU100` <a name="CU100" id="projen.python.uvConfig.TorchMode.CU100"></a>
+
+Use the PyTorch index for CUDA 10.0. (cu100).
+
+---
+
+
+##### `CU92` <a name="CU92" id="projen.python.uvConfig.TorchMode.CU92"></a>
+
+Use the PyTorch index for CUDA 9.2. (cu92).
+
+---
+
+
+##### `CU91` <a name="CU91" id="projen.python.uvConfig.TorchMode.CU91"></a>
+
+Use the PyTorch index for CUDA 9.1. (cu91).
+
+---
+
+
+##### `CU90` <a name="CU90" id="projen.python.uvConfig.TorchMode.CU90"></a>
+
+Use the PyTorch index for CUDA 9.0. (cu90).
+
+---
+
+
+##### `CU80` <a name="CU80" id="projen.python.uvConfig.TorchMode.CU80"></a>
+
+Use the PyTorch index for CUDA 8.0. (cu80).
+
+---
+
+
+##### `ROCM6_3` <a name="ROCM6_3" id="projen.python.uvConfig.TorchMode.ROCM6_3"></a>
+
+Use the PyTorch index for ROCm 6.3. (rocm6.3).
+
+---
+
+
+##### `ROCM6_2_4` <a name="ROCM6_2_4" id="projen.python.uvConfig.TorchMode.ROCM6_2_4"></a>
+
+Use the PyTorch index for ROCm 6.2.4. (rocm6.2.4).
+
+---
+
+
+##### `ROCM6_2` <a name="ROCM6_2" id="projen.python.uvConfig.TorchMode.ROCM6_2"></a>
+
+Use the PyTorch index for ROCm 6.2. (rocm6.2).
+
+---
+
+
+##### `ROCM6_1` <a name="ROCM6_1" id="projen.python.uvConfig.TorchMode.ROCM6_1"></a>
+
+Use the PyTorch index for ROCm 6.1. (rocm6.1).
+
+---
+
+
+##### `ROCM6_0` <a name="ROCM6_0" id="projen.python.uvConfig.TorchMode.ROCM6_0"></a>
+
+Use the PyTorch index for ROCm 6.0. (rocm6.0).
+
+---
+
+
+##### `ROCM5_7` <a name="ROCM5_7" id="projen.python.uvConfig.TorchMode.ROCM5_7"></a>
+
+Use the PyTorch index for ROCm 5.7. (rocm5.7).
+
+---
+
+
+##### `ROCM5_6` <a name="ROCM5_6" id="projen.python.uvConfig.TorchMode.ROCM5_6"></a>
+
+Use the PyTorch index for ROCm 5.6. (rocm5.6).
+
+---
+
+
+##### `ROCM5_5` <a name="ROCM5_5" id="projen.python.uvConfig.TorchMode.ROCM5_5"></a>
+
+Use the PyTorch index for ROCm 5.5. (rocm5.5).
+
+---
+
+
+##### `ROCM5_4_2` <a name="ROCM5_4_2" id="projen.python.uvConfig.TorchMode.ROCM5_4_2"></a>
+
+Use the PyTorch index for ROCm 5.4.2. (rocm5.4.2).
+
+---
+
+
+##### `ROCM5_4` <a name="ROCM5_4" id="projen.python.uvConfig.TorchMode.ROCM5_4"></a>
+
+Use the PyTorch index for ROCm 5.4. (rocm5.4).
+
+---
+
+
+##### `ROCM5_3` <a name="ROCM5_3" id="projen.python.uvConfig.TorchMode.ROCM5_3"></a>
+
+Use the PyTorch index for ROCm 5.3. (rocm5.3).
+
+---
+
+
+##### `ROCM5_2` <a name="ROCM5_2" id="projen.python.uvConfig.TorchMode.ROCM5_2"></a>
+
+Use the PyTorch index for ROCm 5.2. (rocm5.2).
+
+---
+
+
+##### `ROCM5_1_1` <a name="ROCM5_1_1" id="projen.python.uvConfig.TorchMode.ROCM5_1_1"></a>
+
+Use the PyTorch index for ROCm 5.1.1. (rocm5.1.1).
+
+---
+
+
+##### `ROCM4_2` <a name="ROCM4_2" id="projen.python.uvConfig.TorchMode.ROCM4_2"></a>
+
+Use the PyTorch index for ROCm 4.2. (rocm4.2).
+
+---
+
+
+##### `ROCM4_1` <a name="ROCM4_1" id="projen.python.uvConfig.TorchMode.ROCM4_1"></a>
+
+Use the PyTorch index for ROCm 4.1. (rocm4.1).
+
+---
+
+
+##### `ROCM4_0_1` <a name="ROCM4_0_1" id="projen.python.uvConfig.TorchMode.ROCM4_0_1"></a>
+
+Use the PyTorch index for ROCm 4.0.1. (rocm4.0.1).
+
+---
+
+
+##### `XPU` <a name="XPU" id="projen.python.uvConfig.TorchMode.XPU"></a>
+
+Use the PyTorch index for Intel XPU.
+
+(xpu)
+
+---
+
+
 ### TrustedPublishing <a name="TrustedPublishing" id="projen.python.uvConfig.TrustedPublishing"></a>
 
 #### Members <a name="Members" id="Members"></a>
@@ -2974,6 +4329,7 @@ public readonly scripts: string;
 | --- | --- |
 | <code><a href="#projen.python.uvConfig.TrustedPublishing.ALWAYS">ALWAYS</a></code> | always. |
 | <code><a href="#projen.python.uvConfig.TrustedPublishing.NEVER">NEVER</a></code> | never. |
+| <code><a href="#projen.python.uvConfig.TrustedPublishing.AUTOMATIC">AUTOMATIC</a></code> | Attempt trusted publishing when we're in a supported environment, continue if that fails. |
 
 ---
 
@@ -2987,6 +4343,15 @@ always.
 ##### `NEVER` <a name="NEVER" id="projen.python.uvConfig.TrustedPublishing.NEVER"></a>
 
 never.
+
+---
+
+
+##### `AUTOMATIC` <a name="AUTOMATIC" id="projen.python.uvConfig.TrustedPublishing.AUTOMATIC"></a>
+
+Attempt trusted publishing when we're in a supported environment, continue if that fails.
+
+Supported environments include GitHub Actions and GitLab CI/CD. (automatic)
 
 ---
 
