@@ -22848,7 +22848,7 @@ public readonly runtime: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
-- *Default:* Runtime.NODEJS_22_X
+- *Default:* The latest Node.js runtime available in the deployment region, determined at CDK synthesis time using `determineLatestNodeRuntime()`.
 
 The node.js version to target.
 
@@ -22938,7 +22938,7 @@ public readonly runtime: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
-- *Default:* Runtime.NODEJS_22_X
+- *Default:* The latest Node.js runtime available in the deployment region, determined at CDK synthesis time using `determineLatestNodeRuntime()`.
 
 The node.js version to target.
 

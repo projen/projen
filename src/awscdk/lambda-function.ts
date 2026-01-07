@@ -21,7 +21,8 @@ export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
-   * @default Runtime.NODEJS_22_X
+   * @default - The latest Node.js runtime available in the deployment region,
+   * determined at CDK synthesis time using `determineLatestNodeRuntime()`.
    */
   readonly runtime?: LambdaRuntime;
 
@@ -135,7 +136,9 @@ export class LambdaFunction extends Component {
       );
     }
 
-    const runtime = options.runtime ?? LambdaRuntime.NODEJS_22_X;
+    // Use NODEJS_22_X settings for bundling when no runtime specified,
+    // but generate determineLatestNodeRuntime() in the output code
+    const runtimeForBundling = options.runtime ?? LambdaRuntime.NODEJS_22_X;
 
     const entrypoint = normalizePersistedPath(options.entrypoint);
 
@@ -174,9 +177,9 @@ export class LambdaFunction extends Component {
     const propsType = `${constructName}Props`;
 
     const bundle = bundler.addBundle(entrypoint, {
-      target: runtime.esbuildTarget,
-      platform: runtime.esbuildPlatform,
-      externals: runtime.defaultExternals,
+      target: runtimeForBundling.esbuildTarget,
+      platform: runtimeForBundling.esbuildPlatform,
+      externals: runtimeForBundling.defaultExternals,
       ...options.bundlingOptions,
       tsconfigPath: (project as TypeScriptProject)?.tsconfigDev?.fileName,
     });
@@ -214,6 +217,12 @@ export class LambdaFunction extends Component {
         src.line("import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';");
       }
       src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
+      // Import determineLatestNodeRuntime if no runtime is specified (using dynamic runtime)
+      if (!options.runtime) {
+        src.line(
+          "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+        );
+      }
       src.line("import { Construct } from 'constructs';");
     }
 
@@ -229,6 +238,16 @@ export class LambdaFunction extends Component {
       src.open(
         `export interface ${propsType} extends lambda.FunctionOptions {`
       );
+    }
+    // Add runtime prop to interface only when using dynamic runtime (no explicit runtime set)
+    if (!options.runtime) {
+      src.line("  /**");
+      src.line("   * The Lambda runtime to use.");
+      src.line(
+        "   * @default - Latest Node.js runtime available in the deployment region"
+      );
+      src.line("   */");
+      src.line("  readonly runtime?: lambda.Runtime;");
     }
     src.close("}");
     src.line();
@@ -252,9 +271,18 @@ export class LambdaFunction extends Component {
     src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);
     src.line("...props,");
-    src.line(
-      `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
-    );
+
+    // Generate runtime code
+    if (options.runtime) {
+      // Explicit runtime - hardcoded, no override
+      src.line(
+        `runtime: new lambda.Runtime('${options.runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+      );
+    } else {
+      // Dynamic runtime with override support
+      src.line("runtime: props?.runtime ?? determineLatestNodeRuntime(scope),");
+    }
+
     src.line("handler: 'index.handler',");
     src.line(
       `code: lambda.Code.fromAsset(path.join(__dirname, '${convertToPosixPath(
