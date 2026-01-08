@@ -1,3 +1,8 @@
+import { relative } from "node:path";
+import { Project } from "../../project";
+import { normalizePersistedPath } from "../../util";
+import { ensureRelativePathStartsWithDot } from "../../util/path";
+
 export function secretToString(secretName: string): string {
   return `\${{ secrets.${secretName} }}`;
 }
@@ -37,4 +42,22 @@ export function toGitHubExpr(x: NonNullable<any>): string {
     default:
       throw new Error(`Unsupported type: ${typeof x}`);
   }
+}
+
+/**
+ * Returns the relative path of a project from the root of the repository
+ *
+ * This is a bit of hack at the moment, because projects currently don't have the concept of a repository.
+ * The `.github` directory is always created within the outdir of the root project.
+ * Consequently this means a GitHub root project cannot really have an outdir and GH Workflows at the same time.
+ * Or in other words, the outdir of the root project is to be assumed the repository root.
+ *
+ * This helper function can be used to retrieve the correct `working-directory` for a given project.
+ *
+ * @returns path to be used as `working-directory` of a GitHub workflow, this is never empty and will return `./` for the root project
+ */
+export function projectPathRelativeToRepoRoot(project: Project): string {
+  return ensureRelativePathStartsWithDot(
+    normalizePersistedPath(relative(project.root.outdir, project.outdir))
+  );
 }

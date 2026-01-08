@@ -238,7 +238,7 @@ export interface NodeProjectOptions
    * Use tasks and github workflows to handle dependency upgrades.
    * Cannot be used in conjunction with `dependabot`.
    *
-   * @default true
+   * @default - `true` for root projects, `false` for subprojects
    */
   readonly depsUpgrade?: boolean;
 
@@ -251,7 +251,7 @@ export interface NodeProjectOptions
 
   /**
    * Automatically approve deps upgrade PRs, allowing them to be
-   * merged by mergify (if configued).
+   * merged by mergify (if configured).
    *
    * Throw if set to true but `autoApproveOptions` are not defined.
    *
@@ -852,7 +852,8 @@ export class NodeProject extends GitHubProject {
     }
 
     const dependabot = options.dependabot ?? false;
-    const depsUpgrade = options.depsUpgrade ?? !dependabot;
+    const depsUpgrade =
+      options.depsUpgrade ?? (this.parent ? false : !dependabot); // by default disabled in subprojects
 
     if (dependabot && depsUpgrade) {
       throw new Error(
