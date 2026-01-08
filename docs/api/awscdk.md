@@ -22848,7 +22848,7 @@ public readonly runtime: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
-- *Default:* Runtime.NODEJS_22_X
+- *Default:* LambdaRuntime.NODEJS_REGIONAL_LATEST - Uses the latest Node.js runtime available in the deployment region, determined at CDK synthesis time.
 
 The node.js version to target.
 
@@ -22938,7 +22938,7 @@ public readonly runtime: LambdaRuntime;
 ```
 
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
-- *Default:* Runtime.NODEJS_22_X
+- *Default:* LambdaRuntime.NODEJS_REGIONAL_LATEST - Uses the latest Node.js runtime available in the deployment region, determined at CDK synthesis time.
 
 The node.js version to target.
 
@@ -23364,6 +23364,7 @@ The Node.js runtime to use.
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_20_X">NODEJS_20_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 20.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_22_X">NODEJS_22_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 22.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_24_X">NODEJS_24_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 24.x. |
+| <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_REGIONAL_LATEST">NODEJS_REGIONAL_LATEST</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Use the latest Node.js runtime available in the deployment region. |
 
 ---
 
@@ -23470,6 +23471,24 @@ public readonly NODEJS_24_X: LambdaRuntime;
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
 Node.js 24.x.
+
+---
+
+##### `NODEJS_REGIONAL_LATEST`<sup>Required</sup> <a name="NODEJS_REGIONAL_LATEST" id="projen.awscdk.LambdaRuntime.property.NODEJS_REGIONAL_LATEST"></a>
+
+```typescript
+public readonly NODEJS_REGIONAL_LATEST: LambdaRuntime;
+```
+
+- *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
+- *Default:* Uses determineLatestNodeRuntime() from aws-cdk-lib
+
+Use the latest Node.js runtime available in the deployment region.
+
+This generates code that uses `determineLatestNodeRuntime()` at CDK synthesis time,
+which dynamically selects the latest Node.js runtime available based on regional
+availability. This eliminates the need to manually update runtime versions and
+avoids EOL warnings.
 
 ---
 
