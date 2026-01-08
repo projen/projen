@@ -277,7 +277,9 @@ export class LambdaFunction extends Component {
       // Regional latest runtime
       if (!options.runtime) {
         // Default (not explicitly set) - allow consumer override
-        src.line("runtime: props?.runtime ?? determineLatestNodeRuntime(scope),");
+        src.line(
+          "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+        );
       } else {
         // Explicitly set - no override
         src.line("runtime: determineLatestNodeRuntime(scope),");
@@ -410,7 +412,7 @@ export class LambdaRuntime {
 
   /**
    * Use the latest Node.js runtime available in the deployment region.
-   * 
+   *
    * This generates code that uses `determineLatestNodeRuntime()` at CDK synthesis time,
    * which dynamically selects the latest Node.js runtime available based on regional
    * availability. This eliminates the need to manually update runtime versions and
@@ -420,7 +422,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_REGIONAL_LATEST = new LambdaRuntime(
     "NODEJS_REGIONAL_LATEST", // Marker value
-    "node22"                   // esbuild target (current LTS)
+    "node22" // esbuild target (current LTS)
   );
 
   public readonly esbuildPlatform = "node";
