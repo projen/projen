@@ -21,8 +21,8 @@ export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
-   * @default - The latest Node.js runtime available in the deployment region,
-   * determined at CDK synthesis time using `determineLatestNodeRuntime()`.
+   * @default LambdaRuntime.NODEJS_REGIONAL_LATEST - Uses the latest Node.js runtime
+   * available in the deployment region, determined at CDK synthesis time.
    */
   readonly runtime?: LambdaRuntime;
 
@@ -136,9 +136,8 @@ export class LambdaFunction extends Component {
       );
     }
 
-    // Use NODEJS_22_X settings for bundling when no runtime specified,
-    // but generate determineLatestNodeRuntime() in the output code
-    const runtimeForBundling = options.runtime ?? LambdaRuntime.NODEJS_22_X;
+    // Use NODEJS_REGIONAL_LATEST as default, which generates determineLatestNodeRuntime()
+    const runtime = options.runtime ?? LambdaRuntime.NODEJS_REGIONAL_LATEST;
 
     const entrypoint = normalizePersistedPath(options.entrypoint);
 
@@ -177,9 +176,9 @@ export class LambdaFunction extends Component {
     const propsType = `${constructName}Props`;
 
     const bundle = bundler.addBundle(entrypoint, {
-      target: runtimeForBundling.esbuildTarget,
-      platform: runtimeForBundling.esbuildPlatform,
-      externals: runtimeForBundling.defaultExternals,
+      target: runtime.esbuildTarget,
+      platform: runtime.esbuildPlatform,
+      externals: runtime.defaultExternals,
       ...options.bundlingOptions,
       tsconfigPath: (project as TypeScriptProject)?.tsconfigDev?.fileName,
     });
@@ -217,8 +216,8 @@ export class LambdaFunction extends Component {
         src.line("import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';");
       }
       src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
-      // Import determineLatestNodeRuntime if no runtime is specified (using dynamic runtime)
-      if (!options.runtime) {
+      // Import determineLatestNodeRuntime if using NODEJS_REGIONAL_LATEST
+      if (runtime === LambdaRuntime.NODEJS_REGIONAL_LATEST) {
         src.line(
           "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
         );
@@ -239,7 +238,8 @@ export class LambdaFunction extends Component {
         `export interface ${propsType} extends lambda.FunctionOptions {`
       );
     }
-    // Add runtime prop to interface only when using dynamic runtime (no explicit runtime set)
+    // Add runtime prop to interface only when runtime is not explicitly set
+    // This allows consumers to override the default NODEJS_REGIONAL_LATEST
     if (!options.runtime) {
       src.line("  /**");
       src.line("   * The Lambda runtime to use.");
@@ -273,14 +273,20 @@ export class LambdaFunction extends Component {
     src.line("...props,");
 
     // Generate runtime code
-    if (options.runtime) {
+    if (runtime === LambdaRuntime.NODEJS_REGIONAL_LATEST) {
+      // Regional latest runtime
+      if (!options.runtime) {
+        // Default (not explicitly set) - allow consumer override
+        src.line("runtime: props?.runtime ?? determineLatestNodeRuntime(scope),");
+      } else {
+        // Explicitly set - no override
+        src.line("runtime: determineLatestNodeRuntime(scope),");
+      }
+    } else {
       // Explicit runtime - hardcoded, no override
       src.line(
-        `runtime: new lambda.Runtime('${options.runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+        `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
       );
-    } else {
-      // Dynamic runtime with override support
-      src.line("runtime: props?.runtime ?? determineLatestNodeRuntime(scope),");
     }
 
     src.line("handler: 'index.handler',");
@@ -400,6 +406,21 @@ export class LambdaRuntime {
   public static readonly NODEJS_24_X = new LambdaRuntime(
     "nodejs24.x",
     "node24"
+  );
+
+  /**
+   * Use the latest Node.js runtime available in the deployment region.
+   * 
+   * This generates code that uses `determineLatestNodeRuntime()` at CDK synthesis time,
+   * which dynamically selects the latest Node.js runtime available based on regional
+   * availability. This eliminates the need to manually update runtime versions and
+   * avoids EOL warnings.
+   *
+   * @default Uses determineLatestNodeRuntime() from aws-cdk-lib
+   */
+  public static readonly NODEJS_REGIONAL_LATEST = new LambdaRuntime(
+    "NODEJS_REGIONAL_LATEST", // Marker value
+    "node22"                   // esbuild target (current LTS)
   );
 
   public readonly esbuildPlatform = "node";

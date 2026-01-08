@@ -420,7 +420,7 @@ test("generates cdkv2-compatible imports", () => {
   expect(snapshot["src/hello-function.ts"]).toMatchSnapshot();
 });
 
-describe("default runtime (determineLatestNodeRuntime)", () => {
+describe("NODEJS_REGIONAL_LATEST runtime", () => {
   test("generates code using determineLatestNodeRuntime() when no runtime specified", () => {
     const project = new TypeScriptProject({
       name: "hello",
@@ -429,6 +429,7 @@ describe("default runtime (determineLatestNodeRuntime)", () => {
 
     new awscdk.LambdaFunction(project, {
       entrypoint: join("src", "hello.lambda.ts"),
+      // No runtime specified - defaults to NODEJS_REGIONAL_LATEST with override
       cdkDeps: cdkDepsForProject(project, "2.3.1"),
     });
 
@@ -441,6 +442,31 @@ describe("default runtime (determineLatestNodeRuntime)", () => {
     expect(generatedSource).toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).toContain(
       "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+    );
+    expect(generatedSource).toMatchSnapshot();
+  });
+
+  test("explicitly set NODEJS_REGIONAL_LATEST has no override prop", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      runtime: awscdk.LambdaRuntime.NODEJS_REGIONAL_LATEST,
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).toContain(
+      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+    );
+    expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).toContain(
+      "runtime: determineLatestNodeRuntime(scope),"
     );
     expect(generatedSource).toMatchSnapshot();
   });
@@ -466,6 +492,49 @@ describe("default runtime (determineLatestNodeRuntime)", () => {
 });
 
 describe("runtime override support", () => {
+  test("default runtime allows consumer override", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      // No runtime specified - allows override
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).toContain(
+      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+    );
+  });
+
+  test("explicitly set NODEJS_REGIONAL_LATEST does not allow override", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      runtime: awscdk.LambdaRuntime.NODEJS_REGIONAL_LATEST,
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).not.toContain("props?.runtime");
+    expect(generatedSource).toContain(
+      "runtime: determineLatestNodeRuntime(scope),"
+    );
+  });
+
   test("explicit runtime is hardcoded without override support", () => {
     const project = new TypeScriptProject({
       name: "hello",
