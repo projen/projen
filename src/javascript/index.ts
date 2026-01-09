@@ -1,14 +1,17 @@
 export * from "./bundler";
 export * from "./eslint";
+export * from "./import-rewriter";
 export * from "./jest";
 export * from "./license-checker";
 export * from "./node-package";
 export * from "./node-project";
 export * from "./npm-config";
+export * from "./package-json-transformer";
 export * from "./prettier";
 export * from "./projenrc";
 export * from "./typescript-config";
 export * from "./upgrade-dependencies";
+export * from "./vendor-bundle-generator";
 export * from "./yarnrc";
 export * from "./biome/biome";
 export * as biome_config from "./biome/biome-config";

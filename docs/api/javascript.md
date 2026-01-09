@@ -5573,6 +5573,126 @@ The path of the tsconfig.json file to use for bundling.
 
 ---
 
+### AnalyzeOptions <a name="AnalyzeOptions" id="projen.javascript.AnalyzeOptions"></a>
+
+Options for analyzing source files.
+
+#### Initializer <a name="Initializer" id="projen.javascript.AnalyzeOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const analyzeOptions: javascript.AnalyzeOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.AnalyzeOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to look for in imports. |
+| <code><a href="#projen.javascript.AnalyzeOptions.property.extensions">extensions</a></code> | <code>string[]</code> | File extensions to analyze. |
+| <code><a href="#projen.javascript.AnalyzeOptions.property.sourceDir">sourceDir</a></code> | <code>string</code> | Source directory to analyze. |
+
+---
+
+##### `bundledDeps`<sup>Required</sup> <a name="bundledDeps" id="projen.javascript.AnalyzeOptions.property.bundledDeps"></a>
+
+```typescript
+public readonly bundledDeps: string[];
+```
+
+- *Type:* string[]
+
+List of dependencies to look for in imports.
+
+---
+
+##### `extensions`<sup>Optional</sup> <a name="extensions" id="projen.javascript.AnalyzeOptions.property.extensions"></a>
+
+```typescript
+public readonly extensions: string[];
+```
+
+- *Type:* string[]
+- *Default:* ['.ts', '.js']
+
+File extensions to analyze.
+
+---
+
+##### `sourceDir`<sup>Optional</sup> <a name="sourceDir" id="projen.javascript.AnalyzeOptions.property.sourceDir"></a>
+
+```typescript
+public readonly sourceDir: string;
+```
+
+- *Type:* string
+- *Default:* 'src'
+
+Source directory to analyze.
+
+---
+
+### AnalyzeResult <a name="AnalyzeResult" id="projen.javascript.AnalyzeResult"></a>
+
+Result of analyzing source files for bundled dependency imports.
+
+#### Initializer <a name="Initializer" id="projen.javascript.AnalyzeResult.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const analyzeResult: javascript.AnalyzeResult = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.AnalyzeResult.property.defaultImports">defaultImports</a></code> | <code>string[]</code> | Modules that are imported as default. |
+| <code><a href="#projen.javascript.AnalyzeResult.property.imports">imports</a></code> | <code>{[ key: string ]: string[]}</code> | Map of module name to the symbols imported from it. |
+| <code><a href="#projen.javascript.AnalyzeResult.property.namespaceImports">namespaceImports</a></code> | <code>string[]</code> | Modules that are imported as namespace (import * as x). |
+
+---
+
+##### `defaultImports`<sup>Required</sup> <a name="defaultImports" id="projen.javascript.AnalyzeResult.property.defaultImports"></a>
+
+```typescript
+public readonly defaultImports: string[];
+```
+
+- *Type:* string[]
+
+Modules that are imported as default.
+
+---
+
+##### `imports`<sup>Required</sup> <a name="imports" id="projen.javascript.AnalyzeResult.property.imports"></a>
+
+```typescript
+public readonly imports: {[ key: string ]: string[]};
+```
+
+- *Type:* {[ key: string ]: string[]}
+
+Map of module name to the symbols imported from it.
+
+If the array is empty, the entire module is imported.
+
+---
+
+##### `namespaceImports`<sup>Required</sup> <a name="namespaceImports" id="projen.javascript.AnalyzeResult.property.namespaceImports"></a>
+
+```typescript
+public readonly namespaceImports: string[];
+```
+
+- *Type:* string[]
+
+Modules that are imported as namespace (import * as x).
+
+---
+
 ### AuditOptions <a name="AuditOptions" id="projen.javascript.AuditOptions"></a>
 
 Options for security audit configuration.
@@ -6255,6 +6375,165 @@ public readonly statements: number;
 
 ---
 
+### EsbuildConfig <a name="EsbuildConfig" id="projen.javascript.EsbuildConfig"></a>
+
+Generated esbuild configuration.
+
+#### Initializer <a name="Initializer" id="projen.javascript.EsbuildConfig.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const esbuildConfig: javascript.EsbuildConfig = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EsbuildConfig.property.args">args</a></code> | <code>string[]</code> | The esbuild command line arguments. |
+| <code><a href="#projen.javascript.EsbuildConfig.property.entryPoint">entryPoint</a></code> | <code>string</code> | The entry point file. |
+| <code><a href="#projen.javascript.EsbuildConfig.property.external">external</a></code> | <code>string[]</code> | External dependencies. |
+| <code><a href="#projen.javascript.EsbuildConfig.property.outfile">outfile</a></code> | <code>string</code> | The output file. |
+
+---
+
+##### `args`<sup>Required</sup> <a name="args" id="projen.javascript.EsbuildConfig.property.args"></a>
+
+```typescript
+public readonly args: string[];
+```
+
+- *Type:* string[]
+
+The esbuild command line arguments.
+
+---
+
+##### `entryPoint`<sup>Required</sup> <a name="entryPoint" id="projen.javascript.EsbuildConfig.property.entryPoint"></a>
+
+```typescript
+public readonly entryPoint: string;
+```
+
+- *Type:* string
+
+The entry point file.
+
+---
+
+##### `external`<sup>Required</sup> <a name="external" id="projen.javascript.EsbuildConfig.property.external"></a>
+
+```typescript
+public readonly external: string[];
+```
+
+- *Type:* string[]
+
+External dependencies.
+
+---
+
+##### `outfile`<sup>Required</sup> <a name="outfile" id="projen.javascript.EsbuildConfig.property.outfile"></a>
+
+```typescript
+public readonly outfile: string;
+```
+
+- *Type:* string
+
+The output file.
+
+---
+
+### EsbuildConfigOptions <a name="EsbuildConfigOptions" id="projen.javascript.EsbuildConfigOptions"></a>
+
+Options for generating esbuild configuration.
+
+#### Initializer <a name="Initializer" id="projen.javascript.EsbuildConfigOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const esbuildConfigOptions: javascript.EsbuildConfigOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.EsbuildConfigOptions.property.entryPoint">entryPoint</a></code> | <code>string</code> | Entry point file path. |
+| <code><a href="#projen.javascript.EsbuildConfigOptions.property.externalDeps">externalDeps</a></code> | <code>string[]</code> | Dependencies that should remain external (not bundled). |
+| <code><a href="#projen.javascript.EsbuildConfigOptions.property.minify">minify</a></code> | <code>boolean</code> | Enable minification. |
+| <code><a href="#projen.javascript.EsbuildConfigOptions.property.outfile">outfile</a></code> | <code>string</code> | Output file path for the vendor bundle. |
+| <code><a href="#projen.javascript.EsbuildConfigOptions.property.target">target</a></code> | <code>string</code> | Target Node.js version. |
+
+---
+
+##### `entryPoint`<sup>Required</sup> <a name="entryPoint" id="projen.javascript.EsbuildConfigOptions.property.entryPoint"></a>
+
+```typescript
+public readonly entryPoint: string;
+```
+
+- *Type:* string
+
+Entry point file path.
+
+---
+
+##### `externalDeps`<sup>Optional</sup> <a name="externalDeps" id="projen.javascript.EsbuildConfigOptions.property.externalDeps"></a>
+
+```typescript
+public readonly externalDeps: string[];
+```
+
+- *Type:* string[]
+- *Default:* ['constructs']
+
+Dependencies that should remain external (not bundled).
+
+---
+
+##### `minify`<sup>Optional</sup> <a name="minify" id="projen.javascript.EsbuildConfigOptions.property.minify"></a>
+
+```typescript
+public readonly minify: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable minification.
+
+---
+
+##### `outfile`<sup>Optional</sup> <a name="outfile" id="projen.javascript.EsbuildConfigOptions.property.outfile"></a>
+
+```typescript
+public readonly outfile: string;
+```
+
+- *Type:* string
+- *Default:* 'lib/vendor.js'
+
+Output file path for the vendor bundle.
+
+---
+
+##### `target`<sup>Optional</sup> <a name="target" id="projen.javascript.EsbuildConfigOptions.property.target"></a>
+
+```typescript
+public readonly target: string;
+```
+
+- *Type:* string
+- *Default:* 'node18'
+
+Target Node.js version.
+
+---
+
 ### EslintCommandOptions <a name="EslintCommandOptions" id="projen.javascript.EslintCommandOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.EslintCommandOptions.Initializer"></a>
@@ -6621,6 +6900,52 @@ The overridden rules.
 
 ---
 
+### GenerateEntryPointOptions <a name="GenerateEntryPointOptions" id="projen.javascript.GenerateEntryPointOptions"></a>
+
+Options for generating the vendor entry point.
+
+#### Initializer <a name="Initializer" id="projen.javascript.GenerateEntryPointOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const generateEntryPointOptions: javascript.GenerateEntryPointOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.GenerateEntryPointOptions.property.analyzeResult">analyzeResult</a></code> | <code><a href="#projen.javascript.AnalyzeResult">AnalyzeResult</a></code> | The analysis result from analyzeSourceFiles. |
+| <code><a href="#projen.javascript.GenerateEntryPointOptions.property.outputPath">outputPath</a></code> | <code>string</code> | Output path for the generated entry point file. |
+
+---
+
+##### `analyzeResult`<sup>Required</sup> <a name="analyzeResult" id="projen.javascript.GenerateEntryPointOptions.property.analyzeResult"></a>
+
+```typescript
+public readonly analyzeResult: AnalyzeResult;
+```
+
+- *Type:* <a href="#projen.javascript.AnalyzeResult">AnalyzeResult</a>
+
+The analysis result from analyzeSourceFiles.
+
+---
+
+##### `outputPath`<sup>Optional</sup> <a name="outputPath" id="projen.javascript.GenerateEntryPointOptions.property.outputPath"></a>
+
+```typescript
+public readonly outputPath: string;
+```
+
+- *Type:* string
+- *Default:* 'lib/.vendor-entry.js'
+
+Output path for the generated entry point file.
+
+---
+
 ### HasteConfig <a name="HasteConfig" id="projen.javascript.HasteConfig"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.HasteConfig.Initializer"></a>
@@ -6690,6 +7015,79 @@ public readonly throwOnModuleCollision: boolean;
 ```
 
 - *Type:* boolean
+
+---
+
+### ImportInfo <a name="ImportInfo" id="projen.javascript.ImportInfo"></a>
+
+Represents an import found in a source file.
+
+#### Initializer <a name="Initializer" id="projen.javascript.ImportInfo.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const importInfo: javascript.ImportInfo = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.ImportInfo.property.isDefault">isDefault</a></code> | <code>boolean</code> | Whether this is a default import. |
+| <code><a href="#projen.javascript.ImportInfo.property.isNamespace">isNamespace</a></code> | <code>boolean</code> | Whether this is a namespace import (import * as x). |
+| <code><a href="#projen.javascript.ImportInfo.property.moduleName">moduleName</a></code> | <code>string</code> | The module being imported (e.g., 'yaml', 'semver'). |
+| <code><a href="#projen.javascript.ImportInfo.property.symbols">symbols</a></code> | <code>string[]</code> | The specific symbols imported from the module. |
+
+---
+
+##### `isDefault`<sup>Required</sup> <a name="isDefault" id="projen.javascript.ImportInfo.property.isDefault"></a>
+
+```typescript
+public readonly isDefault: boolean;
+```
+
+- *Type:* boolean
+
+Whether this is a default import.
+
+---
+
+##### `isNamespace`<sup>Required</sup> <a name="isNamespace" id="projen.javascript.ImportInfo.property.isNamespace"></a>
+
+```typescript
+public readonly isNamespace: boolean;
+```
+
+- *Type:* boolean
+
+Whether this is a namespace import (import * as x).
+
+---
+
+##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.javascript.ImportInfo.property.moduleName"></a>
+
+```typescript
+public readonly moduleName: string;
+```
+
+- *Type:* string
+
+The module being imported (e.g., 'yaml', 'semver').
+
+---
+
+##### `symbols`<sup>Required</sup> <a name="symbols" id="projen.javascript.ImportInfo.property.symbols"></a>
+
+```typescript
+public readonly symbols: string[];
+```
+
+- *Type:* string[]
+
+The specific symbols imported from the module.
+
+Empty array means the entire module is imported (default import or namespace).
 
 ---
 
@@ -10929,6 +11327,52 @@ You can change this or add scoped registries using the addRegistry method
 
 ---
 
+### PackageJsonTransformOptions <a name="PackageJsonTransformOptions" id="projen.javascript.PackageJsonTransformOptions"></a>
+
+Options for transforming package.json for publishing.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PackageJsonTransformOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const packageJsonTransformOptions: javascript.PackageJsonTransformOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PackageJsonTransformOptions.property.removeDeps">removeDeps</a></code> | <code>string[]</code> | Dependencies to remove from the dependencies field. |
+| <code><a href="#projen.javascript.PackageJsonTransformOptions.property.removeBundledDependencies">removeBundledDependencies</a></code> | <code>boolean</code> | Whether to remove the bundledDependencies field entirely. |
+
+---
+
+##### `removeDeps`<sup>Required</sup> <a name="removeDeps" id="projen.javascript.PackageJsonTransformOptions.property.removeDeps"></a>
+
+```typescript
+public readonly removeDeps: string[];
+```
+
+- *Type:* string[]
+
+Dependencies to remove from the dependencies field.
+
+---
+
+##### `removeBundledDependencies`<sup>Optional</sup> <a name="removeBundledDependencies" id="projen.javascript.PackageJsonTransformOptions.property.removeBundledDependencies"></a>
+
+```typescript
+public readonly removeBundledDependencies: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to remove the bundledDependencies field entirely.
+
+---
+
 ### PeerDependencyOptions <a name="PeerDependencyOptions" id="projen.javascript.PeerDependencyOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.PeerDependencyOptions.Initializer"></a>
@@ -11630,6 +12074,51 @@ Scope of the packages.
 "@angular"
 ```
 
+
+### TransformResult <a name="TransformResult" id="projen.javascript.TransformResult"></a>
+
+Result of a package.json transformation.
+
+#### Initializer <a name="Initializer" id="projen.javascript.TransformResult.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const transformResult: javascript.TransformResult = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.TransformResult.property.packageJson">packageJson</a></code> | <code>{[ key: string ]: any}</code> | The transformed package.json content. |
+| <code><a href="#projen.javascript.TransformResult.property.removedDeps">removedDeps</a></code> | <code>{[ key: string ]: string}</code> | Dependencies that were removed (name -> version). |
+
+---
+
+##### `packageJson`<sup>Required</sup> <a name="packageJson" id="projen.javascript.TransformResult.property.packageJson"></a>
+
+```typescript
+public readonly packageJson: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+
+The transformed package.json content.
+
+---
+
+##### `removedDeps`<sup>Required</sup> <a name="removedDeps" id="projen.javascript.TransformResult.property.removedDeps"></a>
+
+```typescript
+public readonly removedDeps: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Dependencies that were removed (name -> version).
+
+---
 
 ### TypeScriptCompilerOptions <a name="TypeScriptCompilerOptions" id="projen.javascript.TypeScriptCompilerOptions"></a>
 
@@ -14825,6 +15314,103 @@ new javascript.JestReporter(name: string, options?: {[ key: string ]: any})
 
 
 
+### PackageJsonTransformer <a name="PackageJsonTransformer" id="projen.javascript.PackageJsonTransformer"></a>
+
+Utility for transforming package.json for publishing by removing bundled dependencies.
+
+This transformer is used during the publish workflow to:
+1. Remove bundled dependencies from the `dependencies` field
+2. Remove the `bundledDependencies` field entirely
+
+The transformation is reversible using the `restore()` method, which allows
+switching back to development mode where dependencies are needed for
+ESLint validation and TypeScript type checking.
+
+#### Initializers <a name="Initializers" id="projen.javascript.PackageJsonTransformer.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.PackageJsonTransformer()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PackageJsonTransformer.restore">restore</a></code> | Restore package.json to development state. |
+| <code><a href="#projen.javascript.PackageJsonTransformer.transform">transform</a></code> | Transform package.json for publishing. |
+
+---
+
+##### `restore` <a name="restore" id="projen.javascript.PackageJsonTransformer.restore"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.PackageJsonTransformer.restore(packageJson: {[ key: string ]: any}, originalDeps: {[ key: string ]: string})
+```
+
+Restore package.json to development state.
+
+This method restores previously removed dependencies back to the
+`dependencies` field, allowing the package.json to be used for
+development workflows where dependencies are needed.
+
+###### `packageJson`<sup>Required</sup> <a name="packageJson" id="projen.javascript.PackageJsonTransformer.restore.parameter.packageJson"></a>
+
+- *Type:* {[ key: string ]: any}
+
+The transformed package.json.
+
+---
+
+###### `originalDeps`<sup>Required</sup> <a name="originalDeps" id="projen.javascript.PackageJsonTransformer.restore.parameter.originalDeps"></a>
+
+- *Type:* {[ key: string ]: string}
+
+The original dependencies to restore (name -> version).
+
+---
+
+##### `transform` <a name="transform" id="projen.javascript.PackageJsonTransformer.transform"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.PackageJsonTransformer.transform(packageJson: {[ key: string ]: any}, options: PackageJsonTransformOptions)
+```
+
+Transform package.json for publishing.
+
+This method removes specified dependencies from the `dependencies` field
+and optionally removes the `bundledDependencies` field entirely.
+All other fields in package.json are preserved unchanged.
+
+###### `packageJson`<sup>Required</sup> <a name="packageJson" id="projen.javascript.PackageJsonTransformer.transform.parameter.packageJson"></a>
+
+- *Type:* {[ key: string ]: any}
+
+The original package.json content.
+
+---
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.javascript.PackageJsonTransformer.transform.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.PackageJsonTransformOptions">PackageJsonTransformOptions</a>
+
+Transformation options.
+
+---
+
+
+
 ### Transform <a name="Transform" id="projen.javascript.Transform"></a>
 
 #### Initializers <a name="Initializers" id="projen.javascript.Transform.Initializer"></a>
@@ -15041,6 +15627,128 @@ public readonly WEEKLY: UpgradeDependenciesSchedule;
 At 00:00 on Monday.
 
 ---
+
+### VendorBundleGenerator <a name="VendorBundleGenerator" id="projen.javascript.VendorBundleGenerator"></a>
+
+Utility for generating vendor bundles containing bundled dependencies.
+
+This generator:
+1. Analyzes source files to find imports from bundled dependencies
+2. Generates a vendor entry point that re-exports used symbols
+3. Creates esbuild configuration for bundling
+
+The vendor bundle approach avoids code duplication while maintaining
+the file structure for deep imports.
+
+#### Initializers <a name="Initializers" id="projen.javascript.VendorBundleGenerator.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.VendorBundleGenerator()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.VendorBundleGenerator.analyzeSourceFiles">analyzeSourceFiles</a></code> | Analyze source files to find imports from bundled dependencies. |
+| <code><a href="#projen.javascript.VendorBundleGenerator.generateEntryPoint">generateEntryPoint</a></code> | Generate a vendor entry point file that re-exports symbols from bundled dependencies. |
+| <code><a href="#projen.javascript.VendorBundleGenerator.generateEsbuildConfig">generateEsbuildConfig</a></code> | Generate esbuild configuration for bundling the vendor entry point. |
+| <code><a href="#projen.javascript.VendorBundleGenerator.writeEntryPoint">writeEntryPoint</a></code> | Write the vendor entry point file to disk. |
+
+---
+
+##### `analyzeSourceFiles` <a name="analyzeSourceFiles" id="projen.javascript.VendorBundleGenerator.analyzeSourceFiles"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.VendorBundleGenerator.analyzeSourceFiles(options: AnalyzeOptions)
+```
+
+Analyze source files to find imports from bundled dependencies.
+
+This method scans all source files in the specified directory and
+identifies which symbols are imported from the bundled dependencies.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.javascript.VendorBundleGenerator.analyzeSourceFiles.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.AnalyzeOptions">AnalyzeOptions</a>
+
+Analysis options.
+
+---
+
+##### `generateEntryPoint` <a name="generateEntryPoint" id="projen.javascript.VendorBundleGenerator.generateEntryPoint"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.VendorBundleGenerator.generateEntryPoint(options: GenerateEntryPointOptions)
+```
+
+Generate a vendor entry point file that re-exports symbols from bundled dependencies.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.javascript.VendorBundleGenerator.generateEntryPoint.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.GenerateEntryPointOptions">GenerateEntryPointOptions</a>
+
+Generation options.
+
+---
+
+##### `generateEsbuildConfig` <a name="generateEsbuildConfig" id="projen.javascript.VendorBundleGenerator.generateEsbuildConfig"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.VendorBundleGenerator.generateEsbuildConfig(options: EsbuildConfigOptions)
+```
+
+Generate esbuild configuration for bundling the vendor entry point.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.javascript.VendorBundleGenerator.generateEsbuildConfig.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.EsbuildConfigOptions">EsbuildConfigOptions</a>
+
+Configuration options.
+
+---
+
+##### `writeEntryPoint` <a name="writeEntryPoint" id="projen.javascript.VendorBundleGenerator.writeEntryPoint"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.VendorBundleGenerator.writeEntryPoint(content: string, outputPath: string)
+```
+
+Write the vendor entry point file to disk.
+
+###### `content`<sup>Required</sup> <a name="content" id="projen.javascript.VendorBundleGenerator.writeEntryPoint.parameter.content"></a>
+
+- *Type:* string
+
+The entry point content.
+
+---
+
+###### `outputPath`<sup>Required</sup> <a name="outputPath" id="projen.javascript.VendorBundleGenerator.writeEntryPoint.parameter.outputPath"></a>
+
+- *Type:* string
+
+The output file path.
+
+---
+
+
 
 ### WatchPlugin <a name="WatchPlugin" id="projen.javascript.WatchPlugin"></a>
 
