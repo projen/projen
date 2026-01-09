@@ -37,7 +37,7 @@ jobs:
       PR_BODY: ${{ github.event.pull_request.body }}
       EXPECTED: By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
-    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && !(github.event.pull_request.user.login == 'cdklabs-automation' || github.event.pull_request.user.login == 'dependabot[bot]')
+    if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && !(github.event.pull_request.user.login == 'projen-automation' || github.event.pull_request.user.login == 'dependabot[bot]')
     steps:
       - uses: actions/github-script@v8
         with:

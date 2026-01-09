@@ -27,7 +27,8 @@ import {
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
-const bootstrapScriptFile = "projen.js";
+const AUTOMATION_USER = "projen-automation";
+const BOOTSTRAP_SCRIPT = "projen.js";
 
 const project = new JsiiProject({
   name: "projen",
@@ -55,7 +56,7 @@ const project = new JsiiProject({
       contributorStatement:
         "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
       contributorStatementOptions: {
-        exemptUsers: ["cdklabs-automation", "dependabot[bot]"],
+        exemptUsers: [AUTOMATION_USER, "dependabot[bot]"],
       },
     },
   },
@@ -121,7 +122,7 @@ const project = new JsiiProject({
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: `node ./${bootstrapScriptFile}`,
+  projenCommand: `node ./${BOOTSTRAP_SCRIPT}`,
   projenrcTs: true,
 
   // Disable interop since it's disabled available in jsii
@@ -177,7 +178,7 @@ const project = new JsiiProject({
   releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
-  autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
+  autoApproveOptions: { allowedUsernames: [AUTOMATION_USER] },
   checkLicenses: {
     allow: [
       "MIT",
@@ -204,7 +205,7 @@ setupUpgradeDependencies(project);
 
 setupJsiiDocgen(project);
 
-setupProjenBootstrap(project, bootstrapScriptFile);
+setupProjenBootstrap(project, BOOTSTRAP_SCRIPT);
 
 // because snapshots include the projen marker...
 project.addExcludeFromCleanup("test/**");
