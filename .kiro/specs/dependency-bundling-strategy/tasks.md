@@ -7,7 +7,7 @@ This implementation plan transforms projen's dependency bundling from npm's `bun
 ## Tasks
 
 - [-] 1. Create PackageJsonTransformer utility
-  - [-] 1.1 Implement transform function to remove bundled dependencies
+  - [x] 1.1 Implement transform function to remove bundled dependencies
     - Create `src/javascript/package-json-transformer.ts`
     - Implement `transform()` static method that removes specified deps from dependencies field
     - Implement removal of bundledDependencies field
@@ -18,7 +18,7 @@ This implementation plan transforms projen's dependency bundling from npm's `bun
     - **Property 2: Package.json Transformation Correctness**
     - **Validates: Requirements 2.1, 2.2, 2.4, 8.1**
 
-  - [ ] 1.3 Implement restore function for development workflow
+  - [x] 1.3 Implement restore function for development workflow
     - Implement `restore()` static method to restore original dependencies
     - Store original deps in a backup mechanism
     - _Requirements: 8.4_
@@ -27,30 +27,30 @@ This implementation plan transforms projen's dependency bundling from npm's `bun
     - **Property 4: Transformation Integrity**
     - **Validates: Requirements 8.2, 8.4**
 
-- [ ] 2. Checkpoint - Ensure PackageJsonTransformer tests pass
+- [x] 2. Checkpoint - Ensure PackageJsonTransformer tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 3. Create VendorBundleGenerator utility
-  - [ ] 3.1 Implement vendor entry point generator
+- [-] 3. Create VendorBundleGenerator utility
+  - [x] 3.1 Implement vendor entry point generator
     - Create `src/javascript/vendor-bundle-generator.ts`
     - Implement function to analyze source files for bundled dependency imports
     - Generate vendor entry point file that re-exports used symbols
     - _Requirements: 1.1, 1.2_
 
-  - [ ] 3.2 Implement esbuild bundling for vendor bundle
+  - [x] 3.2 Implement esbuild bundling for vendor bundle
     - Create esbuild configuration for vendor bundle
     - Enable tree-shaking
     - Mark external dependencies (constructs) as external
     - Output to `lib/vendor.js`
     - _Requirements: 1.1, 1.2, 1.3_
 
-  - [ ] 3.3 Write unit tests for vendor bundle generation
+  - [x] 3.3 Write unit tests for vendor bundle generation
     - Test entry point generation with various import patterns
     - Test esbuild configuration generation
     - _Requirements: 1.1, 1.2_
 
-- [ ] 4. Create ImportRewriter utility
-  - [ ] 4.1 Implement import rewriting logic
+- [-] 4. Create ImportRewriter utility
+  - [x] 4.1 Implement import rewriting logic
     - Create `src/javascript/import-rewriter.ts`
     - Scan compiled JS files for requires of bundled dependencies
     - Rewrite requires to reference vendor bundle with correct relative path
@@ -61,7 +61,7 @@ This implementation plan transforms projen's dependency bundling from npm's `bun
     - **Property 3: File Structure Preservation**
     - **Validates: Requirements 4.1, 4.2, 4.3, 4.4**
 
-- [ ] 5. Checkpoint - Ensure utility tests pass
+- [x] 5. Checkpoint - Ensure utility tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 6. Create DependencyBundler component
