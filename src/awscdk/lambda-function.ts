@@ -241,13 +241,13 @@ export class LambdaFunction extends Component {
     // Add runtime prop to interface only when runtime is not explicitly set
     // This allows consumers to override the default NODEJS_REGIONAL_LATEST
     if (!options.runtime) {
-      src.line("  /**");
-      src.line("   * The Lambda runtime to use.");
+      src.line("/**");
+      src.line(" * The Lambda runtime to use.");
       src.line(
-        "   * @default - Latest Node.js runtime available in the deployment region"
+        " * @default - Latest Node.js runtime available in the deployment region"
       );
-      src.line("   */");
-      src.line("  readonly runtime?: lambda.Runtime;");
+      src.line(" */");
+      src.line("readonly runtime?: lambda.Runtime;");
     }
     src.close("}");
     src.line();
