@@ -470,6 +470,25 @@
           "path": ".vscode/launch.json"
         }
       },
+      "IntegrationTests#AutoId30": {
+        "metadata": {
+          "type": "component",
+          "construct": "IntegrationTests"
+        }
+      },
+      "GithubWorkflow#integ": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--integ.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/integ.yml"
+        }
+      },
       "JsiiFromJsonSchema@src--javascript--biome--biome-config.ts": {
         "metadata": {
           "type": "file",
@@ -504,7 +523,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId30": {
+      "AiInstructions#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"
