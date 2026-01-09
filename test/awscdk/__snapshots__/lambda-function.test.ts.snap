@@ -11,11 +11,11 @@ import { Construct } from '@aws-cdk/core';
  * Props for HelloFunction
  */
 export interface HelloFunctionProps extends cloudfront.experimental.EdgeFunctionProps {
-    /**
-     * The Lambda runtime to use.
-     * @default - Latest Node.js runtime available in the deployment region
-     */
-    readonly runtime?: lambda.Runtime;
+  /**
+   * The Lambda runtime to use.
+   * @default - Latest Node.js runtime available in the deployment region
+   */
+  readonly runtime?: lambda.Runtime;
 }
 
 /**
@@ -75,11 +75,11 @@ import { Construct } from 'constructs';
  * Props for HelloFunction
  */
 export interface HelloFunctionProps extends lambda.FunctionOptions {
-    /**
-     * The Lambda runtime to use.
-     * @default - Latest Node.js runtime available in the deployment region
-     */
-    readonly runtime?: lambda.Runtime;
+  /**
+   * The Lambda runtime to use.
+   * @default - Latest Node.js runtime available in the deployment region
+   */
+  readonly runtime?: lambda.Runtime;
 }
 
 /**
@@ -286,11 +286,11 @@ import { Construct } from '@aws-cdk/core';
  * Props for HelloFunction
  */
 export interface HelloFunctionProps extends lambda.FunctionOptions {
-    /**
-     * The Lambda runtime to use.
-     * @default - Latest Node.js runtime available in the deployment region
-     */
-    readonly runtime?: lambda.Runtime;
+  /**
+   * The Lambda runtime to use.
+   * @default - Latest Node.js runtime available in the deployment region
+   */
+  readonly runtime?: lambda.Runtime;
 }
 
 /**
@@ -323,11 +323,11 @@ import { Construct } from 'constructs';
  * Props for HelloFunction
  */
 export interface HelloFunctionProps extends lambda.FunctionOptions {
-    /**
-     * The Lambda runtime to use.
-     * @default - Latest Node.js runtime available in the deployment region
-     */
-    readonly runtime?: lambda.Runtime;
+  /**
+   * The Lambda runtime to use.
+   * @default - Latest Node.js runtime available in the deployment region
+   */
+  readonly runtime?: lambda.Runtime;
 }
 
 /**
@@ -357,11 +357,11 @@ import { Construct } from '@aws-cdk/core';
  * Props for HelloFunction
  */
 export interface HelloFunctionProps extends lambda.FunctionOptions {
-    /**
-     * The Lambda runtime to use.
-     * @default - Latest Node.js runtime available in the deployment region
-     */
-    readonly runtime?: lambda.Runtime;
+  /**
+   * The Lambda runtime to use.
+   * @default - Latest Node.js runtime available in the deployment region
+   */
+  readonly runtime?: lambda.Runtime;
 }
 
 /**
@@ -391,11 +391,11 @@ import { Construct } from '@aws-cdk/core';
  * Props for WorldFunction
  */
 export interface WorldFunctionProps extends lambda.FunctionOptions {
-    /**
-     * The Lambda runtime to use.
-     * @default - Latest Node.js runtime available in the deployment region
-     */
-    readonly runtime?: lambda.Runtime;
+  /**
+   * The Lambda runtime to use.
+   * @default - Latest Node.js runtime available in the deployment region
+   */
+  readonly runtime?: lambda.Runtime;
 }
 
 /**
