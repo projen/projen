@@ -1,0 +1,10 @@
+name: integ
+on:
+  pull_request: {}
+  workflow_dispatch: {}
+  merge_group: {}
+jobs:
+  integ:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Success
