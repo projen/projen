@@ -1,4 +1,5 @@
 export * from "./bundler";
+export * from "./dependency-bundler";
 export * from "./eslint";
 export * from "./import-rewriter";
 export * from "./jest";

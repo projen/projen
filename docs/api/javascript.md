@@ -535,6 +535,313 @@ The semantic version requirement for `esbuild` (if defined).
 ---
 
 
+### DependencyBundler <a name="DependencyBundler" id="projen.javascript.DependencyBundler"></a>
+
+Component that bundles dependencies at build time using esbuild with a vendor bundle approach.
+
+This component:
+1. Creates a vendor bundle containing all bundled dependencies
+2. Rewrites imports in compiled files to reference the vendor bundle
+3. Transforms package.json for publishing by removing bundled dependencies
+
+The vendor bundle approach avoids code duplication while maintaining
+the file structure for deep imports.
+
+#### Initializers <a name="Initializers" id="projen.javascript.DependencyBundler.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.DependencyBundler(project: NodeProject, options: DependencyBundlerOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DependencyBundler.Initializer.parameter.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.DependencyBundler.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.DependencyBundlerOptions">DependencyBundlerOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.DependencyBundler.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.javascript.DependencyBundler.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.DependencyBundlerOptions">DependencyBundlerOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.DependencyBundler.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.DependencyBundler.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.DependencyBundler.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.DependencyBundler.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.DependencyBundler.integrateWithWorkflow">integrateWithWorkflow</a></code> | Integrate tasks with the project workflow. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.DependencyBundler.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.DependencyBundler.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.DependencyBundler.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.DependencyBundler.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `integrateWithWorkflow` <a name="integrateWithWorkflow" id="projen.javascript.DependencyBundler.integrateWithWorkflow"></a>
+
+```typescript
+public integrateWithWorkflow(): void
+```
+
+Integrate tasks with the project workflow.
+
+This should be called after the component is created.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.DependencyBundler.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.DependencyBundler.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.DependencyBundler.of">of</a></code> | Returns the `DependencyBundler` instance associated with a project or `undefined` if there is no DependencyBundler. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.DependencyBundler.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.DependencyBundler.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.DependencyBundler.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.DependencyBundler.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.DependencyBundler.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.DependencyBundler.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.DependencyBundler.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.DependencyBundler.of(project: NodeProject)
+```
+
+Returns the `DependencyBundler` instance associated with a project or `undefined` if there is no DependencyBundler.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.DependencyBundler.of.parameter.project"></a>
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+The project.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DependencyBundler.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.DependencyBundler.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.DependencyBundler.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies being bundled. |
+| <code><a href="#projen.javascript.DependencyBundler.property.externalDeps">externalDeps</a></code> | <code>string[]</code> | Dependencies that remain external. |
+| <code><a href="#projen.javascript.DependencyBundler.property.outdir">outdir</a></code> | <code>string</code> | Output directory for bundled files. |
+| <code><a href="#projen.javascript.DependencyBundler.property.rewriteImportsTask">rewriteImportsTask</a></code> | <code>projen.Task</code> | The task that rewrites imports to use the vendor bundle. |
+| <code><a href="#projen.javascript.DependencyBundler.property.target">target</a></code> | <code>string</code> | Target Node.js version for bundling. |
+| <code><a href="#projen.javascript.DependencyBundler.property.transformPackageJsonTask">transformPackageJsonTask</a></code> | <code>projen.Task</code> | The task that transforms package.json for publishing. |
+| <code><a href="#projen.javascript.DependencyBundler.property.vendorBundleTask">vendorBundleTask</a></code> | <code>projen.Task</code> | The task that creates the vendor bundle. |
+| <code><a href="#projen.javascript.DependencyBundler.property.vendorFile">vendorFile</a></code> | <code>string</code> | Name of the vendor bundle file. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.DependencyBundler.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.DependencyBundler.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `bundledDeps`<sup>Required</sup> <a name="bundledDeps" id="projen.javascript.DependencyBundler.property.bundledDeps"></a>
+
+```typescript
+public readonly bundledDeps: string[];
+```
+
+- *Type:* string[]
+
+List of dependencies being bundled.
+
+---
+
+##### `externalDeps`<sup>Required</sup> <a name="externalDeps" id="projen.javascript.DependencyBundler.property.externalDeps"></a>
+
+```typescript
+public readonly externalDeps: string[];
+```
+
+- *Type:* string[]
+
+Dependencies that remain external.
+
+---
+
+##### `outdir`<sup>Required</sup> <a name="outdir" id="projen.javascript.DependencyBundler.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+
+Output directory for bundled files.
+
+---
+
+##### `rewriteImportsTask`<sup>Required</sup> <a name="rewriteImportsTask" id="projen.javascript.DependencyBundler.property.rewriteImportsTask"></a>
+
+```typescript
+public readonly rewriteImportsTask: Task;
+```
+
+- *Type:* projen.Task
+
+The task that rewrites imports to use the vendor bundle.
+
+---
+
+##### `target`<sup>Required</sup> <a name="target" id="projen.javascript.DependencyBundler.property.target"></a>
+
+```typescript
+public readonly target: string;
+```
+
+- *Type:* string
+
+Target Node.js version for bundling.
+
+---
+
+##### `transformPackageJsonTask`<sup>Required</sup> <a name="transformPackageJsonTask" id="projen.javascript.DependencyBundler.property.transformPackageJsonTask"></a>
+
+```typescript
+public readonly transformPackageJsonTask: Task;
+```
+
+- *Type:* projen.Task
+
+The task that transforms package.json for publishing.
+
+---
+
+##### `vendorBundleTask`<sup>Required</sup> <a name="vendorBundleTask" id="projen.javascript.DependencyBundler.property.vendorBundleTask"></a>
+
+```typescript
+public readonly vendorBundleTask: Task;
+```
+
+- *Type:* projen.Task
+
+The task that creates the vendor bundle.
+
+---
+
+##### `vendorFile`<sup>Required</sup> <a name="vendorFile" id="projen.javascript.DependencyBundler.property.vendorFile"></a>
+
+```typescript
+public readonly vendorFile: string;
+```
+
+- *Type:* string
+
+Name of the vendor bundle file.
+
+---
+
+
 ### Eslint <a name="Eslint" id="projen.javascript.Eslint"></a>
 
 Represents eslint configuration.
@@ -6375,6 +6682,140 @@ public readonly statements: number;
 
 ---
 
+### DependencyBundlerOptions <a name="DependencyBundlerOptions" id="projen.javascript.DependencyBundlerOptions"></a>
+
+Options for the DependencyBundler component.
+
+#### Initializer <a name="Initializer" id="projen.javascript.DependencyBundlerOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const dependencyBundlerOptions: javascript.DependencyBundlerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into the vendor bundle. |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.autoIntegrate">autoIntegrate</a></code> | <code>boolean</code> | Automatically integrate with the project's build workflow. |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.esbuildVersion">esbuildVersion</a></code> | <code>string</code> | The semantic version requirement for `esbuild`. |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.externalDeps">externalDeps</a></code> | <code>string[]</code> | Dependencies that should remain external (not bundled). |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.outdir">outdir</a></code> | <code>string</code> | Output directory for bundled files. |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.target">target</a></code> | <code>string</code> | Target Node.js version for bundling. |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.treeShake">treeShake</a></code> | <code>boolean</code> | Enable tree-shaking to minimize bundle size. |
+| <code><a href="#projen.javascript.DependencyBundlerOptions.property.vendorFile">vendorFile</a></code> | <code>string</code> | Name of the vendor bundle file. |
+
+---
+
+##### `bundledDeps`<sup>Required</sup> <a name="bundledDeps" id="projen.javascript.DependencyBundlerOptions.property.bundledDeps"></a>
+
+```typescript
+public readonly bundledDeps: string[];
+```
+
+- *Type:* string[]
+
+List of dependencies to bundle into the vendor bundle.
+
+These will be inlined during build and removed from published package.json.
+
+---
+
+##### `autoIntegrate`<sup>Optional</sup> <a name="autoIntegrate" id="projen.javascript.DependencyBundlerOptions.property.autoIntegrate"></a>
+
+```typescript
+public readonly autoIntegrate: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically integrate with the project's build workflow.
+
+When true, tasks are automatically added to post-compile and package phases.
+
+---
+
+##### `esbuildVersion`<sup>Optional</sup> <a name="esbuildVersion" id="projen.javascript.DependencyBundlerOptions.property.esbuildVersion"></a>
+
+```typescript
+public readonly esbuildVersion: string;
+```
+
+- *Type:* string
+- *Default:* no specific version (implies latest)
+
+The semantic version requirement for `esbuild`.
+
+---
+
+##### `externalDeps`<sup>Optional</sup> <a name="externalDeps" id="projen.javascript.DependencyBundlerOptions.property.externalDeps"></a>
+
+```typescript
+public readonly externalDeps: string[];
+```
+
+- *Type:* string[]
+- *Default:* ['constructs']
+
+Dependencies that should remain external (not bundled).
+
+---
+
+##### `outdir`<sup>Optional</sup> <a name="outdir" id="projen.javascript.DependencyBundlerOptions.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+- *Default:* 'lib'
+
+Output directory for bundled files.
+
+---
+
+##### `target`<sup>Optional</sup> <a name="target" id="projen.javascript.DependencyBundlerOptions.property.target"></a>
+
+```typescript
+public readonly target: string;
+```
+
+- *Type:* string
+- *Default:* 'node18'
+
+Target Node.js version for bundling.
+
+---
+
+##### `treeShake`<sup>Optional</sup> <a name="treeShake" id="projen.javascript.DependencyBundlerOptions.property.treeShake"></a>
+
+```typescript
+public readonly treeShake: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable tree-shaking to minimize bundle size.
+
+---
+
+##### `vendorFile`<sup>Optional</sup> <a name="vendorFile" id="projen.javascript.DependencyBundlerOptions.property.vendorFile"></a>
+
+```typescript
+public readonly vendorFile: string;
+```
+
+- *Type:* string
+- *Default:* 'vendor.js'
+
+Name of the vendor bundle file.
+
+---
+
 ### EsbuildConfig <a name="EsbuildConfig" id="projen.javascript.EsbuildConfig"></a>
 
 Generated esbuild configuration.
@@ -12023,6 +12464,183 @@ Should the package lockfile be updated?
 
 ---
 
+### RewriteFileResult <a name="RewriteFileResult" id="projen.javascript.RewriteFileResult"></a>
+
+Result of rewriting imports in a single file.
+
+#### Initializer <a name="Initializer" id="projen.javascript.RewriteFileResult.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const rewriteFileResult: javascript.RewriteFileResult = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.RewriteFileResult.property.filePath">filePath</a></code> | <code>string</code> | The file path that was processed. |
+| <code><a href="#projen.javascript.RewriteFileResult.property.rewrittenCount">rewrittenCount</a></code> | <code>number</code> | Number of requires that were rewritten. |
+| <code><a href="#projen.javascript.RewriteFileResult.property.rewrittenModules">rewrittenModules</a></code> | <code>string[]</code> | The module names that were rewritten. |
+
+---
+
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.javascript.RewriteFileResult.property.filePath"></a>
+
+```typescript
+public readonly filePath: string;
+```
+
+- *Type:* string
+
+The file path that was processed.
+
+---
+
+##### `rewrittenCount`<sup>Required</sup> <a name="rewrittenCount" id="projen.javascript.RewriteFileResult.property.rewrittenCount"></a>
+
+```typescript
+public readonly rewrittenCount: number;
+```
+
+- *Type:* number
+
+Number of requires that were rewritten.
+
+---
+
+##### `rewrittenModules`<sup>Required</sup> <a name="rewrittenModules" id="projen.javascript.RewriteFileResult.property.rewrittenModules"></a>
+
+```typescript
+public readonly rewrittenModules: string[];
+```
+
+- *Type:* string[]
+
+The module names that were rewritten.
+
+---
+
+### RewriteImportsOptions <a name="RewriteImportsOptions" id="projen.javascript.RewriteImportsOptions"></a>
+
+Options for rewriting imports in compiled JavaScript files.
+
+#### Initializer <a name="Initializer" id="projen.javascript.RewriteImportsOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const rewriteImportsOptions: javascript.RewriteImportsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.RewriteImportsOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to rewrite to vendor bundle. |
+| <code><a href="#projen.javascript.RewriteImportsOptions.property.externalDeps">externalDeps</a></code> | <code>string[]</code> | Dependencies that should remain external (not rewritten). |
+| <code><a href="#projen.javascript.RewriteImportsOptions.property.libDir">libDir</a></code> | <code>string</code> | Directory containing compiled JavaScript files. |
+| <code><a href="#projen.javascript.RewriteImportsOptions.property.vendorFile">vendorFile</a></code> | <code>string</code> | Path to the vendor bundle file relative to libDir. |
+
+---
+
+##### `bundledDeps`<sup>Required</sup> <a name="bundledDeps" id="projen.javascript.RewriteImportsOptions.property.bundledDeps"></a>
+
+```typescript
+public readonly bundledDeps: string[];
+```
+
+- *Type:* string[]
+
+List of dependencies to rewrite to vendor bundle.
+
+---
+
+##### `externalDeps`<sup>Optional</sup> <a name="externalDeps" id="projen.javascript.RewriteImportsOptions.property.externalDeps"></a>
+
+```typescript
+public readonly externalDeps: string[];
+```
+
+- *Type:* string[]
+- *Default:* ['constructs']
+
+Dependencies that should remain external (not rewritten).
+
+---
+
+##### `libDir`<sup>Optional</sup> <a name="libDir" id="projen.javascript.RewriteImportsOptions.property.libDir"></a>
+
+```typescript
+public readonly libDir: string;
+```
+
+- *Type:* string
+- *Default:* 'lib'
+
+Directory containing compiled JavaScript files.
+
+---
+
+##### `vendorFile`<sup>Optional</sup> <a name="vendorFile" id="projen.javascript.RewriteImportsOptions.property.vendorFile"></a>
+
+```typescript
+public readonly vendorFile: string;
+```
+
+- *Type:* string
+- *Default:* 'vendor.js'
+
+Path to the vendor bundle file relative to libDir.
+
+---
+
+### RewriteResult <a name="RewriteResult" id="projen.javascript.RewriteResult"></a>
+
+Result of rewriting imports across all files.
+
+#### Initializer <a name="Initializer" id="projen.javascript.RewriteResult.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const rewriteResult: javascript.RewriteResult = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.RewriteResult.property.files">files</a></code> | <code><a href="#projen.javascript.RewriteFileResult">RewriteFileResult</a>[]</code> | Results for each file that was processed. |
+| <code><a href="#projen.javascript.RewriteResult.property.totalRewritten">totalRewritten</a></code> | <code>number</code> | Total number of requires rewritten across all files. |
+
+---
+
+##### `files`<sup>Required</sup> <a name="files" id="projen.javascript.RewriteResult.property.files"></a>
+
+```typescript
+public readonly files: RewriteFileResult[];
+```
+
+- *Type:* <a href="#projen.javascript.RewriteFileResult">RewriteFileResult</a>[]
+
+Results for each file that was processed.
+
+---
+
+##### `totalRewritten`<sup>Required</sup> <a name="totalRewritten" id="projen.javascript.RewriteResult.property.totalRewritten"></a>
+
+```typescript
+public readonly totalRewritten: number;
+```
+
+- *Type:* number
+
+Total number of requires rewritten across all files.
+
+---
+
 ### ScopedPackagesOptions <a name="ScopedPackagesOptions" id="projen.javascript.ScopedPackagesOptions"></a>
 
 Options for scoped packages.
@@ -15280,6 +15898,218 @@ public readonly os: string[];
 ---
 
 ## Classes <a name="Classes" id="Classes"></a>
+
+### ImportRewriter <a name="ImportRewriter" id="projen.javascript.ImportRewriter"></a>
+
+Utility for rewriting imports in compiled JavaScript files to reference the vendor bundle instead of node_modules.
+
+This rewriter:
+1. Scans compiled JS files for requires of bundled dependencies
+2. Rewrites those requires to reference the vendor bundle
+3. Preserves requires of external dependencies
+
+The rewriting maintains the correct relative path from each file
+to the vendor bundle based on the file's location in the directory tree.
+
+#### Initializers <a name="Initializers" id="projen.javascript.ImportRewriter.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.ImportRewriter()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.ImportRewriter.calculateRelativePath">calculateRelativePath</a></code> | Calculate the relative path from a file to the vendor bundle. |
+| <code><a href="#projen.javascript.ImportRewriter.getBaseModuleName">getBaseModuleName</a></code> | Get the base module name from an import path. |
+| <code><a href="#projen.javascript.ImportRewriter.rewriteContent">rewriteContent</a></code> | Rewrite the content of a JavaScript file. |
+| <code><a href="#projen.javascript.ImportRewriter.rewriteFile">rewriteFile</a></code> | Rewrite imports in a single JavaScript file. |
+| <code><a href="#projen.javascript.ImportRewriter.rewriteImports">rewriteImports</a></code> | Rewrite imports in all JavaScript files in the lib directory. |
+
+---
+
+##### `calculateRelativePath` <a name="calculateRelativePath" id="projen.javascript.ImportRewriter.calculateRelativePath"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.ImportRewriter.calculateRelativePath(filePath: string, libDir: string, vendorFile: string)
+```
+
+Calculate the relative path from a file to the vendor bundle.
+
+###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.javascript.ImportRewriter.calculateRelativePath.parameter.filePath"></a>
+
+- *Type:* string
+
+Path to the source file.
+
+---
+
+###### `libDir`<sup>Required</sup> <a name="libDir" id="projen.javascript.ImportRewriter.calculateRelativePath.parameter.libDir"></a>
+
+- *Type:* string
+
+The lib directory path.
+
+---
+
+###### `vendorFile`<sup>Required</sup> <a name="vendorFile" id="projen.javascript.ImportRewriter.calculateRelativePath.parameter.vendorFile"></a>
+
+- *Type:* string
+
+The vendor bundle filename.
+
+---
+
+##### `getBaseModuleName` <a name="getBaseModuleName" id="projen.javascript.ImportRewriter.getBaseModuleName"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.ImportRewriter.getBaseModuleName(importPath: string)
+```
+
+Get the base module name from an import path.
+
+Handles scoped packages and subpaths.
+
+###### `importPath`<sup>Required</sup> <a name="importPath" id="projen.javascript.ImportRewriter.getBaseModuleName.parameter.importPath"></a>
+
+- *Type:* string
+
+The import path.
+
+---
+
+##### `rewriteContent` <a name="rewriteContent" id="projen.javascript.ImportRewriter.rewriteContent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.ImportRewriter.rewriteContent(content: string, bundledDeps: string[], externalDeps: string[], vendorPath: string, rewrittenModules: string[])
+```
+
+Rewrite the content of a JavaScript file.
+
+###### `content`<sup>Required</sup> <a name="content" id="projen.javascript.ImportRewriter.rewriteContent.parameter.content"></a>
+
+- *Type:* string
+
+The file content.
+
+---
+
+###### `bundledDeps`<sup>Required</sup> <a name="bundledDeps" id="projen.javascript.ImportRewriter.rewriteContent.parameter.bundledDeps"></a>
+
+- *Type:* string[]
+
+Array of bundled dependency names.
+
+---
+
+###### `externalDeps`<sup>Required</sup> <a name="externalDeps" id="projen.javascript.ImportRewriter.rewriteContent.parameter.externalDeps"></a>
+
+- *Type:* string[]
+
+Array of external dependency names to preserve.
+
+---
+
+###### `vendorPath`<sup>Required</sup> <a name="vendorPath" id="projen.javascript.ImportRewriter.rewriteContent.parameter.vendorPath"></a>
+
+- *Type:* string
+
+Relative path to vendor bundle.
+
+---
+
+###### `rewrittenModules`<sup>Required</sup> <a name="rewrittenModules" id="projen.javascript.ImportRewriter.rewriteContent.parameter.rewrittenModules"></a>
+
+- *Type:* string[]
+
+Array to collect rewritten module names.
+
+---
+
+##### `rewriteFile` <a name="rewriteFile" id="projen.javascript.ImportRewriter.rewriteFile"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.ImportRewriter.rewriteFile(filePath: string, bundledDeps: string[], externalDeps: string[], libDir: string, vendorFile: string)
+```
+
+Rewrite imports in a single JavaScript file.
+
+###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.javascript.ImportRewriter.rewriteFile.parameter.filePath"></a>
+
+- *Type:* string
+
+Path to the JavaScript file.
+
+---
+
+###### `bundledDeps`<sup>Required</sup> <a name="bundledDeps" id="projen.javascript.ImportRewriter.rewriteFile.parameter.bundledDeps"></a>
+
+- *Type:* string[]
+
+Array of bundled dependency names.
+
+---
+
+###### `externalDeps`<sup>Required</sup> <a name="externalDeps" id="projen.javascript.ImportRewriter.rewriteFile.parameter.externalDeps"></a>
+
+- *Type:* string[]
+
+Array of external dependency names to preserve.
+
+---
+
+###### `libDir`<sup>Required</sup> <a name="libDir" id="projen.javascript.ImportRewriter.rewriteFile.parameter.libDir"></a>
+
+- *Type:* string
+
+The lib directory path.
+
+---
+
+###### `vendorFile`<sup>Required</sup> <a name="vendorFile" id="projen.javascript.ImportRewriter.rewriteFile.parameter.vendorFile"></a>
+
+- *Type:* string
+
+The vendor bundle filename.
+
+---
+
+##### `rewriteImports` <a name="rewriteImports" id="projen.javascript.ImportRewriter.rewriteImports"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.ImportRewriter.rewriteImports(options: RewriteImportsOptions)
+```
+
+Rewrite imports in all JavaScript files in the lib directory.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.javascript.ImportRewriter.rewriteImports.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.RewriteImportsOptions">RewriteImportsOptions</a>
+
+Rewrite options.
+
+---
+
+
 
 ### JestReporter <a name="JestReporter" id="projen.javascript.JestReporter"></a>
 
