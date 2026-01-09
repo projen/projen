@@ -5907,6 +5907,13 @@ Tests the code.
 
 ### ProjectTree <a name="ProjectTree" id="projen.ProjectTree"></a>
 
+Generates a `.projen/tree.json` file that provides a snapshot of your project's component hierarchy. This file includes metadata about each component such as file paths, types, and the projen version used.
+
+The tree file is helpful for:
+- Understanding how your project is structured
+- Debugging component relationships
+- Verifying which versions synthesized the project
+
 #### Initializers <a name="Initializers" id="projen.ProjectTree.Initializer"></a>
 
 ```typescript
@@ -12481,6 +12488,7 @@ const projectOptions: ProjectOptions = { ... }
 | <code><a href="#projen.ProjectOptions.property.logging">logging</a></code> | <code><a href="#projen.LoggerOptions">LoggerOptions</a></code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.ProjectOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.ProjectOptions.property.parent">parent</a></code> | <code><a href="#projen.Project">Project</a></code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.ProjectOptions.property.projectTree">projectTree</a></code> | <code>boolean</code> | Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging. |
 | <code><a href="#projen.ProjectOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.ProjectOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.ProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code><a href="#projen.ProjenrcJsonOptions">ProjenrcJsonOptions</a></code> | Options for .projenrc.json. |
@@ -12580,6 +12588,19 @@ public readonly parent: Project;
 - *Type:* <a href="#projen.Project">Project</a>
 
 The parent project, if this project is part of a bigger project.
+
+---
+
+##### `projectTree`<sup>Optional</sup> <a name="projectTree" id="projen.ProjectOptions.property.projectTree"></a>
+
+```typescript
+public readonly projectTree: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging.
 
 ---
 

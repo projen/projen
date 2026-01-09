@@ -10294,6 +10294,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projectTree">projectTree</a></code> | <code>boolean</code> | Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
@@ -10568,6 +10569,19 @@ public readonly parent: Project;
 - *Type:* projen.Project
 
 The parent project, if this project is part of a bigger project.
+
+---
+
+##### `projectTree`<sup>Optional</sup> <a name="projectTree" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.projectTree"></a>
+
+```typescript
+public readonly projectTree: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging.
 
 ---
 
@@ -13550,6 +13564,7 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projectTree">projectTree</a></code> | <code>boolean</code> | Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
@@ -13701,6 +13716,19 @@ public readonly parent: Project;
 - *Type:* projen.Project
 
 The parent project, if this project is part of a bigger project.
+
+---
+
+##### `projectTree`<sup>Optional</sup> <a name="projectTree" id="projen.awscdk.AwsCdkJavaAppOptions.property.projectTree"></a>
+
+```typescript
+public readonly projectTree: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging.
 
 ---
 
@@ -14671,6 +14699,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projectTree">projectTree</a></code> | <code>boolean</code> | Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
@@ -14836,6 +14865,19 @@ public readonly parent: Project;
 - *Type:* projen.Project
 
 The parent project, if this project is part of a bigger project.
+
+---
+
+##### `projectTree`<sup>Optional</sup> <a name="projectTree" id="projen.awscdk.AwsCdkPythonAppOptions.property.projectTree"></a>
+
+```typescript
+public readonly projectTree: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging.
 
 ---
 
@@ -15870,6 +15912,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projectTree">projectTree</a></code> | <code>boolean</code> | Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
@@ -16136,6 +16179,19 @@ public readonly parent: Project;
 - *Type:* projen.Project
 
 The parent project, if this project is part of a bigger project.
+
+---
+
+##### `projectTree`<sup>Optional</sup> <a name="projectTree" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.projectTree"></a>
+
+```typescript
+public readonly projectTree: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging.
 
 ---
 
@@ -18909,6 +18965,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.logging">logging</a></code> | <code>projen.LoggerOptions</code> | Configure logging options such as verbosity. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.parent">parent</a></code> | <code>projen.Project</code> | The parent project, if this project is part of a bigger project. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projectTree">projectTree</a></code> | <code>boolean</code> | Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
@@ -19197,6 +19254,21 @@ public readonly parent: Project;
 - *Type:* projen.Project
 
 The parent project, if this project is part of a bigger project.
+
+---
+
+##### ~~`projectTree`~~<sup>Optional</sup> <a name="projectTree" id="projen.awscdk.ConstructLibraryAwsOptions.property.projectTree"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly projectTree: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate a project tree file (`.projen/tree.json`) that shows all components and their relationships. Useful for understanding your project structure and debugging.
 
 ---
 

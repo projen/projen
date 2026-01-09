@@ -21,7 +21,6 @@ import {
   AiInstructions,
   javascript,
   JsonPatch,
-  ProjectTree,
   ReleasableCommits,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -124,6 +123,7 @@ const project = new JsiiProject({
   // since this is projen, we need to always compile before we run
   projenCommand: `node ./${BOOTSTRAP_SCRIPT}`,
   projenrcTs: true,
+  projectTree: true,
 
   // Disable interop since it's disabled available in jsii
   tsconfigDev: {
@@ -278,8 +278,6 @@ new WindowsBuild(project);
 if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);
 }
-
-new ProjectTree(project);
 
 new AiInstructions(project);
 

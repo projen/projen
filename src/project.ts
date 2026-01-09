@@ -17,6 +17,7 @@ import { Logger, LoggerOptions } from "./logger";
 import { ObjectFile } from "./object-file";
 import { InitProjectOptionHints } from "./option-hints";
 import { ProjectBuild as ProjectBuild } from "./project-build";
+import { ProjectTree } from "./project-tree";
 import { ProjenrcJson, ProjenrcJsonOptions } from "./projenrc-json";
 import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
@@ -123,6 +124,16 @@ export interface ProjectOptions {
    * Configuration options for .gitignore file
    */
   readonly gitIgnoreOptions?: IgnoreFileOptions;
+
+  /**
+   * Generate a project tree file (`.projen/tree.json`) that shows all
+   * components and their relationships. Useful for understanding your
+   * project structure and debugging.
+   *
+   * @stability experimental
+   * @default false
+   */
+  readonly projectTree?: boolean;
 }
 
 /**
@@ -272,6 +283,7 @@ export class Project extends Construct {
     tagAsProject(this);
     this.node.addMetadata("type", "project");
     this.node.addMetadata("construct", new.target.name);
+    this.node.addMetadata("projen.version", PROJEN_VERSION);
 
     this.initProject = resolveInitProject(options);
 
@@ -358,6 +370,10 @@ export class Project extends Construct {
 
     if (options.renovatebot) {
       new Renovatebot(this, options.renovatebotOptions);
+    }
+
+    if (options.projectTree) {
+      new ProjectTree(this);
     }
 
     this.commitGenerated = options.commitGenerated ?? true;
