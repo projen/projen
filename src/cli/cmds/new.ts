@@ -16,6 +16,7 @@ import {
   normalizePersistedPath,
 } from "../../util";
 import { tryProcessMacro } from "../macros";
+import { cliPrompts } from "../prompts";
 import {
   CliError,
   findJsiiFilePath,
@@ -57,6 +58,11 @@ class Command implements yargs.CommandModule {
       type: "boolean",
       default: true,
       desc: "Run `git init` and create an initial commit (use --no-git to disable)",
+    });
+    args.option("interactive", {
+      type: "boolean",
+      default: false,
+      desc: "Enable interactive prompts. Currently only enabled for JS/TS projects (always disabled in CI or non-TTY environments)",
     });
     args.example(
       "projen new awscdk-app-ts",
@@ -252,11 +258,11 @@ function renderDefault(cwd: string, value: string) {
  * @param type Project type
  * @param argv Command line switches
  */
-function commandLineToProps(
+async function commandLineToProps(
   cwd: string,
   type: inventory.ProjectType,
   argv: Record<string, unknown>
-): Record<string, any> {
+): Promise<Record<string, any>> {
   const props: Record<string, any> = {};
 
   // initialize props with default values
@@ -283,6 +289,28 @@ function commandLineToProps(
         }
       }
     }
+  }
+
+  const isInteractive =
+    argv.interactive && !process.env.CI && process.stdout.isTTY;
+
+  if (isInteractive) {
+    // when in interactive mode, prompt JS/TS tools to use
+    const jsTools = await cliPrompts.selectJsTools({
+      projectTypeName: type.typename,
+      packageName: props.name,
+    });
+    return jsTools
+      ? {
+          ...props,
+          name: jsTools.projectName,
+          eslint: jsTools.linter === "eslint",
+          prettier: jsTools.formatter === "prettier",
+          jest: jsTools.testTool === "jest",
+          biome: jsTools.linter === "biome",
+          packageManager: jsTools.packageManager,
+        }
+      : props;
   }
 
   return props;
@@ -473,7 +501,7 @@ async function initProject(
   args: any
 ) {
   // convert command line arguments to project props using type information
-  const props = commandLineToProps(baseDir, type, args);
+  const props = await commandLineToProps(baseDir, type, args);
 
   Projects.createProject({
     dir: props.outdir ?? baseDir,

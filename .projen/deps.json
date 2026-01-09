@@ -165,6 +165,10 @@
       "type": "bundled"
     },
     {
+      "name": "consola",
+      "type": "bundled"
+    },
+    {
       "name": "conventional-changelog-config-spec",
       "type": "bundled"
     },
