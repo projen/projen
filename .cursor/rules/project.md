@@ -49,3 +49,9 @@ This project's configuration is defined in the .projenrc file at the root of the
   - There are no compilation errors (`node ./projen.js compile`)
   - There are no linting errors (usually part of the build, if not, run the linter defined in tasks.json)
   - The full build succeeds (`node ./projen.js build`)
+
+# Developing projen itself
+
+    - **Avoid running a full build**: It takes a long time. Instead run individual tasks directly.
+    - **Run specific tests**: Use `node ./projen.js test test/path-to-test.test.ts` to run specific test files. Prefer this over running all tests.
+    - **Always run the linter**: Use `node ./projen.js eslint` to ensure any code is formatted correctly and follows best practices. Use often.
