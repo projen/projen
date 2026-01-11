@@ -768,6 +768,23 @@ exports[`inventory 1`] = `
         "switch": "parent-pom",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -1975,6 +1992,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PoetryPyprojectOptionsWithoutDeps",
         "switch": "poetry-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -4694,6 +4728,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -8009,6 +8060,23 @@ exports[`inventory 1`] = `
         "switch": "prettier-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -9987,6 +10055,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PoetryPyprojectOptionsWithoutDeps",
         "switch": "poetry-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -12491,6 +12576,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -15574,6 +15676,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -18718,6 +18837,23 @@ exports[`inventory 1`] = `
         "switch": "prettier-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -20436,6 +20572,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "ParentPom",
         "switch": "parent-pom",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -22660,6 +22813,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -25471,6 +25641,23 @@ exports[`inventory 1`] = `
         "switch": "prettier-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -28165,6 +28352,23 @@ exports[`inventory 1`] = `
         "switch": "prettier-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -30847,6 +31051,23 @@ exports[`inventory 1`] = `
         "switch": "prettier-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -31885,6 +32106,23 @@ exports[`inventory 1`] = `
         "switch": "parent",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": ""npx projen"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "featured": false,
@@ -32518,6 +32756,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PoetryPyprojectOptionsWithoutDeps",
         "switch": "poetry-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -34641,6 +34896,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -37323,6 +37595,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -40150,6 +40439,23 @@ exports[`inventory 1`] = `
         "switch": "prettier-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -42951,6 +43257,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
