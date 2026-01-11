@@ -183,35 +183,6 @@ jobs:
         run: cd .repo && node ./projen.js package:go
       - name: Collect go artifact
         run: mv .repo/dist dist
-  post-build-integ:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    if: ${{ !needs.build.outputs.self_mutation_happened }}
-    steps:
-      - uses: actions/setup-python@v6
-        with:
-          python-version: 3.x
-      - uses: actions/setup-go@v6
-        with:
-          go-version: 1.16.x
-      - name: Download build artifacts
-        uses: actions/download-artifact@v5
-        with:
-          name: build-artifact
-          path: dist
-      - name: Restore build artifact permissions
-        run: cd dist && setfacl --restore=permissions-backup.acl
-        continue-on-error: true
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - name: Install dependencies
-        run: npm ci
-      - run: node ./projen.js integ
   build_matrix:
     runs-on: ${{ matrix.runner.os }}
     permissions:

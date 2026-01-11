@@ -13,6 +13,7 @@
 /.github/workflows/auto-queue.yml linguist-generated
 /.github/workflows/build.yml linguist-generated
 /.github/workflows/check-licenses.yml linguist-generated
+/.github/workflows/integ.yml linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
 /.github/workflows/release.yml linguist-generated
 /.github/workflows/upgrade-bundled-main.yml linguist-generated

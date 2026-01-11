@@ -65,6 +65,7 @@ tsconfig.json
 **/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
+!/.github/workflows/integ.yml
 !/src/javascript/biome/biome-config.ts
 !/src/python/pyproject-toml.ts
 !/src/python/uv-config.ts
