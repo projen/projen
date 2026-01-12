@@ -8,7 +8,6 @@ import {
   setupJsiiDocgen,
   setupGitignore,
   setupGitpod,
-  setupIntegTest,
   setupMarkdown,
   setupNpmignore,
   setupUpgradeDependencies,
@@ -16,6 +15,7 @@ import {
   WindowsBuild,
   JsiiFromJsonSchema,
   JsonConst,
+  IntegrationTests,
 } from "./projenrc";
 import {
   AiInstructions,
@@ -224,7 +224,7 @@ setupAllContributors(project);
 
 setupNpmignore(project);
 
-setupIntegTest(project);
+new IntegrationTests(project);
 
 setupBundleTaskRunner(project);
 
