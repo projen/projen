@@ -21,7 +21,6 @@ import {
   AiInstructions,
   javascript,
   JsonPatch,
-  ProjectTree,
   ReleasableCommits,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
@@ -124,6 +123,7 @@ const project = new JsiiProject({
   // since this is projen, we need to always compile before we run
   projenCommand: `node ./${BOOTSTRAP_SCRIPT}`,
   projenrcTs: true,
+  projectTree: true,
 
   // Disable interop since it's disabled available in jsii
   tsconfigDev: {
@@ -279,8 +279,14 @@ if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);
 }
 
-new ProjectTree(project);
+new AiInstructions(project, {
+  instructions: [
+    `# Developing projen itself
 
-new AiInstructions(project);
+    - **Avoid running a full build**: It takes a long time. Instead run individual tasks directly.
+    - **Run specific tests**: Use \`${project.projenCommand} test test/path-to-test.test.ts\` to run specific test files. Prefer this over running all tests.
+    - **Always run the linter**: Use \`${project.projenCommand} eslint\` to ensure any code is formatted correctly and follows best practices. Use often.`,
+  ],
+});
 
 project.synth();

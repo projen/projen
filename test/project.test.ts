@@ -207,3 +207,59 @@ test("github: false disables github integration", () => {
   // THEN
   expect(p.github).toBeUndefined();
 });
+
+test("projectTree: false (default) does not generate tree.json", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  const snapshot = synthSnapshot(p);
+
+  // THEN
+  expect(snapshot[".projen/tree.json"]).toBeUndefined();
+});
+
+test("projectTree: true generates tree.json with project hierarchy", () => {
+  // GIVEN
+  const p = new TestProject({ projectTree: true });
+
+  // WHEN
+  const snapshot = synthSnapshot(p);
+
+  // THEN
+  expect(snapshot[".projen/tree.json"]).toBeDefined();
+  const tree = snapshot[".projen/tree.json"];
+  expect(tree["//"]).toBe(
+    "Experimental. Expect frequent changes to the structure of this file."
+  );
+  // The root key should be the auto-generated construct ID
+  const rootKey = Object.keys(tree).find((k) => k !== "//");
+  expect(rootKey).toBeDefined();
+  const rootNode = tree[rootKey!];
+  expect(rootNode.metadata).toBeDefined();
+  expect(rootNode.metadata.type).toBe("project");
+});
+
+test("projectTree includes subprojects in hierarchy", () => {
+  // GIVEN
+  const p = new TestProject({ projectTree: true });
+  new Project({
+    name: "child-project",
+    parent: p,
+    outdir: "packages/child",
+  });
+
+  // WHEN
+  const snapshot = synthSnapshot(p);
+
+  // THEN
+  const tree = snapshot[".projen/tree.json"];
+  const rootKey = Object.keys(tree).find((k) => k !== "//");
+  const rootNode = tree[rootKey!];
+  expect(rootNode.nodes).toBeDefined();
+  // Find the child project node
+  const childKey = Object.keys(rootNode.nodes!).find((k) =>
+    k.includes("child-project")
+  );
+  expect(childKey).toBeDefined();
+});

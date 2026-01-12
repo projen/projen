@@ -3,7 +3,8 @@
   "JsiiProject#projen@<root>": {
     "metadata": {
       "type": "project",
-      "construct": "JsiiProject"
+      "construct": "JsiiProject",
+      "projen.version": "0.0.0"
     },
     "nodes": {
       "GitAttributesFile@.gitattributes": {
@@ -56,6 +57,19 @@
         "metadata": {
           "type": "component",
           "construct": "Logger"
+        }
+      },
+      "ProjectTree": {
+        "metadata": {
+          "type": "component",
+          "construct": "ProjectTree"
+        }
+      },
+      "JsonFile@.projen--tree.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": ".projen/tree.json"
         }
       },
       "JsonFile@.projen--files.json": {
@@ -488,19 +502,6 @@
         "metadata": {
           "type": "component",
           "construct": "WindowsBuild"
-        }
-      },
-      "ProjectTree": {
-        "metadata": {
-          "type": "component",
-          "construct": "ProjectTree"
-        }
-      },
-      "JsonFile@.projen--tree.json": {
-        "metadata": {
-          "type": "file",
-          "construct": "JsonFile",
-          "path": ".projen/tree.json"
         }
       },
       "AiInstructions#AutoId30": {
