@@ -475,13 +475,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,consola,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-glob fast-json-patch ini parse-conflict-json semver shx xmlbuilder2 yaml yargs"
+          "exec": "npm update @iarna/toml case chalk comment-json consola conventional-changelog-config-spec fast-glob fast-json-patch ini parse-conflict-json semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "node ./projen.js"
