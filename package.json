@@ -45,8 +45,7 @@
     "upgrade": "node ./projen.js upgrade",
     "upgrade-bundled": "node ./projen.js upgrade-bundled",
     "watch": "node ./projen.js watch",
-    "projen": "node ./projen.js",
-    "prepack": "node ./scripts/remove-bundled-dependencies.js"
+    "projen": "node ./projen.js"
   },
   "author": {
     "name": "Amazon Web Services",
