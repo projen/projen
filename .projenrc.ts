@@ -94,6 +94,7 @@ const project = new JsiiProject({
     "esbuild",
     "all-contributors-cli",
     "json2jsii",
+    "tar-stream", // Used by scripts/remove-bundled-dependencies.js
     // Needed to generate biome config
     "@biomejs/biome@^2",
     // used to get current node versions in tests
@@ -198,6 +199,12 @@ project.github
   ?.file?.patch(
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
+
+// Add a post-step to package:js task to clean up bundled dependencies in the tarball
+// This prevents consumers from installing dependencies that are already bundled
+project.tasks
+  .tryFind("package:js")
+  ?.exec("node ./scripts/remove-bundled-dependencies.js dist/js");
 
 setupCheckLicenses(project);
 

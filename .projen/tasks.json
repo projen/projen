@@ -317,6 +317,9 @@
       "steps": [
         {
           "exec": "jsii-pacmak -v --target js"
+        },
+        {
+          "exec": "node ./scripts/remove-bundled-dependencies.js dist/js"
         }
       ]
     },
@@ -450,13 +453,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,tar-stream,ts-jest,ts-node"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript"
+          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier tar-stream ts-jest ts-node typescript"
         },
         {
           "exec": "node ./projen.js"

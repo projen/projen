@@ -135,6 +135,10 @@
       "type": "build"
     },
     {
+      "name": "tar-stream",
+      "type": "build"
+    },
+    {
       "name": "ts-jest",
       "type": "build"
     },
