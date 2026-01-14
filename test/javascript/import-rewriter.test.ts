@@ -76,7 +76,7 @@ describe("ImportRewriter", () => {
     const externalDeps = ["constructs"];
     const vendorPath = "./vendor";
 
-    test("rewrites require for bundled dependency", () => {
+    test("rewrites require for bundled dependency with named export", () => {
       const content = `const YAML = require("yaml");`;
       const rewrittenModules: string[] = [];
 
@@ -88,11 +88,11 @@ describe("ImportRewriter", () => {
         rewrittenModules
       );
 
-      expect(result).toBe(`const YAML = require("./vendor");`);
+      expect(result).toBe(`const YAML = require("./vendor").yaml;`);
       expect(rewrittenModules).toContain("yaml");
     });
 
-    test("rewrites destructured require", () => {
+    test("rewrites destructured require with named export", () => {
       const content = `const { parse, stringify } = require("yaml");`;
       const rewrittenModules: string[] = [];
 
@@ -104,7 +104,9 @@ describe("ImportRewriter", () => {
         rewrittenModules
       );
 
-      expect(result).toBe(`const { parse, stringify } = require("./vendor");`);
+      expect(result).toBe(
+        `const { parse, stringify } = require("./vendor").yaml;`
+      );
       expect(rewrittenModules).toContain("yaml");
     });
 
@@ -172,7 +174,7 @@ describe("ImportRewriter", () => {
       expect(rewrittenModules).toHaveLength(0);
     });
 
-    test("rewrites multiple requires in same file", () => {
+    test("rewrites multiple requires in same file with named exports", () => {
       const content = `const YAML = require("yaml");
 const semver = require("semver");
 const { Construct } = require("constructs");`;
@@ -186,8 +188,8 @@ const { Construct } = require("constructs");`;
         rewrittenModules
       );
 
-      expect(result).toBe(`const YAML = require("./vendor");
-const semver = require("./vendor");
+      expect(result).toBe(`const YAML = require("./vendor").yaml;
+const semver = require("./vendor").semver;
 const { Construct } = require("constructs");`);
       expect(rewrittenModules).toContain("yaml");
       expect(rewrittenModules).toContain("semver");
@@ -205,11 +207,11 @@ const { Construct } = require("constructs");`);
         rewrittenModules
       );
 
-      expect(result).toBe(`const YAML = require("./vendor");`);
+      expect(result).toBe(`const YAML = require("./vendor").yaml;`);
       expect(rewrittenModules).toContain("yaml");
     });
 
-    test("handles subpath imports", () => {
+    test("handles subpath imports with named export", () => {
       const content = `const { deepClone } = require("fast-json-patch");`;
       const rewrittenModules: string[] = [];
 
@@ -221,7 +223,9 @@ const { Construct } = require("constructs");`);
         rewrittenModules
       );
 
-      expect(result).toBe(`const { deepClone } = require("./vendor");`);
+      expect(result).toBe(
+        `const { deepClone } = require("./vendor").fast_json_patch;`
+      );
       expect(rewrittenModules).toContain("fast-json-patch");
     });
 
@@ -239,6 +243,31 @@ const { parse } = require("yaml");`;
       );
 
       expect(rewrittenModules.filter((m) => m === "yaml")).toHaveLength(1);
+    });
+  });
+
+  describe("moduleNameToVendorKey", () => {
+    test("converts simple package names", () => {
+      expect(ImportRewriter.moduleNameToVendorKey("yaml")).toBe("yaml");
+      expect(ImportRewriter.moduleNameToVendorKey("semver")).toBe("semver");
+    });
+
+    test("converts hyphenated package names", () => {
+      expect(ImportRewriter.moduleNameToVendorKey("fast-glob")).toBe(
+        "fast_glob"
+      );
+      expect(ImportRewriter.moduleNameToVendorKey("fast-json-patch")).toBe(
+        "fast_json_patch"
+      );
+    });
+
+    test("converts scoped package names", () => {
+      expect(ImportRewriter.moduleNameToVendorKey("@iarna/toml")).toBe(
+        "iarna_toml"
+      );
+      expect(ImportRewriter.moduleNameToVendorKey("@scope/package")).toBe(
+        "scope_package"
+      );
     });
   });
 
@@ -276,7 +305,7 @@ const { parse } = require("yaml");`;
       expect(result.rewrittenModules).toContain("yaml");
 
       const newContent = fs.readFileSync(filePath, "utf-8");
-      expect(newContent).toBe(`const YAML = require("./vendor");`);
+      expect(newContent).toBe(`const YAML = require("./vendor").yaml;`);
     });
 
     test("does not write file if no changes", () => {
@@ -343,14 +372,14 @@ const { parse } = require("yaml");`;
         path.join(libDir, "index.js"),
         "utf-8"
       );
-      expect(rootContent).toBe(`const YAML = require("./vendor");`);
+      expect(rootContent).toBe(`const YAML = require("./vendor").yaml;`);
 
       // Check nested file
       const nestedContent = fs.readFileSync(
         path.join(subDir, "util.js"),
         "utf-8"
       );
-      expect(nestedContent).toBe(`const semver = require("../vendor");`);
+      expect(nestedContent).toBe(`const semver = require("../vendor").semver;`);
     });
 
     test("returns empty result for non-existent directory", () => {
@@ -400,7 +429,7 @@ const { Construct } = require("constructs");`
       expect(result.totalRewritten).toBe(1);
 
       const content = fs.readFileSync(path.join(libDir, "index.js"), "utf-8");
-      expect(content).toContain(`require("./vendor")`);
+      expect(content).toContain(`require("./vendor").yaml`);
       expect(content).toContain(`require("constructs")`);
     });
 

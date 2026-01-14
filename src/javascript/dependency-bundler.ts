@@ -353,8 +353,15 @@ console.log('Generated vendor entry point with ' + deps.length + ' dependencies'
     });
 
     // Generate the rewrite script inline with error handling
-    const bundledDepsJson = JSON.stringify(this.bundledDeps);
-    const externalDepsJson = JSON.stringify(this.externalDeps);
+    // Escape double quotes for shell embedding
+    const bundledDepsJson = JSON.stringify(this.bundledDeps).replace(
+      /"/g,
+      '\\"'
+    );
+    const externalDepsJson = JSON.stringify(this.externalDeps).replace(
+      /"/g,
+      '\\"'
+    );
 
     const script = `
 try {
@@ -391,7 +398,11 @@ try {
         "Transform package.json for publishing (remove bundled deps)",
     });
 
-    const bundledDepsJson = JSON.stringify(this.bundledDeps);
+    // Escape double quotes for shell embedding
+    const bundledDepsJson = JSON.stringify(this.bundledDeps).replace(
+      /"/g,
+      '\\"'
+    );
 
     const script = `
 try {

@@ -180,32 +180,60 @@ export function setupJsiiDocgen(project: NodeProject) {
  * Add a task to upgrade dependencies
  *
  * @param project The project to add the task to
+ * @param bundledDepNames Names of dependencies that are bundled (for separate upgrade workflow)
  */
-export function setupUpgradeDependencies(project: NodeProject) {
+export function setupUpgradeDependencies(
+  project: NodeProject,
+  bundledDepNames: string[] = []
+) {
   const cooldown = 2; //
 
   // Upgrade Dependencies in two parts:
   // a) Upgrade bundled dependencies as a releasable fix
   // b) Upgrade devDependencies as a chore
-  new UpgradeDependencies(project, {
-    taskName: "upgrade-bundled",
-    types: [DependencyType.BUNDLED],
-    cooldown,
-    semanticCommit: "fix",
-    pullRequestTitle: "upgrade bundled dependencies",
-    workflowOptions: {
-      labels: ["auto-approve"],
-      // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
-      schedule: UpgradeDependenciesSchedule.expressions(["0 12 * * *"]),
-    },
-  });
+
+  // If bundled dep names are provided, use them; otherwise fall back to DependencyType.BUNDLED
+  const hasBundledDeps = bundledDepNames.length > 0;
+
+  if (hasBundledDeps) {
+    // New approach: bundled deps are regular runtime deps, filter by name
+    new UpgradeDependencies(project, {
+      taskName: "upgrade-bundled",
+      include: bundledDepNames,
+      cooldown,
+      semanticCommit: "fix",
+      pullRequestTitle: "upgrade bundled dependencies",
+      workflowOptions: {
+        labels: ["auto-approve"],
+        // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
+        schedule: UpgradeDependenciesSchedule.expressions(["0 12 * * *"]),
+      },
+    });
+  } else {
+    // Legacy approach: use DependencyType.BUNDLED
+    new UpgradeDependencies(project, {
+      taskName: "upgrade-bundled",
+      types: [DependencyType.BUNDLED],
+      cooldown,
+      semanticCommit: "fix",
+      pullRequestTitle: "upgrade bundled dependencies",
+      workflowOptions: {
+        labels: ["auto-approve"],
+        // Run projen's daily upgrade (and release) acyclic to the schedule that projects are on so they get updates faster
+        schedule: UpgradeDependenciesSchedule.expressions(["0 12 * * *"]),
+      },
+    });
+  }
+
   new UpgradeDependencies(project, {
     taskName: "upgrade",
     exclude: [
       // exclude the bundled deps
-      ...project.deps.all
-        .filter((d: any) => d.type === DependencyType.BUNDLED)
-        .map((d: any) => d.name),
+      ...(hasBundledDeps
+        ? bundledDepNames
+        : project.deps.all
+            .filter((d: any) => d.type === DependencyType.BUNDLED)
+            .map((d: any) => d.name)),
       // constructs version constraint should not be changed
       "constructs",
     ],

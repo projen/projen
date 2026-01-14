@@ -25,10 +25,53 @@ import {
   ReleasableCommits,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
+import { DependencyBundler } from "./src/javascript";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
 const AUTOMATION_USER = "projen-automation";
 const BOOTSTRAP_SCRIPT = "projen.js";
+
+// Dependencies that will be bundled at build time using esbuild
+// These are kept as regular deps during development for ESLint/TypeScript validation
+// but are inlined into the vendor bundle for publishing
+const BUNDLED_DEPS = [
+  "conventional-changelog-config-spec",
+  "yaml@^2.2.2",
+  "yargs",
+  "case",
+  "fast-glob",
+  "semver",
+  "chalk",
+  "@iarna/toml",
+  "xmlbuilder2",
+  "ini",
+  "fast-json-patch",
+  "comment-json@4.2.2",
+  "parse-conflict-json",
+];
+
+// CLI tools that are bundled via npm's bundledDependencies but NOT via esbuild
+// These are executed as commands, not imported as modules
+const BUNDLED_CLI_TOOLS = ["shx"];
+
+/**
+ * Extract package name from a dependency string, removing version specifiers.
+ * Handles both regular packages (yaml@^2.2.2 -> yaml) and
+ * scoped packages (@iarna/toml@^1.0.0 -> @iarna/toml).
+ */
+function getPackageName(dep: string): string {
+  if (dep.startsWith("@")) {
+    // Scoped package: find the second @ (version specifier) or return the whole string
+    const secondAtIndex = dep.indexOf("@", 1);
+    return secondAtIndex === -1 ? dep : dep.substring(0, secondAtIndex);
+  }
+  // Regular package: find the first @ (version specifier) or return the whole string
+  const atIndex = dep.indexOf("@");
+  return atIndex === -1 ? dep : dep.substring(0, atIndex);
+}
+
+// Extract package names without version specifiers
+const BUNDLED_DEP_NAMES = BUNDLED_DEPS.map(getPackageName);
 
 const project = new JsiiProject({
   name: "projen",
@@ -68,22 +111,10 @@ const project = new JsiiProject({
 
   deps: ["constructs@^10.0.0"],
 
-  bundledDeps: [
-    "conventional-changelog-config-spec",
-    "yaml@^2.2.2",
-    "yargs",
-    "case",
-    "fast-glob",
-    "semver",
-    "chalk",
-    "@iarna/toml",
-    "xmlbuilder2",
-    "ini",
-    "shx",
-    "fast-json-patch",
-    "comment-json@4.2.2",
-    "parse-conflict-json",
-  ],
+  // Bundled dependencies - these are added to bundledDependencies for jsii compatibility
+  // Library deps will be bundled at build time by DependencyBundler into a vendor bundle
+  // CLI tools (shx) are bundled via npm's bundledDependencies only
+  bundledDeps: [...BUNDLED_DEPS, ...BUNDLED_CLI_TOOLS],
 
   devDeps: [
     "@types/conventional-changelog-config-spec",
@@ -201,7 +232,8 @@ project.github
 
 setupCheckLicenses(project);
 
-setupUpgradeDependencies(project);
+// Pass bundled dep names for separate upgrade workflow
+setupUpgradeDependencies(project, BUNDLED_DEP_NAMES);
 
 setupJsiiDocgen(project);
 
@@ -282,5 +314,14 @@ if (project.defaultTask) {
 new ProjectTree(project);
 
 new AiInstructions(project);
+
+// Setup dependency bundling using esbuild vendor bundle approach
+// This replaces the bundledDeps option with build-time bundling
+// Note: CLI tools like 'shx' are excluded as they can't be require()'d
+new DependencyBundler(project, {
+  bundledDeps: BUNDLED_DEP_NAMES,
+  externalDeps: ["constructs"],
+  target: "node16", // Match minNodeVersion
+});
 
 project.synth();

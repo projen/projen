@@ -212,9 +212,25 @@ export class ImportRewriter {
         rewrittenModules.push(baseName);
       }
 
-      // Rewrite to vendor bundle
-      return `require("${vendorPath}")`;
+      // Convert module name to vendor export key
+      // e.g., '@iarna/toml' -> 'iarna_toml', 'fast-glob' -> 'fast_glob'
+      const vendorKey = ImportRewriter.moduleNameToVendorKey(baseName);
+
+      // Rewrite to vendor bundle with named export access
+      return `require("${vendorPath}").${vendorKey}`;
     });
+  }
+
+  /**
+   * Convert a module name to its vendor bundle export key.
+   * This matches the key generation in the vendor entry point.
+   *
+   * @param moduleName The npm module name
+   * @returns The vendor bundle export key
+   */
+  public static moduleNameToVendorKey(moduleName: string): string {
+    // Remove leading @ for scoped packages and replace non-alphanumeric with _
+    return moduleName.replace(/^@/, "").replace(/[^a-zA-Z0-9_]/g, "_");
   }
 
   /**

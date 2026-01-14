@@ -230,6 +230,9 @@
       "description": "Creates the distribution package",
       "steps": [
         {
+          "spawn": "transform-package-json"
+        },
+        {
           "spawn": "package:js",
           "condition": "node -e \"if (!process.env.CI) process.exit(1)\""
         },
@@ -308,6 +311,12 @@
         },
         {
           "spawn": "default"
+        },
+        {
+          "spawn": "vendor-bundle"
+        },
+        {
+          "spawn": "rewrite-imports"
         }
       ]
     },
@@ -365,6 +374,16 @@
         }
       ]
     },
+    "rewrite-imports": {
+      "name": "rewrite-imports",
+      "description": "Rewrite imports to use vendor bundle",
+      "steps": [
+        {
+          "exec": "node -e \" try {   const { ImportRewriter } = require('./lib/javascript/import-rewriter');   const result = ImportRewriter.rewriteImports({     bundledDeps: [\\\"conventional-changelog-config-spec\\\",\\\"yaml\\\",\\\"yargs\\\",\\\"case\\\",\\\"fast-glob\\\",\\\"semver\\\",\\\"chalk\\\",\\\"@iarna/toml\\\",\\\"xmlbuilder2\\\",\\\"ini\\\",\\\"fast-json-patch\\\",\\\"comment-json\\\",\\\"parse-conflict-json\\\"],     externalDeps: [\\\"constructs\\\"],     libDir: 'lib',     vendorFile: 'vendor.js'   });   console.log('Rewrote ' + result.totalRewritten + ' imports in ' + result.files.length + ' files');   if (result.files.length > 0) {     result.files.forEach(f => console.log('  - ' + f.filePath + ': ' + f.rewrittenModules.join(', ')));   } } catch (e) {   console.error('ERROR: Failed to rewrite imports:', e.message);   console.error('\\nThis may indicate that the lib directory does not exist or ImportRewriter is not available.');   process.exit(1); } \"",
+          "name": "rewrite-imports"
+        }
+      ]
+    },
     "test": {
       "name": "test",
       "description": "Run tests",
@@ -384,6 +403,16 @@
       "steps": [
         {
           "exec": "jest --watch"
+        }
+      ]
+    },
+    "transform-package-json": {
+      "name": "transform-package-json",
+      "description": "Transform package.json for publishing (remove bundled deps)",
+      "steps": [
+        {
+          "exec": "node -e \" try {   const fs = require('fs');   if (!fs.existsSync('package.json')) {     console.error('ERROR: package.json not found');     process.exit(1);   }   const pkgContent = fs.readFileSync('package.json', 'utf-8');   let pkg;   try {     pkg = JSON.parse(pkgContent);   } catch (parseErr) {     console.error('ERROR: Failed to parse package.json:', parseErr.message);     process.exit(1);   }   const { PackageJsonTransformer } = require('./lib/javascript/package-json-transformer');   const result = PackageJsonTransformer.transform(pkg, {     removeDeps: [\\\"conventional-changelog-config-spec\\\",\\\"yaml\\\",\\\"yargs\\\",\\\"case\\\",\\\"fast-glob\\\",\\\"semver\\\",\\\"chalk\\\",\\\"@iarna/toml\\\",\\\"xmlbuilder2\\\",\\\"ini\\\",\\\"fast-json-patch\\\",\\\"comment-json\\\",\\\"parse-conflict-json\\\"],     removeBundledDependencies: true   });   fs.writeFileSync('package.json', JSON.stringify(result.packageJson, null, 2) + '\\n');   const removedCount = Object.keys(result.removedDeps).length;   if (removedCount > 0) {     console.log('Removed ' + removedCount + ' bundled dependencies from package.json:');     Object.keys(result.removedDeps).forEach(d => console.log('  - ' + d));   } else {     console.log('No bundled dependencies found in package.json to remove');   } } catch (e) {   console.error('ERROR: Failed to transform package.json:', e.message);   process.exit(1); } \"",
+          "name": "transform-package-json"
         }
       ]
     },
@@ -414,13 +443,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node,shx"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript"
+          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript shx"
         },
         {
           "exec": "node ./projen.js"
@@ -439,19 +468,37 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=conventional-changelog-config-spec,yaml,yargs,case,fast-glob,semver,chalk,@iarna/toml,xmlbuilder2,ini,fast-json-patch,comment-json,parse-conflict-json"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-glob fast-json-patch ini parse-conflict-json semver shx xmlbuilder2 yaml yargs"
+          "exec": "npm update conventional-changelog-config-spec yaml yargs case fast-glob semver chalk @iarna/toml xmlbuilder2 ini fast-json-patch comment-json parse-conflict-json"
         },
         {
           "exec": "node ./projen.js"
         },
         {
           "spawn": "post-upgrade"
+        }
+      ]
+    },
+    "vendor-bundle": {
+      "name": "vendor-bundle",
+      "description": "Generate vendor bundle from bundled dependencies",
+      "steps": [
+        {
+          "exec": "node -e \" const fs = require('fs'); const path = require('path'); const deps = ['conventional-changelog-config-spec','yaml','yargs','case','fast-glob','semver','chalk','@iarna/toml','xmlbuilder2','ini','fast-json-patch','comment-json','parse-conflict-json']; const lines = ['// Auto-generated vendor entry point']; const missing = []; for (const dep of deps) {   try {     require.resolve(dep);     const id = dep.replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '_');     lines.push('module.exports.' + id + ' = require(\\\"' + dep + '\\\");');   } catch (e) {     missing.push(dep);   } } if (missing.length > 0) {   console.error('ERROR: The following bundled dependencies are not installed:');   missing.forEach(d => console.error('  - ' + d));   console.error('\\nPlease run your package manager install command first.');   process.exit(1); } const dir = path.dirname('lib/.vendor-entry.js'); if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync('lib/.vendor-entry.js', lines.join('\\n') + '\\n'); console.log('Generated vendor entry point with ' + deps.length + ' dependencies'); \"",
+          "name": "generate-vendor-entry"
+        },
+        {
+          "exec": "esbuild lib/.vendor-entry.js --bundle --outfile=lib/vendor.js --platform=node --format=cjs --target=node16 --tree-shaking=true --external:constructs",
+          "name": "esbuild-vendor"
+        },
+        {
+          "exec": "rm -f lib/.vendor-entry.js",
+          "name": "cleanup-vendor-entry"
         }
       ]
     },

@@ -15931,6 +15931,7 @@ new javascript.ImportRewriter()
 | --- | --- |
 | <code><a href="#projen.javascript.ImportRewriter.calculateRelativePath">calculateRelativePath</a></code> | Calculate the relative path from a file to the vendor bundle. |
 | <code><a href="#projen.javascript.ImportRewriter.getBaseModuleName">getBaseModuleName</a></code> | Get the base module name from an import path. |
+| <code><a href="#projen.javascript.ImportRewriter.moduleNameToVendorKey">moduleNameToVendorKey</a></code> | Convert a module name to its vendor bundle export key. |
 | <code><a href="#projen.javascript.ImportRewriter.rewriteContent">rewriteContent</a></code> | Rewrite the content of a JavaScript file. |
 | <code><a href="#projen.javascript.ImportRewriter.rewriteFile">rewriteFile</a></code> | Rewrite imports in a single JavaScript file. |
 | <code><a href="#projen.javascript.ImportRewriter.rewriteImports">rewriteImports</a></code> | Rewrite imports in all JavaScript files in the lib directory. |
@@ -15988,6 +15989,26 @@ Handles scoped packages and subpaths.
 - *Type:* string
 
 The import path.
+
+---
+
+##### `moduleNameToVendorKey` <a name="moduleNameToVendorKey" id="projen.javascript.ImportRewriter.moduleNameToVendorKey"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.ImportRewriter.moduleNameToVendorKey(moduleName: string)
+```
+
+Convert a module name to its vendor bundle export key.
+
+This matches the key generation in the vendor entry point.
+
+###### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.javascript.ImportRewriter.moduleNameToVendorKey.parameter.moduleName"></a>
+
+- *Type:* string
+
+The npm module name.
 
 ---
 

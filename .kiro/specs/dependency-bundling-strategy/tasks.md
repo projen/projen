@@ -92,24 +92,24 @@ This implementation plan transforms projen's dependency bundling from npm's `bun
 - [x] 7. Checkpoint - Ensure DependencyBundler tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 8. Update projen's own configuration to use new bundling
-  - [ ] 8.1 Modify .projenrc.ts to use DependencyBundler
+- [x] 8. Update projen's own configuration to use new bundling
+  - [x] 8.1 Modify .projenrc.ts to use DependencyBundler
     - Replace bundledDeps with new DependencyBundler component
     - Configure bundled dependencies list
     - Configure external dependencies (constructs)
     - _Requirements: 1.1, 2.1, 3.1_
 
-  - [ ] 8.2 Update package.json handling
+  - [x] 8.2 Update package.json handling
     - Ensure bundled deps remain in dependencies during development
     - Ensure @types packages remain as devDependencies
     - _Requirements: 3.1, 3.2, 3.3, 5.1, 5.2_
 
-  - [ ] 8.3 Remove bundledDependencies from JsiiProject options
+  - [x] 8.3 Remove bundledDependencies from JsiiProject options
     - Update JsiiProject to not use bundledDeps option
     - Ensure backward compatibility for existing projects
     - _Requirements: 2.2_
 
-- [ ] 9. Checkpoint - Verify projen builds successfully
+- [x] 9. Checkpoint - Verify projen builds successfully
   - Run `node ./projen.js build`
   - Verify vendor.js is generated
   - Verify imports are rewritten

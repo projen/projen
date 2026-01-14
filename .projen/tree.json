@@ -550,6 +550,12 @@
           "construct": "AiInstructionsFile",
           "path": "AGENTS.md"
         }
+      },
+      "DependencyBundler#AutoId31": {
+        "metadata": {
+          "type": "component",
+          "construct": "DependencyBundler"
+        }
       }
     }
   }
