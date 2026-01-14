@@ -319,8 +319,7 @@
           "exec": "jsii-pacmak -v --target js"
         },
         {
-          "exec": "node ../../scripts/remove-bundled-dependencies.js",
-          "cwd": "dist/js"
+          "exec": "node ./scripts/remove-bundled-dependencies.js dist/js"
         }
       ]
     },

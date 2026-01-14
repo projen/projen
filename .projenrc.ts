@@ -203,9 +203,7 @@ project.github
 // This prevents consumers from installing dependencies that are already bundled
 project.tasks
   .tryFind("package:js")
-  ?.exec("node ../../scripts/remove-bundled-dependencies.js", {
-    cwd: "dist/js",
-  });
+  ?.exec("node ./scripts/remove-bundled-dependencies.js dist/js");
 
 setupCheckLicenses(project);
 
