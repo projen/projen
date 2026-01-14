@@ -199,6 +199,10 @@ project.github
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
 
+// Add prepack script to remove bundled dependencies from dependencies array
+// This prevents consumers from installing dependencies that are already bundled
+project.setScript("prepack", "node ./scripts/remove-bundled-dependencies.js");
+
 setupCheckLicenses(project);
 
 setupUpgradeDependencies(project);
