@@ -286,6 +286,11 @@ if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);
 }
 
+// This is the projen repo itself.
+// We cannot report a version here as it would change during the release version bump and cause the tampering check to fail.
+// Instead we report the repo as fake version. Has no effect on the published package.
+project.node.addMetadata("projen.version", "https://github.com/projen/projen");
+
 new AiInstructions(project, {
   instructions: [
     `# Developing projen itself
