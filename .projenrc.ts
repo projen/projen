@@ -94,6 +94,7 @@ const project = new JsiiProject({
     "esbuild",
     "all-contributors-cli",
     "json2jsii",
+    "tar-stream", // Used by scripts/remove-bundled-dependencies.js
     // Needed to generate biome config
     "@biomejs/biome@^2",
     // used to get current node versions in tests

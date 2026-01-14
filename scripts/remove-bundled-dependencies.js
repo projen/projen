@@ -10,8 +10,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
-const os = require('os');
+const zlib = require('zlib');
+const tar = require('tar-stream');
 
 // Get directory from command line argument
 const targetDir = process.argv[2];
@@ -39,71 +39,121 @@ if (!tarball) {
 const tarballPath = path.join(fullPath, tarball);
 console.log(`Processing tarball: ${tarball}`);
 
-// Create a temporary directory for working files
-const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-pack-'));
+async function processTarball() {
+  // Read and decompress the tarball
+  const gzipData = fs.readFileSync(tarballPath);
+  const tarData = zlib.gunzipSync(gzipData);
 
-try {
-  const tarPath = path.join(tmpDir, 'archive.tar');
-  
-  // Step 1: Decompress the gzip file
-  execSync(`gzip -d -c "${tarballPath}" > "${tarPath}"`, { stdio: 'pipe' });
-  
-  // Step 2: Extract only package.json from the tar file
-  const pkgJsonPath = path.join(tmpDir, 'package.json');
-  execSync(`tar -xf "${tarPath}" -C "${tmpDir}" --strip-components=1 package/package.json`, { stdio: 'pipe' });
-  
-  if (!fs.existsSync(pkgJsonPath)) {
-    console.error('Error: Could not find package/package.json in tarball');
-    process.exit(1);
-  }
-  
-  // Step 3: Read and modify package.json
-  const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
-  
-  if (pkg.bundledDependencies && pkg.bundledDependencies.length > 0) {
-    const bundled = new Set(pkg.bundledDependencies);
-    const originalDepsCount = Object.keys(pkg.dependencies || {}).length;
-    
-    // Remove bundled dependencies from dependencies
-    if (pkg.dependencies) {
-      for (const dep of bundled) {
-        if (pkg.dependencies[dep]) {
-          delete pkg.dependencies[dep];
+  // Parse the tar file and collect all entries
+  const entries = [];
+  let packageJsonEntry = null;
+  let packageJsonContent = null;
+
+  const extract = tar.extract();
+
+  return new Promise((resolve, reject) => {
+    extract.on('entry', (header, stream, next) => {
+      const chunks = [];
+      
+      stream.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+      
+      stream.on('end', () => {
+        const content = Buffer.concat(chunks);
+        
+        if (header.name === 'package/package.json') {
+          packageJsonEntry = header;
+          packageJsonContent = content.toString('utf8');
+        } else {
+          entries.push({ header, content });
         }
+        
+        next();
+      });
+      
+      stream.resume();
+    });
+
+    extract.on('finish', () => {
+      if (!packageJsonContent) {
+        reject(new Error('Could not find package/package.json in tarball'));
+        return;
       }
-    }
+
+      // Parse and modify package.json
+      const pkg = JSON.parse(packageJsonContent);
+
+      if (pkg.bundledDependencies && pkg.bundledDependencies.length > 0) {
+        const bundled = new Set(pkg.bundledDependencies);
+        const originalDepsCount = Object.keys(pkg.dependencies || {}).length;
+        
+        // Remove bundled dependencies from dependencies
+        if (pkg.dependencies) {
+          for (const dep of bundled) {
+            if (pkg.dependencies[dep]) {
+              delete pkg.dependencies[dep];
+            }
+          }
+        }
+        
+        const newDepsCount = Object.keys(pkg.dependencies || {}).length;
+        const removed = originalDepsCount - newDepsCount;
+        
+        if (removed > 0) {
+          console.log(`Removed ${removed} bundled dependencies from tarball package.json`);
+          
+          // Create new package.json content
+          const newPackageJsonContent = JSON.stringify(pkg, null, 2) + '\n';
+          const newPackageJsonBuffer = Buffer.from(newPackageJsonContent, 'utf8');
+          
+          // Update the header size
+          packageJsonEntry.size = newPackageJsonBuffer.length;
+          
+          // Create a new tarball with all entries
+          const pack = tar.pack();
+          
+          // Add all entries except package.json
+          for (const { header, content } of entries) {
+            pack.entry(header, content);
+          }
+          
+          // Add the modified package.json
+          pack.entry(packageJsonEntry, newPackageJsonBuffer);
+          
+          pack.finalize();
+          
+          // Collect the new tar data
+          const newTarChunks = [];
+          pack.on('data', (chunk) => {
+            newTarChunks.push(chunk);
+          });
+          
+          pack.on('end', () => {
+            const newTarData = Buffer.concat(newTarChunks);
+            const newGzipData = zlib.gzipSync(newTarData);
+            fs.writeFileSync(tarballPath, newGzipData);
+            console.log(`Repacked tarball: ${tarball}`);
+            resolve();
+          });
+        } else {
+          console.log('No bundled dependencies to remove');
+          resolve();
+        }
+      } else {
+        console.log('No bundled dependencies found, skipping cleanup');
+        resolve();
+      }
+    });
+
+    extract.on('error', reject);
     
-    const newDepsCount = Object.keys(pkg.dependencies || {}).length;
-    const removed = originalDepsCount - newDepsCount;
-    
-    if (removed > 0) {
-      console.log(`Removed ${removed} bundled dependencies from tarball package.json`);
-      
-      // Step 4: Write the modified package.json
-      fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2) + '\n');
-      
-      // Step 5: Create the directory structure for tar
-      const packageDir = path.join(tmpDir, 'package');
-      fs.mkdirSync(packageDir);
-      fs.renameSync(pkgJsonPath, path.join(packageDir, 'package.json'));
-      
-      // Step 6: Update the tar file with the modified package.json
-      execSync(`tar -uf "${tarPath}" -C "${tmpDir}" package/package.json`, { stdio: 'pipe' });
-      
-      // Step 7: Recompress the tar file
-      execSync(`gzip "${tarPath}"`, { stdio: 'pipe' });
-      
-      // Step 8: Replace the original tarball
-      fs.renameSync(`${tarPath}.gz`, tarballPath);
-      
-      console.log(`Repacked tarball: ${tarball}`);
-    } else {
-      console.log('No bundled dependencies to remove');
-    }
-  } else {
-    console.log('No bundled dependencies found, skipping cleanup');
-  }
-} finally {
-  // Clean up temp directory
-  fs.rmSync(tmpDir, { recursive: true, force: true });
+    // Write the tar data to the extract stream
+    extract.end(tarData);
+  });
 }
+
+processTarball().catch((err) => {
+  console.error('Error:', err.message);
+  process.exit(1);
+});
