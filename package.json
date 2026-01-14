@@ -84,7 +84,6 @@
     "license-checker": "^25.0.1",
     "markmac": "^0.1.659",
     "prettier": "^2.8.8",
-    "tar-stream": "^3.1.7",
     "ts-jest": "^29",
     "ts-node": "^10.9.2",
     "typescript": "5.9.x"
