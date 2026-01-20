@@ -75,6 +75,27 @@ describe("merge-queue", () => {
     expect(autoQueue).toMatchSnapshot();
   });
 
+  test("auto queue workflow uses environment from credentials", async () => {
+    const project = new TestProject({
+      githubOptions: {
+        mergeQueue: true,
+        mergeQueueOptions: {
+          autoQueueOptions: {
+            projenCredentials: GithubCredentials.fromPersonalAccessToken({
+              secret: "shh",
+              environment: "auto-queue-env",
+            }),
+          },
+        },
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    const autoQueue = snapshot[`.github/workflows/auto-queue.yml`];
+
+    expect(autoQueue).toContain("environment: auto-queue-env");
+  });
+
   test("auto queue workflow generated with mergeQueue targetBranches", async () => {
     const project = new NodeProject({
       buildWorkflow: true,

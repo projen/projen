@@ -1,5 +1,5 @@
 // import * as yaml from "yaml";
-import { PullRequestBackport } from "../../src/github";
+import { GithubCredentials, PullRequestBackport } from "../../src/github";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
@@ -119,6 +119,23 @@ test("can be added via githubOptions", () => {
 
   const settings = snapshot[".backportrc.json"];
   expect(settings.targetPRLabels).toEqual(["magic"]);
+});
+
+test("uses environment from projenCredentials", () => {
+  // GIVEN
+  const project = createProject({
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromPersonalAccessToken({
+        environment: "backport-env",
+      }),
+      pullRequestBackport: true,
+    },
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  const workflow = snapshot[".github/workflows/backport.yml"];
+  expect(workflow).toContain("environment: backport-env");
 });
 
 type ProjectOptions = Omit<
