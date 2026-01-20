@@ -5277,7 +5277,7 @@ public readonly group: string;
 Concurrency group controls which workflow runs will share the same concurrency limit.
 
 For example, if you specify `${{ github.workflow }}-${{ github.ref }}`, workflow runs triggered
-on the same branch cannot run concurrenty, but workflows runs triggered on different branches can.
+on the same branch cannot run concurrently, but workflows runs triggered on different branches can.
 
 > [https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-concurrency#example-concurrency-groups)
 
@@ -6318,6 +6318,7 @@ const githubCredentialsAppOptions: github.GithubCredentialsAppOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubCredentialsAppOptions.property.appIdSecret">appIdSecret</a></code> | <code>string</code> | The secret containing the GitHub App ID. |
+| <code><a href="#projen.github.GithubCredentialsAppOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment the secrets are added to. |
 | <code><a href="#projen.github.GithubCredentialsAppOptions.property.owner">owner</a></code> | <code>string</code> | The owner of the GitHub App installation. |
 | <code><a href="#projen.github.GithubCredentialsAppOptions.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.AppPermissions">AppPermissions</a></code> | The permissions granted to the token. |
 | <code><a href="#projen.github.GithubCredentialsAppOptions.property.privateKeySecret">privateKeySecret</a></code> | <code>string</code> | The secret containing the GitHub App private key. |
@@ -6335,6 +6336,21 @@ public readonly appIdSecret: string;
 - *Default:* "PROJEN_APP_ID"
 
 The secret containing the GitHub App ID.
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.GithubCredentialsAppOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used
+
+The GitHub Actions environment the secrets are added to.
+
+This can be used to add explicit approval steps to access the secrets.
 
 ---
 
@@ -6408,7 +6424,23 @@ const githubCredentialsPersonalAccessTokenOptions: github.GithubCredentialsPerso
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.GithubCredentialsPersonalAccessTokenOptions.property.secret">secret</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.GithubCredentialsPersonalAccessTokenOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment the secrets is added to. |
+| <code><a href="#projen.github.GithubCredentialsPersonalAccessTokenOptions.property.secret">secret</a></code> | <code>string</code> | The name of the secret that holds the GitHub personal access token. |
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.GithubCredentialsPersonalAccessTokenOptions.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+- *Default:* no environment used
+
+The GitHub Actions environment the secrets is added to.
+
+This can be used to add explicit approval steps to access the secret.
 
 ---
 
@@ -6419,6 +6451,9 @@ public readonly secret: string;
 ```
 
 - *Type:* string
+- *Default:* "PROJEN_GITHUB_TOKEN"
+
+The name of the secret that holds the GitHub personal access token.
 
 ---
 
@@ -9706,6 +9741,7 @@ secret can be specified here.
 | --- | --- | --- |
 | <code><a href="#projen.github.GithubCredentials.property.setupSteps">setupSteps</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Setup steps to obtain GitHub credentials. |
 | <code><a href="#projen.github.GithubCredentials.property.tokenRef">tokenRef</a></code> | <code>string</code> | The value to use in a workflow when a GitHub token is expected. |
+| <code><a href="#projen.github.GithubCredentials.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment the credentials have been added to. |
 
 ---
 
@@ -9733,6 +9769,18 @@ The value to use in a workflow when a GitHub token is expected.
 
 This
 typically looks like "${{ some.path.to.a.value }}".
+
+---
+
+##### `environment`<sup>Optional</sup> <a name="environment" id="projen.github.GithubCredentials.property.environment"></a>
+
+```typescript
+public readonly environment: string;
+```
+
+- *Type:* string
+
+The GitHub Actions environment the credentials have been added to.
 
 ---
 

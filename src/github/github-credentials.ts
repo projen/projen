@@ -5,7 +5,21 @@ import { JobStep, AppPermissions } from "./workflows-model";
  * Options for `GithubCredentials.fromPersonalAccessToken`
  */
 export interface GithubCredentialsPersonalAccessTokenOptions {
+  /**
+   * The name of the secret that holds the GitHub personal access token.
+   *
+   * @default "PROJEN_GITHUB_TOKEN"
+   */
   readonly secret?: string;
+
+  /**
+   * The GitHub Actions environment the secrets is added to.
+   *
+   * This can be used to add explicit approval steps to access the secret.
+   *
+   * @default - no environment used
+   */
+  readonly environment?: string;
 }
 
 /**
@@ -49,6 +63,15 @@ export interface GithubCredentialsAppOptions {
    * @default - all permissions granted to the app
    */
   readonly permissions?: AppPermissions;
+
+  /**
+   * The GitHub Actions environment the secrets are added to.
+   *
+   * This can be used to add explicit approval steps to access the secrets.
+   *
+   * @default - no environment used
+   */
+  readonly environment?: string;
 }
 
 /**
@@ -70,6 +93,7 @@ export class GithubCredentials {
     return new GithubCredentials({
       setupSteps: [],
       tokenRef: `\${{ secrets.${options.secret ?? "PROJEN_GITHUB_TOKEN"} }}`,
+      environment: options.environment,
     });
   }
 
@@ -121,6 +145,7 @@ export class GithubCredentials {
         },
       ],
       tokenRef: "${{ steps.generate_token.outputs.token }}",
+      environment: options.environment,
     });
   }
 
@@ -140,9 +165,17 @@ export class GithubCredentials {
   public get tokenRef(): string {
     return this.options.tokenRef;
   }
+
+  /**
+   * The GitHub Actions environment the credentials have been added to.
+   */
+  public get environment(): string | undefined {
+    return this.options.environment;
+  }
 }
 
 interface GithubCredentialsOptions {
   readonly setupSteps: JobStep[];
   readonly tokenRef: string;
+  readonly environment?: string;
 }

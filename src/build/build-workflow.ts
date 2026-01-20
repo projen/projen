@@ -371,6 +371,7 @@ export class BuildWorkflow extends Component {
   }
 
   private addSelfMutationJob(options: BuildWorkflowOptions) {
+    const credentials = this.workflow.projenCredentials;
     this.workflow.addJob("self-mutation", {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
@@ -378,11 +379,12 @@ export class BuildWorkflow extends Component {
       },
       needs: [BUILD_JOBID],
       if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
+      environment: credentials.environment,
       steps: [
-        ...this.workflow.projenCredentials.setupSteps,
+        ...credentials.setupSteps,
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
-          token: this.workflow.projenCredentials.tokenRef,
+          token: credentials.tokenRef,
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
           lfs: this.github.downloadLfs,
