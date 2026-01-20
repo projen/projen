@@ -162,6 +162,7 @@ export class GitHub extends Component {
       );
     }
 
+    // @deprecated
     if (options.projenTokenSecret) {
       this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
         secret: options.projenTokenSecret,
@@ -169,6 +170,7 @@ export class GitHub extends Component {
     } else if (options.projenCredentials) {
       this.projenCredentials = options.projenCredentials;
     } else {
+      // default
       this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
         secret: "PROJEN_GITHUB_TOKEN",
       });

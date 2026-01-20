@@ -48,6 +48,7 @@ export class WorkflowJobs {
       name: jobName,
       if: `\${{ needs.${options.patch.jobId}.outputs.${options.patch.outputName} }}`,
       needs: [options.patch.jobId],
+      environment: options.credentials?.environment,
       permissions,
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       steps,
