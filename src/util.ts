@@ -268,6 +268,10 @@ export function deepMerge(
 ) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
     for (const key of Object.keys(source)) {
+      // Prevent prototype pollution by blocking dangerous keys
+      if (key === "__proto__" || key === "constructor" || key === "prototype") {
+        continue;
+      }
       const value = source[key];
 
       // if the current value is a plain object, we recursively merge it
