@@ -19,6 +19,7 @@ import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
+const GITHUB_PACKAGES_MAVEN_HOST = "maven.pkg.github.com";
 const ARTIFACTS_DOWNLOAD_DIR = "dist";
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = "https://maven.pkg.github.com";
 const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
@@ -479,9 +480,21 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToMaven(options: MavenPublishOptions = {}) {
-    const isGitHubPackages = options.mavenRepositoryUrl?.startsWith(
-      GITHUB_PACKAGES_MAVEN_REPOSITORY
-    );
+    const isGitHubPackages = (() => {
+      const repoUrl = options.mavenRepositoryUrl;
+      if (!repoUrl) {
+        return false;
+      }
+      try {
+        const parsed = new URL(repoUrl);
+        return (
+          parsed.protocol === "https:" &&
+          parsed.hostname === GITHUB_PACKAGES_MAVEN_HOST
+        );
+      } catch {
+        return false;
+      }
+    })();
     const isGitHubActor =
       isGitHubPackages && options.mavenUsername == undefined;
     const mavenServerId =
