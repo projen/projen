@@ -18,11 +18,30 @@ import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
-const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
+
+/**
+ * Checks if a URL's host matches the expected host exactly.
+ * @param url The URL to check
+ * @param expectedHost The expected host (e.g., "npm.pkg.github.com")
+ * @returns true if the URL's host matches exactly
+ */
+function urlHostMatches(
+  url: string | undefined,
+  expectedHost: string
+): boolean {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url.includes("://") ? url : `https://${url}`);
+    return parsed.host === expectedHost;
+  } catch {
+    return false;
+  }
+}
+const GITHUB_PACKAGES_NPM = "npm.pkg.github.com";
+const GITHUB_PACKAGES_MAVEN = "maven.pkg.github.com";
+const GITHUB_PACKAGES_NUGET = "nuget.pkg.github.com";
 const ARTIFACTS_DOWNLOAD_DIR = "dist";
-const GITHUB_PACKAGES_MAVEN_REPOSITORY = "https://maven.pkg.github.com";
-const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
-const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
+const AWS_CODEARTIFACT_REGISTRY_REGEX = /\.codeartifact\..*\.amazonaws\.com/;
 const PUBLIB_TOOLCHAIN: Record<string, Tools> = {
   js: {},
   java: { java: { version: "11" } },
@@ -322,8 +341,9 @@ export class Publisher extends Component {
     const trustedPublisher = options.trustedPublishing ? "true" : undefined;
     const npmProvenance = options.npmProvenance ? "true" : undefined;
 
-    const isGitHubPackages = options.registry?.startsWith(
-      GITHUB_PACKAGES_REGISTRY
+    const isGitHubPackages = urlHostMatches(
+      options.registry,
+      GITHUB_PACKAGES_NPM
     );
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
     const isAwsCodeArtifactWithOidc =
@@ -433,8 +453,9 @@ export class Publisher extends Component {
       );
     }
 
-    const isGitHubPackages = options.nugetServer?.startsWith(
-      GITHUB_PACKAGES_NUGET_REPOSITORY
+    const isGitHubPackages = urlHostMatches(
+      options.nugetServer,
+      GITHUB_PACKAGES_NUGET
     );
     const needsIdTokenWrite = options.trustedPublishing;
 
@@ -479,8 +500,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToMaven(options: MavenPublishOptions = {}) {
-    const isGitHubPackages = options.mavenRepositoryUrl?.startsWith(
-      GITHUB_PACKAGES_MAVEN_REPOSITORY
+    const isGitHubPackages = urlHostMatches(
+      options.mavenRepositoryUrl,
+      GITHUB_PACKAGES_MAVEN
     );
     const isGitHubActor =
       isGitHubPackages && options.mavenUsername == undefined;
@@ -1389,8 +1411,12 @@ interface VersionArtifactOptions {
  * @param registryUrl url of registry
  * @returns true for AWS CodeArtifact
  */
-export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
-  return registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl);
+export function isAwsCodeArtifactRegistry(
+  registryUrl: string | undefined
+): boolean {
+  return Boolean(
+    registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl)
+  );
 }
 
 /**
