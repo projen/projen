@@ -3142,6 +3142,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-java@v5
@@ -3161,13 +3162,10 @@ jobs:
         continue-on-error: true
       - name: Release
         env:
-          MAVEN_SERVER_ID: central-ossrh
+          MAVEN_SERVER_ID: github
           MAVEN_REPOSITORY_URL: maven.pkg.github.com
-          MAVEN_GPG_PRIVATE_KEY: \${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: \${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}
-          MAVEN_PASSWORD: \${{ secrets.MAVEN_PASSWORD }}
-          MAVEN_USERNAME: \${{ secrets.MAVEN_USERNAME }}
-          MAVEN_STAGING_PROFILE_ID: \${{ secrets.MAVEN_STAGING_PROFILE_ID }}
+          MAVEN_PASSWORD: \${{ secrets.GITHUB_TOKEN }}
+          MAVEN_USERNAME: \${{ github.actor }}
         run: npx -p publib@latest publib-maven
   release_nuget:
     name: Publish to NuGet Gallery
@@ -3175,6 +3173,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v5
@@ -3193,7 +3192,7 @@ jobs:
         continue-on-error: true
       - name: Release
         env:
-          NUGET_API_KEY: \${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: \${{ secrets.GITHUB_TOKEN }}
           NUGET_SERVER: nuget.pkg.github.com
         run: npx -p publib@latest publib-nuget
 ",
@@ -3316,15 +3315,12 @@ node_modules/
         "description": "Publish this package to Maven Central",
         "env": {
           "MAVEN_REPOSITORY_URL": "maven.pkg.github.com",
-          "MAVEN_SERVER_ID": "central-ossrh",
+          "MAVEN_SERVER_ID": "github",
         },
         "name": "publish:maven",
         "requiredEnv": [
-          "MAVEN_GPG_PRIVATE_KEY",
-          "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
           "MAVEN_PASSWORD",
           "MAVEN_USERNAME",
-          "MAVEN_STAGING_PROFILE_ID",
         ],
         "steps": [
           {
