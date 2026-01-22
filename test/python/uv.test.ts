@@ -1,5 +1,6 @@
 import * as TOML from "@iarna/toml";
 import { TestPythonProject } from "./util";
+import { AnnotationStyle } from "../../src/python/uv-config";
 import { synthSnapshot } from "../util";
 
 test("uv enabled", () => {
@@ -131,7 +132,7 @@ test("uv enabled with uv-specific options", () => {
         },
         pip: {
           allExtras: true,
-          annotationStyle: "line",
+          annotationStyle: AnnotationStyle.LINE,
           dependencyMetadata: [
             {
               name: "flask",

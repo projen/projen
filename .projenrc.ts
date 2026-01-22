@@ -8,7 +8,6 @@ import {
   setupJsiiDocgen,
   setupGitignore,
   setupGitpod,
-  setupIntegTest,
   setupMarkdown,
   setupNpmignore,
   setupUpgradeDependencies,
@@ -16,18 +15,19 @@ import {
   WindowsBuild,
   JsiiFromJsonSchema,
   JsonConst,
+  IntegrationTests,
 } from "./projenrc";
 import {
   AiInstructions,
   javascript,
   JsonPatch,
-  ProjectTree,
   ReleasableCommits,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
-const bootstrapScriptFile = "projen.js";
+const AUTOMATION_USER = "projen-automation";
+const BOOTSTRAP_SCRIPT = "projen.js";
 
 const project = new JsiiProject({
   name: "projen",
@@ -55,7 +55,7 @@ const project = new JsiiProject({
       contributorStatement:
         "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
       contributorStatementOptions: {
-        exemptUsers: ["cdklabs-automation", "dependabot[bot]"],
+        exemptUsers: [AUTOMATION_USER, "dependabot[bot]"],
       },
     },
   },
@@ -121,8 +121,9 @@ const project = new JsiiProject({
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: `node ./${bootstrapScriptFile}`,
+  projenCommand: `node ./${BOOTSTRAP_SCRIPT}`,
   projenrcTs: true,
+  projectTree: true,
 
   // Disable interop since it's disabled available in jsii
   tsconfigDev: {
@@ -177,9 +178,17 @@ const project = new JsiiProject({
   releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
-  autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
+  autoApproveOptions: { allowedUsernames: [AUTOMATION_USER] },
   checkLicenses: {
-    allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
+    allow: [
+      "MIT",
+      "ISC",
+      "BSD",
+      "BSD-2-Clause",
+      "BSD-3-Clause",
+      "Apache-2.0",
+      "Python-2.0",
+    ],
   },
 });
 
@@ -190,21 +199,13 @@ project.github
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
   );
 
-// cannot upgrade xmlbuilder2 to v4 as it drops node versions < 20
-// instead we force js-yaml to a fixed version
-project.package.addField("overrides", {
-  xmlbuilder2: {
-    "js-yaml": "^3.14.2",
-  },
-});
-
 setupCheckLicenses(project);
 
 setupUpgradeDependencies(project);
 
 setupJsiiDocgen(project);
 
-setupProjenBootstrap(project, bootstrapScriptFile);
+setupProjenBootstrap(project, BOOTSTRAP_SCRIPT);
 
 // because snapshots include the projen marker...
 project.addExcludeFromCleanup("test/**");
@@ -223,7 +224,7 @@ setupAllContributors(project);
 
 setupNpmignore(project);
 
-setupIntegTest(project);
+new IntegrationTests(project);
 
 setupBundleTaskRunner(project);
 
@@ -278,8 +279,19 @@ if (project.defaultTask) {
   project.postCompileTask.spawn(project.defaultTask);
 }
 
-new ProjectTree(project);
+// This is the projen repo itself.
+// We cannot report a version here as it would change during the release version bump and cause the tampering check to fail.
+// Instead we report the repo as fake version. Has no effect on the published package.
+project.node.addMetadata("projen.version", "https://github.com/projen/projen");
 
-new AiInstructions(project);
+new AiInstructions(project, {
+  instructions: [
+    `# Developing projen itself
+
+    - **Avoid running a full build**: It takes a long time. Instead run individual tasks directly.
+    - **Run specific tests**: Use \`${project.projenCommand} test test/path-to-test.test.ts\` to run specific test files. Prefer this over running all tests.
+    - **Always run the linter**: Use \`${project.projenCommand} eslint\` to ensure any code is formatted correctly and follows best practices. Use often.`,
+  ],
+});
 
 project.synth();

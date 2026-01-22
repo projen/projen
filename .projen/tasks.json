@@ -65,7 +65,7 @@
       "name": "check-licenses",
       "steps": [
         {
-          "exec": "license-checker --summary --production --onlyAllow \"MIT;ISC;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0\"",
+          "exec": "license-checker --summary --production --onlyAllow \"MIT;ISC;BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0\"",
           "receiveArgs": true
         }
       ]
@@ -124,7 +124,7 @@
       "name": "contributors:update",
       "steps": [
         {
-          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"\\[bot\\]\" | grep -v \"cdklabs-automation\" | xargs -n1 -I{} all-contributors add {} code"
+          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"\\[bot\\]\" | grep -v \"cdklabs-automation\" | grep -v \"projen-automation\" | xargs -n1 -I{} all-contributors add {} code"
         }
       ]
     },
@@ -203,25 +203,61 @@
     },
     "integ": {
       "name": "integ",
-      "description": "Run integration tests",
+      "description": "Run all integration tests",
       "steps": [
         {
           "spawn": "compile"
         },
         {
-          "spawn": "package:python"
+          "spawn": "package-all"
         },
         {
-          "spawn": "integ:python-compat"
+          "spawn": "integ:node"
+        },
+        {
+          "spawn": "integ:python"
+        },
+        {
+          "spawn": "integ:go"
+        },
+        {
+          "spawn": "integ:java"
         }
       ]
     },
-    "integ:python-compat": {
-      "name": "integ:python-compat",
-      "description": "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
+    "integ:go": {
+      "name": "integ:go",
+      "description": "Run Go integration test",
       "steps": [
         {
-          "exec": "scripts/python-compat.sh"
+          "exec": "scripts/integ-go.sh"
+        }
+      ]
+    },
+    "integ:java": {
+      "name": "integ:java",
+      "description": "Run Java integration test",
+      "steps": [
+        {
+          "exec": "scripts/integ-java.sh"
+        }
+      ]
+    },
+    "integ:node": {
+      "name": "integ:node",
+      "description": "Run Node.js integration test",
+      "steps": [
+        {
+          "exec": "scripts/integ-node.sh"
+        }
+      ]
+    },
+    "integ:python": {
+      "name": "integ:python",
+      "description": "Run Python integration test",
+      "steps": [
+        {
+          "exec": "scripts/integ-python.sh"
         }
       ]
     },

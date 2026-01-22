@@ -768,6 +768,23 @@ exports[`inventory 1`] = `
         "switch": "parent-pom",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -1977,6 +1994,23 @@ exports[`inventory 1`] = `
         "switch": "poetry-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -2794,7 +2828,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -3516,7 +3550,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -4694,6 +4728,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -6038,7 +6089,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -6774,7 +6825,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -8007,6 +8058,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -9989,6 +10057,23 @@ exports[`inventory 1`] = `
         "switch": "poetry-options",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -10709,7 +10794,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -11385,7 +11470,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -12491,6 +12576,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -13772,7 +13874,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -14428,7 +14530,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -15574,6 +15676,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -16982,7 +17101,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17587,7 +17706,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -18716,6 +18835,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -20438,6 +20574,23 @@ exports[`inventory 1`] = `
         "switch": "parent-pom",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -20979,7 +21132,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -21531,7 +21684,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -22660,6 +22813,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -24051,7 +24221,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -24552,7 +24722,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -25469,6 +25639,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -26607,7 +26794,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -27108,7 +27295,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -28163,6 +28350,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -29427,7 +29631,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -29928,7 +30132,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -30845,6 +31049,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -31885,6 +32106,23 @@ exports[`inventory 1`] = `
         "switch": "parent",
       },
       {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
+      },
+      {
         "default": ""npx projen"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "featured": false,
@@ -32518,6 +32756,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PoetryPyprojectOptionsWithoutDeps",
         "switch": "poetry-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -33223,7 +33478,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -33724,7 +33979,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -34641,6 +34896,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -35767,7 +36039,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36268,7 +36540,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -37323,6 +37595,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -38592,7 +38881,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39093,7 +39382,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -40148,6 +40437,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",
@@ -41395,7 +41701,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- true",
-        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
+        "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configured).",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -41896,7 +42202,7 @@ exports[`inventory 1`] = `
         "switch": "deps",
       },
       {
-        "default": "true",
+        "default": "- \`true\` for root projects, \`false\` for subprojects",
         "docs": "Use tasks and github workflows to handle dependency upgrades.",
         "featured": false,
         "fullType": {
@@ -42951,6 +43257,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "PrettierOptions",
         "switch": "prettier-options",
+      },
+      {
+        "default": "false",
+        "docs": "Generate a project tree file (\`.projen/tree.json\`) that shows all components and their relationships. Useful for understanding your project structure and debugging.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projectTree",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "projectTree",
+        ],
+        "simpleType": "boolean",
+        "switch": "project-tree",
       },
       {
         "default": "ProjectType.UNKNOWN",

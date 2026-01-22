@@ -120,6 +120,7 @@ test("runtime can be used to customize the lambda runtime Node 14.x and esbuild 
   expect(generatedSource).toContain(
     "runtime: new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),"
   );
+  expect(generatedSource).not.toContain("props?.runtime");
   expect(tasks["bundle:hello.lambda"]).toEqual({
     description: "Create a JavaScript bundle from src/hello.lambda.ts",
     name: "bundle:hello.lambda",
@@ -149,6 +150,7 @@ test("runtime can be used to customize the lambda runtime Node 16.x and esbuild 
   expect(generatedSource).toContain(
     "runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),"
   );
+  expect(generatedSource).not.toContain("props?.runtime");
   expect(tasks["bundle:hello.lambda"]).toEqual({
     description: "Create a JavaScript bundle from src/hello.lambda.ts",
     name: "bundle:hello.lambda",
@@ -184,6 +186,7 @@ test.each([
     expect(generatedSource).toContain(
       `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
     );
+    expect(generatedSource).not.toContain("props?.runtime");
     expect(tasks["bundle:hello.lambda"]).toEqual({
       description: "Create a JavaScript bundle from src/hello.lambda.ts",
       name: "bundle:hello.lambda",
@@ -415,6 +418,145 @@ test("generates cdkv2-compatible imports", () => {
 
   const snapshot = Testing.synth(project);
   expect(snapshot["src/hello-function.ts"]).toMatchSnapshot();
+});
+
+describe("NODEJS_REGIONAL_LATEST runtime", () => {
+  test("generates code using determineLatestNodeRuntime() when no runtime specified", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      // No runtime specified - defaults to NODEJS_REGIONAL_LATEST with override
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).toContain(
+      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+    );
+    expect(generatedSource).toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).toContain(
+      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+    );
+    expect(generatedSource).toMatchSnapshot();
+  });
+
+  test("explicitly set NODEJS_REGIONAL_LATEST has no override prop", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      runtime: awscdk.LambdaRuntime.NODEJS_REGIONAL_LATEST,
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).toContain(
+      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+    );
+    expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).toContain(
+      "runtime: determineLatestNodeRuntime(scope),"
+    );
+    expect(generatedSource).toMatchSnapshot();
+  });
+
+  test("uses latest LTS (node22) esbuild target for bundling when no runtime specified", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const tasks = snapshot[".projen/tasks.json"].tasks;
+
+    expect(tasks["bundle:hello.lambda"].steps[0].exec).toContain(
+      '--target="node22"'
+    );
+  });
+});
+
+describe("runtime override support", () => {
+  test("default runtime allows consumer override", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      // No runtime specified - allows override
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).toContain(
+      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+    );
+  });
+
+  test("explicitly set NODEJS_REGIONAL_LATEST does not allow override", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      runtime: awscdk.LambdaRuntime.NODEJS_REGIONAL_LATEST,
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).not.toContain("props?.runtime");
+    expect(generatedSource).toContain(
+      "runtime: determineLatestNodeRuntime(scope),"
+    );
+  });
+
+  test("explicit runtime is hardcoded without override support", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      runtime: awscdk.LambdaRuntime.NODEJS_20_X,
+      cdkDeps: cdkDepsForProject(project, "2.3.1"),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource = snapshot["src/hello-function.ts"];
+
+    expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
+    expect(generatedSource).not.toContain("props?.runtime");
+    expect(generatedSource).toContain(
+      "runtime: new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS),"
+    );
+    expect(generatedSource).toMatchSnapshot();
+  });
 });
 
 function cdkDepsForProject(

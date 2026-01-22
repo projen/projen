@@ -145,6 +145,7 @@ export class PullRequestBackport extends Component {
     const checkStep = "check_labels";
     const checkOutput = "matched";
     const labelPrefixEscaped = labelPrefix.replace(/"/g, '\\"');
+    const credentials = workflowEngine.projenCredentials;
 
     this.workflow.addJob("backport", {
       name: "Backport PR",
@@ -152,8 +153,9 @@ export class PullRequestBackport extends Component {
       permissions: {},
       // Only ever run this job if the PR is merged and not a backport PR itself
       if: `github.event.pull_request.merged == true && !${isBackportPr}`,
+      environment: credentials.environment,
       steps: [
-        ...workflowEngine.projenCredentials.setupSteps,
+        ...credentials.setupSteps,
         // We need a custom step to check if the PR has any of the labels that indicate that the PR should be backported.
         // This is not currently possible with GH Actions expression by itself, so we use a bash script.
         {
@@ -175,7 +177,7 @@ export class PullRequestBackport extends Component {
           // and causes any PR to be marked with a red X, leading to error blindness.
           if: `fromJSON(steps.${checkStep}.outputs.${checkOutput}) > 0`,
           with: {
-            github_token: workflowEngine.projenCredentials.tokenRef,
+            github_token: credentials.tokenRef,
             auto_backport_label_prefix: labelPrefix,
           },
         },

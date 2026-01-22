@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as posixPath from "node:path/posix";
 import { Task } from "..";
 import { Component } from "../component";
 import {
@@ -13,7 +13,10 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import { ensureNotHiddenPath } from "../github/private/util";
+import {
+  ensureNotHiddenPath,
+  projectPathRelativeToRepoRoot,
+} from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
 import {
   Job,
@@ -37,7 +40,6 @@ import {
   SELF_MUTATION_STEP,
 } from "./private/consts";
 import { workflowNameForProject } from "../util/name";
-import { ensureRelativePathStartsWithDot } from "../util/path";
 
 export interface BuildWorkflowCommonOptions {
   /**
@@ -191,9 +193,8 @@ export class BuildWorkflow extends Component {
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
-    const projectPathRelativeToRoot = path.relative(
-      this.project.root.outdir,
-      this.project.outdir
+    const projectPathRelativeToRoot = projectPathRelativeToRepoRoot(
+      this.project
     );
     const jobConfig: workflows.Job = {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
@@ -211,9 +212,7 @@ export class BuildWorkflow extends Component {
       defaults: this.project.parent // is subproject,
         ? {
             run: {
-              workingDirectory: ensureRelativePathStartsWithDot(
-                projectPathRelativeToRoot
-              ),
+              workingDirectory: projectPathRelativeToRoot,
             },
           }
         : undefined,
@@ -372,6 +371,7 @@ export class BuildWorkflow extends Component {
   }
 
   private addSelfMutationJob(options: BuildWorkflowOptions) {
+    const credentials = this.workflow.projenCredentials;
     this.workflow.addJob("self-mutation", {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
@@ -379,11 +379,12 @@ export class BuildWorkflow extends Component {
       },
       needs: [BUILD_JOBID],
       if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
+      environment: credentials.environment,
       steps: [
-        ...this.workflow.projenCredentials.setupSteps,
+        ...credentials.setupSteps,
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
-          token: this.workflow.projenCredentials.tokenRef,
+          token: credentials.tokenRef,
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
           lfs: this.github.downloadLfs,
@@ -447,7 +448,10 @@ export class BuildWorkflow extends Component {
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.project.parent
-                  ? `${projectPathRelativeToRoot}/${this.artifactsDirectory}`
+                  ? posixPath.join(
+                      projectPathRelativeToRoot,
+                      this.artifactsDirectory
+                    )
                   : this.artifactsDirectory,
               },
             }),

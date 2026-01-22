@@ -10,33 +10,8 @@ import {
 export * from "./windows-build";
 export * from "./json2jsii";
 export * from "./jsonConst";
-
-/**
- * Add integration tests tasks to a project
- *
- * @param project The project to add the tasks to
- */
-export function setupIntegTest(project: NodeProject) {
-  const packagePythonTask = project.tasks.tryFind("package:python");
-
-  const pythonCompatTask = project.addTask("integ:python-compat", {
-    exec: "scripts/python-compat.sh",
-    description:
-      "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
-  });
-  const integTask = project.addTask("integ", {
-    description: "Run integration tests",
-  });
-  integTask.spawn(project.compileTask);
-  if (packagePythonTask) {
-    integTask.spawn(packagePythonTask);
-  }
-  integTask.spawn(pythonCompatTask);
-
-  project.buildWorkflow?.addPostBuildJobTask(integTask, {
-    tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
-  });
-}
+export * from "./integ-versions";
+export * from "./integ-test";
 
 /**
  * Add a task to bundle the run-task script needed for "projen eject"
@@ -302,7 +277,7 @@ export function setupDevcontainer(project: NodeProject) {
  */
 export function setupAllContributors(project: NodeProject) {
   project.addTask("contributors:update", {
-    exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | xargs -n1 -I{} all-contributors add {} code',
+    exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | grep -v "projen-automation" | xargs -n1 -I{} all-contributors add {} code',
   });
   project.npmignore?.exclude("/.all-contributorsrc");
 }

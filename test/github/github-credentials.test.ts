@@ -33,3 +33,47 @@ test("with a GitHub app for authentication with limited permissions", () => {
     },
   });
 });
+
+test("with environment for PAT credentials", () => {
+  const project = new NodeProject({
+    defaultReleaseBranch: "main",
+    name: "node-project",
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromPersonalAccessToken({
+        secret: "MY_TOKEN",
+        environment: "protected-env",
+      }),
+    },
+  });
+
+  const output = synthSnapshot(project);
+  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+  expect(buildWorkflow.jobs["self-mutation"].environment).toBe("protected-env");
+});
+
+test("with environment for GitHub App credentials", () => {
+  const project = new NodeProject({
+    defaultReleaseBranch: "main",
+    name: "node-project",
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromApp({
+        environment: "app-env",
+      }),
+    },
+  });
+
+  const output = synthSnapshot(project);
+  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+  expect(buildWorkflow.jobs["self-mutation"].environment).toBe("app-env");
+});
+
+test("no environment by default", () => {
+  const project = new NodeProject({
+    defaultReleaseBranch: "main",
+    name: "node-project",
+  });
+
+  const output = synthSnapshot(project);
+  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+  expect(buildWorkflow.jobs["self-mutation"].environment).toBeUndefined();
+});

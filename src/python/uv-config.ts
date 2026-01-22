@@ -19,7 +19,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#add-bounds
    */
-  readonly addBounds?: string;
+  readonly addBounds?: AddBoundsKind;
 
   /**
    * Allow insecure connections to host.
@@ -347,7 +347,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#fork-strategy
    */
-  readonly forkStrategy?: string;
+  readonly forkStrategy?: ForkStrategy;
 
   /**
    * The indexes to use when resolving dependencies.
@@ -392,7 +392,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#index-strategy
    */
-  readonly indexStrategy?: string;
+  readonly indexStrategy?: IndexStrategy;
 
   /**
    * The URL of the Python package index (by default: <https://pypi.org/simple>).
@@ -417,7 +417,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#keyring-provider
    */
-  readonly keyringProvider?: string;
+  readonly keyringProvider?: KeyringProviderType;
 
   /**
    * The method to use when installing packages from the global cache.
@@ -433,7 +433,7 @@ export interface UvConfiguration {
    * @default clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
    * @schema UvConfiguration#link-mode
    */
-  readonly linkMode?: string;
+  readonly linkMode?: LinkMode;
 
   /**
    * Whether the project is managed by uv. If `false`, uv will ignore the project when
@@ -582,7 +582,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#prerelease
    */
-  readonly prerelease?: string;
+  readonly prerelease?: PrereleaseMode;
 
   /**
    * Whether to enable experimental, preview features.
@@ -618,7 +618,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#python-downloads
    */
-  readonly pythonDownloads?: string;
+  readonly pythonDownloads?: PythonDownloads;
 
   /**
    * URL pointing to JSON of custom Python installations.
@@ -648,7 +648,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#python-preference
    */
-  readonly pythonPreference?: string;
+  readonly pythonPreference?: PythonPreference;
 
   /**
    * Reinstall all packages, regardless of whether they're already installed. Implies `refresh`.
@@ -692,7 +692,7 @@ export interface UvConfiguration {
    *
    * @schema UvConfiguration#resolution
    */
-  readonly resolution?: string;
+  readonly resolution?: ResolutionMode;
 
   /**
    * The sources to use when resolving dependencies.
@@ -823,6 +823,28 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The default version specifier when adding a dependency.
+ *
+ * @schema AddBoundsKind
+ */
+export enum AddBoundsKind {
+  /** Only a lower bound, e.g., `>=1.2.3`. (lower) */
+  LOWER = "lower",
+  /** Allow the same major version, similar to the semver caret, e.g., `>=1.2.3, <2.0.0`.
+
+Leading zeroes are skipped, e.g. `>=0.1.2, <0.2.0`. (major) */
+  MAJOR = "major",
+  /** Allow the same minor version, similar to the semver tilde, e.g., `>=1.2.3, <1.3.0`.
+
+Leading zeroes are skipped, e.g. `>=0.1.2, <0.1.3`. (minor) */
+  MINOR = "minor",
+  /** Pin the exact version, e.g., `==1.2.3`.
+
+This option is not recommended, as versions are already pinned in the uv lockfile. (exact) */
+  EXACT = "exact",
+}
 
 /**
  * Settings for the uv build backend (`uv_build`).
@@ -1127,6 +1149,19 @@ export function toJson_StaticMetadata(obj: StaticMetadata | undefined): Record<s
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * @schema ForkStrategy
+ */
+export enum ForkStrategy {
+  /** Optimize for selecting the fewest number of versions for each package. Older versions may
+be preferred if they are compatible with a wider range of supported Python versions or
+platforms. (fewest) */
+  FEWEST = "fewest",
+  /** Optimize for selecting latest supported version of each package, for each supported Python
+version. (requires-python) */
+  REQUIRES_HYPHEN_PYTHON = "requires-python",
+}
+
+/**
  * @schema Index
  */
 export interface Index {
@@ -1142,7 +1177,7 @@ export interface Index {
    *
    * @schema Index#authenticate
    */
-  readonly authenticate?: string;
+  readonly authenticate?: AuthPolicy;
 
   /**
    * Cache control configuration for this index.
@@ -1205,7 +1240,7 @@ export interface Index {
    *
    * @schema Index#format
    */
-  readonly format?: string;
+  readonly format?: IndexFormat;
 
   /**
    * Status codes that uv should ignore when deciding whether
@@ -1293,6 +1328,69 @@ export function toJson_Index(obj: Index | undefined): Record<string, any> | unde
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * @schema IndexStrategy
+ */
+export enum IndexStrategy {
+  /** Only use results from the first index that returns a match for a given package name.
+
+While this differs from pip's behavior, it's the default index strategy as it's the most
+secure. (first-index) */
+  FIRST_HYPHEN_INDEX = "first-index",
+  /** Search for every package name across all indexes, exhausting the versions from the first
+index before moving on to the next.
+
+In this strategy, we look for every package across all indexes. When resolving, we attempt
+to use versions from the indexes in order, such that we exhaust all available versions from
+the first index before moving on to the next. Further, if a version is found to be
+incompatible in the first index, we do not reconsider that version in subsequent indexes,
+even if the secondary index might contain compatible versions (e.g., variants of the same
+versions with different ABI tags or Python version constraints).
+
+See: <https://peps.python.org/pep-0708/> (unsafe-first-match) */
+  UNSAFE_HYPHEN_FIRST_HYPHEN_MATCH = "unsafe-first-match",
+  /** Search for every package name across all indexes, preferring the "best" version found. If a
+package version is in multiple indexes, only look at the entry for the first index.
+
+In this strategy, we look for every package across all indexes. When resolving, we consider
+all versions from all indexes, choosing the "best" version found (typically, the highest
+compatible version).
+
+This most closely matches pip's behavior, but exposes the resolver to "dependency confusion"
+attacks whereby malicious actors can publish packages to public indexes with the same name
+as internal packages, causing the resolver to install the malicious package in lieu of
+the intended internal package.
+
+See: <https://peps.python.org/pep-0708/> (unsafe-best-match) */
+  UNSAFE_HYPHEN_BEST_HYPHEN_MATCH = "unsafe-best-match",
+}
+
+/**
+ * Keyring provider type to use for credential lookup.
+ *
+ * @schema KeyringProviderType
+ */
+export enum KeyringProviderType {
+  /** Do not use keyring for credential lookup. (disabled) */
+  DISABLED = "disabled",
+  /** Use the `keyring` command for credential lookup. (subprocess) */
+  SUBPROCESS = "subprocess",
+}
+
+/**
+ * @schema LinkMode
+ */
+export enum LinkMode {
+  /** Clone (i.e., copy-on-write) packages from the wheel into the `site-packages` directory. (clone) */
+  CLONE = "clone",
+  /** Copy packages from the wheel into the `site-packages` directory. (copy) */
+  COPY = "copy",
+  /** Hard link packages from the wheel into the `site-packages` directory. (hardlink) */
+  HARDLINK = "hardlink",
+  /** Symbolically link packages from the wheel into the `site-packages` directory. (symlink) */
+  SYMLINK = "symlink",
+}
+
+/**
  * Settings that are specific to the `uv pip` command-line interface.
  *
  * These values will be ignored when running commands outside the `uv pip` namespace (e.g.,
@@ -1324,7 +1422,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#annotation-style
    */
-  readonly annotationStyle?: string;
+  readonly annotationStyle?: AnnotationStyle;
 
   /**
    * Allow uv to modify an `EXTERNALLY-MANAGED` Python installation.
@@ -1533,7 +1631,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#fork-strategy
    */
-  readonly forkStrategy?: string;
+  readonly forkStrategy?: ForkStrategy;
 
   /**
    * Include distribution hashes in the output file.
@@ -1559,7 +1657,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#index-strategy
    */
-  readonly indexStrategy?: string;
+  readonly indexStrategy?: IndexStrategy;
 
   /**
    * The URL of the Python package index (by default: <https://pypi.org/simple>).
@@ -1582,7 +1680,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#keyring-provider
    */
-  readonly keyringProvider?: string;
+  readonly keyringProvider?: KeyringProviderType;
 
   /**
    * The method to use when installing packages from the global cache.
@@ -1598,7 +1696,7 @@ export interface PipOptions {
    * @default clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
    * @schema PipOptions#link-mode
    */
-  readonly linkMode?: string;
+  readonly linkMode?: LinkMode;
 
   /**
    * Exclude comment annotations indicating the source of each package from the output file
@@ -1768,7 +1866,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#prerelease
    */
-  readonly prerelease?: string;
+  readonly prerelease?: PrereleaseMode;
 
   /**
    * The Python interpreter into which packages should be installed.
@@ -1797,7 +1895,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#python-platform
    */
-  readonly pythonPlatform?: string;
+  readonly pythonPlatform?: TargetTriple;
 
   /**
    * The minimum Python version that should be supported by the resolved requirements (e.g.,
@@ -1851,7 +1949,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#resolution
    */
-  readonly resolution?: string;
+  readonly resolution?: ResolutionMode;
 
   /**
    * Validate the Python environment, to detect packages with missing dependencies and other
@@ -1899,7 +1997,7 @@ export interface PipOptions {
    *
    * @schema PipOptions#torch-backend
    */
-  readonly torchBackend?: string;
+  readonly torchBackend?: TorchMode;
 
   /**
    * Perform a universal resolution, attempting to generate a single `requirements.txt` output
@@ -2018,6 +2116,68 @@ export function toJson_PipOptions(obj: PipOptions | undefined): Record<string, a
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * @schema PrereleaseMode
+ */
+export enum PrereleaseMode {
+  /** Disallow all pre-release versions. (disallow) */
+  DISALLOW = "disallow",
+  /** Allow all pre-release versions. (allow) */
+  ALLOW = "allow",
+  /** Allow pre-release versions if all versions of a package are pre-release. (if-necessary) */
+  IF_HYPHEN_NECESSARY = "if-necessary",
+  /** Allow pre-release versions for first-party packages with explicit pre-release markers in
+their version requirements. (explicit) */
+  EXPLICIT = "explicit",
+  /** Allow pre-release versions if all versions of a package are pre-release, or if the package
+has an explicit pre-release marker in its version requirements. (if-necessary-or-explicit) */
+  IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT = "if-necessary-or-explicit",
+}
+
+/**
+ * @schema PythonDownloads
+ */
+export enum PythonDownloads {
+  /** Automatically download managed Python installations when needed. (automatic) */
+  AUTOMATIC = "automatic",
+  /** Do not automatically download managed Python installations; require explicit installation. (manual) */
+  MANUAL = "manual",
+  /** Do not ever allow Python downloads. (never) */
+  NEVER = "never",
+}
+
+/**
+ * @schema PythonPreference
+ */
+export enum PythonPreference {
+  /** Only use managed Python installations; never use system Python installations. (only-managed) */
+  ONLY_HYPHEN_MANAGED = "only-managed",
+  /** Prefer managed Python installations over system Python installations.
+
+System Python installations are still preferred over downloading managed Python versions.
+Use `only-managed` to always fetch a managed Python version. (managed) */
+  MANAGED = "managed",
+  /** Prefer system Python installations over managed Python installations.
+
+If a system Python installation cannot be found, a managed Python installation can be used. (system) */
+  SYSTEM = "system",
+  /** Only use system Python installations; never use managed Python installations. (only-system) */
+  ONLY_HYPHEN_SYSTEM = "only-system",
+}
+
+/**
+ * @schema ResolutionMode
+ */
+export enum ResolutionMode {
+  /** Resolve the highest compatible version of each package. (highest) */
+  HIGHEST = "highest",
+  /** Resolve the lowest compatible version of each package. (lowest) */
+  LOWEST = "lowest",
+  /** Resolve the lowest compatible version of any direct dependencies, and the highest
+compatible version of any transitive dependencies. (lowest-direct) */
+  LOWEST_HYPHEN_DIRECT = "lowest-direct",
+}
+
+/**
  * @schema TrustedPublishing
  */
 export enum TrustedPublishing {
@@ -2025,6 +2185,10 @@ export enum TrustedPublishing {
   ALWAYS = "always",
   /** never */
   NEVER = "never",
+  /** Attempt trusted publishing when we're in a supported environment, continue if that fails.
+
+Supported environments include GitHub Actions and GitLab CI/CD. (automatic) */
+  AUTOMATIC = "automatic",
 }
 
 /**
@@ -2125,6 +2289,29 @@ export function toJson_WheelDataIncludes(obj: WheelDataIncludes | undefined): Re
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * When to use authentication.
+ *
+ * @schema AuthPolicy
+ */
+export enum AuthPolicy {
+  /** Authenticate when necessary.
+
+If credentials are provided, they will be used. Otherwise, an unauthenticated request will
+be attempted first. If the request fails, uv will search for credentials. If credentials are
+found, an authenticated request will be attempted. (auto) */
+  AUTO = "auto",
+  /** Always authenticate.
+
+If credentials are not provided, uv will eagerly search for credentials. If credentials
+cannot be found, uv will error instead of attempting an unauthenticated request. (always) */
+  ALWAYS = "always",
+  /** Never authenticate.
+
+If credentials are provided, uv will error. uv will not search for credentials. (never) */
+  NEVER = "never",
+}
+
+/**
  * Cache control configuration for an index.
  *
  * @schema IndexCacheControl
@@ -2162,6 +2349,29 @@ export function toJson_IndexCacheControl(obj: IndexCacheControl | undefined): Re
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * @schema IndexFormat
+ */
+export enum IndexFormat {
+  /** A PyPI-style index implementing the Simple Repository API. (simple) */
+  SIMPLE = "simple",
+  /** A `--find-links`-style index containing a flat list of wheels and source distributions. (flat) */
+  FLAT = "flat",
+}
+
+/**
+ * Indicate the style of annotation comments, used to indicate the dependencies that requested each
+ * package.
+ *
+ * @schema AnnotationStyle
+ */
+export enum AnnotationStyle {
+  /** Render the annotations on a single, comma-separated line. (line) */
+  LINE = "line",
+  /** Render each annotation on its own line. (split) */
+  SPLIT = "split",
+}
+
+/**
  * The pip-compatible variant of a [`GroupName`].
  *
  * Either <groupname> or <path>:<groupname>.
@@ -2196,3 +2406,223 @@ export function toJson_PipGroupName(obj: PipGroupName | undefined): Record<strin
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
 }
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * The supported target triples. Each triple consists of an architecture, vendor, and operating
+ * system.
+ *
+ * See: <https://doc.rust-lang.org/nightly/rustc/platform-support.html>
+ *
+ * @schema TargetTriple
+ */
+export enum TargetTriple {
+  /** An alias for `x86_64-pc-windows-msvc`, the default target for Windows. (windows) */
+  WINDOWS = "windows",
+  /** An alias for `x86_64-unknown-linux-gnu`, the default target for Linux. (linux) */
+  LINUX = "linux",
+  /** An alias for `aarch64-apple-darwin`, the default target for macOS. (macos) */
+  MACOS = "macos",
+  /** A 64-bit x86 Windows target. (x86_64-pc-windows-msvc) */
+  X86_UNDERSCORE_64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC = "x86_64-pc-windows-msvc",
+  /** An ARM64 Windows target. (aarch64-pc-windows-msvc) */
+  AARCH64_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC = "aarch64-pc-windows-msvc",
+  /** A 32-bit x86 Windows target. (i686-pc-windows-msvc) */
+  I686_HYPHEN_PC_HYPHEN_WINDOWS_HYPHEN_MSVC = "i686-pc-windows-msvc",
+  /** An x86 Linux target. Equivalent to `x86_64-manylinux_2_28`. (x86_64-unknown-linux-gnu) */
+  X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU = "x86_64-unknown-linux-gnu",
+  /** An ARM-based macOS target, as seen on Apple Silicon devices
+
+By default, assumes the least-recent, non-EOL macOS version (13.0), but respects
+the `MACOSX_DEPLOYMENT_TARGET` environment variable if set. (aarch64-apple-darwin) */
+  AARCH64_HYPHEN_APPLE_HYPHEN_DARWIN = "aarch64-apple-darwin",
+  /** An x86 macOS target.
+
+By default, assumes the least-recent, non-EOL macOS version (13.0), but respects
+the `MACOSX_DEPLOYMENT_TARGET` environment variable if set. (x86_64-apple-darwin) */
+  X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_DARWIN = "x86_64-apple-darwin",
+  /** An ARM64 Linux target. Equivalent to `aarch64-manylinux_2_28`. (aarch64-unknown-linux-gnu) */
+  AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU = "aarch64-unknown-linux-gnu",
+  /** An ARM64 Linux target. (aarch64-unknown-linux-musl) */
+  AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL = "aarch64-unknown-linux-musl",
+  /** An `x86_64` Linux target. (x86_64-unknown-linux-musl) */
+  X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL = "x86_64-unknown-linux-musl",
+  /** A RISCV64 Linux target. (riscv64-unknown-linux) */
+  RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX = "riscv64-unknown-linux",
+  /** An `x86_64` target for the `manylinux2014` platform. Equivalent to `x86_64-manylinux_2_17`. (x86_64-manylinux2014) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014 = "x86_64-manylinux2014",
+  /** An `x86_64` target for the `manylinux_2_17` platform. (x86_64-manylinux_2_17) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17 = "x86_64-manylinux_2_17",
+  /** An `x86_64` target for the `manylinux_2_28` platform. (x86_64-manylinux_2_28) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28 = "x86_64-manylinux_2_28",
+  /** An `x86_64` target for the `manylinux_2_31` platform. (x86_64-manylinux_2_31) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31 = "x86_64-manylinux_2_31",
+  /** An `x86_64` target for the `manylinux_2_32` platform. (x86_64-manylinux_2_32) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32 = "x86_64-manylinux_2_32",
+  /** An `x86_64` target for the `manylinux_2_33` platform. (x86_64-manylinux_2_33) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33 = "x86_64-manylinux_2_33",
+  /** An `x86_64` target for the `manylinux_2_34` platform. (x86_64-manylinux_2_34) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34 = "x86_64-manylinux_2_34",
+  /** An `x86_64` target for the `manylinux_2_35` platform. (x86_64-manylinux_2_35) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35 = "x86_64-manylinux_2_35",
+  /** An `x86_64` target for the `manylinux_2_36` platform. (x86_64-manylinux_2_36) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36 = "x86_64-manylinux_2_36",
+  /** An `x86_64` target for the `manylinux_2_37` platform. (x86_64-manylinux_2_37) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37 = "x86_64-manylinux_2_37",
+  /** An `x86_64` target for the `manylinux_2_38` platform. (x86_64-manylinux_2_38) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38 = "x86_64-manylinux_2_38",
+  /** An `x86_64` target for the `manylinux_2_39` platform. (x86_64-manylinux_2_39) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39 = "x86_64-manylinux_2_39",
+  /** An `x86_64` target for the `manylinux_2_40` platform. (x86_64-manylinux_2_40) */
+  X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40 = "x86_64-manylinux_2_40",
+  /** An ARM64 target for the `manylinux2014` platform. Equivalent to `aarch64-manylinux_2_17`. (aarch64-manylinux2014) */
+  AARCH64_HYPHEN_MANYLINUX2014 = "aarch64-manylinux2014",
+  /** An ARM64 target for the `manylinux_2_17` platform. (aarch64-manylinux_2_17) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17 = "aarch64-manylinux_2_17",
+  /** An ARM64 target for the `manylinux_2_28` platform. (aarch64-manylinux_2_28) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28 = "aarch64-manylinux_2_28",
+  /** An ARM64 target for the `manylinux_2_31` platform. (aarch64-manylinux_2_31) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31 = "aarch64-manylinux_2_31",
+  /** An ARM64 target for the `manylinux_2_32` platform. (aarch64-manylinux_2_32) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32 = "aarch64-manylinux_2_32",
+  /** An ARM64 target for the `manylinux_2_33` platform. (aarch64-manylinux_2_33) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33 = "aarch64-manylinux_2_33",
+  /** An ARM64 target for the `manylinux_2_34` platform. (aarch64-manylinux_2_34) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34 = "aarch64-manylinux_2_34",
+  /** An ARM64 target for the `manylinux_2_35` platform. (aarch64-manylinux_2_35) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35 = "aarch64-manylinux_2_35",
+  /** An ARM64 target for the `manylinux_2_36` platform. (aarch64-manylinux_2_36) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36 = "aarch64-manylinux_2_36",
+  /** An ARM64 target for the `manylinux_2_37` platform. (aarch64-manylinux_2_37) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37 = "aarch64-manylinux_2_37",
+  /** An ARM64 target for the `manylinux_2_38` platform. (aarch64-manylinux_2_38) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38 = "aarch64-manylinux_2_38",
+  /** An ARM64 target for the `manylinux_2_39` platform. (aarch64-manylinux_2_39) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39 = "aarch64-manylinux_2_39",
+  /** An ARM64 target for the `manylinux_2_40` platform. (aarch64-manylinux_2_40) */
+  AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40 = "aarch64-manylinux_2_40",
+  /** An ARM64 Android target.
+
+By default uses Android API level 24, but respects
+the `ANDROID_API_LEVEL` environment variable if set. (aarch64-linux-android) */
+  AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID = "aarch64-linux-android",
+  /** An `x86_64` Android target.
+
+By default uses Android API level 24, but respects
+the `ANDROID_API_LEVEL` environment variable if set. (x86_64-linux-android) */
+  X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID = "x86_64-linux-android",
+  /** A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12. (wasm32-pyodide2024) */
+  WASM32_HYPHEN_PYODIDE2024 = "wasm32-pyodide2024",
+  /** An ARM64 target for iOS device
+
+By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
+environment variable if set. (arm64-apple-ios) */
+  ARM64_HYPHEN_APPLE_HYPHEN_IOS = "arm64-apple-ios",
+  /** An ARM64 target for iOS simulator
+
+By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
+environment variable if set. (arm64-apple-ios-simulator) */
+  ARM64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR = "arm64-apple-ios-simulator",
+  /** An `x86_64` target for iOS simulator
+
+By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
+environment variable if set. (x86_64-apple-ios-simulator) */
+  X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR = "x86_64-apple-ios-simulator",
+}
+
+/**
+ * The strategy to use when determining the appropriate PyTorch index.
+ *
+ * @schema TorchMode
+ */
+export enum TorchMode {
+  /** Select the appropriate PyTorch index based on the operating system and CUDA driver version. (auto) */
+  AUTO = "auto",
+  /** Use the CPU-only PyTorch index. (cpu) */
+  CPU = "cpu",
+  /** Use the PyTorch index for CUDA 13.0. (cu130) */
+  CU130 = "cu130",
+  /** Use the PyTorch index for CUDA 12.9. (cu129) */
+  CU129 = "cu129",
+  /** Use the PyTorch index for CUDA 12.8. (cu128) */
+  CU128 = "cu128",
+  /** Use the PyTorch index for CUDA 12.6. (cu126) */
+  CU126 = "cu126",
+  /** Use the PyTorch index for CUDA 12.5. (cu125) */
+  CU125 = "cu125",
+  /** Use the PyTorch index for CUDA 12.4. (cu124) */
+  CU124 = "cu124",
+  /** Use the PyTorch index for CUDA 12.3. (cu123) */
+  CU123 = "cu123",
+  /** Use the PyTorch index for CUDA 12.2. (cu122) */
+  CU122 = "cu122",
+  /** Use the PyTorch index for CUDA 12.1. (cu121) */
+  CU121 = "cu121",
+  /** Use the PyTorch index for CUDA 12.0. (cu120) */
+  CU120 = "cu120",
+  /** Use the PyTorch index for CUDA 11.8. (cu118) */
+  CU118 = "cu118",
+  /** Use the PyTorch index for CUDA 11.7. (cu117) */
+  CU117 = "cu117",
+  /** Use the PyTorch index for CUDA 11.6. (cu116) */
+  CU116 = "cu116",
+  /** Use the PyTorch index for CUDA 11.5. (cu115) */
+  CU115 = "cu115",
+  /** Use the PyTorch index for CUDA 11.4. (cu114) */
+  CU114 = "cu114",
+  /** Use the PyTorch index for CUDA 11.3. (cu113) */
+  CU113 = "cu113",
+  /** Use the PyTorch index for CUDA 11.2. (cu112) */
+  CU112 = "cu112",
+  /** Use the PyTorch index for CUDA 11.1. (cu111) */
+  CU111 = "cu111",
+  /** Use the PyTorch index for CUDA 11.0. (cu110) */
+  CU110 = "cu110",
+  /** Use the PyTorch index for CUDA 10.2. (cu102) */
+  CU102 = "cu102",
+  /** Use the PyTorch index for CUDA 10.1. (cu101) */
+  CU101 = "cu101",
+  /** Use the PyTorch index for CUDA 10.0. (cu100) */
+  CU100 = "cu100",
+  /** Use the PyTorch index for CUDA 9.2. (cu92) */
+  CU92 = "cu92",
+  /** Use the PyTorch index for CUDA 9.1. (cu91) */
+  CU91 = "cu91",
+  /** Use the PyTorch index for CUDA 9.0. (cu90) */
+  CU90 = "cu90",
+  /** Use the PyTorch index for CUDA 8.0. (cu80) */
+  CU80 = "cu80",
+  /** Use the PyTorch index for ROCm 6.3. (rocm6.3) */
+  ROCM6_3 = "rocm6.3",
+  /** Use the PyTorch index for ROCm 6.2.4. (rocm6.2.4) */
+  ROCM6_2_4 = "rocm6.2.4",
+  /** Use the PyTorch index for ROCm 6.2. (rocm6.2) */
+  ROCM6_2 = "rocm6.2",
+  /** Use the PyTorch index for ROCm 6.1. (rocm6.1) */
+  ROCM6_1 = "rocm6.1",
+  /** Use the PyTorch index for ROCm 6.0. (rocm6.0) */
+  ROCM6_0 = "rocm6.0",
+  /** Use the PyTorch index for ROCm 5.7. (rocm5.7) */
+  ROCM5_7 = "rocm5.7",
+  /** Use the PyTorch index for ROCm 5.6. (rocm5.6) */
+  ROCM5_6 = "rocm5.6",
+  /** Use the PyTorch index for ROCm 5.5. (rocm5.5) */
+  ROCM5_5 = "rocm5.5",
+  /** Use the PyTorch index for ROCm 5.4.2. (rocm5.4.2) */
+  ROCM5_4_2 = "rocm5.4.2",
+  /** Use the PyTorch index for ROCm 5.4. (rocm5.4) */
+  ROCM5_4 = "rocm5.4",
+  /** Use the PyTorch index for ROCm 5.3. (rocm5.3) */
+  ROCM5_3 = "rocm5.3",
+  /** Use the PyTorch index for ROCm 5.2. (rocm5.2) */
+  ROCM5_2 = "rocm5.2",
+  /** Use the PyTorch index for ROCm 5.1.1. (rocm5.1.1) */
+  ROCM5_1_1 = "rocm5.1.1",
+  /** Use the PyTorch index for ROCm 4.2. (rocm4.2) */
+  ROCM4_2 = "rocm4.2",
+  /** Use the PyTorch index for ROCm 4.1. (rocm4.1) */
+  ROCM4_1 = "rocm4.1",
+  /** Use the PyTorch index for ROCm 4.0.1. (rocm4.0.1) */
+  ROCM4_0_1 = "rocm4.0.1",
+  /** Use the PyTorch index for Intel XPU. (xpu) */
+  XPU = "xpu",
+}

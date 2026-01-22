@@ -16,7 +16,7 @@ export interface ConcurrencyOptions {
   /**
    * Concurrency group controls which workflow runs will share the same concurrency limit.
    * For example, if you specify `${{ github.workflow }}-${{ github.ref }}`, workflow runs triggered
-   * on the same branch cannot run concurrenty, but workflows runs triggered on different branches can.
+   * on the same branch cannot run concurrently, but workflows runs triggered on different branches can.
    *
    * @default - ${{ github.workflow }}
    *

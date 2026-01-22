@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as posixPath from "node:path/posix";
 import { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
@@ -14,7 +14,10 @@ import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import { ensureNotHiddenPath } from "../github/private/util";
+import {
+  ensureNotHiddenPath,
+  projectPathRelativeToRepoRoot,
+} from "../github/private/util";
 import {
   Job,
   JobPermission,
@@ -28,9 +31,7 @@ import {
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
 import { Task } from "../task";
-import { normalizePersistedPath } from "../util";
 import { workflowNameForProject } from "../util/name";
-import { ensureRelativePathStartsWithDot } from "../util/path";
 import { ReleasableCommits, Version } from "../version";
 
 const BUILD_JOBID = "release";
@@ -483,8 +484,8 @@ export class Release extends Component {
       nextVersionCommand: options.nextVersionCommand,
     });
 
-    this.releaseTagFilePath = path.posix.normalize(
-      path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName)
+    this.releaseTagFilePath = posixPath.normalize(
+      posixPath.join(this.artifactsDirectory, this.version.releaseTagFileName)
     );
 
     this.publisher = new Publisher(this.project, {
@@ -507,15 +508,15 @@ export class Release extends Component {
     const githubRelease = options.githubRelease ?? true;
     if (githubRelease) {
       this.publisher.publishToGitHubReleases({
-        changelogFile: path.posix.join(
+        changelogFile: posixPath.join(
           this.artifactsDirectory,
           this.version.changelogFileName
         ),
-        versionFile: path.posix.join(
+        versionFile: posixPath.join(
           this.artifactsDirectory,
           this.version.versionFileName
         ),
-        releaseTagFile: path.posix.join(
+        releaseTagFile: posixPath.join(
           this.artifactsDirectory,
           this.version.releaseTagFileName
         ),
@@ -706,15 +707,15 @@ export class Release extends Component {
 
     if (this.releaseTrigger.isManual) {
       const publishTask = this.publisher.publishToGit({
-        changelogFile: path.posix.join(
+        changelogFile: posixPath.join(
           this.artifactsDirectory,
           this.version.changelogFileName
         ),
-        versionFile: path.posix.join(
+        versionFile: posixPath.join(
           this.artifactsDirectory,
           this.version.versionFileName
         ),
-        releaseTagFile: path.posix.join(
+        releaseTagFile: posixPath.join(
           this.artifactsDirectory,
           this.version.releaseTagFileName
         ),
@@ -749,12 +750,8 @@ export class Release extends Component {
       ].join("\n"),
     });
 
-    const projectPathRelativeToRoot = path.relative(
-      this.project.root.outdir,
-      this.project.outdir
-    );
-    const normalizedProjectPathRelativeToRoot = normalizePersistedPath(
-      projectPathRelativeToRoot
+    const projectPathRelativeToRoot = projectPathRelativeToRepoRoot(
+      this.project
     );
 
     postBuildSteps.push(
@@ -768,10 +765,9 @@ export class Release extends Component {
         if: noNewCommits,
         with: {
           name: BUILD_ARTIFACT_NAME,
-          path:
-            normalizedProjectPathRelativeToRoot.length > 0
-              ? `${normalizedProjectPathRelativeToRoot}/${this.artifactsDirectory}`
-              : this.artifactsDirectory,
+          path: this.project.parent // is subproject
+            ? posixPath.join(projectPathRelativeToRoot, this.artifactsDirectory)
+            : this.artifactsDirectory,
         },
       })
     );
@@ -820,16 +816,13 @@ export class Release extends Component {
         },
         preBuildSteps,
         postBuildSteps,
-        jobDefaults:
-          normalizedProjectPathRelativeToRoot.length > 0 // is subproject
-            ? {
-                run: {
-                  workingDirectory: ensureRelativePathStartsWithDot(
-                    normalizedProjectPathRelativeToRoot
-                  ),
-                },
-              }
-            : undefined,
+        jobDefaults: this.project.parent // is subproject
+          ? {
+              run: {
+                workingDirectory: projectPathRelativeToRoot,
+              },
+            }
+          : undefined,
         ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
       });
 

@@ -3,7 +3,8 @@
   "JsiiProject#projen@<root>": {
     "metadata": {
       "type": "project",
-      "construct": "JsiiProject"
+      "construct": "JsiiProject",
+      "projen.version": "https://github.com/projen/projen"
     },
     "nodes": {
       "GitAttributesFile@.gitattributes": {
@@ -56,6 +57,19 @@
         "metadata": {
           "type": "component",
           "construct": "Logger"
+        }
+      },
+      "ProjectTree": {
+        "metadata": {
+          "type": "component",
+          "construct": "ProjectTree"
+        }
+      },
+      "JsonFile@.projen--tree.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": ".projen/tree.json"
         }
       },
       "JsonFile@.projen--files.json": {
@@ -456,6 +470,25 @@
           "path": ".vscode/launch.json"
         }
       },
+      "IntegrationTests#AutoId30": {
+        "metadata": {
+          "type": "component",
+          "construct": "IntegrationTests"
+        }
+      },
+      "GithubWorkflow#integ": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--integ.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/integ.yml"
+        }
+      },
       "JsiiFromJsonSchema@src--javascript--biome--biome-config.ts": {
         "metadata": {
           "type": "file",
@@ -490,20 +523,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "ProjectTree": {
-        "metadata": {
-          "type": "component",
-          "construct": "ProjectTree"
-        }
-      },
-      "JsonFile@.projen--tree.json": {
-        "metadata": {
-          "type": "file",
-          "construct": "JsonFile",
-          "path": ".projen/tree.json"
-        }
-      },
-      "AiInstructions#AutoId30": {
+      "AiInstructions#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"

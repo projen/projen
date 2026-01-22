@@ -9,7 +9,9 @@ import {
   WorkflowJobs,
   WorkflowSteps,
 } from "../github";
+import { isYarnClassic, isYarnBerry, isNpm } from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
+import { projectPathRelativeToRepoRoot } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
 import {
   ContainerOptions,
@@ -22,7 +24,7 @@ import { Release } from "../release";
 import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
-import { isYarnClassic, isYarnBerry, isNpm } from "./util";
+import { workflowNameForProject } from "../util/name";
 
 const CREATE_PATCH_STEP_ID = "create_patch";
 const PATCH_CREATED_OUTPUT = "patch_created";
@@ -268,18 +270,21 @@ export class UpgradeDependencies extends Component {
     });
     this.upgradeTask.lock(); // this task is a lazy value, so make it readonly
 
-    if (this.upgradeTask && project.github && (options.workflow ?? true)) {
+    // always use the GitHub of the root project - there can only be one
+    const github = GitHub.of(project.root);
+
+    if (this.upgradeTask && github && (options.workflow ?? true)) {
       if (options.workflowOptions?.branches) {
         for (const branch of options.workflowOptions.branches) {
           this.workflows.push(
-            this.createWorkflow(this.upgradeTask, project.github, branch)
+            this.createWorkflow(this.upgradeTask, github, branch)
           );
         }
       } else if (Release.of(project)) {
         const release = Release.of(project)!;
         release._forEachBranch((branch: string) => {
           this.workflows.push(
-            this.createWorkflow(this.upgradeTask, project.github!, branch)
+            this.createWorkflow(this.upgradeTask, github, branch)
           );
         });
       } else {
@@ -287,7 +292,7 @@ export class UpgradeDependencies extends Component {
         // just like not specifying anything.
         const defaultBranch = undefined;
         this.workflows.push(
-          this.createWorkflow(this.upgradeTask, project.github, defaultBranch)
+          this.createWorkflow(this.upgradeTask, github, defaultBranch)
         );
       }
     }
@@ -545,9 +550,11 @@ export class UpgradeDependencies extends Component {
       this.options.workflowOptions?.schedule ??
       UpgradeDependenciesSchedule.DAILY;
 
-    const workflowName = `${task.name}${
+    const taskBranchName = `${task.name}${
       branch ? `-${branch.replace(/\//g, "-")}` : ""
     }`;
+    const workflowName = workflowNameForProject(taskBranchName, this.project);
+
     const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
@@ -581,6 +588,9 @@ export class UpgradeDependencies extends Component {
       {
         name: "Upgrade dependencies",
         run: this.project.runTaskCommand(task),
+        workingDirectory: this.project.parent
+          ? projectPathRelativeToRepoRoot(this.project)
+          : undefined,
       },
     ];
 

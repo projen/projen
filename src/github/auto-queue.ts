@@ -155,6 +155,7 @@ export class AutoQueue extends Component {
         contents: gh.workflows.JobPermission.WRITE,
       },
       if: conditions.length ? conditions.join(" && ") : undefined,
+      environment: credentials.environment,
       steps: [
         ...credentials.setupSteps,
         {

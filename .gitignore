@@ -2,6 +2,7 @@
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
+!/.projen/tree.json
 !/.projen/files.json
 !/.github/workflows/auto-queue.yml
 !/.github/workflows/pull-request-lint.yml
@@ -64,11 +65,11 @@ tsconfig.json
 **/.tool-versions
 !/.markdownlint.json
 !/.vscode/launch.json
+!/.github/workflows/integ.yml
 !/src/javascript/biome/biome-config.ts
 !/src/python/pyproject-toml.ts
 !/src/python/uv-config.ts
 !/src/awscdk/private/feature-flags-v2.const.ts
-!/.projen/tree.json
 !/.github/copilot-instructions.md
 !/.cursor/rules/project.md
 !/CLAUDE.md
