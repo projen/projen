@@ -15,9 +15,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v5
-
       - name: Build docs
         working-directory: docusaurus
         run: |

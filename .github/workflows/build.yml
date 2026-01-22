@@ -262,6 +262,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_matrix
+    permissions: {}
     if: always()
     outputs:
       self_mutation_happened: ${{ needs.build_matrix.outputs.self_mutation_happened }}

@@ -102,6 +102,7 @@ export class WindowsBuild extends Component {
       JsonPatch.add(buildJobPath(), {
         "runs-on": "ubuntu-latest",
         needs: [JOB_BUILD_MATRIX],
+        permissions: {},
         if: "always()",
         outputs: {
           self_mutation_happened: `\${{ needs.${JOB_BUILD_MATRIX}.outputs.self_mutation_happened }}`,
