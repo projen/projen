@@ -732,7 +732,7 @@ export class Release extends Component {
     // Read the releasetag, then check if it already exists.
     // If it does, we will cancel this release
     postBuildSteps.push(
-      WorkflowSteps.tagExists(`$(cat ${this.releaseTagFilePath})`, {
+      WorkflowSteps.tagExists(`$(cat ${this.releaseTagFilePath} || true)`, {
         name: "Check if version has already been tagged",
         id: TAG_EXISTS_STEPID,
       })
