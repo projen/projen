@@ -1,6 +1,6 @@
 import * as yaml from "yaml";
 import { GithubCredentials, workflows } from "../../src/github";
-import { NodeProject } from "../../src/javascript/node-project";
+import { NodeProject } from "../../src/javascript";
 import { synthSnapshot } from "../../src/util/synth";
 
 test("with a GitHub app for authentication with limited permissions", () => {

@@ -6313,11 +6313,11 @@ const eslintOptions: javascript.EslintOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.EslintOptions.property.dirs">dirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasExtensions">aliasExtensions</a></code> | <code>string[]</code> | Enable import alias for module paths. |
 | <code><a href="#projen.javascript.EslintOptions.property.aliasMap">aliasMap</a></code> | <code>{[ key: string ]: string}</code> | Enable import alias for module paths. |
 | <code><a href="#projen.javascript.EslintOptions.property.commandOptions">commandOptions</a></code> | <code><a href="#projen.javascript.EslintCommandOptions">EslintCommandOptions</a></code> | Options for eslint command executed by eslint task. |
 | <code><a href="#projen.javascript.EslintOptions.property.devdirs">devdirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files that include tests and build tools. |
+| <code><a href="#projen.javascript.EslintOptions.property.dirs">dirs</a></code> | <code>string[]</code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.fileExtensions">fileExtensions</a></code> | <code>string[]</code> | File types that should be linted (e.g. [ ".js", ".ts" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns. |
 | <code><a href="#projen.javascript.EslintOptions.property.lintProjenRc">lintProjenRc</a></code> | <code>boolean</code> | Should we lint .projenrc.js. |
@@ -6327,18 +6327,6 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.tsAlwaysTryTypes">tsAlwaysTryTypes</a></code> | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to `tsconfig.json` which should be used by eslint. |
 | <code><a href="#projen.javascript.EslintOptions.property.yaml">yaml</a></code> | <code>boolean</code> | Write eslint configuration as YAML instead of JSON. |
-
----
-
-##### `dirs`<sup>Required</sup> <a name="dirs" id="projen.javascript.EslintOptions.property.dirs"></a>
-
-```typescript
-public readonly dirs: string[];
-```
-
-- *Type:* string[]
-
-Files or glob patterns or directories with source files to lint (e.g. [ "src" ]).
 
 ---
 
@@ -6392,6 +6380,19 @@ public readonly devdirs: string[];
 Files or glob patterns or directories with source files that include tests and build tools.
 
 These sources are linted but may also import packages from `devDependencies`.
+
+---
+
+##### `dirs`<sup>Optional</sup> <a name="dirs" id="projen.javascript.EslintOptions.property.dirs"></a>
+
+```typescript
+public readonly dirs: string[];
+```
+
+- *Type:* string[]
+- *Default:* all files in the projet
+
+Files or glob patterns or directories with source files to lint (e.g. [ "src" ]).
 
 ---
 
@@ -14838,6 +14839,44 @@ new javascript.JestReporter(name: string, options?: {[ key: string ]: any})
 
 
 
+
+### ModuleType <a name="ModuleType" id="projen.javascript.ModuleType"></a>
+
+
+
+
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.ModuleType.property.COMMON_JS">COMMON_JS</a></code> | <code><a href="#projen.javascript.ModuleType">ModuleType</a></code> | CommonJS module. |
+| <code><a href="#projen.javascript.ModuleType.property.ESM">ESM</a></code> | <code><a href="#projen.javascript.ModuleType">ModuleType</a></code> | EcmaScript Module. |
+
+---
+
+##### `COMMON_JS`<sup>Required</sup> <a name="COMMON_JS" id="projen.javascript.ModuleType.property.COMMON_JS"></a>
+
+```typescript
+public readonly COMMON_JS: ModuleType;
+```
+
+- *Type:* <a href="#projen.javascript.ModuleType">ModuleType</a>
+
+CommonJS module.
+
+---
+
+##### `ESM`<sup>Required</sup> <a name="ESM" id="projen.javascript.ModuleType.property.ESM"></a>
+
+```typescript
+public readonly ESM: ModuleType;
+```
+
+- *Type:* <a href="#projen.javascript.ModuleType">ModuleType</a>
+
+EcmaScript Module.
+
+---
 
 ### Transform <a name="Transform" id="projen.javascript.Transform"></a>
 

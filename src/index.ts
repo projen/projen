@@ -38,6 +38,8 @@ export * from "./toml";
 export * from "./version";
 export * from "./yaml";
 export * from "./xmlfile";
+// @todo move file
+export * from "./code-resolvable";
 
 // export submodules
 export * as web from "./web";
