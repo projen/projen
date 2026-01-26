@@ -3251,7 +3251,7 @@ public readonly organizeImports: any;
 
 Provides a code action to sort the imports and exports in the file using a built-in or custom order.
 
-See <https://biomejs.dev/assist/actions/organize-imports>
+See https://biomejs.dev/assist/actions/organize-imports
 
 ---
 
@@ -3277,7 +3277,7 @@ public readonly useSortedAttributes: any;
 
 Enforce attribute sorting in JSX elements.
 
-See <https://biomejs.dev/assist/actions/use-sorted-attributes>
+See https://biomejs.dev/assist/actions/use-sorted-attributes
 
 ---
 
@@ -3291,7 +3291,7 @@ public readonly useSortedKeys: any;
 
 Sort the keys of a JSON object in natural order.
 
-See <https://biomejs.dev/assist/actions/use-sorted-keys>
+See https://biomejs.dev/assist/actions/use-sorted-keys
 
 ---
 
@@ -3305,7 +3305,7 @@ public readonly useSortedProperties: any;
 
 Enforce ordering of CSS properties and nested rules.
 
-See <https://biomejs.dev/assist/actions/use-sorted-properties>
+See https://biomejs.dev/assist/actions/use-sorted-properties
 
 ---
 
