@@ -2462,7 +2462,7 @@ export enum VcsClientKind {
 export interface Source {
   /**
    * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
-   * See <https://biomejs.dev/assist/actions/organize-imports>
+   * See https://biomejs.dev/assist/actions/organize-imports
    *
    * @schema Source#organizeImports
    */
@@ -2477,7 +2477,7 @@ export interface Source {
 
   /**
    * Enforce attribute sorting in JSX elements.
-   * See <https://biomejs.dev/assist/actions/use-sorted-attributes>
+   * See https://biomejs.dev/assist/actions/use-sorted-attributes
    *
    * @schema Source#useSortedAttributes
    */
@@ -2485,7 +2485,7 @@ export interface Source {
 
   /**
    * Sort the keys of a JSON object in natural order.
-   * See <https://biomejs.dev/assist/actions/use-sorted-keys>
+   * See https://biomejs.dev/assist/actions/use-sorted-keys
    *
    * @schema Source#useSortedKeys
    */
@@ -2493,7 +2493,7 @@ export interface Source {
 
   /**
    * Enforce ordering of CSS properties and nested rules.
-   * See <https://biomejs.dev/assist/actions/use-sorted-properties>
+   * See https://biomejs.dev/assist/actions/use-sorted-properties
    *
    * @schema Source#useSortedProperties
    */
