@@ -185,7 +185,7 @@ export class Uv
 
     // Create venv with the specific Python version
     // this will install the requested python version if needed
-    exec(`uv venv --python ${this.venvPython} .venv`, {
+    exec(`uv venv --python "${this.venvPython}" .venv`, {
       cwd: this.project.outdir,
     });
     this.project.logger.info(

@@ -346,6 +346,8 @@ export class PythonProject extends GitHubProject {
       this.checkToolConflicts("uv", tools);
 
       const uvProject = new Uv(this, {
+        pythonExec: options.uvOptions?.pythonExec,
+
         project: {
           name: options.name,
           version: options.version,
