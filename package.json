@@ -80,7 +80,7 @@
     "jsii-docgen": "^10.5.0",
     "jsii-pacmak": "^1.126.0",
     "jsii-rosetta": "5.9.x",
-    "json2jsii": "^0.5.18",
+    "json2jsii": "^0.5.19",
     "license-checker": "^25.0.1",
     "markmac": "^0.1.659",
     "prettier": "^2.8.8",
