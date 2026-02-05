@@ -57,3 +57,21 @@ test("trailing whitespace is trimmed", () => {
     ["", "        hello, world."].join("\n")
   );
 });
+
+test("executable option is passed through to the underlying file", () => {
+  const project = new TestProject();
+  new SourceCode(project, "script.sh", { executable: true });
+
+  const file = project.tryFindFile("script.sh");
+  expect(file).toBeDefined();
+  expect(file!.executable).toBe(true);
+});
+
+test("executable defaults to false", () => {
+  const project = new TestProject();
+  new SourceCode(project, "script.txt");
+
+  const file = project.tryFindFile("script.txt");
+  expect(file).toBeDefined();
+  expect(file!.executable).toBe(false);
+});
