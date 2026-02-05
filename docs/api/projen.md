@@ -13180,8 +13180,22 @@ const sourceCodeOptions: SourceCodeOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.SourceCodeOptions.property.executable">executable</a></code> | <code>boolean</code> | Whether the generated file should be marked as executable. |
 | <code><a href="#projen.SourceCodeOptions.property.indent">indent</a></code> | <code>number</code> | Indentation size. |
 | <code><a href="#projen.SourceCodeOptions.property.readonly">readonly</a></code> | <code>boolean</code> | Whether the generated file should be readonly. |
+
+---
+
+##### `executable`<sup>Optional</sup> <a name="executable" id="projen.SourceCodeOptions.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the generated file should be marked as executable.
 
 ---
 

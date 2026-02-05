@@ -18,6 +18,13 @@ export interface SourceCodeOptions {
    * @default true
    */
   readonly readonly?: boolean;
+
+  /**
+   * Whether the generated file should be marked as executable.
+   *
+   * @default false
+   */
+  readonly executable?: boolean;
 }
 
 /**
@@ -37,6 +44,7 @@ export class SourceCode extends Component {
     this.indent = options.indent ?? 2;
     this.file = new TextFile(project, filePath, {
       readonly: options.readonly ?? true,
+      executable: options.executable,
     });
   }
 
