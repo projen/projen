@@ -91,8 +91,7 @@ export interface VsCodeLaunchInputEntry {
  * Options for a 'VsCodeLaunchPromptStringInputEntry'
  * Source: https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
  */
-export interface VsCodeLaunchPromptStringInputEntry
-  extends VsCodeLaunchInputEntry {
+export interface VsCodeLaunchPromptStringInputEntry extends VsCodeLaunchInputEntry {
   readonly description: string;
   readonly default?: string;
   readonly password?: boolean;
@@ -102,8 +101,7 @@ export interface VsCodeLaunchPromptStringInputEntry
  * Options for a 'VsCodeLaunchPickStringInputEntry'
  * Source: https://code.visualstudio.com/docs/editor/variables-reference#_input-variables
  */
-export interface VsCodeLaunchPickStringInputEntry
-  extends VsCodeLaunchInputEntry {
+export interface VsCodeLaunchPickStringInputEntry extends VsCodeLaunchInputEntry {
   readonly description: string;
   readonly default?: string;
   readonly options: string[];
@@ -133,7 +131,7 @@ export class VsCodeLaunchConfig extends Component {
         Object.entries(cfg.env).map(([key, value]) => [
           key,
           value === false ? null : value,
-        ])
+        ]),
       ),
     };
   }
@@ -154,7 +152,7 @@ export class VsCodeLaunchConfig extends Component {
       obj: () => ({
         ...this.content,
         configurations: this.content.configurations.map(
-          VsCodeLaunchConfig.renderLaunchConfig
+          VsCodeLaunchConfig.renderLaunchConfig,
         ),
       }),
     });

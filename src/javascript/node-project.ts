@@ -92,9 +92,7 @@ export interface AuditOptions {
 }
 
 export interface NodeProjectOptions
-  extends GitHubProjectOptions,
-    NodePackageOptions,
-    ReleaseProjectOptions {
+  extends GitHubProjectOptions, NodePackageOptions, ReleaseProjectOptions {
   /**
    * License copyright owner.
    *
@@ -586,11 +584,11 @@ export class NodeProject extends GitHubProject {
       options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
     ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
     const normalizedArtifactsDirectory = normalizePersistedPath(
-      this.artifactsDirectory
+      this.artifactsDirectory,
     );
     this.artifactsJavascriptDirectory = posix.join(
       normalizedArtifactsDirectory,
-      "js"
+      "js",
     );
 
     this.runScriptCommand = (() => {
@@ -634,7 +632,7 @@ export class NodeProject extends GitHubProject {
       this.npmignore = new IgnoreFile(
         this,
         ".npmignore",
-        options.npmIgnoreOptions
+        options.npmIgnoreOptions,
       );
     }
 
@@ -649,7 +647,7 @@ export class NodeProject extends GitHubProject {
     if (options.npmignore?.length) {
       if (!this.npmignore) {
         throw new Error(
-          '.npmignore is not defined for an APP project type. Add "npmIgnore: true" to override this'
+          '.npmignore is not defined for an APP project type. Add "npmIgnore: true" to override this',
         );
       }
 
@@ -673,7 +671,7 @@ export class NodeProject extends GitHubProject {
         !this.deps.isDependencySatisfied(
           "constructs",
           DependencyType.BUILD,
-          "^10.0.0"
+          "^10.0.0",
         )
       ) {
         this.addDevDeps(`constructs@^10.0.0`);
@@ -682,7 +680,7 @@ export class NodeProject extends GitHubProject {
 
     if (!options.defaultReleaseBranch) {
       throw new Error(
-        '"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"'
+        '"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"',
       );
     }
 
@@ -721,12 +719,12 @@ export class NodeProject extends GitHubProject {
         postBuildSteps: [...(options.postBuildSteps ?? [])],
         ...filteredRunsOnOptions(
           options.workflowRunsOn,
-          options.workflowRunsOnGroup
+          options.workflowRunsOnGroup,
         ),
       });
 
       this.buildWorkflow.addPostBuildSteps(
-        ...this.renderUploadCoverageJobStep(options)
+        ...this.renderUploadCoverageJobStep(options),
       );
       this.maybeAddCodecovIgnores(options);
     }
@@ -821,19 +819,19 @@ export class NodeProject extends GitHubProject {
       // validate that no release options are selected if the release workflow is disabled.
       if (options.releaseToNpm) {
         throw new Error(
-          '"releaseToNpm" is not supported if "release" is not set'
+          '"releaseToNpm" is not supported if "release" is not set',
         );
       }
 
       if (options.releaseEveryCommit) {
         throw new Error(
-          '"releaseEveryCommit" is not supported if "release" is not set'
+          '"releaseEveryCommit" is not supported if "release" is not set',
         );
       }
 
       if (options.releaseSchedule) {
         throw new Error(
-          '"releaseSchedule" is not supported if "release" is not set'
+          '"releaseSchedule" is not supported if "release" is not set',
         );
       }
     }
@@ -857,7 +855,7 @@ export class NodeProject extends GitHubProject {
 
     if (dependabot && depsUpgrade) {
       throw new Error(
-        "'dependabot' cannot be configured together with 'depsUpgrade'"
+        "'dependabot' cannot be configured together with 'depsUpgrade'",
       );
     }
 
@@ -865,7 +863,7 @@ export class NodeProject extends GitHubProject {
 
     if (depsAutoApprove && !this.autoApprove && this.github) {
       throw new Error(
-        "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`",
       );
     }
 
@@ -879,7 +877,7 @@ export class NodeProject extends GitHubProject {
         labels: autoApproveLabel(depsAutoApprove),
       };
       this.github?.addDependabot(
-        deepMerge([defaultOptions, options.dependabotOptions ?? {}])
+        deepMerge([defaultOptions, options.dependabotOptions ?? {}]),
       );
     }
 
@@ -898,13 +896,13 @@ export class NodeProject extends GitHubProject {
       };
       this.upgradeWorkflow = new UpgradeDependencies(
         this,
-        deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
+        deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]),
       );
     }
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(
-        ...(options.pullRequestTemplateContents ?? [])
+        ...(options.pullRequestTemplateContents ?? []),
       );
     }
 
@@ -926,7 +924,7 @@ export class NodeProject extends GitHubProject {
     const shouldPackage = options.package ?? true;
     if (release && !shouldPackage) {
       this.logger.warn(
-        "When `release` is enabled, `package` must also be enabled as it is required by release. Force enabling `package`."
+        "When `release` is enabled, `package` must also be enabled as it is required by release. Force enabling `package`.",
       );
     }
     if (release || shouldPackage) {
@@ -937,7 +935,7 @@ export class NodeProject extends GitHubProject {
           ? "pnpm"
           : "npm";
       this.packageTask.exec(
-        `${pkgMgr} pack --pack-destination ${this.artifactsJavascriptDirectory}`
+        `${pkgMgr} pack --pack-destination ${this.artifactsJavascriptDirectory}`,
       );
     }
 
@@ -973,7 +971,7 @@ export class NodeProject extends GitHubProject {
   }
 
   private determineIdTokenPermissions(
-    options: NodeProjectOptions
+    options: NodeProjectOptions,
   ): JobPermission | undefined {
     const { codeCovTokenSecret, scopedPackagesOptions, codeArtifactOptions } =
       options;
@@ -1114,7 +1112,7 @@ export class NodeProject extends GitHubProject {
    * @returns array of job steps required for each private scoped packages
    */
   private getScopedPackageSteps(
-    codeArtifactOptions: CodeArtifactOptions | undefined
+    codeArtifactOptions: CodeArtifactOptions | undefined,
   ): JobStep[] {
     const parsedCodeArtifactOptions = {
       accessKeyIdSecret:
@@ -1153,10 +1151,10 @@ export class NodeProject extends GitHubProject {
           uses: "aws-actions/configure-aws-credentials@v5",
           with: {
             "aws-access-key-id": secretToString(
-              parsedCodeArtifactOptions.accessKeyIdSecret
+              parsedCodeArtifactOptions.accessKeyIdSecret,
             ),
             "aws-secret-access-key": secretToString(
-              parsedCodeArtifactOptions.secretAccessKeySecret
+              parsedCodeArtifactOptions.secretAccessKeySecret,
             ),
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1176,10 +1174,10 @@ export class NodeProject extends GitHubProject {
         run: `${this.runScriptCommand} ca:login`,
         env: {
           AWS_ACCESS_KEY_ID: secretToString(
-            parsedCodeArtifactOptions.accessKeyIdSecret
+            parsedCodeArtifactOptions.accessKeyIdSecret,
           ),
           AWS_SECRET_ACCESS_KEY: secretToString(
-            parsedCodeArtifactOptions.secretAccessKeySecret
+            parsedCodeArtifactOptions.secretAccessKeySecret,
           ),
         },
       },
@@ -1194,7 +1192,7 @@ export class NodeProject extends GitHubProject {
    * @returns Job steps
    */
   public renderWorkflowSetup(
-    options: RenderWorkflowSetupOptions = {}
+    options: RenderWorkflowSetupOptions = {},
   ): JobStep[] {
     const install = new Array<JobStep>();
 
@@ -1222,8 +1220,8 @@ export class NodeProject extends GitHubProject {
           isYarnClassic(pm) || isYarnBerry(pm)
             ? "yarn"
             : pm === NodePackageManager.PNPM
-            ? "pnpm"
-            : "npm";
+              ? "pnpm"
+              : "npm";
         install.push({
           name: "Setup Node.js",
           uses: "actions/setup-node@v5",
@@ -1243,7 +1241,7 @@ export class NodeProject extends GitHubProject {
 
     if (this.package.scopedPackagesOptions) {
       install.push(
-        ...this.getScopedPackageSteps(this.package.codeArtifactOptions)
+        ...this.getScopedPackageSteps(this.package.codeArtifactOptions),
       );
     }
 
@@ -1388,7 +1386,7 @@ export class NodeProject extends GitHubProject {
       ".yarn-integrity",
 
       "# parcel-bundler cache (https://parceljs.org/)",
-      ".cache"
+      ".cache",
     );
   }
 

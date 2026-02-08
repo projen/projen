@@ -78,9 +78,9 @@ test("fails if entrypoint does not have the .lambda suffix", () => {
       new awscdk.LambdaFunction(project, {
         entrypoint: join("src", "hello-no-lambda.ts"),
         cdkDeps: cdkDepsForProject(project),
-      })
+      }),
   ).toThrow(
-    "hello-no-lambda.ts must have a .lambda.ts or .edge-lambda.ts extension"
+    "hello-no-lambda.ts must have a .lambda.ts or .edge-lambda.ts extension",
   );
 });
 
@@ -118,7 +118,7 @@ test("runtime can be used to customize the lambda runtime Node 14.x and esbuild 
   const generatedSource = snapshot["src/hello-function.ts"];
   const tasks = snapshot[".projen/tasks.json"].tasks;
   expect(generatedSource).toContain(
-    "runtime: new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),"
+    "runtime: new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),",
   );
   expect(generatedSource).not.toContain("props?.runtime");
   expect(tasks["bundle:hello.lambda"]).toEqual({
@@ -148,7 +148,7 @@ test("runtime can be used to customize the lambda runtime Node 16.x and esbuild 
   const generatedSource = snapshot["src/hello-function.ts"];
   const tasks = snapshot[".projen/tasks.json"].tasks;
   expect(generatedSource).toContain(
-    "runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),"
+    "runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),",
   );
   expect(generatedSource).not.toContain("props?.runtime");
   expect(tasks["bundle:hello.lambda"]).toEqual({
@@ -184,7 +184,7 @@ test.each([
     const generatedSource = snapshot["src/hello-function.ts"];
     const tasks = snapshot[".projen/tasks.json"].tasks;
     expect(generatedSource).toContain(
-      `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+      `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`,
     );
     expect(generatedSource).not.toContain("props?.runtime");
     expect(tasks["bundle:hello.lambda"]).toEqual({
@@ -196,7 +196,7 @@ test.each([
         },
       ],
     });
-  }
+  },
 );
 
 test("aws sdk v3 packages are considered external with NODEJS_18_X", () => {
@@ -238,7 +238,7 @@ test("AWS SDK connection reuse", () => {
   const snapshot = Testing.synth(project);
   const generatedSource = snapshot["src/hello-function.ts"];
   expect(generatedSource).toContain(
-    "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
+    "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });",
   );
 });
 
@@ -257,7 +257,7 @@ test("AWS SDK connection reuse can be disabled", () => {
   const snapshot = Testing.synth(project);
   const generatedSource = snapshot["src/hello-function.ts"];
   expect(generatedSource).not.toContain(
-    "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
+    "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });",
   );
 });
 
@@ -294,7 +294,7 @@ test("eslint allows handlers to import dev dependencies", () => {
 
   const snapshot = Testing.synth(project);
   expect(
-    snapshot[".eslintrc.json"].rules["import/no-extraneous-dependencies"]
+    snapshot[".eslintrc.json"].rules["import/no-extraneous-dependencies"],
   ).toStrictEqual([
     "error",
     {
@@ -359,15 +359,15 @@ test("auto-discover", () => {
   mkdirSync(join(srcdir, "subdir"), { recursive: true });
   writeFileSync(
     join(srcdir, "hello.lambda.ts"),
-    "export function handler() {}"
+    "export function handler() {}",
   );
   writeFileSync(
     join(srcdir, "subdir", "world.lambda.ts"),
-    "export function handler() {}"
+    "export function handler() {}",
   );
   writeFileSync(
     join(srcdir, "subdir", "jangy.lambda.ts"),
-    "export function handler() {}"
+    "export function handler() {}",
   );
 
   new awscdk.AutoDiscover(project, {
@@ -437,11 +437,11 @@ describe("NODEJS_REGIONAL_LATEST runtime", () => {
     const generatedSource = snapshot["src/hello-function.ts"];
 
     expect(generatedSource).toContain(
-      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';",
     );
     expect(generatedSource).toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).toContain(
-      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
     );
     expect(generatedSource).toMatchSnapshot();
   });
@@ -462,11 +462,11 @@ describe("NODEJS_REGIONAL_LATEST runtime", () => {
     const generatedSource = snapshot["src/hello-function.ts"];
 
     expect(generatedSource).toContain(
-      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+      "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';",
     );
     expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).toContain(
-      "runtime: determineLatestNodeRuntime(scope),"
+      "runtime: determineLatestNodeRuntime(scope),",
     );
     expect(generatedSource).toMatchSnapshot();
   });
@@ -486,7 +486,7 @@ describe("NODEJS_REGIONAL_LATEST runtime", () => {
     const tasks = snapshot[".projen/tasks.json"].tasks;
 
     expect(tasks["bundle:hello.lambda"].steps[0].exec).toContain(
-      '--target="node22"'
+      '--target="node22"',
     );
   });
 });
@@ -509,7 +509,7 @@ describe("runtime override support", () => {
 
     expect(generatedSource).toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).toContain(
-      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+      "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
     );
   });
 
@@ -531,7 +531,7 @@ describe("runtime override support", () => {
     expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).not.toContain("props?.runtime");
     expect(generatedSource).toContain(
-      "runtime: determineLatestNodeRuntime(scope),"
+      "runtime: determineLatestNodeRuntime(scope),",
     );
   });
 
@@ -553,7 +553,7 @@ describe("runtime override support", () => {
     expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).not.toContain("props?.runtime");
     expect(generatedSource).toContain(
-      "runtime: new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS),"
+      "runtime: new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS),",
     );
     expect(generatedSource).toMatchSnapshot();
   });
@@ -561,7 +561,7 @@ describe("runtime override support", () => {
 
 function cdkDepsForProject(
   project: TypeScriptProject,
-  cdkVersion = "1.0.0"
+  cdkVersion = "1.0.0",
 ): awscdk.AwsCdkDeps {
   return new AwsCdkDepsJs(project, {
     cdkVersion: cdkVersion,

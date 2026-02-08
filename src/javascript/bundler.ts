@@ -172,7 +172,7 @@ export class Bundler extends Component {
     }
 
     const loaders =
-      options.loaders ?? false ? options.loaders : this.loaders ?? false;
+      (options.loaders ?? false) ? options.loaders : (this.loaders ?? false);
     if (loaders) {
       for (let [extension, loader] of Object.entries(loaders)) {
         args.push(`--loader:.${extension}=${loader}`);

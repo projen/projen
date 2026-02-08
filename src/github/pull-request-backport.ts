@@ -68,7 +68,7 @@ export class PullRequestBackport extends Component {
 
   public constructor(
     scope: IConstruct,
-    options: PullRequestBackportOptions = {}
+    options: PullRequestBackportOptions = {},
   ) {
     super(scope);
 
@@ -77,7 +77,7 @@ export class PullRequestBackport extends Component {
       throw new Error(
         `Cannot add ${
           new.target.name
-        } to project without GitHub enabled. Please enable GitHub for this project.`
+        } to project without GitHub enabled. Please enable GitHub for this project.`,
       );
     }
 
@@ -85,7 +85,7 @@ export class PullRequestBackport extends Component {
       options.branches ?? Release.of(this.project as any)?.branches ?? [];
     if (branches.length === 0) {
       this.project.logger.warn(
-        "PullRequestBackport could not find any target branches. Backports will not be available. Please add release branches or configure `branches` manually."
+        "PullRequestBackport could not find any target branches. Backports will not be available. Please add release branches or configure `branches` manually.",
       );
     }
 
@@ -95,7 +95,7 @@ export class PullRequestBackport extends Component {
     const shouldAutoApprove = options.autoApproveBackport ?? true;
     if (shouldAutoApprove) {
       const autoApprove = this.project.components.find(
-        (c): c is AutoApprove => c instanceof AutoApprove
+        (c): c is AutoApprove => c instanceof AutoApprove,
       );
       if (autoApprove?.label) {
         targetPrLabels.push(autoApprove.label);
@@ -124,7 +124,7 @@ export class PullRequestBackport extends Component {
     // Workflow
     this.workflow = new GithubWorkflow(
       workflowEngine,
-      options.workflowName ?? "backport"
+      options.workflowName ?? "backport",
     );
     this.workflow.on({
       pullRequestTarget: {
@@ -136,7 +136,8 @@ export class PullRequestBackport extends Component {
     // we prefer to match the PR using labels, but will fallback to matching the branch name prefix
     const branchCondition = `startsWith(github.head_ref, '${backportBranchNamePrefix}')`;
     const labelConditions: string[] = targetPrLabelsRaw.map(
-      (label) => `contains(github.event.pull_request.labels.*.name, '${label}')`
+      (label) =>
+        `contains(github.event.pull_request.labels.*.name, '${label}')`,
     );
     const isBackportPr = labelConditions.length
       ? `(${labelConditions.join(" && ")})`

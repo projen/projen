@@ -14,7 +14,7 @@ describe("github-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     const workflow = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
 
     expect(workflow.env).toBeUndefined();
@@ -28,7 +28,7 @@ describe("github-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     const workflow = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
 
     console.log(JSON.stringify(workflow, null, 2));
@@ -44,7 +44,7 @@ describe("github-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     const workflow = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
 
     expect(workflow.concurrency).toBeUndefined();
@@ -60,7 +60,7 @@ describe("github-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     const workflow = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
 
     expect(workflow.concurrency).toEqual({
@@ -83,7 +83,7 @@ describe("github-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     const workflow = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
 
     expect(workflow.concurrency).toEqual({
@@ -112,8 +112,8 @@ describe("github-workflow", () => {
       new GithubWorkflow(project.github!, workflowName, {
         fileName,
       });
-    }).toThrowError(
-      "GitHub Workflow files must have either a .yml or .yaml file extension, got: foobar.txt"
+    }).toThrow(
+      "GitHub Workflow files must have either a .yml or .yaml file extension, got: foobar.txt",
     );
   });
 
@@ -267,7 +267,7 @@ describe("github-workflow", () => {
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
 
     const workflowYAML = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
     expect(workflowYAML.jobs["working-dir"]).toBeUndefined();
   });
@@ -291,10 +291,10 @@ describe("github-workflow", () => {
 
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
     const workflowYAML = YAML.parse(
-      snapshot[`.github/workflows/${workflowName}.yml`]
+      snapshot[`.github/workflows/${workflowName}.yml`],
     );
     expect(workflowYAML.jobs["working-dir"].steps[0].uses).toEqual(
-      "actions/checkout@v2"
+      "actions/checkout@v2",
     );
   });
 
@@ -312,7 +312,7 @@ describe("github-workflow", () => {
       const snapshot = synthSnapshot(project);
 
       expect(
-        snapshot[`.github/workflows/${workflowName}.yml`]
+        snapshot[`.github/workflows/${workflowName}.yml`],
       ).toMatchSnapshot();
     });
 
@@ -328,7 +328,7 @@ describe("github-workflow", () => {
 
       project.github?.actions.set(
         "actions/checkout@v4",
-        "replacement/checkout"
+        "replacement/checkout",
       );
 
       const snapshot = synthSnapshot(project);
@@ -373,11 +373,11 @@ describe("github-workflow", () => {
 
       project.github?.actions.set(
         "actions/checkout@v4",
-        "actions/checkout@explicit-v4"
+        "actions/checkout@explicit-v4",
       );
       project.github?.actions.set(
         "actions/checkout",
-        "actions/checkout@generic-override"
+        "actions/checkout@generic-override",
       );
 
       const snapshot = synthSnapshot(project);

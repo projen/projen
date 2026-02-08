@@ -13,7 +13,7 @@ test("default", () => {
 
   // THEN
   expect(synthSnapshot(project)[PULL_REQUEST_TEMPLATE_FILE]).toStrictEqual(
-    "Fixes #"
+    "Fixes #",
   );
 });
 
@@ -27,6 +27,6 @@ test("custom content", () => {
 
   // THEN
   expect(synthSnapshot(project)[PULL_REQUEST_TEMPLATE_FILE]).toStrictEqual(
-    ["hello", "world", "", "foobar"].join("\n")
+    ["hello", "world", "", "foobar"].join("\n"),
   );
 });

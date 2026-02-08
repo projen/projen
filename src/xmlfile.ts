@@ -18,7 +18,7 @@ export class XmlFile extends ObjectFile {
   constructor(
     project: Project,
     filePath: string,
-    options: XmlFileOptions = {}
+    options: XmlFileOptions = {},
   ) {
     super(project, filePath, options);
   }

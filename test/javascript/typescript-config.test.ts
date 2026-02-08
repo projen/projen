@@ -33,13 +33,13 @@ describe("TypescriptConfig", () => {
 
       const loadedConfig = ts.readConfigFile(
         tsConfig.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
 
       expect(loadedConfig.error).toBeUndefined();
       expect(loadedConfig.config).toHaveProperty(
         "compilerOptions.outDir",
-        "testOurDir"
+        "testOurDir",
       );
     });
   });
@@ -63,11 +63,11 @@ describe("TypescriptConfig", () => {
 
       const loadedBase = ts.readConfigFile(
         baseConfig.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
       const loadedConfig = ts.readConfigFile(
         tsConfig.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
 
       expect(loadedConfig.error).toBeUndefined();
@@ -93,12 +93,12 @@ describe("TypescriptConfig", () => {
 
       const loadedConfig = ts.readConfigFile(
         baseConfig.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
       expect(loadedConfig.error).toBeUndefined();
       expect(loadedConfig.config).toHaveProperty(
         "extends",
-        "@tsconfig/recommended/tsconfig.json"
+        "@tsconfig/recommended/tsconfig.json",
       );
     });
   });
@@ -120,12 +120,12 @@ describe("TypescriptConfig", () => {
 
       const loadedConfig = ts.readConfigFile(
         baseConfig.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
       expect(loadedConfig.error).toBeUndefined();
       expect(loadedConfig.config).toHaveProperty(
         "extends",
-        "@tsconfig/recommended/tsconfig.json"
+        "@tsconfig/recommended/tsconfig.json",
       );
     });
   });
@@ -140,7 +140,7 @@ describe("TypescriptConfig", () => {
         // No compilerOptions
         // No extends
       });
-    }).toThrowError(/Must provide either `extends` or `compilerOptions`/);
+    }).toThrow(/Must provide either `extends` or `compilerOptions`/);
   });
 
   test("TypeScript should parse generated config with multiple extensions", () => {
@@ -188,15 +188,15 @@ describe("TypescriptConfig", () => {
 
       const loadedConfig = ts.readConfigFile(
         tsConfig.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
       const buildConfig = ts.readConfigFile(
         buildBase.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
       const baseConfig = ts.readConfigFile(
         commonBase.file.absolutePath,
-        ts.sys.readFile
+        ts.sys.readFile,
       );
 
       // expect no "extends" field by default.
@@ -206,7 +206,7 @@ describe("TypescriptConfig", () => {
       expect(baseConfig.error).toBeUndefined();
       expect(baseConfig.config).toHaveProperty(
         "extends",
-        "./tsconfig.build.json"
+        "./tsconfig.build.json",
       );
       // expect array extends field when multiple extensions.
       expect(loadedConfig.error).toBeUndefined();
@@ -221,7 +221,7 @@ describe("TypescriptConfig", () => {
   const extendsCase = (
     tsVersion: string,
     warns: { none: boolean; single: boolean; multi: boolean },
-    manifestVersion?: string
+    manifestVersion?: string,
   ) => {
     return [
       {
@@ -259,7 +259,7 @@ describe("TypescriptConfig", () => {
         single: false,
         multi: true,
       },
-      "4.5.0"
+      "4.5.0",
     ),
     ...extendsCase(
       "typescript@*",
@@ -268,7 +268,7 @@ describe("TypescriptConfig", () => {
         single: false,
         multi: false,
       },
-      "5.0.0"
+      "5.0.0",
     ),
     ...extendsCase("typescript@^4", {
       none: false,
@@ -299,29 +299,29 @@ describe("TypescriptConfig", () => {
         if (manifestVersion) {
           const mockManifestPath = path.join(
             outdir,
-            "node_modules/typescript/package.json"
+            "node_modules/typescript/package.json",
           );
           mkdirSync(path.dirname(mockManifestPath), { recursive: true });
           writeFileSync(
             mockManifestPath,
-            JSON.stringify({ name: "typescript", version: manifestVersion })
+            JSON.stringify({ name: "typescript", version: manifestVersion }),
           );
         }
         project.synth();
         const doExpect = expectWarn ? expect(logSpy) : expect(logSpy).not;
         const versFromDep = semver.coerce(
           project.deps.tryGetDependency("typescript")?.version,
-          { loose: true }
+          { loose: true },
         );
         const vers = manifestVersion ?? versFromDep;
         doExpect.toHaveBeenCalledWith(
           "TypeScript < 5.0.0 can only extend from a single base config.",
           `TypeScript Version: ${vers}`,
           `File: ${tsconfig.file.absolutePath}`,
-          `Extends: ${extendsPaths}`
+          `Extends: ${extendsPaths}`,
         );
       });
-    }
+    },
   );
 
   test("Should allow adding to the includes array", () => {

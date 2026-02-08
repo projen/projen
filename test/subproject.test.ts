@@ -16,7 +16,7 @@ test("composing projects declaratively", () => {
 
   // THEN
   expect(
-    fs.existsSync(path.join(comp.outdir, "packages", "foo", ".gitignore"))
+    fs.existsSync(path.join(comp.outdir, "packages", "foo", ".gitignore")),
   ).toBeTruthy();
 });
 
@@ -41,10 +41,10 @@ test("composing projects synthesizes to subdirs", () => {
   // THEN
   expect(fs.existsSync(path.join(comp.outdir, "README.md")));
   expect(
-    fs.existsSync(path.join(comp.outdir, "packages", "foo", ".gitignore"))
+    fs.existsSync(path.join(comp.outdir, "packages", "foo", ".gitignore")),
   );
   expect(
-    fs.existsSync(path.join(comp.outdir, "packages", "bar", ".gitignore"))
+    fs.existsSync(path.join(comp.outdir, "packages", "bar", ".gitignore")),
   );
 });
 
@@ -64,8 +64,8 @@ test("errors when paths overlap", () => {
         name: "foo",
         parent: comp,
         outdir: path.join("packages", "foo"),
-      })
-  ).toThrowError(/There is already a subproject with/i);
+      }),
+  ).toThrow(/There is already a subproject with/i);
 });
 
 test("multiple levels", () => {
@@ -95,14 +95,14 @@ test("subprojects cannot introduce files that override each other", () => {
 
   new TextFile(root, "subproject/file.txt");
   expect(() => new TextFile(child, "file.txt")).toThrow(
-    /There is already a file under subproject(\\|\/)file\.txt/
+    /There is already a file under subproject(\\|\/)file\.txt/,
   );
 });
 
 test('"outdir" for subprojects must be relative', () => {
   const root = new TestProject();
   expect(
-    () => new Project({ name: "foobar", parent: root, outdir: "/foo/bar" })
+    () => new Project({ name: "foobar", parent: root, outdir: "/foo/bar" }),
   ).toThrow(/"outdir" must be a relative path/);
 });
 
@@ -155,7 +155,7 @@ test("subprojects do not add a Projenrc component", () => {
 
   // THEN
   const rcFiles = child.components.filter((o: Component) =>
-    o.constructor.name.toLowerCase().includes("projenrc")
+    o.constructor.name.toLowerCase().includes("projenrc"),
   );
   expect(rcFiles.length).toBe(0);
 });

@@ -10,12 +10,12 @@ test("throws when adding an existing service with same name and alias", () => {
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "bar" });
   // THEN
-  expect(() => c.addServices({ name: "bar" })).toThrowError(
-    /GitLab CI already contains/
+  expect(() => c.addServices({ name: "bar" })).toThrow(
+    /GitLab CI already contains/,
   );
-  expect(() =>
-    c.addServices({ name: "foobar" }, { name: "foobar" })
-  ).toThrowError(/GitLab CI already contains/);
+  expect(() => c.addServices({ name: "foobar" }, { name: "foobar" })).toThrow(
+    /GitLab CI already contains/,
+  );
 });
 
 test("does not throw when adding an services with same name and different alias", () => {
@@ -26,8 +26,8 @@ test("does not throw when adding an services with same name and different alias"
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "foo", alias: "foobar" });
   // THEN
-  expect(() => c.addServices({ name: "foo", alias: "baz" })).not.toThrowError(
-    /GitLab CI already contains/
+  expect(() => c.addServices({ name: "foo", alias: "baz" })).not.toThrow(
+    /GitLab CI already contains/,
   );
 });
 
@@ -38,17 +38,17 @@ test("does not throw when adding an valid include", () => {
   });
   const c = new CiConfiguration(p, "foo");
   // THEN
-  expect(() => c.addIncludes({ local: "foo" })).not.toThrowError(
-    /A valid include configuration specifies/
+  expect(() => c.addIncludes({ local: "foo" })).not.toThrow(
+    /A valid include configuration specifies/,
   );
-  expect(() =>
-    c.addIncludes({ file: ["foo"], project: "foo" })
-  ).not.toThrowError(/A valid include configuration specifies/);
-  expect(() => c.addIncludes({ remote: "foo" })).not.toThrowError(
-    /A valid include configuration specifies/
+  expect(() => c.addIncludes({ file: ["foo"], project: "foo" })).not.toThrow(
+    /A valid include configuration specifies/,
   );
-  expect(() => c.addIncludes({ template: "foo" })).not.toThrowError(
-    /A valid include configuration specifies/
+  expect(() => c.addIncludes({ remote: "foo" })).not.toThrow(
+    /A valid include configuration specifies/,
+  );
+  expect(() => c.addIncludes({ template: "foo" })).not.toThrow(
+    /A valid include configuration specifies/,
   );
 });
 
@@ -60,10 +60,10 @@ test("throws when adding an invalid include", () => {
   const c = new CiConfiguration(p, "foo");
   // THEN
   expect(() =>
-    c.addIncludes({ file: ["foo"], project: "foo", local: "foo" })
+    c.addIncludes({ file: ["foo"], project: "foo", local: "foo" }),
   ).toThrow(/contains 2 property combination/);
   expect(() => c.addIncludes({ project: "foo" })).toThrow(
-    /contains 0 property combination/
+    /contains 0 property combination/,
   );
 });
 
@@ -77,20 +77,20 @@ test("throws when adding an existing includes", () => {
     { local: "foo" },
     { file: ["foo"], project: "foo" },
     { remote: "foo" },
-    { template: "foo" }
+    { template: "foo" },
   );
   // THEN
-  expect(() => c.addIncludes({ local: "foo" })).toThrowError(
-    /already contains one or more templates specified in/
+  expect(() => c.addIncludes({ local: "foo" })).toThrow(
+    /already contains one or more templates specified in/,
   );
-  expect(() => c.addIncludes({ file: ["foo"], project: "foo" })).toThrowError(
-    /already contains one or more templates specified in/
+  expect(() => c.addIncludes({ file: ["foo"], project: "foo" })).toThrow(
+    /already contains one or more templates specified in/,
   );
-  expect(() => c.addIncludes({ remote: "foo" })).toThrowError(
-    /already contains one or more templates specified in/
+  expect(() => c.addIncludes({ remote: "foo" })).toThrow(
+    /already contains one or more templates specified in/,
   );
-  expect(() => c.addIncludes({ template: "foo" })).toThrowError(
-    /already contains one or more templates specified in/
+  expect(() => c.addIncludes({ template: "foo" })).toThrow(
+    /already contains one or more templates specified in/,
   );
 });
 
@@ -138,8 +138,8 @@ test("throws when adding a job with more than 4 caches configured", () => {
             variables: { AWS_REGION: "eu-central-1" },
           },
         },
-      })
-  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
+      }),
+  ).toThrow("foo: GitLab CI can only define up to 4 caches, got: 5");
 });
 
 test("throws when adding more than 4 default caches", () => {
@@ -175,8 +175,8 @@ test("throws when adding more than 4 default caches", () => {
             },
           ],
         },
-      })
-  ).toThrowError("foo: GitLab CI can only define up to 4 caches, got: 5");
+      }),
+  ).toThrow("foo: GitLab CI can only define up to 4 caches, got: 5");
 });
 
 test("respected the original format when variables are added to jobs", () => {
@@ -193,7 +193,8 @@ test("respected the original format when variables are added to jobs", () => {
   });
   // THEN
   expect(
-    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build.variables
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build
+      .variables,
   ).toStrictEqual({ AWS_REGION: "eu-central-1" });
 });
 
@@ -210,7 +211,7 @@ test("respect the original format when adding global variables", () => {
   });
   // THEN
   expect(
-    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).variables
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).variables,
   ).toStrictEqual({
     AWS_DEFAULT_OUTPUT: "json",
     AWS_REGION: "eu-central-1",
@@ -231,7 +232,8 @@ test("respect the original format when variables are added to jobs", () => {
   });
   // THEN
   expect(
-    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build.id_tokens
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build
+      .id_tokens,
   ).toStrictEqual({ TEST_ID_TOKEN: { aud: "https://test.service.com" } });
 });
 
@@ -338,7 +340,7 @@ test("add default tokens to all jobs", () => {
   // THEN
   expect(
     YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).default
-      .id_tokens
+      .id_tokens,
   ).toStrictEqual({ TEST_ID_TOKEN: { aud: "https://test.service.com" } });
 });
 
@@ -386,7 +388,7 @@ my_job:
     - .my_cache
   script:
     - echo Here is my_job
-`
+`,
   );
 });
 
@@ -412,7 +414,7 @@ test("test code coverage report", () => {
   // THEN
   expect(
     YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build.artifacts
-      .reports
+      .reports,
   ).toStrictEqual({
     coverage_report: {
       coverage_format: "cobertura",
@@ -428,7 +430,7 @@ test("adds default hooks", () => {
   c.addDefaultHooks({ preGetSourcesScript: ["echo test"] });
   // THEN
   expect(
-    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).default.hooks
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).default.hooks,
   ).toStrictEqual({ pre_get_sources_script: ["echo test"] });
 });
 

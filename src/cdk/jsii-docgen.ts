@@ -35,12 +35,12 @@ export class JsiiDocgen extends Component {
       !this.project.deps.isDependencySatisfied(
         "jsii-docgen",
         DependencyType.BUILD,
-        version
+        version,
       )
     ) {
       this.project.deps.addDependency(
         `jsii-docgen@${version}`,
-        DependencyType.BUILD
+        DependencyType.BUILD,
       );
     }
 

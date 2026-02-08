@@ -32,16 +32,14 @@ export class CommitAndTagVersion {
   constructor(
     packageSpec: string | undefined,
     private readonly cwd: string,
-    private readonly options: CommitAndTagOptions
+    private readonly options: CommitAndTagOptions,
   ) {
     let cmd;
     if (!packageSpec) {
       // If no packageSpec is given, try and resolve the CATV binary
       // from devDependencies. This will speed up execution a lot.
       try {
-        cmd = `${process.execPath} ${require.resolve(
-          "commit-and-tag-version/bin/cli.js"
-        )}`;
+        cmd = `${process.execPath} ${require.resolve("commit-and-tag-version/bin/cli.js")}`;
       } catch {
         // Oh well
       }
@@ -54,7 +52,7 @@ export class CommitAndTagVersion {
    * Invoke the `commit-and-tag` package
    */
   public async invoke<A extends InvokeOptions>(
-    options: A
+    options: A,
   ): Promise<A extends { capture: true } ? string : void> {
     const catvConfig: CommitAndTagConfig = {
       packageFiles: [
@@ -150,7 +148,7 @@ export class CommitAndTagVersion {
         capture: true,
         dryRun: true,
         skipChangelog: true,
-      })
+      }),
     );
     const re = /bumping version.*from ([0-9a-z.+-]+) to ([0-9a-z.+-]+)/im;
     const m = re.exec(output);

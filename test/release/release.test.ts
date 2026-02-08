@@ -121,7 +121,7 @@ describe("Single Project", () => {
     // THEN
     const outdir = synthSnapshot(project);
     expect(outdir[".projen/tasks.json"].tasks.bump.env.BUMP_PACKAGE).toEqual(
-      "MY-BUMP"
+      "MY-BUMP",
     );
   });
 
@@ -141,7 +141,7 @@ describe("Single Project", () => {
     // THEN
     const outdir = synthSnapshot(project);
     expect(
-      outdir[".projen/tasks.json"].tasks.bump.env.NEXT_VERSION_COMMAND
+      outdir[".projen/tasks.json"].tasks.bump.env.NEXT_VERSION_COMMAND,
     ).toEqual("NEXT-VERSION-COMMAND");
   });
 
@@ -160,7 +160,7 @@ describe("Single Project", () => {
         minMajorVersion: 10,
       });
     }).toThrow(
-      /minMajorVersion and nextVersionCommand cannot be used together/
+      /minMajorVersion and nextVersionCommand cannot be used together/,
     );
   });
 
@@ -206,7 +206,7 @@ describe("Single Project", () => {
 
     // THEN
     expect(addBranch).toThrow(
-      /you must specify \"majorVersion\" for the default branch when adding multiple release branches/
+      /you must specify \"majorVersion\" for the default branch when adding multiple release branches/,
     );
   });
 
@@ -418,10 +418,10 @@ describe("Single Project", () => {
     const outdir = synthSnapshot(project);
     const steps: Object[] = outdir[".projen/tasks.json"].tasks.release.steps;
     const antiTamperStepIndex = steps.findIndex(
-      (obj: any) => obj.exec === Release.ANTI_TAMPER_CMD
+      (obj: any) => obj.exec === Release.ANTI_TAMPER_CMD,
     );
     const publishGitStepIndex = steps.findIndex(
-      (obj: any) => obj.spawn === Publisher.PUBLISH_GIT_TASK_NAME
+      (obj: any) => obj.spawn === Publisher.PUBLISH_GIT_TASK_NAME,
     );
     expect(publishGitStepIndex).toBeGreaterThan(antiTamperStepIndex);
   });
@@ -449,7 +449,7 @@ describe("Single Project", () => {
         expect.objectContaining({
           exec: "git push --follow-tags -o ci.skip origin main",
         }),
-      ])
+      ]),
     );
   });
 
@@ -606,9 +606,9 @@ describe("Single Project", () => {
           majorVersion: 1,
           releaseBranches: ["10.x", "2.x"] as any,
           artifactsDirectory: "dist",
-        })
+        }),
     ).toThrow(
-      /\"releaseBranches\" is no longer an array. See type annotations/
+      /\"releaseBranches\" is no longer an array. See type annotations/,
     );
   });
 
@@ -992,7 +992,7 @@ describe("Single Project", () => {
       release.publisher.publishToNpm({ distTag: "next" });
 
       expect(() => project.synth()).toThrow(
-        /cannot set branch-level npmDistTag and npmDistTag in publishToNpm/
+        /cannot set branch-level npmDistTag and npmDistTag in publishToNpm/,
       );
     });
   });
@@ -1088,7 +1088,7 @@ describe("Single Project", () => {
     const files = synthSnapshot(project);
     const tasks = files[".projen/tasks.json"].tasks;
     expect(
-      Object.keys(tasks).filter((t) => t.startsWith("publish:")).length
+      Object.keys(tasks).filter((t) => t.startsWith("publish:")).length,
     ).toBe(0);
   });
 
@@ -1115,12 +1115,12 @@ describe("Single Project", () => {
     const files = synthSnapshot(project);
     const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
     const releaseJobs = Object.keys(releaseWorkflow.jobs).filter((name) =>
-      name.startsWith("release_")
+      name.startsWith("release_"),
     );
     for (const name of releaseJobs) {
       const job = releaseWorkflow.jobs[name];
       expect(
-        job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:')
+        job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:'),
       ).toBeTruthy();
     }
   });
@@ -1212,15 +1212,15 @@ describe("Subproject", () => {
 
     expect(subprojectReleaseWorkflowAsString).toBeDefined();
     const subprojectReleaseWorkflow = YAML.parse(
-      subprojectReleaseWorkflowAsString
+      subprojectReleaseWorkflowAsString,
     );
     expect(
-      subprojectReleaseWorkflow.jobs.release.defaults.run["working-directory"]
+      subprojectReleaseWorkflow.jobs.release.defaults.run["working-directory"],
     ).toEqual(`./${subprojectOutdir}`);
     expect(
       subprojectReleaseWorkflow.jobs.release.steps.find(
-        (step: any) => step.name === "Upload artifact"
-      ).with.path
+        (step: any) => step.name === "Upload artifact",
+      ).with.path,
     ).toEqual(`${subprojectOutdir}/${artifactsDirectory}`);
 
     expect(subprojectReleaseWorkflowAsString).toMatchSnapshot();
@@ -1278,7 +1278,7 @@ describe("python", () => {
 
     // Find the Release step (it should be the step with name "Release")
     const releaseStep = releaseWorkflow.jobs.release_pypi.steps.find(
-      (step: any) => step.name === "Release"
+      (step: any) => step.name === "Release",
     );
     expect(releaseStep).toMatchObject({
       name: "Release",
@@ -1320,7 +1320,7 @@ describe("nuget", () => {
 
     // Find the Release step (it should be the step with name "Release")
     const releaseStep = releaseWorkflow.jobs.release_nuget.steps.find(
-      (step: any) => step.name === "Release"
+      (step: any) => step.name === "Release",
     );
     expect(releaseStep).toMatchObject({
       name: "Release",

@@ -67,7 +67,7 @@ async function main() {
   const nodeVersion = getNodeMajorVersion();
   if (nodeVersion && nodeVersion < 16) {
     logging.warn(
-      `WARNING: You are using Node v${nodeVersion}, which reaches end of life on April 30, 2023. Support for EOL Node releases may be dropped by projen in the future. Please consider upgrading to Node >= 16 as soon as possible.`
+      `WARNING: You are using Node v${nodeVersion}, which reaches end of life on April 30, 2023. Support for EOL Node releases may be dropped by projen in the future. Please consider upgrading to Node >= 16 as soon as possible.`,
     );
   }
 

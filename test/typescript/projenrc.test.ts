@@ -75,7 +75,7 @@ test("adds default projencodedir to jest testMatch patterns", () => {
   const snapshot = synthSnapshot(prj);
   const testMatch = snapshot["package.json"].jest.testMatch;
   expect(testMatch).toContain(
-    "<rootDir>/@(projenrc)/**/*(*.)@(spec|test).ts?(x)"
+    "<rootDir>/@(projenrc)/**/*(*.)@(spec|test).ts?(x)",
   );
   expect(testMatch).toContain("<rootDir>/@(projenrc)/**/__tests__/**/*.ts?(x)");
 });

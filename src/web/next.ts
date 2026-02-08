@@ -30,12 +30,10 @@ export interface NextJsCommonProjectOptions {
 }
 
 export interface NextJsTypeScriptProjectOptions
-  extends NextJsCommonProjectOptions,
-    TypeScriptProjectOptions {}
+  extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
 
 export interface NextJsProjectOptions
-  extends NextJsCommonProjectOptions,
-    NodeProjectOptions {
+  extends NextJsCommonProjectOptions, NodeProjectOptions {
   /**
    * Typescript sources directory.
    *
@@ -181,7 +179,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
         defaultOptions,
         options,
         { sampleCode: false },
-      ]) as TypeScriptProjectOptions
+      ]) as TypeScriptProjectOptions,
     );
 
     this.srcdir = options.srcdir ?? "pages";

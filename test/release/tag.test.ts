@@ -26,13 +26,13 @@ test("empty release tag file", async () => {
 
 test("missing release tag file", async () => {
   await expect(
-    testTag({ testOptions: { releaseTagPath: "bogus" } })
+    testTag({ testOptions: { releaseTagPath: "bogus" } }),
   ).rejects.toThrow();
 });
 
 test("missing changelog file", async () => {
   await expect(
-    testTag({ testOptions: { changelogPath: "bogus" } })
+    testTag({ testOptions: { changelogPath: "bogus" } }),
   ).rejects.toThrow();
 });
 
@@ -67,11 +67,11 @@ async function testTag(opts: TestTagOpts = {}) {
   git("config tag.gpgsign false");
   await fs.writeFile(
     join(workdir, opts.testOptions?.releaseTagPath || "", releaseTagFile),
-    releaseTag
+    releaseTag,
   );
   await fs.writeFile(
     join(workdir, opts.testOptions?.changelogPath || "", changelog),
-    changelogContent
+    changelogContent,
   );
   git("add .");
   git('commit -m "chore: foo"');

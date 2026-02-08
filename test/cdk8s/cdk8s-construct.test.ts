@@ -103,7 +103,7 @@ describe("cdk8s and consructs version", () => {
 
     // Then
     expect(createCdk8sConstructLibrary).toThrow(
-      /cdk8s 2.x requires constructs 10.x/
+      /cdk8s 2.x requires constructs 10.x/,
     );
   });
 

@@ -9,8 +9,7 @@ import { Project } from "../project";
 /**
  * Options for `AutoDiscover`.
  */
-export interface AutoDiscoverOptions
-  extends IntegrationTestAutoDiscoverOptions {
+export interface AutoDiscoverOptions extends IntegrationTestAutoDiscoverOptions {
   /**
    * Automatically discover integration tests
    *
@@ -33,8 +32,7 @@ export class AutoDiscover extends Component {
   }
 }
 
-export interface IntegrationTestAutoDiscoverOptions
-  extends IntegrationTestAutoDiscoverBaseOptions {
+export interface IntegrationTestAutoDiscoverOptions extends IntegrationTestAutoDiscoverBaseOptions {
   /**
    * Path to the tsconfig file to use for integration tests.
    */

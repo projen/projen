@@ -25,7 +25,7 @@ describe("Publisher Trusted Publishing Validation", () => {
       }).toThrow(
         "Cannot use npmTokenSecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of NPM tokens. " +
-          "Remove the npmTokenSecret option to use trusted publishing."
+          "Remove the npmTokenSecret option to use trusted publishing.",
       );
     });
 
@@ -64,7 +64,7 @@ describe("Publisher Trusted Publishing Validation", () => {
       }).toThrow(
         "Cannot use nugetApiKeySecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of API keys. " +
-          "Remove the nugetApiKeySecret option to use trusted publishing."
+          "Remove the nugetApiKeySecret option to use trusted publishing.",
       );
     });
 
@@ -95,7 +95,7 @@ describe("Publisher Trusted Publishing Validation", () => {
       }).toThrow(
         "Cannot use twineUsernameSecret and twinePasswordSecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of username/password credentials. " +
-          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing."
+          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing.",
       );
     });
 
@@ -108,7 +108,7 @@ describe("Publisher Trusted Publishing Validation", () => {
       }).toThrow(
         "Cannot use twineUsernameSecret and twinePasswordSecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of username/password credentials. " +
-          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing."
+          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing.",
       );
     });
 
@@ -122,7 +122,7 @@ describe("Publisher Trusted Publishing Validation", () => {
       }).toThrow(
         "Cannot use twineUsernameSecret and twinePasswordSecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of username/password credentials. " +
-          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing."
+          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing.",
       );
     });
 

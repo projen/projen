@@ -32,7 +32,7 @@ test("fails if the step fails", () => {
 
   // THEN
   expect(() => executeTask(p, "testme")).toThrow(
-    /Task \"testme\" failed when executing \"false\"/
+    /Task \"testme\" failed when executing \"false\"/,
   );
 });
 
@@ -64,7 +64,7 @@ test("execution stops if a step fails", () => {
 
   // THEN
   expect(() => executeTask(p, "testme")).toThrow(
-    /Task \"testme\" failed when executing \"echo failing && false\"/
+    /Task \"testme\" failed when executing \"echo failing && false\"/,
   );
 });
 
@@ -160,7 +160,7 @@ describe("environment variables", () => {
     // WHEN
     const t = p.addTask("test:env");
     t.exec(
-      `node -e "const fs = require('fs'); fs.writeFileSync('test.txt', 'testing');"`
+      `node -e "const fs = require('fs'); fs.writeFileSync('test.txt', 'testing');"`,
     );
     // VALUE wouldn't return anything if evaluated up front
     t.exec(`node -e "console.log(process.env.VALUE)"`, {
@@ -190,8 +190,8 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
-    expect(warn).toBeCalledWith(
-      "Received non-string value for environment variable VALUE. Value will be stringified."
+    expect(warn).toHaveBeenCalledWith(
+      "Received non-string value for environment variable VALUE. Value will be stringified.",
     );
     warn.mockRestore();
   });
@@ -211,8 +211,8 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
-    expect(warn).toBeCalledWith(
-      "Received non-string value for environment variable VALUE. Value will be stringified."
+    expect(warn).toHaveBeenCalledWith(
+      "Received non-string value for environment variable VALUE. Value will be stringified.",
     );
     warn.mockRestore();
   });
@@ -327,7 +327,7 @@ describe("cwd", () => {
       exec: `node -e "console.log('cwd is %s', process.cwd())"`,
     });
     expect(
-      executeTask(p, "testme")[0].includes(basename(p.outdir))
+      executeTask(p, "testme")[0].includes(basename(p.outdir)),
     ).toBeTruthy();
   });
 
@@ -337,7 +337,7 @@ describe("cwd", () => {
     task.exec(`cd ${tmpdir()}`);
     task.exec(`node -e "console.log('cwd is %s', process.cwd())"`);
     expect(
-      executeTask(p, "testme")[0].includes(basename(p.outdir))
+      executeTask(p, "testme")[0].includes(basename(p.outdir)),
     ).toBeTruthy();
   });
 
@@ -386,7 +386,7 @@ describe("cwd", () => {
     const task = p.addTask("testme");
     task.exec("echo step", { cwd: join(p.outdir, "mystep") });
     expect(() => executeTask(p, "testme")).toThrow(
-      /must be an existing directory/
+      /must be an existing directory/,
     );
   });
 });
@@ -425,7 +425,7 @@ test("env is inherited from parent tasks", () => {
     exec: `node -e "console.log('child: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3)"`,
   });
   parent.exec(
-    `node -e "console.log('parent: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3 ?? '')"`
+    `node -e "console.log('parent: [%s,%s,%s]', process.env.E1, process.env.E2, process.env.E3 ?? '')"`,
   );
   parent.spawn(child);
 
@@ -444,13 +444,13 @@ test("requiredEnv can be used to specify required environment variables", () => 
   });
 
   expect(() => executeTask(p, "my-task")).toThrow(
-    /missing required environment variables: ENV1,ENV2,ENV3/
+    /missing required environment variables: ENV1,ENV2,ENV3/,
   );
   expect(() => executeTask(p, "my-task", { ENV1: "env1" })).toThrow(
-    /missing required environment variables: ENV2,ENV3/
+    /missing required environment variables: ENV2,ENV3/,
   );
   expect(
-    executeTask(p, "my-task", { ENV1: "env1", ENV2: "env2", ENV3: "env3" })
+    executeTask(p, "my-task", { ENV1: "env1", ENV2: "env2", ENV3: "env3" }),
   ).toStrictEqual(["env1 env2 env3"]);
 });
 
@@ -466,7 +466,7 @@ test("exec can receive args", () => {
 
   // THEN
   expect(
-    executeTask(p, "test1", {}, ["world", "and", "other", "planets"])
+    executeTask(p, "test1", {}, ["world", "and", "other", "planets"]),
   ).toEqual(["hello world and other planets"]);
 });
 
@@ -561,7 +561,7 @@ describe("makeCrossPlatform", () => {
     Object.defineProperty(process, "platform", { value: "win32" });
 
     expect(makeCrossPlatform("mkdir newdir && rm olddir")).toBe(
-      "shx mkdir newdir && shx rm olddir"
+      "shx mkdir newdir && shx rm olddir",
     );
   });
 
@@ -570,7 +570,7 @@ describe("makeCrossPlatform", () => {
     Object.defineProperty(process, "platform", { value: "win32" });
 
     expect(makeCrossPlatform("  cp file1.txt file2.txt  ")).toBe(
-      "shx cp file1.txt file2.txt"
+      "shx cp file1.txt file2.txt",
     );
   });
 
@@ -637,12 +637,12 @@ function executeTask(
   p: Project,
   taskName: string,
   env: Record<string, string> = {},
-  additionalArgs: string[] = []
+  additionalArgs: string[] = [],
 ) {
   p.synth();
 
   const args = [require.resolve("../../lib/cli"), taskName].map(
-    (x) => `"${x}"`
+    (x) => `"${x}"`,
   );
 
   const result = spawnSync(
@@ -653,7 +653,7 @@ function executeTask(
       shell: true,
       env: { ...process.env, ...env },
       timeout: 10_000, // let's try to catch hanging processes sooner than later
-    }
+    },
   );
   if (result.status !== 0) {
     throw new Error(`non-zero exit code: ${result.stderr.toString("utf-8")}`);

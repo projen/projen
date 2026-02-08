@@ -27,7 +27,7 @@ const PUBLIB_VERSION = "latest";
  */
 function urlHostMatches(
   url: string | undefined,
-  expectedHost: string
+  expectedHost: string,
 ): boolean {
   if (!url) return false;
   try {
@@ -221,7 +221,7 @@ export class Publisher extends Component {
    */
   public _renderJobsForBranch(
     branch: string,
-    options: Partial<BranchOptions>
+    options: Partial<BranchOptions>,
   ): Record<string, Job> {
     let jobs: Record<string, Job> = {};
 
@@ -334,7 +334,7 @@ export class Publisher extends Component {
       throw new Error(
         "Cannot use npmTokenSecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of NPM tokens. " +
-          "Remove the npmTokenSecret option to use trusted publishing."
+          "Remove the npmTokenSecret option to use trusted publishing.",
       );
     }
 
@@ -343,7 +343,7 @@ export class Publisher extends Component {
 
     const isGitHubPackages = urlHostMatches(
       options.registry,
-      GITHUB_PACKAGES_NPM
+      GITHUB_PACKAGES_NPM,
     );
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
     const isAwsCodeArtifactWithOidc =
@@ -358,7 +358,7 @@ export class Publisher extends Component {
 
     if (options.distTag) {
       this.project.logger.warn(
-        "The `distTag` option is deprecated. Use the npmDistTag option instead."
+        "The `distTag` option is deprecated. Use the npmDistTag option instead.",
       );
     }
 
@@ -370,11 +370,11 @@ export class Publisher extends Component {
         options.codeArtifactOptions?.secretAccessKeySecret
       ) {
         throw new Error(
-          "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+          "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact",
         );
       } else if (!options.codeArtifactOptions?.roleToAssume) {
         throw new Error(
-          '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+          '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options',
         );
       }
       const regionCaptureRegex = /codeartifact\.(.+)\.amazonaws\.com/;
@@ -392,7 +392,7 @@ export class Publisher extends Component {
     this.addPublishJob("npm", (_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error(
-          "cannot set branch-level npmDistTag and npmDistTag in publishToNpm()"
+          "cannot set branch-level npmDistTag and npmDistTag in publishToNpm()",
         );
       }
 
@@ -421,14 +421,14 @@ export class Publisher extends Component {
             isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
               ? secret(
                   options.codeArtifactOptions?.accessKeyIdSecret ??
-                    "AWS_ACCESS_KEY_ID"
+                    "AWS_ACCESS_KEY_ID",
                 )
               : undefined,
           AWS_SECRET_ACCESS_KEY:
             isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
               ? secret(
                   options.codeArtifactOptions?.secretAccessKeySecret ??
-                    "AWS_SECRET_ACCESS_KEY"
+                    "AWS_SECRET_ACCESS_KEY",
                 )
               : undefined,
           AWS_ROLE_TO_ASSUME:
@@ -449,13 +449,13 @@ export class Publisher extends Component {
       throw new Error(
         "Cannot use nugetApiKeySecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of API keys. " +
-          "Remove the nugetApiKeySecret option to use trusted publishing."
+          "Remove the nugetApiKeySecret option to use trusted publishing.",
       );
     }
 
     const isGitHubPackages = urlHostMatches(
       options.nugetServer,
-      GITHUB_PACKAGES_NUGET
+      GITHUB_PACKAGES_NUGET,
     );
     const needsIdTokenWrite = options.trustedPublishing;
 
@@ -484,14 +484,14 @@ export class Publisher extends Component {
             : secret(
                 isGitHubPackages
                   ? "GITHUB_TOKEN"
-                  : options.nugetApiKeySecret ?? "NUGET_API_KEY"
+                  : (options.nugetApiKeySecret ?? "NUGET_API_KEY"),
               ),
           NUGET_SERVER: options.nugetServer ?? undefined,
           NUGET_USERNAME: options.trustedPublishing
             ? secret(options.nugetUsernameSecret ?? "NUGET_USERNAME")
             : undefined,
         },
-      })
+      }),
     );
   }
 
@@ -502,7 +502,7 @@ export class Publisher extends Component {
   public publishToMaven(options: MavenPublishOptions = {}) {
     const isGitHubPackages = urlHostMatches(
       options.mavenRepositoryUrl,
-      GITHUB_PACKAGES_MAVEN
+      GITHUB_PACKAGES_MAVEN,
     );
     const isGitHubActor =
       isGitHubPackages && options.mavenUsername == undefined;
@@ -511,13 +511,13 @@ export class Publisher extends Component {
 
     if (isGitHubPackages && mavenServerId != "github") {
       throw new Error(
-        'publishing to GitHub Packages requires the "mavenServerId" to be "github"'
+        'publishing to GitHub Packages requires the "mavenServerId" to be "github"',
       );
     }
 
     if (mavenServerId === "central-ossrh" && options.mavenEndpoint != null) {
       throw new Error(
-        'Custom endpoints are not supported when publishing to Maven Central (mavenServerId: "central-ossrh"). Please remove "mavenEndpoint" from the options.'
+        'Custom endpoints are not supported when publishing to Maven Central (mavenServerId: "central-ossrh"). Please remove "mavenEndpoint" from the options.',
       );
     }
 
@@ -539,17 +539,17 @@ export class Publisher extends Component {
           MAVEN_GPG_PRIVATE_KEY: isGitHubPackages
             ? undefined
             : secret(
-                options.mavenGpgPrivateKeySecret ?? "MAVEN_GPG_PRIVATE_KEY"
+                options.mavenGpgPrivateKeySecret ?? "MAVEN_GPG_PRIVATE_KEY",
               ),
           MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages
             ? undefined
             : secret(
                 options.mavenGpgPrivateKeyPassphrase ??
-                  "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
+                  "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
               ),
           MAVEN_PASSWORD: secret(
             options.mavenPassword ??
-              (isGitHubPackages ? "GITHUB_TOKEN" : "MAVEN_PASSWORD")
+              (isGitHubPackages ? "GITHUB_TOKEN" : "MAVEN_PASSWORD"),
           ),
           MAVEN_USERNAME: isGitHubActor
             ? "${{ github.actor }}"
@@ -557,14 +557,14 @@ export class Publisher extends Component {
           MAVEN_STAGING_PROFILE_ID: isGitHubPackages
             ? undefined
             : secret(
-                options.mavenStagingProfileId ?? "MAVEN_STAGING_PROFILE_ID"
+                options.mavenStagingProfileId ?? "MAVEN_STAGING_PROFILE_ID",
               ),
         },
         permissions: {
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
-      })
+      }),
     );
   }
 
@@ -580,7 +580,7 @@ export class Publisher extends Component {
       throw new Error(
         "Cannot use twineUsernameSecret and twinePasswordSecret when trustedPublishing is enabled. " +
           "Trusted publishing uses OIDC tokens for authentication instead of username/password credentials. " +
-          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing."
+          "Remove the twineUsernameSecret and twinePasswordSecret options to use trusted publishing.",
       );
     }
 
@@ -588,11 +588,11 @@ export class Publisher extends Component {
     const prePublishSteps = options.prePublishSteps ?? [];
     let workflowEnv: Record<string, string | undefined> = {};
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(
-      options.twineRegistryUrl
+      options.twineRegistryUrl,
     );
     if (isAwsCodeArtifact) {
       const { domain, account, region } = awsCodeArtifactInfoFromUrl(
-        options.twineRegistryUrl
+        options.twineRegistryUrl,
       );
       const {
         authProvider,
@@ -604,7 +604,7 @@ export class Publisher extends Component {
       if (useOidcAuth) {
         if (!roleToAssume) {
           throw new Error(
-            '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+            '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options',
           );
         }
         permissions = { ...permissions, idToken: JobPermission.WRITE };
@@ -624,10 +624,10 @@ export class Publisher extends Component {
           ? undefined
           : {
               AWS_ACCESS_KEY_ID: secret(
-                accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID"
+                accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
               ),
               AWS_SECRET_ACCESS_KEY: secret(
-                secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY"
+                secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
               ),
             },
       });
@@ -662,7 +662,7 @@ export class Publisher extends Component {
           TWINE_REPOSITORY_URL: options.twineRegistryUrl,
         },
         workflowEnv,
-      })
+      }),
     );
   }
 
@@ -681,14 +681,14 @@ export class Publisher extends Component {
         run: 'ssh-agent -a ${SSH_AUTH_SOCK} && ssh-add - <<< "${GITHUB_DEPLOY_KEY}"',
         env: {
           GITHUB_DEPLOY_KEY: secret(
-            options.githubDeployKeySecret ?? "GO_GITHUB_DEPLOY_KEY"
+            options.githubDeployKeySecret ?? "GO_GITHUB_DEPLOY_KEY",
           ),
           SSH_AUTH_SOCK: workflowEnv.SSH_AUTH_SOCK,
         },
       });
     } else {
       workflowEnv.GITHUB_TOKEN = secret(
-        options.githubTokenSecret ?? "GO_GITHUB_TOKEN"
+        options.githubTokenSecret ?? "GO_GITHUB_TOKEN",
       );
     }
 
@@ -710,7 +710,7 @@ export class Publisher extends Component {
           GIT_COMMIT_MESSAGE: options.gitCommitMessage,
         },
         workflowEnv: workflowEnv,
-      })
+      }),
     );
   }
 
@@ -722,8 +722,8 @@ export class Publisher extends Component {
     basename: string,
     factory: (
       branch: string,
-      branchOptions: Partial<BranchOptions>
-    ) => PublishJobOptions
+      branchOptions: Partial<BranchOptions>,
+    ) => PublishJobOptions,
   ) {
     const jobname = `${PUBLISH_JOB_PREFIX}${basename}`;
     this.publishJobs[basename] = jobname;
@@ -742,7 +742,7 @@ export class Publisher extends Component {
       // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
       const jobEnv: Record<string, string> = { ...opts.env };
       const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {}).filter(
-        ([_, value]) => value != undefined
+        ([_, value]) => value != undefined,
       ) as string[][];
       for (const [env, expression] of workflowEnvEntries) {
         requiredEnv.push(env);
@@ -760,7 +760,7 @@ export class Publisher extends Component {
             description: `Publish this package to ${opts.registryName}`,
             env: opts.env,
             requiredEnv: requiredEnv,
-          }
+          },
         );
 
         // first verify that we are on the correct branch
@@ -826,7 +826,7 @@ export class Publisher extends Component {
                 GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
               },
             },
-          ]
+          ],
         );
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
@@ -856,7 +856,7 @@ export class Publisher extends Component {
 
   private githubReleaseCommand(
     options: GitHubReleasesPublishOptions,
-    branchOptions: Partial<BranchOptions>
+    branchOptions: Partial<BranchOptions>,
   ): string {
     const changelogFile = options.changelogFile;
     const releaseTagFile = options.releaseTagFile;
@@ -1412,10 +1412,10 @@ interface VersionArtifactOptions {
  * @returns true for AWS CodeArtifact
  */
 export function isAwsCodeArtifactRegistry(
-  registryUrl: string | undefined
+  registryUrl: string | undefined,
 ): boolean {
   return Boolean(
-    registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl)
+    registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl),
   );
 }
 
@@ -1445,8 +1445,7 @@ function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
  * Publishing options for GitHub releases.
  */
 export interface GitHubReleasesPublishOptions
-  extends VersionArtifactOptions,
-    CommonPublishOptions {}
+  extends VersionArtifactOptions, CommonPublishOptions {}
 
 /**
  * Publishing options for Git releases
@@ -1474,5 +1473,5 @@ export interface GitPublishOptions extends VersionArtifactOptions {
 
 type PublishJobFactory = (
   branch: string,
-  branchOptions: Partial<BranchOptions>
+  branchOptions: Partial<BranchOptions>,
 ) => Record<string, Job>;

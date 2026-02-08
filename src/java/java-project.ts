@@ -11,8 +11,7 @@ import { anySelected, multipleSelected } from "../util";
  * Options for `JavaProject`.
  */
 export interface JavaProjectCommonOptions
-  extends GitHubProjectOptions,
-    PomOptions {
+  extends GitHubProjectOptions, PomOptions {
   /**
    * Final artifact output directory.
    *
@@ -152,7 +151,7 @@ export class JavaProject extends GitHubProject {
 
     if (multipleSelected(rcFileTypeOptions)) {
       throw new Error(
-        "Only one of projenrcJava and projenrcJson can be selected."
+        "Only one of projenrcJava and projenrcJson can be selected.",
       );
     }
 
@@ -164,7 +163,7 @@ export class JavaProject extends GitHubProject {
       this.projenrc = new ProjenrcJava(
         this,
         this.pom,
-        options.projenrcJavaOptions
+        options.projenrcJavaOptions,
       );
     }
 
@@ -193,7 +192,7 @@ export class JavaProject extends GitHubProject {
     this.packaging = new MavenPackaging(
       this,
       this.pom,
-      options.packagingOptions
+      options.packagingOptions,
     );
 
     this.addPlugin("org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3", {

@@ -23,7 +23,7 @@ export class RequirementsFile extends FileBase {
   constructor(
     project: Project,
     filePath: string,
-    options: RequirementsFileOptions
+    options: RequirementsFileOptions,
   ) {
     super(project, filePath);
 
@@ -65,8 +65,8 @@ export class RequirementsFile extends FileBase {
     if (this.packageProvider) {
       allPackages.push(
         ...this.packageProvider.packages.map((dep) =>
-          this.formatDependency(dep)
-        )
+          this.formatDependency(dep),
+        ),
       );
     }
 

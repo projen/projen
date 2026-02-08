@@ -25,7 +25,7 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
     case types.isRegExp(value):
       if (value.flags) {
         throw new Error(
-          "RegExp with flags should be explicitly converted to a string"
+          "RegExp with flags should be explicitly converted to a string",
         );
       }
       return value.source;
@@ -60,7 +60,7 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
   // only allow data types (i.e. objects without constructors)
   if (value.constructor && value.constructor?.name !== "Object") {
     throw new Error(
-      `only data types can be resolved. trying to resolve object of type ${value.constructor?.name}`
+      `only data types can be resolved. trying to resolve object of type ${value.constructor?.name}`,
     );
   }
 

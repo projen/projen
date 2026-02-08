@@ -26,8 +26,7 @@ export interface IntegrationTestCommonOptions {
  * Options for `IntegrationTest`.
  */
 export interface IntegrationTestOptions
-  extends IntegrationTestCommonOptions,
-    IntegrationTestBaseOptions {
+  extends IntegrationTestCommonOptions, IntegrationTestBaseOptions {
   /**
    * A list of stacks within the integration test to deploy/destroy.
    * @default ["**"]
@@ -60,7 +59,7 @@ export class IntegrationTest extends IntegrationTestBase {
     if (!project.deps.tryGetDependency("aws-cdk")) {
       project.deps.addDependency(
         `aws-cdk@^${options.cdkDeps.cdkMajorVersion}`,
-        DependencyType.BUILD
+        DependencyType.BUILD,
       );
     }
 
@@ -105,7 +104,7 @@ export class IntegrationTest extends IntegrationTestBase {
 
     this.deployTask.exec(`rm -fr ${deployDir}`);
     this.deployTask.exec(
-      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deployDir}`
+      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deployDir}`,
     );
 
     // if deployment was successful, copy the deploy dir to the expected dir
@@ -128,7 +127,7 @@ export class IntegrationTest extends IntegrationTestBase {
     }
 
     this.snapshotTask.exec(
-      `cdk synth ${cdkopts} -o ${this.snapshotDir} > /dev/null`
+      `cdk synth ${cdkopts} -o ${this.snapshotDir} > /dev/null`,
     );
 
     const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
@@ -137,7 +136,7 @@ export class IntegrationTest extends IntegrationTestBase {
     this.assertTask.exec(
       `diff -r ${exclude.map((x) => `-x ${x}`).join(" ")} ${
         this.snapshotDir
-      }/ ${assertDir}/`
+      }/ ${assertDir}/`,
     );
 
     // do not commit all files we are excluding

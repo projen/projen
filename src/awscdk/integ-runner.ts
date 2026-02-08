@@ -12,11 +12,11 @@ export class IntegRunner extends Component {
 
     project.deps.addDependency(
       "@aws-cdk/integ-runner@latest",
-      DependencyType.DEVENV
+      DependencyType.DEVENV,
     );
     project.deps.addDependency(
       "@aws-cdk/integ-tests-alpha@latest",
-      DependencyType.DEVENV
+      DependencyType.DEVENV,
     );
 
     const integSnapshotTask = project.addTask("integ", {

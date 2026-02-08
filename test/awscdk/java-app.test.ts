@@ -30,7 +30,7 @@ test("happy flow", () => {
   expect(snapshot["pom.xml"]).toMatchSnapshot();
   expect(snapshot["src/test/java/org/bacme/MyTest.java"]).toMatchSnapshot();
   expect(snapshot["cdk.json"].app).toStrictEqual(
-    "mvn exec:java --quiet -Dexec.mainClass=org.bacme.BoomApp"
+    "mvn exec:java --quiet -Dexec.mainClass=org.bacme.BoomApp",
   );
 });
 
@@ -46,7 +46,7 @@ test("mainClass", () => {
 
   const snapshot = Testing.synth(p);
   expect(snapshot["cdk.json"].app).toStrictEqual(
-    "mvn exec:java --quiet -Dexec.mainClass=org.acme.jojo.MyApp"
+    "mvn exec:java --quiet -Dexec.mainClass=org.acme.jojo.MyApp",
   );
 });
 
@@ -70,13 +70,13 @@ test("deps", () => {
   const pom = JSON.parse(
     xml.convert(snapshot["pom.xml"], {
       format: "json",
-    })
+    }),
   );
 
   expect(
     pom.project.dependencies.dependency.filter(
-      (d: any) => d.groupId === "software.amazon.awscdk"
-    )
+      (d: any) => d.groupId === "software.amazon.awscdk",
+    ),
   ).toStrictEqual([
     {
       artifactId: "aws-lambda",
@@ -108,8 +108,8 @@ test("deps", () => {
 
   expect(
     pom.project.dependencies.dependency.filter(
-      (d: any) => d.groupId === "software.constructs"
-    )
+      (d: any) => d.groupId === "software.constructs",
+    ),
   ).toStrictEqual([
     {
       artifactId: "constructs",
@@ -133,13 +133,13 @@ test("deps cdkv2", () => {
   const pom = JSON.parse(
     xml.convert(snapshot["pom.xml"], {
       format: "json",
-    })
+    }),
   );
 
   expect(
     pom.project.dependencies.dependency.filter(
-      (d: any) => d.groupId === "software.amazon.awscdk"
-    )
+      (d: any) => d.groupId === "software.amazon.awscdk",
+    ),
   ).toStrictEqual([
     {
       artifactId: "aws-cdk-lib",
@@ -150,8 +150,8 @@ test("deps cdkv2", () => {
 
   expect(
     pom.project.dependencies.dependency.filter(
-      (d: any) => d.groupId === "software.constructs"
-    )
+      (d: any) => d.groupId === "software.constructs",
+    ),
   ).toStrictEqual([
     {
       artifactId: "constructs",
@@ -176,6 +176,6 @@ test("can disable sample code", () => {
   const snapshot = Testing.synth(p);
 
   expect(Object.keys(snapshot)).not.toContain(
-    "src/main/java/org/acme/jojo/MyApp.java"
+    "src/main/java/org/acme/jojo/MyApp.java",
   );
 });

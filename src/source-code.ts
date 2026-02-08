@@ -38,7 +38,7 @@ export class SourceCode extends Component {
   constructor(
     project: Project,
     public readonly filePath: string,
-    options: SourceCodeOptions = {}
+    options: SourceCodeOptions = {},
   ) {
     super(project);
     this.indent = options.indent ?? 2;

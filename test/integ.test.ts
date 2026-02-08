@@ -29,7 +29,7 @@ for (const projenrc of files) {
       directorySnapshot(workdir, {
         excludeGlobs: ["node_modules/**"],
         parseJson: false,
-      })
+      }),
     ).toMatchSnapshot();
   });
 }

@@ -33,7 +33,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   const workdir = runtime.workdir;
   const rcfile = path.resolve(
     workdir,
-    options.rcfile ?? DEFAULT_PROJEN_RC_JS_FILENAME
+    options.rcfile ?? DEFAULT_PROJEN_RC_JS_FILENAME,
   ); // TODO: support non javascript projenrc (e.g. java projects)
 
   // if --rc points to .projenrc.js, then behave as if it wasn't specified.
@@ -45,7 +45,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   // projects must at least have the "default" task).
   if (runtime.tasks.length === 0 && !fs.existsSync(rcfile)) {
     logging.error(
-      'Unable to find projen project. Use "projen new" to create a new project.'
+      'Unable to find projen project. Use "projen new" to create a new project.',
     );
     process.exit(1);
   }
@@ -66,7 +66,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     process.env.PROJEN_DISABLE_POST = (!options.post).toString();
     try {
       const defaultTask = runtime.tasks.find(
-        (t) => t.name === Project.DEFAULT_TASK
+        (t) => t.name === Project.DEFAULT_TASK,
       );
 
       // if "--rc" is specified, ignore the default task
@@ -76,7 +76,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
           return true;
         } else {
           logging.warn(
-            "Default task skipped. Trying legacy synthesis since --rc is specified"
+            "Default task skipped. Trying legacy synthesis since --rc is specified",
           );
         }
       }
@@ -131,7 +131,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
       fs.symlinkSync(
         projenModule,
         projenModulePath,
-        os.platform() === "win32" ? "junction" : null
+        os.platform() === "win32" ? "junction" : null,
       );
     }
 
@@ -143,7 +143,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     } else if (ret.status !== 0) {
       logging.error(ret.stderr.toString());
       throw new Error(
-        `Synthesis failed: calling "${process.execPath} ${rcfile}" exited with status=${ret.status}`
+        `Synthesis failed: calling "${process.execPath} ${rcfile}" exited with status=${ret.status}`,
       );
     }
 

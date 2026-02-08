@@ -227,7 +227,7 @@ export class GitHubProject extends Project {
     if (options.autoApproveOptions && this.github) {
       this.autoApprove = new AutoApprove(
         this.github,
-        options.autoApproveOptions
+        options.autoApproveOptions,
       );
     }
 
@@ -249,7 +249,7 @@ export class GitHubProject extends Project {
   public annotateGenerated(glob: string): void {
     this.gitattributes.addAttributes(
       normalizePersistedPath(glob),
-      "linguist-generated"
+      "linguist-generated",
     );
   }
 }

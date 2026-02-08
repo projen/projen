@@ -84,11 +84,11 @@ describe("alias", () => {
       [
         ["@src", "./src"],
         ["@foo", "./src/foo"],
-      ]
+      ],
     );
     expect(eslint.config.settings["import/resolver"].alias).toHaveProperty(
       "extensions",
-      [".ts", ".js"]
+      [".ts", ".js"],
     );
   });
 });
@@ -129,7 +129,7 @@ describe("eslint settings", () => {
     // THEN
     expect(eslint.config.settings["import/resolver"].typescript).toHaveProperty(
       "alwaysTryTypes",
-      true
+      true,
     );
   });
 
@@ -326,7 +326,7 @@ describe("eslint settings", () => {
     // THEN
     const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
     expect(eslint.eslintTask._renderSpec()).toMatchObject(
-      manifest.tasks.eslint
+      manifest.tasks.eslint,
     );
   });
 
@@ -348,7 +348,7 @@ describe("eslint settings", () => {
     const taskStep = eslint.eslintTask.steps[0];
     expect(taskStep.exec).not.toContain("--fix");
     expect(taskStep?.args ?? []).not.toContain(
-      expect.stringContaining("--fix")
+      expect.stringContaining("--fix"),
     );
   });
 
@@ -371,7 +371,7 @@ describe("eslint settings", () => {
     const taskStep = eslint.eslintTask.steps[0];
     expect(taskStep.exec).not.toContain("--ext");
     expect(taskStep?.args ?? []).not.toContain(
-      expect.stringContaining("--ext")
+      expect.stringContaining("--ext"),
     );
   });
 

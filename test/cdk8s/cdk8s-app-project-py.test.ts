@@ -33,7 +33,7 @@ test("basic options", () => {
 
   // expect postcompile step to contain synth
   expect(
-    output[".projen/tasks.json"].tasks["post-compile"].steps
+    output[".projen/tasks.json"].tasks["post-compile"].steps,
   ).toStrictEqual([{ spawn: "synth" }]);
 
   expect(output["requirements.txt"]).toContain("cdk8s>=1.5.53, <2.0.0");
@@ -173,7 +173,7 @@ test("cdk8s-plus-22 undefined", () => {
 
   // THEN
   expect(output["requirements.txt"]).toContain(
-    "cdk8s-plus-22>=2.0.0.rc26, <3.0.0"
+    "cdk8s-plus-22>=2.0.0.rc26, <3.0.0",
   );
 });
 
@@ -194,7 +194,7 @@ test("cdk8s-plus-22 defined", () => {
 
   // THEN
   expect(output["requirements.txt"]).toContain(
-    "cdk8s-plus-22>=2.0.0.rc27, <3.0.0"
+    "cdk8s-plus-22>=2.0.0.rc27, <3.0.0",
   );
 });
 

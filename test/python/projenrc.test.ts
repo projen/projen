@@ -20,7 +20,7 @@ test("projenrc.py support", () => {
 test("generate projenrc in python", () => {
   // GIVEN
   const project = new TestProject(
-    renderProjenInitOptions("projen.python.PythonProject", {})
+    renderProjenInitOptions("projen.python.PythonProject", {}),
   );
 
   // WHEN
@@ -42,7 +42,7 @@ test("javascript values are translated to python", () => {
       nullArg: null,
       objectArg: { foo: "bar" },
       projectType: ProjectType.LIB,
-    })
+    }),
   );
 
   // WHEN
@@ -75,7 +75,7 @@ test("ensure python import is correctly resolved when python module exists", () 
 
       // THEN
       expect(resolvedImportName).toEqual(expectedImportName);
-    }
+    },
   );
 });
 
@@ -97,7 +97,7 @@ test("generate projenrc in python with a given outdir", () => {
     const project = new TestProject(
       renderProjenInitOptions("projen.python.PythonProject", {
         outdir: newOutDir,
-      })
+      }),
     );
     new Projenrc(project);
     const projen = new Projenrc(project);

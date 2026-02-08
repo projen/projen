@@ -49,12 +49,10 @@ export interface ReactRewireOptions {
 }
 
 export interface ReactTypeScriptProjectOptions
-  extends TypeScriptProjectOptions,
-    ReactRewireOptions {}
+  extends TypeScriptProjectOptions, ReactRewireOptions {}
 
 export interface ReactProjectOptions
-  extends NodeProjectOptions,
-    ReactRewireOptions {
+  extends NodeProjectOptions, ReactRewireOptions {
   /**
    * Source directory.
    *
@@ -148,7 +146,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         defaultOptions,
         options,
         { sampleCode: false },
-      ]) as TypeScriptProjectOptions
+      ]) as TypeScriptProjectOptions,
     );
 
     this.srcdir = options.srcdir ?? "src";
@@ -180,7 +178,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
     this.package.addPackageResolutions(
       // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/62300
       "@types/express@4.17.13",
-      "@types/express-serve-static-core@4.17.30"
+      "@types/express-serve-static-core@4.17.30",
     );
   }
 }
@@ -211,7 +209,7 @@ export class ReactComponent extends Component {
       "@testing-library/dom",
       "@testing-library/jest-dom",
       "@testing-library/react",
-      "@testing-library/user-event"
+      "@testing-library/user-event",
     );
     if (this.typescript) {
       project.addDevDeps("@types/jest", "@types/react", "@types/react-dom");
@@ -230,11 +228,11 @@ export class ReactComponent extends Component {
       }
       configOverrides.line("/**");
       configOverrides.line(
-        " * Override CRA configuration without needing to eject."
+        " * Override CRA configuration without needing to eject.",
       );
       configOverrides.line(" *");
       configOverrides.line(
-        " * @see https://www.npmjs.com/package/react-app-rewired"
+        " * @see https://www.npmjs.com/package/react-app-rewired",
       );
       configOverrides.line(" */");
       configOverrides.open("module.exports = function override(config, env) {");
@@ -496,7 +494,7 @@ export class ReactTypeDef extends FileBase {
   constructor(
     project: ReactTypeScriptProject,
     filePath: string,
-    options: ReactTypeDefOptions = {}
+    options: ReactTypeDefOptions = {},
   ) {
     super(project, filePath, options);
   }

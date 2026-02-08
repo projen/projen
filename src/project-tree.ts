@@ -44,7 +44,7 @@ function renderConstruct(construct: IConstruct): ConstructTree {
   return {
     [construct.node.id]: {
       metadata: Object.fromEntries(
-        construct.node.metadata.map(({ type, data }) => [type, data])
+        construct.node.metadata.map(({ type, data }) => [type, data]),
       ),
       nodes: construct.node.children.length
         ? construct.node.children.reduce(
@@ -52,7 +52,7 @@ function renderConstruct(construct: IConstruct): ConstructTree {
               ...nodes,
               ...renderConstruct(c),
             }),
-            {}
+            {},
           )
         : undefined,
     },

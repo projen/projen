@@ -18,7 +18,7 @@ test("uv enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain("a short project description");
   expect(snapshot["pyproject.toml"]).toContain("Apache-2.0");
   expect(snapshot["pyproject.toml"]).toContain(
-    "Development Status :: 4 - Beta"
+    "Development Status :: 4 - Beta",
   );
   expect(snapshot["pyproject.toml"]).toContain('python = ">=3.12,<4.0"'); // default python version
 });
@@ -36,7 +36,7 @@ test.each([
     poetry: boolean,
     pip: boolean,
     venv: boolean,
-    setuptools: boolean
+    setuptools: boolean,
   ) => {
     expect(
       () =>
@@ -50,11 +50,11 @@ test.each([
           description: "a short project description",
           license: "Apache-2.0",
           classifiers: ["Development Status :: 4 - Beta"],
-        })
-    ).toThrowError(
-      `uv cannot be used together with other tools, found the following incompatible tools enabled: ${tools}`
+        }),
+    ).toThrow(
+      `uv cannot be used together with other tools, found the following incompatible tools enabled: ${tools}`,
     );
-  }
+  },
 );
 
 test("uv add dependency", () => {
@@ -90,8 +90,8 @@ test("uv options not using uv", () => {
     () =>
       new TestPythonProject({
         uvOptions: { uv: { reinstall: true } },
-      })
-  ).toThrowError("uvOptions only applies when using uv.");
+      }),
+  ).toThrow("uvOptions only applies when using uv.");
 });
 
 test("uv enabled with uv-specific options", () => {

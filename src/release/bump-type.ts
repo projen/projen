@@ -89,7 +89,7 @@ export function performBump(baseVersion: string, bumpType: BumpType): string {
       const inced = inc(baseVersion, bumpType.relative);
       if (!inced) {
         throw new Error(
-          `Could not bump version: ${baseVersion}, type ${bumpType.relative}`
+          `Could not bump version: ${baseVersion}, type ${bumpType.relative}`,
         );
       }
       return inced.toString();

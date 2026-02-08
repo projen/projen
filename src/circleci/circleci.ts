@@ -204,7 +204,7 @@ export class Circleci extends Component {
 
 export const isObjectContainingFieldExactly = (
   obj: any,
-  field: string
+  field: string,
 ): boolean => {
   return Object.keys(obj).length == 1 && Object.keys(obj).includes(field);
 };

@@ -30,7 +30,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "bun run --tsconfig-override=tsconfig.json ./src/main.ts"
+      "bun run --tsconfig-override=tsconfig.json ./src/main.ts",
     );
   });
 
@@ -43,7 +43,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts",
     );
   });
 
@@ -56,7 +56,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts",
     );
   });
 
@@ -69,7 +69,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts",
     );
   });
 
@@ -82,7 +82,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts",
     );
   });
 
@@ -94,7 +94,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts",
     );
   });
 
@@ -107,7 +107,7 @@ describe("cdk.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
-      "npx ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts"
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/my-app.ts",
     );
   });
 
@@ -120,7 +120,7 @@ describe("cdk.json", () => {
         app: "bun --smol my-app.ts",
         appEntrypoint: "my-app.ts",
       });
-    }).toThrowError("Only one of 'app' or 'appEntrypoint' can be specified");
+    }).toThrow("Only one of 'app' or 'appEntrypoint' can be specified");
   });
 });
 
@@ -149,7 +149,7 @@ describe("lambda functions", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot["src/my-function.ts"]).not.toBeUndefined();
     expect(
-      snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
+      snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps,
     ).toStrictEqual([
       {
         exec: 'esbuild --bundle src/my.lambda.ts --target="node22" --platform="node" --outfile="assets/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar',
@@ -170,14 +170,14 @@ describe("lambda functions", () => {
     mkdirSync(join(project.outdir, project.srcdir));
     writeFileSync(
       join(project.outdir, project.srcdir, "my.lambda.ts"),
-      "// dummy"
+      "// dummy",
     );
 
     // THEN
     const snapshot = synthSnapshot(project);
     expect(snapshot["src/my-function.ts"]).toBeUndefined();
     expect(
-      snapshot[".projen/tasks.json"].tasks["bundle:src/my"]
+      snapshot[".projen/tasks.json"].tasks["bundle:src/my"],
     ).toBeUndefined();
   });
 });
@@ -215,7 +215,7 @@ describe("synth", () => {
 
   it('spawns a "synth:silent" post-compile task', () => {
     expect(
-      files[".projen/tasks.json"].tasks["post-compile"].steps
+      files[".projen/tasks.json"].tasks["post-compile"].steps,
     ).toStrictEqual([{ spawn: "synth:silent" }]);
   });
 });
@@ -249,7 +249,7 @@ describe("watch", () => {
 
   it('removes the "bundle" task from pre-compile', () => {
     expect(
-      files[".projen/tasks.json"].tasks["pre-compile"].steps
+      files[".projen/tasks.json"].tasks["pre-compile"].steps,
     ).toBeUndefined();
   });
 });
@@ -266,10 +266,10 @@ describe("integ-runner", () => {
     const snapshot = synthSnapshot(project);
 
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-runner"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-runner"],
     ).toStrictEqual("latest");
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"],
     ).toStrictEqual("latest");
     expect(project.tasks.tryFind("integ")?.steps).toEqual([
       { exec: "integ-runner $@ --language typescript", receiveArgs: true },
@@ -281,7 +281,7 @@ describe("integ-runner", () => {
       },
     ]);
     expect(project.testTask.steps).toEqual(
-      expect.arrayContaining([{ spawn: "integ" }])
+      expect.arrayContaining([{ spawn: "integ" }]),
     );
   });
 });
@@ -310,12 +310,12 @@ describe("CDK v2", () => {
   });
   it("has the correct import for the sample file", () => {
     expect(snapshot["src/main.ts"]).toContain(
-      "import { App, Stack, StackProps } from 'aws-cdk-lib'"
+      "import { App, Stack, StackProps } from 'aws-cdk-lib'",
     );
   });
   it("has v2 feature flags in context", () => {
     expect(snapshot["cdk.json"].context).toEqual(
-      expect.objectContaining(FEATURE_FLAGS_V2)
+      expect.objectContaining(FEATURE_FLAGS_V2),
     );
   });
 });
@@ -361,7 +361,7 @@ describe("CDK CLI version", () => {
     expect(snap["package.json"].devDependencies).toEqual(
       expect.objectContaining({
         "aws-cdk": "3.0.0",
-      })
+      }),
     );
   });
 
@@ -376,7 +376,7 @@ describe("CDK CLI version", () => {
     expect(snap["package.json"].devDependencies).toEqual(
       expect.objectContaining({
         "aws-cdk": "^2",
-      })
+      }),
     );
   });
 });

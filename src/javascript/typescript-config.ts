@@ -731,7 +731,7 @@ export class TypescriptConfig extends Component {
 
     if (!options.extends && !options.compilerOptions) {
       throw new Error(
-        "TypescriptConfig: Must provide either `extends` or `compilerOptions` (or both)."
+        "TypescriptConfig: Must provide either `extends` or `compilerOptions` (or both).",
       );
     }
 
@@ -798,7 +798,7 @@ export class TypescriptConfig extends Component {
     if (!path.isAbsolute(configPath)) return configPath;
     const relativeConfig = path.relative(
       path.dirname(this.file.absolutePath),
-      configPath
+      configPath,
     );
     // ensure immediate sibling files are prefixed with './'
     // typescript figures this out, but some tools seemingly break without it (i.e, eslint).
@@ -826,14 +826,14 @@ export class TypescriptConfig extends Component {
     }
     const tsVersion = semver.coerce(
       project.package.tryResolveDependencyVersion("typescript"),
-      { loose: true }
+      { loose: true },
     );
     if (tsVersion && tsVersion.major < 5) {
       this.project.logger.warn(
         "TypeScript < 5.0.0 can only extend from a single base config.",
         `TypeScript Version: ${tsVersion.format()}`,
         `File: ${this.file.absolutePath}`,
-        `Extends: ${this.extends}`
+        `Extends: ${this.extends}`,
       );
     }
   }

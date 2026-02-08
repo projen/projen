@@ -58,7 +58,7 @@ describe("decamelizeRecursively", () => {
 
     // WHEN
     expect(() => decamelizeKeysRecursively(circle)).toThrow(
-      /circular reference/
+      /circular reference/,
     );
   });
 
@@ -272,16 +272,16 @@ test("dedupArray", () => {
 test("getFilePermissions", () => {
   expect(getFilePermissions({})).toEqual("644");
   expect(getFilePermissions({ readonly: true, executable: true })).toEqual(
-    "544"
+    "544",
   );
   expect(getFilePermissions({ readonly: true, executable: false })).toEqual(
-    "444"
+    "444",
   );
   expect(getFilePermissions({ readonly: false, executable: true })).toEqual(
-    "755"
+    "755",
   );
   expect(getFilePermissions({ readonly: false, executable: false })).toEqual(
-    "644"
+    "644",
   );
   expect(getFilePermissions({ readonly: false })).toEqual("644");
   expect(getFilePermissions({ executable: true })).toEqual("755");

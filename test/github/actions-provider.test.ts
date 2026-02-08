@@ -58,7 +58,7 @@ describe("override github action", () => {
           });
         });
       }
-    }
+    },
   );
 });
 

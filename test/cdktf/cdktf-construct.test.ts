@@ -33,10 +33,10 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "10.0.1"
+      "10.0.1",
     );
     expect(snapshot["package.json"]?.devDependencies?.constructs).toBe(
-      "10.0.1"
+      "10.0.1",
     );
     expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
   });
@@ -54,10 +54,10 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "10.3.0"
+      "10.3.0",
     );
     expect(snapshot["package.json"]?.devDependencies?.constructs).toBe(
-      "10.3.0"
+      "10.3.0",
     );
     expect(snapshot["package.json"]?.dependencies?.constructs).toBe("10.3.0");
   });
@@ -76,7 +76,7 @@ const defaultOptions = {
 
 class TestProject extends ConstructLibraryCdktf {
   constructor(
-    options: Omit<ConstructLibraryCdktfOptions, keyof typeof defaultOptions>
+    options: Omit<ConstructLibraryCdktfOptions, keyof typeof defaultOptions>,
   ) {
     super({
       ...defaultOptions,

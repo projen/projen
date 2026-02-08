@@ -54,7 +54,7 @@ export class JsiiFromJsonSchema extends TextFile {
           convertNullUnionsToOptional: true,
           simplifyElementArrayUnions: true,
         },
-      }
+      },
     );
 
     Eslint.of(project)?.addIgnorePattern(this.path);

@@ -20,7 +20,7 @@ export class Dependencies extends Component {
    */
   public static readonly MANIFEST_FILE = path.posix.join(
     PROJEN_DIR,
-    "deps.json"
+    "deps.json",
   );
 
   /**
@@ -113,7 +113,7 @@ export class Dependencies extends Component {
    */
   public tryGetDependency(
     name: string,
-    type?: DependencyType
+    type?: DependencyType,
   ): Dependency | undefined {
     const idx = this.tryGetDependencyIndex(name, type);
     if (idx === -1) {
@@ -135,7 +135,7 @@ export class Dependencies extends Component {
   public addDependency(
     spec: string,
     type: DependencyType,
-    metadata: { [key: string]: any } = {}
+    metadata: { [key: string]: any } = {},
   ): Dependency {
     this.project.logger.debug(`${type}-dep ${spec}`);
 
@@ -149,7 +149,7 @@ export class Dependencies extends Component {
 
     if (existingDepIndex !== -1) {
       this.project.logger.debug(
-        `updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`
+        `updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`,
       );
       this._deps[existingDepIndex] = dep;
     } else {
@@ -186,7 +186,7 @@ export class Dependencies extends Component {
   public isDependencySatisfied(
     name: string,
     type: DependencyType,
-    expectedRange: string
+    expectedRange: string,
   ): boolean {
     const dep = this.tryGetDependency(name, type);
     return dep?.version != null && semver.subset(dep.version, expectedRange);
@@ -203,7 +203,7 @@ export class Dependencies extends Component {
         throw new Error(
           `"${name}" is defined for multiple dependency types: ${deps
             .map((d) => d.type)
-            .join(",")}. Please specify dependency type`
+            .join(",")}. Please specify dependency type`,
         );
       }
 
@@ -211,7 +211,7 @@ export class Dependencies extends Component {
     }
 
     return this._deps.findIndex(
-      (dep) => dep.name === name && dep.type === type
+      (dep) => dep.name === name && dep.type === type,
     );
   }
 

@@ -196,7 +196,7 @@ const project = new JsiiProject({
 project.github
   ?.tryFindWorkflow("release")
   ?.file?.patch(
-    JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x")
+    JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x"),
   );
 
 setupCheckLicenses(project);
@@ -241,8 +241,8 @@ new JsiiFromJsonSchema(project, {
   transform: (schema) => (
     (schema.properties.tool.properties = Object.fromEntries(
       Object.entries(schema.properties.tool.properties).map(
-        ([tool, def]) => (delete (def as any).$ref, [tool, def])
-      )
+        ([tool, def]) => (delete (def as any).$ref, [tool, def]),
+      ),
     )),
     schema
   ),

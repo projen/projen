@@ -19,7 +19,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain("a short project description");
   expect(snapshot["pyproject.toml"]).toContain("Apache-2.0");
   expect(snapshot["pyproject.toml"]).toContain(
-    "Development Status :: 4 - Beta"
+    "Development Status :: 4 - Beta",
   );
   expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"'); // default python version
 });
@@ -34,8 +34,8 @@ test("poetry and venv fails", () => {
         description: "a short project description",
         license: "Apache-2.0",
         classifiers: ["Development Status :: 4 - Beta"],
-      })
-  ).toThrowError();
+      }),
+  ).toThrow();
 });
 
 test("poetry and pip fails", () => {
@@ -48,8 +48,8 @@ test("poetry and pip fails", () => {
         description: "a short project description",
         license: "Apache-2.0",
         classifiers: ["Development Status :: 4 - Beta"],
-      })
-  ).toThrowError();
+      }),
+  ).toThrow();
 });
 
 test("poetry and setuptools fails", () => {
@@ -62,8 +62,8 @@ test("poetry and setuptools fails", () => {
         description: "a short project description",
         license: "Apache-2.0",
         classifiers: ["Development Status :: 4 - Beta"],
-      })
-  ).toThrowError();
+      }),
+  ).toThrow();
 });
 
 test("poetry enabled", () => {
@@ -82,7 +82,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain("a short project description");
   expect(snapshot["pyproject.toml"]).toContain("Apache-2.0");
   expect(snapshot["pyproject.toml"]).toContain(
-    "Development Status :: 4 - Beta"
+    "Development Status :: 4 - Beta",
   );
   expect(snapshot["pyproject.toml"]).toContain('python = "^3.8"'); // default python version
 });
@@ -237,8 +237,8 @@ test("poetry environment is setup with pythonExec", () => {
   }
 
   // THEN
-  expect(debug).toBeCalledWith(
-    expect.stringContaining("poetry env use python-exec-test-path")
+  expect(debug).toHaveBeenCalledWith(
+    expect.stringContaining("poetry env use python-exec-test-path"),
   );
 
   // AFTER

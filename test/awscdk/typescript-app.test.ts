@@ -44,7 +44,7 @@ describe("AwsCdkTypeScriptApp", () => {
     expect(tsconfig.compilerOptions.strict).toBe(true);
     expect(tsconfig.compilerOptions.declaration).toBe(true);
     expect(tsconfig.exclude).toEqual(
-      expect.arrayContaining(["cdk.out", "custom-exclude", "another-exclude"])
+      expect.arrayContaining(["cdk.out", "custom-exclude", "another-exclude"]),
     );
   });
 });

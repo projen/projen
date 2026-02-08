@@ -9,7 +9,7 @@ test("assert generateProjenrc returns the correct projenrc with correct outdir",
     const project = new TestProject(
       renderProjenInitOptions("projen.javascript.NodeProject", {
         outdir: newOutDir,
-      })
+      }),
     );
     const projen = new Projenrc(project);
 

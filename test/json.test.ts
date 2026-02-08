@@ -191,7 +191,7 @@ describe("gitattributes linguist-language", () => {
 
     const snapshot = synthSnapshot(prj);
     expect(snapshot[".gitattributes"]).toContain(
-      "/config.json5 linguist-generated linguist-language=JSON-with-Comments"
+      "/config.json5 linguist-generated linguist-language=JSON-with-Comments",
     );
   });
 
@@ -202,7 +202,7 @@ describe("gitattributes linguist-language", () => {
 
     const snapshot = synthSnapshot(prj);
     expect(snapshot[".gitattributes"]).toContain(
-      "/config.jsonc linguist-generated linguist-language=JSON-with-Comments"
+      "/config.jsonc linguist-generated linguist-language=JSON-with-Comments",
     );
   });
 
@@ -216,7 +216,7 @@ describe("gitattributes linguist-language", () => {
 
     const snapshot = synthSnapshot(prj);
     expect(snapshot[".gitattributes"]).toContain(
-      "/config.json linguist-generated linguist-language=JSON-with-Comments"
+      "/config.json linguist-generated linguist-language=JSON-with-Comments",
     );
   });
 
@@ -227,10 +227,10 @@ describe("gitattributes linguist-language", () => {
 
     const snapshot = synthSnapshot(prj);
     expect(snapshot[".gitattributes"]).toContain(
-      "/config.json linguist-generated"
+      "/config.json linguist-generated",
     );
     expect(snapshot[".gitattributes"]).not.toContain(
-      "linguist-language=JSON-with-Comments"
+      "linguist-language=JSON-with-Comments",
     );
   });
 
@@ -268,7 +268,7 @@ describe("changed", () => {
     const file = new JsonFile(prj, "hello.json", { obj });
     writeFileSync(
       join(prj.outdir, "hello.json"),
-      JSON.stringify({ hello: "world1" }, undefined, 2)
+      JSON.stringify({ hello: "world1" }, undefined, 2),
     );
     prj.synth();
     expect(file.changed).toBeTruthy();
@@ -284,7 +284,7 @@ describe("changed", () => {
     writeFile(
       join(prj.outdir, "hello.json"),
       JSON.stringify(obj, undefined, 2),
-      { readonly: false, executable: true }
+      { readonly: false, executable: true },
     );
     prj.synth();
     expect(file.changed).toBeTruthy();
@@ -300,7 +300,7 @@ describe("changed", () => {
     writeFile(
       join(prj.outdir, "hello.json"),
       JSON.stringify(obj, undefined, 2),
-      { readonly: true, executable: false }
+      { readonly: true, executable: false },
     );
     prj.synth();
     expect(file.changed).toStrictEqual(false);

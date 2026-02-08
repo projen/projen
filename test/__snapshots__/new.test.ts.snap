@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`projen new --from project options --outdir path/to/mydir 1`] = `
 "const { javascript } = require("projen");

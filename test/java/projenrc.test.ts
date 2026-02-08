@@ -65,7 +65,7 @@ test("set the class name", () => {
 test("generate projenrc in java", () => {
   // GIVEN
   const project = new TestProject(
-    renderProjenInitOptions("projen.java.JavaProject", {})
+    renderProjenInitOptions("projen.java.JavaProject", {}),
   );
   const pom = new Pom(project, {
     groupId: "my.group.id",
@@ -78,7 +78,7 @@ test("generate projenrc in java", () => {
 
   // THEN
   expect(
-    synthSnapshot(project)["src/test/java/projenrc.java"]
+    synthSnapshot(project)["src/test/java/projenrc.java"],
   ).toMatchSnapshot();
 });
 
@@ -150,7 +150,7 @@ test("assert getJavaImport returns the correct import for submodules.", () => {
   // WHEN
   const fullNameWithSubmodule = getJavaImport(
     jsiiTypeWithSubmodule,
-    jsiiManifest
+    jsiiManifest,
   );
 
   // THEN
@@ -188,7 +188,7 @@ test("assert generateProjenrc returns the correct projenrc with correct outdir",
     const project = new TestProject(
       renderProjenInitOptions("projen.java.JavaProject", {
         outdir: newOutDir,
-      })
+      }),
     );
     const pom = new Pom(project, {
       groupId: "my.group.id",

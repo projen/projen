@@ -11,7 +11,7 @@ export const COMPONENT_SYMBOL = Symbol.for("projen.Component");
  * @returns A function to find the closest construct matching the predicate
  */
 export function tryFindClosest<T extends IConstruct>(
-  predicate: (x: any) => x is T
+  predicate: (x: any) => x is T,
 ): (construct?: IConstruct) => T | undefined {
   return (construct?: IConstruct) =>
     construct?.node.scopes.reverse().find(predicate);
@@ -26,7 +26,7 @@ export function tryFindClosest<T extends IConstruct>(
  */
 export function findClosestProject(
   construct: IConstruct,
-  constructInCreation: string
+  constructInCreation: string,
 ): Project {
   if (isComponent(construct)) {
     return construct.project;
@@ -35,7 +35,7 @@ export function findClosestProject(
   const project = tryFindClosest(isProject)(construct);
   if (!project) {
     throw new Error(
-      `${constructInCreation} at '${construct.node.path}' must be created in the scope of a Project, but no Project was found`
+      `${constructInCreation} at '${construct.node.path}' must be created in the scope of a Project, but no Project was found`,
     );
   }
 
@@ -55,7 +55,7 @@ export function findClosestProject(
 export function closestProjectMustBe<T>(
   construct: IConstruct,
   projectType: new (...args: any[]) => T,
-  constructInCreation: string
+  constructInCreation: string,
 ): T {
   const project = tryFindClosest(isProject)(construct);
   const error = `${constructInCreation} at '${construct.node.path}' must be created within a ${projectType.name}`;

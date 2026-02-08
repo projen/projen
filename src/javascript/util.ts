@@ -96,7 +96,7 @@ export function minVersion(version: string): string | undefined {
  */
 export function tryResolveModule(
   moduleId: string,
-  options?: { paths: string[] }
+  options?: { paths: string[] },
 ): string | undefined {
   try {
     return require.resolve(moduleId, options);
@@ -119,7 +119,7 @@ export function tryResolveModule(
  */
 export function tryResolveModuleManifestPath(
   moduleId: string,
-  options?: { paths: string[] }
+  options?: { paths: string[] },
 ): string | undefined {
   // cannot just `require('dependency/package.json')` here because
   // `options.paths` may not overlap with this node proc's resolution paths.
@@ -136,7 +136,7 @@ export function tryResolveModuleManifestPath(
  */
 export function tryResolveManifestPathFromDefaultExport(
   moduleId: string,
-  options?: { paths: string[] }
+  options?: { paths: string[] },
 ): string | undefined {
   const defaultExportPath = tryResolveModule(moduleId, options);
   if (!defaultExportPath) {
@@ -161,7 +161,7 @@ export function tryResolveManifestPathFromDefaultExport(
  */
 export function tryResolveManifestPathFromPath(
   moduleId: string,
-  basePath: string
+  basePath: string,
 ) {
   const base = basePath.includes("node_modules")
     ? basePath
@@ -181,7 +181,7 @@ export function tryResolveManifestPathFromPath(
  */
 export function tryResolveManifestPathFromSearch(
   moduleId: string,
-  options?: { paths: string[] }
+  options?: { paths: string[] },
 ): string | undefined {
   const searchPaths = [
     ...(options?.paths ?? []),
@@ -204,7 +204,7 @@ export function tryResolveManifestPathFromSearch(
  */
 export function tryResolveModuleManifest(
   moduleId: string,
-  options?: { paths: string[] }
+  options?: { paths: string[] },
 ): PackageManifest | undefined {
   const strategies = [
     tryResolveModuleManifestPath,
@@ -217,7 +217,7 @@ export function tryResolveModuleManifest(
     if (result) {
       try {
         const manifest = JSON.parse(
-          readFileSync(result, "utf8")
+          readFileSync(result, "utf8"),
         ) as PackageManifest;
         // verify name matches target module.
         if (manifest.name === moduleId) {
@@ -238,7 +238,7 @@ export function tryResolveModuleManifest(
  */
 export function tryResolveDependencyVersion(
   dependencyName: string,
-  options?: { paths: string[] }
+  options?: { paths: string[] },
 ): string | undefined {
   const manifest = tryResolveModuleManifest(dependencyName, options);
   if (!manifest) {
@@ -291,7 +291,7 @@ export function tryResolveDependencyVersion(
 export function hasDependencyVersion(
   project: Project,
   dependencyName: string,
-  checkRange: string
+  checkRange: string,
 ): boolean | undefined {
   const file = NodePackage.of(project)?.file;
   if (!file) {
@@ -342,7 +342,7 @@ export function hasDependencyVersion(
  */
 export function installedVersionProbablyMatches(
   requestedRange: string,
-  checkRange: string
+  checkRange: string,
 ): boolean {
   const options = {
     includePrerelease: true,
@@ -375,6 +375,6 @@ export function installedVersionProbablyMatches(
 
   return !semver.eq(
     semver.minVersion(requestedRange, options) ?? "1.2.3",
-    semver.minVersion(checkRange, options) ?? "1.2.3"
+    semver.minVersion(checkRange, options) ?? "1.2.3",
   );
 }

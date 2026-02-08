@@ -71,7 +71,7 @@ export class DockerCompose extends Component {
   static portMapping(
     publishedPort: number,
     targetPort: number,
-    options?: DockerComposePortMappingOptions
+    options?: DockerComposePortMappingOptions,
   ): DockerComposeServicePort {
     const protocol = options?.protocol ?? DockerComposeProtocol.TCP;
 
@@ -90,7 +90,7 @@ export class DockerCompose extends Component {
    */
   static bindVolume(
     sourcePath: string,
-    targetPath: string
+    targetPath: string,
   ): IDockerComposeVolumeBinding {
     return {
       bind(_volumeInfo: IDockerComposeVolumeConfig): DockerComposeVolumeMount {
@@ -115,7 +115,7 @@ export class DockerCompose extends Component {
   static namedVolume(
     volumeName: string,
     targetPath: string,
-    options: DockerComposeVolumeConfig = {}
+    options: DockerComposeVolumeConfig = {},
   ): IDockerComposeVolumeBinding {
     return {
       bind(volumeInfo: IDockerComposeVolumeConfig): DockerComposeVolumeMount {
@@ -140,7 +140,7 @@ export class DockerCompose extends Component {
    */
   static network(
     networkName: string,
-    options: DockerComposeNetworkConfig = {}
+    options: DockerComposeNetworkConfig = {},
   ): IDockerComposeNetworkBinding {
     return {
       bind(networkInfo: IDockerComposeNetworkConfig): string {
@@ -189,7 +189,7 @@ export class DockerCompose extends Component {
    */
   public addService(
     serviceName: string,
-    description: DockerComposeServiceDescription
+    description: DockerComposeServiceDescription,
   ): DockerComposeService {
     const service = new DockerComposeService(serviceName, description);
     this.services[serviceName] = service;

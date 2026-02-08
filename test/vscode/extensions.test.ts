@@ -30,7 +30,7 @@ test("recommend extensions", () => {
   // WHEN
   project.vscode?.extensions.addRecommendations(
     "vscode.csharp",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
   );
 
   // THEN
@@ -48,7 +48,7 @@ test("unwanted recommendations", () => {
   // WHEN
   project.vscode?.extensions.addUnwantedRecommendations(
     "amazonwebservices.aws-toolkit-vscode",
-    "ms-toolsai.jupyter"
+    "ms-toolsai.jupyter",
   );
 
   // THEN
@@ -69,11 +69,11 @@ test("recommended extensions and unwanted recommendations", () => {
   // WHEN
   project.vscode?.extensions.addRecommendations(
     "vscode.csharp",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
   );
   project.vscode?.extensions.addUnwantedRecommendations(
     "amazonwebservices.aws-toolkit-vscode",
-    "ms-toolsai.jupyter"
+    "ms-toolsai.jupyter",
   );
 
   // THEN

@@ -84,7 +84,7 @@ export class LambdaExtension extends Component {
 
     const basePath = join(
       dirname(options.entrypoint),
-      basename(options.entrypoint, TYPESCRIPT_LAMBDA_EXTENSION_EXT)
+      basename(options.entrypoint, TYPESCRIPT_LAMBDA_EXTENSION_EXT),
     );
 
     const name = options.name ?? basename(basePath);
@@ -92,7 +92,7 @@ export class LambdaExtension extends Component {
     const bundler = Bundler.of(project);
     if (!bundler) {
       throw new Error(
-        "No bundler found. Please add a Bundler component to your project."
+        "No bundler found. Please add a Bundler component to your project.",
       );
     }
 
@@ -111,7 +111,7 @@ export class LambdaExtension extends Component {
 
     // Use the lowest runtime version to bundle
     const [bundlerRuntime] = compatibleRuntimes.sort((a, b) =>
-      a.functionRuntime.localeCompare(b.functionRuntime)
+      a.functionRuntime.localeCompare(b.functionRuntime),
     );
 
     // Allow extension code to import dev-deps since they are only needed
@@ -140,7 +140,7 @@ export class LambdaExtension extends Component {
       assetDir: bundle.outdir,
       compatibleRuntimes: compatibleRuntimes,
       description: `Provides a Lambda Extension \`${name}\` from ${convertToPosixPath(
-        options.entrypoint
+        options.entrypoint,
       )}`,
       cdkDeps: options.cdkDeps,
     });
@@ -190,7 +190,7 @@ class LambdaLayerConstruct extends SourceCode {
     src.line(` * Props for ${constructName}`);
     src.line(" */");
     src.open(
-      `export interface ${propsType} extends lambda.LayerVersionOptions {`
+      `export interface ${propsType} extends lambda.LayerVersionOptions {`,
     );
     src.close("}");
     src.line();
@@ -200,7 +200,7 @@ class LambdaLayerConstruct extends SourceCode {
     src.line(" */");
     src.open(`export class ${constructName} extends lambda.LayerVersion {`);
     src.open(
-      `constructor(scope: Construct, id: string, props?: ${propsType}) {`
+      `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
     );
 
     src.open("super(scope, id, {");
@@ -210,7 +210,7 @@ class LambdaLayerConstruct extends SourceCode {
     src.open("compatibleRuntimes: [");
     for (const runtime of options.compatibleRuntimes) {
       src.line(
-        `new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+        `new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`,
       );
     }
     src.close("],");

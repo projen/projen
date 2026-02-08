@@ -87,7 +87,7 @@ export class Projenrc extends ProjenrcFile {
     mkdirSync(dirname(rcfile), { recursive: true });
     writeFileSync(rcfile, lines.join("\n"));
     this.project.logger.info(
-      `Project definition file was created at ${rcfile}`
+      `Project definition file was created at ${rcfile}`,
     );
   }
 }

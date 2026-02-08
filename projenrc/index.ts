@@ -45,7 +45,7 @@ export function setupBundleTaskRunner(project: Project) {
  */
 export function setupProjenBootstrap(
   project: NodeProject,
-  bootstrapScriptFile: string
+  bootstrapScriptFile: string,
 ) {
   // this script is what we use as the projen command in this project
   // it will compile the project if needed and then run the cli.
@@ -143,7 +143,7 @@ export function setupJsiiDocgen(project: NodeProject) {
 
   if (docgenTask) {
     docgenTask.reset(
-      "jsii-docgen .jsii -o docs/api/projen --split-by-submodule"
+      "jsii-docgen .jsii -o docs/api/projen --split-by-submodule",
     );
   }
 

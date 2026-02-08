@@ -501,7 +501,7 @@ export interface JestDiscoverTestMatchPatternsForDirsOptions {
 export class Transform {
   public constructor(
     private readonly name: string,
-    private readonly options?: any
+    private readonly options?: any,
   ) {}
 
   /**
@@ -519,7 +519,7 @@ export class Transform {
 export class WatchPlugin {
   public constructor(
     private readonly name: string,
-    private readonly options?: any
+    private readonly options?: any,
   ) {}
 
   /**
@@ -648,7 +648,7 @@ export interface HasteConfig {
 export class JestReporter {
   public constructor(
     private readonly name: string,
-    private readonly options?: { [key: string]: any }
+    private readonly options?: { [key: string]: any },
   ) {}
 
   /**
@@ -717,7 +717,7 @@ export class Jest extends Component {
     // hard deprecation
     if ((options as any).typescriptConfig) {
       throw new Error(
-        '"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead'
+        '"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead',
       );
     }
 
@@ -753,7 +753,7 @@ export class Jest extends Component {
 
     if (this.jestConfig?.testMatch && this.jestConfig.testMatch.length > 0) {
       this.jestConfig.testMatch.forEach((pattern) =>
-        this.addTestMatch(pattern)
+        this.addTestMatch(pattern),
       );
     }
 
@@ -789,7 +789,7 @@ export class Jest extends Component {
       const reportsDir = DEFAULT_TEST_REPORTS_DIR;
 
       this.addReporter(
-        new JestReporter("jest-junit", { outputDirectory: reportsDir })
+        new JestReporter("jest-junit", { outputDirectory: reportsDir }),
       );
 
       this.project.addDevDeps("jest-junit@^16");
@@ -797,12 +797,12 @@ export class Jest extends Component {
       this.project.gitignore.exclude(
         "# jest-junit artifacts",
         `/${reportsDir}/`,
-        "junit.xml"
+        "junit.xml",
       );
       this.project.npmignore?.exclude(
         "# jest-junit artifacts",
         `/${reportsDir}/`,
-        "junit.xml"
+        "junit.xml",
       );
     }
 
@@ -853,7 +853,7 @@ export class Jest extends Component {
    */
   public discoverTestMatchPatternsForDirs(
     dirs: string[],
-    options?: JestDiscoverTestMatchPatternsForDirsOptions
+    options?: JestDiscoverTestMatchPatternsForDirsOptions,
   ): void {
     const testPatterns = this.buildTestMatchPatternsForDirs(dirs, options);
 
@@ -868,15 +868,15 @@ export class Jest extends Component {
    */
   private buildTestMatchPatternsForDirs(
     dirs: string[],
-    options?: JestDiscoverTestMatchPatternsForDirsOptions
+    options?: JestDiscoverTestMatchPatternsForDirsOptions,
   ): string[] {
     const fileExtensionPattern = options?.fileExtensionPattern ?? "[jt]s?(x)";
     return [
       `<rootDir>/@(${dirs.join(
-        "|"
+        "|",
       )})/**/*(*.)@(spec|test).${fileExtensionPattern}`,
       `<rootDir>/@(${dirs.join(
-        "|"
+        "|",
       )})/**/__tests__/**/*.${fileExtensionPattern}`,
     ];
   }

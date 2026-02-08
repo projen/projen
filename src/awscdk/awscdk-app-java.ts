@@ -7,9 +7,7 @@ import { CdkTasks } from "./cdk-tasks";
 import { JavaProject, JavaProjectOptions } from "../java";
 
 export interface AwsCdkJavaAppOptions
-  extends JavaProjectOptions,
-    CdkConfigCommonOptions,
-    AwsCdkDepsCommonOptions {
+  extends JavaProjectOptions, CdkConfigCommonOptions, AwsCdkDepsCommonOptions {
   /**
    * The name of the Java class with the static `main()` method. This method
    * should call `app.synth()` on the CDK app.

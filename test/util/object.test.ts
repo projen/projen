@@ -8,7 +8,7 @@ describe("removeNullOrUndefinedProperties", () => {
         b: undefined,
         c: null,
         d: 2,
-      })
+      }),
     ).toStrictEqual({
       a: 1,
       d: 2,

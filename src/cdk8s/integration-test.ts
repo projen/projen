@@ -41,7 +41,7 @@ export class IntegrationTest extends IntegrationTestBase {
 
     // Assert that the snapshot has not changed (run during tests)
     this.assertTask.exec(
-      `cdk8s synth --app "${app}" -o ${assertDir} > /dev/null`
+      `cdk8s synth --app "${app}" -o ${assertDir} > /dev/null`,
     );
     this.assertTask.exec(`diff ${this.snapshotDir}/ ${assertDir}/`);
   }

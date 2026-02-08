@@ -60,7 +60,7 @@ test("add extensions", () => {
   // WHEN
   project.devContainer?.addVscodeExtensions(
     "ms-vscode-remote.remote-containers",
-    "VisualStudioExptTeam.vscodeintellicode"
+    "VisualStudioExptTeam.vscodeintellicode",
   );
 
   // THEN
@@ -84,7 +84,7 @@ test("add postCreateCommands", () => {
   // WHEN
   project.devContainer?.addTasks(
     project.addTask("testCwd1"),
-    project.addTask("testCwd2")
+    project.addTask("testCwd2"),
   );
 
   // THEN
@@ -105,7 +105,7 @@ test("add features", () => {
   // WHEN
   project.devContainer?.addFeatures(
     { name: "ghcr.io/devcontainers/features/aws-cli", version: "1" },
-    { name: "ghcr.io/devcontainers-contrib/features/aws-cdk" }
+    { name: "ghcr.io/devcontainers-contrib/features/aws-cdk" },
   );
 
   // THEN

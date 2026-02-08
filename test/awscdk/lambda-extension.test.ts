@@ -27,15 +27,15 @@ test("simplest LambdaExtension cdk v2", () => {
 
   expect(bundleTaskExec).toContain(
     // Outputs `extensions/${name}` dir
-    '--outfile="assets/example.lambda-extension/extensions/example"'
+    '--outfile="assets/example.lambda-extension/extensions/example"',
   );
   expect(bundleTaskExec).toContain(
     // aws-sdk is external
-    "--external:aws-sdk"
+    "--external:aws-sdk",
   );
   expect(bundleTaskExec).toContain(
     // Supports node12
-    '--target="node12"'
+    '--target="node12"',
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
@@ -43,23 +43,23 @@ test("simplest LambdaExtension cdk v2", () => {
     [
       "import * as lambda from 'aws-cdk-lib/aws-lambda';",
       "import { Construct } from 'constructs';",
-    ].join("\n")
+    ].join("\n"),
   );
   expect(generatedSource).toContain(
-    "export interface ExampleLayerVersionProps"
+    "export interface ExampleLayerVersionProps",
   );
   expect(generatedSource).toContain("export class ExampleLayerVersion");
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toMatchSnapshot();
 });
@@ -84,7 +84,7 @@ test("simplest LambdaExtension cdk v1", () => {
     [
       "import * as lambda from '@aws-cdk/aws-lambda';",
       "import { Construct } from '@aws-cdk/core';",
-    ].join("\n")
+    ].join("\n"),
   );
 });
 
@@ -116,24 +116,24 @@ test("changing compatible runtimes", () => {
 
   expect(bundleTaskExec).toContain(
     // It picked the lowest compatible runtime
-    '--target="node10"'
+    '--target="node10"',
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)"
+    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)",
   );
 });
 
@@ -161,7 +161,7 @@ test("bundler options", () => {
 
   expect(bundleTaskExec).toContain(
     // `foo` is external
-    "--external:foo"
+    "--external:foo",
   );
 });
 
@@ -187,7 +187,7 @@ test("changing the extension name", () => {
 
   expect(bundleTaskExec).toContain(
     // Outputs `extensions/${name}` dir
-    '--outfile="assets/example.lambda-extension/extensions/other"'
+    '--outfile="assets/example.lambda-extension/extensions/other"',
   );
 });
 
@@ -214,7 +214,7 @@ test("changing construct name and path", () => {
 
 function cdkDepsForProject(
   project: TypeScriptProject,
-  cdkVersion = "1.0.0"
+  cdkVersion = "1.0.0",
 ): AwsCdkDeps {
   return new AwsCdkDepsJs(project, {
     cdkVersion: cdkVersion,

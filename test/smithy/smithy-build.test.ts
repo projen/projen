@@ -108,12 +108,12 @@ test("can add maven dependencies and repositories", () => {
   // WHEN
   smithyBuild.addMavenDependencies(
     "software.amazon.smithy:foo:1.27.0",
-    "software.amazon.smithy:bar:1.27.0"
+    "software.amazon.smithy:bar:1.27.0",
   );
   smithyBuild.addMavenDependencies("software.amazon.smithy:baz:1.27.0");
   smithyBuild.addMavenRepositories(
     { url: "https://repo1.maven.org/maven2/" },
-    { url: "https://repo2.maven.org/maven2/" }
+    { url: "https://repo2.maven.org/maven2/" },
   );
   const snps = synthSnapshot(project);
 

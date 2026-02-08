@@ -223,7 +223,7 @@ export class IntegrationTests extends Component {
   private runTaskStep(
     project: NodeProject,
     name: string,
-    nameOfTask: string
+    nameOfTask: string,
   ): JobStep {
     return {
       name,
@@ -285,7 +285,7 @@ export class IntegrationTests extends Component {
    */
   private createNodeMatrixJob(
     project: NodeProject,
-    config: LanguageTestConfig
+    config: LanguageTestConfig,
   ): Job {
     return {
       permissions: {
@@ -309,7 +309,7 @@ export class IntegrationTests extends Component {
         this.runTaskStep(
           project,
           `Run Node integration test`,
-          taskName(config.name)
+          taskName(config.name),
         ),
       ],
     };
@@ -320,7 +320,7 @@ export class IntegrationTests extends Component {
    */
   private createPythonMatrixJob(
     project: NodeProject,
-    config: LanguageTestConfig
+    config: LanguageTestConfig,
   ): Job {
     return {
       permissions: {
@@ -345,7 +345,7 @@ export class IntegrationTests extends Component {
         this.runTaskStep(
           project,
           "Run Python integration test",
-          taskName(config.name)
+          taskName(config.name),
         ),
       ],
     };
@@ -356,7 +356,7 @@ export class IntegrationTests extends Component {
    */
   private createGoMatrixJob(
     project: NodeProject,
-    config: LanguageTestConfig
+    config: LanguageTestConfig,
   ): Job {
     return {
       permissions: {
@@ -381,7 +381,7 @@ export class IntegrationTests extends Component {
         this.runTaskStep(
           project,
           "Run Go integration test",
-          taskName(config.name)
+          taskName(config.name),
         ),
       ],
     };
@@ -392,7 +392,7 @@ export class IntegrationTests extends Component {
    */
   private createJavaMatrixJob(
     project: NodeProject,
-    config: LanguageTestConfig
+    config: LanguageTestConfig,
   ): Job {
     const javaVersions: JavaVersion[] = this.versions.java;
 
@@ -417,7 +417,7 @@ export class IntegrationTests extends Component {
         ...this.createCommonSteps(),
         this.setupJavaStep(
           "${{ matrix.java-version }}",
-          "${{ matrix.java-distribution }}"
+          "${{ matrix.java-distribution }}",
         ),
         this.setupNodeStep("lts/*"),
         this.installDepsStep(project),
@@ -426,7 +426,7 @@ export class IntegrationTests extends Component {
         this.runTaskStep(
           project,
           "Run Java integration test",
-          taskName(config.name)
+          taskName(config.name),
         ),
       ],
     };

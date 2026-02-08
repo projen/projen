@@ -7,8 +7,7 @@ import { Project } from "../project";
 import { Task } from "../task";
 
 export interface SetuptoolsOptions
-  extends PythonPackagingOptions,
-    PythonExecutableOptions {}
+  extends PythonPackagingOptions, PythonExecutableOptions {}
 
 /**
  * Manages packaging through setuptools with a setup.py script.

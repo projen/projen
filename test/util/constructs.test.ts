@@ -28,7 +28,7 @@ describe("closestProjectMustBeA", () => {
 
     // WHEN/THEN
     expect(() =>
-      closestProjectMustBe(child, NodeProject, "TestComponent")
+      closestProjectMustBe(child, NodeProject, "TestComponent"),
     ).toThrow(/must be created within a NodeProject, but found: Project/);
   });
 
@@ -39,7 +39,7 @@ describe("closestProjectMustBeA", () => {
 
     // WHEN/THEN
     expect(() =>
-      closestProjectMustBe(child, NodeProject, "TestComponent")
+      closestProjectMustBe(child, NodeProject, "TestComponent"),
     ).toThrow(/must be created within a NodeProject, but no Project was found/);
   });
 });

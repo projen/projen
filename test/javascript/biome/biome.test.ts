@@ -8,7 +8,7 @@ import {
 import { synthSnapshot } from "../../../src/util/synth";
 
 const getTestProject = (
-  projenOptions: Partial<TypeScriptProjectOptions>
+  projenOptions: Partial<TypeScriptProjectOptions>,
 ): TypeScriptProject => {
   return new TypeScriptProject({
     name: "test-project",
@@ -248,7 +248,7 @@ describe("Configuration", () => {
         // The merged config should have the same length since duplicates should be removed
         // This tests that the merge logic properly deduplicates entries
         expect(mergedConfig.files!.includes!.length).toBe(
-          config.files!.includes!.length
+          config.files!.includes!.length,
         );
       });
     });
@@ -341,7 +341,7 @@ describe("Configuration", () => {
 });
 
 function snapshotBiomeConfig(
-  project: Project
+  project: Project,
 ): biome_config.BiomeConfiguration {
   return synthSnapshot(project)["biome.jsonc"];
 }

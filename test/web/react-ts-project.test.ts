@@ -21,7 +21,7 @@ test("deps can be overridden", () => {
     "react@^2",
     "react-dom@^4",
     "react-scripts@1.2.3",
-    "web-vitals@7.2"
+    "web-vitals@7.2",
   );
 
   const pkg = synthSnapshot(p)["package.json"];

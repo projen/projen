@@ -90,7 +90,7 @@ export class MavenPackaging extends Component {
     }
     this.project.packageTask.exec(`mkdir -p ${this.distdir}`);
     this.project.packageTask.exec(
-      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${this.distdir}`
+      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${this.distdir}`,
     );
 
     project.gitignore.exclude(this.distdir);

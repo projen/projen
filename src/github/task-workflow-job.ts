@@ -183,13 +183,13 @@ export class TaskWorkflowJob extends Component {
             name: options.artifactsDirectory,
             path: options.artifactsDirectory,
           },
-        })
+        }),
       );
     }
 
     const runsOnInputs = filteredRunsOnOptions(
       options.runsOn,
-      options.runsOnGroup
+      options.runsOnGroup,
     );
     this.runsOn = (runsOnInputs as { runsOn: string[] })?.runsOn;
     this.runsOnGroup = (

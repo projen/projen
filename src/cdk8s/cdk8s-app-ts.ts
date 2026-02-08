@@ -9,8 +9,7 @@ import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
 
 export interface Cdk8sTypeScriptAppOptions
-  extends TypeScriptProjectOptions,
-    Cdk8sDepsCommonOptions {
+  extends TypeScriptProjectOptions, Cdk8sDepsCommonOptions {
   /**
    * Import a specific Kubernetes spec version.
    *

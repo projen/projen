@@ -32,7 +32,7 @@ describe("IntegrationTest", () => {
   // and the various temporary directories created during execution.
   test("npmignore", () => {
     ["test/.tmp", "test/foo.integ.snapshot"].forEach((i) =>
-      expect(output[".npmignore"]).toContain(i)
+      expect(output[".npmignore"]).toContain(i),
     );
   });
 
@@ -156,13 +156,13 @@ test("synthesizing cdk v2 integration tests", () => {
   const output = Testing.synth(project);
 
   expect(
-    output[".projen/tasks.json"].tasks["integ:foo:deploy"]
+    output[".projen/tasks.json"].tasks["integ:foo:deploy"],
   ).toMatchSnapshot();
   expect(
-    output[".projen/tasks.json"].tasks["integ:foo:snapshot"]
+    output[".projen/tasks.json"].tasks["integ:foo:snapshot"],
   ).toMatchSnapshot();
   expect(
-    output[".projen/tasks.json"].tasks["integ:foo:watch"]
+    output[".projen/tasks.json"].tasks["integ:foo:watch"],
   ).toMatchSnapshot();
 });
 
@@ -187,13 +187,13 @@ test("synthesizing an integration test containing a multi-stack stage", () => {
   const output = Testing.synth(project);
 
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"]
+    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"],
   ).toMatchSnapshot();
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"]
+    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"],
   ).toMatchSnapshot();
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:watch"]
+    output[".projen/tasks.json"].tasks["integ:my-stage:watch"],
   ).toMatchSnapshot();
 });
 
@@ -219,26 +219,26 @@ test("enabling path metadata", () => {
   const output = Testing.synth(project);
 
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"].steps
+    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"].steps,
   ).not.toEqual(
     expect.arrayContaining([
       { exec: expect.stringContaining("--no-path-metadata") },
-    ])
+    ]),
   );
 
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"].steps
+    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"].steps,
   ).not.toEqual(
     expect.arrayContaining([
       { exec: expect.stringContaining("--no-path-metadata") },
-    ])
+    ]),
   );
 
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:watch"].steps
+    output[".projen/tasks.json"].tasks["integ:my-stage:watch"].steps,
   ).not.toEqual(
     expect.arrayContaining([
       { exec: expect.stringContaining("--no-path-metadata") },
-    ])
+    ]),
   );
 });

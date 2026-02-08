@@ -214,7 +214,7 @@ export class Eslint extends Component {
       "@typescript-eslint/eslint-plugin@^8",
       "@typescript-eslint/parser@^8",
       "eslint-import-resolver-typescript",
-      "eslint-plugin-import"
+      "eslint-plugin-import",
     );
 
     if (options.aliasMap) {
@@ -434,7 +434,7 @@ export class Eslint extends Component {
       },
       extends: () =>
         Array.from(this._extends).sort((a, b) =>
-          this.sortExtends.compare(a, b)
+          this.sortExtends.compare(a, b),
         ),
       settings: {
         "import/parsers": {
@@ -560,7 +560,7 @@ export class Eslint extends Component {
     this.nodeProject.addDevDeps(
       "prettier",
       "eslint-plugin-prettier",
-      "eslint-config-prettier"
+      "eslint-config-prettier",
     );
 
     this._formattingRules = {};
@@ -590,7 +590,7 @@ export class Eslint extends Component {
 
     this.eslintTask.reset(
       [taskExecCommand, ...argsSet].join(" "),
-      this.buildTaskStepOptions(taskExecCommand)
+      this.buildTaskStepOptions(taskExecCommand),
     );
   }
 
@@ -603,7 +603,7 @@ export class Eslint extends Component {
    */
   private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
     const currentEslintTaskStep = this.eslintTask?.steps?.find((step) =>
-      step?.exec?.startsWith?.(taskExecCommand)
+      step?.exec?.startsWith?.(taskExecCommand),
     );
 
     if (currentEslintTaskStep) {

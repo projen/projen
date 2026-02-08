@@ -102,10 +102,10 @@ describe("dev environment docker options", () => {
 
     // WHEN
     project.gitpod?.addDockerImage(
-      DevEnvironmentDockerImage.fromImage("jsii/superchain:node14")
+      DevEnvironmentDockerImage.fromImage("jsii/superchain:node14"),
     );
     project.devContainer?.addDockerImage(
-      DevEnvironmentDockerImage.fromImage("jsii/uberchain")
+      DevEnvironmentDockerImage.fromImage("jsii/uberchain"),
     );
 
     // THEN
@@ -129,10 +129,10 @@ describe("dev environment docker options", () => {
 
     // WHEN
     project.gitpod?.addDockerImage(
-      DevEnvironmentDockerImage.fromFile(".gitpod.Dockerfile")
+      DevEnvironmentDockerImage.fromFile(".gitpod.Dockerfile"),
     );
     project.devContainer?.addDockerImage(
-      DevEnvironmentDockerImage.fromFile("Dockerfile")
+      DevEnvironmentDockerImage.fromFile("Dockerfile"),
     );
 
     // THEN
@@ -255,7 +255,7 @@ test("dev environment vscode extensions", () => {
 
   // WHEN
   project.gitpod?.addVscodeExtensions(
-    "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=="
+    "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==",
   );
   project.devContainer?.addVscodeExtensions("dbaeumer.vscode-eslint");
 
@@ -264,7 +264,7 @@ test("dev environment vscode extensions", () => {
   const gitpodSnapshot = outdir[GITPOD_FILE];
   expect(gitpodSnapshot).toContain("extensions:");
   expect(gitpodSnapshot).toContain(
-    "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=="
+    "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==",
   );
 
   const devContainerSnapshot = outdir[DEVCONTAINER_FILE];

@@ -103,7 +103,7 @@ export interface ContributorStatementOptions {
 export class PullRequestLint extends Component {
   constructor(
     private readonly github: GitHub,
-    private readonly options: PullRequestLintOptions = {}
+    private readonly options: PullRequestLintOptions = {},
   ) {
     super(github.project);
 
@@ -175,7 +175,7 @@ export class PullRequestLint extends Component {
 
       const exclusions: string[] = [
         ...labels.map(
-          (l) => `contains(github.event.pull_request.labels.*.name, '${l}')`
+          (l) => `contains(github.event.pull_request.labels.*.name, '${l}')`,
         ),
         ...users.map((u) => `github.event.pull_request.user.login == '${u}'`),
       ];
@@ -248,7 +248,7 @@ function fnBody(fn: (...args: any[]) => any) {
   const minIndentation = Math.min(
     ...body
       .filter((l) => l.trim()) // ignore empty lines
-      .map((l) => l.search(/\S|$/))
+      .map((l) => l.search(/\S|$/)),
   );
 
   return body

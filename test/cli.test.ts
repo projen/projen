@@ -29,7 +29,7 @@ test('running "projen" with no arguments will execute .projenrc.js', () => {
 test('running "projen" for projects with a "default" task will execute it', () => {
   const project = new Project({ name: "my-project" });
   project.defaultTask?.exec(
-    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`,
   );
   project.synth();
 
@@ -40,7 +40,7 @@ test('running "projen" for projects with a "default" task will execute it', () =
 test('running "projen" with task in root of a project will execute task of the project', () => {
   const project = new Project({ name: "my-project" });
   project.testTask?.exec(
-    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`,
   );
   project.synth();
 
@@ -52,20 +52,20 @@ test('running "projen" with task in root of a project that receives args will pa
   const project = new Project({ name: "my-project" });
   project.testTask?.exec(
     `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', '$@\\n');"`,
-    { receiveArgs: true }
+    { receiveArgs: true },
   );
   project.synth();
 
   execProjenCLI(project.outdir, ["test", "something", "--help"]);
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual(
-    "something --help\n"
+    "something --help\n",
   );
 });
 
 test('running "projen" with task in subdirectory of a project will execute task of the project', () => {
   const project = new Project({ name: "my-project" });
   project.testTask?.exec(
-    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`,
   );
   project.synth();
   const subdirectory = mkdtemp({ dir: project.outdir });
@@ -90,13 +90,13 @@ test('running "projen" with task in root of a subproject will execute task of th
     outdir: "subproject",
   });
   subProject.testTask?.exec(
-    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`,
   );
   project.synth();
 
   execProjenCLI(subProject.outdir, ["test"]);
   expect(directorySnapshot(subProject.outdir)["bar.txt"]).toStrictEqual(
-    "foo\n"
+    "foo\n",
   );
 });
 
@@ -108,14 +108,14 @@ test('running "projen" with task in subdirectory of a subproject will execute ta
     outdir: "subproject",
   });
   subProject.testTask?.exec(
-    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`
+    `node -e "const fs = require('fs'); fs.writeFileSync('bar.txt', 'foo\\n');"`,
   );
   project.synth();
   const subdirectory = mkdtemp({ dir: subProject.outdir });
 
   execProjenCLI(subdirectory, ["test"]);
   expect(directorySnapshot(subProject.outdir)["bar.txt"]).toStrictEqual(
-    "foo\n"
+    "foo\n",
   );
 });
 
@@ -128,7 +128,7 @@ test('running "projen" with task if there is no tasks.json', () => {
   const t = () => {
     execProjenCLI(dir, ["build"]);
   };
-  expect(t).toThrowError("Unknown command: build");
+  expect(t).toThrow("Unknown command: build");
 });
 
 test('running "projen" with task in root of a project that receives args will respect whitespaces', () => {

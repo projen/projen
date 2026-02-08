@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generate projenrc in java 1`] = `
 "import io.github.cdklabs.projen.java.JavaProject;

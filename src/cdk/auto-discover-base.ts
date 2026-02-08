@@ -60,7 +60,7 @@ export interface IntegrationTestAutoDiscoverBaseOptions {
 export class IntegrationTestAutoDiscoverBase extends AutoDiscoverBase {
   constructor(
     project: Project,
-    options: IntegrationTestAutoDiscoverBaseOptions
+    options: IntegrationTestAutoDiscoverBaseOptions,
   ) {
     super(project, {
       extension: TYPESCRIPT_INTEG_EXT,

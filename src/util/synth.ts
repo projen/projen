@@ -30,7 +30,7 @@ export interface SynthOutput {
  */
 export function synthSnapshot(
   project: Project,
-  options: SnapshotOptions = {}
+  options: SnapshotOptions = {},
 ): SynthOutput {
   // defensive: verify that "outdir" is actually in a temporary directory
   if (
@@ -38,7 +38,7 @@ export function synthSnapshot(
     !project.outdir.includes("project-temp-dir")
   ) {
     throw new Error(
-      "Trying to capture a snapshot of a project outside of tmpdir, which implies this test might corrupt an existing project"
+      "Trying to capture a snapshot of a project outside of tmpdir, which implies this test might corrupt an existing project",
     );
   }
 
@@ -59,7 +59,7 @@ export function synthSnapshot(
       excludeGlobs: ignoreExts.map((ext) => `**/*.${ext}`),
       supportJsonComments: project.files.some(
         // At least one json file in project supports comments
-        (file) => file instanceof JsonFile && file.supportsComments
+        (file) => file instanceof JsonFile && file.supportsComments,
       ),
     });
   } finally {
@@ -106,7 +106,7 @@ function isJsonLikeFile(filePath: string): boolean {
 
 export function directorySnapshot(
   root: string,
-  options: DirectorySnapshotOptions = {}
+  options: DirectorySnapshotOptions = {},
 ) {
   const output: SynthOutput = {};
 
@@ -128,7 +128,7 @@ export function directorySnapshot(
       content = fs.readFileSync(filePath, "utf-8");
       if (parseJson && isJsonLikeFile(filePath)) {
         content = cleanCommentArrays(
-          JSONC.parse(content, undefined, !options.supportJsonComments)
+          JSONC.parse(content, undefined, !options.supportJsonComments),
         );
       }
     } else {

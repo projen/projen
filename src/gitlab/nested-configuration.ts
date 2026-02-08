@@ -12,7 +12,7 @@ export class NestedConfiguration extends CiConfiguration {
     project: Project,
     parent: GitlabConfiguration,
     name: string,
-    options?: CiConfigurationOptions
+    options?: CiConfigurationOptions,
   ) {
     super(project, name, options);
     this.parent = parent;

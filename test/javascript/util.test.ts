@@ -22,7 +22,7 @@ describe("tryResolveModule", () => {
     (moduleId, expected) => {
       const result = tryResolveModule(moduleId);
       expect(Boolean(result)).toBe(expected);
-    }
+    },
   );
 });
 
@@ -35,7 +35,7 @@ describe("tryResolveModuleManifestPath", () => {
     (moduleId, expected) => {
       const result = tryResolveModuleManifestPath(moduleId);
       expect(Boolean(result)).toBe(expected);
-    }
+    },
   );
 });
 
@@ -48,7 +48,7 @@ describe("tryResolveManifestPathFromDefaultExport", () => {
     (moduleId, expected) => {
       const result = tryResolveManifestPathFromDefaultExport(moduleId);
       expect(Boolean(result)).toBe(expected);
-    }
+    },
   );
 });
 
@@ -59,7 +59,7 @@ describe("tryResolveManifestPathFromPath", () => {
     mkdirSync(fakeJestPath, { recursive: true });
     writeFileSync(
       path.join(fakeJestPath, "package.json"),
-      JSON.stringify({ name: "jest", version: "0.0.0" })
+      JSON.stringify({ name: "jest", version: "0.0.0" }),
     );
     const result = tryResolveManifestPathFromPath("jest", outdir);
     expect(result).toBeDefined();
@@ -68,7 +68,7 @@ describe("tryResolveManifestPathFromPath", () => {
   test("should return undefined if the module does not exist in the specified path", () => {
     const result = tryResolveManifestPathFromPath(
       "non-existent-module",
-      mkdtemp()
+      mkdtemp(),
     );
     expect(result).toBeUndefined();
   });
@@ -83,7 +83,7 @@ describe("tryResolveManifestPathFromSearch", () => {
     (moduleId, expected) => {
       const result = tryResolveManifestPathFromSearch(moduleId);
       expect(Boolean(result)).toBe(expected);
-    }
+    },
   );
 });
 
@@ -109,7 +109,7 @@ describe("tryResolveDependencyVersion", () => {
     mkdirSync(fakeModPath, { recursive: true });
     writeFileSync(
       path.join(fakeModPath, "package.json"),
-      JSON.stringify({ name: "fake-module", version: "0.0.0" })
+      JSON.stringify({ name: "fake-module", version: "0.0.0" }),
     );
   });
 
@@ -122,10 +122,10 @@ describe("tryResolveDependencyVersion", () => {
     "should resolve the dependency version if the module exists (%s)",
     (params, expected) => {
       const result = tryResolveDependencyVersion(
-        ...(params as [moduleId: string, options?: { paths: string[] }])
+        ...(params as [moduleId: string, options?: { paths: string[] }]),
       );
       expect(Boolean(result)).toBe(expected);
-    }
+    },
   );
 });
 
@@ -143,7 +143,7 @@ test.each([
   "installedVersionProbablyMatches(%p, %p) should return %p",
   (requested, check, expected) => {
     expect(installedVersionProbablyMatches(requested, check)).toEqual(expected);
-  }
+  },
 );
 
 test.each([

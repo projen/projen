@@ -166,18 +166,18 @@ export abstract class Cdk8sDeps extends Component {
     // constructs library
     this.addConstructsDependency(
       options.constructsVersion,
-      options.constructsVersionPinning
+      options.constructsVersionPinning,
     );
 
     this.addFrameworkDependency(
       options.cdk8sVersion,
-      options.cdk8sVersionPinning
+      options.cdk8sVersionPinning,
     );
 
     if (options.cdk8sCliDependency) {
       this.addClientDependency(
         options.cdk8sCliVersion,
-        options.cdk8sCliVersionPinning
+        options.cdk8sCliVersionPinning,
       );
     }
 
@@ -187,7 +187,7 @@ export abstract class Cdk8sDeps extends Component {
         k8MinorVersion,
         options.cdk8sPlusVersion,
         // (project instanceof Cdk8sPythonApp) ? true : false,
-        options.cdk8sPlusVersionPinning
+        options.cdk8sPlusVersionPinning,
       );
     }
   }
@@ -201,7 +201,7 @@ export abstract class Cdk8sDeps extends Component {
     requestedVersion: string | undefined,
     v1Version: string,
     v2Version: string,
-    pinning?: boolean
+    pinning?: boolean,
   ) {
     const defaultVersion = this.cdk8sMajorVersion === 1 ? v1Version : v2Version;
     const version = `${requestedVersion ?? defaultVersion}`;
@@ -212,29 +212,29 @@ export abstract class Cdk8sDeps extends Component {
   private addCdk8sPlusDependency(
     k8MinorVersion: number,
     requestedVersion: string | undefined,
-    pinning?: boolean
+    pinning?: boolean,
   ) {
     const versionRequirement = this.getVersionRequirement(
       requestedVersion,
       "1.0.0-beta.222",
       "2.0.0-rc.26",
-      pinning
+      pinning,
     );
 
     const cdk8sPlusMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!cdk8sPlusMajorVersion) {
       throw new Error(
-        `Cannot determine major version of cdk8s-plus version '${versionRequirement}'`
+        `Cannot determine major version of cdk8s-plus version '${versionRequirement}'`,
       );
     }
 
     const cdk8sPlusLib = this._packageNames.cdk8sPlus.concat(
       "-",
-      k8MinorVersion.toString()
+      k8MinorVersion.toString(),
     );
     this.project.deps.addDependency(
       `${cdk8sPlusLib}@${versionRequirement}`,
-      this.dependencyType
+      this.dependencyType,
     );
 
     return versionRequirement;
@@ -242,25 +242,25 @@ export abstract class Cdk8sDeps extends Component {
 
   private addClientDependency(
     requestedVersion: string | undefined,
-    pinning?: boolean
+    pinning?: boolean,
   ) {
     const versionRequirement = this.getVersionRequirement(
       requestedVersion,
       "1.1.34",
       "2.0.28",
-      pinning
+      pinning,
     );
 
     const cdk8sCliMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!cdk8sCliMajorVersion) {
       throw new Error(
-        `Cannot determine major version of cdk8s version '${versionRequirement}'`
+        `Cannot determine major version of cdk8s version '${versionRequirement}'`,
       );
     }
 
     this.project.deps.addDependency(
       `${this._packageNames.cdk8sClient}@${versionRequirement}`,
-      DependencyType.BUILD
+      DependencyType.BUILD,
     );
 
     return versionRequirement;
@@ -268,25 +268,25 @@ export abstract class Cdk8sDeps extends Component {
 
   private addFrameworkDependency(
     requestedVersion: string | undefined,
-    pinning?: boolean
+    pinning?: boolean,
   ) {
     const versionRequirement = this.getVersionRequirement(
       requestedVersion,
       "1.6.33",
       "2.3.33",
-      pinning
+      pinning,
     );
 
     const cdk8sMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!cdk8sMajorVersion) {
       throw new Error(
-        `Cannot determine major version of cdk8s version '${versionRequirement}'`
+        `Cannot determine major version of cdk8s version '${versionRequirement}'`,
       );
     }
 
     this.project.deps.addDependency(
       `${this._packageNames.cdk8s}@${versionRequirement}`,
-      this.dependencyType
+      this.dependencyType,
     );
 
     return versionRequirement;
@@ -294,11 +294,11 @@ export abstract class Cdk8sDeps extends Component {
 
   private addConstructsDependency(
     requestedVersion: string | undefined,
-    pinning?: boolean
+    pinning?: boolean,
   ) {
     if (requestedVersion && !semver.parse(requestedVersion)) {
       throw new Error(
-        `"constructsVersion" cannot be parsed as a semver version: ${requestedVersion}`
+        `"constructsVersion" cannot be parsed as a semver version: ${requestedVersion}`,
       );
     }
 
@@ -306,13 +306,13 @@ export abstract class Cdk8sDeps extends Component {
       requestedVersion,
       "3.4.39",
       "10.1.42",
-      pinning
+      pinning,
     );
 
     const constructsMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!constructsMajorVersion) {
       throw new Error(
-        `Cannot determine major version of constructs version '${versionRequirement}'`
+        `Cannot determine major version of constructs version '${versionRequirement}'`,
       );
     }
 
@@ -332,7 +332,7 @@ export abstract class Cdk8sDeps extends Component {
 
     this.project.deps.addDependency(
       `${this._packageNames.constructs}@${versionRequirement}`,
-      this.dependencyType
+      this.dependencyType,
     );
 
     return versionRequirement;
@@ -343,7 +343,7 @@ function determineFrameworkVersion(options: Cdk8sDepsOptions) {
   const ver = semver.parse(options.cdk8sVersion);
   if (!ver) {
     throw new Error(
-      `"cdk8sVersion" cannot be parsed as a semver version: ${options.cdk8sVersion}`
+      `"cdk8sVersion" cannot be parsed as a semver version: ${options.cdk8sVersion}`,
     );
   }
 

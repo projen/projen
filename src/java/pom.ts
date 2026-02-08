@@ -353,7 +353,7 @@ export class Pom extends Component {
           ...this.synthPluginRepositories(),
         },
       },
-      { omitEmpty: true }
+      { omitEmpty: true },
     );
   }
 
@@ -483,7 +483,7 @@ function mavenCoords(dep: DependencyCoordinates) {
   const parts = name.split("/");
   if (parts.length !== 2) {
     throw new Error(
-      `invalid maven coordinates in dependency named "${name}". format is "<groupId>/<artifactId>". For example "org.junit.jupiter/junit-jupiter-engine"`
+      `invalid maven coordinates in dependency named "${name}". format is "<groupId>/<artifactId>". For example "org.junit.jupiter/junit-jupiter-engine"`,
     );
   }
 
@@ -501,7 +501,7 @@ function pluginConfig(options: PluginOptions = {}) {
       options.dependencies && options.dependencies.length > 0
         ? {
             dependency: options.dependencies?.map((d) =>
-              mavenCoords(Dependencies.parseDependency(d))
+              mavenCoords(Dependencies.parseDependency(d)),
             ),
           }
         : undefined,

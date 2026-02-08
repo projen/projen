@@ -16,7 +16,7 @@ test("stale enabled", () => {
   });
 
   expect(
-    synthSnapshot(project)[".github/workflows/stale.yml"]
+    synthSnapshot(project)[".github/workflows/stale.yml"],
   ).toMatchSnapshot();
 });
 
@@ -34,7 +34,7 @@ test("customizations", () => {
   });
 
   expect(
-    synthSnapshot(project)[".github/workflows/stale.yml"]
+    synthSnapshot(project)[".github/workflows/stale.yml"],
   ).toMatchSnapshot();
 });
 
@@ -47,7 +47,7 @@ test("with custom runner", () => {
   });
 
   expect(synthSnapshot(project)[".github/workflows/stale.yml"]).toContain(
-    "runs-on: self-hosted"
+    "runs-on: self-hosted",
   );
 });
 
@@ -76,7 +76,7 @@ test("with custom runner group", () => {
 describe("renderBehavior()", () => {
   test("defaults", () => {
     expect(
-      renderBehavior(undefined, { stale: 10, close: 11, type: "issue" })
+      renderBehavior(undefined, { stale: 10, close: 11, type: "issue" }),
     ).toStrictEqual({
       closeMessage:
         'Closing this issue as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the "backlog" label.',
@@ -89,7 +89,7 @@ describe("renderBehavior()", () => {
     });
 
     expect(
-      renderBehavior(undefined, { stale: 99, close: 65, type: "xomo" })
+      renderBehavior(undefined, { stale: 99, close: 65, type: "xomo" }),
     ).toStrictEqual({
       closeMessage:
         'Closing this xomo as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the "backlog" label.',
@@ -153,7 +153,7 @@ test("exempt labels in workflow output", () => {
   });
 
   const workflow = YAML.parse(
-    synthSnapshot(project)[".github/workflows/stale.yml"]
+    synthSnapshot(project)[".github/workflows/stale.yml"],
   );
 
   expect(workflow.jobs.stale.steps[0]).toStrictEqual({

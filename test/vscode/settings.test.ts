@@ -29,12 +29,12 @@ test("add single settings", () => {
   project.vscode?.settings.addSetting(
     "editor.defaultFormatter",
     "esbenp.prettier-vscode",
-    "javascript"
+    "javascript",
   );
   project.vscode?.settings.addSetting(
     "editor.defaultFormatter",
     "esbenp.prettier-vscode",
-    "typescript"
+    "typescript",
   );
 
   // THEN
@@ -73,13 +73,13 @@ test("batch add settings", () => {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "eslint.format.enable": true,
     },
-    ["javascript", "typescript"]
+    ["javascript", "typescript"],
   );
   project.vscode?.settings.addSettings(
     {
       "python.formatting.provider": "black",
     },
-    "python"
+    "python",
   );
 
   // THEN

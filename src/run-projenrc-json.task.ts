@@ -20,7 +20,7 @@ if (!filename || filename == "") {
 const { type, ...json } = JSON.parse(fs.readFileSync(filename, "utf8"));
 if (!type) {
   throw new Error(
-    'projenrc.json requires a "type" field with the fully qualified type name. e.g. projen.web.ReactProject'
+    'projenrc.json requires a "type" field with the fully qualified type name. e.g. projen.web.ReactProject',
   );
 }
 

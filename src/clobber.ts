@@ -23,7 +23,7 @@ export class Clobber extends Component {
     });
     task.exec("git clean -fdx", { name: "clean all untracked files" });
     task.say(
-      'ready to rock! (unpushed commits are under the "scratch" branch)'
+      'ready to rock! (unpushed commits are under the "scratch" branch)',
     );
   }
 }

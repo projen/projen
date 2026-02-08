@@ -26,7 +26,7 @@ test("sample file from source", () => {
 
   // THEN
   expect(synthSnapshot(project)["logo.svg"]).toMatch(
-    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
+    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
   );
 });
 
@@ -78,7 +78,7 @@ test("sample directory from source", () => {
   expect(snapshot["public/robots.txt"].length).toBeGreaterThan(0);
   expect(snapshot["public/index.html"].length).toBeGreaterThan(0);
   expect(Object.keys(snapshot["public/manifest.json"]).length).toBeGreaterThan(
-    0
+    0,
   );
 });
 
@@ -97,11 +97,11 @@ test("sample directory from source with overwritten files", () => {
   // THEN
   const snapshot = synthSnapshot(project);
   expect(snapshot["public/index.html"]).toMatch(
-    "<!doctype html><body>Hello world!</body>"
+    "<!doctype html><body>Hello world!</body>",
   );
   expect(snapshot["public/robots.txt"].length).toBeGreaterThan(0);
   expect(Object.keys(snapshot["public/manifest.json"]).length).toBeGreaterThan(
-    0
+    0,
   );
 });
 

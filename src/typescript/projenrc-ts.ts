@@ -63,7 +63,7 @@ export class ProjenrcTs extends ProjenrcFile {
 
     // Use npx since project's deps manager is not guaranteed to be JS-based
     project.defaultTask?.exec(
-      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.filePath}`
+      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.filePath}`,
     );
 
     this.generateProjenrc();
@@ -109,7 +109,7 @@ export class ProjenrcTs extends ProjenrcFile {
 
     writeFileSync(rcfile, lines.join("\n"));
     this.project.logger.info(
-      `Project definition file was created at ${rcfile}`
+      `Project definition file was created at ${rcfile}`,
     );
   }
 }

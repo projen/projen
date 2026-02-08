@@ -149,7 +149,7 @@ export class Renovatebot extends Component {
         this._project.deps.all
           .filter((dep) => dep.version || dep.type === DependencyType.OVERRIDE)
           .map((dep) => dep.name)
-          .concat(this.explicitIgnores)
+          .concat(this.explicitIgnores),
       ),
     ];
 

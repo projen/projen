@@ -42,14 +42,14 @@ interface DockerComposeFileSchema {
 
 export function renderDockerComposeFile(
   serviceDescriptions: Record<string, DockerComposeService>,
-  version?: string
+  version?: string,
 ): object {
   // Record volume configuration
   const volumeConfig: Record<string, DockerComposeVolumeConfig> = {};
   const volumeInfo: IDockerComposeVolumeConfig = {
     addVolumeConfiguration(
       volumeName: string,
-      configuration: DockerComposeVolumeConfig
+      configuration: DockerComposeVolumeConfig,
     ) {
       if (!volumeConfig[volumeName]) {
         // First volume configuration takes precedence.
@@ -62,7 +62,7 @@ export function renderDockerComposeFile(
   const networkInfo: IDockerComposeNetworkConfig = {
     addNetworkConfiguration(
       networkName: string,
-      configuration: DockerComposeNetworkConfig
+      configuration: DockerComposeNetworkConfig,
     ) {
       if (!networkConfig[networkName]) {
         // First network configuration takes precedence.
@@ -74,7 +74,7 @@ export function renderDockerComposeFile(
   // Render service configuration
   const services: Record<string, DockerComposeFileServiceSchema> = {};
   for (const [serviceName, serviceDescription] of Object.entries(
-    serviceDescriptions ?? {}
+    serviceDescriptions ?? {},
   )) {
     // Resolve the names of each dependency and check that they exist.
     // Note: They may not exist if the user made a mistake when referencing a
@@ -88,7 +88,7 @@ export function renderDockerComposeFile(
       }
       if (!serviceDescriptions[resolvedServiceName]) {
         throw new Error(
-          `Unable to resolve service named ${resolvedServiceName} for ${serviceName}`
+          `Unable to resolve service named ${resolvedServiceName} for ${serviceName}`,
         );
       }
 
@@ -114,27 +114,27 @@ export function renderDockerComposeFile(
     services[serviceName] = {
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "image",
-        serviceDescription.image
+        serviceDescription.image,
       ),
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "build",
-        serviceDescription.imageBuild
+        serviceDescription.imageBuild,
       ),
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "entrypoint",
-        serviceDescription.entrypoint
+        serviceDescription.entrypoint,
       ),
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "command",
-        serviceDescription.command
+        serviceDescription.command,
       ),
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "platform",
-        serviceDescription.platform
+        serviceDescription.platform,
       ),
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "privileged",
-        serviceDescription.privileged
+        serviceDescription.privileged,
       ),
       ...(Object.keys(serviceDescription.environment).length > 0
         ? { environment: serviceDescription.environment }
@@ -177,7 +177,7 @@ export function renderDockerComposeFile(
  */
 function getObjectWithKeyAndValueIfValueIsDefined<K extends string, T>(
   key: K,
-  value: T
+  value: T,
 ): { K: T } | {} {
   return value !== undefined ? { [key]: value } : {};
 }

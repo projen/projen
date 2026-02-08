@@ -46,9 +46,9 @@ describe("task-workflow", () => {
             issueComment: {},
           },
           permissions: {},
-        })
+        }),
     ).toThrow(
-      /Trigger \"issueComment\" should not be used due to a security concern/
+      /Trigger \"issueComment\" should not be used due to a security concern/,
     );
   });
 
@@ -65,7 +65,7 @@ describe("task-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
-      "runs-on: self-hosted"
+      "runs-on: self-hosted",
     );
   });
 
@@ -110,7 +110,7 @@ describe("task-workflow", () => {
 
     // LFS is enabled in the workflows
     expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
-      "lfs: true"
+      "lfs: true",
     );
     expect(snapshot[".gitattributes"]).toContain("*.bin filter=lfs");
   });
@@ -128,7 +128,7 @@ describe("task-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     expect(snapshot[".github/workflows/task-workflow.yml"]).toMatch(
-      /runs-on:\n\s+- self-hosted\n\s+- ubuntu-18\.04/m
+      /runs-on:\n\s+- self-hosted\n\s+- ubuntu-18\.04/m,
     );
   });
 });

@@ -119,7 +119,7 @@ test("Typescript Project Jest Defaults Configured", () => {
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(
-    compilerOptionDefaults
+    compilerOptionDefaults,
   );
   expect(jestTypescriptConfig.include).toEqual([
     "src/**/*.ts",
@@ -156,7 +156,7 @@ test("Typescript Project Jest With Compiler Options", () => {
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(
-    mergedCompilerOptions
+    mergedCompilerOptions,
   );
 });
 
@@ -174,9 +174,9 @@ test("jestOptions.typeScriptCompilerOptions is deprecated", () => {
             noImplicitAny: false,
           },
         } as any,
-      })
+      }),
   ).toThrow(
-    '"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead'
+    '"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead',
   );
 });
 
@@ -196,7 +196,7 @@ test("testdir is under src discovers compiled js tests", () => {
     "<rootDir>/@(lib/boom/bam/__tests)/**/__tests__/**/*.js?(x)",
   ]);
   files["package.json"].jest.testMatch.forEach((testMatch: string) =>
-    expect(testMatch).toContain(".js")
+    expect(testMatch).toContain(".js"),
   );
 });
 
@@ -289,7 +289,7 @@ test("addSetupFileAfterEnv() can be used to add setup files", () => {
 
   // THEN
   expect(
-    synthSnapshot(project)["package.json"].jest.setupFilesAfterEnv
+    synthSnapshot(project)["package.json"].jest.setupFilesAfterEnv,
   ).toStrictEqual(["./mySetupFileAfterEnv.ts"]);
 });
 
@@ -309,7 +309,7 @@ test("addModuleNameMappers() can be used to add module name mappers", () => {
 
   // THEN
   expect(
-    synthSnapshot(project)["package.json"].jest.moduleNameMapper
+    synthSnapshot(project)["package.json"].jest.moduleNameMapper,
   ).toStrictEqual({
     "^@/(.*)$": "<rootDir>/src/$1",
   });
@@ -329,7 +329,7 @@ test("addModulePaths() can be used to add module paths", () => {
 
   // THEN
   expect(synthSnapshot(project)["package.json"].jest.modulePaths).toStrictEqual(
-    ["<rootDir>/src"]
+    ["<rootDir>/src"],
   );
 });
 

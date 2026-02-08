@@ -31,7 +31,7 @@ describe("AiInstructions", () => {
     expect(copilotInstructions).toContain("projen");
     expect(copilotInstructions).toContain("npx projen");
     expect(copilotInstructions).toContain(
-      "DO NOT manually edit generated files"
+      "DO NOT manually edit generated files",
     );
     expect(copilotInstructions).toContain("Modify configuration in .projenrc");
   });
@@ -119,7 +119,7 @@ describe("AiInstructions", () => {
     const instructions = snapshot[".github/copilot-instructions.md"];
 
     expect(instructions).toContain(
-      "Always use functional programming patterns."
+      "Always use functional programming patterns.",
     );
     expect(instructions).toContain("Prefer immutability.");
   });
@@ -130,7 +130,7 @@ describe("AiInstructions", () => {
 
     ai.addAgentSpecificInstructions(
       AiAgent.GITHUB_COPILOT,
-      "Use descriptive commit messages."
+      "Use descriptive commit messages.",
     );
 
     const snapshot = synthSnapshot(project);
@@ -139,7 +139,7 @@ describe("AiInstructions", () => {
 
     expect(copilotInstructions).toContain("Use descriptive commit messages.");
     expect(cursorInstructions).not.toContain(
-      "Use descriptive commit messages."
+      "Use descriptive commit messages.",
     );
   });
 
@@ -227,7 +227,7 @@ describe("AiInstructions", () => {
     const cursorInstructions = snapshot[".cursor/rules/project.md"];
 
     expect(copilotInstructions).toContain(
-      "General instruction for all agents."
+      "General instruction for all agents.",
     );
     expect(cursorInstructions).toContain("General instruction for all agents.");
 
@@ -353,7 +353,7 @@ describe("AiInstructions", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot[".cursor/rules/project.md"]).toBeDefined();
     expect(snapshot[".cursor/rules/project.md"]).toContain(
-      "Cursor instruction."
+      "Cursor instruction.",
     );
   });
 
@@ -378,7 +378,7 @@ describe("AiInstructions", () => {
     new AiInstructions(project);
 
     expect(
-      project.tryFindFile(".github/copilot-instructions.md")
+      project.tryFindFile(".github/copilot-instructions.md"),
     ).toBeDefined();
     expect(project.tryFindFile(".cursor/rules/project.md")).toBeDefined();
     expect(project.tryFindFile("CLAUDE.md")).toBeDefined();
@@ -397,7 +397,7 @@ describe("AiInstructions", () => {
     ai.addAgentSpecificInstructions(
       AiAgent.GITHUB_COPILOT,
       "First instruction",
-      "Second instruction"
+      "Second instruction",
     );
 
     const snapshot = synthSnapshot(project);
@@ -419,16 +419,16 @@ describe("AiInstructions", () => {
 
     const snapshot = synthSnapshot(project);
     expect(snapshot[".github/copilot-instructions.md"]).toContain(
-      "Copilot instruction"
+      "Copilot instruction",
     );
     expect(snapshot[".cursor/rules/project.md"]).toContain(
-      "Cursor instruction"
+      "Cursor instruction",
     );
     expect(snapshot[".github/copilot-instructions.md"]).not.toContain(
-      "Cursor instruction"
+      "Cursor instruction",
     );
     expect(snapshot[".cursor/rules/project.md"]).not.toContain(
-      "Copilot instruction"
+      "Copilot instruction",
     );
   });
 
@@ -439,7 +439,7 @@ describe("AiInstructions", () => {
     ai.addInstructions(
       "Use functional programming patterns.",
       "Prefer immutability.",
-      "Always write tests."
+      "Always write tests.",
     );
 
     const snapshot = synthSnapshot(project);
@@ -458,7 +458,7 @@ describe("AiInstructions", () => {
       AiAgent.GITHUB_COPILOT,
       "Use descriptive commit messages.",
       "Keep PRs small and focused.",
-      "Write clear documentation."
+      "Write clear documentation.",
     );
 
     const snapshot = synthSnapshot(project);
@@ -478,7 +478,7 @@ describe("AiInstructions", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot["AGENTS.md"]).toBeDefined();
     expect(snapshot["AGENTS.md"]).toContain(
-      "Projen-managed Project Instructions"
+      "Projen-managed Project Instructions",
     );
   });
 });

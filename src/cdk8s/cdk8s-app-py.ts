@@ -7,8 +7,7 @@ import { PythonProject, PythonProjectOptions } from "../python/python-project";
  * Options for `Cdk8sPythonApp`
  */
 export interface Cdk8sPythonOptions
-  extends PythonProjectOptions,
-    Cdk8sDepsCommonOptions {
+  extends PythonProjectOptions, Cdk8sDepsCommonOptions {
   /**
    * Import a specific Kubernetes spec version.
    *

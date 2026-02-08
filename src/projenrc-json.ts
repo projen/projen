@@ -48,7 +48,7 @@ export class ProjenrcJson extends ProjenrcFile {
     mkdirSync(dirname(rcfile), { recursive: true });
     writeFileSync(rcfile, JSON.stringify(json, null, 2));
     this.project.logger.info(
-      `Project definition file was created at ${rcfile}`
+      `Project definition file was created at ${rcfile}`,
     );
   }
 }

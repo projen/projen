@@ -80,7 +80,7 @@ export class WorkflowSteps {
       run: [
         `TAG=${tag}`,
         `(${varIsSet("TAG")} && ${checkTag("$TAG")} && ${setOutput(
-          true
+          true,
         )}) || ${setOutput(false)}`,
         "cat $GITHUB_OUTPUT",
       ].join("\n"),
@@ -148,7 +148,7 @@ export class WorkflowSteps {
    * Simple adapter to ensure we only include the necessary fields for a JobStepConfiguration.
    */
   private static buildJobStepConfig(
-    options: JobStepConfiguration
+    options: JobStepConfiguration,
   ): JobStepConfiguration {
     return {
       continueOnError: options?.continueOnError,

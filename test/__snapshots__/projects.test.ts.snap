@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`createProject creates a project and passes in JSON-like project options 1`] = `
 "const { typescript } = require("projen");

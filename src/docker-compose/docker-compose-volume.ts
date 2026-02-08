@@ -50,7 +50,7 @@ export interface IDockerComposeVolumeConfig {
    */
   addVolumeConfiguration(
     volumeName: string,
-    configuration: DockerComposeVolumeConfig
+    configuration: DockerComposeVolumeConfig,
   ): void;
 }
 
