@@ -1,6 +1,5 @@
 import * as path from "path";
 import {
-  setupAllContributors,
   setupProjenBootstrap,
   setupBundleTaskRunner,
   setupCheckLicenses,
@@ -218,8 +217,6 @@ setupVscode(project);
 setupGitpod(project);
 
 setupDevcontainer(project);
-
-setupAllContributors(project);
 
 setupNpmignore(project);
 

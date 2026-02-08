@@ -17,7 +17,6 @@
     "clobber": "node ./projen.js clobber",
     "compat": "node ./projen.js compat",
     "compile": "node ./projen.js compile",
-    "contributors:update": "node ./projen.js contributors:update",
     "default": "node ./projen.js default",
     "devenv:setup": "node ./projen.js devenv:setup",
     "docgen": "node ./projen.js docgen",

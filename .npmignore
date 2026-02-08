@@ -27,7 +27,6 @@ tsconfig.tsbuildinfo
 /projen.js
 /.markdownlint.json
 /.devcontainer.json
-/.all-contributorsrc
 /docs/
 /logo/
 /rfcs/

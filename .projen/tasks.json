@@ -120,14 +120,6 @@
         }
       ]
     },
-    "contributors:update": {
-      "name": "contributors:update",
-      "steps": [
-        {
-          "exec": "npx -y all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"\\[bot\\]\" | grep -v \"cdklabs-automation\" | grep -v \"projen-automation\" | xargs -n1 -I{} npx -y all-contributors add {} code"
-        }
-      ]
-    },
     "default": {
       "name": "default",
       "description": "Synthesize project files",
