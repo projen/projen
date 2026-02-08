@@ -1,3 +1,4 @@
+import { Plugin } from "../config-object";
 import { SharedConfig } from "../shared-config";
 
 /**
@@ -6,6 +7,11 @@ import { SharedConfig } from "../shared-config";
  * @ses https://eslint.style/guide/config-presets
  */
 export class Stylistic extends SharedConfig {
+  /**
+   * As ESLint Plugin
+   */
+  public static readonly PLUGIN: Plugin = Plugin.fromName('@stylistic');
+  
   /**
    * Enable all rules
    */

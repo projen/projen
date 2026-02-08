@@ -341,29 +341,22 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId21": {
-        "metadata": {
-          "type": "component",
-          "construct": "Eslint"
-        }
-      },
-      "JsonFile@.eslintrc.json": {
-        "metadata": {
-          "type": "file",
-          "construct": "JsonFile",
-          "path": ".eslintrc.json"
-        }
-      },
-      "Projenrc#AutoId22": {
+      "Projenrc#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "SampleCode#AutoId23": {
+      "SampleCode#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
+        }
+      },
+      "SampleDir#AutoId23": {
+        "metadata": {
+          "type": "component",
+          "construct": "SampleDir"
         }
       },
       "SampleDir#AutoId24": {
@@ -372,16 +365,23 @@
           "construct": "SampleDir"
         }
       },
-      "SampleDir#AutoId25": {
-        "metadata": {
-          "type": "component",
-          "construct": "SampleDir"
-        }
-      },
-      "JsiiDocgen#AutoId26": {
+      "JsiiDocgen#AutoId25": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
+        }
+      },
+      "ESLint#AutoId26": {
+        "metadata": {
+          "type": "component",
+          "construct": "ESLint"
+        }
+      },
+      "ESLintConfigFile@eslint.config.mjs": {
+        "metadata": {
+          "type": "file",
+          "construct": "ESLintConfigFile",
+          "path": "eslint.config.mjs"
         }
       },
       "TaskWorkflow#check-licenses": {

@@ -1,3 +1,4 @@
+import { Plugin } from "../config-object";
 import { SharedConfig } from "../shared-config";
 
 /**
@@ -6,6 +7,11 @@ import { SharedConfig } from "../shared-config";
  * @see https://typescript-eslint.io/getting-started/typed-linting/#shared-configurations
  */
 export class Tseslint extends SharedConfig {
+  /**
+   * As ESLint Plugin
+   */
+  public static readonly PLUGIN: Plugin = Plugin.fromName("@typescript-eslint");
+  
   /**
    * Enables each the rules provided as a part of typescript-eslint. Note that many rules are not applicable in all codebases, or are meant to be configured.
    * @see {@link https://typescript-eslint.io/users/configs#all}

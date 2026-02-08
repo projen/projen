@@ -57,9 +57,6 @@ export class ESLintConfigFile extends FileBase {
 
   public preSynthesize(): void {
     // Phase 1: Resolve value
-    const dataResolver = new DataResolver();
-    dataResolver.allowPassThrough(CodeResolvable.isCodeResolvable);
-
     const exportStatement = this.moduleType === ModuleType.ESM ? "export default" : "module.exports =";
     const defineConfig = from("eslint/config").defineConfig;
     const resolvedConfigs = this.resolveConfigs();    

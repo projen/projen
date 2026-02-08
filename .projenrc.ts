@@ -118,7 +118,7 @@ const project = new JsiiProject({
 
   codeCov: true,
   eslint: false,
-  prettier: false,
+  prettier: true,
   defaultReleaseBranch: "main",
   gitpod: true,
   devContainer: true,
@@ -205,6 +205,7 @@ new eslint.ESLint(project, {
       tsconfigPath: `./${project.tsconfigDev.fileName}`,
       dirs: [project.srcdir],
       devdirs: [project.testdir, "build-tools"],
+      prettier: true,
     }),
   ],
 });
