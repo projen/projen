@@ -1,4 +1,8 @@
+import { CodeResolvable, IImportResolver } from "../../../code-resolvable";
+import { DependencyType } from "../../../dependencies";
 import { SharedConfig } from "../shared-config";
+
+
 
 /**
  * Configurations provided to run prettier
@@ -18,4 +22,18 @@ export class Prettier extends SharedConfig {
       path: `configs.${path}`,
     });
   }
+
+  public toJSON(): any {
+    const code = this.createCode();
+    return new class extends CodeResolvable {
+      public render(): string {
+        return code.render();
+      }
+      public resolveImports(imports: IImportResolver): void {
+        imports.project.deps.addDependency("prettier", DependencyType.BUILD);
+        imports.project.deps.addDependency("eslint-config-prettier", DependencyType.BUILD);
+        return code.resolveImports?.(imports);
+      }
+    }();
+  } 
 }

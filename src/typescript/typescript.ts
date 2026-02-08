@@ -25,6 +25,7 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
+import { EslintLegacy } from "../javascript/eslint/legacy";
 
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
@@ -552,6 +553,15 @@ export class TypeScriptProject extends NodeProject {
         lintProjenRc: false,
         ...options.eslintOptions,
       });
+
+      new EslintLegacy(this, {
+        tsconfigPath: `./${this.tsconfigDev.fileName}`,
+        dirs: [this.srcdir],
+        devdirs: [this.testdir, "build-tools"],
+        fileExtensions: [".ts", ".tsx"],
+        lintProjenRc: false,
+        ...options.eslintOptions,
+      })
 
       this.tsconfigEslint = this.tsconfigDev;
     }
