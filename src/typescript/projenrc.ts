@@ -130,7 +130,7 @@ export class Projenrc extends ProjenrcFile {
       comments: bootstrap.comments,
     });
 
-    imports.add(moduleName, importName);
+    imports.from(moduleName, importName);
 
     const lines = new Array<string>();
     lines.push(...imports.asEsmImports());

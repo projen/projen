@@ -5,7 +5,6 @@
 /.amazonq/rules/project.md linguist-generated
 /.cursor/rules/project.md linguist-generated
 /.devcontainer.json linguist-generated
-/.eslintrc.json linguist-generated linguist-language=JSON-with-Comments
 /.gitattributes linguist-generated
 /.github/copilot-instructions.md linguist-generated
 /.github/pull_request_template.md linguist-generated
@@ -34,6 +33,7 @@
 /AGENTS.md linguist-generated
 /API.md linguist-generated
 /CLAUDE.md linguist-generated
+/eslint.config.mjs linguist-generated
 /LICENSE linguist-generated
 /package-lock.json linguist-generated
 /package.json linguist-generated

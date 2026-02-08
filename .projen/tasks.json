@@ -172,13 +172,9 @@
     "eslint": {
       "name": "eslint",
       "description": "Runs eslint against the codebase",
-      "env": {
-        "ESLINT_USE_FLAT_CONFIG": "false",
-        "NODE_NO_WARNINGS": "1"
-      },
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
+          "exec": "eslint --cache --no-error-on-unmatched-pattern",
           "receiveArgs": true
         }
       ]
@@ -450,13 +446,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,all-contributors-cli,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,@typescript-eslint/eslint-plugin,all-contributors-cli,aws-cdk-lib,esbuild,eslint,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,globals,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node,typescript-eslint"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript"
+          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin all-contributors-cli aws-cdk-lib commit-and-tag-version esbuild eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier globals jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript-eslint typescript"
         },
         {
           "exec": "node ./projen.js"

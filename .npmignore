@@ -21,8 +21,8 @@ dist
 /.idea/
 /.projenrc.js
 tsconfig.tsbuildinfo
-/.eslintrc.json
 !.jsii
+eslint.config.mjs
 /docusaurus/
 /projen.js
 /.markdownlint.json
